@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Web</title>
+     <style>
+          .periodic-table tbody:first-of-type tr:first-of-type td:nth-child(1),
+          .periodic-table tbody:first-of-type tr:nth-child(2) td:nth-child(n+5):nth-child(-n+7),
+          .periodic-table tbody:first-of-type tr:nth-child(3) td:nth-child(n+6):nth-child(-n+7),
+          .periodic-table tbody:first-of-type tr:nth-child(4) td:nth-child(16){
+               background-color: lightseagreen;
+          }
+          .periodic-table tbody:first-of-type tr:first-of-type td:nth-child(3),
+          .periodic-table tbody:first-of-type tr:nth-child(n+2):nth-child(-n+4) td:nth-child(9),
+          .periodic-table tbody:first-of-type tr:nth-child(n+4):nth-child(-n+7) td:nth-child(18){
+               background-color: darkorchid;
+          }
+          .periodic-table tbody:first-of-type tr:nth-child(n+2):nth-child(-n+4) td:nth-child(8),
+          .periodic-table tbody:first-of-type tr:nth-child(n+4):nth-child(-n+7) td:nth-child(17){
+               background-color: violet;
+          }
+
+          .periodic-table tbody:first-of-type tr:nth-child(n+2):nth-child(-n+7) td:nth-child(1){
+               background-color: red;
+          }
+          .periodic-table tbody:first-of-type tr:nth-child(n+2):nth-child(-n+7) td:nth-child(2){
+               background-color: orangered;
+          }
+          .periodic-table tbody:first-of-type tr:nth-child(n+4):nth-child(-n+7) td:nth-child(n+3):nth-child(-n+12){
+               background-color: yellow;
+          }
+          .periodic-table tbody:first-of-type tr:nth-child(2) td:nth-child(4),
+          .periodic-table tbody:first-of-type tr:nth-child(3) td:nth-child(5),
+          .periodic-table tbody:first-of-type tr:nth-child(4) td:nth-child(n+14):nth-child(-n+15),
+          .periodic-table tbody:first-of-type tr:nth-child(5) td:nth-child(n+15):nth-child(-n+16),
+          .periodic-table tbody:first-of-type tr:nth-child(6) td:nth-child(16){
+               background-color: lightblue;
+          }
+          
+          .periodic-table tbody:first-of-type tr:nth-child(3) td:nth-child(4),
+          .periodic-table tbody:first-of-type tr:nth-child(n+4):nth-child(-n+7) td:nth-child(13),
+          .periodic-table tbody:first-of-type tr:nth-child(n+5):nth-child(-n+7) td:nth-child(14),
+          .periodic-table tbody:first-of-type tr:nth-child(n+6):nth-child(-n+7) td:nth-child(15),
+          .periodic-table tbody:first-of-type tr:nth-child(7) td:nth-child(16){
+               background-color: green;
+          }
+
+          .periodic-table tbody:first-of-type tr:nth-child(8) td:nth-child(n+2):nth-child(-n+15){
+               background-color: yellowgreen;
+          }
+
+          .periodic-table tbody:first-of-type tr:nth-child(9) td:nth-child(n+2):nth-child(-n+15){
+               background-color: lightgreen;
+          }
+          .footer-boxes {
+               display: flex;
+               gap: 10px;
+               padding: 10px;
+               justify-content: center; 
+          }
+
+          .box {
+               flex: 1;
+               border: 1px solid;
+               padding: 10px;
+               text-align: center;
+               border-radius: 5px;
+          }
+          /* pesudo-element selector */
+          input::file-selector-button{ 
+               background-color: darkslategray;
+               color: darkgoldenrod;
+          }
+
+          input[required] {
+               border: 2px solid red;
+          }
+          input[type="date"] {
+               background-color: darkolivegreen;
+          }
+          h1[class~="head"]{
+               background-color: darksalmon;
+          }
+          input[type~="text"]{
+               background-color: darksalmon;
+          }
+          a[href^="https"] {
+               color: green;
+               }
+          a[href^="tel"]{
+               background-color: yellowgreen;
+          }
+          marquee[direction$="t"] {
+               background-color: darkorange;
+          }
+          a[href*="@"] {
+               background-color: darkmagenta;
+          }
+
+
+     </style>
+</head>
+<body>
+     <Section>
+     <div>
+          <h1 class="head"><ins>Heading Tags</ins></h1>
+          <h1>Heading 1 2em (32px)</h1>
+          <h2>Heading 2 1.5em (24px)</h2>
+          <h3>Heading 3 1.17em (18.72px)</h3>
+          <h4>Heading 4 1em (16px)</h4>
+          <h5>Heading 5 0.83em (13.28px)</h5>
+          <h6>Heading 6 0.67em (10.72px)</h6>
+     </div>
+     </section>
+<hr>
+     <section>
+     <div>
+          <h1><ins>p-Paragraph tag</ins></h1>
+          <p>p tag represent paragraph that it is a group of text as a pragraph</p>
+     </div>
+     </Section>
+<hr>
+     <div>
+          <h1><u>Formatting</u> <ins>Tag</ins></h1>
+          <p><b>Formatting</b> <strong>Tag</strong> are use to change the <i>appearance</i> of the <em>text or content</em></p>
+          <p><b>b-Bold</b></p>
+          <p><strong>strong-Same as Bold</strong></p>
+          <p><i>i-Italic</i></p>
+          <p><em>em-Same as Italic</em></p>
+          <p><ins>ins-Same as Underline</ins></p>
+          <p><mark>mark-Highlight Text</mark></p>
+          <p><del>del-Strike the text</del></p>
+          <p><strike>strike-Same as del</strike></p>
+          <p>CO<sub>2</sub> sub will give the subscript that it will lower it below the baseline</p>
+          <p>a<sup>2</sup> sup will give the superscript that it will rise it above the baseline</p>
+          <p><q>q-quotiont double quote</q></p>
+          <p><pre>pre-
+line1               line      and     space
+line2               break
+line3               display same as written
+          </pre></p>
+     </div>
+<hr>     
+     <div>
+          <h1>Element</h1>
+          <p><h2>Types of Elements: </h2></p>
+          <p><h3>Inline level Element</h3></p>
+          <p><pre>Displayed in Sameline and we cannot adjust Height and Width. 
+Eg: &lt;b&gt;, &lt;i&gt;, &lt;mark&gt;, etc.,</pre></p>
+          <p><h3>Block Level Element</h3></p>
+          <p><pre>It will take the entire width of the page and can able to adjust the Height and Width.
+Eg: &lt;h1&gt;, &lt;h2&gt;, &lt;p&gt; etc.,</pre></p>
+          <p><h3>Inline-Block Level Element</h3></p>
+          <p><pre>Combination of both display in same line and we can adjust height and width 
+Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
+     </div>
+<hr>
+     <div>
+          <p>Attributes: They proide aditional information or functionallity to HTML Element.</p>
+          <pre>Syntax: 
+          &lt;element attribute = "value"&gt;content&lt;/element&gt;
+          </pre>
+          <p>Maquee Tag: Implements Scrollable content in our web page.</p>
+          <pre>sSyntax:
+          &lt;marquee behaviour="" direction=""&gt; content &lt;/maquee&gt;
+          </pre>
+     </div>
+<hr>
+     <marquee>Maquee Tag</marquee>
+     <marquee behaviour="scroll" direction="left" scrollamount="20" loop="infinite" height="100%" Width="100%">Maquee Tag</marquee>
+     <marquee behaviour="scroll" direction="right" scrollamount="20" loop="infinite" height="100%" Width="100%">Maquee Tag</marquee>
+     <marquee behaviour="scroll" direction="up" scrollamount="6" loop="infinite" height="100%" Width="100%">Maquee Tag</marquee>
+     <marquee behaviour="scroll" direction="down" scrollamount="6" loop="infinite" height="100%" Width="100%">Maquee Tag</marquee>
+<hr>
+     <div>
+     <a href="https://www.youtube.com" target="_blank">target-blank</a>
+     <br>
+     <a href="https://www.youtube.com" target="_self">target-self</a>
+     <br>
+     <a href="https://www.youtube.com" target="_parent">target-parent</a>
+     <br>
+     <a href="tel:9150470830">Call Me</a>
+     <br>
+     <a href="Mailto:p.aathisivaganesh@gmail.com">Mail</a>
+
+     </div>
+<hr>
+     <div>
+          <h1>Orderedlist</h1>
+          <ol>
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+          
+          <ol type="1" start="6">
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+          <ol type="1" start="10" reversed>
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+          <ol type="a" start="10">
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+          <ol type="A" start="10" reversed>
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+          <ol type="I" start="10">
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+          <ol type="I" start="10" reversed>
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+          <ol type="i" start="10">
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+          <ol type="i" start="10" reversed>
+               <li>A</li>
+               <li>B</li>
+               <li>C</li>
+               <li>D</li>
+               <li>E</li>
+          </ol>
+
+     </div>
+<hr>
+     <div>
+          <h1>UnOrdered List</h1>
+          <ul>
+               <li>Disc</li>
+               <li>Square</li>
+               <li>Circle</li>
+               <li>None</li>
+          </ul>
+          <ul type="square">
+               <li>Disc</li>
+               <li>Square</li>
+               <li>Circle</li>
+               <li>None</li>
+          </ul>
+          <ul type="circle">
+               <li>Disc</li>
+               <li>Square</li>
+               <li>Circle</li>
+               <li>None</li>
+          </ul>
+          <ul type="none">
+               <li>Disc</li>
+               <li>Square</li>
+               <li>Circle</li>
+               <li>None</li>
+          </ul>
+     </div>
+<hr>
+     <div>
+          <h1>Description List</h1>
+          <dl>
+               <dt>HTML</dt>
+               <dd>Hypertext Markup Language</dd>
+               <dt>CSS</dt>
+               <dd>Cascading Style Sheet</dd>
+               <dt>JS</dt>
+               <dd>JavaScript</dd>
+          </dl>
+     </div>
+<hr>
+     <div>
+          <h1>Nested List</h1>
+          <ol type="I">
+               <li>Leo</li>
+               <ul type="circle">
+                    <li>Vijay</li>
+                    <li>Trisha</li>
+                    <li>Arjun</li>
+               </ul>
+               <li>Coolie</li>
+               <ul type="square">
+                    <li>RajiniKanth</li>
+                    <li>Shruti Hassan</li>
+                    <li>Naga Arjuna</li>
+               </ul>
+               <li>Vikram</li>
+               <ol type="1">
+                    <li>Kamala Hassan</li>
+                    <li>Maya krishan</li>
+                    <li>Vijay Sethupathi</li>
+
+               </ol>
+
+          </ol>
+     </div>
+<hr>
+     <div style="width: 100vw;">
+          <h1>Periodic Table</h1>
+          <table class="periodic-table" border="1" cellpadding="10" cellspacing="10">
+               <thead>
+                    <tr style="background-color: silver;">
+                         <th>1</th>
+                         <th>2</th>
+                         <th>3</th>
+                         <th>4</th>
+                         <th>5</th>
+                         <th>6</th>
+                         <th>7</th>
+                         <th>8</th>
+                         <th>9</th>
+                         <th>10</th>
+                         <th>11</th>
+                         <th>12</th>
+                         <th>13</th>
+                         <th>14</th>
+                         <th>15</th>
+                         <th>16</th>
+                         <th>17</th>
+                         <th>18</th>
+                    </tr>
+
+               </thead>
+               <tbody>
+                    <tr>
+                         <td><sup>1</sup>H</td>
+                         <td style="border: none;" colspan="16"></td>
+                         <td><sup>2</sup>He</td>
+                    </tr>
+                    <tr>
+                         <td><sup>3</sup>Li</td>
+                         <td><sup>4</sup>Be</td>
+                         <td style="border: none;" colspan="10"></td>
+                         <td><sup>5</sup>B</td>
+                         <td><sup>6</sup>C</td>
+                         <td><sup>7</sup>N</td>
+                         <td><sup>8</sup>O</td>
+                         <td><sup>9</sup>F</td>
+                         <td><sup>10</sup>Ne</td>
+                    </tr>
+                    <tr>
+                         <td><sup>11</sup>Na</td>
+                         <td><sup>12</sup>Mg</td>
+                         <td style="border: none;" colspan="10"></td>
+                         <td><sup>13</sup>Al</td>
+                         <td><sup>14</sup>Si</td>
+                         <td><sup>15</sup>P</td>
+                         <td><sup>16</sup>S</td>
+                         <td><sup>17</sup>Cl</td>
+                         <td><sup>18</sup>Ar</td>
+                    </tr>
+                    <tr>
+                         <td><sup>19</sup>K</td>
+                         <td><sup>20</sup>Ca</td>
+                         <td><sup>21</sup>Sc</td>
+                         <td><sup>22</sup>Ti</td>
+                         <td><sup>23</sup>V</td>
+                         <td><sup>24</sup>Cr</td>
+                         <td><sup>25</sup>Mn</td>
+                         <td><sup>26</sup>Fe</td>
+                         <td><sup>27</sup>Co</td>
+                         <td><sup>28</sup>Ni</td>
+                         <td><sup>29</sup>Cu</td>
+                         <td><sup>30</sup>Zn</td>
+                         <td><sup>31</sup>Ga</td>
+                         <td><sup>32</sup>Ge</td>
+                         <td><sup>33</sup>As</td>
+                         <td><sup>34</sup>Se</td>
+                         <td><sup>35</sup>Br</td>
+                         <td><sup>36</sup>Kr</td>
+                    </tr>
+                    <tr>
+                         <td><sup>37</sup>Rb</td>
+                         <td><sup>38</sup>Sr</td>
+                         <td><sup>39</sup>Y</td>
+                         <td><sup>40</sup>Zr</td>
+                         <td><sup>41</sup>Nb</td>
+                         <td><sup>42</sup>Mo</td>
+                         <td><sup>43</sup>Tc</td>
+                         <td><sup>44</sup>Ru</td>
+                         <td><sup>45</sup>Rh</td>
+                         <td><sup>46</sup>Pd</td>
+                         <td><sup>47</sup>Ag</td>
+                         <td><sup>48</sup>Cd</td>
+                         <td><sup>49</sup>In</td>
+                         <td><sup>50</sup>Sn</td>
+                         <td><sup>51</sup>Sb</td>
+                         <td><sup>52</sup>Te</td>
+                         <td><sup>53</sup>I</td>
+                         <td><sup>54</sup>Xe</td>
+                    </tr>
+                    <tr>
+                         <td><sup>55</sup>Cs</td>
+                         <td><sup>56</sup>Ba</td>
+                         <td><sup>71</sup>Lu</td>
+                         <td><sup>72</sup>Hf</td>
+                         <td><sup>73</sup>Ta</td>
+                         <td><sup>74</sup>W</td>
+                         <td><sup>75</sup>Re</td>
+                         <td><sup>76</sup>Os</td>
+                         <td><sup>77</sup>Ir</td>
+                         <td><sup>78</sup>Pt</td>
+                         <td><sup>79</sup>Au</td>
+                         <td><sup>80</sup>Hg</td>
+                         <td><sup>81</sup>Tl</td>
+                         <td><sup>82</sup>Pb</td>
+                         <td><sup>83</sup>Bi</td>
+                         <td><sup>84</sup>Po</td>
+                         <td><sup>85</sup>At</td>
+                         <td><sup>86</sup>Rn</td>
+                    </tr>
+                    <tr>
+                         <td><sup>87</sup>Fr</td>
+                         <td><sup>88</sup>Ra</td>
+                         <td><sup>103</sup>Lr</td>
+                         <td><sup>104</sup>Rf</td>
+                         <td><sup>105</sup>Db</td>
+                         <td><sup>106</sup>Sg</td>
+                         <td><sup>107</sup>Bh</td>
+                         <td><sup>108</sup>Hs</td>
+                         <td><sup>109</sup>Mt</td>
+                         <td><sup>110</sup>Ds</td>
+                         <td><sup>111</sup>Rg</td>
+                         <td><sup>112</sup>Cn</td>
+                         <td><sup>113</sup>Nh</td>
+                         <td><sup>114</sup>Fi</td>
+                         <td><sup>115</sup>Mc</td>
+                         <td><sup>116</sup>Lv</td>
+                         <td><sup>117</sup>Ts</td>
+                         <td><sup>118</sup>Og</td>
+                  
+                    </tr>
+                    <tr>
+                         <td style="border: none;" colspan="2"></td>
+                         <td><sup>57</sup>La</td>
+                         <td><sup>58</sup>Ce</td>
+                         <td><sup>59</sup>Pr</td>
+                         <td><sup>60</sup>Nd</td>
+                         <td><sup>61</sup>Pm</td>
+                         <td><sup>62</sup>Sm</td>
+                         <td><sup>63</sup>Eu</td>
+                         <td><sup>64</sup>Gd</td>
+                         <td><sup>65</sup>Tb</td>
+                         <td><sup>66</sup>Dy</td>
+                         <td><sup>67</sup>Ho</td>
+                         <td><sup>68</sup>Er</td>
+                         <td><sup>69</sup>Tm</td>
+                         <td><sup>70</sup>Yb</td>                  
+                         <td style="border: none;" colspan="2"></td>
+                    </tr>
+                    <tr>
+                         <td style="border: none;" colspan="2"></td>
+                         <td><sup>89</sup>Ac</td>
+                         <td><sup>90</sup>Th</td>
+                         <td><sup>91</sup>Pa</td>
+                         <td><sup>92</sup>U</td>
+                         <td><sup>93</sup>Np</td>
+                         <td><sup>94</sup>Pu</td>
+                         <td><sup>95</sup>Am</td>
+                         <td><sup>96</sup>Cm</td>
+                         <td><sup>97</sup>Bk</td>
+                         <td><sup>98</sup>Cf</td>
+                         <td><sup>99</sup>Es</td>
+                         <td><sup>100</sup>Fm</td>
+                         <td><sup>101</sup>Md</td>
+                         <td><sup>102</sup>No</td>                  
+                         <td style="border: none;" colspan="2"></td>
+                    </tr>
+               </tbody>
+               <tfoot>
+                    <tr>
+                         <td colspan="18">
+                              <div class="footer-boxes">
+                              <div class="box" style="background-color: red;">Alkali Metal</div>
+                              <div class="box" style="background-color: orangered;">Alkaline Earth</div>
+                              <div class="box" style="background-color: green;">Basic Metal</div>
+                              <div class="box" style="background-color: lightseagreen;">Non Metal</div>
+                              <div class="box" style="background-color: lightblue;">Semimetal</div>
+                              <div class="box" style="background-color: violet;">Halogen</div>
+                              <div class="box" style="background-color: darkorchid;">Noble Gas</div>
+                              <div class="box" style="background-color: greenyellow">Lanthanide</div>
+                              <div class="box" style="background-color: lightgreen">Actinide</div>
+                         </div>
+                                             
+                         </td>
+                    </tr>
+               </tfoot>
+          </table>
+     </div>
+<hr>
+     <div>
+          <audio src="drums_of_liberation.mp3" controls loop muted autoplay>Audio</audio>
+          <video src="luffy-in-winter.960x540.mp4" controls height="170px" width="300px" loop muted autoplay>Video</video>
+          <video src="luffy-in-winter.960x540.mp4" controls height="170px" width="300px" loop muted poster="videoframe_5133.png">Video</video>
+          <iframe src="https://aathi.pythonanywhere.com/" height="170px" width="300px" frameborder="0">iframe</iframe>
+     </div>
+<hr>
+     <div>
+          <form action="">
+               Name<input><br><br>
+               Email<input><br><br>
+               <button>Submit</button>
+          </form>
+     </div>
+<hr>
+     <div>
+          <h2 style="text-align: center;">Form</h2> <!--In Form the input field 'id' used to link the label that id should be same as 'for' attribute and the 'name' is used to link it with js or backend-->
+          <form action="">
+               <label for="nameid">Name:</label>
+               <input type="text" id="nameid" name="name" required><br><br>
+               
+               <label for="email">Email:</label>
+               <input type="text" id="email" name="mail"><br><br>
+               
+               <label for="password">Password:</label>
+               <input type="text" id="password" name="pass"><br><br>
+               
+               <label for="gender">Gender:</label>
+               <label for="male">
+               <input type="radio" name="gender" id="male" value="male">
+               Male</label>
+               <label for="female">
+               <input type="radio" name="gender" id="female" value="female">
+               Female</label>
+               <label for="others">
+               <input type="radio" name="gender" id="others" value="others">
+               Others</label><br><br>
+               
+               <label for="skills">Skills:</label>
+               <label for="skills">
+               <input type="checkbox" name="skill" id="skills" value="html">
+               HTML</label>
+               <label for="skills">
+               <input type="checkbox" name="skill" id="skills" value="css">
+               CSS</label>
+               <label for="skills">
+               <input type="checkbox" name="skill" id="skills" value="js">
+               JS</label>
+               <label for="skills">
+               <input type="checkbox" name="skill" id="skills" value="Java">
+               JAVA</label>
+               <label for="skills">
+               <input type="checkbox" name="skill" id="skills" value="PY">
+               PY</label>
+               <label for="skills">
+               <input type="checkbox" name="skill" id="skills" value="SQL">
+               SQL</label>
+               <label for="skills">
+               <input type="checkbox" name="skill" id="skills" value="Sqlite">
+               SQLITE</label><br><br>
+
+               <label for="lang">Language:</label>
+               <select name="lang" id="lang">
+                    <option value="English">  English  </option>
+                    <option value="Tamil">  Tamil  </option>
+               </select><br><br>
+
+               <label for="job">JOB:</label>
+               <select name="job" id="job">
+               <option value="Select" style="text-align: center;">--Select JOB--</option>
+               <optgroup label="Software">
+                    <option value="Devp">Software Developer</option>
+                    <option value="test">Software Tester</option>
+               </optgroup>
+               <optgroup label="Hardware">
+                    <option value="civil">Building</option>
+                    <option value="EEE">Electrical & Electronic</option>
+               </optgroup>
+               </select><br><br>
+
+               <label for="url">URL:</label>
+               <input type="url" name="url" id="url"><br><br>
+
+               <label for="age">Age:</label>
+               <input type="number" name="age" id="age" min="0" max="200"><br><br>
+
+               <label for="dob">DOB</label>
+               <input type="date" name="dob" id="dob"><br><br>
+
+               <label for="date">Date & Time:</label>
+               <input type="datetime-local" name="date" id="date"><br><br>
+
+               <label for="file">CV:</label>
+               <input type="file" name="file" id="file"><br><br>
+
+               <label for="photo">Photo:</label>
+               <input type="image" name="photo" id="photo" width="50px" height="30px" src="videoframe_5133.png"><br><br>
+
+               <label for="vol">Range:</label>
+               <input type="range" name="vol" id="vol" min="0" max="100"><br><br>
+
+               <label for="color">Color:</label>
+               <input type="color" name="color" id="color"><br><br>
+
+               <label for="month">Month:</label>
+               <input type="month" name="month" id="month"><br><br>
+
+               <label for="week">Week:</label>
+               <input type="week" name="week" id="week"><br><br>
+
+               <label for="time">Time:</label>
+               <input type="time" name="time" id="time"><br><br>
+
+               <label for="search">Search:</label>
+               <input type="search" name="search" id="search"><br><br>
+               
+               <label for="hidden">Hidden/Hide Any Input Type:</label>
+               <input type="hidden" name="hidden" id="hidden" value="12345678"><br><br>
+
+               <label for="reset">Reset:</label>
+               <input type="reset" name="reset" id="reset"><br><br>
+
+               <label for="button">Button</label>
+               <input type="button" value="Click Me" onclick="alert('Hello!')"><br><br>
+
+               <label for="submit">Submit:</label>
+               <input type="submit" name="submit" id="submit"><br><br>
+
+          </form>
+     </div>
+<hr>
+     <div>
+          <h3>HTML Non-Semetic Element</h3>
+          <table border="1" cellpadding="12" cellspacing="20" style="border-collapse: collapse; text-align: center;">
+               <tbody>
+               <tr>
+                    <td colspan="4">&lt;div&gt;</td>
+               </tr>
+               <tr>
+                    <td colspan="4">&lt;div&gt;</td>
+               </tr>
+               <tr>
+                   <td>&lt;div&gt;</td>
+                    <td rowspan="2">&lt;div&gt;</td> 
+               </tr>
+               <tr>
+                    <td>&lt;div&gt;</td>
+               </tr>
+               <tr>
+                    <td colspan="4">&lt;div&gt;</td>
+               </tr>
+               </tbody>
+          </table><br><br>
+<hr>
+          <h3>HTML Sementic Element</h3>
+          <table border="1" cellpadding="12" cellspacing="20" style="border-collapse: collapse; text-align: center;">
+               <tbody>
+                    <tr>
+                         <td colspan="4">&lt;header&gt;</td>
+                    </tr>
+                    <tr>
+                         <td colspan="4">&lt;nav&gt;</td>
+                    </tr>
+                    <tr>
+                         <td col>&lt;section&gt;</td>
+                         <td rowspan="2">&lt;aside&gt;</td>
+                    </tr>
+                    <tr>
+                         <td>&lt;article&gt;</td>
+                    </tr>
+                    <tr>
+                         <td colspan="4">footer</td>
+                    </tr>
+               </tbody><br><br>
+          </table>     
+
+          <header>
+               <h1>This is Header</h1>
+          
+               <nav>
+                    <a href="#">Home</a>
+                    <a href="#">Explore</a>
+                    <a href="#">Contact</a>
+               </nav>
+          </header>
+          <main>
+               <section>
+                    <h1>This is Section 1</h1>
+                    <article>
+                         <h1>This is Article 1</h1>
+                    </article>
+                    <article>
+                         <h1>This is Article 2</h1>
+                    </article>
+               </section>
+               <section>
+                    <h1>This is Section 2</h1>
+                    <article>
+                         <h1>This is Article 3</h1>
+                    </article>
+                    <article>
+                         <h1>This is Article 4</h1>
+                    </article>
+               </section>
+
+               <aside>
+                    <h1>This is Aside</h1>
+               </aside>
+          </main>
+          <footer>
+               <h1>This is Footer</h1>
+          </footer>     
+     </div>
+<hr>
+     
+</body>
+</html>
