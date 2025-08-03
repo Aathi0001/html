@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+</head>
+<body>
+     <h1>JavaScript</h1>
+     <p>JavaScript (JS) is a powerful, lightweight, highlevel programming language and widely-used scripting language that runs in the browser.</p>  
+     <p>It is allows you to make web pages interactive and dynamic.</p>
+     <p>It is the only programming language understood by the browser because of js nature.</p>
+     <p>It can be used for both frontend and backend and even for testing.</p>
+     <p>Front-end: React.js, Angular.js, Next.js | Back-end: Express.js, Node.js | Testing: Cypress.js, Playwright.js</p>
+<br>
+     <p>A company called Netsape communication cooperation created a browser called Netscape Navigator.</p>
+     <p>Initially this browser only support static web pages</p>
+     <p>To support dynamix webpage netscape hired brandon eich in 1995.</p>
+     <p>In just 10 days he created a new scripting language caled mocha and js engine called spider monkey.</p>
+     <p>Mocha was later renamed Livescript and then finaly javascript</p>
+     <p>In 1997 js was standarised by ECMA</p>
+<br>
+     <p>chrome: VA engine, Firefox: Spider Monkey, Safari: JS code, MS Edge: chakra</p>
+<br>
+     <h2>Characteristics of JS</h2>
+     <p>Client side scripting languages - Js alows variable to hold any declare type</p>
+     <p>Weakly or Loosely type language - No need of semicolon , We can change datatype from one type to another.</p>
+     <p>Dynamically Script language</p>
+     <p>Interptetor - It is executed directly to machine code</p>
+     <p>Synchronous - It will be executing all the task in the order they are written.</p>
+     <p>Single Threading language - It will only execute one task at a time.</p>
+     <p>Object Based Language - Everything in javascript is considered as object like arrays, function, etc.,</p>
+     <p>Object Oriented Programming Language - JavaScript suppport oops concept through object.</p>
+     <p>light weight language - we can execute js directly on browser.</p>
+<br>
+     <h2>Tokens:</h2>
+     <p>Basic building blocks of any programming language</p>
+     <p><strong>1. Identifiers:</strong> Names of variables, functions, arrays, etc. (e.g., <code>myVar</code>, <code>totalSum</code>)</p>
+     <p><strong>2. Keywords:</strong> Reserved words in JS (e.g., <code>var</code>, <code>let</code>, <code>if</code>, <code>return</code>)</p>
+     <p><strong>3. Literals:</strong> Fixed values like Number Literal: <code>10</code>, String Literal: <code>"Hello"</code>, Boolean Literal: <code>true</code>, <code>null</code></p>
+     <p><strong>4. Operators:</strong> Symbols used to perform operations (e.g., <code>+</code>, <code>-</code>, <code>*</code>, <code>==</code>, <code>===</code>)</p>
+     <p><strong>5. Separators:</strong> Symbols like <code>( )</code>, <code>{ }</code>, <code>[ ]</code>, <code>;</code>, <code>,</code></p>
+     <p><strong>6. Comments:</strong> Used to add notes (e.g., <code>// single-line</code>, <code>/* multi-line */</code>)</p>
+     <p><strong>7. Variables:</strong> A named block of memory which is used to store the value. (Variable-Declaration <code>var</code>, <code>let</code>, <code>const</code>)</p>
+<br>
+     <h2>Scope:</h2>
+     <p>Scope is used to define the visibility.</p>
+     <h6>Types :</h6>
+     <p>1. Global Scope - Any variable declared with var will be present in global scope. we can access it from anywhere.</p>
+     <p>2. Script Scope - Any variable declared with let an dconst will be present in script scope. we can access only after declaration.</p>
+     <p>3. Local Scope / Function Scope - Any variable defined for a specific scope like inside function will be present in local scope. we cannot access these variabe outside the function.</p>
+     <p>Note: If we assign a value to a variabe which is not declared automatically that is without variable declaration it will become global variable. eg:a=100 -> Global scope</p>
+<br>    
+     <h2>Hosting</h2>
+     <p><strong>Definition:</strong> In JavaScript, variable and function declarations are moved to the top of their scope before code execution. This is called hoisting.</p>
+     <p><strong>Function declarations</strong> are hoisted completely (name + body), so they can be used before they're defined.</p>
+     <p><strong>Variable declarations</strong> with <code>var</code> are hoisted (only the declaration, not the value).</p>
+     <p><strong>Example:</strong></p>
+     <pre><code>
+     greet(); // ✅ Works due to hoisting
+     function greet() {
+          console.log("Hello from hoisted function!");
+     }
+
+     console.log(x); // ❌ undefined, because only declaration is hoisted
+     var x = 10;
+     </code></pre>
+     <h2>Temporal Dead Zone</h2>
+     <p><strong>Definition:</strong> TDZ(Temporal Dead Zone) is the time between entering a block and declaring a variable with <code>let</code> or <code>const</code>. Accessing the variable in this zone throws a ReferenceError.</p>
+     <p><strong>TDZ applies to:</strong> <code>let</code> and <code>const</code> (not <code>var</code>).</p>
+     <p><strong>Example:</strong></p>
+     <pre><code>
+     console.log(a); // ❌ ReferenceError: Cannot access 'a' before initialization
+     let a = 5;
+
+     const b = 10;
+     console.log(b); // ✅ OK if accessed after declaration
+     </code></pre>
+
+     <p><strong>✔️ Hoisting:</strong> Moves declarations to the top. Works with <code>var</code> and functions.</p>
+     <p><strong>❌ TDZ:</strong> Accessing <code>let</code> or <code>const</code> before declaration causes an error.</p>
+<br>
+     <h2>DataType:</h2>
+     <h2>Primitive Data Types:</h2>
+     <p>1. <strong>Number</strong> – Represents both integer and floating-point numbers.<br>Example: <code>let a = 10;</code></p>
+     <p>2. <strong>String</strong> – Sequence of characters inside single/double/backticks.<br>Example: <code>let name = "Aathi";</code></p>
+     <p>3. <strong>Boolean</strong> – Represents <code>true</code> or <code>false</code>.<br>Example: <code>let isValid = true;</code></p>
+     <p>4. <strong>Undefined</strong> – A variable declared but not assigned.<br>Example: <code>let x;</code></p>
+     <p>5. <strong>Null</strong> – Represents intentional absence of value.<br>Example: <code>let data = null;</code></p>
+     <p>6. <strong>BigInt</strong> – For very large integers.<br>Example: <code>let bigNum = 12345678901234567890n;</code></p>
+     <p>7. <strong>Symbol</strong> – Unique identifier.<br>Example: <code>let sym = Symbol("id");</code></p>
+
+     <h2>Non-Primitive (Reference) Data Types</h2>
+     <p>1. <strong>Object</strong> – Collection of key-value pairs.<br>Example:<br><code>
+     let person = { name: "Aathi", age: 22 };</code></p>
+     <p>2. <strong>Array</strong> – Ordered list of values.<br>Example:<br><code>
+     let colors = ["red", "green", "blue"];</code></p>
+     <p>3. <strong>Function</strong> – Block of reusable code.<br>Example:<br><code>
+     function greet() { console.log("Hello!"); }</code></p>
+     <p>4. <strong>Date, RegExp, Map, Set, WeakMap, WeakSet, etc.</strong> – Built-in complex objects in JS.</p>
+
+     <script src="./javascript.js"></script>
+</body>
+</html>

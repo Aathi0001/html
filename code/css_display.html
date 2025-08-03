@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <style>
+  h1{
+     color: #0d47a1;
+  }
+  h4 {
+    color: #007acc; 
+    font-size: large;
+  }
+
+  h5 {
+    color: #0d47a1; 
+  }
+
+  p {
+    color: #333333; 
+  }
+
+  ul li {
+    color: #444444; 
+  }
+
+  pre {
+    color: #1a1a1a; 
+    background-color: #f5f5f5;
+    padding: 10px;
+    border-radius: 6px;
+    font-family: Consolas, monospace;
+  }
+
+  code {
+    color: #c62828; 
+    background-color: #fff3f3;
+    padding: 2px 5px;
+    border-radius: 4px;
+    font-family: Consolas, monospace;
+  }
+</style>
+
+</head>
+<body>
+     <h1>CSS Display Property</h1>
+
+<h5>→ What is display?</h5>
+<p>The <code>display</code> property determines how an element is displayed (rendered) in the document flow.</p>
+<p>It is one of the most important properties in CSS for layout.</p>
+
+<h5>→ Syntax:</h5>
+<pre>display: value;</pre>
+
+<h5>→ Common Values of display:</h5>
+<ul>
+  <li><code>block</code> → The element takes full width and starts on a new line. (e.g., &lt;div&gt;, &lt;p&gt;)</li>
+  <li><code>inline</code> → The element only takes as much width as it needs. It does not start on a new line. (e.g., &lt;span&gt;)</li>
+  <li><code>inline-block</code> → Behaves like inline but allows setting width and height.</li>
+  <li><code>none</code> → Hides the element completely (no space is reserved).</li>
+</ul>
+
+<h5>→ Flex and Grid Display:</h5>
+<ul>
+  <li><code>flex</code> → Enables Flexbox layout for flexible item arrangement.</li>
+  <li><code>inline-flex</code> → Like flex, but behaves like an inline element.</li>
+  <li><code>grid</code> → Enables Grid layout for 2D layout structure (rows & columns).</li>
+  <li><code>inline-grid</code> → Like grid, but behaves like an inline element.</li>
+</ul>
+
+<h5>→ Table Display:</h5>
+<ul>
+  <li><code>table</code> → Behaves like an HTML &lt;table&gt; element.</li>
+  <li><code>table-row</code> → Behaves like a &lt;tr&gt; element.</li>
+  <li><code>table-cell</code> → Behaves like a &lt;td&gt; element.</li>
+</ul>
+
+<h5>→ Other Values:</h5>
+<ul>
+  <li><code>contents</code> → Makes the element disappear, but keeps its children visible (without creating a box).</li>
+  <li><code>list-item</code> → Behaves like a &lt;li&gt; element with bullet/number.</li>
+  <li><code>run-in</code> → Rarely used; tries to run the element into the next block if possible.</li>
+</ul>
+
+<h5>→ Example:</h5>
+<pre>
+div {
+  display: inline-block;
+}
+</pre>
+
+     <br><br>
+     <h1>Flexbox Layout</h1>
+<ul>
+  <li>Flexbox is used to design layouts in a <b>one-dimensional format</b> (row or column).</li>
+  <li>It requires a <b>flex container</b>, and only its <b>direct children</b> become flex items.</li>
+</ul>
+
+<h4>Flex Container Properties</h4>
+
+<h4>1. display: flex</h4>
+<ul>
+  <li>This enables flex context and allows other flex properties to be used.</li>
+  <li>Example:
+    <pre>
+.container {
+  display: flex;
+}
+    </pre>
+  </li>
+</ul>
+
+<h4>2. justify-content</h4>
+<ul>
+  <li>Aligns flex items along the <b>main axis</b>.</li>
+  <li>Syntax: justify-content: value;</li>
+  <li>Values:
+    <ul>
+      <li><b>flex-start</b> – Items align at the start (default).</li>
+      <li><b>center</b> – Items align at the center.</li>
+      <li><b>flex-end</b> – Items align at the end.</li>
+      <li><b>space-between</b> – Equal spacing between items, first and last stick to edges.</li>
+      <li><b>space-around</b> – Equal spacing around items.</li>
+      <li><b>space-evenly</b> – Equal spacing between and around items.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>3. align-items</h4>
+<ul>
+  <li>Aligns items along the <b>cross axis</b>.</li>
+  <li>Syntax: align-items: value;</li>
+  <li>Values:
+    <ul>
+      <li><b>flex-start</b> – Items align at the start (default).</li>
+      <li><b>center</b> – Items align at the center.</li>
+      <li><b>flex-end</b> – Items align at the end.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>4. flex-direction</h4>
+<ul>
+  <li>Specifies the direction of the main axis.</li>
+  <li>Syntax: flex-direction: value;</li>
+  <li>Values:
+    <ul>
+      <li><b>row</b> – Default. Left to right.</li>
+      <li><b>row-reverse</b> – Right to left.</li>
+      <li><b>column</b> – Top to bottom.</li>
+      <li><b>column-reverse</b> – Bottom to top.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>5. flex-wrap</h4>
+<ul>
+  <li>Determines whether flex items wrap to the next line.</li>
+  <li>Syntax: flex-wrap: value;</li>
+  <li>Values:
+    <ul>
+      <li><b>nowrap</b> – Default. No wrapping.</li>
+      <li><b>wrap</b> – Items wrap to next line.</li>
+      <li><b>wrap-reverse</b> – Items wrap in reverse order.</li>
+    </ul>
+  </li>
+</ul>
+
+<h4>6. align-content</h4>
+<ul>
+  <li>Aligns rows of wrapped items in the <b>cross axis</b>.</li>
+  <li>Syntax: align-content: value;</li>
+  <li>Values:
+    <ul>
+      <li><b>flex-start</b></li>
+      <li><b>center</b></li>
+      <li><b>flex-end</b></li>
+      <li><b>space-between</b></li>
+      <li><b>space-around</b></li>
+      <li><b>space-evenly</b></li>
+    </ul>
+  </li>
+</ul>
+
+<h4>7. flex-flow</h4>
+<ul>
+  <li>Shorthand for <b>flex-direction</b> and <b>flex-wrap</b>.</li>
+  <li>Syntax: flex-flow: <i>flex-direction</i> <i>flex-wrap</i>;</li>
+  <li>Example:
+    <pre>
+.container {
+  flex-flow: row wrap;
+}
+    </pre>
+  </li>
+</ul>
+
+<h4>8. column-gap / row-gap / gap</h4>
+<ul>
+  <li><b>column-gap</b>: Space between columns.</li>
+  <li><b>row-gap</b>: Space between rows.</li>
+  <li><b>gap</b>: Shorthand for both row and column gaps.</li>
+  <li>Example:
+    <pre>
+.container {
+  gap: 20px 30px; /* row-gap column-gap */
+}
+    </pre>
+  </li>
+</ul>
+
+<hr>
+
+<h4>Flex Item Properties</h4>
+
+<h4>1. order</h4>
+<ul>
+  <li>Changes the order of items (ascending).</li>
+  <li>Default order for all items is 0.</li>
+  <li>Example:
+    <pre>
+.item1 { order: 4; }
+.item2 { order: 1; }
+.item3 { order: 2; }
+.item4 { order: 3; }
+    </pre>
+  </li>
+</ul>
+
+<h4>2. align-self</h4>
+<ul>
+  <li>Overrides <b>align-items</b> for individual flex items.</li>
+  <li>Used to align a single item on the cross axis.</li>
+  <li>Values: flex-start, center, flex-end</li>
+  <li>Example:
+    <pre>
+.item2 {
+  align-self: center;
+}
+    </pre>
+  </li>
+</ul>
+
+<h4>3. flex-basis</h4>
+<ul>
+  <li>Specifies the initial size (main axis) of a flex item.</li>
+  <li>Acts like <b>width</b> in row direction and <b>height</b> in column direction.</li>
+  <li>Example:
+    <pre>
+.item2 {
+  flex-basis: 100px;
+}
+    </pre>
+  </li>
+</ul>
+
+<hr>
+
+<h4>Extra Notes for Better Understanding</h4>
+<ul>
+  <li><b>Main Axis</b> is defined by <code>flex-direction</code>.</li>
+  <li><b>Cross Axis</b> is perpendicular to the main axis.</li>
+  <li>Use <code>flex-wrap: wrap</code> if you want items to move to the next line on smaller screens.</li>
+  <li>Use <code>gap</code> for consistent spacing instead of margin.</li>
+  <li><code>align-items</code> (container-wide) vs <code>align-self</code> (per item).</li>
+</ul>
+<br><br>
+<h1>CSS Positions</h1>
+<ul>
+  <li>The <b>position</b> property is used to control the placement of elements on a webpage.</li>
+  <li>It determines how an element is positioned in relation to its normal flow and other elements.</li>
+  <li>There are 5 types of positioning:</li>
+  <ul>
+    <li><b>Static</b></li>
+    <li><b>Relative</b></li>
+    <li><b>Absolute</b></li>
+    <li><b>Fixed</b></li>
+    <li><b>Sticky</b></li>
+  </ul>
+  <li>To control positioned elements, we use helper properties:</li>
+  <ul>
+    <li><b>top</b></li>
+    <li><b>bottom</b></li>
+    <li><b>left</b></li>
+    <li><b>right</b></li>
+  </ul>
+</ul>
+
+<h4>1. Static Positioning</h4>
+<ul>
+  <li>This is the default position of all elements.</li>
+  <li>The element follows the normal document flow.</li>
+  <li>Helper properties (top, bottom, left, right) do not affect static elements.</li>
+</ul>
+
+<h4>2. Relative Positioning</h4>
+<ul>
+  <li>Moves the element <b>relative to its original position</b>.</li>
+  <li>The space originally occupied by the element remains.</li>
+  <li>Other elements do not move into its place.</li>
+  <li>Example:</li>
+  <pre>
+position: relative;
+top: 20px;   /* Moves the element 20px down */
+left: 10px;  /* Moves the element 10px right */
+  </pre>
+</ul>
+
+<h4>3. Absolute Positioning</h4>
+<ul>
+  <li>Moves the element relative to the <b>nearest positioned ancestor</b>.</li>
+  <li>If no such ancestor exists, it is positioned relative to the <b>viewport</b>.</li>
+  <li>The element is removed from the normal document flow.</li>
+  <li>Other elements take its place.</li>
+  <li>Use <b>z-index</b> to control overlapping of absolute elements.</li>
+  <li>Example:</li>
+  <pre>
+.parent {
+  position: relative;
+}
+.child {
+  position: absolute;
+  top: 50px;
+  left: 30px;
+}
+  </pre>
+</ul>
+
+<h4>4. Fixed Positioning</h4>
+<ul>
+  <li>Positioned relative to the <b>viewport</b>.</li>
+  <li><b>Does not move</b> even when scrolling.</li>
+  <li>Helper properties define its position.</li>
+  <li>Example:</li>
+  <pre>
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+background: black;
+color: white;
+  </pre>
+</ul>
+
+<h4>5. Sticky Positioning</h4>
+<ul>
+  <li>Acts like <b>relative</b> until it reaches a scroll threshold, then becomes <b>fixed</b>.</li>
+  <li>Helper properties act like sticky conditions.</li>
+  <li>Example:</li>
+  <pre>
+position: sticky;
+top: 50px; /* Sticks 50px from the top when scrolling */
+  </pre>
+</ul>
+
+<h4>Important Notes</h4>
+<ul>
+  <li>If an element has <b>relative, absolute, fixed,</b> or <b>sticky</b> positioning:</li>
+  <ul>
+    <li>It is removed from normal document flow.</li>
+    <li>Floats on the z-axis (overlapping).</li>
+  </ul>
+  <li>Avoid using both <b>top and bottom</b> or <b>left and right</b> together — may cause issues.</li>
+</ul>
+<br><br>
+<h1>Grid</h1>
+<p>Grid lays out the webpage in a 2-dimensional format (rows and columns).</p>
+<p>To use Grid:</p>
+<ul>
+  <li>You need a grid container using <code>display: grid</code></li>
+  <li>All <strong>direct children</strong> of the grid container become grid-items</li>
+</ul>
+
+<h3>Grid Container Properties</h3>
+
+<h4>1. display: grid</h4>
+<ul>
+  <li>Makes the element a grid container</li>
+  <li>Allows use of all grid-related properties</li>
+</ul>
+
+<h4>2. grid-template-columns</h4>
+<ul>
+  <li>Defines number and width of columns</li>
+  <li>Example:
+    <pre><code>grid-template-columns: 200px 200px 200px 200px;</code></pre>
+    4 columns, each 200px wide
+  </li>
+  <li>Other formats:
+    <pre><code>
+grid-template-columns: 200px 100px 150px 80px;
+<h5> What it means:</h5><p>You are creating <strong>4 columns</strong> with fixed widths:</p>
+Column 1 → 200px wide
+Column 2 → 100px wide
+Column 3 → 150px wide
+Column 4 → 80px wide
+<h5> Use Case:</h5><p>Useful when you want to control the **exact size** of each column manually.</p>
+<p>---------------------------------------------------------------------------------</p>
+grid-template-columns: 1fr 2fr 1fr;
+<h5>What it means:</h5><p>This creates <strong>3 flexible columns</strong> using <code>fr</code> (fractional unit). These columns share the available space in a ratio.</p>
+Column 1 → 1 part
+Column 2 → 2 parts (twice as wide as column 1)
+Column 3 → 1 part
+<h5>Use Case:</h5><p>Use this when you want a **responsive layout** where columns adjust size based on available space.</p> 
+<h5>Example:</h5><p>If container width = 800px: → Total parts = 1 + 2 + 1 = 4 → Column widths = 200px, 400px, 200px</p>
+<p>---------------------------------------------------------------------------------</p>
+grid-template-columns: repeat(4, 180px);
+<h5>What it means:</h5><p>Instead of writing <code>180px 180px 180px 180px</code>, we use the <code>repeat()</code> function to make it short.</p>
+Column 1 → 180px
+Column 2 → 180px
+Column 3 → 180px
+Column 4 → 180px
+<h5>Use Case:</h5><p>Best when all columns have the **same width** and you want to keep your code cleaner.</p>
+<p>---------------------------------------------------------------------------------</p>
+grid-template-columns: repeat(3, auto);
+<h5>What it means:</h5> <p>This creates <strong>3 columns</strong> that automatically adjust based on their content width.</p>
+Column 1 → auto
+Column 2 → auto
+Column 3 → auto
+<h5>Use Case:</h5><p>Best when you want the grid to **shrink or grow to fit the content** inside each column.</p>
+<p>---------------------------------------------------------------------------------</p>
+    </code></pre>
+  </li>
+</ul>
+
+<h4>3. grid-template-rows</h4>
+<ul>
+  <li>Defines number and height of rows</li>
+  <li>Example:
+    <pre><code>grid-template-rows: 150px 50px 150px 30px 100px;</code></pre>
+  </li>
+  <li>Other formats:
+    <pre><code>
+grid-template-rows: repeat(3, 100px);
+<ul>
+  <li>Creates <strong>3 rows</strong>, each of fixed height <code>100px</code>.</li>
+  <li><strong>Row 1 →</strong> 100px</li>
+  <li><strong>Row 2 →</strong> 100px</li>
+  <li><strong>Row 3 →</strong> 100px</li>
+  <li>Use when you want all rows to be the same height.</li>
+</ul>
+<p>---------------------------------------------------------------------------------</p>
+grid-template-rows: 1fr 3fr 1fr;
+<ul>
+  <li>Creates <strong>3 flexible rows</strong> using <code>fr</code> units (fractional space).</li>
+  <li><strong>Row 1 →</strong> 1 part</li>
+  <li><strong>Row 2 →</strong> 3 parts (largest)</li>
+  <li><strong>Row 3 →</strong> 1 part</li>
+  <li>If total height = 500px, result would be 100px, 300px, 100px respectively.</li>
+</ul>
+<p>---------------------------------------------------------------------------------</p>
+grid-template-rows: 0.5fr 0.2fr 1fr 0.2fr;
+<ul>
+  <li>You are creating <strong>4 flexible rows</strong> with different proportions:</li>
+  <ul>
+    <li><strong>Row 1</strong> → 0.5 part</li>
+    <li><strong>Row 2</strong> → 0.2 part</li>
+    <li><strong>Row 3</strong> → 1 part <em>(largest row)</em></li>
+    <li><strong>Row 4</strong> → 0.2 part</li>
+  </ul>
+  <li><strong>Total parts</strong> = 0.5 + 0.2 + 1 + 0.2 = <strong>1.9 parts</strong></li>
+  <li><strong>If container height = 950px:</strong></li>
+  <ul>
+    <li>Row 1 → (0.5 / 1.9) × 950 ≈ <strong>250px</strong></li>
+    <li>Row 2 → (0.2 / 1.9) × 950 ≈ <strong>100px</strong></li>
+    <li>Row 3 → (1 / 1.9) × 950 ≈ <strong>500px</strong></li>
+    <li>Row 4 → (0.2 / 1.9) × 950 ≈ <strong>100px</strong></li>
+  </ul>
+</ul>
+<p><strong>Use Case:</strong><br>
+Use this when you want <strong>precise control</strong> over row height ratios in a responsive layout.</p>
+
+<p>---------------------------------------------------------------------------------</p>
+    </code></pre>
+  </li>
+</ul>
+
+<h4>4. column-gap, row-gap, gap</h4>
+<ul>
+  <li>Controls space between columns and rows</li>
+  <li><code>gap</code> is shorthand for both</li>
+  <li>Example:
+    <pre><code>
+section {
+  row-gap: 5px;
+  column-gap: 20px;
+  /* OR */
+  gap: 5px 20px;
+}
+    </code></pre>
+  </li>
+</ul>
+
+<hr>
+
+<h3>Grid Item Properties</h3>
+
+<h4>1. grid-row</h4>
+<ul>
+  <li>Shorthand for <code>grid-row-start</code> and <code>grid-row-end</code></li>
+  <li>Example:
+    <pre><code>grid-row: 1 / 5;</code></pre>
+    <ul>
+     <li>This sets the grid item to start on <strong>row line 1</strong> and end at <strong>row line 5</strong>.</li>
+     <li><strong>It will span 4 rows</strong> (row lines: 1→2→3→4→5).</li>
+     <li>Used when you want a tall item that covers multiple rows vertically.</li>
+     </ul>
+  </li>
+</ul>
+
+<h4>2. grid-column</h4>
+<ul>
+  <li>Shorthand for <code>grid-column-start</code> and <code>grid-column-end</code></li>
+  <li>Example:
+    <pre><code>grid-column: 1 / 4;</code></pre>
+    <ul>
+     <li>This sets the grid item to start on <strong>column line 1</strong> and end at <strong>column line 4</strong>.</li>
+     <li><strong>It will span 3 columns</strong> (column lines: 1→2→3→4).</li>
+     <li>Used when you want a wide item that stretches across multiple columns.</li>
+     </ul>
+  </li>
+</ul>
+
+<h4>3. grid-area</h4>
+<ul>
+  <li>Shorthand for all four:
+    <ul>
+      <li><code>grid-row-start</code></li>
+      <li><code>grid-column-start</code></li>
+      <li><code>grid-row-end</code></li>
+      <li><code>grid-column-end</code></li>
+    </ul>
+  </li>
+  <li>Example:
+    <pre><code>grid-area: 1 / 1 / 3 / 4;</code></pre>
+    <ul>
+  <li>This is a shorthand for all four lines: <code>grid-row-start / grid-column-start / grid-row-end / grid-column-end</code>.</li>
+  <li><strong>Starts at row line 1</strong> and ends at row line 3 → spans 2 rows.</li>
+  <li><strong>Starts at column line 1</strong> and ends at column line 4 → spans 3 columns.</li>
+  <li>Same as:
+    <pre><code>
+grid-row: 1 / 3;
+grid-column: 1 / 4;
+    </code></pre>
+  </li>
+</ul>
+  </li>
+</ul>
+
+<hr>
+
+<h3>Extra Example</h3>
+
+<pre><code>
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 100px 100px;
+  gap: 10px;
+}
+
+.item1 {
+  grid-column: 1 / 3;
+  grid-row: 1 / 2;
+}
+
+.item2 {
+  grid-area: 2 / 2 / 3 / 4;
+}
+</code></pre>
+
+<p><strong>Note:</strong> You can use <code>fr</code> units (fractional space) to create flexible layouts.</p>
+<br><br>
+<h4>Transform</h4>
+
+<h5>→ Definition:</h5>
+<p>Transform changes the state of an element like position, rotation, scale, and skew.</p>
+
+<h5>→ Syntax:</h5>
+<pre>transform: value;</pre>
+
+<h5>→ Functions:</h5>
+
+<h5>1. translate()</h5>
+<p>Moves an element along the x and y axes.</p>
+<pre>
+transform: translateX(200px);
+transform: translateY(400px);
+transform: translate(200px, 400px);
+</pre>
+
+<h5>2. scale()</h5>
+<p>Increases or decreases the size of an element. increase greater than 1, decrease lesser than 1 same size 1</p>
+<pre>
+transform: scaleX(2);     /* Doubles the width */
+transform: scaleY(0.5);   /* Halves the height */
+transform: scale(2, 0.5); /* Width x2, Height /2 */
+</pre>
+
+<h5>3. skew()</h5>
+<p>Tilts an element along the axes.</p>
+<pre>
+transform: skewX(40deg);
+transform: skewY(20deg);
+transform: skew(40deg, 20deg);
+</pre>
+
+<h5>4. rotate()</h5>
+<p>Rotates an element around its center.</p>
+<pre>
+transform: rotate(90deg);   /* Clockwise */
+transform: rotate(-90deg);  /* Counterclockwise */
+</pre>
+
+<h5>→ Multiple Transforms:</h5>
+<pre>
+/* Only the last one will apply if written separately */
+transform: translate(200px,200px);
+transform: scale(2);
+transform: rotate(360deg);
+
+/* Correct way */
+transform: translate(200px,200px) scale(2) rotate(360deg);
+</pre>
+
+<hr>
+
+<h4>Transition</h4>
+
+<h5>→ Definition:</h5>
+<p>Allows CSS property changes to occur smoothly over a duration.</p>
+
+<h5>→ Shorthand:</h5>
+<pre>transition: property duration timing-function delay;</pre>
+
+<h5>→ Properties:</h5>
+
+<h5>1. transition-property</h5>
+<pre>transition-property: background-color;</pre>
+
+<h5>2. transition-duration</h5>
+<pre>transition-duration: 2s;</pre>
+
+<h5>3. transition-delay</h5>
+<pre>transition-delay: 0.5s;</pre>
+
+<h5>4. transition-timing-function</h5>
+<pre>
+transition-timing-function: ease;
+transition-timing-function: ease-in;
+transition-timing-function: ease-out;
+transition-timing-function: ease-in-out;
+transition-timing-function: linear;
+</pre>
+
+<h5>→ Example:</h5>
+<pre>
+div:hover {
+  transition: all 0.5s ease-in-out;
+  background-color: red;
+}
+</pre>
+
+<hr>
+
+<h4>Box Shadow</h4>
+
+<h5>→ Definition:</h5>
+<p>Adds shadow to the box element.</p>
+
+<h5>→ Syntax:</h5>
+<pre>box-shadow: x-offset y-offset blur-radius spread-radius color inset;</pre>
+
+<h5>→ Examples:</h5>
+<pre>
+box-shadow: 2px 2px 2px 3px blue;
+box-shadow: 2px 2px 2px 3px blue inset;
+</pre>
+
+<hr>
+
+<h4>Z-index</h4>
+
+<h5>→ Definition:</h5>
+<p>Controls the stack order of elements when they overlap. Only works with positioned elements.</p>
+
+<h5>→ Syntax:</h5>
+<pre>
+z-index: 1;   /* Behind elements with higher z-index */
+z-index: 100; /* In front of elements with lower z-index */
+</pre>
+
+<h5>→ Note:</h5>
+<p>Applies only if the element has position set to relative, absolute, fixed, or sticky.</p>
+<br><br>
+<h4>CSS Responsiveness / Media Query</h4>
+
+<h5>→ Purpose:</h5>
+<p>To achieve responsiveness, we mainly use the <code>@media</code> rule.</p>
+
+<h5>→ What is @media?</h5>
+<p>The <code>@media</code> rule applies styles based on conditions like screen size, device type, or orientation.</p>
+
+<h5>→ Syntax:</h5>
+<pre>
+@media mediaType mediaOperator mediaFeatures {
+  /* CSS Code */
+}
+</pre>
+
+<h5>→ Key Components:</h5>
+
+<h5>1. Media Type</h5>
+<p>Specifies the type of device the CSS applies to.</p>
+<ul>
+  <li><code>all</code> → Default, applies to all media types. that is for both print and screen.</li>
+  <li><code>screen</code> → Applies only to screen displays. display on the screen</li>
+  <li><code>print</code> → Applies to print previews. display when print the page.</li>
+</ul>
+
+<h5>2. Media Operator</h5>
+<p>Combines or negates multiple media features.</p>
+<ul>
+  <li><code>and</code> → All conditions must be true</li>
+  <li><code>or</code> → At least one condition must be true</li>
+  <li><code>not</code> → Negates the condition</li>
+</ul>
+
+<h5>3. Media Features</h5>
+<p>Defines breakpoints based on screen properties.</p>
+<ul>
+  <li><code>min-width</code> → Minimum width of screen</li>
+  <li><code>max-width</code> → Maximum width of screen</li>
+  <li><code>min-height</code> → Minimum height of screen</li>
+  <li><code>max-height</code> → Maximum height of screen</li>
+  <li><code>width</code> / <code>height</code> → Compare using &lt;, &gt;, &lt;=, &gt;=</li>
+  <li><code>orientation</code> → Values: <code>portrait:  width&gt;height</code>  , <code>landscape:  width&lt;height</code></li>
+</ul>
+
+<h5>→ Example: Mobile View</h5>
+<pre>
+@media screen and (min-width: 0px) and (max-width: 400px) {
+  h1::after {
+    content: "Mobile View";
+  }
+  body {
+    background-color: teal;
+  }
+}
+</pre>
+
+<h5>→ Example: Tablet View</h5>
+<pre>
+@media screen and (min-width: 400px) and (max-width: 800px) {
+  h1::after {
+    content: "Tablet View";
+  }
+  body {
+    background-color: cadetblue;
+  }
+}
+</pre>
+<br><br>
+<h4>CSS Animation</h4>
+
+<h5>→ What is Animation?</h5>
+<p>Animation allows an element to smoothly change from one style to another over time.</p>
+<p>It is a shorthand property for:</p>
+<ul>
+  <li>animation-name</li>
+  <li>animation-duration</li>
+  <li>animation-delay</li>
+  <li>animation-timing-function</li>
+  <li>animation-direction</li>
+  <li>animation-iteration-count</li>
+</ul>
+
+<h5>→ @keyframes Rule</h5>
+<p>The <code>@keyframes</code> rule defines the sequence of styles in an animation.</p>
+
+<h5>→ Syntax:</h5>
+<pre>
+@keyframes animationName {
+  0% {
+    /* initial style */
+  }
+  50% {
+    /* mid-point style */
+  }
+  100% {
+    /* final style */
+  }
+}
+</pre>
+
+<h5>→ animation-name:</h5>
+<p>Specifies the name of the animation (should match the <code>@keyframes</code> identifier).</p>
+
+<h5>→ animation-duration:</h5>
+<p>Sets how long the animation will run.</p>
+<ul>
+  <li>Default: <code>0s</code> (animation won't run)</li>
+  <li>Required for animation to work</li>
+</ul>
+
+<h5>→ animation-delay:</h5>
+<p>Specifies the delay before the animation starts.</p>
+<ul>
+  <li>Default: <code>0s</code> (starts immediately)</li>
+</ul>
+
+<h5>→ animation-timing-function:</h5>
+<p>Defines the speed curve of the animation.</p>
+<ul>
+  <li><code>linear</code> → constant speed</li>
+  <li><code>ease</code> → slow start, fast middle, slow end</li>
+  <li><code>ease-in</code> → slow start</li>
+  <li><code>ease-out</code> → slow end</li>
+  <li><code>ease-in-out</code> → slow start and end</li>
+</ul>
+
+<h5>→ animation-direction:</h5>
+<p>Controls the direction of the animation cycle.</p>
+<ul>
+  <li><code>normal</code> → forward (default)</li>
+  <li><code>reverse</code> → backward</li>
+  <li><code>alternate</code> → forward then backward</li>
+  <li><code>alternate-reverse</code> → backward then forward</li>
+</ul>
+
+<h5>→ animation-iteration-count:</h5>
+<p>Specifies how many times the animation runs.</p>
+<ul>
+  <li>Any number (e.g., <code>3</code>)</li>
+  <li><code>infinite</code> → animation runs forever</li>
+</ul>
+<br><br>
+<h4>CSS object-fit</h4>
+
+<h5>→ Purpose:</h5>
+<p>The <code>object-fit</code> property is used to specify how an <code>&lt;img&gt;</code> or <code>&lt;video&gt;</code> should be resized to fit its container.</p>
+
+<h5>→ Syntax:</h5>
+<pre>object-fit: value;</pre>
+
+<h5>→ Values:</h5>
+<ul>
+  <li><strong>fill</strong> → Default. The image is resized to fill the given dimension (stretched or squished if necessary).</li>
+  <li><strong>contain</strong> → Keeps the aspect ratio, resized to fit within the container.</li>
+  <li><strong>cover</strong> → Keeps the aspect ratio, fills the container, and may be clipped.</li>
+  <li><strong>none</strong> → Image is not resized at all.</li>
+</ul>
+
+<hr>
+
+<h4>CSS opacity</h4>
+
+<h5>→ Purpose:</h5>
+<p>Sets the transparency level of an element. A value from <code>0.0</code> (completely transparent) to <code>1.0</code> (fully opaque).</p>
+
+<h5>→ Syntax:</h5>
+<pre>opacity: 0 to 1;</pre>
+
+<h5>→ Note:</h5>
+<p>Commonly used with the <code>:hover</code> selector to create mouse-over effects.</p>
+
+<hr>
+
+<h4>CSS float</h4>
+
+<h5>→ Purpose:</h5>
+<p>The <code>float</code> property is used to position an element to the left or right, allowing text/content to wrap around it.</p>
+
+<h5>→ Syntax:</h5>
+<pre>float: left | right | none;</pre>
+
+<h5>→ Values:</h5>
+<ul>
+  <li><strong>left</strong> → Floats the element to the left.</li>
+  <li><strong>right</strong> → Floats the element to the right.</li>
+  <li><strong>none</strong> → Default. No floating.</li>
+</ul>
+
+<h5>→ Notes:</h5>
+<ul>
+  <li>Floated elements are taken out of normal flow.</li>
+  <li>Text and inline elements wrap around floated elements.</li>
+</ul>
+
+<hr>
+
+<h4>CSS clear</h4>
+
+<h5>→ Purpose:</h5>
+<p>Used to prevent elements from flowing next to floated elements. Forces them to move below.</p>
+
+<h5>→ Syntax:</h5>
+<pre>clear: left | right | both | none;</pre>
+
+<h5>→ Values:</h5>
+<ul>
+  <li><strong>none</strong> → Default. No clearing.</li>
+  <li><strong>left</strong> → Clears content floated to the left.</li>
+  <li><strong>right</strong> → Clears content floated to the right.</li>
+  <li><strong>both</strong> → Clears both left and right floats.</li>
+</ul>
+
+</body>
+</html>

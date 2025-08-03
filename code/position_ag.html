@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CSS Position Types</title>
+  <style>
+    body {
+      height: 2000px; /* For scroll testing */
+      margin: 0;
+      padding: 0;
+    }
+
+    section {
+      
+      width: 800px;
+      height: 800px;
+      border: 3px solid rgb(66, 51, 153);
+      margin: 50px auto;
+      background-color: #f5f5f5;
+    }
+    .flexs{
+          display: flex;
+    }
+
+    .box {
+      width: 120px;
+      height: 120px;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial;
+    }
+
+    .static-box {
+      position: static;
+      background-color: #ff7f50;
+      margin-bottom: 10px;
+      
+    }
+
+    .relative-box {
+      position: relative;
+      top: 680px;
+      left: 560px;
+      
+      background-color: #1e90ff;
+    }
+
+    .absolute-box {
+      position: absolute;
+      top: 733px;
+      right: 955px;
+      background-color: #32cd32;
+    }
+
+    .fixed-box {
+      position: fixed;
+      left: 957px;
+      background-color: #800080;
+      z-index: 10;
+    }
+
+    .sticky-box {
+      position: sticky;
+      align-items: center;
+      justify-content: center;
+      top: 50%;
+      left: 45%;
+      background-color: #ffa500;
+    }
+
+    .grids{
+     display: grid;
+     grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+     grid-template-rows: repeat(2, 50%); /* 2 rows, 50% height each */
+    }
+
+    .boxs {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid black;
+    }
+     .translate, .rotate, .scale, .skew, .multiple {
+      transition: background-color 0.5s ease, transform 0.5s ease;
+    }
+    .translate:hover {
+      transform: translate(30px, 20px);
+      background-color: crimson;
+    }
+
+    .rotate:hover {
+      transform: rotate(45deg);
+      background-color: crimson;
+    }
+
+    .scale:hover {
+      transform: scale(1.7, 2);
+      background-color: crimson;
+    }
+
+    .skew:hover {
+      transform: skew(20deg, 10deg);
+      background-color: crimson;
+    }
+
+    .multiple:hover {
+      transform: rotate(20deg) scale(1.2) translateX(20px);
+      background-color: crimson;
+    }
+
+    .boxss {
+      width: 100px;
+      height: 100px;
+      background-color: royalblue;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .transform {
+      display: flex;
+      gap: 50px;
+      
+    }
+    .boxssss {
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+      position: relative;
+      animation: slideColor 2s 5s ease-in-out infinite alternate;
+    }
+
+    @keyframes slideColor {
+      0% {
+        left: 0;
+        background-color: orange;
+      }
+      50% {
+        left: 100px;
+        background-color: lightblue;
+      }
+      100% {
+        left: 200px;
+        background-color: green;
+      }
+    }
+    .container {
+      border: 2px solid black;
+      padding: 10px;
+    }
+
+    .left-box {
+      float: left;
+      width: 150px;
+      height: 150px;
+      background-color: lightblue;
+      margin-right: 10px;
+    }
+
+    .right-box {
+      float: right;
+      width: 150px;
+      height: 150px;
+      background-color: lightcoral;
+      margin-left: 10px;
+    }
+
+    .content {
+      background-color: rgb(156, 156, 35);
+    }
+
+    .clear-fix {
+      clear: both;
+    }
+  </style>
+</head>
+<body>
+
+  
+<h1>Flex</h1>
+  <section class="flexs">
+     
+    <div class="static-box box">Static</div>
+    <div class="relative-box box">Relative</div>
+    <div class="absolute-box box">Absolute</div>
+     <div class="fixed-box box">Fixed</div>
+     <div class="sticky-box box">Sticky</div>
+  </section>
+<h1>Grid</h1>
+  <section class="grids">
+     <div class="boxs">Box 1</div>
+    <div class="boxs">Box 2</div>
+    <div class="boxs">Box 3</div>
+    <div class="boxs">Box 4</div>
+    <div class="boxs">Box 5</div>
+    <div class="boxs">Box 6</div>
+  </section>
+<h1>Transform and Transition</h1>
+  <section class="transform">
+    <div class="boxss translate">Translate</div>
+    <div class="boxss rotate">Rotate</div>
+    <div class="boxss scale">Scale</div>
+    <div class="boxss skew">Skew</div>
+    <div class="boxss multiple">Multiple</div>
+  </section>
+<h1>Keyframes</h1>
+  <div class="boxssss"></div>
+  
+<h1>float and clear</h1>
+  <div class="container">
+    <div class="left-box">Float Left</div>
+    <div class="right-box">Float Right</div>
+    <div class="content">
+      <p>This paragraph wraps around the floated boxes. It fills the space between them.</p>
+    </div>
+     <p>This paragraph wraps around the floated boxes. It fills the space between them.</p>
+    <div class="clear-fix"></div>
+
+    <p>This paragraph comes <b>after the floats</b>, because of <code>clear: both</code>.</p>
+  </div>
+</body>
+</html>

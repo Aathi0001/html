@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <style>
+          *{
+               margin: 0;
+               padding: 0;
+               box-sizing: border-box;
+          }
+          body{
+               width: 100vw;
+               height:800px
+
+          }
+          .burger{
+               position: absolute;
+               bottom: 30px;
+               width: 440px;
+               height: 410px;
+               left: 105px;
+               z-index: 10;
+
+          }
+          .coke{
+               position: absolute;
+               right: 30px;
+               bottom: 45px;
+               height: 520px;
+               width: 200px;
+          }
+          .fries{
+               position: absolute;
+               width: 400px;
+               height: 300px;
+               bottom: 140px;
+               right: 320px;
+               transform: rotate(5deg);
+               overflow: hidden;
+
+          }
+          .poster{
+               display: inline-block; /* or use width: fit-content; */
+               position: relative; 
+               overflow: hidden;
+
+          }
+          .outer-circle {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background-color: rgb(175, 57, 22);
+  position: absolute;
+  left: 10px;
+  bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 199;
+}
+.small {
+  font-size: 18px;
+}
+
+.inner-dotted-circle {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  border: 3px dashed rgb(255, 255, 255);
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  color: beige;
+  row-gap: 0px;
+  
+}
+
+     </style>
+</head>
+<body>
+     <div style="height: 100vh; display: flex; justify-content: center; align-items: center;">
+          <div class="poster" style="width: 650px; height: 600px;  border: 1px solid; border-color: rgb(255, 153, 0); background-image: radial-gradient(ellipse, white, rgb(244, 165, 96), sandybrown, sandybrown,sandybrown); ">
+          <img src="Burger-removebg-preview.png" alt="burger" class="burger">
+          <img src="coke-removebg-preview.png" alt="coke" class="coke">
+          <img src="fries-removebg-preview.png" alt="fries" class="fries">
+          <div class="outer-circle">
+               <div class="inner-dotted-circle"><p>$5<span class="small">.49</span></p>o n l y</div>
+          </div>
+
+          </div>
+     </div>
+     <h1 style="color: darkolivegreen; text-align: center; ">Poster</h1>
+</body>
+</html>
