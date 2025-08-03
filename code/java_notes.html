@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Java Notes – Core Concepts</title>
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      color: #333;
+    }
+
+    h1, h2, h3 {
+      margin-top: 30px;
+      border-left: 5px solid #ff6347;
+      padding-left: 12px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #e91e63;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #3f51b5;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: #009688;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px 15px;
+      border-left: 5px solid #607d8b;
+      white-space: pre-wrap;
+      font-family: 'Consolas', monospace;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .highlight {
+      background-color: #fff3cd;
+      padding: 10px;
+      border-left: 4px solid #ffc107;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Java Core Concepts</h1>
+
+  <div class="section">
+    <h2>Operators</h2>
+    <pre>
+It is a predefined symbol used to perform operations.
+Operators work with operands and are categorized based on the number of operands:
+  - Unary
+  - Binary
+  - Ternary
+    </pre>
+
+    <h3>Arithmetic Operators:</h3>
+    <ul>
+      <li>+ (Addition)</li>
+      <li>- (Subtraction)</li>
+      <li>* (Multiplication)</li>
+      <li>/ (Division)</li>
+      <li>% (Modulo)</li>
+    </ul>
+
+    <h3>Unary Operators:</h3>
+    <ul>
+      <li>+ (Unary plus)</li>
+      <li>- (Unary minus)</li>
+      <li>++ (Increment)</li>
+      <li>-- (Decrement)</li>
+      <li>! (Logical NOT)</li>
+    </ul>
+
+    <h3>Assignment Operators:</h3>
+    <ul>
+      <li>= (Simple assignment)</li>
+      <li>+=, -=, *=, /=, %= (Compound assignment)</li>
+    </ul>
+
+    <h3>Relational Operators:</h3>
+    <ul>
+      <li>== (Equal to)</li>
+      <li>!= (Not equal to)</li>
+      <li>&gt; (Greater than)</li>
+      <li>&lt; (Less than)</li>
+      <li>&gt;= (Greater than or equal to)</li>
+      <li>&lt;= (Less than or equal to)</li>
+    </ul>
+
+    <h3>Logical Operators:</h3>
+    <ul>
+      <li>&& (Logical AND)</li>
+      <li>|| (Logical OR)</li>
+      <li>! (Logical NOT)</li>
+    </ul>
+
+    <h3>Bitwise Operators:</h3>
+    <ul>
+      <li>& (Bitwise AND)</li>
+      <li>| (Bitwise OR)</li>
+      <li>^ (Bitwise XOR)</li>
+      <li>~ (Bitwise Complement)</li>
+    </ul>
+
+    <h3>Shift Operators:</h3>
+    <ul>
+      <li>&lt;&lt; (Left shift)</li>
+      <li>&gt;&gt; (Signed right shift)</li>
+      <li>&gt;&gt;&gt; (Unsigned right shift)</li>
+    </ul>
+
+    <h3>Ternary Operator:</h3>
+    <pre>condition ? expression1 : expression2</pre>
+
+    <h3>instanceof Operator:</h3>
+    <pre>Used to check if an object is an instance of a class or interface.</pre>
+  </div>
+
+  <div class="section">
+    <h2>Typecasting</h2>
+    <pre>The process of converting one data type into another.</pre>
+
+    <h3>Primitive Typecasting:</h3>
+    <ul>
+      <li><strong>Widening:</strong> Lower to higher range (e.g., int to float)</li>
+      <li><strong>Narrowing:</strong> Higher to lower range (e.g., float to int)</li>
+    </ul>
+
+    <h3>Non-Primitive Typecasting:</h3>
+    <ul>
+      <li>Requires is-a relationship (inheritance)</li>
+    </ul>
+
+    <h3>Upcasting:</h3>
+    <pre>
+Child to parent.
+Implicit and compile-time success.
+Example:
+  D ref1 = new E();
+  C ref2 = new D();
+    </pre>
+
+    <h3>Downcasting:</h3>
+    <pre>
+Parent to child.
+Used to access child-specific members.
+Example:
+  C ref1 = new F();
+  F ref2 = (F) ref1;
+    </pre>
+
+    <h3>instanceof Operator:</h3>
+    <pre>
+Binary operator returning boolean.
+Syntax: ref instanceof Type
+    </pre>
+  </div>
+
+  <div class="section">
+    <h2>Methods</h2>
+    <pre>
+A block of code that performs a task.
+
+Syntax:
+  [Access Modifier] [Modifier] ReturnType MethodName([arguments]) {
+    // task
+  }
+
+- Method Signature: Name + formal arguments
+- Cannot define a method inside another method
+    </pre>
+
+    <h3>Types of Methods:</h3>
+    <ul>
+      <li>No Argument Method</li>
+      <li>Parameterized Method</li>
+    </ul>
+
+    <h3>Access Modifiers:</h3>
+    <ul>
+      <li>public, protected, private, default</li>
+    </ul>
+
+    <h3>Modifiers:</h3>
+    <ul>
+      <li>static, final, abstract, transient, native, synchronized</li>
+    </ul>
+
+    <h3>Return Types:</h3>
+    <ul>
+      <li>void, primitive, or non-primitive</li>
+    </ul>
+
+    <h3>Return Keyword:</h3>
+    <pre>Used to exit a method and return a value</pre>
+
+    <div class="highlight">
+      <strong>Note:</strong> Static methods can be called without objects. Non-static methods require objects.
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Java Introduction</h2>
+    <pre>
+Java is a high-level, object-oriented, class-based, and platform-independent language.
+Key Features:
+  - Simple
+  - Object-Oriented
+  - Secure
+  - Platform Independent
+  - Robust
+  - Multithreaded
+  - Portable
+  - Distributed
+    </pre>
+  </div>
+
+  <div class="section">
+    <h2>Loops</h2>
+    <pre>
+Loops execute a block of code repeatedly while a condition is true.
+    </pre>
+
+    <h3>for loop:</h3>
+    <pre>
+Used when the number of iterations is known.
+
+Syntax:
+  for(initialization; condition; update){
+    // code
+  }
+    </pre>
+
+    <h3>while loop:</h3>
+    <pre>
+Used when the number of iterations is unknown.
+
+Syntax:
+  while(condition){
+    // code
+  }
+    </pre>
+
+    <h3>do-while loop:</h3>
+    <pre>
+Runs at least once, even if the condition is false.
+
+Syntax:
+  do {
+    // code
+  } while(condition);
+    </pre>
+  </div>
+ <div class="section">
+    <h2>Array</h2>
+    <pre>
+It is the collection of elements of the same type stored in a fixed size container.
+Array is a continuous memory location which is logically divided into multiple parts to store multiple data.
+Size of the array will be fixed and we cannot modify the size during the execution of the program.
+We can declare the size of an array during the declaration of an array.
+    
+Syntax:
+    datatype[] variable_name = new datatype[size];
+
+Array Initialization:
+    Array_reference_var[index] = value;
+Example:
+    arr[3] = 8;
+
+Index:
+    It is an integer value which starts from 0 and goes till (size - 1).
+
+Creating an array and initialization in one line:
+    datatype[] variable_name = {value1, value2, value3, .....};
+
+Declaration and creating an array:
+    int[] numbers = new int[5];              // Declaration with size
+    int[] marks = {90, 80, 85, 70, 95};      // Declaration with values
+
+2D Array:
+    int[][] num = new int[2][3];
+    2 -> rows
+    3 -> columns
+
+    num[0][0] - 1
+    num[0][1] - 2
+    num[0][2] - 3
+    num[1][0] - 4
+    num[1][1] - 5
+    num[1][2] - 6    
+
+    for(int i=0; i&lt;num.length; i++){
+        for(int j=0; j&lt;num[i].length; j++){
+            System.out.print(num[i][j] + " ");
+        }
+        System.out.println();
+    }
+    </pre>
+  </div>
+
+  <div class="section">
+    <h2>Scanner Methods by Datatype</h2>
+    <pre>
+Datatype        Methods
+
+int             nextInt()
+long            nextLong()
+float           nextFloat()
+double          nextDouble()
+byte            nextByte()
+short           nextShort()
+boolean         nextBoolean()
+char            next().charAt(0)
+String(word)    next()         -> Reads up single word. Eg: Aathi
+String(line)    nextLine()     -> Reads entire line. Eg: My name is Aathi.
+    </pre>
+  </div>
+
+  <div class="section">
+    <h2>Recursion</h2>
+    <pre>
+A method calling itself.
+During recursion there is a possibility of runtime error called as stack overflow error.
+    </pre>
+  </div>
+
+  <div class="section">
+    <h2>Control Flow</h2>
+    <pre>
+if, else if, else:
+    This statement helps you make decisions in your program.
+
+Syntax:
+    if(condition 1){
+        // run if condition is true
+    }
+    else if(condition 2){
+        // run if the previous was false 
+    }
+    .
+    .
+    .
+    else{
+        // run if none of above are true
+    }
+
+switch statement:
+    Used when you want to compare one variable against multiple values.
+
+Syntax:
+    switch(variable){
+    case value1:{
+        // code;
+        break;
+    }
+    case value2:{
+        // code;
+        break;
+    }
+    .
+    .
+    .
+    default:
+        // code if no case match
+    }
+
+Break Statement:
+    It is used to immediately exit a loop or switch.
+
+Syntax:
+    break;
+
+Example:
+    for(int i=0; i&lt;5; i++){
+        if(i == 3){
+            break;
+        }
+        System.out.println(i);
+    }
+
+Output:
+    1
+    2
+    3
+
+Continue Statement:
+    Used to skip the current iteration and move to the next one.
+
+Syntax:
+    continue;
+
+Example:
+    for(int i=0; i&lt;5; i++){
+        if(i == 3){
+            continue;
+        }
+        System.out.println(i);
+    }
+
+Output:
+    1
+    2
+    4
+    5
+    </pre>
+  </div>
+
+  <div class="section">
+    <h2>Functions / Methods in Java</h2>
+    <pre>
+A method in Java is a block of code that performs a specific task.
+You can call it whenever needed — helps avoid repeating code.
+
+Syntax:
+    returnType MethodName(Parameter1, Parameter2, ...) {
+        return value;
+    }
+
+Types:
+
+1) void Method Without Parameter:
+    public static void greet(){
+        System.out.println("Welcome");
+    }
+
+2) void Method With Parameter:
+    public static void sum(int a, int b){
+        System.out.println(a + b);
+    }
+
+3) return Method Without Parameters:
+    public static int FixedNumber(){
+        return 100;
+    }
+
+4) return Method With Parameters:
+    public static int Multiply(int a, int b){
+        return (a * b);
+    }
+    </pre>
+  </div>
+  <section>
+    <h1>Object Oriented Programming In Java</h1>
+
+    <h2>Class and Objects</h2>
+    <p>A class is a blueprint or template for creating object. It defines properties (variables) & behaviors (methods). An object is a real world instance of a class.</p>
+
+    <h2>Constructors</h2>
+    <p>It is a special block which is having name similar to class name with no return type. It is used to load all the non-static member into object and also helps to initialize the states of the object.</p>
+    <p>If a programmer forgot to add constructor in the class, the compiler will add a default no-argument constructor at compile time.</p>
+
+<pre><code>class Car {
+    Car() {
+        // load initializer
+    }
+}
+</code></pre>
+
+    <h3>Types</h3>
+    <ul>
+      <li>Default Constructor - No Parameter</li>
+      <li>Parameterized Constructor - Takes arguments</li>
+      <li>Constructor Overloading - Multiple constructors in the same class with different parameters</li>
+    </ul>
+
+<pre><code>class Student {
+    String name;
+    int age;
+
+    Student() {
+        name = "Aathi";
+        age = 21;
+    }
+
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    void display() {
+        System.out.println(name + "-" + age);
+    }
+}
+
+class Constructor {
+    public static void main(String[] args) {
+        Student s1 = new Student();
+        s1.display();
+        Student s2 = new Student("aathi siva ganesh", 21);
+        s2.display();
+    }
+}
+</code></pre>
+
+    <h3>this</h3>
+    <p><code>this()</code> keyword refers to the current object instance. It is used to call another constructor from within the same class.</p>
+    <p>Cannot be used in static blocks. Useful when local and object variable names are same.</p>
+
+    <hr>
+
+    <h2>Inheritance</h2>
+    <p>When a class (child/subclass) inherits properties and behaviours from another class (parent/superclass).</p>
+
+<pre><code>class Person {
+    String name;
+    int age;
+    void displayPersonInfo() {
+        System.out.println("Name:" + name);
+        System.out.println("Age:" + age);
+    }
+}
+
+class Student extends Person {
+    int rollno;
+    void displayStudentInfo() {
+        System.out.println("Rollno:" + rollno);
+    }
+}
+
+class Inherit {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.name = "Aathi";
+        s.age = 21;
+        s.rollno = 1101;
+
+        s.displayPersonInfo();
+        s.displayStudentInfo();
+    }
+}
+</code></pre>
+
+    <h3>Inheritance and Constructor</h3>
+<pre><code>class Person {
+    String name;
+    int age;
+
+    Person(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    void displayPersonInfo() {
+        System.out.println("Name:" + name);
+        System.out.println("Age:" + age);
+    }
+}
+
+class Student extends Person {
+    int rollno;
+
+    Student(String name, int age, int rollno) {
+        super(name, age);
+        this.rollno = rollno;
+    }
+
+    void displayStudentInfo() {
+        System.out.println("RollNo:" + rollno);
+    }
+}
+
+class Super {
+    public static void main(String[] args) {
+        Student s = new Student("Aathi", 21, 1101);
+        s.displayPersonInfo();
+        s.displayStudentInfo();
+    }
+}
+</code></pre>
+
+    <hr>
+
+    <h2>Polymorphism</h2>
+    <p>Poly = many, morph = form. One thing behaves in many ways.</p>
+
+    <h3>Types</h3>
+    <ul>
+      <li><strong>Compile-time (Static)</strong> - Method overloading, constructor overloading, variable/method shadowing</li>
+      <li><strong>Runtime (Dynamic)</strong> - Method overriding between parent and child</li>
+    </ul>
+
+<pre><code>class Calc {
+    void add(int a, int b) {
+        System.out.println("Sum(int): " + (a + b));
+    }
+
+    void add(double a, double b) {
+        System.out.println("Sum(double): " + (a + b));
+    }
+
+    void add(int a, int b, int c) {
+        System.out.println("Sum(3int): " + (a + b + c));
+    }
+}
+
+class PolymorphismMethodOverloading {
+    public static void main(String[] args) {
+        Calc c = new Calc();
+        c.add(10, 20);
+        c.add(20.3, 2.3);
+        c.add(10, 20, 30);
+    }
+}
+</code></pre>
+
+<pre><code>class Animal {
+    void makeSound() {
+        System.out.println("Animal Sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    void makeSound() {
+        System.out.println("Dog Barks");
+    }
+}
+
+class Cat extends Animal {
+    @Override
+    void makeSound() {
+        System.out.println("Cat Meow");
+    }
+}
+
+class PolymorphismMethodOverriding {
+    public static void main(String[] args) {
+        Animal a;
+        a = new Dog();
+        a.makeSound();
+        a = new Cat();
+        a.makeSound();
+    }
+}
+</code></pre>
+
+    <h3>super in Overriding</h3>
+<pre><code>class Animal {
+    void makeSound() {
+        System.out.println("Animal Sound");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    void makeSound() {
+        super.makeSound();
+        System.out.println("Dog Barks");
+    }
+}
+
+class OverridingSuper {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.makeSound();
+    }
+}
+</code></pre>
+
+    <hr>
+
+    <h2>Abstraction</h2>
+    <p>Hiding internal implementation details and showing only essential features to the user.</p>
+
+    <h3>Abstract Class vs Interface</h3>
+
+<pre><code>abstract class Animal {
+    abstract void makeSound();
+
+    void sleep() {
+        System.out.println("Sleeping");
+    }
+}
+
+class Dog extends Animal {
+    @Override
+    void makeSound() {
+        System.out.println("Dog Barks");
+    }
+}
+
+class Abstract {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.makeSound();
+        d.sleep();
+    }
+}
+</code></pre>
+
+<pre><code>interface Animal {
+    void makeSound();
+}
+
+class Dog implements Animal {
+    public void makeSound() {
+        System.out.println("Dog Barks");
+    }
+}
+
+class Interface {
+    public static void main(String[] args) {
+        Dog d = new Dog();
+        d.makeSound();
+    }
+}
+</code></pre>
+
+    <h3>Lambda Expressions</h3>
+    <p>Lambda expression = method without a name. Used with functional interfaces.</p>
+
+<pre><code>(int arg1, String arg2) -> {
+    System.out.println("Two arguments: " + arg1 + " and " + arg2);
+};
+</code></pre>
+
+    <h3>Method References</h3>
+    <ul>
+      <li>Static: <code>ClassName::staticMethod</code></li>
+      <li>Instance: <code>object::instanceMethod</code></li>
+      <li>Class (instance): <code>ClassName::instanceMethod</code></li>
+      <li>Constructor: <code>ClassName::new</code></li>
+    </ul>
+
+    <hr>
+
+    <h2>Encapsulation</h2>
+    <p>Wrapping data (variables) and methods into a single unit (class) and restricting direct access.</p>
+
+<pre><code>class Student {
+    private String name;
+    private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String newName) {
+        name = newName;
+    }
+
+    public void setAge(int newAge) {
+        if (newAge > 0) {
+            age = newAge;
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student();
+        s.setName("Aathi");
+        s.setAge(21);
+        System.out.println(s.getName());
+        System.out.println(s.getAge());
+    }
+}
+</code></pre>
+
+  </section>
+
+  <div class="note-section">
+    <h2>Access Modifiers and Packages in Java</h2>
+    <p>Access Modifiers control the visibility of classes, variables, methods, and constructors.</p>
+    <p><strong>Order of access:</strong> <code>public &gt; protected &gt; default &gt; private</code></p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Modifier</th>
+          <th>Same Class</th>
+          <th>Same Package</th>
+          <th>Sub Class</th>
+          <th>Other Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>public</td><td>yes</td><td>yes</td><td>yes</td><td>yes</td></tr>
+        <tr><td>protected</td><td>yes</td><td>yes</td><td>yes</td><td>no</td></tr>
+        <tr><td>default</td><td>yes</td><td>yes</td><td>no</td><td>no</td></tr>
+        <tr><td>private</td><td>yes</td><td>no</td><td>no</td><td>no</td></tr>
+      </tbody>
+    </table>
+
+    <ul>
+      <li><strong>public</strong> – visibility everywhere</li>
+      <li><strong>protected</strong> – within the package and subclass of other package</li>
+      <li><strong>default</strong> – within the package</li>
+      <li><strong>private</strong> – only within the class</li>
+    </ul>
+
+    <pre><code>public class example {
+    public int a = 1;        // visible everywhere
+    protected int b = 2;     // visible in same package + subclass
+    int c = 3;               // default visible in same package
+    private int d = 4;       // only within class
+
+    public static void main(String[] args) {
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(c);
+        System.out.println(d);
+    }
+}
+</code></pre>
+
+    <p><strong>Output:</strong></p>
+    <pre><code>1
+2
+3
+4</code></pre>
+
+    <h3>Packages</h3>
+    <p>A package is a namespace that organizes a set of related classes and interfaces.</p>
+    
+    <h4>Creating a package:</h4>
+    <pre><code>package mypackage;
+
+public class myclass {
+    public void display() {
+        System.out.println("inside my class in my packages");
+    }
+}
+</code></pre>
+
+    <p><strong>Types of packages:</strong></p>
+    <ul>
+      <li>Built-in packages – java.util, java.io, java.lang</li>
+      <li>User-defined packages – like <code>mypackage</code></li>
+    </ul>
+
+    <h3>Static</h3>
+    <ul>
+      <li><strong>static</strong> – belongs to the class, not the instance</li>
+      <li><strong>static variable</strong> – shared across all objects</li>
+      <li><strong>static method</strong> – can be called without object</li>
+      <li><strong>static block</strong> – runs once when class is loaded</li>
+    </ul>
+
+    <h4>Static Variable Example:</h4>
+    <pre><code>class Student {
+    int id;
+    String name;
+    static String college = "AMS";
+
+    Student(int i, String n) {
+        id = i;
+        name = n;
+    }
+
+    void display() {
+        System.out.println(id + " " + name + " " + college);
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Student s1 = new Student(1, "Aathi");
+        Student s2 = new Student(2, "Rakshan");
+        s1.display();
+        s2.display();
+    }
+}
+</code></pre>
+
+    <p><strong>Output:</strong></p>
+    <pre><code>1 Aathi AMS
+2 Rakshan AMS</code></pre>
+
+    <h4>Static Method Example:</h4>
+    <pre><code>class Demo {
+    static void greet() {
+        System.out.println("Hello from static method");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Demo.greet(); // called without object creation
+    }
+}
+</code></pre>
+
+    <h3>Final Keyword</h3>
+    <p>Used to create constants, prevent method overriding or stop inheritance.</p>
+    <ul>
+      <li><strong>final variable</strong> – cannot change its value</li>
+      <li><strong>final method</strong> – cannot be overridden in subclass</li>
+      <li><strong>final class</strong> – cannot be extended (inherited)</li>
+    </ul>
+
+    <hr>
+
+    <h3>Multidimensional Arrays</h3>
+    <p>One array inside another array.</p>
+    <p><strong>Ways to create:</strong> dynamic and static</p>
+
+    <h4>Syntax:</h4>
+    <ul>
+      <li>Declaration of multidimensional array reference variable: <code>datatype[][] variable;</code></li>
+      <li>Declaration + Initialization: <code>datatype[][] variable = new datatype[rows][columns];</code></li>
+      <li>Initialization later: <code>variable = new datatype[rows][columns];</code></li>
+    </ul>
+
+    <h4>Jagged Array:</h4>
+    <p>Unequal row and column size</p>
+    <pre><code>double[][] a = new double[4][];</code></pre>
+
+    <hr>
+  </div>
+
+  <div class="section">
+    <h2>String</h2>
+    <p>String is a non-primitive datatype. Anything present inside double quotes (" ") is a String. The <code>String</code> class contains many methods to perform operations on strings.</p>
+    
+    <h3>String Comparison (Literal vs New)</h3>
+    <pre><code>String s1 = "AATHI";
+String s2 = "AATHI";
+String s3 = new String("AATHI");
+String s4 = new String("AATHI");
+
+System.out.println(s1 == s2);      // ✅ true (same literal in String Pool)
+System.out.println(s1 == s3);      // ❌ false (new object in heap)
+System.out.println(s1.equals(s3)); // ✅ true (same content)
+System.out.println(s3 == s4);      // ❌ false (different memory)
+System.out.println(s3.equals(s4)); // ✅ true (same content)
+    </code></pre>
+
+    <h3>StringBuilder Comparison</h3>
+    <pre><code>StringBuilder sb1 = new StringBuilder("AATHI");
+StringBuilder sb2 = new StringBuilder("AATHI");
+
+System.out.println(sb1 == sb2);        // ❌ false (different objects)
+// ❌ sb1.equals(sb2) returns false as StringBuilder doesn't override equals
+    </code></pre>
+
+    <h3>StringBuffer Comparison</h3>
+    <pre><code>StringBuffer sbf1 = new StringBuffer("AATHI");
+StringBuffer sbf2 = new StringBuffer("AATHI");
+
+System.out.println(sbf1 == sbf2);        // ❌ false (different objects)
+// ❌ sbf1.equals(sbf2) returns false as StringBuffer doesn't override equals
+    </code></pre>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h2>Java Members Reference – Variables, Methods, Blocks</h2>
+    <h3>🔸 VARIABLES</h3>
+    <ul>
+      <li>Instance Variable → Belongs to object (non-static)</li>
+      <li>Static Variable → Belongs to class (shared)</li>
+      <li>Local Variable → Declared in methods/blocks</li>
+      <li>Final Variable → Cannot be reassigned after set</li>
+    </ul>
+
+    <h3>🔸 METHODS</h3>
+    <ul>
+      <li>Instance Method → Needs object to call</li>
+      <li>Static Method → Call using class name</li>
+      <li>Constructor → Same name as class, runs on object creation</li>
+      <li>Main Method → Entry point: <code>public static void main(String[] args)</code></li>
+    </ul>
+
+    <h3>🔸 INITIALIZERS</h3>
+    <ul>
+      <li>Static Block → Runs once when class loads</li>
+      <li>Instance Block → Runs before constructor, every object creation</li>
+    </ul>
+
+    <p><strong>ORDER OF EXECUTION:</strong><br>
+    → Static Block → Instance Block → Constructor → Methods</p>
+  </div>
+
+  <div class="section">
+    <h2>Static vs Non-Static in Java</h2>
+    <h3>🔹 STATIC</h3>
+    <ul>
+      <li>Belongs to the class (not to object)</li>
+      <li>Shared by all objects</li>
+      <li>Can be accessed using class name</li>
+    </ul>
+
+    <h3>🔸 NON-STATIC</h3>
+    <ul>
+      <li>Belongs to individual object</li>
+      <li>Unique for each object</li>
+      <li>Requires object to access</li>
+    </ul>
+
+    <p><strong>Rules:</strong></p>
+    <ul>
+      <li>Static methods can access only static members directly</li>
+      <li>Non-static methods can access both static and non-static members</li>
+    </ul>
+
+    <p><strong>Use Cases:</strong></p>
+    <ul>
+      <li>Static: Constants, counters, utility methods</li>
+      <li>Non-static: Personal data, behavior per object</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Class Loading & Initialization Flow</h2>
+    <ol>
+      <li>Class is loaded by ClassLoader (JVM)</li>
+      <li>Static variables & static blocks are initialized</li>
+      <li>Main method is called</li>
+      <li>Object creation: Instance variables → Instance block → Constructor</li>
+    </ol>
+  </div>
+
+  <div class="section">
+    <h2>Object</h2>
+    <p>Every object has:</p>
+    <ul>
+      <li><strong>State</strong>: Non-static variables</li>
+      <li><strong>Behaviour</strong>: Non-static methods</li>
+    </ul>
+
+    <pre><code>class Book {
+  int id;
+  String author, title;
+  double price;
+  
+  void read() {}
+  void write() {}
+}
+    </code></pre>
+
+    <h3>java.lang.Object</h3>
+    <ul>
+      <li>Superclass of all Java classes</li>
+      <li>Methods: toString(), equals(), hashCode(), getClass(), finalize()</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Encapsulation</h2>
+    <p>Encapsulation binds data (variables) and behavior (methods) into a single unit and restricts direct access.</p>
+
+    <h3>Rules:</h3>
+    <ul>
+      <li>Variables must be private</li>
+      <li>Provide public getters/setters</li>
+      <li>Use a class to wrap everything</li>
+    </ul>
+
+    <h3>Java Setters and Getters</h3>
+    <pre><code>class Student {
+    private String name;
+    private int age;
+
+    public String getName() {
+        return name;
+    }
+    public int getAge() {
+        return age;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setAge(int age) {
+        if(age > 0)
+            this.age = age;
+    }
+}
+
+Student s = new Student();
+s.setName("Aathi");
+s.setAge(20);
+System.out.println(s.getName());
+System.out.println(s.getAge());
+    </code></pre>
+
+    <h3>✅ ADVANTAGES</h3>
+    <ul>
+      <li>Hide internal data</li>
+      <li>Add validation logic</li>
+      <li>Clean and flexible APIs</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Characteristics of Getters and Setters</h2>
+
+    <h3>🔸 Getter Method</h3>
+    <ul>
+      <li>Reads private field value</li>
+      <li>Public, no parameters</li>
+      <li>Returns the field's data type</li>
+      <li>Format: getFieldName()</li>
+    </ul>
+
+    <h3>🔸 Setter Method</h3>
+    <ul>
+      <li>Updates private field value</li>
+      <li>Public, one parameter</li>
+      <li>Return type is void</li>
+      <li>Format: setFieldName()</li>
+    </ul>
+
+    <pre><code>public void setAge(int age) {
+    if(age > 0)
+        this.age = age;
+    else
+        System.out.println("Invalid age!");
+}
+    </code></pre>
+  </div>
+
+  <div class="section">
+    <h2>☑️ Setter and Getter for Boolean Variables</h2>
+    <ul>
+      <li>Use <code>isFieldName()</code> for getter</li>
+      <li>Use <code>setFieldName()</code> for setter</li>
+    </ul>
+
+    <pre><code>private boolean active;
+
+public boolean isActive() {
+    return active;
+}
+
+public void setActive(boolean active) {
+    this.active = active;
+}
+    </code></pre>
+  </div>
+
+  <div class="section">
+    <h2>Singleton Pattern in Java</h2>
+    <p>Ensures only one object is created for the class. Used in logging, configuration managers, DB connections, etc.</p>
+  </div>
+
+  <div class="section">
+    <h2>Java Bean / POJO Class</h2>
+    <p>A simple Java class used for encapsulation and framework compatibility.</p>
+
+    <h3>Rules:</h3>
+    <ul>
+      <li>Must be public</li>
+      <li>No-argument constructor</li>
+      <li>All fields private</li>
+      <li>Provide public getters and setters</li>
+      <li>Should be serializable (optional)</li>
+    </ul>
+<div class="section">
+  <h1>Serialization and Deserialization</h1>
+  <div class="highlight">
+    Serialization is the process of converting a Java object into a byte stream — for storing in a file, database, sending over network, etc.
+    <br><br>
+    Deserialization is the reverse — converting the byte stream back into a Java object.
+  </div>
+</div>
+
+<hr>
+
+<div class="section">
+  <h1>Relationship</h1>
+  <div class="highlight">
+    The onnection between the object is called as relationship.
+  </div>
+  <ul>
+    <li>Has-a-relationship</li>
+    <li>is-a-relationship</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Has-a-relationship</h2>
+  <div class="highlight">
+    Dependency between the objet<br>
+    one class contains a reference to another class
+  </div>
+  <p><strong>type</strong></p>
+  <ul>
+    <li>Composition</li>
+    <li>Aggregation</li>
+  </ul>
+
+  <h3>composition:(Strong Has-A)</h3>
+  <div class="highlight">
+    The dependency between the object is in such a way that one object cannot exist without another object.<br>
+    we can achieve composition by using the technique called as early instantiation<br>
+    Early instantiation means is the process where when ever we creating a object it will also create dependency objetion.
+  </div>
+  <pre>
+class Heart {
+    void pump() {
+        System.out.println("Pumping blood");
+    }
+}
+
+class Human {
+    private Heart heart = new Heart();  // Composition – Human has-a Heart
+
+    void live() {
+        heart.pump();
+        System.out.println("Human is alive");
+    }
+}
+  </pre>
+
+  <h3>Aggregation:(Weak Has-A)</h3>
+  <div class="highlight">
+    The dependency between the object is in such a way that one object can exist with another object.<br>
+    We can achieve aggregatiion by using the technique called as lazy instantiation.<br>
+    Lazy instantiation means initializing the dependent object through the mehtod called as lazy instantiation
+  </div>
+  <pre>
+class Book {
+    String title;
+    Book(String title) {
+        this.title = title;
+    }
+}
+
+class Library {
+    Book book;  // Library has-a Book
+
+    Library(Book book) {
+        this.book = book;
+    }
+
+    void showBook() {
+        System.out.println("Library has: " + book.title);
+    }
+}
+  </pre>
+</div>
+
+<div class="section">
+  <h2>Is a relationship</h2>
+  <div class="highlight">
+    A connection between the object which is similar to parent and child.
+  </div>
+
+  <h3>Inheritance</h3>
+  <div class="highlight">
+    The proess of occuring states and behavior of one object into another object.<br>
+    In java we can achieve inheritance bu using special keyword by using extends and implements
+  </div>
+
+  <p><strong>Types of Inheritance</strong></p>
+  <ul>
+    <li>Single level inheritance - inheritance of only one level</li>
+    <li>Multi level inheritance - Inheritance of more than one level</li>
+    <li>hieratchical inheritance - If a parent has more than one child at the same level</li>
+    <li>Multiple Inheritance - It is  a subclass (child) has more then one superclass (parent).</li>
+    <li>Hybrid inheritane - the combination of multiple inheritance and hierarchical inheritance</li>
+  </ul>
+
+  <div class="highlight">
+    Multiple inheritance has a problem known as diamond problem
+  </div>
+
+  <div class="highlight">
+    note <br>
+    when both templates are same then extends <br>
+    eg<br>
+    class A<br>
+    class B extends A<br><br>
+    when both templates are different then we use implements<br>
+    eg<br>
+    interface A<br>
+    class B implements A<br>    
+    and we cannot use like <br>
+    class A<br>
+    interface B implements A<br>
+    it is wrong
+  </div>
+
+  <h3>extends</h3>
+  <div class="highlight">
+    It is a keyword which is used to achieve inheritance or is a relationship<br>
+    extends keyword we can use when both the template parent and child is same
+  </div>
+
+  <h3>implements</h3>
+  <div class="highlight">
+    It is a keyword which is used to achieve inheritance or is a relationship<br>
+    implements keyword we can use when both the templates parent and child are different<br>
+    we cannot inherit a class into a interface
+  </div>
+
+  <h3>super call</h3>
+  <div class="highlight">
+    we use super call statement to call the constructor of parent class<br>
+    super class statement helps to load the parent non static members inside the child object
+  </div>
+  <pre>
+class A{											
+    A(){	
+     //l.i					At compile time					
+    }                          
+}
+
+class B extend A{									
+    B(){			
+     //l.i												
+    }														
+}	
+
+// with explicit super
+class A{
+    A(){
+     //l.i
+    }
+}
+
+class B extends A{
+    B(){			
+     super(); //l.i
+    }
+}
+  </pre>
+</div>
+
+<hr>
+
+<div class="section">
+  <h1>final</h1>
+  <div class="highlight">
+    It is a keyword as well as modifier<br>
+    final represent constant which mwan once the value was designed we cnnot change.<br>
+    in java we prefix final for class variable and methods
+  </div>
+
+  <h3>final method</h3>
+  <div class="highlight">
+    Any method prefix with final<br>
+    we can inherit final method and you can use the final method<br>
+    we cannot override final method
+  </div>
+
+  <h3>final global variable</h3>
+  <div class="highlight">
+    any global variable prefixed with final is called final variable<br>
+    once value assigned fro the final variable we cannot change<br>
+    we should mention the final variable in uper case
+  </div>
+
+  <h3>final local vaiable</h3>
+  <div class="highlight">
+    any local vaiable prefixed with final is called as final local variable<br>
+    final local vaiable can be declared because the visibility is not for all function<br>
+    once value assigned for the final local variable we cannot change.
+  </div>
+
+  <h3>final class</h3>
+  <div class="highlight">
+    any class which is prefix with final modifier <br>
+    we can have final class but we cannot inherit final class
+  </div>
+</div>
+
+<hr>
+
+<div class="section">
+  <h1>Varargs</h1>
+  <div class="highlight">
+    Only one varargs parameter is allowed in a method.<br>
+    It must be the last parameter in the method signature.
+  </div>
+
+  <p><strong>syntax</strong></p>
+  <pre>
+returnType methodName(type... varName) { }
+  </pre>
+  <div class="highlight">
+    The ... (three dots) tells Java that the method accepts 0 or more arguments of that type.
+  </div>
+</div>
+
+<hr>
+
+<div class="section">
+  <h1>Anonymous Class</h1>
+  <div class="highlight">
+    An anonymous class is a class without a name, declared and instantiated in a single statement.<br>
+    It is also override the abstract method present inside the class and interface.
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Purpose</th>
+        <th>Anonymous Class Usage?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Runnable</td><td>Interface</td><td>Run code in a thread</td><td>✅ Yes</td></tr>
+      <tr><td>Callable</td><td>Interface</td><td>Like Runnable but returns result</td><td>✅ Yes</td></tr>
+      <tr><td>Comparator</td><td>Interface</td><td>Used to sort objects</td><td>✅ Yes</td></tr>
+      <tr><td>ActionListener</td><td>Interface</td><td>Used in GUI for button clicks etc.</td><td>✅ Yes</td></tr>
+      <tr><td>Thread</td><td>Class</td><td>Controls and starts threads</td><td>✅ Yes (can be extended)</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>syntax</strong></p>
+  <pre>
+InterfaceOrClass obj = new InterfaceOrClass() {
+    // Override methods here
+};
+  </pre>
+</div>
+
+<hr>
+
+<div class="section">
+  <h1>object class</h1>
+  <div class="highlight">
+    Object is the root class of all Java classes.<br>
+    Every class in Java implicitly extends Object if no other superclass is specified.<br>
+    It contain eleven non static method.<br>
+    Object class is the super most class for all the classes in java<br>
+    When programmer forget to add extends keyword for any class compiler will add extends object.
+  </div>
+
+  <pre>
+syntax
+object ref = new class_name();
+  </pre>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Purpose</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>toString()</td><td>Returns string representation of object</td></tr>
+      <tr><td>equals(Object o)</td><td>Compares if two objects are equal (by default compares memory)</td></tr>
+      <tr><td>hashCode()</td><td>Returns hash code (used in collections like HashMap)</td></tr>
+      <tr><td>getClass()</td><td>Returns runtime class info</td></tr>
+      <tr><td>clone()</td><td>Creates a copy of the object (if Cloneable)</td></tr>
+      <tr><td>finalize()</td><td>Called by GC before object is destroyed (rarely used)</td></tr>
+      <tr><td>wait(), notify(), notifyAll()</td><td>For thread communication (used in multithreading)</td></tr>
+    </tbody>
+  </table>
+
+  <pre>
+public String toString()
+Returns a string representation of the object. Default: ClassName@HexHashCode.
+
+public boolean equals(Object obj)
+Checks whether two objects are logically equal.
+
+public int hashCode()
+Used in hashing-based collections like HashMap, HashSet. Returns a hash code value for the object.
+
+public final Class<?> getClass()
+Returns runtime class information of the object.
+
+protected Object clone() throws CloneNotSupportedException
+Creates a copy of the object. The class must implement Cloneable.
+It is a marker interface and the implementation of clone method in object class is done by using other programming language. because native keyword is there
+
+public final void wait() throws InterruptedException
+public final void wait(long timeout) throws InterruptedException
+public final void wait(long timeout, int nanos) throws InterruptedException
+public final void notify()
+public final void notifyAll()
+Used in multithreading for synchronization.
+
+protected void finalize() throws Throwable	 
+It is used to perform clean up process. 	
+Finaluzed method helps to remove th eunused objects which is not having reference.
+In order to start Garbage collection process we need to call "System.gc()" which initially clall finalize method.
+Obly those object colleted by garbage collector which is created with the help of new keyword.
+  </pre>
+</div>
+
+    
+</body>
+</html>
