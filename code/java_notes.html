@@ -3276,5 +3276,2767 @@ System.out.println(sbf); // Hello World
   </ul>
 </div>
 
+<div class="section">
+  <h1>🛠️ Java Exception Handling (Basics)</h1>
+
+  <h2>What is an Exception?</h2>
+  <ul>
+    <li>An <strong>exception</strong> is an <strong>unexpected error</strong> that occurs during program execution.</li>
+    <li>It interrupts the normal flow of the program.</li>
+  </ul>
+  <div class="highlight">
+    <strong>Examples:</strong>
+    <ul>
+      <li>Dividing by zero</li>
+      <li>Accessing an invalid array index</li>
+      <li>Opening a file that doesn't exist</li>
+    </ul>
+  </div>
+
+  <h2>Types of Errors in Java</h2>
+  <ol>
+    <li><strong>Compile-Time Errors</strong> ➝ Syntax issues</li>
+    <li><strong>Runtime Errors</strong> ➝ Exceptions (handled using try-catch)</li>
+    <li><strong>Logical Errors</strong> ➝ Program runs but gives wrong output</li>
+  </ol>
+
+  <h2>Types of Exceptions</h2>
+  <h3>1️⃣ Checked Exceptions (Compile-time)</h3>
+  <ul>
+    <li>Must be handled using <code>try-catch</code> or <code>throws</code>.</li>
+    <li>Examples: <code>IOException</code>, <code>SQLException</code>, <code>FileNotFoundException</code></li>
+  </ul>
+
+  <h3>2️⃣ Unchecked Exceptions (Runtime)</h3>
+  <ul>
+    <li>Occurs during execution, optional to handle.</li>
+    <li>Examples: <code>ArithmeticException</code>, <code>NullPointerException</code>, <code>ArrayIndexOutOfBoundsException</code></li>
+  </ul>
+
+  <h2>Java Exception Hierarchy</h2>
+  <pre>
+Object
+   |
+Throwable
+ /       \
+Error   Exception
+        /        \
+ Checked     Unchecked (Runtime)
+  </pre>
+
+  <h2>Basic Syntax of try-catch</h2>
+  <pre>
+try {
+    // Code that may cause exception
+} catch (ExceptionType e) {
+    // Handling code
+}
+  </pre>
+
+  <table>
+    <tr>
+      <th>Keyword</th>
+      <th>Meaning</th>
+    </tr>
+    <tr>
+      <td><code>try</code></td>
+      <td>Wraps risky code that may throw exception</td>
+    </tr>
+    <tr>
+      <td><code>catch</code></td>
+      <td>Handles exception type</td>
+    </tr>
+    <tr>
+      <td><code>finally</code></td>
+      <td>Runs always (for cleanup)</td>
+    </tr>
+    <tr>
+      <td><code>throw</code></td>
+      <td>Used to throw an exception manually</td>
+    </tr>
+    <tr>
+      <td><code>throws</code></td>
+      <td>Declares exceptions in method signature</td>
+    </tr>
+  </table>
+
+  <pre>
+try {
+    // Risky code
+} catch (ExceptionType e) {
+    // Handle exception
+} finally {
+    // Always runs
+}
+  </pre>
+
+  <h3>Example:</h3>
+  <pre>
+try {
+    int[] arr = {1, 2, 3};
+    System.out.println(arr[5]);
+} catch (ArrayIndexOutOfBoundsException e) {
+    System.out.println("Invalid index!");
+} finally {
+    System.out.println("Cleanup code here.");
+}
+  </pre>
+
+  <h2>throw vs throws</h2>
+  <table>
+    <tr>
+      <th>throw</th>
+      <th>throws</th>
+    </tr>
+    <tr>
+      <td>Used to <strong>manually throw</strong> an exception</td>
+      <td>Declares that method <strong>might throw</strong> exception</td>
+    </tr>
+    <tr>
+      <td>Used inside method</td>
+      <td>Used in method declaration</td>
+    </tr>
+    <tr>
+      <td>Can throw only <strong>one</strong> exception at a time</td>
+      <td>Can declare multiple exceptions</td>
+    </tr>
+    <tr>
+      <td><code>throw new ArithmeticException();</code></td>
+      <td><code>void read() throws IOException</code></td>
+    </tr>
+  </table>
+
+  <h3>Example:</h3>
+  <pre>
+public class Demo {
+    static void test(int age) {
+        if (age < 18)
+            throw new ArithmeticException("Not eligible");
+        else
+            System.out.println("Eligible");
+    }
+
+    public static void main(String[] args) {
+        test(16);
+    }
+}
+  </pre>
+
+  <h2>Multiple Catch Blocks</h2>
+  <pre>
+try {
+    String s = null;
+    System.out.println(s.length());
+} catch (NullPointerException e) {
+    System.out.println("Null object!");
+} catch (Exception e) {
+    System.out.println("Other exception!");
+}
+  </pre>
+
+  <h2>Nested try-catch</h2>
+  <pre>
+try {
+    try {
+        int a = 10 / 0;
+    } catch (ArithmeticException e) {
+        System.out.println("Divide by zero!");
+    }
+
+    String s = null;
+    System.out.println(s.length());
+
+} catch (NullPointerException e) {
+    System.out.println("Null value!");
+}
+  </pre>
+
+  <h2>Key Points on Exceptions</h2>
+  <ul>
+    <li>Every exception arises because of a statement at runtime.</li>
+    <li>The type of exception object created depends on the statement causing it.</li>
+    <li>To manually throw an exception, use <code>throw</code> keyword.</li>
+  </ul>
+
+  <h3>throw Keyword Syntax:</h3>
+  <pre>
+throw new NumberFormatException();
+  </pre>
+
+  <h3>Checked vs Unchecked Exception:</h3>
+  <ul>
+    <li><strong>Checked:</strong> Compiler-aware, must handle or declare. Examples: <code>FileNotFoundException</code>, <code>IOException</code></li>
+    <li><strong>Unchecked:</strong> Compiler-unaware, optional to handle. Examples: <code>ArithmeticException</code>, <code>NullPointerException</code></li>
+  </ul>
+
+  <h2>printStackTrace()</h2>
+  <p>This method (inherited from <code>Throwable</code>) displays the class name, reason, and the stack trace of the exception.</p>
+
+  <h2>finally Block</h2>
+  <ul>
+    <li>Contains important code that must always execute.</li>
+    <li>Executes whether exception occurs or not.</li>
+    <li>Execution can be avoided by using <code>System.exit()</code>.</li>
+  </ul>
+
+  <h2>Object Propagation</h2>
+  <p>The movement of an exception object from one method (frame) to another in the call stack.</p>
+  <ul>
+    <li>Unchecked exceptions propagate implicitly.</li>
+    <li>Checked exceptions must be explicitly declared using <code>throws</code> or handled.</li>
+  </ul>
+
+  <h2>throws Keyword</h2>
+  <ul>
+    <li>Used to propagate exceptions from one method to another.</li>
+    <li>Mostly used for checked exceptions.</li>
+    <li>Can declare multiple exceptions.</li>
+  </ul>
+
+  <h2>Custom Exceptions</h2>
+  <p>When built-in exceptions are insufficient, you can create your own.</p>
+  <div class="highlight">
+    <strong>Steps:</strong>
+    <ol>
+      <li>Create a class extending <code>Exception</code> (checked) or <code>RuntimeException</code> (unchecked).</li>
+      <li>Create a constructor with a reason and pass it to <code>super()</code>.</li>
+    </ol>
+  </div>
+
+  <h2>Error</h2>
+  <p>An <strong>Error</strong> represents serious problems that occur during runtime, usually caused by the system, not the code.</p>
+  <div class="highlight">
+    <strong>Examples:</strong> <code>OutOfMemoryError</code>, <code>StackOverflowError</code>
+  </div>
+
+  <h2>Feature Comparison</h2>
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>Checked Exception</th>
+      <th>Unchecked Exception</th>
+    </tr>
+    <tr>
+      <td>Compiler Check</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Must use <code>throws</code> if not handled</td>
+      <td>✅ Yes</td>
+      <td>❌ No</td>
+    </tr>
+    <tr>
+      <td>Example</td>
+      <td><code>IOException</code>, <code>SQLException</code></td>
+      <td><code>NullPointerException</code>, <code>ArithmeticException</code></td>
+    </tr>
+  </table>
+</div>
+
+<hr>
+
+<div class="section">
+  <h1>📂 Java File Handling</h1>
+
+  <h2>Definition</h2>
+  <p>
+    <strong>File Handling</strong> in Java is the process of creating, reading, writing, and updating files stored on disk using the <code>java.io</code> package.
+    It allows persistent data storage beyond the program’s execution.
+  </p>
+
+  <h2>Flowchart: File Handling Process</h2>
+  <pre>
+          ┌───────────────────────┐
+          │    Create/Open File   │
+          └──────────┬────────────┘
+                     │
+           ┌─────────▼─────────┐
+           │ Read / Write Data │
+           └─────────┬─────────┘
+                     │
+           ┌─────────▼─────────┐
+           │ Close the Stream  │
+           └───────────────────┘
+  </pre>
+
+  <h2>Key Points</h2>
+  <ul>
+    <li><code>createNewFile()</code> → Returns <code>true</code> if file is created, <code>false</code> if it already exists.</li>
+    <li><code>FileWriter</code> overwrites the file. Use <code>new FileWriter(file, true)</code> to append instead of overwrite.</li>
+    <li>Always close streams using <code>close()</code> to prevent data loss.</li>
+    <li>Most file handling methods throw <strong>checked exceptions</strong> (like <code>IOException</code>), so they must be handled using <code>try-catch</code> or declared with <code>throws</code>.</li>
+  </ul>
+
+  <h2>Character Stream vs Byte Stream</h2>
+  <table>
+    <tr>
+      <th>Feature</th>
+      <th>Character Stream</th>
+      <th>Byte Stream</th>
+    </tr>
+    <tr>
+      <td>Classes</td>
+      <td><code>FileReader</code>, <code>FileWriter</code>, <code>BufferedReader</code>, <code>BufferedWriter</code></td>
+      <td><code>FileInputStream</code>, <code>FileOutputStream</code>, <code>BufferedInputStream</code>, <code>BufferedOutputStream</code></td>
+    </tr>
+    <tr>
+      <td>Data type handled</td>
+      <td>Reads/Writes <strong>characters</strong> (text)</td>
+      <td>Reads/Writes <strong>raw bytes</strong> (binary or text)</td>
+    </tr>
+    <tr>
+      <td>Encoding aware</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Use case</td>
+      <td>Text files (.txt, .java, .csv)</td>
+      <td>Binary files (.jpg, .mp3, .pdf)</td>
+    </tr>
+  </table>
+
+  <h2>Common File Handling Classes</h2>
+  <table>
+    <tr>
+      <th>Class</th>
+      <th>Purpose</th>
+    </tr>
+    <tr>
+      <td><code>File</code></td>
+      <td>Represents file/directory path.</td>
+    </tr>
+    <tr>
+      <td><code>FileWriter</code></td>
+      <td>Write text to a file (character stream).</td>
+    </tr>
+    <tr>
+      <td><code>FileReader</code></td>
+      <td>Read text from a file (character stream).</td>
+    </tr>
+    <tr>
+      <td><code>BufferedReader</code></td>
+      <td>Read text efficiently, line-by-line.</td>
+    </tr>
+    <tr>
+      <td><code>PrintWriter</code></td>
+      <td>Write text easily using <code>print</code>/<code>println</code>.</td>
+    </tr>
+  </table>
+
+  <h2>Basic Syntax Examples</h2>
+  <h3>Create a File</h3>
+  <pre>
+import java.io.*;
+
+public class CreateFileExample {
+    public static void main(String[] args) {
+        try {
+            File file = new File("example.txt");
+            if (file.createNewFile()) {
+                System.out.println("File created: " + file.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </pre>
+
+  <h3>Write to a File</h3>
+  <pre>
+import java.io.*;
+
+public class WriteFileExample {
+    public static void main(String[] args) {
+        try {
+            FileWriter writer = new FileWriter("example.txt");
+            writer.write("Hello, Java File Handling!");
+            writer.close();
+            System.out.println("Data written to file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </pre>
+
+  <h3>Append to a File</h3>
+  <pre>
+FileWriter writer = new FileWriter("example.txt", true);
+writer.write("\nThis is appended text.");
+writer.close();
+  </pre>
+
+  <h3>Read from a File</h3>
+  <pre>
+import java.io.*;
+
+public class ReadFileExample {
+    public static void main(String[] args) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("example.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </pre>
+
+  <hr>
+
+  <h1>🗄️ Serialization & Deserialization</h1>
+
+  <h2>Definition</h2>
+  <ul>
+    <li><strong>Serialization</strong> → Converting a Java object into a byte stream so it can be stored in a file or sent over a network.</li>
+    <li><strong>Deserialization</strong> → Reconstructing the object from the byte stream back into memory.</li>
+  </ul>
+
+  <h2>Key Points</h2>
+  <ul>
+    <li>Uses <code>ObjectOutputStream</code> (for writing) and <code>ObjectInputStream</code> (for reading).</li>
+    <li>The class must implement <code>Serializable</code> interface (marker interface).</li>
+    <li>If a field is marked as <code>transient</code>, it will not be serialized.</li>
+    <li>During deserialization, <code>transient</code> fields get default values (e.g., <code>null</code> for objects, <code>0</code> for numbers).</li>
+  </ul>
+
+  <h2>Flow: Serialization</h2>
+  <pre>
+Object → Serialize (ObjectOutputStream) → Byte Stream → File / Network
+  </pre>
+
+  <h2>Example: Serialization</h2>
+  <pre>
+import java.io.*;
+
+class Student implements Serializable {
+    String name;
+    transient int age; // will not be serialized
+
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+public class SerializeExample {
+    public static void main(String[] args) {
+        try {
+            Student s1 = new Student("Alice", 22);
+            FileOutputStream fos = new FileOutputStream("student.ser");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(s1);
+            oos.close();
+            fos.close();
+            System.out.println("Object serialized.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </pre>
+
+  <h2>Example: Deserialization</h2>
+  <pre>
+import java.io.*;
+
+class DeserializeExample {
+    public static void main(String[] args) {
+        try {
+            FileInputStream fis = new FileInputStream("student.ser");
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            Student s = (Student) ois.readObject();
+            ois.close();
+            fis.close();
+
+            System.out.println("Name: " + s.name);
+            System.out.println("Age: " + s.age); // will be 0 because 'age' is transient
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </pre>
+
+  <div class="highlight">
+    <strong>Important:</strong>  
+    - Use <code>transient</code> to skip sensitive data during serialization.  
+    - Always close streams after use.  
+    - Serialization is mostly used for saving object state or sending objects over networks.
+  </div>
+</div>
+
+<hr>
+
+<div class="section">
+  <h1>📦 Wrapper Classes</h1>
+
+  <h2>Primitive → Wrapper mapping</h2>
+  <table>
+    <tr>
+      <th>Primitive</th>
+      <th>Wrapper Class</th>
+      <th>Size / Notes</th>
+    </tr>
+    <tr><td><code>byte</code></td><td><code>Byte</code></td><td>8-bit signed</td></tr>
+    <tr><td><code>short</code></td><td><code>Short</code></td><td>16-bit signed</td></tr>
+    <tr><td><code>int</code></td><td><code>Integer</code></td><td>32-bit signed</td></tr>
+    <tr><td><code>long</code></td><td><code>Long</code></td><td>64-bit signed</td></tr>
+    <tr><td><code>float</code></td><td><code>Float</code></td><td>32-bit IEEE 754</td></tr>
+    <tr><td><code>double</code></td><td><code>Double</code></td><td>64-bit IEEE 754</td></tr>
+    <tr><td><code>char</code></td><td><code>Character</code></td><td>16-bit Unicode</td></tr>
+    <tr><td><code>boolean</code></td><td><code>Boolean</code></td><td>true / false</td></tr>
+  </table>
+
+  <h2>Why wrapper classes?</h2>
+  <ul>
+    <li>Java is <strong>not 100% object-oriented</strong> because primitives are not objects. Wrapper classes were introduced so primitive values can be treated as objects.</li>
+    <li>Wrappers are required by many APIs that work with objects (for example, Java Collections and Generics: <code>List<Integer></code>).</li>
+    <li>Wrapper classes provide utility methods (parsing, conversions, constants like <code>Integer.MAX_VALUE</code>).</li>
+  </ul>
+
+  <h2>Boxing / Unboxing (and auto versions)</h2>
+  <p><strong>Boxing</strong> = converting primitive → wrapper (explicitly using <code>valueOf()</code> or constructor).<br>
+     <strong>Autoboxing</strong> = automatic boxing performed by compiler (since Java 5).</p>
+
+  <p><strong>Unboxing</strong> = converting wrapper → primitive (explicitly using <code>xxxValue()</code>).<br>
+     <strong>Auto-unboxing</strong> = automatic unboxing performed by compiler.</p>
+
+  <h3>Syntax & examples</h3>
+  <pre>
+// Boxing (explicit)
+Integer boxed = Integer.valueOf(42);
+
+// Autoboxing (compiler does it)
+Integer autoBoxed = 42;  // same as Integer.valueOf(42)
+
+// Unboxing (explicit)
+int primitive = boxed.intValue();
+
+// Auto-unboxing
+int autoUnboxed = boxed; // compiler inserts intValue()
+  </pre>
+
+  <h2>Parsing Strings → primitives</h2>
+  <p>All numeric wrapper classes (except <code>Character</code>) provide <code>parseXxx(String)</code> that returns a primitive and <code>valueOf(String)</code> that returns a wrapper object.</p>
+
+  <h3>Examples</h3>
+  <pre>
+int n = Integer.parseInt("123");             // returns primitive int
+Integer i = Integer.valueOf("123");          // returns Integer object
+
+boolean b = Boolean.parseBoolean("true");    // returns primitive boolean (false if not "true")
+Boolean B = Boolean.valueOf("true");         // returns Boolean object
+
+char c = "hello".charAt(0);                  // use String.charAt — Character has no parseChar(String)
+Character C = Character.valueOf('x');
+  </pre>
+
+  <h3>NumberFormatException (common pitfall)</h3>
+  <pre>
+try {
+    int bad = Integer.parseInt("12a"); // throws NumberFormatException
+} catch (NumberFormatException e) {
+    System.out.println("Invalid number: " + e.getMessage());
+}
+  </pre>
+
+  <h2>Useful wrapper methods</h2>
+  <ul>
+    <li><code>xxx.parseXxx(String)</code> → primitive (e.g., <code>Integer.parseInt</code>).</li>
+    <li><code>xxx.valueOf(String)</code> → wrapper object (may use caching).</li>
+    <li><code>xxxValue()</code> → convert wrapper to other primitives (e.g., <code>doubleValue()</code>, <code>longValue()</code>).</li>
+    <li><code>toString()</code> → string representation.</li>
+    <li><code>compareTo()</code> and <code>equals()</code> → comparisons (wrappers implement <code>Comparable</code>).</li>
+    <li><code>Integer.MAX_VALUE</code>, <code>MIN_VALUE</code> and similar constants.</li>
+    <li><code>Double.isNaN()</code>, <code>Double.isInfinite()</code> — special checks for floating point wrappers.</li>
+  </ul>
+
+  <h2>Number class</h2>
+  <p><code>Byte, Short, Integer, Long, Float, Double</code> extend <code>Number</code>. <code>Number</code> provides methods:</p>
+  <pre>
+int intValue()
+long longValue()
+float floatValue()
+double doubleValue()
+byte byteValue()
+short shortValue()
+  </pre>
+  <p>Useful when you have a generic number and need a specific primitive value.</p>
+
+  <h2>Important behaviors & pitfalls</h2>
+  <ul>
+    <li><strong>Caching</strong>: <code>Integer.valueOf</code> (and other wrappers) cache commonly used values (standard -128..127 for <code>Integer</code>), so:</li>
+  </ul>
+  <pre>
+Integer a = 127;
+Integer b = 127;
+System.out.println(a == b);   // true (cached)
+Integer x = 128;
+Integer y = 128;
+System.out.println(x == y);   // usually false (different objects)
+  </pre>
+  <ul>
+    <li>Use <code>equals()</code> to compare wrapper values reliably: <code>a.equals(b)</code>.</li>
+    <li><strong>NullPointerException on unboxing:</strong></li>
+  </ul>
+  <pre>
+Integer n = null;
+int m = n; // throws NullPointerException (auto-unboxing attempts to read value)
+  </pre>
+  <ul>
+    <li><strong>Performance:</strong> boxing/unboxing creates objects (or uses cached ones) which is slower and uses more memory than primitives — avoid in tight loops.</li>
+    <li><strong>Immutability:</strong> wrapper instances are immutable and final — they are safe to share between threads.</li>
+    <li><strong>Use-cases:</strong> Collections/Generics, Reflection, APIs requiring <code>Object</code>, streams with boxed types (<code>Stream<Integer></code>), or when you need methods on the value (e.g., <code>toString()</code>, <code>compareTo()</code>).</li>
+  </ul>
+
+  <h2>Small, focused examples</h2>
+  <h3>1) Autoboxing with collections</h3>
+  <pre>
+import java.util.*;
+
+List<Integer> list = new ArrayList<>();
+list.add(10);        // autoboxing from int -> Integer
+int val = list.get(0); // auto-unboxing from Integer -> int
+  </pre>
+
+  <h3>2) Parsing with exception handling</h3>
+  <pre>
+String s = "12a";
+try {
+    int v = Integer.parseInt(s); // NumberFormatException here
+} catch (NumberFormatException e) {
+    System.out.println("Not a number: " + s);
+}
+  </pre>
+
+  <h3>3) Beware of == vs equals()</h3>
+  <pre>
+Integer a = 100; Integer b = 100;
+System.out.println(a == b);           // often true (cached)
+System.out.println(a.equals(b));      // true
+
+Integer x = 128; Integer y = 128;
+System.out.println(x == y);           // often false
+System.out.println(x.equals(y));      // true
+  </pre>
+
+  <h3>4) Null unboxing problem</h3>
+  <pre>
+Integer maybe = null;
+if (maybe != null && maybe > 0) {  // even this may auto-unbox; check for null first
+    System.out.println("positive");
+}
+  </pre>
+
+  <h2>Extras — small checklist / best practices</h2>
+  <ul>
+    <li>Prefer <code>valueOf()</code> or autoboxing; avoid unnecessary <code>new Integer(...)</code> to benefit from caching and lower memory.</li>
+    <li>Use primitives in performance-critical code; use wrappers when objects are required.</li>
+    <li>Always guard against <code>null</code> when auto-unboxing values that might be null.</li>
+    <li>Use <code>parseXxx</code> when you need primitives; use <code>valueOf</code> when you want wrapper objects.</li>
+    <li>Use <code>equals()</code> to compare wrapper values instead of <code>==</code>.</li>
+  </ul>
+
+  <div class="highlight">
+    <strong>Summary:</strong>
+    Wrapper classes make primitives behave like objects (required for collections and many APIs). Autoboxing/unboxing (since Java 5) makes conversions convenient, but be aware of performance costs, caching behavior, and null-related pitfalls. Use parsing methods carefully (they throw <code>NumberFormatException</code> on bad input).
+  </div>
+</div>
+
+<hr>
+
+<div class="section">
+  <h1>🧩 Java Collection Framework (Overview)</h1>
+
+  <h2>What is a Framework?</h2>
+  <p>
+    A <strong>framework</strong> is a ready-made architecture — a set of interfaces and classes that provide common functionality so you don't build everything from scratch.
+    The <strong>Java Collections Framework</strong> (sometimes called the Collection API or collection hierarchy) gives reusable data structures and algorithms for storing and manipulating groups of objects.
+  </p>
+
+  <h2>What is a Collection?</h2>
+  <p>
+    A <strong>collection</strong> represents a group of related objects treated as a single unit (for example, a list of users). Collections provide convenient methods to add, remove, search and iterate elements.
+  </p>
+
+  <h2>Why use the Collection Framework?</h2>
+  <ul>
+    <li>Arrays are <strong>fixed-size</strong> and require manual resizing; collections are dynamic and grow as needed.</li>
+    <li>Arrays require more boilerplate for common ops (insert, delete, search); collections provide ready methods (<code>add</code>, <code>remove</code>, <code>contains</code>, <code>sort</code>, etc.).</li>
+    <li>Collections integrate with Java generics and iterators, improving type-safety and traversal.</li>
+    <li>Different implementations offer different performance/ordering characteristics — pick one to suit your use-case (fast lookup, ordered iteration, sorted, concurrent, etc.).</li>
+    <li>Collection utilities (class <code>Collections</code>) provide algorithms like <code>sort</code>, <code>binarySearch</code>, <code>synchronizedXxx</code>, <code>unmodifiableXxx</code>.</li>
+  </ul>
+
+  <h2>Where it lives</h2>
+  <p>The core interfaces and classes are in <code>java.util</code>.</p>
+
+  <h2>High-level Hierarchy (visual)</h2>
+  <pre>
+           Iterable
+              |
+           Collection
+          /    |     \
+        List   Set   Queue
+       / | \   / \    /  \
+   ArrayList Linked HashSet PriorityQueue
+     Vector       TreeSet   ArrayDeque
+           (Map is separate, not a Collection)
+  Map
+   ├─ HashMap
+   ├─ LinkedHashMap
+   ├─ TreeMap (Sorted)
+   └─ Hashtable (legacy, synchronized)
+  </pre>
+
+  <h2>Key Interfaces & Characteristics</h2>
+
+  <h3>List</h3>
+  <ul>
+    <li>Ordered sequence of elements, indexed access (<code>get(index)</code>), allows duplicates.</li>
+    <li>Common implementations: <code>ArrayList</code>, <code>LinkedList</code>, <code>Vector</code> (legacy).</li>
+    <li>Typical uses: dynamic arrays, when you need random access or maintain insertion order.</li>
+    <li>Small example: <code>List&lt;Integer&gt; list = new ArrayList&lt;&gt;();</code></li>
+  </ul>
+
+  <h3>Set</h3>
+  <ul>
+    <li>No duplicate elements.</li>
+    <li>Common implementations: <code>HashSet</code> (unordered), <code>LinkedHashSet</code> (insertion order), <code>TreeSet</code> (sorted).</li>
+    <li>Use when uniqueness matters (e.g., distinct IDs).</li>
+    <li>Small example: <code>Set&lt;String&gt; s = new HashSet&lt;&gt;();</code></li>
+  </ul>
+
+  <h3>Queue</h3>
+  <ul>
+    <li>Designed for holding elements prior to processing. Often FIFO, but semantics depend on implementation.</li>
+    <li>Implementations: <code>PriorityQueue</code> (priority-based), <code>ArrayDeque</code> (double-ended), <code>LinkedList</code> (can act as queue/deque).</li>
+    <li>Use for task scheduling, breadth-first search, producer-consumer buffers.</li>
+    <li>Small example: <code>Queue&lt;Integer&gt; q = new ArrayDeque&lt;&gt;();</code></li>
+  </ul>
+
+  <h3>Map (not a Collection)</h3>
+  <ul>
+    <li>Key → Value pairs. Keys are unique, values may repeat.</li>
+    <li>Implementations: <code>HashMap</code> (fast, allows one null key), <code>LinkedHashMap</code> (insertion order), <code>TreeMap</code> (sorted by key), <code>Hashtable</code> (legacy, synchronized).</li>
+    <li>Use when you need lookup by key (dictionaries, caches).</li>
+    <li>Small example: <code>Map&lt;String,Integer&gt; map = new HashMap&lt;&gt;();</code></li>
+  </ul>
+
+  <h2>Important behavioral notes</h2>
+  <ul>
+    <li><strong>Null handling:</strong> <code>HashMap</code> and <code>HashSet</code> allow <code>null</code> (HashMap allows one null key); <code>TreeMap</code>/ <code>TreeSet</code> generally disallow null keys if natural ordering is used.</li>
+    <li><strong>Ordering:</strong> ArrayList & LinkedList preserve insertion order; HashSet/HashMap do not (LinkedHash* do); Tree* maintain sorted order.</li>
+    <li><strong>Duplicates:</strong> Lists allow duplicates; Sets do not; Map keys are unique.</li>
+    <li><strong>Thread-safety:</strong> <code>Vector</code> and <code>Hashtable</code> are synchronized (legacy). Prefer modern concurrent collections like <code>ConcurrentHashMap</code> or wrapper methods: <code>Collections.synchronizedList(...)</code> when needed.</li>
+    <li><strong>Generics:</strong> Collections are generic (e.g., <code>List&lt;String&gt;</code>) — use generics to avoid casts and get compile-time type safety.</li>
+  </ul>
+
+  <h2>Performance Cheatsheet (common cases)</h2>
+  <table>
+    <tr><th>Structure</th><th>Typical ops</th><th>Avg complexity</th></tr>
+    <tr><td>ArrayList</td><td>get(index), add(end), remove(mid)</td><td>get O(1), add amortized O(1), remove O(n)</td></tr>
+    <tr><td>LinkedList</td><td>add/remove ends, get(index)</td><td>add/remove at ends O(1), get O(n)</td></tr>
+    <tr><td>HashMap / HashSet</td><td>put / get / contains</td><td>average O(1), worst O(n)</td></tr>
+    <tr><td>TreeMap / TreeSet</td><td>sorted ops, range queries</td><td>O(log n)</td></tr>
+    <tr><td>PriorityQueue</td><td>offer / poll (min/max)</td><td>O(log n)</td></tr>
+    <tr><td>ArrayDeque</td><td>push / pop / offer / poll</td><td>O(1)</td></tr>
+  </table>
+
+  <h2>Useful utilities & tips</h2>
+  <ul>
+    <li>Use <code>Collections</code> for algorithms: <code>Collections.sort(list)</code>, <code>Collections.binarySearch(list, key)</code>, <code>Collections.reverse(list)</code>.</li>
+    <li>To get a thread-safe view: <code>List&lt;T&gt; sync = Collections.synchronizedList(new ArrayList&lt;&gt;());</code></li>
+    <li>To make unmodifiable collections: <code>Collections.unmodifiableList(list)</code>.</li>
+    <li>Prefer coding to interfaces: <code>List&lt;String&gt; list = new ArrayList&lt;&gt;();</code> so you can swap implementations easily.</li>
+    <li>Pick the implementation by behavior & complexity you need (fast random access → <code>ArrayList</code>; frequent insert/removal at ends → <code>LinkedList</code>; unique elements → <code>HashSet</code>; sorted → <code>TreeSet</code>).</li>
+  </ul>
+
+  <div class="highlight">
+    <strong>Summary:</strong>
+    The Collection Framework is a standardized set of interfaces and implementations for handling groups of objects. Choose List/Set/Queue/Map and their concrete classes according to ordering, duplication rules, and performance needs. Use generics, prefer interface types, and use utility methods from <code>Collections</code> to simplify common tasks.
+  </div>
+</div>
+
+<hr>
+
+<h1>Java <code>List</code> Interface and Implementations</h1>
+
+<div class="section" id="list-interface">
+  <h2>1️⃣ List Interface</h2>
+
+  <h3>Definition</h3>
+  <p>
+    The <code>List</code> interface in Java is part of the <code>java.util</code> package and extends the <code>Collection</code> interface.
+    It represents an <strong>ordered collection of elements</strong> where the <strong>order of insertion is preserved</strong> and <strong>duplicates are allowed</strong>.
+    It provides methods to access elements by their index, iterate through them, and perform positional insertions or deletions.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>List&lt;Type&gt; listName = new ArrayList&lt;&gt;();</code></pre>
+  <p>Here:</p>
+  <ul>
+    <li><code>Type</code> is the element type (e.g., <code>Integer</code>, <code>String</code>, or custom objects).</li>
+    <li>The actual object created can be <code>ArrayList</code>, <code>LinkedList</code>, <code>Vector</code>, etc.</li>
+  </ul>
+
+  <h3>Characteristics</h3>
+  <ol>
+    <li><strong>Ordered</strong> – Elements are stored and accessed in the exact order they were inserted.</li>
+    <li><strong>Index-based Access</strong> – Each element can be accessed via an integer index (starting from 0).</li>
+    <li><strong>Allows Duplicates</strong> – Multiple occurrences of the same value are allowed.</li>
+    <li><strong>Allows Nulls</strong> – <code>null</code> values can be stored as elements (some implementations may allow multiple nulls, some only one).</li>
+    <li><strong>Resizable</strong> – Most implementations grow dynamically as elements are added.</li>
+  </ol>
+
+  <h3>Advantages</h3>
+  <ul>
+    <li>Maintains <strong>predictable iteration order</strong>.</li>
+    <li>Flexible choice of underlying data structure (ArrayList, LinkedList, etc.).</li>
+    <li>Supports both <strong>random access</strong> and <strong>sequential access</strong> depending on implementation.</li>
+  </ul>
+
+  <h3>Disadvantages</h3>
+  <ul>
+    <li>Not inherently thread-safe (unless using a synchronized implementation like <code>Vector</code> or <code>CopyOnWriteArrayList</code>).</li>
+    <li>Performance may degrade depending on choice of implementation for specific operations.</li>
+  </ul>
+
+  <h3>When to Use</h3>
+  <ul>
+    <li>When <strong>ordering matters</strong> (e.g., task sequences, history logs).</li>
+    <li>When <strong>duplicates are required</strong>.</li>
+    <li>When <strong>indexed access</strong> is important.</li>
+  </ul>
+
+  <h3>When Not to Use</h3>
+  <ul>
+    <li>If <strong>uniqueness of elements</strong> is required → use <code>Set</code>.</li>
+    <li>If performance is critical and a specialized collection is better (e.g., <code>Queue</code> for FIFO, <code>Map</code> for key-value).</li>
+  </ul>
+
+  <h3>Capacity</h3>
+  <p><code>List</code> itself has no fixed capacity — it depends on the implementation.</p>
+
+  <h3>Underlying Data Structure</h3>
+  <ul>
+    <li><code>ArrayList</code> → Dynamic Array</li>
+    <li><code>LinkedList</code> → Doubly Linked List</li>
+    <li><code>Vector</code> / <code>Stack</code> → Dynamic Array</li>
+  </ul>
+</div>
+
+<hr />
+
+<div class="section" id="arraylist">
+  <h2>2️⃣ ArrayList</h2>
+
+  <h3>Definition</h3>
+  <p>
+    <code>ArrayList</code> is a <strong>resizable array implementation</strong> of the <code>List</code> interface.
+    It stores elements in a <strong>contiguous memory block</strong> and automatically grows when capacity is exceeded.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>ArrayList&lt;Type&gt; list = new ArrayList&lt;&gt;();
+ArrayList&lt;Type&gt; listWithCapacity = new ArrayList&lt;&gt;(initialCapacity);</code></pre>
+
+  <h3>Characteristics</h3>
+  <ol>
+    <li><strong>Random Access</strong> – O(1) time complexity for getting/setting elements.</li>
+    <li><strong>Resizable</strong> – Automatically increases capacity when full.</li>
+    <li><strong>Insertion at End is Fast</strong> – O(1) amortized.</li>
+    <li><strong>Insertion/Removal in Middle is Slow</strong> – O(n) due to shifting elements.</li>
+    <li><strong>Allows Duplicates and Nulls</strong>.</li>
+  </ol>
+
+  <h3>Advantages</h3>
+  <ul>
+    <li>Excellent for <strong>read-heavy</strong> operations.</li>
+    <li>Predictable iteration order.</li>
+    <li>Easy to convert to array and back.</li>
+  </ul>
+
+  <h3>Disadvantages</h3>
+  <ul>
+    <li>Insertion/removal in the middle is costly.</li>
+    <li>Capacity increases cause <strong>reallocation and copying</strong>, which can be expensive for very large lists.</li>
+  </ul>
+
+  <h3>When to Use</h3>
+  <ul>
+    <li>When you need <strong>fast random reads</strong>.</li>
+    <li>When insertions/removals are mostly at the <strong>end</strong>.</li>
+  </ul>
+
+  <h3>When Not to Use</h3>
+  <ul>
+    <li>When frequent middle insertions/removals occur → use <code>LinkedList</code>.</li>
+  </ul>
+
+  <h3>Capacity Details</h3>
+  <ul>
+    <li><strong>Default Initial Capacity:</strong> 10</li>
+    <li><strong>Growth Formula:</strong> <code>(oldCapacity * 3/2) + 1</code><br />
+    Example: 10 → 16 → 25 → 38, etc.</li>
+  </ul>
+
+  <h3>Underlying Data Structure</h3>
+  <p><strong>Dynamic Array</strong></p>
+</div>
+
+<hr />
+
+<div class="section" id="linkedlist">
+  <h2>3️⃣ LinkedList</h2>
+
+  <h3>Definition</h3>
+  <p>
+    <code>LinkedList</code> is a <strong>doubly linked list implementation</strong> of both <code>List</code> and <code>Deque</code>.
+    It stores elements in nodes, each containing data plus pointers to the previous and next node.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>LinkedList&lt;Type&gt; list = new LinkedList&lt;&gt;();</code></pre>
+
+  <h3>Characteristics</h3>
+  <ol>
+    <li><strong>No Capacity Limit</strong> – Grows until memory is exhausted.</li>
+    <li><strong>Efficient Insert/Remove</strong> – O(1) when you already have a reference to the node.</li>
+    <li><strong>Slow Random Access</strong> – O(n) since traversal is required.</li>
+    <li><strong>Can be Used as Queue/Deque</strong> – Implements <code>Deque</code> interface.</li>
+  </ol>
+
+  <h3>Advantages</h3>
+  <ul>
+    <li>Fast insertion and deletion anywhere in the list.</li>
+    <li>No shifting of elements needed.</li>
+  </ul>
+
+  <h3>Disadvantages</h3>
+  <ul>
+    <li>Uses extra memory for pointers.</li>
+    <li>Slower to access elements by index.</li>
+  </ul>
+
+  <h3>When to Use</h3>
+  <ul>
+    <li>When insertion/removal is frequent, especially in the middle.</li>
+    <li>As a <code>Queue</code> or <code>Deque</code>.</li>
+  </ul>
+
+  <h3>When Not to Use</h3>
+  <ul>
+    <li>When you need a lot of random access by index.</li>
+  </ul>
+
+  <h3>Capacity</h3>
+  <p>Not applicable (linked structure).</p>
+
+  <h3>Underlying Data Structure</h3>
+  <p><strong>Doubly Linked List</strong></p>
+</div>
+
+<hr />
+
+<div class="section" id="stack">
+  <h2>4️⃣ Stack</h2>
+
+  <h3>Definition</h3>
+  <p>
+    <code>Stack</code> is a <strong>LIFO (Last-In-First-Out)</strong> collection that extends <code>Vector</code>.
+    It is synchronized and supports <code>push()</code>, <code>pop()</code>, and <code>peek()</code>.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>Stack&lt;Type&gt; stack = new Stack&lt;&gt;();</code></pre>
+
+  <h3>Characteristics</h3>
+  <ol>
+    <li><strong>Thread-Safe</strong> due to synchronization.</li>
+    <li>Allows duplicates and nulls.</li>
+    <li>Uses dynamic array internally.</li>
+  </ol>
+
+  <h3>Advantages</h3>
+  <ul>
+    <li>Simple for LIFO use cases.</li>
+    <li>Thread-safe without external synchronization.</li>
+  </ul>
+
+  <h3>Disadvantages</h3>
+  <ul>
+    <li>Slower due to synchronization.</li>
+    <li><code>ArrayDeque</code> is faster in single-threaded stacks.</li>
+  </ul>
+
+  <h3>When to Use</h3>
+  <ul>
+    <li>Undo/Redo operations, expression parsing, backtracking.</li>
+  </ul>
+
+  <h3>When Not to Use</h3>
+  <ul>
+    <li>High-performance applications → prefer <code>ArrayDeque</code>.</li>
+  </ul>
+
+  <h3>Capacity</h3>
+  <p>Same as <code>Vector</code> (starts at 10, doubles when full).</p>
+
+  <h3>Underlying Data Structure</h3>
+  <p><strong>Dynamic Array</strong></p>
+</div>
+
+<hr />
+
+<div class="section" id="vector">
+  <h2>5️⃣ Vector</h2>
+
+  <h3>Definition</h3>
+  <p>
+    <code>Vector</code> is a <strong>synchronized dynamic array</strong> that implements <code>List</code>.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>Vector&lt;Type&gt; vector = new Vector&lt;&gt;();
+Vector&lt;Type&gt; vectorWithCapacity = new Vector&lt;&gt;(initialCapacity);</code></pre>
+
+  <h3>Characteristics</h3>
+  <ol>
+    <li><strong>Thread-Safe</strong> – All methods synchronized.</li>
+    <li>Allows nulls and duplicates.</li>
+    <li>Random Access – O(1) for get/set.</li>
+  </ol>
+
+  <h3>Advantages</h3>
+  <ul>
+    <li>Safe for concurrent access.</li>
+  </ul>
+
+  <h3>Disadvantages</h3>
+  <ul>
+    <li>Slower in single-threaded applications.</li>
+  </ul>
+
+  <h3>When to Use</h3>
+  <ul>
+    <li>Multi-threaded contexts needing a List.</li>
+  </ul>
+
+  <h3>When Not to Use</h3>
+  <ul>
+    <li>Single-threaded → use <code>ArrayList</code>.</li>
+  </ul>
+
+  <h3>Capacity</h3>
+  <ul>
+    <li><strong>Default Initial Capacity:</strong> 10</li>
+    <li><strong>Growth:</strong> Doubles when full.</li>
+  </ul>
+
+  <h3>Underlying Data Structure</h3>
+  <p><strong>Dynamic Array</strong></p>
+</div>
+
+<hr />
+
+  <h1>Java Collections: List Interface and Implementations</h1>
+
+  <h2>1. <code>List</code> Interface (java.util.List) — Common Methods</h2>
+
+  <p>
+    The <code>List</code> interface is the root interface for ordered collections in Java.
+    These methods are implemented by <code>ArrayList</code>, <code>LinkedList</code>, <code>Vector</code>, and <code>Stack</code>.
+  </p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Return Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>add(E e)</code></td><td><code>boolean</code></td><td>Appends element to end of list.</td><td><code>list.add("Apple");</code></td></tr>
+      <tr><td><code>add(int index, E element)</code></td><td><code>void</code></td><td>Inserts element at given index.</td><td><code>list.add(1, "Banana");</code></td></tr>
+      <tr><td><code>addAll(Collection&lt;? extends E&gt; c)</code></td><td><code>boolean</code></td><td>Appends all elements from given collection.</td><td><code>list.addAll(Arrays.asList("A", "B"));</code></td></tr>
+      <tr><td><code>addAll(int index, Collection&lt;? extends E&gt; c)</code></td><td><code>boolean</code></td><td>Inserts all elements at given index.</td><td><code>list.addAll(1, Arrays.asList("X", "Y"));</code></td></tr>
+      <tr><td><code>clear()</code></td><td><code>void</code></td><td>Removes all elements.</td><td><code>list.clear();</code></td></tr>
+      <tr><td><code>contains(Object o)</code></td><td><code>boolean</code></td><td>Checks if list contains the element.</td><td><code>list.contains("Apple");</code></td></tr>
+      <tr><td><code>containsAll(Collection&lt;?&gt; c)</code></td><td><code>boolean</code></td><td>Checks if list contains all elements in given collection.</td><td><code>list.containsAll(Arrays.asList("A", "B"));</code></td></tr>
+      <tr><td><code>equals(Object o)</code></td><td><code>boolean</code></td><td>Compares lists for equality.</td><td><code>list1.equals(list2);</code></td></tr>
+      <tr><td><code>get(int index)</code></td><td><code>E</code></td><td>Returns element at index.</td><td><code>list.get(2);</code></td></tr>
+      <tr><td><code>indexOf(Object o)</code></td><td><code>int</code></td><td>Returns first occurrence index or -1.</td><td><code>list.indexOf("Banana");</code></td></tr>
+      <tr><td><code>isEmpty()</code></td><td><code>boolean</code></td><td>Checks if list is empty.</td><td><code>list.isEmpty();</code></td></tr>
+      <tr><td><code>iterator()</code></td><td><code>Iterator&lt;E&gt;</code></td><td>Returns iterator for elements.</td><td><code>Iterator&lt;String&gt; it = list.iterator();</code></td></tr>
+      <tr><td><code>lastIndexOf(Object o)</code></td><td><code>int</code></td><td>Returns last occurrence index.</td><td><code>list.lastIndexOf("Banana");</code></td></tr>
+      <tr><td><code>listIterator()</code></td><td><code>ListIterator&lt;E&gt;</code></td><td>Returns bidirectional list iterator.</td><td><code>ListIterator&lt;String&gt; li = list.listIterator();</code></td></tr>
+      <tr><td><code>listIterator(int index)</code></td><td><code>ListIterator&lt;E&gt;</code></td><td>Returns list iterator starting at index.</td><td><code>list.listIterator(2);</code></td></tr>
+      <tr><td><code>remove(Object o)</code></td><td><code>boolean</code></td><td>Removes first occurrence of element.</td><td><code>list.remove("Apple");</code></td></tr>
+      <tr><td><code>remove(int index)</code></td><td><code>E</code></td><td>Removes element at index.</td><td><code>list.remove(1);</code></td></tr>
+      <tr><td><code>removeAll(Collection&lt;?&gt; c)</code></td><td><code>boolean</code></td><td>Removes all elements in given collection.</td><td><code>list.removeAll(Arrays.asList("A", "B"));</code></td></tr>
+      <tr><td><code>retainAll(Collection&lt;?&gt; c)</code></td><td><code>boolean</code></td><td>Keeps only elements in given collection.</td><td><code>list.retainAll(Arrays.asList("A", "B"));</code></td></tr>
+      <tr><td><code>replaceAll(UnaryOperator&lt;E&gt; op)</code></td><td><code>void</code></td><td>Replaces each element with function result.</td><td><code>list.replaceAll(s -&gt; s.toUpperCase());</code></td></tr>
+      <tr><td><code>set(int index, E element)</code></td><td><code>E</code></td><td>Replaces element at index.</td><td><code>list.set(1, "Kiwi");</code></td></tr>
+      <tr><td><code>size()</code></td><td><code>int</code></td><td>Returns number of elements.</td><td><code>list.size();</code></td></tr>
+      <tr><td><code>sort(Comparator&lt;? super E&gt; c)</code></td><td><code>void</code></td><td>Sorts list using comparator.</td><td><code>list.sort(String::compareTo);</code></td></tr>
+      <tr><td><code>spliterator()</code></td><td><code>Spliterator&lt;E&gt;</code></td><td>Returns spliterator for parallel iteration.</td><td><code>Spliterator&lt;String&gt; sp = list.spliterator();</code></td></tr>
+      <tr><td><code>subList(int from, int to)</code></td><td><code>List&lt;E&gt;</code></td><td>Returns portion of list.</td><td><code>list.subList(1, 3);</code></td></tr>
+      <tr><td><code>toArray()</code></td><td><code>Object[]</code></td><td>Returns array of elements.</td><td><code>Object[] arr = list.toArray();</code></td></tr>
+      <tr><td><code>toArray(T[] a)</code></td><td><code>&lt;T&gt; T[]</code></td><td>Returns array of given type.</td><td><code>String[] arr = list.toArray(new String[0]);</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. <code>ArrayList</code> — Extra Methods</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Return Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>ensureCapacity(int minCapacity)</code></td><td><code>void</code></td><td>Ensures internal capacity.</td><td><code>((ArrayList&lt;String&gt;) list).ensureCapacity(50);</code></td></tr>
+      <tr><td><code>trimToSize()</code></td><td><code>void</code></td><td>Shrinks storage to current size.</td><td><code>((ArrayList&lt;String&gt;) list).trimToSize();</code></td></tr>
+      <tr><td><code>clone()</code></td><td><code>Object</code></td><td>Returns a shallow copy.</td><td><code>ArrayList&lt;String&gt; copy = (ArrayList&lt;String&gt;) list.clone();</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>3. <code>LinkedList</code> — Extra Methods</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Return Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>addFirst(E e)</code></td><td><code>void</code></td><td>Inserts at beginning.</td><td><code>linkedList.addFirst("First");</code></td></tr>
+      <tr><td><code>addLast(E e)</code></td><td><code>void</code></td><td>Inserts at end.</td><td><code>linkedList.addLast("Last");</code></td></tr>
+      <tr><td><code>offerFirst(E e)</code></td><td><code>boolean</code></td><td>Offers element at beginning.</td><td><code>linkedList.offerFirst("First");</code></td></tr>
+      <tr><td><code>offerLast(E e)</code></td><td><code>boolean</code></td><td>Offers element at end.</td><td><code>linkedList.offerLast("Last");</code></td></tr>
+      <tr><td><code>getFirst()</code></td><td><code>E</code></td><td>Retrieves first element.</td><td><code>linkedList.getFirst();</code></td></tr>
+      <tr><td><code>getLast()</code></td><td><code>E</code></td><td>Retrieves last element.</td><td><code>linkedList.getLast();</code></td></tr>
+      <tr><td><code>peekFirst()</code></td><td><code>E</code></td><td>Retrieves first element, null if empty.</td><td><code>linkedList.peekFirst();</code></td></tr>
+      <tr><td><code>peekLast()</code></td><td><code>E</code></td><td>Retrieves last element, null if empty.</td><td><code>linkedList.peekLast();</code></td></tr>
+      <tr><td><code>removeFirst()</code></td><td><code>E</code></td><td>Removes first element.</td><td><code>linkedList.removeFirst();</code></td></tr>
+      <tr><td><code>removeLast()</code></td><td><code>E</code></td><td>Removes last element.</td><td><code>linkedList.removeLast();</code></td></tr>
+      <tr><td><code>pollFirst()</code></td><td><code>E</code></td><td>Removes first element, null if empty.</td><td><code>linkedList.pollFirst();</code></td></tr>
+      <tr><td><code>pollLast()</code></td><td><code>E</code></td><td>Removes last element, null if empty.</td><td><code>linkedList.pollLast();</code></td></tr>
+      <tr><td><code>push(E e)</code></td><td><code>void</code></td><td>Pushes to front (stack).</td><td><code>linkedList.push("Top");</code></td></tr>
+      <tr><td><code>pop()</code></td><td><code>E</code></td><td>Pops from front (stack).</td><td><code>linkedList.pop();</code></td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. <code>Vector</code> — Extra Methods</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Return Type</th>
+        <th>Purpose</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td><code>capacity()</code></td><td><code>int</code></td><td>Returns capacity.</td><td><code>vector.capacity();</code></td></tr>
+      <tr><td><code>copyInto(Object[] anArray)</code></td><td><code>void</code></td><td>Copies elements into array.</td><td><code>vector.copyInto(arr);</code></td></tr>
+      <tr><td><code>elementAt(int index)</code></td><td><code>E</code></td><td>Gets element at index.</td><td><code>vector.elementAt(2);</code></td></tr>
+      <tr><td><code>firstElement()</code></td><td><code>E</code></td><td>Gets first element.</td><td><code>vector.firstElement();</code></td></tr>
+      <tr><td><code>lastElement()</code></td><td><code>E</code></td><td>Gets last element.</td><td><code>vector.lastElement();</code></td></tr>
+      <tr><td><code>removeAllElements()</code></td><td><code>void</code></td><td>Clears vector.</td><td><code>vector.removeAllElements();</code></td></tr>
+      <tr><td><code>setElementAt(E obj, int index)</code></td><td><code>void</code></td><td>Sets element at index.</td><td><code>vector.setElementAt("X", 2);</code></td></tr>
+      <tr><td><code>insertElementAt(E obj, int index)</code></td><td><code>void</code></td><td>Inserts at index.</td><td><code>vector.insertElementAt("X", 1);</code></td></tr>
+      <tr><td><code>addElement(E obj)</code></td><td><code>void</code></td><td>Adds at end.</td><td><code>vector.addElement("New");</code></td></tr>
+      <tr><td><code>removeElementAt(int index)</code></td><td><code>void</code></td><td>Removes at index.</td><td><code>vector.removeElementAt(1);</code></td></tr>
+      <tr><td><code>removeElement(Object obj)</code></td><td><code>boolean</code></td><td>Removes first occurrence.</td><td><code>vector.removeElement("A");</code></td></tr>
+      <tr><td><code>trimToSize()</code></td><td><code>void</code></td><td>Shrinks capacity to size.</td><td><code>vector.trimToSize();</code></td></tr>
+      <tr><td><code>ensureCapacity(int minCapacity)</code></td><td><code>void</code></td><td>Ensures capacity.</td><td><code>vector.ensureCapacity(50);</code></td></tr>
+      <tr><td><code>setSize(int newSize)</code></td><td><code>void</code></td><td>Changes size.</td><td><code>vector.setSize(10);</code></td></tr>
+</tbody>
+  </table>
+
+<h2>5. <code>Stack</code> — Extra Methods</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Return Type</th>
+      <th>Purpose</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>push(E item)</code></td><td><code>E</code></td><td>Pushes onto stack.</td><td><code>stack.push("A");</code></td></tr>
+    <tr><td><code>pop()</code></td><td><code>E</code></td><td>Removes top element.</td><td><code>stack.pop();</code></td></tr>
+    <tr><td><code>peek()</code></td><td><code>E</code></td><td>Looks at top element.</td><td><code>stack.peek();</code></td></tr>
+    <tr><td><code>empty()</code></td><td><code>boolean</code></td><td>Checks if stack is empty.</td><td><code>stack.empty();</code></td></tr>
+    <tr><td><code>search(Object o)</code></td><td><code>int</code></td><td>1-based position from top.</td><td><code>stack.search("A");</code></td></tr>
+  </tbody>
+</table>
+
+<hr/>
+
+<h2><code>Iterator</code> Methods</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>boolean hasNext()</code></td><td>Checks if more elements exist.</td></tr>
+    <tr><td><code>E next()</code></td><td>Returns the next element.</td></tr>
+    <tr><td><code>void remove()</code></td><td>Removes the last returned element (optional).</td></tr>
+    <tr><td><code>default void forEachRemaining(Consumer)</code></td><td>Applies action to remaining elements (Java 8+).</td></tr>
+  </tbody>
+</table>
+
+<hr/>
+
+<h2><code>ListIterator</code> Methods</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>boolean hasNext()</code></td><td>Check forward elements.</td></tr>
+    <tr><td><code>E next()</code></td><td>Get next element.</td></tr>
+    <tr><td><code>boolean hasPrevious()</code></td><td>Check backward elements.</td></tr>
+    <tr><td><code>E previous()</code></td><td>Get previous element.</td></tr>
+    <tr><td><code>int nextIndex()</code></td><td>Index of next element.</td></tr>
+    <tr><td><code>int previousIndex()</code></td><td>Index of previous element.</td></tr>
+    <tr><td><code>void remove()</code></td><td>Removes current element.</td></tr>
+    <tr><td><code>void set(E e)</code></td><td>Replaces last element returned.</td></tr>
+    <tr><td><code>void add(E e)</code></td><td>Inserts an element.</td></tr>
+  </tbody>
+</table>
+
+<hr/>
+
+<h2>Explanation: <code>Iterator</code> and <code>ListIterator</code></h2>
+
+<p>
+  Both <code>Iterator</code> and <code>ListIterator</code> are interfaces in Java's Collections Framework used to traverse collections, but they differ in capabilities and use cases.
+</p>
+
+<h3><code>Iterator</code></h3>
+<p>
+  An <code>Iterator</code> provides a simple way to traverse a collection sequentially in the forward direction only.
+</p>
+<ul>
+  <li><strong>Key Methods:</strong> <code>hasNext()</code>, <code>next()</code>, <code>remove()</code>, and <code>forEachRemaining()</code> (Java 8+)</li>
+  <li><strong>Usage:</strong> Mainly used to iterate over collections like <code>List</code>, <code>Set</code>, and <code>Queue</code>.</li>
+  <li><strong>Advantages:</strong>
+    <ul>
+      <li>Simplifies element traversal without exposing internal structure.</li>
+      <li>Supports safe removal of elements during iteration (<code>remove()</code> method).</li>
+      <li>Works with any collection implementing <code>Iterable</code>.</li>
+    </ul>
+  </li>
+  <li><strong>Limitations:</strong>
+    <ul>
+      <li>Can only move forward through the collection.</li>
+      <li>No ability to add or replace elements during iteration.</li>
+      <li>Does not provide index information.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3><code>ListIterator</code></h3>
+<p>
+  <code>ListIterator</code> extends <code>Iterator</code> and is specifically designed for use with <code>List</code> implementations.
+</p>
+<ul>
+  <li><strong>Key Methods:</strong> Includes all <code>Iterator</code> methods plus <code>hasPrevious()</code>, <code>previous()</code>, <code>nextIndex()</code>, <code>previousIndex()</code>, <code>set(E e)</code>, and <code>add(E e)</code>.</li>
+  <li><strong>Usage:</strong> Allows bi-directional traversal (forward and backward) of lists.</li>
+  <li><strong>Advantages:</strong>
+    <ul>
+      <li>Traverse lists both forwards and backwards.</li>
+      <li>Can modify the list during iteration with <code>set()</code> and <code>add()</code>.</li>
+      <li>Provides positional information via <code>nextIndex()</code> and <code>previousIndex()</code>.</li>
+    </ul>
+  </li>
+  <li><strong>Limitations:</strong>
+    <ul>
+      <li>Only applicable to List implementations (not general collections).</li>
+      <li>More complex interface compared to Iterator.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>Use Cases</h3>
+<ul>
+  <li><strong>Iterator:</strong> Best when you need simple forward traversal and optional safe removal of elements (e.g., looping over a <code>Set</code> or <code>List</code> when no modification except removal is needed).</li>
+  <li><strong>ListIterator:</strong> Ideal when you need to traverse a list in both directions, or modify elements during iteration (e.g., editing or inserting elements while looping through a <code>LinkedList</code> or <code>ArrayList</code>).</li>
+</ul>
+
+<h3>Summary</h3>
+<p>
+  - Use <code>Iterator</code> for basic forward-only iteration and safe element removal.<br/>
+  - Use <code>ListIterator</code> for advanced bidirectional iteration and in-place list modifications.<br/>
+</p>
+
+<hr>
+
+<h1>Java <code>Set</code> Interface and Implementations</h1>
+
+<h3>1️⃣ Set Interface</h3>
+
+<h4>Definition</h4>
+<p>
+  The <code>Set</code> interface in Java (from <code>java.util</code>) extends <code>Collection</code> and represents an <strong>unordered collection of unique elements</strong>.
+  It <strong>does not allow duplicates</strong> and at most <strong>one null element</strong> (depending on implementation).
+  Unlike <code>List</code>, <code>Set</code> does <strong>not preserve insertion order</strong> (except for ordered variants like <code>LinkedHashSet</code>).
+</p>
+
+<h4>Syntax</h4>
+<pre><code>Set&lt;Type&gt; setName = new HashSet&lt;&gt;();</code></pre>
+<p>Here:</p>
+<ul>
+  <li><code>Type</code> → Element type (e.g., <code>Integer</code>, <code>String</code>, custom object).</li>
+  <li>Can be implemented by <code>HashSet</code>, <code>LinkedHashSet</code>, <code>TreeSet</code>, etc.</li>
+</ul>
+
+<h4>Characteristics</h4>
+<ol>
+  <li><strong>Uniqueness</strong> – No duplicate elements allowed.</li>
+  <li><strong>Order</strong> – Not guaranteed (except in ordered variants).</li>
+  <li><strong>Null Handling</strong> – Allows one null in most implementations.</li>
+  <li><strong>Efficient Lookup</strong> – Implementations like <code>HashSet</code> provide near O(1) average time for search, insert, delete.</li>
+  <li><strong>No Index Access</strong> – You cannot get elements by index like a <code>List</code>.</li>
+</ol>
+
+<h4>Advantages</h4>
+<ul>
+  <li>Prevents duplicates automatically.</li>
+  <li>Fast searching and lookups (for hash-based sets).</li>
+  <li>Good for membership tests (<code>contains()</code>).</li>
+</ul>
+
+<h4>Disadvantages</h4>
+<ul>
+  <li>No positional access.</li>
+  <li>Unordered (unless using ordered variant).</li>
+  <li>Slightly more memory overhead due to hashing or tree nodes.</li>
+</ul>
+
+<h4>When to Use</h4>
+<ul>
+  <li>When uniqueness is required.</li>
+  <li>For <strong>fast lookups</strong> and membership checks.</li>
+  <li>When you don’t care about order (use <code>HashSet</code>) or you need sorted order (<code>TreeSet</code>).</li>
+</ul>
+
+<h4>When Not to Use</h4>
+<ul>
+  <li>If you need duplicates → use <code>List</code>.</li>
+  <li>If positional/indexed access is required.</li>
+</ul>
+
+<h4>Capacity</h4>
+<p>Depends on implementation (e.g., <code>HashSet</code> default 16 buckets, load factor 0.75).</p>
+
+<h4>Underlying Data Structure</h4>
+<ul>
+  <li><code>HashSet</code> → <strong>Hash table</strong></li>
+  <li><code>LinkedHashSet</code> → <strong>Hash table + linked list</strong> (for order)</li>
+  <li><code>TreeSet</code> → <strong>Red-Black tree</strong> (sorted)</li>
+</ul>
+
+<hr/>
+
+<h3>2️⃣ HashSet</h3>
+
+<h4>Definition</h4>
+<p><code>HashSet</code> is an <strong>unordered collection</strong> that uses a <strong>hash table</strong> for storage and ensures <strong>unique elements</strong>.</p>
+
+<h4>Syntax</h4>
+<pre><code>HashSet&lt;Type&gt; set = new HashSet&lt;&gt;();
+HashSet&lt;Type&gt; setWithCapacity = new HashSet&lt;&gt;(initialCapacity, loadFactor);</code></pre>
+
+<h4>Characteristics</h4>
+<ol>
+  <li><strong>Unordered</strong> – No guarantee of iteration order.</li>
+  <li>Allows one null.</li>
+  <li><strong>O(1) average</strong> performance for add, remove, contains.</li>
+  <li>Backed by <code>HashMap</code> internally (elements are keys, values are dummy objects).</li>
+</ol>
+
+<h4>Advantages</h4>
+<ul>
+  <li>Fast operations.</li>
+  <li>Automatically handles duplicates.</li>
+  <li>Good for large datasets where order doesn’t matter.</li>
+</ul>
+
+<h4>Disadvantages</h4>
+<ul>
+  <li>Unpredictable iteration order.</li>
+  <li>Performance depends on good <code>hashCode()</code> implementation.</li>
+</ul>
+
+<h4>When to Use</h4>
+<ul>
+  <li>When you need <strong>fast, unique storage</strong>.</li>
+</ul>
+
+<h4>When Not to Use</h4>
+<ul>
+  <li>When order is important → use <code>LinkedHashSet</code> or <code>TreeSet</code>.</li>
+</ul>
+
+<h4>Capacity Growth</h4>
+<ul>
+  <li><strong>Default Initial Capacity:</strong> 16</li>
+  <li><strong>Load Factor:</strong> 0.75 (resizes when 75% full)</li>
+  <li><strong>Growth:</strong> Doubles capacity when resized.</li>
+</ul>
+
+<h4>Underlying Data Structure</h4>
+<p><strong>Hash table</strong> (via <code>HashMap</code>).</p>
+
+<hr/>
+
+<h3>3️⃣ LinkedHashSet</h3>
+
+<h4>Definition</h4>
+<p><code>LinkedHashSet</code> is an <strong>ordered version of HashSet</strong> that maintains <strong>insertion order</strong> using a linked list along with the hash table.</p>
+
+<h4>Syntax</h4>
+<pre><code>LinkedHashSet&lt;Type&gt; set = new LinkedHashSet&lt;&gt;();</code></pre>
+
+<h4>Characteristics</h4>
+<ol>
+  <li>Maintains Insertion Order.</li>
+  <li>Slightly slower than <code>HashSet</code> due to linked list overhead.</li>
+  <li>Allows one null.</li>
+</ol>
+
+<h4>Advantages</h4>
+<ul>
+  <li>Predictable iteration order.</li>
+  <li>Still fast (close to O(1) operations).</li>
+</ul>
+
+<h4>Disadvantages</h4>
+<ul>
+  <li>Slightly more memory than <code>HashSet</code>.</li>
+</ul>
+
+<h4>When to Use</h4>
+<ul>
+  <li>When both uniqueness and <strong>insertion order</strong> matter.</li>
+</ul>
+
+<h4>Capacity</h4>
+<p>Same as <code>HashSet</code>.</p>
+
+<h4>Underlying Data Structure</h4>
+<p><strong>Hash table + doubly linked list</strong>.</p>
+
+<hr/>
+
+<h3>4️⃣ TreeSet</h3>
+
+<h4>Definition</h4>
+<p><code>TreeSet</code> is a <strong>sorted</strong> implementation of the <code>Set</code> interface using a <strong>Red-Black tree</strong>.</p>
+
+<h4>Syntax</h4>
+<pre><code>TreeSet&lt;Type&gt; set = new TreeSet&lt;&gt;();
+TreeSet&lt;Type&gt; customOrderSet = new TreeSet&lt;&gt;(Comparator.reverseOrder());</code></pre>
+
+<h4>Characteristics</h4>
+<ol>
+  <li><strong>Sorted Order</strong> – Natural order or via custom comparator.</li>
+  <li><strong>O(log n)</strong> performance for all operations.</li>
+  <li><strong>No nulls allowed</strong> (throws <code>NullPointerException</code> if null is inserted).</li>
+</ol>
+
+<h4>Advantages</h4>
+<ul>
+  <li>Maintains sorted order automatically.</li>
+  <li>Good for range queries (<code>subSet()</code>, <code>headSet()</code>, <code>tailSet()</code>).</li>
+</ul>
+
+<h4>Disadvantages</h4>
+<ul>
+  <li>Slower than <code>HashSet</code> for add/remove/contains.</li>
+  <li>No null elements allowed.</li>
+</ul>
+
+<h4>When to Use</h4>
+<ul>
+  <li>When sorted order is required.</li>
+</ul>
+
+<h4>Capacity</h4>
+<p>Not applicable (tree structure).</p>
+
+<h4>Underlying Data Structure</h4>
+<p><strong>Red-Black Tree</strong>.</p>
+
+<hr/>
+
+<h3>5️⃣ Other Set Implementations</h3>
+
+<h4>EnumSet</h4>
+<ul>
+  <li>Special set for enums.</li>
+  <li>Very fast and memory efficient (bit vector representation).</li>
+  <li>No nulls allowed.</li>
+</ul>
+
+<h4>CopyOnWriteArraySet</h4>
+<ul>
+  <li>Thread-safe set backed by <code>CopyOnWriteArrayList</code>.</li>
+  <li>Good for read-heavy concurrent applications.</li>
+  <li>Slower writes (copying array on every modification).</li>
+</ul>
+
+<hr>
+
+<h1>Java Collections: Set Interface and Implementations</h1>
+<h2>1. <code>Set</code> Interface (<code>java.util.Set</code>) — Common Methods</h2>
+
+<p>
+  The <code>Set</code> interface is implemented by classes like <code>HashSet</code>, <code>LinkedHashSet</code>, and <code>TreeSet</code>.
+  It represents a collection that contains no duplicate elements.
+</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Return Type</th>
+      <th>Purpose</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>add(E e)</code></td>
+      <td><code>boolean</code></td>
+      <td>Adds element if not already present. Returns <code>true</code> if added.</td>
+      <td><code>set.add("Apple");</code></td>
+    </tr>
+    <tr>
+      <td><code>addAll(Collection&lt;? extends E&gt; c)</code></td>
+      <td><code>boolean</code></td>
+      <td>Adds all elements from given collection (ignores duplicates).</td>
+      <td><code>set.addAll(Arrays.asList("A", "B"));</code></td>
+    </tr>
+    <tr>
+      <td><code>clear()</code></td>
+      <td><code>void</code></td>
+      <td>Removes all elements.</td>
+      <td><code>set.clear();</code></td>
+    </tr>
+    <tr>
+      <td><code>contains(Object o)</code></td>
+      <td><code>boolean</code></td>
+      <td>Checks if element exists.</td>
+      <td><code>set.contains("Apple");</code></td>
+    </tr>
+    <tr>
+      <td><code>containsAll(Collection&lt;?&gt; c)</code></td>
+      <td><code>boolean</code></td>
+      <td>Checks if all given elements exist.</td>
+      <td><code>set.containsAll(Arrays.asList("A", "B"));</code></td>
+    </tr>
+    <tr>
+      <td><code>equals(Object o)</code></td>
+      <td><code>boolean</code></td>
+      <td>Checks equality of sets.</td>
+      <td><code>set1.equals(set2);</code></td>
+    </tr>
+    <tr>
+      <td><code>hashCode()</code></td>
+      <td><code>int</code></td>
+      <td>Returns hash code for set.</td>
+      <td><code>int code = set.hashCode();</code></td>
+    </tr>
+    <tr>
+      <td><code>isEmpty()</code></td>
+      <td><code>boolean</code></td>
+      <td>Checks if empty.</td>
+      <td><code>set.isEmpty();</code></td>
+    </tr>
+    <tr>
+      <td><code>iterator()</code></td>
+      <td><code>Iterator&lt;E&gt;</code></td>
+      <td>Returns iterator over elements.</td>
+      <td><code>Iterator&lt;String&gt; it = set.iterator();</code></td>
+    </tr>
+    <tr>
+      <td><code>remove(Object o)</code></td>
+      <td><code>boolean</code></td>
+      <td>Removes element if present.</td>
+      <td><code>set.remove("Apple");</code></td>
+    </tr>
+    <tr>
+      <td><code>removeAll(Collection&lt;?&gt; c)</code></td>
+      <td><code>boolean</code></td>
+      <td>Removes all given elements.</td>
+      <td><code>set.removeAll(Arrays.asList("A", "B"));</code></td>
+    </tr>
+    <tr>
+      <td><code>retainAll(Collection&lt;?&gt; c)</code></td>
+      <td><code>boolean</code></td>
+      <td>Keeps only elements in given collection.</td>
+      <td><code>set.retainAll(Arrays.asList("A", "B"));</code></td>
+    </tr>
+    <tr>
+      <td><code>size()</code></td>
+      <td><code>int</code></td>
+      <td>Number of elements.</td>
+      <td><code>set.size();</code></td>
+    </tr>
+    <tr>
+      <td><code>spliterator()</code></td>
+      <td><code>Spliterator&lt;E&gt;</code></td>
+      <td>Returns spliterator for parallel iteration.</td>
+      <td><code>Spliterator&lt;String&gt; sp = set.spliterator();</code></td>
+    </tr>
+    <tr>
+      <td><code>toArray()</code></td>
+      <td><code>Object[]</code></td>
+      <td>Returns array of all elements.</td>
+      <td><code>Object[] arr = set.toArray();</code></td>
+    </tr>
+    <tr>
+      <td><code>toArray(T[] a)</code></td>
+      <td><code>&lt;T&gt; T[]</code></td>
+      <td>Returns array of given type.</td>
+      <td><code>String[] arr = set.toArray(new String[0]);</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Explanation:</strong> These methods provide basic operations for managing unique collections of elements. Since <code>Set</code> doesn’t allow duplicates, the <code>add</code> method only adds an element if it is not already present. The <code>retainAll</code> method helps filter the set to only keep elements also present in the specified collection.</p>
+
+<hr/>
+
+<h2>2. <code>HashSet</code> — Extra Methods</h2>
+
+<p><code>HashSet</code> inherits from <code>AbstractSet</code> and does not add extra public methods beyond constructors.</p>
+
+<p><strong>Note:</strong> It uses a <strong>hash table</strong> internally (via <code>HashMap</code>) to provide fast add, remove, and lookup operations (~O(1) average).</p>
+
+<hr/>
+
+<h2>3. <code>LinkedHashSet</code> — Extra Methods</h2>
+
+<p><code>LinkedHashSet</code> extends <code>HashSet</code> but maintains <strong>insertion order</strong> by using a linked list running through the hash table.</p>
+
+<p>It does not add any extra public methods either, but preserves order when iterating over elements.</p>
+
+<hr/>
+
+<h2>4. <code>TreeSet</code> — Extra Methods</h2>
+
+<p><code>TreeSet</code> implements <code>NavigableSet</code>, adding a rich set of navigation and sorted set operations.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Return Type</th>
+      <th>Purpose</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>ceiling(E e)</code></td>
+      <td><code>E</code></td>
+      <td>Returns least element ≥ given element, or <code>null</code> if none.</td>
+      <td><code>treeSet.ceiling("B");</code></td>
+    </tr>
+    <tr>
+      <td><code>floor(E e)</code></td>
+      <td><code>E</code></td>
+      <td>Returns greatest element ≤ given element, or <code>null</code> if none.</td>
+      <td><code>treeSet.floor("B");</code></td>
+    </tr>
+    <tr>
+      <td><code>higher(E e)</code></td>
+      <td><code>E</code></td>
+      <td>Returns least element > given element.</td>
+      <td><code>treeSet.higher("B");</code></td>
+    </tr>
+    <tr>
+      <td><code>lower(E e)</code></td>
+      <td><code>E</code></td>
+      <td>Returns greatest element < given element.</td>
+      <td><code>treeSet.lower("B");</code></td>
+    </tr>
+    <tr>
+      <td><code>first()</code></td>
+      <td><code>E</code></td>
+      <td>Returns smallest element.</td>
+      <td><code>treeSet.first();</code></td>
+    </tr>
+    <tr>
+      <td><code>last()</code></td>
+      <td><code>E</code></td>
+      <td>Returns largest element.</td>
+      <td><code>treeSet.last();</code></td>
+    </tr>
+    <tr>
+      <td><code>headSet(E toElement)</code></td>
+      <td><code>SortedSet&lt;E&gt;</code></td>
+      <td>Returns all elements less than given element.</td>
+      <td><code>treeSet.headSet("C");</code></td>
+    </tr>
+    <tr>
+      <td><code>headSet(E toElement, boolean inclusive)</code></td>
+      <td><code>NavigableSet&lt;E&gt;</code></td>
+      <td>Returns elements ≤ given element if <code>inclusive</code> is true.</td>
+      <td><code>treeSet.headSet("C", true);</code></td>
+    </tr>
+    <tr>
+      <td><code>tailSet(E fromElement)</code></td>
+      <td><code>SortedSet&lt;E&gt;</code></td>
+      <td>Returns all elements ≥ given element.</td>
+      <td><code>treeSet.tailSet("B");</code></td>
+    </tr>
+    <tr>
+      <td><code>tailSet(E fromElement, boolean inclusive)</code></td>
+      <td><code>NavigableSet&lt;E&gt;</code></td>
+      <td>Returns elements ≥ given element, inclusive if true.</td>
+      <td><code>treeSet.tailSet("B", false);</code></td>
+    </tr>
+    <tr>
+      <td><code>subSet(E from, E to)</code></td>
+      <td><code>SortedSet&lt;E&gt;</code></td>
+      <td>Returns elements in range <code>[from, to)</code>.</td>
+      <td><code>treeSet.subSet("A", "C");</code></td>
+    </tr>
+    <tr>
+      <td><code>subSet(E from, boolean fromInclusive, E to, boolean toInclusive)</code></td>
+      <td><code>NavigableSet&lt;E&gt;</code></td>
+      <td>Returns range with custom bounds inclusivity.</td>
+      <td><code>treeSet.subSet("A", true, "C", false);</code></td>
+    </tr>
+    <tr>
+      <td><code>descendingSet()</code></td>
+      <td><code>NavigableSet&lt;E&gt;</code></td>
+      <td>Returns set in reverse order.</td>
+      <td><code>treeSet.descendingSet();</code></td>
+    </tr>
+    <tr>
+      <td><code>pollFirst()</code></td>
+      <td><code>E</code></td>
+      <td>Removes and returns first element.</td>
+      <td><code>treeSet.pollFirst();</code></td>
+    </tr>
+    <tr>
+      <td><code>pollLast()</code></td>
+      <td><code>E</code></td>
+      <td>Removes and returns last element.</td>
+      <td><code>treeSet.pollLast();</code></td>
+    </tr>
+    <tr>
+      <td><code>descendingIterator()</code></td>
+      <td><code>Iterator&lt;E&gt;</code></td>
+      <td>Returns iterator in reverse order.</td>
+      <td><code>Iterator&lt;String&gt; it = treeSet.descendingIterator();</code></td>
+    </tr>
+    <tr>
+      <td><code>comparator()</code></td>
+      <td><code>Comparator&lt;? super E&gt;</code></td>
+      <td>Returns comparator or <code>null</code> if natural ordering.</td>
+      <td><code>treeSet.comparator();</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Explanation:</strong> These methods allow powerful navigation of sorted elements, retrieval of subsets by range, and iteration in reverse order. For example, <code>ceiling()</code> finds the smallest element greater than or equal to the argument, useful for floor/ceiling operations in sorted sets.</p>
+
+<hr/>
+
+<h2>Summary and Notes</h2>
+
+<ul>
+  <li><strong>Set interface</strong> methods provide the standard operations for unique element collections.</li>
+  <li><code>HashSet</code> and <code>LinkedHashSet</code> don’t add unique public methods beyond those inherited; they differ in iteration order.</li>
+  <li><code>TreeSet</code> provides extensive navigation methods due to sorted order and implements <code>NavigableSet</code>.</li>
+  <li>Always remember that <code>Set</code> disallows duplicates and offers no index-based access.</li>
+  <li>Iteration order depends on implementation — unordered in <code>HashSet</code>, insertion order in <code>LinkedHashSet</code>, sorted order in <code>TreeSet</code>.</li>
+</ul>
+
+<hr>
+<h1>Java <code>Queue</code> Interface and Implementations</h1>
+
+<h2>1️⃣ Queue Interface</h2>
+
+<h3>Definition</h3>
+<p>
+  The <code>Queue</code> interface in Java (<code>java.util</code>) represents a collection designed for holding elements prior to processing,
+  typically following <strong>FIFO</strong> (First-In-First-Out) ordering.
+  Some implementations modify the ordering, e.g., <code>PriorityQueue</code> orders elements by priority.
+</p>
+
+<h3>Syntax</h3>
+<pre><code>Queue&lt;Type&gt; queueName = new LinkedList&lt;&gt;();
+Queue&lt;Type&gt; queueName = new PriorityQueue&lt;&gt;();</code></pre>
+<ul>
+  <li><code>Type</code> → Element type (e.g., Integer, String, custom class).</li>
+  <li>Implemented by classes like <code>LinkedList</code>, <code>PriorityQueue</code>, <code>ArrayDeque</code>, etc.</li>
+</ul>
+
+<h3>Characteristics</h3>
+<ol>
+  <li>Usually <strong>FIFO</strong>, but ordering depends on implementation.</li>
+  <li>No indexed access — elements are retrieved in queue order.</li>
+  <li>Supports methods like <code>offer()</code>, <code>poll()</code>, <code>peek()</code> in addition to <code>Collection</code> methods.</li>
+  <li>May or may not allow <code>null</code> (depends on implementation).</li>
+  <li>Performance depends on the underlying data structure.</li>
+</ol>
+
+<h3>Advantages</h3>
+<ul>
+  <li>Natural choice for task scheduling, buffering, and breadth-first algorithms.</li>
+  <li>Built-in methods make queue operations expressive and clean.</li>
+  <li>Supports both bounded and unbounded capacity implementations.</li>
+</ul>
+
+<h3>Disadvantages</h3>
+<ul>
+  <li>No random access like <code>List</code>.</li>
+  <li>Bounded queues’ <code>add()</code> may throw exceptions if full — use <code>offer()</code> for safe insertions.</li>
+</ul>
+
+<h3>When to Use</h3>
+<ul>
+  <li>Processing tasks in arrival order.</li>
+  <li>Implementing <strong>producer-consumer</strong> patterns.</li>
+  <li>Managing work pipelines or messaging systems.</li>
+</ul>
+
+<h3>When Not to Use</h3>
+<ul>
+  <li>If you need frequent random access — use a <code>List</code>.</li>
+  <li>If sorting is the main requirement — use a <code>List</code> or <code>TreeSet</code>.</li>
+</ul>
+
+<h3>Capacity</h3>
+<ul>
+  <li>Unbounded queues grow as needed.</li>
+  <li>Bounded queues (like <code>ArrayBlockingQueue</code>) have fixed capacity.</li>
+  <li>Some queues (like <code>ArrayDeque</code>) expand dynamically.</li>
+</ul>
+
+<h3>Underlying Data Structure</h3>
+<ul>
+  <li><code>LinkedList</code> → Doubly linked list</li>
+  <li><code>PriorityQueue</code> → Binary heap</li>
+  <li><code>ArrayDeque</code> → Resizable circular array</li>
+</ul>
+
+<hr/>
+
+<h2>2️⃣ LinkedList (as Queue)</h2>
+
+<h3>Definition</h3>
+<p>
+  <code>LinkedList</code> implements <code>Queue</code>, allowing <strong>FIFO</strong> operations while maintaining insertion order.
+</p>
+
+<h3>Syntax</h3>
+<pre><code>Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+queue.offer(10);
+queue.offer(20);</code></pre>
+
+<h3>Characteristics</h3>
+<ol>
+  <li>Maintains insertion order.</li>
+  <li>Allows <code>null</code> elements.</li>
+  <li>O(1) insertion/removal at head and tail.</li>
+</ol>
+
+<h3>Advantages</h3>
+<ul>
+  <li>Flexible: can act as <code>List</code> or <code>Deque</code>.</li>
+  <li>Good for frequent insertions/removals at both ends.</li>
+</ul>
+
+<h3>Disadvantages</h3>
+<ul>
+  <li>Higher memory overhead due to node objects and links.</li>
+  <li>Slightly slower access than array-based queues.</li>
+</ul>
+
+<h3>Capacity</h3>
+<p>Unbounded (limited only by memory).</p>
+
+<h3>Underlying Data Structure</h3>
+<p>Doubly linked list.</p>
+
+<hr/>
+
+<h2>3️⃣ PriorityQueue</h2>
+
+<h3>Definition</h3>
+<p>
+  <code>PriorityQueue</code> orders elements by their natural ordering or a custom <code>Comparator</code>.
+</p>
+
+<h3>Syntax</h3>
+<pre><code>Queue&lt;Integer&gt; pq = new PriorityQueue&lt;&gt;();
+Queue&lt;Integer&gt; customPQ = new PriorityQueue&lt;&gt;(Comparator.reverseOrder());</code></pre>
+
+<h3>Characteristics</h3>
+<ol>
+  <li>Not FIFO — ordered by priority.</li>
+  <li>Null elements are not allowed.</li>
+  <li><code>peek()</code> returns smallest (or highest priority) element.</li>
+</ol>
+
+<h3>Advantages</h3>
+<ul>
+  <li>Automatic sorting by priority.</li>
+  <li>O(log n) insertion and removal.</li>
+</ul>
+
+<h3>Disadvantages</h3>
+<ul>
+  <li>Iteration order is not sorted — only the head is guaranteed.</li>
+  <li>Slower than O(1) queues for insertion/removal.</li>
+</ul>
+
+<h3>Capacity</h3>
+<p>Default initial capacity is 11; grows automatically as needed.</p>
+
+<h3>Underlying Data Structure</h3>
+<p>Binary heap backed by array.</p>
+
+<hr/>
+
+<h2>4️⃣ ArrayDeque</h2>
+
+<h3>Definition</h3>
+<p>
+  <code>ArrayDeque</code> implements <code>Deque</code> (double-ended queue) backed by a resizable circular array.
+</p>
+
+<h3>Syntax</h3>
+<pre><code>Queue&lt;String&gt; adq = new ArrayDeque&lt;&gt;();</code></pre>
+
+<h3>Characteristics</h3>
+<ol>
+  <li>Maintains insertion order.</li>
+  <li>Null elements are not allowed.</li>
+  <li>Faster than <code>LinkedList</code> for most queue operations.</li>
+</ol>
+
+<h3>Advantages</h3>
+<ul>
+  <li>No capacity restrictions (auto-expands).</li>
+  <li>Fast O(1) amortized time for head/tail operations.</li>
+</ul>
+
+<h3>Disadvantages</h3>
+<ul>
+  <li>Not thread-safe.</li>
+  <li>No null elements allowed.</li>
+</ul>
+
+<h3>Capacity</h3>
+<p>Grows automatically, typically doubles capacity when needed.</p>
+
+<h3>Underlying Data Structure</h3>
+<p>Resizable circular array.</p>
+
+<hr/>
+
+<h2>5️⃣ Other Queue Implementations</h2>
+
+<h3>ConcurrentLinkedQueue</h3>
+<ul>
+  <li>Thread-safe, non-blocking FIFO queue.</li>
+  <li>Good for high-concurrency scenarios.</li>
+  <li>Unbounded capacity.</li>
+</ul>
+
+<h3>ArrayBlockingQueue</h3>
+<ul>
+  <li>Fixed-size, thread-safe blocking queue.</li>
+  <li>Blocks when full (on add) or empty (on poll).</li>
+</ul>
+
+<h3>DelayQueue</h3>
+<ul>
+  <li>Orders elements by delay expiration.</li>
+  <li>Useful for scheduling and timer tasks.</li>
+</ul>
+
+<h3>SynchronousQueue</h3>
+<ul>
+  <li>No internal storage — each insert waits for a remove and vice versa.</li>
+  <li>Used for thread handoff scenarios.</li>
+</ul>
+
+<hr/>
+
+<h2>🔍 Summary Table — Queue Implementations</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Implementation</th>
+      <th>Ordering</th>
+      <th>Nulls</th>
+      <th>Thread-safe</th>
+      <th>Growth</th>
+      <th>Backing Data Structure</th>
+      <th>Typical Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>LinkedList</td>
+      <td>FIFO</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Unbounded</td>
+      <td>Doubly linked list</td>
+      <td>Simple FIFO queue</td>
+    </tr>
+    <tr>
+      <td>PriorityQueue</td>
+      <td>Priority order</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Dynamic</td>
+      <td>Binary heap</td>
+      <td>Task scheduling by priority</td>
+    </tr>
+    <tr>
+      <td>ArrayDeque</td>
+      <td>FIFO</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Dynamic</td>
+      <td>Circular array</td>
+      <td>Fast head/tail operations</td>
+    </tr>
+    <tr>
+      <td>ConcurrentLinkedQueue</td>
+      <td>FIFO</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Unbounded</td>
+      <td>Linked nodes</td>
+      <td>Concurrent task queue</td>
+    </tr>
+    <tr>
+      <td>ArrayBlockingQueue</td>
+      <td>FIFO</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Fixed</td>
+      <td>Array</td>
+      <td>Bounded producer-consumer</td>
+    </tr>
+    <tr>
+      <td>DelayQueue</td>
+      <td>Delay expiry</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Dynamic</td>
+      <td>Priority queue</td>
+      <td>Delayed task execution</td>
+    </tr>
+    <tr>
+      <td>SynchronousQueue</td>
+      <td>Direct handoff</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>None</td>
+      <td>None</td>
+      <td>Thread handoff without storage</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h1>Java Collections: Queue Interface and Implementations</h1>
+<h2>1. <code>Queue</code> Interface (java.util.Queue) — Common Methods</h2>
+
+<p>These methods are available in all Queue implementations.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Return Type</th>
+      <th>Purpose</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>boolean add(E e)</code></td>
+      <td>boolean</td>
+      <td>Inserts the element into the queue; throws <code>IllegalStateException</code> if full.</td>
+      <td><code>queue.add("A");</code></td>
+    </tr>
+    <tr>
+      <td><code>boolean offer(E e)</code></td>
+      <td>boolean</td>
+      <td>Inserts element; returns <code>false</code> if full (preferred for bounded queues).</td>
+      <td><code>queue.offer("B");</code></td>
+    </tr>
+    <tr>
+      <td><code>E remove()</code></td>
+      <td>E</td>
+      <td>Retrieves and removes head; throws <code>NoSuchElementException</code> if empty.</td>
+      <td><code>queue.remove();</code></td>
+    </tr>
+    <tr>
+      <td><code>E poll()</code></td>
+      <td>E</td>
+      <td>Retrieves and removes head; returns <code>null</code> if empty.</td>
+      <td><code>queue.poll();</code></td>
+    </tr>
+    <tr>
+      <td><code>E element()</code></td>
+      <td>E</td>
+      <td>Retrieves (but does not remove) head; throws <code>NoSuchElementException</code> if empty.</td>
+      <td><code>queue.element();</code></td>
+    </tr>
+    <tr>
+      <td><code>E peek()</code></td>
+      <td>E</td>
+      <td>Retrieves (but does not remove) head; returns <code>null</code> if empty.</td>
+      <td><code>queue.peek();</code></td>
+    </tr>
+    <tr>
+      <td><code>int size()</code></td>
+      <td>int</td>
+      <td>Returns number of elements in queue.</td>
+      <td><code>queue.size();</code></td>
+    </tr>
+    <tr>
+      <td><code>boolean isEmpty()</code></td>
+      <td>boolean</td>
+      <td>Checks if queue is empty.</td>
+      <td><code>queue.isEmpty();</code></td>
+    </tr>
+    <tr>
+      <td><code>boolean contains(Object o)</code></td>
+      <td>boolean</td>
+      <td>Checks if queue contains element.</td>
+      <td><code>queue.contains("X");</code></td>
+    </tr>
+    <tr>
+      <td><code>Iterator&lt;E&gt; iterator()</code></td>
+      <td><code>Iterator&lt;E&gt;</code></td>
+      <td>Iterates through queue elements in order.</td>
+      <td><code>Iterator&lt;String&gt; it = queue.iterator();</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr/>
+
+<h2>2. <code>PriorityQueue</code> — Extra Methods</h2>
+<p><em>(Implements <code>Queue</code> + priority ordering)</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Return Type</th>
+      <th>Purpose</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>comparator()</code></td>
+      <td><code>Comparator&lt;? super E&gt;</code></td>
+      <td>Returns comparator used, or <code>null</code> if natural ordering.</td>
+      <td><code>pq.comparator();</code></td>
+    </tr>
+    <tr>
+      <td colspan="4"><em>Other queue methods behave according to priority order.</em></td>
+    </tr>
+  </tbody>
+</table>
+
+<hr/>
+
+<h2>3. <code>ArrayDeque</code> — Extra Methods</h2>
+<p><em>(Implements <code>Deque</code>, so supports double-ended operations)</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Return Type</th>
+      <th>Purpose</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>void addFirst(E e)</code></td><td>void</td><td>Inserts at front.</td><td><code>deque.addFirst("A");</code></td></tr>
+    <tr><td><code>void addLast(E e)</code></td><td>void</td><td>Inserts at rear.</td><td><code>deque.addLast("B");</code></td></tr>
+    <tr><td><code>boolean offerFirst(E e)</code></td><td>boolean</td><td>Offers at front; returns false if full.</td><td><code>deque.offerFirst("C");</code></td></tr>
+    <tr><td><code>boolean offerLast(E e)</code></td><td>boolean</td><td>Offers at rear.</td><td><code>deque.offerLast("D");</code></td></tr>
+    <tr><td><code>E removeFirst()</code></td><td>E</td><td>Removes front; throws exception if empty.</td><td><code>deque.removeFirst();</code></td></tr>
+    <tr><td><code>E removeLast()</code></td><td>E</td><td>Removes rear; throws exception if empty.</td><td><code>deque.removeLast();</code></td></tr>
+    <tr><td><code>E pollFirst()</code></td><td>E</td><td>Removes front; returns null if empty.</td><td><code>deque.pollFirst();</code></td></tr>
+    <tr><td><code>E pollLast()</code></td><td>E</td><td>Removes rear; returns null if empty.</td><td><code>deque.pollLast();</code></td></tr>
+    <tr><td><code>E getFirst()</code></td><td>E</td><td>Retrieves front without removing; throws exception if empty.</td><td><code>deque.getFirst();</code></td></tr>
+    <tr><td><code>E getLast()</code></td><td>E</td><td>Retrieves rear without removing; throws exception if empty.</td><td><code>deque.getLast();</code></td></tr>
+    <tr><td><code>E peekFirst()</code></td><td>E</td><td>Retrieves front without removing; returns null if empty.</td><td><code>deque.peekFirst();</code></td></tr>
+    <tr><td><code>E peekLast()</code></td><td>E</td><td>Retrieves rear without removing; returns null if empty.</td><td><code>deque.peekLast();</code></td></tr>
+    <tr><td><code>boolean removeFirstOccurrence(Object o)</code></td><td>boolean</td><td>Removes first occurrence of given element.</td><td><code>deque.removeFirstOccurrence("X");</code></td></tr>
+    <tr><td><code>boolean removeLastOccurrence(Object o)</code></td><td>boolean</td><td>Removes last occurrence of given element.</td><td><code>deque.removeLastOccurrence("X");</code></td></tr>
+  </tbody>
+</table>
+
+<hr/>
+
+<h2>4. <code>LinkedList</code> (as Queue) — Notes</h2>
+
+<ul>
+  <li>
+    Implements <code>List</code>, <code>Deque</code>, and <code>Queue</code> interfaces — thus supports methods from all:
+    <ul>
+      <li><strong>Queue interface</strong> (as above)</li>
+      <li><strong>Deque interface</strong> (like <code>ArrayDeque</code>)</li>
+      <li><strong>List interface</strong> (index-based operations)</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>Queue&lt;String&gt; queue = new LinkedList&lt;&gt;();
+queue.offer("A");
+queue.offer("B");
+System.out.println(queue.poll()); // Output: A
+System.out.println(queue.peek()); // Output: B
+</code></pre>
+
+<hr/>
+
+<h3>Additional Points / Explanation</h3>
+<ul>
+  <li><strong>add() vs offer():</strong> Both insert elements, but <code>add()</code> throws exception if queue is full (bounded queues), whereas <code>offer()</code> returns false, making it safer for bounded queues.</li>
+  <li><strong>remove() vs poll():</strong> Both remove and return head element; <code>remove()</code> throws exception if empty, <code>poll()</code> returns null.</li>
+  <li><strong>element() vs peek():</strong> Both retrieve (but don’t remove) head element; <code>element()</code> throws exception if empty, <code>peek()</code> returns null.</li>
+  <li><strong>ArrayDeque and LinkedList</strong> are the most common queue implementations, with ArrayDeque generally faster and preferred if no nulls and no thread safety required.</li>
+  <li><strong>Thread safety:</strong> None of these implementations are thread-safe by default; for thread-safe queues, consider classes from <code>java.util.concurrent</code> package like <code>ConcurrentLinkedQueue</code>, <code>ArrayBlockingQueue</code>, etc.</li>
+</ul>
+
+<hr>
+
+<h1>Java <code>Map</code> Interface and Implementations</h1>
+<h2>1️⃣ Map Interface (java.util.Map)</h2>
+
+<h3>Definition</h3>
+<p>The <code>Map</code> interface represents a <strong>collection of key-value pairs</strong> where:</p>
+<ul>
+  <li><strong>Keys</strong> are unique (no duplicates).</li>
+  <li>Each key maps to at most <strong>one value</strong>.</li>
+  <li>Keys can be null (depending on implementation), values can be null (except in <code>Hashtable</code>).</li>
+</ul>
+
+<h3>Syntax</h3>
+<pre><code>Map&lt;KeyType, ValueType&gt; mapName = new HashMap&lt;&gt;();
+Map&lt;KeyType, ValueType&gt; mapName = new TreeMap&lt;&gt;();</code></pre>
+
+<h3>Characteristics</h3>
+<ul>
+  <li>No duplicate keys — inserting an existing key replaces the old value.</li>
+  <li>Values can be duplicated.</li>
+  <li>No positional index — accessed via keys.</li>
+  <li>Ordering depends on implementation (unordered, insertion-order, or sorted).</li>
+  <li>Provides collection views:
+    <ul>
+      <li><code>keySet()</code> — set of keys</li>
+      <li><code>values()</code> — collection of values</li>
+      <li><code>entrySet()</code> — set of key-value pairs</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>Advantages</h3>
+<ul>
+  <li>Fast key-based lookup.</li>
+  <li>Flexible — choose ordering and performance by selecting implementation.</li>
+  <li>Can store null keys/values in some implementations.</li>
+</ul>
+
+<h3>Disadvantages</h3>
+<ul>
+  <li>No indexed access like a list.</li>
+  <li>Memory overhead for key-value object wrappers.</li>
+</ul>
+
+<h3>When to Use</h3>
+<ul>
+  <li>Associating keys with values (like a dictionary).</li>
+  <li>Caching, lookup tables, configuration storage.</li>
+</ul>
+
+<h3>When Not to Use</h3>
+<ul>
+  <li>If you need ordered sequential data without keys → use <code>List</code>.</li>
+  <li>If multiple duplicate keys needed → use <code>Multimap</code> (Guava) or <code>Map&lt;K, List&lt;V&gt;&gt;</code> pattern.</li>
+</ul>
+
+<h3>Capacity</h3>
+<ul>
+  <li><strong>Initial Capacity:</strong> Starting bucket size (HashMap default = 16).</li>
+  <li><strong>Load Factor:</strong> Threshold to resize (default 0.75 in HashMap).</li>
+  <li><strong>Incremental Growth:</strong> Capacity usually doubles when threshold exceeded.</li>
+</ul>
+
+<h3>Underlying Data Structure</h3>
+<ul>
+  <li><code>HashMap</code>, <code>Hashtable</code> — hash table (array + linked list/tree bins for Java 8+).</li>
+  <li><code>LinkedHashMap</code> — hash table + doubly linked list.</li>
+  <li><code>TreeMap</code> — Red-Black Tree.</li>
+  <li><code>EnumMap</code> — array indexed by enum ordinal.</li>
+</ul>
+
+<hr/>
+
+<h2>2️⃣ HashMap</h2>
+
+<h3>Definition</h3>
+<p>Unordered map using <strong>hashing</strong> for key lookup.</p>
+
+<h3>Syntax</h3>
+<pre><code>Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+map.put("A", 1);</code></pre>
+
+<h3>Characteristics</h3>
+<ul>
+  <li>Allows one <code>null</code> key and multiple null values.</li>
+  <li>Unordered iteration.</li>
+  <li>O(1) average time for <code>get</code> and <code>put</code> (worst case O(log n) due to tree bins).</li>
+</ul>
+
+<h3>Advantages</h3>
+<ul>
+  <li>Very fast for large datasets.</li>
+  <li>Allows null key.</li>
+</ul>
+
+<h3>Disadvantages</h3>
+<ul>
+  <li>No ordering guarantee.</li>
+  <li>Not thread-safe.</li>
+</ul>
+
+<h3>Capacity</h3>
+<ul>
+  <li>Default initial capacity = 16.</li>
+  <li>Load factor = 0.75, resizes by doubling capacity.</li>
+</ul>
+
+<h3>Underlying Data Structure</h3>
+<p>Hash table with array + linked list/tree bins.</p>
+
+<hr/>
+
+<h2>3️⃣ LinkedHashMap</h2>
+
+<h3>Definition</h3>
+<p>Ordered version of <code>HashMap</code> — maintains <strong>insertion order</strong> or <strong>access order</strong>.</p>
+
+<h3>Syntax</h3>
+<pre><code>Map&lt;String, Integer&gt; map = new LinkedHashMap&lt;&gt;();</code></pre>
+
+<h3>Characteristics</h3>
+<ul>
+  <li>Allows null key.</li>
+  <li>Predictable iteration order.</li>
+  <li>Slightly slower than <code>HashMap</code> due to ordering overhead.</li>
+</ul>
+
+<h3>Advantages</h3>
+<ul>
+  <li>Preserves order.</li>
+  <li>Supports LRU caches using access-order mode.</li>
+</ul>
+
+<h3>Disadvantages</h3>
+<ul>
+  <li>More memory overhead than <code>HashMap</code>.</li>
+</ul>
+
+<h3>Underlying Data Structure</h3>
+<p>Hash table + doubly linked list.</p>
+
+<hr/>
+
+<h2>4️⃣ TreeMap</h2>
+
+<h3>Definition</h3>
+<p>Sorted map implemented with a <strong>Red-Black Tree</strong>.</p>
+
+<h3>Syntax</h3>
+<pre><code>Map&lt;String, Integer&gt; map = new TreeMap&lt;&gt;();
+Map&lt;String, Integer&gt; customMap = new TreeMap&lt;&gt;(Comparator.reverseOrder());</code></pre>
+
+<h3>Characteristics</h3>
+<ul>
+  <li>No <code>null</code> keys allowed; multiple null values allowed.</li>
+  <li>Keys sorted by natural order or custom comparator.</li>
+  <li>O(log n) time for <code>get</code> and <code>put</code>.</li>
+</ul>
+
+<h3>Advantages</h3>
+<ul>
+  <li>Automatically sorted keys.</li>
+</ul>
+
+<h3>Disadvantages</h3>
+<ul>
+  <li>Slower than <code>HashMap</code> for large data.</li>
+</ul>
+
+<h3>Underlying Data Structure</h3>
+<p>Red-Black Tree.</p>
+
+<hr/>
+
+<h2>5️⃣ Hashtable</h2>
+
+<h3>Definition</h3>
+<p>Legacy synchronized map.</p>
+
+<h3>Characteristics</h3>
+<ul>
+  <li>No <code>null</code> keys or values allowed.</li>
+  <li>Thread-safe but slower.</li>
+</ul>
+
+<h3>When to Use</h3>
+<p>Rarely; prefer <code>ConcurrentHashMap</code> for concurrency.</p>
+
+<hr/>
+
+<h2>6️⃣ Other Map Implementations</h2>
+<ul>
+  <li><strong>ConcurrentHashMap</strong> — thread-safe, high concurrency, segmented locking.</li>
+  <li><strong>WeakHashMap</strong> — keys eligible for GC when no longer referenced.</li>
+  <li><strong>IdentityHashMap</strong> — compares keys by reference (<code>==</code>) instead of <code>equals()</code>.</li>
+  <li><strong>EnumMap</strong> — optimized for enum keys, backed by an array.</li>
+</ul>
+
+<hr/>
+
+<h2>🔍 Summary Table — Map Implementations</h2>
+
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Implementation</th>
+      <th>Ordering</th>
+      <th>Null Key</th>
+      <th>Null Value</th>
+      <th>Thread-safe</th>
+      <th>Growth</th>
+      <th>Backing DS</th>
+      <th>Use Case</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HashMap</td>
+      <td>None</td>
+      <td>1</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Dynamic</td>
+      <td>Hash table</td>
+      <td>General-purpose key-value</td>
+    </tr>
+    <tr>
+      <td>LinkedHashMap</td>
+      <td>Insertion/Access</td>
+      <td>1</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Dynamic</td>
+      <td>Hash + Doubly linked list</td>
+      <td>Predictable iteration, LRU cache</td>
+    </tr>
+    <tr>
+      <td>TreeMap</td>
+      <td>Sorted</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Dynamic</td>
+      <td>Red-Black Tree</td>
+      <td>Sorted keys</td>
+    </tr>
+    <tr>
+      <td>Hashtable</td>
+      <td>None</td>
+      <td>No</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Dynamic</td>
+      <td>Hash table</td>
+      <td>Legacy synchronized map</td>
+    </tr>
+    <tr>
+      <td>ConcurrentHashMap</td>
+      <td>None</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Dynamic</td>
+      <td>Segmented hash</td>
+      <td>High concurrency</td>
+    </tr>
+    <tr>
+      <td>WeakHashMap</td>
+      <td>None</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Dynamic</td>
+      <td>Hash + weak references</td>
+      <td>Auto-remove GC-collected keys</td>
+    </tr>
+    <tr>
+      <td>IdentityHashMap</td>
+      <td>None</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Dynamic</td>
+      <td>Hash table</td>
+      <td>Key identity-based mapping</td>
+    </tr>
+    <tr>
+      <td>EnumMap</td>
+      <td>Natural (enum)</td>
+      <td>No</td>
+      <td>Yes</td>
+      <td>No</td>
+      <td>Fixed size</td>
+      <td>Array</td>
+      <td>Enum keys only, fast lookup</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<h1>Java Collections: Map Interface and Implementations</h1>
+<h2>📌 Map in Java</h2>
+
+<p>A <strong>Map</strong> in Java is <strong>not</strong> part of the <code>Collection</code> interface but belongs to a separate hierarchy.<br>
+It stores <strong>key–value pairs</strong> — each key is <strong>unique</strong>, and each key maps to exactly <strong>one value</strong>.</p>
+
+<hr/>
+
+<h3>Hierarchy</h3>
+<pre><code>Map&lt;K, V&gt; (interface)
+    |
+    +-- HashMap
+    +-- LinkedHashMap
+    +-- TreeMap
+    +-- Hashtable
+</code></pre>
+
+<hr/>
+
+<h3>Key Points</h3>
+<ul>
+  <li>Keys <strong>must be unique</strong> (if duplicate key is inserted, old value is replaced).</li>
+  <li>Values <strong>can be duplicated</strong>.</li>
+  <li>Allows <strong>null</strong> keys and values (implementation-dependent):
+    <ul>
+      <li><code>HashMap</code> → 1 null key, multiple null values allowed.</li>
+      <li><code>Hashtable</code> → no null keys or values allowed.</li>
+      <li><code>TreeMap</code> → no null keys (throws <code>NullPointerException</code>), null values allowed if comparator supports.</li>
+    </ul>
+  </li>
+</ul>
+
+<hr/>
+
+<h3>Main Methods</h3>
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>put(K key, V value)</code></td>
+      <td>Adds or updates a key-value pair.</td>
+    </tr>
+    <tr>
+      <td><code>putIfAbsent(K key, V value)</code></td>
+      <td>Adds the pair only if the key is not already present.</td>
+    </tr>
+    <tr>
+      <td><code>get(Object key)</code></td>
+      <td>Returns the value mapped to the given key.</td>
+    </tr>
+    <tr>
+      <td><code>getOrDefault(Object key, V defaultValue)</code></td>
+      <td>Returns the value for the key or a default value if key not found.</td>
+    </tr>
+    <tr>
+      <td><code>remove(Object key)</code></td>
+      <td>Removes the mapping for the key.</td>
+    </tr>
+    <tr>
+      <td><code>containsKey(Object key)</code></td>
+      <td>Checks if the map contains the specified key.</td>
+    </tr>
+    <tr>
+      <td><code>containsValue(Object value)</code></td>
+      <td>Checks if the map contains the specified value.</td>
+    </tr>
+    <tr>
+      <td><code>keySet()</code></td>
+      <td>Returns a <code>Set</code> view of the keys.</td>
+    </tr>
+    <tr>
+      <td><code>values()</code></td>
+      <td>Returns a <code>Collection</code> view of the values.</td>
+    </tr>
+    <tr>
+      <td><code>entrySet()</code></td>
+      <td>Returns a <code>Set</code> view of key-value mappings.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr/>
+
+<h3>Example: Using HashMap</h3>
+<pre><code>import java.util.*;
+
+public class MapExample {
+    public static void main(String[] args) {
+        Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+
+        // Adding entries
+        map.put(1, "Apple");
+        map.put(2, "Banana");
+        map.put(3, "Cherry");
+
+        // Duplicate key (replaces value)
+        map.put(2, "Blueberry");
+
+        // Accessing
+        System.out.println("Key 2 → " + map.get(2));
+
+        // Checking
+        System.out.println("Contains key 3? " + map.containsKey(3));
+
+        // Iterating using entrySet()
+        for (Map.Entry&lt;Integer, String&gt; entry : map.entrySet()) {
+            System.out.println(entry.getKey() + " → " + entry.getValue());
+        }
+    }
+}
+</code></pre>
+
+<h4>Output</h4>
+<pre><code>Key 2 → Blueberry
+Contains key 3? true
+1 → Apple
+2 → Blueberry
+3 → Cherry
+</code></pre>
+
+<hr/>
+
+<h3>Types of Map Implementations</h3>
+<table border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Implementation</th>
+      <th>Ordering</th>
+      <th>Null Keys</th>
+      <th>Thread-Safe?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>HashMap</strong></td>
+      <td>No ordering</td>
+      <td>1 null key allowed</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><strong>LinkedHashMap</strong></td>
+      <td>Maintains insertion order</td>
+      <td>1 null key allowed</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><strong>TreeMap</strong></td>
+      <td>Sorted by keys (natural order or comparator)</td>
+      <td>No null keys allowed</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td><strong>Hashtable</strong></td>
+      <td>No ordering</td>
+      <td>No null keys or values allowed</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr/>
+
+<h3>Additional Notes</h3>
+<ul>
+  <li><strong>Thread Safety:</strong> Most implementations (except <code>Hashtable</code> and <code>ConcurrentHashMap</code>) are <em>not</em> thread-safe. Use synchronization or concurrent collections for multithreaded access.</li>
+  <li><strong>Iteration:</strong> Iteration order depends on implementation (unordered, insertion order, or sorted).</li>
+  <li><strong>Null Handling:</strong> Be mindful of null keys and values, as some implementations disallow them.</li>
+</ul>
+
+<hr>
+
 </body>
 </html>
