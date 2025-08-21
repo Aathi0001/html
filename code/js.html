@@ -4,6 +4,79 @@
      <meta charset="UTF-8">
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Document</title>
+     <style>
+   body { 
+    font-family: Arial, sans-serif; 
+    line-height: 1.6; 
+    background: #f9f9f9; 
+    padding: 20px; 
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+pre, table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+
+/* Headings with unique border colors */
+h1 { 
+    color: #2c3e50; 
+    border-left: 6px solid #3498db; /* blue */
+    padding-left: 12px; 
+}
+
+h2 { 
+    color: #2c3e50; 
+    border-left: 6px solid #e67e22; /* orange */
+    padding-left: 10px; 
+}
+
+h3 { 
+    color: #2c3e50; 
+    border-left: 6px solid #27ae60; /* green */
+    padding-left: 8px; 
+}
+
+pre { 
+    background: #2d2d2d; 
+    color: #f8f8f2; 
+    padding: 10px; 
+    border-radius: 5px; 
+    overflow-x: auto; 
+}
+
+code { 
+    font-family: Consolas, monospace; 
+}
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+
+.note { 
+    background: #e8f4fd; 
+    padding: 10px; 
+    border-left: 4px solid #3498db; 
+    margin: 10px 0; 
+}
+
+</style>
 </head>
 <body>
      <h1>JavaScript</h1>
@@ -99,6 +172,4793 @@
      function greet() { console.log("Hello!"); }</code></p>
      <p>4. <strong>Date, RegExp, Map, Set, WeakMap, WeakSet, etc.</strong> – Built-in complex objects in JS.</p>
 
-     <script src="./javascript.js"></script>
+     <h2>Primitive vs Non-Primitive Data Types in JavaScript</h2>
+
+<table  cellpadding="6" cellspacing="0">
+    <thead>
+        <tr>
+            <th>Feature</th>
+            <th>Primitive Data Types</th>
+            <th>Non-Primitive Data Types</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Definition</td>
+            <td>Immutable values; stored directly in the variable.</td>
+            <td>Mutable objects; variables store a reference to the value.</td>
+        </tr>
+        <tr>
+            <td>Examples</td>
+            <td>String, Number, Boolean, Null, Undefined, Symbol, BigInt</td>
+            <td>Objects, Arrays, Functions</td>
+        </tr>
+        <tr>
+            <td>Mutability</td>
+            <td>Immutable (cannot be changed after creation)</td>
+            <td>Mutable (can be modified after creation)</td>
+        </tr>
+        <tr>
+            <td>Stored</td>
+            <td>Stored in Stack memory</td>
+            <td>Stored in Heap memory (reference stored in stack)</td>
+        </tr>
+        <tr>
+            <td>Comparison</td>
+            <td>Compared by value</td>
+            <td>Compared by reference</td>
+        </tr>
+        <tr>
+            <td>Size</td>
+            <td>Fixed size</td>
+            <td>Dynamic size</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<hr>
+
+<h1>JavaScript Scope</h1>
+<p>Scope determines where variables and functions are accessible in your code. It’s like the “visibility” or “lifetime” of a variable.</p>
+
+<hr>
+
+<h2>1. Types of Scope</h2>
+
+<h3>1. Global Scope</h3>
+<p>Declared outside any function or block. Accessible from anywhere.</p>
+<pre><code>let globalVar = "I am global";
+
+function show() {
+  console.log(globalVar); // ✅ accessible here
+}
+
+show();
+console.log(globalVar); // ✅ accessible here too
+</code></pre>
+
+<h3>2. Function Scope (Local Scope)</h3>
+<p>Variables declared inside a function are only accessible within that function.</p>
+<pre><code>function myFunc() {
+  var name = "Aathi";
+  console.log(name); // ✅ accessible here
+}
+
+myFunc();
+console.log(name); // ❌ ReferenceError
+</code></pre>
+
+<h3>3. Block Scope</h3>
+<p>Variables declared with <code>let</code> or <code>const</code> inside <code>{ }</code> are only accessible inside that block.</p>
+<pre><code>{
+  let blockVar = "Inside block";
+  console.log(blockVar); // ✅
+}
+console.log(blockVar); // ❌ ReferenceError
+</code></pre>
+
+<h3>4. Lexical Scope</h3>
+<p>Inner functions can access variables from their outer function.</p>
+<pre><code>function outer() {
+  let outerVar = "Outer";
+
+  function inner() {
+    console.log(outerVar); // ✅ Accessible due to lexical scope
+  }
+
+  inner();
+}
+
+outer();
+</code></pre>
+
+<h3>5. Script Scope</h3>
+<p>Top-level <code>let</code> and <code>const</code> in a non-module script are not attached to <code>window</code> but still accessible in the same script.</p>
+<pre><code>&lt;script&gt;
+var a = 1;
+let b = 2;
+const c = 3;
+
+console.log(window.a); // ✅ 1
+console.log(window.b); // ❌ undefined
+console.log(window.c); // ❌ undefined
+&lt;/script&gt;
+</code></pre>
+
+<hr>
+
+<h2>2. Special Concepts</h2>
+
+<h3>A. Hoisting</h3>
+<pre><code>console.log(a); // undefined
+var a = 5;
+
+console.log(b); // ❌ ReferenceError
+let b = 10;
+</code></pre>
+
+<h3>B. Scope Chain</h3>
+<p>When a variable is used, JavaScript looks in the current scope, then parent scopes, up to the global scope.</p>
+
+<h3>C. Closures</h3>
+<pre><code>function outer() {
+  let count = 0;
+  return function () {
+    count++;
+    console.log(count);
+  };
+}
+
+const counter = outer();
+counter(); // 1
+counter(); // 2
+</code></pre>
+
+<hr>
+
+<h2>3. Summary Table</h2>
+<table>
+<tr>
+  <th>Type</th>
+  <th>Declared With</th>
+  <th>Accessible Where?</th>
+  <th>Example Use</th>
+</tr>
+<tr>
+  <td>Global Scope</td>
+  <td>Anywhere</td>
+  <td>Everywhere</td>
+  <td>Config variables</td>
+</tr>
+<tr>
+  <td>Function Scope</td>
+  <td>var, function</td>
+  <td>Inside the function only</td>
+  <td>Private function data</td>
+</tr>
+<tr>
+  <td>Block Scope</td>
+  <td>let, const</td>
+  <td>Inside { } only</td>
+  <td>Loop counters</td>
+</tr>
+<tr>
+  <td>Lexical Scope</td>
+  <td>Function inside function</td>
+  <td>Inner can access outer</td>
+  <td>Closures</td>
+</tr>
+<tr>
+  <td>Script Scope</td>
+  <td>let, const (top-level)</td>
+  <td>Script-wide, not on window</td>
+  <td>Safer global variables</td>
+</tr>
+</table>
+
+<div class="note"><strong>Note:</strong> If we assign a value to a variable which is not declared automatically it will become global variable.
+<pre>
+     Eg: a= 100;  -> Global Scope
+</pre>
+
+<table>
+    <tr>
+        <th>Declared in script</th>
+        <th>Scope type</th>
+        <th>Added to <code>window</code>?</th>
+        <th>Common name</th>
+    </tr>
+    <tr>
+        <td><code>var x = 1;</code></td>
+        <td>Global scope</td>
+        <td>✅ Yes</td>
+        <td><strong>True global variable</strong></td>
+    </tr>
+    <tr>
+        <td><code>let y = 2;</code></td>
+        <td>Global scope (script scope)</td>
+        <td>❌ No</td>
+        <td><em>Global (script-scoped) variable</em></td>
+    </tr>
+    <tr>
+        <td><code>const z = 3;</code></td>
+        <td>Global scope (script scope)</td>
+        <td>❌ No</td>
+        <td><em>Global (script-scoped) constant</em></td>
+    </tr>
+</table>
+
+<p>
+    <strong>var</strong> → True global variable (in normal scripts) — accessible everywhere and attached to <code>window</code>.
+</p>
+<p>
+    <strong>let</strong> and <strong>const</strong> → Top-level variables in a script, but not true globals — they are script-scoped and not properties of <code>window</code>.
+</p>
+
+</div>
+
+<hr>
+
+<section>
+    <h2>JavaScript typeof Operator</h2>
+    <p>The <code>typeof</code> operator returns a string indicating the type of the operand.</p>
+    <p>It always return String</p>
+
+    <h3>Syntax</h3>
+    <pre><code>typeof operand
+typeof (operand)</code></pre>
+
+    <h3>Return Values</h3>
+    <table  cellpadding="5">
+        <tr><th>Example</th><th>Result</th></tr>
+        <tr><td><code>typeof 42</code></td><td>"number"</td></tr>
+        <tr><td><code>typeof "Hello"</code></td><td>"string"</td></tr>
+        <tr><td><code>typeof typeof true</code></td><td>"String"</td></tr>
+        <tr><td><code>typeof true</code></td><td>"boolean"</td></tr>
+        <tr><td><code>typeof undefined</code></td><td>"undefined"</td></tr>
+        <tr><td><code>typeof {}</code></td><td>"object"</td></tr>
+        <tr><td><code>typeof []</code></td><td>"object"</td></tr>
+        <tr><td><code>typeof function() {}</code></td><td>"function"</td></tr>
+        <tr><td><code>typeof null</code></td><td>"object" (quirk)</td></tr>
+        <tr><td><code>typeof Symbol("id")</code></td><td>"symbol"</td></tr>
+        <tr><td><code>typeof BigInt(123)</code></td><td>"bigint"</td></tr>
+    </table>
+
+    <h3>Key Points</h3>
+    <ul>
+        <li><code>typeof null</code> returns <code>"object"</code> — a historical bug.</li>
+        <li>Arrays return <code>"object"</code> — use <code>Array.isArray()</code> to check.</li>
+        <li>Functions return <code>"function"</code>, but are still objects internally.</li>
+        <li>Works on undeclared variables without error.</li>
+    </ul>
+
+    <h3>Example</h3>
+    <pre><code>let num = 42;
+console.log(typeof num); // "number"
+
+let greeting = "Hello";
+console.log(typeof greeting); // "string"
+
+let isActive = true;
+console.log(typeof isActive); // "boolean"
+
+let data = null;
+console.log(typeof data); // "object"
+</code></pre>
+</section>
+
+<hr>
+
+<section>
+  <h2>JavaScript: <code>null</code> and <code>undefined</code></h2>
+
+  <h3>📌 Difference between <code>null</code> and <code>undefined</code></h3>
+  <table  cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Property</th>
+        <th><code>null</code></th>
+        <th><code>undefined</code></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Type (typeof)</td>
+        <td><code>"object"</code> (legacy bug in JavaScript)</td>
+        <td><code>"undefined"</code></td>
+      </tr>
+      <tr>
+        <td>Meaning</td>
+        <td>Intentional absence of any value / Empty value</td>
+        <td>Variable declared but not assigned any value</td>
+      </tr>
+      <tr>
+        <td>Default value</td>
+        <td>No</td>
+        <td>Yes — uninitialized variables are <code>undefined</code> by default</td>
+      </tr>
+      <tr>
+        <td>Example</td>
+        <td><code>let a = null;</code></td>
+        <td><code>let b;</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pre><code>// Example:
+let a = null;
+let b;
+console.log(typeof a); // "object"
+console.log(typeof b); // "undefined"
+</code></pre>
+</section>
+
+<hr>
+
+<h2>JavaScript Operators</h2>
+
+<p>Operators in JavaScript are special symbols used to perform operations on values and variables. They are classified into different types based on their functionality.</p>
+
+<h3>1. Arithmetic Operators</h3>
+<ul>
+    <li><strong>+</strong> → Addition</li>
+    <li><strong>-</strong> → Subtraction</li>
+    <li><strong>*</strong> → Multiplication</li>
+    <li><strong>/</strong> → Division</li>
+    <li><strong>%</strong> → Modulus (Remainder)</li>
+    <li><strong>**</strong> → Exponentiation</li>
+    <li><strong>++</strong> → Increment</li>
+    <li><strong>--</strong> → Decrement</li>
+</ul>
+
+<section>
+    <h3>Increment & Decrement Operators</h3>
+    <p>These operators are used to increase or decrease a variable's value by 1.</p>
+
+    <table  cellpadding="5">
+        <tr>
+            <th>Operator</th>
+            <th>Name</th>
+            <th>When Value is Changed</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><code>a++</code></td>
+            <td>Post-increment</td>
+            <td>Value is returned first, then incremented</td>
+            <td><code>let a = 5; console.log(a++); // 5, a becomes 6</code></td>
+        </tr>
+        <tr>
+            <td><code>++a</code></td>
+            <td>Pre-increment</td>
+            <td>Value is incremented first, then returned</td>
+            <td><code>let a = 5; console.log(++a); // 6, a is 6</code></td>
+        </tr>
+        <tr>
+            <td><code>a--</code></td>
+            <td>Post-decrement</td>
+            <td>Value is returned first, then decremented</td>
+            <td><code>let a = 5; console.log(a--); // 5, a becomes 4</code></td>
+        </tr>
+        <tr>
+            <td><code>--a</code></td>
+            <td>Pre-decrement</td>
+            <td>Value is decremented first, then returned</td>
+            <td><code>let a = 5; console.log(--a); // 4, a is 4</code></td>
+        </tr>
+    </table>
+</section>
+
+<pre><code>let a = 10, b = 3;
+console.log(a + b);  // 13
+console.log(a % b);  // 1
+console.log(a ** b); // 1000
+</code></pre>
+
+<h3>2. Assignment Operators</h3>
+<ul>
+    <li><strong>=</strong> → Assign</li>
+    <li><strong>+=</strong> → Add and assign</li>
+    <li><strong>-=</strong> → Subtract and assign</li>
+    <li><strong>*=</strong> → Multiply and assign</li>
+    <li><strong>/=</strong> → Divide and assign</li>
+    <li><strong>%=</strong> → Modulus and assign</li>
+    <li><strong>**=</strong> → Exponentiation and assign</li>
+</ul>
+<pre><code>let x = 5;
+x += 3; // x = 8
+</code></pre>
+
+<h3>3. Comparison Operators</h3>
+<ul>
+    <li><strong>==</strong> → Equal to (loose)</li>
+    <li><strong>===</strong> → Equal to (strict, checks type)</li>
+    <li><strong>!=</strong> → Not equal to (loose)</li>
+    <li><strong>!==</strong> → Not equal to (strict)</li>
+    <li><strong>&gt;</strong> → Greater than</li>
+    <li><strong>&lt;</strong> → Less than</li>
+    <li><strong>&gt;=</strong> → Greater than or equal to</li>
+    <li><strong>&lt;=</strong> → Less than or equal to</li>
+</ul>
+<pre><code>console.log(5 == '5');  // true
+console.log(5 === '5'); // false
+</code></pre>
+
+<h3>4. Logical Operators</h3>
+<ul>
+    <li><strong>&amp;&amp;</strong> → Logical AND</li>
+    <li><strong>||</strong> → Logical OR</li>
+    <li><strong>!</strong> → Logical NOT</li>
+</ul>
+<pre><code>console.log(true && false); // false
+console.log(true || false); // true
+console.log(!true);         // false
+</code></pre>
+
+<h3>5. Bitwise Operators</h3>
+<ul>
+    <li><strong>&amp;</strong> → AND</li>
+    <li><strong>|</strong> → OR</li>
+    <li><strong>^</strong> → XOR</li>
+    <li><strong>~</strong> → NOT</li>
+    <li><strong>&lt;&lt;</strong> → Left shift</li>
+    <li><strong>&gt;&gt;</strong> → Right shift</li>
+    <li><strong>&gt;&gt;&gt;</strong> → Unsigned right shift</li>
+</ul>
+<pre><code>console.log(5 & 1);  // 1
+console.log(5 | 1);  // 5
+console.log(5 ^ 1);  // 4
+</code></pre>
+
+<h3>6. Ternary Operator</h3>
+<p>Used for conditional expressions in a single line.</p>
+<pre><code>let age = 18;
+let result = (age >= 18) ? "Adult" : "Minor";
+console.log(result); // Adult
+</code></pre>
+
+<h3>7. typeof Operator</h3>
+<p>Returns the type of a variable.</p>
+<pre><code>console.log(typeof 123);      // number
+console.log(typeof "Hello");  // string
+console.log(typeof null);     // object (JavaScript quirk)
+</code></pre>
+
+<hr>
+
+<!-- ================== JavaScript Control Flow ================== -->
+<div class="topic">
+    <h2>⚡ JavaScript Control Flow</h2>
+    <p>Control flow determines the <b>order</b> in which statements are executed in a program.</p>
+
+    <h3>1️⃣ Conditional Statements</h3>
+    <table  cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Statement</th>
+            <th>Example</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>if</code></td>
+            <td>
+<pre>
+if (age >= 18) {
+    console.log("Adult");
+}
+</pre>
+            </td>
+            <td>Executes block if condition is true.</td>
+        </tr>
+        <tr>
+            <td><code>if...else</code></td>
+            <td>
+<pre>
+if (marks >= 50) {
+    console.log("Pass");
+} else {
+    console.log("Fail");
+}
+</pre>
+            </td>
+            <td>Executes one block if true, another if false.</td>
+        </tr>
+        <tr>
+            <td><code>if...else if...else</code></td>
+            <td>
+<pre>
+if (score >= 90) {
+    console.log("A");
+} else if (score >= 75) {
+    console.log("B");
+} else {
+    console.log("C");
+}
+</pre>
+            </td>
+            <td>Multiple conditions.</td>
+        </tr>
+        <tr>
+            <td><code>switch</code></td>
+            <td>
+<pre>
+switch(day) {
+    case 1: console.log("Mon"); break;
+    case 2: console.log("Tue"); break;
+    default: console.log("Other");
+}
+</pre>
+            </td>
+            <td>Checks a value against multiple cases.</td>
+        </tr>
+    </table>
+
+    <h3>2️⃣ Loops</h3>
+    <table  cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Loop</th>
+            <th>Example</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>for</code></td>
+            <td>
+<pre>
+for (let i = 0; i < 5; i++) {
+    console.log(i);
+}
+</pre>
+            </td>
+            <td>Repeats a block a fixed number of times.</td>
+        </tr>
+        <tr>
+            <td><code>while</code></td>
+            <td>
+<pre>
+let i = 0;
+while (i < 5) {
+    console.log(i);
+    i++;
+}
+</pre>
+            </td>
+            <td>Repeats as long as condition is true.</td>
+        </tr>
+        <tr>
+            <td><code>do...while</code></td>
+            <td>
+<pre>
+let i = 0;
+do {
+    console.log(i);
+    i++;
+} while (i < 5);
+</pre>
+            </td>
+            <td>Runs at least once, then checks condition.</td>
+        </tr>
+        <tr>
+            <td><code>for...of</code></td>
+            <td>
+<pre>
+for (let val of [1, 2, 3]) {
+    console.log(val);
+}
+</pre>
+            </td>
+            <td>Iterates over iterable objects like arrays.</td>
+        </tr>
+        <tr>
+            <td><code>for...in</code></td>
+            <td>
+<pre>
+let obj = {a: 1, b: 2};
+for (let key in obj) {
+    console.log(key, obj[key]);
+}
+</pre>
+            </td>
+            <td>Iterates over object properties.</td>
+        </tr>
+    </table>
+
+    <h3>3️⃣ Jump Statements</h3>
+    <table  cellpadding="5" cellspacing="0">
+        <tr>
+            <th>Statement</th>
+            <th>Example</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>break</code></td>
+            <td>
+<pre>
+for (let i=0; i<5; i++) {
+    if(i == 3) break;
+    console.log(i);
+}
+</pre>
+            </td>
+            <td>Stops the loop entirely.</td>
+        </tr>
+        <tr>
+            <td><code>continue</code></td>
+            <td>
+<pre>
+for (let i=0; i<5; i++) {
+    if(i == 3) continue;
+    console.log(i);
+}
+</pre>
+            </td>
+            <td>Skips current iteration.</td>
+        </tr>
+        <tr>
+            <td><code>return</code></td>
+            <td>
+<pre>
+function sum(a, b) {
+    return a + b;
+}
+</pre>
+            </td>
+            <td>Exits function and returns a value.</td>
+        </tr>
+        <tr>
+            <td><code>throw</code></td>
+            <td>
+<pre>
+throw new Error("Something went wrong!");
+</pre>
+            </td>
+            <td>Throws an error for <code>try...catch</code>.</td>
+        </tr>
+    </table>
+
+    <h3>4️⃣ Exception Handling</h3>
+<pre>
+try {
+    let result = riskyFunction();
+} catch (error) {
+    console.log("Error:", error.message);
+} finally {
+    console.log("Cleanup done.");
+}
+</pre>
+</div>
+
+<hr>
+
+<section>
+    <h2>Truthy and Falsy Values in JavaScript</h2>
+
+    <h3>Falsy Values</h3>
+    <p>These values are considered <strong>false</strong> when evaluated in a Boolean context (e.g., inside <code>if</code> conditions).</p>
+
+    <table  cellpadding="6">
+        <tr>
+            <th>Value</th>
+            <th>Type</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td><code>false</code></td>
+            <td>Boolean</td>
+            <td>Literal false</td>
+        </tr>
+        <tr>
+            <td><code>0</code>, <code>-0</code></td>
+            <td>Number</td>
+            <td>Zero and negative zero</td>
+        </tr>
+        <tr>
+            <td><code>0n</code></td>
+            <td>BigInt</td>
+            <td>Zero as BigInt</td>
+        </tr>
+        <tr>
+            <td><code>""</code></td>
+            <td>String</td>
+            <td>Empty string</td>
+        </tr>
+        <tr>
+            <td><code>null</code></td>
+            <td>Null</td>
+            <td>Intentional absence of any value</td>
+        </tr>
+        <tr>
+            <td><code>undefined</code></td>
+            <td>Undefined</td>
+            <td>Variable declared but not assigned</td>
+        </tr>
+        <tr>
+            <td><code>NaN</code></td>
+            <td>Number</td>
+            <td>Not a Number</td>
+        </tr>
+    </table>
+
+    <h3>Truthy Values</h3>
+    <p>Any value that is <em>not</em> falsy is considered <strong>truthy</strong>.</p>
+    <p>Examples:</p>
+    <ul>
+        <li>Non-empty strings → <code>"hello"</code>, <code>" "</code></li>
+        <li>Non-zero numbers → <code>42</code>, <code>-7</code></li>
+        <li>Objects → <code>{}</code>, <code>[]</code></li>
+        <li>Functions → <code>function() {}</code></li>
+        <li>Dates → <code>new Date()</code></li>
+        <li>Infinity, -Infinity</li>
+    </ul>
+
+    <h3>Example:</h3>
+    <pre>
+if ("hello") {
+    console.log("Truthy!"); // This will run
+}
+
+if (0) {
+    console.log("Falsy!"); // This won't run
+}
+    </pre>
+
+<h3>Notes:</h3>
+    <ul>
+        <li><strong><code>NaN</code></strong> → Whenever We perform an Airthmetic opeation that is not possible we get result as NaN.</li>
+    </ul>
+</section>
+
+<hr>
+
+<section>
+    <h2>Type Conversion (Type Casting) in JavaScript</h2>
+
+    <p>Type conversion means changing a value from one data type to another.</p>
+    <p>In JavaScript, this happens in two ways:</p>
+    <ul>
+        <li><strong>Implicit Conversion</strong> (Type coercion) → done automatically by JavaScript at runtime.</li>
+        <li><strong>Explicit Conversion</strong> → done manually by the developer. It might lead to data loss.</li>
+    </ul>
+
+    <h3>1. Implicit Conversion (Type Coercion)</h3>
+    <p>JavaScript automatically converts values when needed.</p>
+    <pre>
+// String + Number → String
+console.log('5' + 2); // "52"
+
+// Number + Boolean → Number
+console.log(5 + true); // 6 (true → 1)
+
+// String * Number → Number
+console.log('4' * 2); // 8
+
+// Chained comparisons
+console.log(1 &lt; 2 &lt; 3); // true
+// Explanation: (1 &lt; 2) → true → true is converted to 1 → (1 &lt; 3) → true
+
+console.log(3 > 2 > 1); // false
+// Explanation: (3 > 2) → true → true is converted to 1 → (1 > 1) → false
+
+// Boolean addition
+console.log(true + true); // 2 (true → 1, so 1 + 1 = 2)
+
+// String minus number
+console.log("abc" - 5); // NaN (string cannot be converted to a valid number)
+
+
+    </pre>
+
+    <h3>2. Explicit Conversion</h3>
+    <p>We manually convert using built-in functions.</p>
+
+    <h4>To Number:</h4>
+    <pre>
+Number("42");   // 42
+Number("3.14"); // 3.14
+Number(true);   // 1
+Number(false);  // 0
+    </pre>
+
+    <h4>To String:</h4>
+    <pre>
+String(42);         // "42"
+String(true);       // "true"
+String(null);       // "null"
+(42).toString();    // "42"
+    </pre>
+
+    <h4>To Boolean:</h4>
+    <pre>
+Boolean(1);    // true
+Boolean(0);    // false
+Boolean("");   // false
+Boolean("hi"); // true
+    </pre>
+
+    <h3>Special Notes:</h3>
+    <ul>
+        <li><code>parseInt()</code> → Converts string to integer.</li>
+        <li><code>parseFloat()</code> → Converts string to decimal number.</li>
+        <li><code>Number()</code> → Converts its arguments into number.</li>
+        <li><code>String()</code> → Converts its arguments into number.</li>
+        <li><code>Boolean()</code> → Converts its arguments into boolean.</li>
+        <li><code>+value</code> → Quick way to convert to number.</li>
+
+        <li><code>==</code> → Allow conversion.</li>
+        <li><code>===</code> → Does not allow conversion.</li>
+
+    </ul>
+
+    <h3>Example:</h3>
+    <pre>
+console.log(Number("123"));     // 123
+console.log(String(456));       // "456"
+console.log(Boolean("Hello"));  // true
+console.log(parseInt("99px"));  // 99
+    </pre>
+</section>
+
+<hr>
+
+<section>
+    <h2>String Interpolation in JavaScript</h2>
+
+    <p>
+        String interpolation allows us to insert variables or expressions directly inside a string 
+        using <strong>template literals</strong> (<code>`backticks`</code>).
+    </p>
+
+    <h3>1. Syntax:</h3>
+    <pre>
+`Some text ${expression} more text`
+    </pre>
+
+    <h3>2. Example:</h3>
+    <pre>
+let name = "Aathi";
+let age = 25;
+
+console.log(`Hello, my name is ${name} and I am ${age} years old.`);
+// Output: Hello, my name is Aathi and I am 25 years old
+    </pre>
+
+    <h3>3. Benefits over string concatenation:</h3>
+    <ul>
+        <li>Cleaner and more readable.</li>
+        <li>Supports multi-line strings without <code>\n</code>.</li>
+        <li>Can insert any JavaScript expression inside <code>${}</code>.</li>
+    </ul>
+
+    <h3>4. Multi-line String Example:</h3>
+    <pre>
+let message = `This is line 1
+This is line 2
+This is line 3`;
+
+console.log(message);
+    </pre>
+
+    <h3>5. Expression Evaluation:</h3>
+    <pre>
+let a = 10;
+let b = 20;
+
+console.log(`The sum is ${a + b}`); // The sum is 30
+console.log(`Random number: ${Math.random()}`);
+    </pre>
+
+    <h3>6. Inside Functions:</h3>
+    <pre>
+function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+console.log(greet("JavaScript")); // Hello, JavaScript!
+    </pre>
+
+    <h3>Summary:</h3>
+    <p>
+        Use <strong>template literals</strong> (<code>`</code>) instead of quotes when you 
+        want to embed variables, expressions, or create multi-line strings.
+    </p>
+</section>
+
+<hr>
+
+<section>
+    <h2>JavaScript Strings</h2>
+
+    <p>
+        A <strong>string</strong> in JavaScript is a sequence of characters enclosed in single quotes (<code>' '</code>), double quotes (<code>" "</code>), or backticks (<code>` `</code> for template literals).
+    </p>
+
+    <h3>1. Creating Strings:</h3>
+    <pre>
+let str1 = "Hello";
+let str2 = 'World';
+let str3 = `JavaScript`; // Template literal
+    </pre>
+
+    <h3>2. String Characteristics:</h3>
+    <ul>
+        <li>Strings are immutable (cannot be changed after creation).</li>
+        <li>They are zero-indexed (first character index is <code>0</code>).</li>
+    </ul>
+
+    <h3>3. Common String Methods:</h3>
+
+    <table  cellpadding="5">
+        <thead>
+            <tr>
+                <th>Method</th>
+                <th>Description</th>
+                <th>Example</th>
+                <th>Output</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><code>length</code></td>
+                <td>Returns string length</td>
+                <td><code>"Hello".length</code></td>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td><code>charAt(index)</code></td>
+                <td>Returns character at position</td>
+                <td><code>"Hello".charAt(1)</code></td>
+                <td>e</td>
+            </tr>
+            <tr>
+                <td><code>indexof(searchValue)</code></td>
+                <td> Returns the index of the first occurrence of a specified value. -1 if the value is not found.</td>
+                <td><code>"Hello world, welcome to the world!".indexOf("world")</code></td>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td><code>lastIndexOf(searchValue)</code></td>
+                <td> Returns the index of the last occurrence of a specified value. -1 if the value is not found.</td>
+                <td><code>"Hello world, welcome to the world!".lastIndexOf("world")</code></td>
+                <td>26</td>
+            </tr>
+            <tr>
+                <td><code>at(index)</code></td>
+                <td>Returns character (supports negative index)</td>
+                <td><code>"Hello".at(-1)</code></td>
+                <td>o</td>
+            </tr>
+            <tr>
+                <td><code>charCodeAt(index)</code></td>
+                <td>Returns Unicode value</td>
+                <td><code>"A".charCodeAt(0)</code></td>
+                <td>65</td>
+            </tr>
+            <tr>
+                <td><code>slice(start, end)</code></td>
+                <td>Extracts part of string. It accept negative indexes. If start index is greater than end index it will return empty String.</td>
+                <td><code>"Hello".slice(1,4)</code></td>
+                <td>ell</td>
+            </tr>
+            <tr>
+                <td><code>substring(start, end)</code></td>
+                <td>Similar to slice but no negative indexes. If start index is greater than end index it will swap the index</td>
+                <td><code>"Hello".substring(1,4)</code></td>
+                <td>ell</td>
+            </tr>
+            <tr>
+                <td><code>substr(start, length)</code></td>
+                <td>Extracts part of string (deprecated)</td>
+                <td><code>"Hello".substr(1,3)</code></td>
+                <td>ell</td>
+            </tr>
+            <tr>
+                <td><code>toUpperCase()</code></td>
+                <td>Converts to uppercase</td>
+                <td><code>"hello".toUpperCase()</code></td>
+                <td>HELLO</td>
+            </tr>
+            <tr>
+                <td><code>toLowerCase()</code></td>
+                <td>Converts to lowercase</td>
+                <td><code>"HELLO".toLowerCase()</code></td>
+                <td>hello</td>
+            </tr>
+            <tr>
+                <td><code>trim()</code></td>
+                <td>Removes whitespace from both sides</td>
+                <td><code>"  hi  ".trim()</code></td>
+                <td>hi</td>
+            </tr>
+            <tr>
+                <td><code>trimStart()</code> / <code>trimEnd()</code></td>
+                <td>Removes whitespace from start / end</td>
+                <td><code>"  hi  ".trimStart()</code></td>
+                <td>"hi  "</td>
+            </tr>
+            <tr>
+                <td><code>padStart(targetLength, padString)</code></td>
+                <td>Pads start of string</td>
+                <td><code>"5".padStart(3, "0")</code></td>
+                <td>005</td>
+            </tr>
+            <tr>
+                <td><code>padEnd(targetLength, padString)</code></td>
+                <td>Pads end of string</td>
+                <td><code>"5".padEnd(3, "0")</code></td>
+                <td>500</td>
+            </tr>
+            <tr>
+                <td><code>repeat(count)</code></td>
+                <td>Repeats string</td>
+                <td><code>"ha".repeat(3)</code></td>
+                <td>hahaha</td>
+            </tr>
+            <tr>
+                <td><code>replace(search, replace)</code></td>
+                <td>Replaces first match</td>
+                <td><code>"hi hi".replace("hi","hello")</code></td>
+                <td>hello hi</td>
+            </tr>
+            <tr>
+                <td><code>replaceAll(search, replace)</code></td>
+                <td>Replaces all matches</td>
+                <td><code>"hi hi".replaceAll("hi","hello")</code></td>
+                <td>hello hello</td>
+            </tr>
+            <tr>
+                <td><code>split(separator)</code></td>
+                <td>Splits string into array</td>
+                <td><code>"a,b,c".split(",")</code></td>
+                <td>["a","b","c"]</td>
+            </tr>
+            <tr>
+                <td><code>includes(substring)</code></td>
+                <td>Checks if substring exists</td>
+                <td><code>"hello".includes("ell")</code></td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td><code>startsWith(prefix)</code></td>
+                <td>Checks start of string</td>
+                <td><code>"hello".startsWith("he")</code></td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td><code>endsWith(suffix)</code></td>
+                <td>Checks end of string</td>
+                <td><code>"hello".endsWith("lo")</code></td>
+                <td>true</td>
+            </tr>
+            <tr>
+                <td><code>concat(str1, str2, ...)</code></td>
+                <td>Joins strings</td>
+                <td><code>"Hello".concat(" ", "World")</code></td>
+                <td>Hello World</td>
+            </tr>
+            <tr>
+                <td><code>valueOf()</code></td>
+                <td>Returns primitive value</td>
+                <td><code>new String("hi").valueOf()</code></td>
+                <td>hi</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>4. Template Literals with Strings:</h3>
+    <pre>
+let name = "Aathi";
+let age = 25;
+console.log(`My name is ${name} and I am ${age} years old.`);
+    </pre>
+
+    <h3>5. Summary:</h3>
+    <p>
+        Strings in JavaScript are immutable and provide many built-in methods for searching, modifying, and formatting text.
+    </p>
+</section>
+
+<hr>
+
+<section id="functions-deep-dive">
+  <h2>JavaScript Functions — Complete Guide</h2>
+  <p>A <b>function</b> is a reusable block of code. In JavaScript, functions are <b>first-class</b> values: you can store them in variables, pass them around, and return them.</p>
+
+  <!-- Quick Summary Table -->
+  <h3>📌 Quick Summary</h3>
+  <table  cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Topic</th>
+        <th>Key Idea</th>
+        <th>Typical Use</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Function Declaration</td>
+        <td>Named, hoisted to top of scope</td>
+        <td>APIs/utilities you call anywhere in the file</td>
+      </tr>
+      <tr>
+        <td>Function Call</td>
+        <td>Invoke with <code>()</code> (or via <code>call/apply/bind</code>)</td>
+        <td>Execute logic; pass args; bind <code>this</code> if needed</td>
+      </tr>
+      <tr>
+        <td>Parameters vs Arguments</td>
+        <td>Parameters = definition; Arguments = the values passed</td>
+        <td>Design clean function signatures</td>
+      </tr>
+      <tr>
+        <td>Named Function</td>
+        <td>Has an identifier; better stack traces</td>
+        <td>Reusable utilities; recursion</td>
+      </tr>
+      <tr>
+        <td>Anonymous Function</td>
+        <td>No name; often inline</td>
+        <td>Inline callbacks (e.g., <code>map</code>, <code>setTimeout</code>)</td>
+      </tr>
+      <tr>
+        <td>Function Expression</td>
+        <td>Function created inside an expression</td>
+        <td>Define functions conditionally or locally</td>
+      </tr>
+      <tr>
+        <td>Arrow Function</td>
+        <td>Concise; lexical <code>this</code>; no <code>arguments</code></td>
+        <td>Callbacks, array methods, closures</td>
+      </tr>
+      <tr>
+        <td>Implicit Return</td>
+        <td>Arrow functions: expression result auto-returned</td>
+        <td>Short, declarative one-liners</td>
+      </tr>
+      <tr>
+        <td>IIFE</td>
+        <td>Runs immediately after definition</td>
+        <td>Isolate scope; init code</td>
+      </tr>
+      <tr>
+        <td>Higher-Order Function</td>
+        <td>Takes/returns functions</td>
+        <td>Composition, utilities (<code>map</code>, <code>filter</code>)</td>
+      </tr>
+      <tr>
+        <td>Callback Function</td>
+        <td>Function passed to another function</td>
+        <td>Async flows, event handlers</td>
+      </tr>
+      <tr>
+        <td>Nested Function</td>
+        <td>Function inside another; forms closures</td>
+        <td>Encapsulation; private state</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <!-- 1. Function Declaration -->
+  <h3>1) Function Declaration</h3>
+  <p><b>Syntax:</b> Declared with the <code>function</code> keyword at statement level. Declarations are <b>hoisted</b> (available anywhere in the scope).</p>
+  <pre><code>function [name] ([parameters]){
+ [return]
+}</code></pre>
+  <pre><code>function add(a, b) {
+  return a + b;
+}
+
+console.log(add(2, 3)); // 5
+</code></pre>
+  <ul>
+    <li><b>Where to use:</b> Public utilities/APIs used throughout a file.</li>
+    <li><b>Notes:</b> In classic browser scripts, top-level declarations become globals on <code>window</code>. In modules, they’re module-scoped.</li>
+  </ul>
+
+  <!-- 2. Function Call -->
+  <h3>2) Function Call</h3>
+  <p>Function will not get executed automatically we need to call the function or Invoke with parentheses. Ways to call:</p>
+  <pre><code>name([argument])</code></pre>
+  
+  <table  cellpadding="6" cellspacing="0">
+    <tr>
+      <th>Form</th><th>Example</th><th><code>this</code> Binding</th><th>Use Case</th>
+    </tr>
+    <tr>
+      <td>Plain call</td>
+      <td><pre><code>fn(x, y)</code></pre></td>
+      <td><code>undefined</code> in strict; global in sloppy</td>
+      <td>Regular invocation</td>
+    </tr>
+    <tr>
+      <td>Method call</td>
+      <td><pre><code>obj.m()</code></pre></td>
+      <td><code>this === obj</code></td>
+      <td>Object methods</td>
+    </tr>
+    <tr>
+      <td>Constructor</td>
+      <td><pre><code>new Person("Aathi")</code></pre></td>
+      <td>New instance</td>
+      <td>Create objects (not with arrows)</td>
+    </tr>
+    <tr>
+      <td><code>call</code>/<code>apply</code></td>
+      <td><pre><code>fn.call(ctx, a, b)
+fn.apply(ctx, [a, b])</code></pre></td>
+      <td>Forced to <code>ctx</code></td>
+      <td>Borrow methods; set <code>this</code></td>
+    </tr>
+    <tr>
+      <td><code>bind</code></td>
+      <td><pre><code>const g = fn.bind(ctx, a)
+g(b)</code></pre></td>
+      <td>Permanently bound</td>
+      <td>Event handlers; partial application</td>
+    </tr>
+  </table>
+
+  <!-- 3. Parameters vs Arguments -->
+  <h3>3) Parameters &amp; Arguments</h3>
+  <p>These are the varable that get values passed during function call.</p>
+  <pre><code>function sum(a,b){
+    console.log(a+b)
+}
+here <b>a</b> and <b>b</b> are called <b>Parameters.</b>  </code></pre>
+  <p>arguments: These are the values passed during the function call.</p>
+  <pre><code>sum(10,20)
+here <b>10</b> and <b>20</b> are called <b>Arguments.</b></code></pre>
+
+  <pre><code>function greet(name, punctuation = "!") { // parameters
+  return `Hello, ${name}${punctuation}`;
+}
+console.log(greet("Aathi", "!!")); // arguments → "Hello, Aathi!!"
+</code></pre>
+  <ul>
+    <li><b>Default parameters:</b> <code>function f(x = 0) {}</code></li>
+    <li><b>Rest parameters:</b> <code>function sum(...nums) { return nums.reduce((a,b)=>a+b,0); }</code></li>
+    <li><b><code>arguments</code> object:</b> exists in non-arrow functions; for arrows use rest (<code>...args</code>).</li>
+  </ul>
+
+  <!-- 4. Named Function -->
+  <h3>4) Named Function</h3>
+  <p>A function haveing a name is called as named function.</p>
+  <p>Has an identifier; shows in stack traces; supports recursion by name.</p>
+  <pre><code>function factorial(n) {
+  if (n &lt;= 1) return 1;
+  return n * factorial(n - 1);
+}
+</code></pre>
+  <p><b>Where to use:</b> Library utilities, recursive algorithms, anything you’ll call in multiple places.</p>
+
+  <!-- 5. Anonymous Function -->
+  <h3>5) Anonymous Function</h3>
+  <p>Function without a name; usually inline as a callback.</p>
+  <p>To execute this function we store the function in a variable and call according to the variable name.</p>
+  <pre><code>let add = function (a,b){
+    console.log(a+b)
+}
+add(20,30)
+</code></pre>
+  <pre><code>setTimeout(function () {
+  console.log("Runs later");
+}, 500);
+</code></pre>
+  <p><b>Where to use:</b> Short-lived callbacks. <b>Tip:</b> Prefer named functions for better debugging if reused.</p>
+
+  <!-- 6. First-class / First-citizen Functions -->
+  <h3>6) First-class / First-citizen Functions</h3>
+  <p>Functions behave like values.</p>
+  <p>A function stored in a variable.</p>
+  <pre><code>let add = function sum(a,b){
+    console.log(a+b)
+}
+add(10,20)  // ✔ correct way and give the answer as 30
+sum(10,20)  //  It give undefined 
+
+// assign to variables
+const log = console.log;
+
+// pass as arguments
+["a","b","c"].forEach(log);
+
+// return from functions
+function makeAdder(x) {
+  return function(y){ return x + y; };
+}
+const add10 = makeAdder(10);
+console.log(add10(5)); // 15
+</code></pre>
+  <p><b>Where to use:</b> Functional patterns, composition, customizing behavior.</p>
+
+  <!-- 7. Function Expression -->
+  <h3>7) Function Expression</h3>
+  <p>Creates a function as part of an expression; not hoisted like declarations.</p>
+  <pre><code>const multiply = function (a, b) { return a * b; };
+console.log(multiply(2, 3)); // 6
+</code></pre>
+  <p><b>Where to use:</b> When you need a function only in a specific scope or conditionally.</p>
+
+  <!-- 8. Arrow Function -->
+  <h3>8) Arrow Function</h3>
+  <p>It is the Syntactic Sugar ( reduce syntax ) or writing function. It does not have a name so we need to store it in a vaiable.</p>
+  <p>Concise syntax; captures <b>lexical</b> <code>this</code>; no <code>prototype</code>, no <code>arguments</code>, not constructible.</p>
+  <pre><code>([parameter])=>{...}</code></pre>
+  <pre><code>const ids = [1,2,3].map(x =&gt; x * 2); // [2,4,6]
+
+// lexical this
+const obj = {
+  count: 0,
+  incLater() {
+    setTimeout(() =&gt; { this.count++; }, 0);
+  }
+};
+</code></pre>
+  <ul>
+    <li><b>Where to use:</b> Callbacks, array methods, closures.</li>
+    <li><b>Avoid for:</b> Methods needing their own <code>this</code>, constructors, <code>arguments</code>-dependent code.</li>
+  </ul>
+
+  <!-- 9. Implicit Return (Arrow) -->
+  <h3>9) Implicit Return</h3>
+  <p>If function consist of only one statement no need to mention curley braces and by default function will return the value without using return the value without using return keyword.</p>
+  <p>Arrow functions can return the expression value without <code>return</code> if written as a single expression.</p>
+  <pre><code>let add = (a,b) => a+b;
+
+let sqr = x => x*x
+  </code></pre>
+  <pre><code>const double = x =&gt; x * 2;
+const makeUser = (name) =&gt; ({ name }); // wrap object literal in ( )
+</code></pre>
+  <p><b>Where to use:</b> Short, declarative mappers/filters and small utilities.</p>
+
+  <!-- 10. IIFE -->
+  <h3>10) IIFE (Immediately Invoked Function Expression)</h3>
+  <p>Executes immediately; creates an isolated scope. we can execute this function only one time</p>
+  <pre><code>Syntax: (function)(argument);</code></pre>
+  <pre><code>(db =>{
+    console.log(`${db} conneced`)
+})("oracle");
+
+(function () {
+  const secret = "scoped";
+  console.log("IIFE ran");
+})(); // classic IIFE
+
+(() =&gt; {
+  console.log("Arrow IIFE");
+})(); // arrow IIFE
+</code></pre>
+  <p><b>Where to use:</b> One-time setup/initialization, avoiding globals. (Less needed inside ES modules.)</p>
+
+  <!-- 11. Higher-order Function -->
+  <h3>11) Higher-order Function (HOF)</h3>
+  <p>A function that takes other functions as args or returns a function.</p>
+  <pre><code>// takes a function
+let add = (a,b) => a+b;        // callback function
+let calc = (a,b,op)=>{      //Higher order function
+    op(a,b);
+}
+console.log(10,20,add)
+
+// takes a function
+function map(arr, fn) {
+  const out = [];
+  for (const v of arr) out.push(fn(v));
+  return out;
+}
+console.log(map([1,2,3], x =&gt; x * x)); // [1,4,9]
+
+// returns a function
+const once = (fn) =&gt; {
+  let called = false, result;
+  return (...args) =&gt; {
+    if (!called) { called = true; result = fn(...args); }
+    return result;
+  };
+};
+const addNumbers = (a, b) => {
+  console.log("Adding numbers..."); // This will only print once
+  return a + b;
+};
+const addNumbersOnce = once(addNumbers);     // Create a "once" version of the addNumbers function
+const result1 = addNumbersOnce(5, 3);       // Call it for the first time
+console.log("Result 1:", result1); // Output: Result 1: 8
+const result2 = addNumbersOnce(10, 2);     // Call it again (original function won't execute)
+console.log("Result 2:", result2); // Output: Result 2: 8
+
+//return a function
+function greetGenerate(greeting){
+    return function generate(name){     //Higher order function return a function
+      return `${greeting} ${name}`;
+    };
+}
+let generate1 = greetGenerate("Hi");
+console.log(generate1("Aathi"));        //o/p: Hi Aathi
+console.log(generate1("Siva"));         //o/p: Hi Siva
+console.log(generate1("Ganesh"));       //o/p: Hi Ganesh
+</code></pre>
+  <p><b>Where to use:</b> Reusable logic (e.g., <code>map</code>/<code>filter</code>/<code>reduce</code>), decorators, middleware.</p>
+
+  <!-- 12. Callback Function -->
+  <h3>12) Callback Function</h3>
+  <p>A function passed as an argument to another function.</p>
+  <p>A function passed into another to be called later.</p>
+  <pre><code>let add = (a,b) => a+b;        // callback function
+let calc = (a,b,op)=>{      //Higher order function
+    op(a,b);
+}
+console.log(10,20,add)
+
+setTimeout(() =&gt; console.log("Later"), 500);
+
+["red","green","blue"].forEach((c, i) =&gt; {
+  console.log(i, c);
+});
+</code></pre>
+  <p><b>Where to use:</b> Event handlers, timing, array methods, async flows. (<b>Tip:</b> Prefer Promises/async-await for complex async logic.)</p>
+
+  <!-- 13. Nested Function -->
+  <h3>13) Nested Function</h3>
+  <p>Functions defined inside other functions; inner functions form <b>closures</b> over outer variables.</p>
+  <pre><code>var a = 10;
+let b = 20;
+const c = 30;
+
+function parent(){
+    var d = 40;
+    let e = 50;
+    const f = 60;
+
+    console.log(a,b,c,d,e,f)
+
+    function child(){
+        var g = 100;
+        let h = 200;
+        const i = 300;
+
+        console.log(g,h,i);
+
+        function grandchild(){
+            console.log(a,b,c,d,e,f,g,h,i);
+        }
+        grandchild();
+    }
+    child();
+}
+parent();
+
+output:
+10,20,30,40,50,60
+100,200,300
+10,20,30,40,50,60,100,200,300
+</code></pre>
+  <pre><code>function makeCounter(start = 0) {
+  let n = start;              // private via closure
+  function inc() { n += 1; }  // nested function
+  function value() { return n; }
+  return { inc, value };
+}
+
+const c = makeCounter(10);
+c.inc(); c.inc();
+console.log(c.value()); // 12
+</code></pre>
+  <p><b>Where to use:</b> Encapsulate state, create factories, hide implementation details.</p>
+
+  <hr>
+
+  <!-- Extras: Best Practices -->
+  <h3>✅ Best Practices</h3>
+  <ul>
+    <li>Prefer <b>declarations</b> for shared utilities; expressions/arrows for local callbacks.</li>
+    <li>Use <b>named</b> functions for reuse and better stack traces.</li>
+    <li>Keep function signatures small; use <b>default</b> and <b>rest</b> params for flexibility.</li>
+    <li>Avoid relying on the dynamic value of <code>this</code>; when needed, prefer arrows (lexical <code>this</code>) or <code>.bind</code>.</li>
+    <li>For async, prefer <b>Promises</b> / <b>async-await</b> over deeply nested callbacks.</li>
+  </ul>
+</section>
+
+<hr>
+
+<!-- Callbacks -->
+<div class="topic">
+  <h2>Callback Functions</h2>
+  <p><b>Definition:</b> A callback is a function passed as an argument to another function and executed later.</p>
+
+  <h3>Syntax:</h3>
+  <pre><code>function parent(param, callbackFn) {
+   // code
+   callbackFn();
+}
+
+function child() {
+   // code
+}
+
+parent("value", child);</code></pre>
+
+  <h3>Example:</h3>
+  <pre><code>function greet(name, callback) {
+  console.log("Hello " + name);
+  callback();
+}
+
+function sayBye() {
+  console.log("Goodbye!");
+}
+
+greet("Aathi", sayBye);</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>Hello Aathi
+Goodbye!</code></pre>
+
+  <p><b>Use Cases:</b> Handling async tasks, event listeners, array methods (map, filter, forEach).</p>
+</div>
+
+<!-- Closures -->
+<div class="topic">
+  <h2>Closures</h2>
+  <p><b>Definition:</b> A closure is when a function remembers variables from its outer scope even after the outer function has finished executing.</p>
+
+  <h3>Syntax:</h3>
+  <pre><code>function outer() {
+   let variable = value;
+
+   function inner() {
+      // can use variable from outer
+   }
+
+   return inner;
+}</code></pre>
+
+  <h3>Example:</h3>
+  <pre><code>function outer() {
+  let count = 0;
+
+  function inner() {
+    count++;
+    console.log(count);
+  }
+
+  return inner;
+}
+
+let counter = outer();
+counter(); 
+counter(); 
+counter();</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>1
+2
+3</code></pre>
+
+  <p><b>Use Cases:</b> Data privacy (private variables), event handlers, setTimeout, functional programming.</p>
+</div>
+
+<!-- this keyword -->
+<div class="topic">
+  <h2><code>this</code> Keyword Basics</h2>
+  <p><b>Definition:</b> The value of <code>this</code> depends on how the function is called, not where it is written.</p>
+
+  <h3>Case 1: Global Scope</h3>
+  <pre><code>console.log(this); // window object (in browser)</code></pre>
+
+  <h3>Case 2: Inside an Object</h3>
+  <pre><code>const person = {
+  name: "Aathi",
+  sayName: function() {
+    console.log(this.name);
+  }
+};
+
+person.sayName();</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>Aathi</code></pre>
+
+  <h3>Case 3: Function Alone</h3>
+  <pre><code>function show() {
+  console.log(this);
+}
+show(); // window</code></pre>
+
+  <h3>Case 4: Arrow Functions vs Normal Functions</h3>
+  <pre><code>const obj = {
+  name: "Aathi",
+  arrowFunc: () => {
+    console.log(this.name); 
+  },
+  normalFunc: function() {
+    console.log(this.name);
+  }
+};
+
+obj.arrowFunc(); 
+obj.normalFunc();</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>undefined
+Aathi</code></pre>
+
+  <p><b>Rules:</b> 
+    <ul>
+      <li>Normal functions → <code>this</code> depends on caller</li>
+      <li>Arrow functions → <code>this</code> uses surrounding scope</li>
+    </ul>
+  </p>
+</div>
+
+<hr>
+
+<section>
+  <h2>📦 JavaScript Arrays</h2>
+  <p><ul>
+    <li>An <b>array</b> is a special type of object used to store multiple values in a single variable.</li>
+    <li>Arrays can hold <b>primitive</b> values (numbers, strings, booleans, etc.) or
+    <b>non-primitive</b> values (objects, other arrays, functions).</li>
+    <li>It can store hetrogeneous data.</li>
+    <li>It is a collection of data at continuous memory allocation. </li>
+    <li>JavaScript arrays are <b>dynamic</b> in size and indexed starting from <code>0</code>.</li>
+  </ul></p>
+
+  <h3>✅ Syntax</h3>
+  <pre><code>
+// Array literal
+let fruits = ["apple", "banana", "mango"];
+
+// Array constructor
+let numbers = new Array(1, 2, 3);
+
+// Empty array
+let emptyArr = [];
+  </code></pre>
+
+  <h3>📌 Properties</h3>
+  <table  cellpadding="5">
+    <tr>
+      <th>Property</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td><code>length</code></td>
+      <td>Returns the number of elements in the array</td>
+      <td><code>fruits.length // 3</code></td>
+    </tr>
+  </table>
+
+  <h3>🔹 Common Array Methods</h3>
+  <h4>1. Mutating (Changes the Original Array)</h4>
+  <table  cellpadding="5">
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td><code>push()</code></td>
+      <td>Adds element(s) to the end</td>
+      <td><code>fruits.push("grape") // ["apple", "banana", "mango", "grape"]</code></td>
+    </tr>
+    <tr>
+      <td><code>pop()</code></td>
+      <td>Removes last element</td>
+      <td><code>fruits.pop() // ["apple", "banana", "mango"]</code></td>
+    </tr>
+    <tr>
+      <td><code>shift()</code></td>
+      <td>Removes first element</td>
+      <td><code>fruits.shift() // ["banana", "mango"]</code></td>
+    </tr>
+    <tr>
+      <td><code>unshift()</code></td>
+      <td>Adds element(s) to the start</td>
+      <td><code>fruits.unshift("kiwi") // ["kiwi", "banana", "mango"]</code></td>
+    </tr>
+    <tr>
+      <td><code>splice()</code></td>
+      <td>Adds/removes elements at specific index. <b>splice(start_index,delete_count,?Element_To_Be_Added)</b></td>
+      <td><code>fruits.splice(1, 0, "orange") // insert at index 1</code></td>
+    </tr>
+    <tr>
+      <td><code>reverse()</code></td>
+      <td>Reverses array order</td>
+      <td><code>fruits.reverse()</code></td>
+    </tr>
+    <tr>
+      <td><code>sort()</code></td>
+      <td>Sorts array (by default as strings)</td>
+      <td><code>[10, 2, 5].sort() // [10, 2, 5] → ["10","2","5"] sorted</code></td>
+    </tr>
+  </table>
+
+  <h4>2. Non-Mutating (Returns New Array)</h4>
+  <table  cellpadding="5">
+    <tr>
+      <th>Method</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td><code>concat()</code></td>
+      <td>Joins two arrays</td>
+      <td><code>[1, 2].concat([3, 4]) // [1, 2, 3, 4]</code></td>
+    </tr>
+    <tr>
+      <td><code>slice()</code></td>
+      <td>Returns part of array</td>
+      <td><code>fruits.slice(1, 3)</code></td>
+    </tr>
+    <tr>
+      <td><code>map()</code></td>
+      <td>Transforms elements</td>
+      <td><code>[1, 2, 3].map(n => n * 2) // [2, 4, 6]</code></td>
+    </tr>
+    <tr>
+      <td><code>filter()</code></td>
+      <td>Filters elements</td>
+      <td><code>[1, 2, 3].filter(n => n > 1) // [2, 3]</code></td>
+    </tr>
+    <tr>
+      <td><code>reduce()</code></td>
+      <td>Reduces array to single value</td>
+      <td><code>[1, 2, 3].reduce((a,b) => a+b, 0) // 6</code></td>
+    </tr>
+    <tr>
+      <td><code>find()</code></td>
+      <td>Finds first matching element</td>
+      <td><code>[1, 2, 3].find(n => n > 1) // 2</code></td>
+    </tr>
+    <tr>
+      <td><code>findIndex()</code></td>
+      <td>Finds index of first match</td>
+      <td><code>[1, 2, 3].findIndex(n => n > 1) // 1</code></td>
+    </tr>
+    <tr>
+      <td><code>includes()</code></td>
+      <td>Checks if value exists</td>
+      <td><code>fruits.includes("apple") // true</code></td>
+    </tr>
+    <tr>
+      <td><code>join()</code></td>
+      <td>Joins elements into string</td>
+      <td><code>fruits.join(", ")</code></td>
+    </tr>
+    <tr>
+      <td><code>indexOf()</code></td>
+      <td>First index of element</td>
+      <td><code>fruits.indexOf("mango")</code></td>
+    </tr>
+    <tr>
+      <td><code>lastIndexOf()</code></td>
+      <td>Last index of element</td>
+      <td><code>fruits.lastIndexOf("apple")</code></td>
+    </tr>
+    <tr>
+      <td><code>flat()</code></td>
+      <td>Flattens nested arrays</td>
+      <td><code>[1, [2, [3]]].flat(2) // [1, 2, 3]</code></td>
+    </tr>
+    <tr>
+      <td><code>flatMap()</code></td>
+      <td>Maps + flattens result</td>
+      <td><code>[1, 2].flatMap(n => [n, n*2]) // [1, 2, 2, 4]</code></td>
+    </tr>
+  </table>
+
+  <h3>💡 When to Use Arrays?</h3>
+  <ul>
+    <li>Storing ordered data (lists)</li>
+    <li>Iterating over collections</li>
+    <li>Performing batch transformations</li>
+  </ul>
+
+  <h3>⚠️ Notes</h3>
+  <ul>
+    <li>Arrays in JS are not fixed in size (dynamic).</li>
+    <li>They can store mixed data types.</li>
+    <li>Indexing starts from <code>0</code>.</li>
+  </ul>
+</section>
+
+<hr>
+
+<section id="array-iteration-methods">
+    <h1>Array Iteration Methods in JavaScript</h1>
+    <p>JavaScript provides several built-in array methods to loop through and process elements. These methods offer cleaner, more expressive code than manual <code>for</code> loops.</p>
+
+    <h2>1. forEach()</h2>
+    <p><strong>Purpose:</strong> Executes a provided function once for each array element. Does not return a new array.</p>
+    <pre><code class="language-js">
+// Syntax
+array.forEach(function(element, index, array) {
+    // Code to execute
+});
+
+// Example
+const nums = [1, 2, 3];
+nums.forEach((num, i) => {
+    console.log(`Index ${i}: ${num}`);
+});
+// Output:
+// Index 0: 1
+// Index 1: 2
+// Index 2: 3
+    </code></pre>
+
+    <h2>2. map()</h2>
+    <p><strong>Purpose:</strong> Creates a new array populated with the results of calling a provided function on every element.</p>
+    <pre><code class="language-js">
+// Syntax
+const newArray = array.map(function(element, index, array) {
+    return value;
+});
+
+// Example
+const nums = [1, 2, 3];
+const doubled = nums.map(num => num * 2);
+console.log(doubled); // [2, 4, 6]
+    </code></pre>
+
+    <h2>3. filter()</h2>
+    <p><strong>Purpose:</strong> Creates a new array with all elements that pass the test implemented by the provided function.</p>
+    <pre><code class="language-js">
+// Syntax
+const filteredArray = array.filter(function(element, index, array) {
+    return condition;
+});
+
+// Example
+const nums = [1, 2, 3, 4];
+const even = nums.filter(num => num % 2 === 0);
+console.log(even); // [2, 4]
+    </code></pre>
+
+    <h2>4. reduce()</h2>
+    <p><strong>Purpose:</strong> Executes a reducer function on each element of the array, resulting in a single output value. It will not update the original arrays.</p>
+    <pre><code class="language-js">
+// Syntax
+const result = array.reduce(function(accumulator, currentValue, index, array) {
+    return updatedAccumulator;
+}, initialValue);
+
+// Example
+const nums = [1, 2, 3, 4];
+const sum = nums.reduce((total, num) => total + num, 0);
+console.log(sum); // 10
+    </code></pre>
+<p><li><b>accumulator</b> is a container which stores the result after each iteration what ever we return from the call back function for each iteration the result is stored in accumulator and after complete traversing the array reduce method return the value of accumulator</li>
+  <li><b>Without initial value</b> if we don't provide initial value accumulator stores the first element of the array and traversing start form second element.</li>
+  <li><b>With inital value</b> reduce method can accept the second parameter which is passed as inital value to the accumulator and the traversing of the array start from first element.</li>
+</p>
+
+    <h2>5. some()</h2>
+    <p><strong>Purpose:</strong> Tests whether at least one element in the array passes the provided function. Returns <code>true</code> or <code>false</code>.</p>
+    <pre><code class="language-js">
+// Syntax
+const result = array.some(function(element, index, array) {
+    return condition;
+});
+
+// Example
+const nums = [1, 3, 5];
+const hasEven = nums.some(num => num % 2 === 0);
+console.log(hasEven); // false
+    </code></pre>
+
+    <h2>6. every()</h2>
+    <p><strong>Purpose:</strong> Tests whether all elements in the array pass the provided function. Returns <code>true</code> or <code>false</code>.</p>
+    <pre><code class="language-js">
+// Syntax
+const result = array.every(function(element, index, array) {
+    return condition;
+});
+
+// Example
+const nums = [2, 4, 6];
+const allEven = nums.every(num => num % 2 === 0);
+console.log(allEven); // true
+    </code></pre>
+
+    <h2>📌 Quick Comparison Table</h2>
+    <table  cellpadding="5">
+        <tr>
+            <th>Method</th>
+            <th>Returns New Array?</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>forEach()</td>
+            <td>No</td>
+            <td>Run code for each element</td>
+        </tr>
+        <tr>
+            <td>map()</td>
+            <td>Yes</td>
+            <td>Transform each element</td>
+        </tr>
+        <tr>
+            <td>filter()</td>
+            <td>Yes</td>
+            <td>Keep elements that pass condition</td>
+        </tr>
+        <tr>
+            <td>reduce()</td>
+            <td>No (returns any value)</td>
+            <td>Combine elements into single value</td>
+        </tr>
+        <tr>
+            <td>some()</td>
+            <td>No (boolean)</td>
+            <td>Check if any element passes condition</td>
+        </tr>
+        <tr>
+            <td>every()</td>
+            <td>No (boolean)</td>
+            <td>Check if all elements pass condition</td>
+        </tr>
+    </table>
+</section>
+
+<hr>
+
+<h2>JavaScript Objects</h2>
+
+<p>
+<li>In JavaScript, <b>objects</b> are collections of key-value pairs. Keys are strings (or symbols), and values can be of any data type (primitive or non-primitive).
+Objects are used to store related data and functionalities together.</li>
+<li>Programmatical representation of any realworld entity.</li>
+<li><b>Properties</b>-> It represent characteristics</li><li><b>Methods</b>-> It represent behavior or functionality.</li>
+</p>
+
+<h3>1. Creating Objects</h3>
+<table  cellpadding="5">
+  <tr>
+    <th>Method</th>
+    <th>Syntax</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>Object Literal</td>
+    <td><code>let obj = { key: value };</code></td>
+    <td>
+      <pre>
+let person = {
+  name: "John",
+  age: 25
+};
+console.log(person.name); // John
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>Using new Object()</td>
+    <td><code>let obj = new Object();</code></td>
+    <td>
+      <pre>
+let car = new Object();
+car.brand = "Tesla";
+car.model = "Model S";
+console.log(car.brand); // Tesla
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td>Constructor Function</td>
+    <td>
+      <pre>
+function Person(name, age) {
+  this.name = name;
+  this.age = age;
+}
+let p1 = new Person("Alice", 30);
+      </pre>
+    </td>
+    <td>
+      <pre>
+console.log(p1.name); // Alice
+      </pre>
+    </td>
+  </tr>
+</table>
+
+<h3>2. Accessing Properties</h3>
+<pre>
+// Dot notation
+console.log(person.name); // John
+
+// Bracket notation
+console.log(person["age"]); // 25
+</pre>
+
+<h3>3. Adding & Modifying Properties</h3>
+<pre>
+person.city = "New York"; // Add new property
+person.age = 26;          // Modify existing property
+</pre>
+
+<h3>4. Deleting Properties</h3>
+<pre>
+delete person.age; // Removes the 'age' property
+</pre>
+
+<h3>5. Checking for Property</h3>
+<pre>
+console.log("name" in person); // true
+console.log(person.hasOwnProperty("city")); // true
+</pre>
+
+<h3>6. Object Methods</h3>
+<table  cellpadding="5">
+  <tr>
+    <th>Method</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td><code>Object.keys(obj)</code></td>
+    <td>Returns an array of property names (keys)</td>
+    <td>
+      <pre>
+console.log(Object.keys(person)); 
+// ["name", "city"]
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>Object.values(obj)</code></td>
+    <td>Returns an array of property values</td>
+    <td>
+      <pre>
+console.log(Object.values(person)); 
+// ["John", "New York"]
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>Object.entries(obj)</code></td>
+    <td>Returns an array of [key, value] pairs</td>
+    <td>
+      <pre>
+console.log(Object.entries(person)); 
+// [["name", "John"], ["city", "New York"]]
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>Object.assign(target, source)</code></td>
+    <td>Copies properties from source to target.It is used to merge the multiple objects together. It will merge all the passed objects into the first object, hence first object get updated. to prevent we can pass empty object as first object.</td>
+    <td>
+      <pre>
+let newObj = Object.assign({}, person);
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>Object.freeze(obj)</code></td>
+    <td>Makes object immutable (cannot change properties)</td>
+    <td>
+      <pre>
+Object.freeze(person);
+person.name = "Changed"; // No effect
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>Object.isFrozen(obj)</code></td>
+    <td>Checks if an object is frozen.</td>
+    <td><pre><code>
+let obj = {y: 10};
+Object.freeze(obj);
+console.log(Object.isFrozen(obj)); // true
+  </code></pre></td>
+  </tr>
+  <tr>
+    <td><code>Object.seal(obj)</code></td>
+    <td>Prevents adding/removing properties but allows modifying</td>
+    <td>
+      <pre>
+Object.seal(person);
+person.city = "LA"; // Allowed
+delete person.name; // Not allowed
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td><code>Object.isSealed(obj)</code></td>
+    <td>Checks if an object is sealed.</td>
+    <td><pre><code>
+let obj = {a: 1};
+Object.seal(obj);
+console.log(Object.isSealed(obj)); // true
+    </code></pre></td>
+</tr>
+</table>
+
+<h3>7. Looping through an Object</h3>
+<pre>
+// for...in loop
+for (let key in person) {
+  console.log(key, person[key]);
+}
+</pre>
+
+<h3>8. Nested Objects</h3>
+<pre>
+let user = {
+  name: "Bob",
+  address: {
+    city: "Paris",
+    zip: 75001
+  }
+};
+console.log(user.address.city); // Paris
+</pre>
+
+<h3>9. Purpose of Objects</h3>
+<ul>
+  <li>To store structured data</li>
+  <li>Group related properties and methods</li>
+  <li>Create reusable data models</li>
+  <li>Basis for OOP in JavaScript</li>
+</ul>
+
+<h3>10. Common Usage</h3>
+<pre>
+// Representing entities
+let book = { title: "JS Guide", author: "MDN" };
+
+// As a dictionary/map
+let colors = { red: "#FF0000", green: "#00FF00" };
+
+// Storing functions (methods)
+let calculator = {
+  add(a, b) { return a + b; }
+};
+console.log(calculator.add(5, 3)); // 8
+</pre>
+
+<hr>
+
+<section id="json">
+    <h2>JavaScript JSON</h2>
+    <p><strong>JSON (JavaScript Object Notation)</strong> is a lightweight data format used for data exchange between applications. It is text-based, easy to read, and language-independent (not limited to JavaScript). It stores data in the format of String.</p>
+
+    <h3>Key Characteristics</h3>
+    <ul>
+        <li>Data is represented in <code>key-value</code> pairs.</li>
+        <li>Keys must be strings (inside double quotes).</li>
+        <li>Values can be strings, numbers, objects, arrays, <code>true</code>, <code>false</code>, or <code>null</code>.</li>
+        <li>Widely used for APIs, configuration, and storage.</li>
+    </ul>
+
+    <h3>Example JSON</h3>
+    <pre><code>
+{
+  "name": "Alice",
+  "age": 25,
+  "isStudent": false,
+  "skills": ["JavaScript", "Python", "Java"],
+  "address": {
+    "city": "New York",
+    "zip": "10001"
+  }
+}
+    </code></pre>
+
+    <h3>JSON vs JavaScript Object</h3>
+    <pre><code>
+// ✅ JavaScript Object
+let user = {
+  name: "Alice",
+  age: 25
+};
+
+// ✅ JSON string (notice double quotes everywhere)
+let jsonString = '{ "name": "Alice", "age": 25 }';
+    </code></pre>
+
+    <h3>JSON Methods</h3>
+    <table  cellpadding="5">
+        <tr>
+            <th>Method</th>
+            <th>Purpose</th>
+            <th>Example</th>
+        </tr>
+        <tr>
+            <td><code>JSON.stringify(obj)</code></td>
+            <td>Converts a JavaScript object into a JSON string.</td>
+            <td><pre><code>
+let obj = {name: "Bob", age: 30};
+let str = JSON.stringify(obj);
+console.log(str); 
+// '{"name":"Bob","age":30}'
+            </code></pre></td>
+        </tr>
+        <tr>
+            <td><code>JSON.parse(str)</code></td>
+            <td>Converts a JSON string into a JavaScript object.</td>
+            <td><pre><code>
+let jsonStr = '{"name":"Bob","age":30}';
+let obj2 = JSON.parse(jsonStr);
+console.log(obj2.name); // Bob
+            </code></pre></td>
+        </tr>
+    </table>
+
+    <h3>Use Cases</h3>
+    <ul>
+        <li><b>APIs</b>: Sending/receiving data between frontend and backend.</li>
+        <li><b>LocalStorage</b>: Storing structured data in browsers.</li>
+        <li><b>Configuration Files</b>: Many tools use <code>.json</code> files for settings.</li>
+    </ul>
+
+    <h3>Usage Example</h3>
+    <pre><code>
+// Convert JS object to JSON string
+let product = { id: 101, name: "Laptop", price: 800 };
+let jsonStr = JSON.stringify(product);
+console.log(jsonStr);
+
+// Convert JSON string back to JS object
+let newObj = JSON.parse(jsonStr);
+console.log(newObj.name); // Laptop
+    </code></pre>
+</section>
+<section id="js-vs-json">
+    <h2>Difference Between JavaScript Object and JSON</h2>
+
+    <table  cellpadding="8">
+        <tr>
+            <th>Aspect</th>
+            <th>JavaScript Object</th>
+            <th>JSON (JavaScript Object Notation)</th>
+        </tr>
+        <tr>
+            <td><b>Definition</b></td>
+            <td>A collection of key-value pairs used to store data in JavaScript programs.</td>
+            <td>A lightweight data-interchange format (string format) used to exchange data between systems.</td>
+        </tr>
+        <tr>
+            <td><b>Data Type</b></td>
+            <td>Native <code>object</code> type in JavaScript.</td>
+            <td>Always a <code>string</code>.</td>
+        </tr>
+        <tr>
+            <td><b>Keys</b></td>
+            <td>Keys can be strings (quotes optional) or symbols.</td>
+            <td>Keys must be <b>double-quoted strings</b>.</td>
+        </tr>
+        <tr>
+            <td><b>Values</b></td>
+            <td>Can be any valid JS type: string, number, boolean, null, object, array, function, <br> undefined, symbol, etc.</td>
+            <td>Limited: string, number, boolean, null, object, array. <br> ❌ Functions & undefined not allowed.</td>
+        </tr>
+        <tr>
+            <td><b>Usage</b></td>
+            <td>Used inside JavaScript code for programming logic.</td>
+            <td>Used for data transfer (APIs, config files, storage).</td>
+        </tr>
+        <tr>
+            <td><b>Syntax Example</b></td>
+            <td><pre><code>
+// JavaScript Object
+let user = {
+  name: "Alice",
+  age: 25,
+  isAdmin: true,
+  greet: function() {
+    return "Hello!";
+  }
+};
+            </code></pre></td>
+            <td><pre><code>
+// JSON string
+let jsonString = '{
+  "name": "Alice",
+  "age": 25,
+  "isAdmin": true
+}';
+            </code></pre></td>
+        </tr>
+        <tr>
+            <td><b>Conversion</b></td>
+            <td>Can be converted into JSON using <code>JSON.stringify(obj)</code>.</td>
+            <td>Can be converted back into JS object using <code>JSON.parse(jsonString)</code>.</td>
+        </tr>
+    </table>
+
+    <h3>Quick Example</h3>
+    <pre><code>
+// JavaScript Object
+let obj = { name: "Bob", age: 30 };
+
+// Convert to JSON string
+let jsonStr = JSON.stringify(obj);
+console.log(jsonStr); // '{"name":"Bob","age":30}'
+
+// Convert back to JavaScript Object
+let newObj = JSON.parse(jsonStr);
+console.log(newObj.age); // 30
+    </code></pre>
+</section>
+
+<hr>
+
+<section id="window-bom">
+    <h2>Window & Browser Object Model (BOM)</h2>
+
+    <p>
+        In JavaScript, <b>Window</b> is the global object representing the browser window.
+        The <b>BOM (Browser Object Model)</b> allows JavaScript to interact with the browser outside the web page’s content (like the URL, history, screen, navigator, alerts, etc.).
+    </p>
+
+    <h3>1. The <code>window</code> Object</h3>
+    <ul>
+        <li>It is the <b>global object</b> in browsers.</li>
+        <li>All global variables and functions become properties of <code>window</code>.</li>
+        <li>Example:
+            <pre><code>
+var name = "Alice";
+console.log(window.name); // Alice
+            </code></pre>
+        </li>
+    </ul>
+
+    <h3>2. Common BOM Objects</h3>
+    <ul>
+        <li><b>window</b> – represents the browser window.</li>
+        <li><b>document</b> – represents the HTML page (DOM).</li>
+        <li><b>navigator</b> – gives information about the browser.</li>
+        <li><b>screen</b> – gives information about the user’s screen.</li>
+        <li><b>history</b> – represents the browser history.</li>
+        <li><b>location</b> – represents the current URL.</li>
+    </ul>
+
+    <h3>3. Window Methods</h3>
+    <pre><code>
+// Popup Alerts
+alert("Hello!");
+confirm("Are you sure?");
+prompt("Enter your name:");
+
+// Open & Close new window
+let win = window.open("https://google.com", "_blank", "width=400,height=400");
+win.close();
+
+// Set Timeout & Interval
+setTimeout(() => { console.log("Runs once after 2s"); }, 2000);
+setInterval(() => { console.log("Repeats every 3s"); }, 3000);
+    </code></pre>
+
+    <h3>4. Location Object</h3>
+    <pre><code>
+console.log(location.href);   // Full URL
+console.log(location.hostname); // Domain name
+console.log(location.pathname); // Path after domain
+console.log(location.protocol); // http: or https:
+
+// Redirect
+location.href = "https://example.com";
+    </code></pre>
+
+    <h3>5. History Object</h3>
+    <pre><code>
+history.back();   // Go to previous page
+history.forward(); // Go to next page
+history.go(-2);    // Go 2 pages back
+    </code></pre>
+
+    <h3>6. Navigator Object</h3>
+    <pre><code>
+console.log(navigator.userAgent);   // Browser details
+console.log(navigator.language);    // Browser language
+console.log(navigator.onLine);      // true if online
+    </code></pre>
+
+    <h3>7. Screen Object</h3>
+    <pre><code>
+console.log(screen.width);   // Screen width
+console.log(screen.height);  // Screen height
+console.log(screen.availWidth); // Available width
+console.log(screen.colorDepth); // Color depth
+    </code></pre>
+
+    <h3>🔑 Key Notes</h3>
+    <ul>
+        <li><code>window</code> = global object for everything in browser.</li>
+        <li>BOM lets us interact with browser environment (not HTML content).</li>
+        <li>DOM (Document Object Model) is different – it deals with the actual web page elements.</li>
+    </ul>
+</section>
+
+<section id="timers">
+    <h2>JavaScript Timers: setTimeout, setInterval, clearTimeout, clearInterval</h2>
+
+    <p>
+        JavaScript provides functions to execute code after a delay or repeatedly at fixed intervals.
+        These methods are part of the <b>Window (BOM)</b> object.
+    </p>
+
+    <h3>1. setTimeout()</h3>
+    <ul>
+        <li>Executes a function <b>once</b> after a specified delay (in milliseconds).</li>
+        <li><b>Syntax:</b>
+            <pre><code>
+let timeoutID = setTimeout(function, delay, arg1, arg2, ...);
+            </code></pre>
+        </li>
+        <li><b>Example:</b>
+            <pre><code>
+setTimeout(() => {
+    console.log("Hello after 2 seconds");
+}, 2000);
+            </code></pre>
+        </li>
+    </ul>
+
+    <h3>2. setInterval()</h3>
+    <ul>
+        <li>Executes a function <b>repeatedly</b> at given time intervals.</li>
+        <li><b>Syntax:</b>
+            <pre><code>
+let intervalID = setInterval(function, delay, arg1, arg2, ...);
+            </code></pre>
+        </li>
+        <li><b>Example:</b>
+            <pre><code>
+let counter = 0;
+let intervalID = setInterval(() => {
+    counter++;
+    console.log("Count:", counter);
+}, 1000);
+            </code></pre>
+        </li>
+    </ul>
+
+    <h3>3. clearTimeout()</h3>
+    <ul>
+        <li>Cancels a <code>setTimeout()</code> before it executes.</li>
+        <li><b>Syntax:</b>
+            <pre><code>
+clearTimeout(timeoutID);
+            </code></pre>
+        </li>
+        <li><b>Example:</b>
+            <pre><code>
+let timeoutID = setTimeout(() => {
+    console.log("This will not run");
+}, 3000);
+
+clearTimeout(timeoutID);  // Cancels the timeout
+            </code></pre>
+        </li>
+    </ul>
+
+    <h3>4. clearInterval()</h3>
+    <ul>
+        <li>Cancels a <code>setInterval()</code> and stops it from running further.</li>
+        <li><b>Syntax:</b>
+            <pre><code>
+clearInterval(intervalID);
+            </code></pre>
+        </li>
+        <li><b>Example:</b>
+            <pre><code>
+let i = 0;
+let intervalID = setInterval(() => {
+    i++;
+    console.log("Repeating:", i);
+    if (i === 5) {
+        clearInterval(intervalID); // Stops after 5 runs
+    }
+}, 1000);
+            </code></pre>
+        </li>
+    </ul>
+
+    <h3>🔑 Key Notes</h3>
+    <ul>
+        <li><code>setTimeout</code> → Runs code once after delay.</li>
+        <li><code>setInterval</code> → Runs code repeatedly every interval.</li>
+        <li><code>clearTimeout</code> → Cancels a scheduled timeout.</li>
+        <li><code>clearInterval</code> → Stops a running interval.</li>
+    </ul>
+</section>
+
+<hr>
+
+<section id="dom">
+    <h2>🌳 Document Object Model (DOM) in JavaScript</h2>
+
+    <p>
+        The <b>DOM</b> is a programming interface for web documents. It represents the page 
+        so that programs can manipulate the structure, style, and content dynamically.
+    </p>
+
+    <h3>📌 DOM Structure</h3>
+    <ul>
+        <li>It provide communication between js and html</li>
+        <li>Using DOM we can manipulate the HTML elements, attributes and style</li>
+        <li>When a web page loads, the browser creates a <b>DOM tree</b>.</li>
+        <li>HTML elements are represented as <b>objects</b> that can be accessed and modified using JavaScript.</li>
+        <li>Example structure:
+            <pre><code>
+Document
+ └── html
+     ├── head
+     │    └── title
+     └── body
+          ├── h1
+          └── p
+            </code></pre>
+        </li>
+    </ul>
+
+    <h3>📌 Accessing DOM Elements</h3>
+    <ul>
+        <li><code>document.getElementById("id")</code> → Selects element by ID.</li>
+        <li><code>document.getElementsByClassName("class")</code> → Selects elements by class.</li>
+        <li><code>document.getElementsByTagName("tag")</code> → Selects elements by tag.</li>
+        <li><code>document.querySelector("selector")</code> → Selects the first match (CSS selector).</li>
+        <li><code>document.querySelectorAll("selector")</code> → Selects all matches (NodeList).</li>
+    </ul>
+
+    <pre><code>
+// Example
+let heading = document.getElementById("title");
+let paragraphs = document.querySelectorAll("p");
+    </code></pre>
+
+    <h3>📌 Modifying DOM Elements</h3>
+    <ul>
+        <li><code>element.innerHTML</code> → Get/Set HTML content.</li>
+        <li><code>element.innerText</code> → Get/Set text content.</li>
+        <li><code>element.style.property</code> → Change CSS style.</li>
+        <li><code>element.setAttribute("attr", "value")</code> → Set attribute.</li>
+        <li><code>element.getAttribute("attr")</code> → Get attribute.</li>
+    </ul>
+
+    <pre><code>
+// Example
+let heading = document.getElementById("title");
+heading.innerText = "Updated Heading!";
+heading.style.color = "blue";
+    </code></pre>
+
+    <h3>📌 Creating & Removing Elements</h3>
+    <ul>
+        <li><code>document.createElement("tag")</code> → Creates a new element.</li>
+        <li><code>parent.appendChild(element)</code> → Adds as last child.</li>
+        <li><code>parent.prepend(element)</code> → Adds as first child.</li>
+        <li><code>element.remove()</code> → Removes element.</li>
+    </ul>
+
+    <pre><code>
+// Example
+let newPara = document.createElement("p");
+newPara.innerText = "I am a new paragraph!";
+document.body.appendChild(newPara);
+    </code></pre>
+
+    <h3>📌 DOM Events</h3>
+    <ul>
+        <li>JavaScript can react to user actions using <b>events</b>.</li>
+        <li><code>element.addEventListener("event", callback)</code></li>
+    </ul>
+
+    <pre><code>
+// Example
+let btn = document.getElementById("myBtn");
+btn.addEventListener("click", () => {
+    alert("Button was clicked!");
+});
+    </code></pre>
+
+    <h3>🔑 Key Notes</h3>
+    <ul>
+        <li>DOM allows JavaScript to dynamically change content, styles, and structure.</li>
+        <li>Best practice: Use <code>querySelector</code> / <code>querySelectorAll</code> for flexibility.</li>
+        <li>Always manipulate DOM after the page is fully loaded (or inside <code>window.onload</code>).</li>
+    </ul>
+</section>
+
+<hr>
+
+<h2>🔹 innerHTML vs innerText vs textContent</h2>
+
+<h3>1. innerHTML</h3>
+<p>
+The <code>innerHTML</code> property returns or sets the <b>HTML code</b> inside an element.
+It reads HTML tags as HTML and renders them.
+</p>
+
+<b>Syntax:</b>
+<pre>
+element.innerHTML
+element.innerHTML = "new HTML";
+</pre>
+
+<b>Example:</b>
+<pre>
+&lt;div id="box"&gt;Hello &lt;b&gt;World&lt;/b&gt;&lt;/div&gt;
+
+&lt;script&gt;
+let box = document.getElementById("box");
+console.log(box.innerHTML);  
+// "Hello <b>World</b>"
+
+box.innerHTML = "Hi &lt;i&gt;Friend&lt;/i&gt;";
+&lt;/script&gt;
+</pre>
+
+<b>Output:</b>  
+- Logs: `Hello <b>World</b>`  
+- Div content becomes: *Hi <i>Friend</i>* (with italic Friend).
+
+<hr>
+
+<h3>2. innerText</h3>
+<p>
+The <code>innerText</code> property returns or sets the <b>visible text</b> of an element.  
+It ignores hidden elements (like with CSS <code>display:none</code>).
+It does not return HTML tags, only text as it is displayed.
+</p>
+
+<b>Syntax:</b>
+<pre>
+element.innerText
+element.innerText = "new text";
+</pre>
+
+<b>Example:</b>
+<pre>
+&lt;div id="box"&gt;Hello &lt;b&gt;World&lt;/b&gt;&lt;/div&gt;
+
+&lt;script&gt;
+let box = document.getElementById("box");
+console.log(box.innerText);  
+// "Hello World" (bold ignored)
+
+box.innerText = "Hi &lt;i&gt;Friend&lt;/i&gt;";
+&lt;/script&gt;
+</pre>
+
+<b>Output:</b>  
+- Logs: `Hello World` (without tags)  
+- Div content becomes: `Hi &lt;i&gt;Friend&lt;/i&gt;` (tags shown as plain text).
+
+<hr>
+
+<h3>3. textContent</h3>
+<p>
+The <code>textContent</code> property returns or sets the <b>all text inside</b> an element, including hidden text.  
+Unlike <code>innerText</code>, it does not care about CSS styles or visibility.
+</p>
+
+<b>Syntax:</b>
+<pre>
+element.textContent
+element.textContent = "new text";
+</pre>
+
+<b>Example:</b>
+<pre>
+&lt;div id="box"&gt;Hello &lt;span style="display:none"&gt;Hidden&lt;/span&gt; World&lt;/div&gt;
+
+&lt;script&gt;
+let box = document.getElementById("box");
+console.log(box.textContent);  
+// "Hello Hidden World"
+
+box.textContent = "Hi &lt;i&gt;Friend&lt;/i&gt;";
+&lt;/script&gt;
+</pre>
+
+<b>Output:</b>  
+- Logs: `Hello Hidden World` (hidden span included)  
+- Div content becomes: `Hi &lt;i&gt;Friend&lt;/i&gt;` (tags shown as text).
+
+<hr>
+
+<h3>4. Key Differences</h3>
+<table  cellpadding="6">
+  <tr>
+    <th>Property</th>
+    <th>Returns</th>
+    <th>Includes Hidden?</th>
+    <th>HTML tags?</th>
+  </tr>
+  <tr>
+    <td><b>innerHTML</b></td>
+    <td>HTML + text</td>
+    <td>Yes</td>
+    <td>Yes (parses HTML)</td>
+  </tr>
+  <tr>
+    <td><b>innerText</b></td>
+    <td>Visible text only</td>
+    <td>No</td>
+    <td>No (plain text)</td>
+  </tr>
+  <tr>
+    <td><b>textContent</b></td>
+    <td>All text</td>
+    <td>Yes</td>
+    <td>No (plain text)</td>
+  </tr>
+</table>
+
+<hr>
+
+<h3>5. When to Use?</h3>
+<ul>
+  <li><b>innerHTML</b> → When you want to read/insert HTML code (with tags).</li>
+  <li><b>innerText</b> → When you want only visible text (like user-facing text).</li>
+  <li><b>textContent</b> → When you want <i>all raw text</i>, regardless of visibility.</li>
+</ul>
+
+<hr>
+
+<h2>📘 JavaScript classList</h2>
+
+<p>The <b>classList</b> property provides methods to add, remove, toggle, and check classes of an element without overwriting existing ones.</p>
+
+<h3>✅ Syntax</h3>
+<pre><code>element.classList</code></pre>
+
+<h3>🔹 Properties of classList</h3>
+<ul>
+  <li><b>length</b> → Returns the number of classes</li>
+  <li><b>value</b> → Returns all class names as a string</li>
+  <li><b>item(index)</b> → Returns the class name at a specific index</li>
+</ul>
+
+<h3>🔹 Methods of classList</h3>
+<ul>
+  <li><b>add(className)</b> → Adds one or more classes</li>
+  <pre><code>element.classList.add("red", "big");</code></pre>
+
+  <li><b>remove(className)</b> → Removes one or more classes</li>
+  <pre><code>element.classList.remove("red");</code></pre>
+
+  <li><b>toggle(className, force)</b> → Toggles a class (adds if not present, removes if present).  
+      Optional <code>force</code> parameter forces add/remove.</li>
+  <pre><code>element.classList.toggle("hidden");
+element.classList.toggle("active", true);</code></pre>
+
+  <li><b>contains(className)</b> → Checks if a class exists</li>
+  <pre><code>element.classList.contains("big"); // true or false</code></pre>
+
+  <li><b>replace(oldClass, newClass)</b> → Replaces one class with another</li>
+  <pre><code>element.classList.replace("big", "small");</code></pre>
+</ul>
+
+<h3>🔎 Example</h3>
+<pre><code>&lt;div id="box" class="red big"&gt;Hello&lt;/div&gt;
+
+&lt;script&gt;
+let box = document.getElementById("box");
+
+console.log(box.classList.length); // 2
+console.log(box.classList.value);  // "red big"
+
+box.classList.add("shadow");  
+box.classList.remove("red");  
+box.classList.toggle("hidden");  
+console.log(box.classList.contains("big")); // true
+box.classList.replace("big", "small");  
+&lt;/script&gt;
+</code></pre>
+
+<hr>
+
+<h2>🔹 setAttribute(), getAttribute(), removeAttribute(), classList</h2>
+
+<h3>1. setAttribute()</h3>
+<p>
+The <code>setAttribute()</code> method is used to <b>set or update</b> an attribute of an HTML element.
+It works with any attribute (id, class, src, href, alt, title, style, etc.).
+</p>
+
+<b>Syntax:</b>
+<pre>
+element.setAttribute("attributeName", "value");
+</pre>
+
+<b>Example:</b>
+<pre>
+&lt;a id="link" href="#"&gt;Google&lt;/a&gt;
+
+&lt;script&gt;
+let link = document.getElementById("link");
+
+// change href
+link.setAttribute("href", "https://google.com");
+
+// add title
+link.setAttribute("title", "Go to Google");
+&lt;/script&gt;
+</pre>
+
+<b>Output:</b> The link will now open Google and show tooltip "Go to Google".
+
+<hr>
+
+<h3>2. getAttribute()</h3>
+<p>
+The <code>getAttribute()</code> method is used to <b>read</b> the value of an attribute.
+</p>
+
+<b>Syntax:</b>
+<pre>
+element.getAttribute("attributeName");
+</pre>
+
+<b>Example:</b>
+<pre>
+console.log(link.getAttribute("href"));   // "https://google.com"
+console.log(link.getAttribute("title"));  // "Go to Google"
+</pre>
+
+<hr>
+
+<h3>3. removeAttribute()</h3>
+<p>
+The <code>removeAttribute()</code> method is used to <b>remove</b> an attribute completely.
+</p>
+
+<b>Syntax:</b>
+<pre>
+element.removeAttribute("attributeName");
+</pre>
+
+<b>Example:</b>
+<pre>
+link.removeAttribute("title"); 
+// title attribute is deleted
+</pre>
+
+<hr>
+
+<h3>4. className vs classList</h3>
+
+<p><b>className</b> → Gets or sets all classes as a single string.</p>
+<p><b>classList</b> → Provides methods to manipulate classes individually.</p>
+
+<b>Syntax:</b>
+<pre>
+// Using className (overwrites all classes)
+element.className = "class1 class2";
+
+// Using classList
+element.classList.add("className");
+element.classList.remove("className");
+element.classList.toggle("className");
+element.classList.contains("className");
+</pre>
+
+<b>Example:</b>
+<pre>
+&lt;div id="box" class="blue"&gt;Hello&lt;/div&gt;
+
+&lt;script&gt;
+let box = document.getElementById("box");
+
+// className replaces everything
+box.className = "red big";
+
+// classList methods
+box.classList.add("shadow");      // add class
+box.classList.remove("red");      // remove class
+box.classList.toggle("hidden");   // add/remove toggle
+console.log(box.classList.contains("big")); // true
+&lt;/script&gt;
+</pre>
+
+<b>Output:</b>  
+- "blue" is replaced by "red big"  
+- "shadow" is added  
+- "red" is removed  
+- "hidden" is toggled  
+
+<hr>
+
+<h3>5. When to use what?</h3>
+<ul>
+  <li><b>setAttribute/getAttribute</b> → Best for attributes like <code>src</code>, <code>alt</code>, <code>href</code>, <code>id</code>, <code>title</code>.</li>
+  <li><b>classList</b> → Best for managing classes safely (adding/removing one at a time).</li>
+  <li><b>className</b> → Best when you want to overwrite all classes at once.</li>
+  <li><b>removeAttribute</b> → Best when you want to delete an attribute fully.</li>
+</ul>
+
+<section class="topic">
+  <h2>🔧Attributes </h2>
+
+  <div class="definition">
+    <p>
+      An <b>attribute</b> is the text you put in HTML (e.g., <code>&lt;input id="x" disabled&gt;</code>).
+      In JS you can read/write them via the <b>Attributes API</b>:
+      <code>setAttribute</code>, <code>getAttribute</code>, <code>removeAttribute</code>, etc.
+      Many attributes are also reflected as <b>properties</b> on the element (e.g., <code>el.id</code>, <code>el.disabled</code>).
+    </p>
+  </div>
+
+  <div class="methods">
+    <h3>🧰 Core Methods</h3>
+    <pre>
+// Create a demo element
+const el = document.createElement('a');
+
+// 1) setAttribute(name, value) — add or change an attribute
+el.setAttribute('href', 'https://example.com');
+el.setAttribute('title', 'Go to Example');
+el.setAttribute('class', 'btn primary');
+
+// 2) getAttribute(name) — read exact attribute text (as written in HTML/JS)
+console.log(el.getAttribute('href'));   // "https://example.com"
+console.log(el.getAttribute('class'));  // "btn primary"
+
+// 3) hasAttribute(name) — check presence
+console.log(el.hasAttribute('title'));  // true
+
+// 4) removeAttribute(name) — remove it completely
+el.removeAttribute('title');
+console.log(el.hasAttribute('title'));  // false
+
+// 5) toggleAttribute(name, force?) — add if missing, remove if present
+//    great for boolean attributes like "hidden", "disabled", "required"
+el.toggleAttribute('hidden');           // adds hidden
+el.toggleAttribute('hidden');           // removes hidden
+el.toggleAttribute('hidden', true);     // force add
+el.toggleAttribute('hidden', false);    // force remove
+
+// 6) getAttributeNames() — list all attribute names
+console.log(el.getAttributeNames());    // e.g., ["href","class"]
+    </pre>
+  </div>
+
+  <div class="booleans">
+    <h3>🟡 Boolean Attributes (special behavior)</h3>
+    <p>
+      Boolean attributes (e.g., <code>disabled</code>, <code>checked</code>, <code>required</code>, <code>hidden</code>) are
+      <b>true</b> when the attribute is present (any value or empty), and <b>false</b> when missing.
+    </p>
+    <pre>
+// Example: checkbox
+const cb = document.createElement('input');
+cb.type = 'checkbox';
+
+// Attribute presence controls the initial state:
+cb.setAttribute('checked', '');   // checked ON
+console.log(cb.checked);          // true (property reflects state)
+
+// Removing the attribute doesn't automatically change the property
+cb.removeAttribute('checked');
+console.log(cb.checked);          // ⚠️ may still be true until you set cb.checked = false
+
+// Prefer changing the property for current state:
+cb.checked = false;               // uncheck in UI
+// If you want HTML to reflect it too (e.g., when serializing), remove the attribute:
+cb.removeAttribute('checked');
+    </pre>
+    <p><b>Rule of thumb:</b> Use <code>properties</code> (<code>el.checked</code>, <code>el.disabled</code>) to control current UI state.
+       Use <code>attributes</code> to control initial/default/markup state.</p>
+  </div>
+
+  <div class="dataset">
+    <h3>🗂️ <code>data-*</code> Attributes & <code>dataset</code></h3>
+    <p>
+      Custom data goes in <code>data-*</code> attributes. They map to the <code>dataset</code> object with
+      <b>camelCase</b> keys.
+    </p>
+    <pre>
+const card = document.createElement('div');
+
+// Set via attribute
+card.setAttribute('data-user-id', '42');
+
+// Read via dataset
+console.log(card.dataset.userId);     // "42"
+
+// Set via dataset (auto-updates attribute)
+card.dataset.role = 'admin';          // adds: data-role="admin"
+console.log(card.getAttribute('data-role')); // "admin"
+    </pre>
+  </div>
+
+  <div class="attrs-vs-props">
+    <h3>🔁 Attributes vs Properties (important!)</h3>
+    <ul>
+      <li><b>Attribute</b> = the string in HTML (source/default).</li>
+      <li><b>Property</b> = the live JS value on the DOM object (current state).</li>
+    </ul>
+    <pre>
+// Input "value": attribute vs property
+const input = document.createElement('input');
+
+// Attribute is what you'd see in HTML markup:
+input.setAttribute('value', 'Hello');    // default value in markup
+console.log(input.getAttribute('value')); // "Hello"
+
+// Property is the live value in the control:
+console.log(input.value);                 // "Hello"
+input.value = 'Hi now';                   // user/JS changed it
+console.log(input.getAttribute('value')); // still "Hello" (attribute didn't change)
+                                           // unless you also setAttribute again
+
+// Links: attribute href vs property href (absolute URL normalization)
+const a = document.createElement('a');
+a.setAttribute('href', '/page');         // as written
+console.log(a.getAttribute('href'));     // "/page"
+console.log(a.href);                     // full absolute URL, e.g. "https://site.com/page"
+    </pre>
+    <p><b>Guideline:</b> For frequently used, “reflected” attributes (like <code>id</code>, <code>class</code>, <code>value</code>, <code>checked</code>, <code>disabled</code>),
+      prefer the <b>property</b> when updating live UI. Use <b>attributes</b> when you need exact markup text or custom data.</p>
+  </div>
+
+  <div class="class-style">
+    <h3>🎨 Class & Style: attribute vs dedicated APIs</h3>
+    <pre>
+// Class: you can use the attribute...
+el.setAttribute('class', 'btn primary');
+
+// ...but classList is safer & easier:
+el.classList.add('btn', 'primary');
+el.classList.toggle('active');
+
+// Style: attribute works...
+el.setAttribute('style', 'color:red; font-size:20px');
+
+// ...but the style API is more robust:
+el.style.color = 'red';
+el.style.setProperty('font-size', '20px');  // kebab-case via setProperty
+    </pre>
+  </div>
+
+  <div class="aria">
+    <h3>♿ ARIA & Accessibility Attributes</h3>
+    <p>
+      ARIA attributes (<code>aria-*</code>) are plain attributes used by assistive technologies:
+      <code>aria-label</code>, <code>aria-expanded</code>, <code>role</code>, etc.
+      Manage them with the same API:
+    </p>
+    <pre>
+el.setAttribute('role', 'button');
+el.setAttribute('aria-label', 'Open menu');
+el.setAttribute('aria-expanded', 'false');
+
+// Update dynamically:
+el.setAttribute('aria-expanded', 'true');
+    </pre>
+  </div>
+
+  <div class="mini-examples">
+    <h3>🧪 Mini Examples (copy-paste ready)</h3>
+    <pre>
+// Example: build a button that toggles disabled via attribute
+const btn = document.createElement('button');
+btn.textContent = 'Click Me';
+document.body.appendChild(btn);
+
+// Toggle the boolean attribute
+btn.addEventListener('click', () => {
+  btn.toggleAttribute('disabled'); // disables/enables
+});
+
+// Example: read all attributes
+console.log([...btn.getAttributeNames()].map(n => [n, btn.getAttribute(n)]));
+
+// Example: safely update class & data
+btn.classList.add('primary');
+btn.dataset.track = 'cta';
+    </pre>
+  </div>
+
+  <div class="summary">
+    <h3>✅ Summary</h3>
+    <ul>
+      <li><code>setAttribute / getAttribute / removeAttribute</code> → raw markup attributes.</li>
+      <li><code>hasAttribute / toggleAttribute / getAttributeNames</code> → useful helpers.</li>
+      <li>Use <b>properties</b> for live state (<code>el.value</code>, <code>el.checked</code>, <code>el.disabled</code>).</li>
+      <li>Use <b>attributes</b> for defaults, serialization, custom <code>data-*</code>, ARIA.</li>
+      <li>Prefer <code>classList</code> & <code>style</code> APIs over setting <code>class</code>/<code>style</code> strings.</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<h2>🎨 CSS in JavaScript</h2>
+
+<p>In JavaScript, you can manipulate CSS dynamically using <b>style.propertyName</b>, <b>setProperty()</b>, <b>cssText</b>, <b>className</b>, and <b>classList</b>. These methods allow full CRUD operations on styles and classes.</p>
+
+<hr>
+
+<h3>1️⃣ style.propertyName</h3>
+<p>Access or modify individual inline CSS properties. Use <b>camelCase</b> for multi-word properties.</p>
+
+<b>Syntax:</b>
+<pre>
+element.style.propertyName = "value";
+let value = element.style.propertyName;
+</pre>
+
+<b>Example:</b>
+<pre>
+&lt;div id="box"&gt;Box&lt;/div&gt;
+
+&lt;script&gt;
+let box = document.getElementById("box");
+
+// CREATE / UPDATE
+box.style.color = "red";
+box.style.backgroundColor = "yellow";
+
+// READ
+console.log(box.style.color); // "red"
+
+// DELETE
+box.style.color = "";  // removes the inline color
+&lt;/script&gt;
+</pre>
+
+<b>Output:</b> Yellow box with red text, then color removed.
+
+<hr>
+
+<h3>2️⃣ style.setProperty() / getPropertyValue() / removeProperty()</h3>
+<p>Use for any CSS property, including dashed properties and CSS variables.</p>
+
+<b>Syntax:</b>
+<pre>
+element.style.setProperty("property-name", "value");
+element.style.getPropertyValue("property-name");
+element.style.removeProperty("property-name");
+</pre>
+
+<b>Example:</b>
+<pre>
+&lt;div id="card"&gt;Card&lt;/div&gt;
+
+&lt;script&gt;
+let card = document.getElementById("card");
+
+// CREATE / UPDATE
+card.style.setProperty("font-size", "20px");
+card.style.setProperty("--main-color", "blue");
+
+// READ
+console.log(card.style.getPropertyValue("font-size")); // "20px"
+
+// DELETE
+card.style.removeProperty("font-size");
+&lt;/script&gt;
+</pre>
+
+<hr>
+
+<h3>3️⃣ style.cssText</h3>
+<p>Set multiple CSS properties at once as a string. Overwrites all existing inline styles.</p>
+
+<b>Syntax:</b>
+<pre>
+element.style.cssText = "property: value; property2: value2;";
+</pre>
+
+<b>Example:</b>
+<pre>
+box.style.cssText = "color: white; background-color: black; font-size: 18px;";
+</pre>
+
+<b>Output:</b> Black box with white text, font 18px.
+
+<hr>
+
+<h3>4️⃣ className</h3>
+<p>Represents all classes of an element as a string. Overwrites all classes when set.</p>
+
+<b>Syntax:</b>
+<pre>
+element.className = "class1 class2";
+console.log(element.className);
+</pre>
+
+<b>Example:</b>
+<pre>
+&lt;div id="para" class="old"&gt;Hello&lt;/div&gt;
+
+&lt;script&gt;
+let para = document.getElementById("para");
+
+// READ
+console.log(para.className);  // "old"
+
+// CREATE / UPDATE (overwrite all)
+para.className = "new highlight";
+
+// DELETE (remove all classes)
+para.className = "";
+&lt;/script&gt;
+</pre>
+
+<hr>
+
+<h3>5️⃣ classList</h3>
+<p>Modern and flexible way to manipulate classes individually.</p>
+
+<b>Methods:</b>
+<ul>
+<li>add("class") → CREATE</li>
+<li>remove("class") → DELETE</li>
+<li>toggle("class") → Toggle add/remove</li>
+<li>replace("old","new") → UPDATE</li>
+<li>contains("class") → READ / check</li>
+</ul>
+
+<b>Example:</b>
+<pre>
+&lt;div id="box2" class="a"&gt;Box2&lt;/div&gt;
+
+&lt;script&gt;
+let box2 = document.getElementById("box2");
+
+// CREATE
+box2.classList.add("b"); 
+
+// READ
+console.log(box2.classList.contains("b")); // true
+
+// UPDATE
+box2.classList.replace("a", "c");
+
+// DELETE
+box2.classList.remove("b");
+
+// TOGGLE
+box2.classList.toggle("hidden"); // adds "hidden"
+box2.classList.toggle("hidden"); // removes "hidden"
+&lt;/script&gt;
+</pre>
+
+<hr>
+
+<h3>6️⃣ CRUD Operations Summary</h3>
+<table  cellpadding="6">
+<tr>
+<th>Operation</th>
+<th>style.propertyName</th>
+<th>setProperty() / getPropertyValue() / removeProperty()</th>
+<th>cssText</th>
+<th>classList / className</th>
+</tr>
+<tr>
+<td>Create</td>
+<td>el.style.color = "red";</td>
+<td>el.style.setProperty("color","red");</td>
+<td>el.style.cssText = "color:red; background:yellow;";</td>
+<td>el.classList.add("new"); / el.className="new";</td>
+</tr>
+<tr>
+<td>Read</td>
+<td>console.log(el.style.color);</td>
+<td>el.style.getPropertyValue("color");</td>
+<td>console.log(el.style.cssText);</td>
+<td>el.classList.contains("new"); / console.log(el.className);</td>
+</tr>
+<tr>
+<td>Update</td>
+<td>el.style.color = "blue";</td>
+<td>el.style.setProperty("color","blue");</td>
+<td>el.style.cssText = "color:blue; background:black;";</td>
+<td>el.classList.replace("old","new"); / el.className="updated";</td>
+</tr>
+<tr>
+<td>Delete</td>
+<td>el.style.color = "";</td>
+<td>el.style.removeProperty("color");</td>
+<td>el.style.cssText = "";</td>
+<td>el.classList.remove("new"); / el.className="";</td>
+</tr>
+</table>
+
+<hr>
+
+<h3>7️⃣ When to Use?</h3>
+<ul>
+<li><b>style.propertyName</b> → Quick inline styles for single property.</li>
+<li><b>setProperty()</b> → Use for dashed properties or CSS variables.</li>
+<li><b>cssText</b> → Use to set multiple inline styles at once.</li>
+<li><b>classList</b> → Recommended for adding/removing/toggling classes.</li>
+<li><b>className</b> → Only if you want to overwrite all classes at once.</li>
+</ul>
+
+<hr>
+
+<!-- Adding ID using JavaScript -->
+<div class="topic">
+  <h2>Adding <code>id</code> using JavaScript</h2>
+  <p><b>Definition:</b> We can assign or change the <code>id</code> attribute of an HTML element using JavaScript DOM methods.</p>
+
+  <h3>Method 1: Using <code>setAttribute()</code></h3>
+  <pre><code>&lt;div&gt;Hello World&lt;/div&gt;
+
+&lt;script&gt;
+  let div = document.querySelector("div");
+  div.setAttribute("id", "myDiv");
+&lt;/script&gt;</code></pre>
+
+  <h3>Method 2: Directly using <code>element.id</code></h3>
+  <pre><code>&lt;div&gt;Hello World&lt;/div&gt;
+
+&lt;script&gt;
+  let div = document.querySelector("div");
+  div.id = "myDiv2";
+&lt;/script&gt;</code></pre>
+
+  <h3>Output (HTML after JS runs):</h3>
+  <pre><code>&lt;div id="myDiv"&gt;Hello World&lt;/div&gt;</code></pre>
+
+  <p><b>Note:</b> 
+    <ul>
+      <li><code>setAttribute()</code> can set any attribute (not just <code>id</code>).</li>
+      <li><code>element.id</code> is shorthand for directly setting <code>id</code>.</li>
+    </ul>
+  </p>
+</div>
+
+<hr>
+
+<section id="dom-events">
+    <h2>🎯 DOM Events</h2>
+
+    <p>
+        Events are actions that happen in the browser (click, keypress, mouseover, submit, etc.).  
+        JavaScript can listen and respond to these events using **event listeners**.
+    </p>
+
+    <h3>📌 Ways to Handle Events</h3>
+    <ol>
+        <li><b>Inline Events (not recommended)</b>
+            <pre><code>&lt;button onclick="alert('Hello!')"&gt;Click&lt;/button&gt;</code></pre>
+        </li>
+
+        <li><b>DOM Property</b>
+            <pre><code>
+let btn = document.getElementById("myBtn");
+btn.onclick = function() {
+    alert("Button Clicked!");
+};
+            </code></pre>
+        </li>
+
+        <li><b>addEventListener (Preferred ✅)</b>
+            <pre><code>
+let btn = document.getElementById("myBtn");
+btn.addEventListener("click", () => {
+    alert("Clicked with addEventListener!");
+});
+            </code></pre>
+        </li>
+    </ol>
+
+    <h3>📌 Common Event Types</h3>
+    <ul>
+        <li><b>Mouse Events:</b> click, dblclick, mouseover, mouseout, mousedown, mouseup, contextmenu</li>
+        <li><b>Keyboard Events:</b> keydown, keyup, keypress</li>
+        <li><b>Form Events:</b> submit, change, input, focus, blur, reset</li>
+        <li><b>Window Events:</b> load, resize, scroll, unload</li>
+    </ul>
+
+    <h3>📌 Event Object</h3>
+    <p>Whenever an event occurs, the browser passes an <code>event</code> object with useful info:</p>
+    <pre><code>
+document.addEventListener("click", function(event) {
+    console.log("Type:", event.type);   // click
+    console.log("Target:", event.target); // Element clicked
+    console.log("X:", event.clientX, "Y:", event.clientY);
+});
+    </code></pre>
+
+    <h3>📌 Event Flow: Bubbling vs Capturing</h3>
+    <p>
+        Events travel in two phases:
+        <br>1️⃣ <b>Capturing Phase</b> → From root → target.  
+        <br>2️⃣ <b>Bubbling Phase</b> → From target → root (default).
+    </p>
+    <pre><code>
+document.getElementById("parent").addEventListener("click", () => {
+    console.log("Parent clicked (bubbling)");
+});
+
+document.getElementById("child").addEventListener("click", () => {
+    console.log("Child clicked");
+});
+
+// Capturing Phase
+document.getElementById("parent").addEventListener("click", () => {
+    console.log("Parent clicked (capturing)");
+}, true);
+    </code></pre>
+
+    <h3>📌 stopPropagation & preventDefault</h3>
+    <ul>
+        <li><code>event.stopPropagation()</code> → Stops event from moving further.</li>
+        <li><code>event.preventDefault()</code> → Prevents default browser behavior.</li>
+    </ul>
+    <pre><code>
+document.querySelector("a").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent link from opening
+    alert("Default prevented!");
+});
+    </code></pre>
+
+    <h3>📌 Event Delegation (Best Practice)</h3>
+    <p>
+        Instead of attaching event listeners to many children,  
+        attach it to a common parent and use <code>event.target</code>.
+    </p>
+    <pre><code>
+document.getElementById("list").addEventListener("click", function(event) {
+    if (event.target.tagName === "LI") {
+        alert("You clicked: " + event.target.textContent);
+    }
+});
+    </code></pre>
+
+    <h3>🔑 Key Notes</h3>
+    <ul>
+        <li>Prefer <b>addEventListener</b> over inline events.</li>
+        <li>Event Bubbling (default) is commonly used for delegation.</li>
+        <li>Always clean up events if elements are removed (memory management).</li>
+    </ul>
+</section>
+
+<hr>
+
+<h2>📌 JavaScript Events — Syntax, Methods & Properties</h2>
+
+<h3>1️⃣ Event Registration (Ways to Add Event)</h3>
+<pre>
+// ✅ Inline HTML attribute (not recommended)
+&lt;button onclick="myFunc()"&gt;Click Me&lt;/button&gt;
+
+// ✅ DOM Property
+element.on(event) = function(event) { ... };
+
+// ✅ addEventListener (Recommended)
+element.addEventListener("click", handlerFunction);
+element.addEventListener("click", handlerFunction, true); // useCapture
+element.addEventListener("click", handlerFunction, { once: true }); // auto remove
+</pre>
+
+<h3>2️⃣ Removing Event Listeners</h3>
+<pre>
+element.removeEventListener("click", handlerFunction);
+</pre>
+
+<h3>3️⃣ Event Object Properties</h3>
+<pre>
+event.type         // "click", "keydown", "mouseover", etc.
+event.target       // element on which event happened
+event.currentTarget// element handling the event (useful in delegation)
+event.timeStamp    // time of event (ms)
+event.bubbles      // true if bubbles (default)
+event.cancelable   // true if preventDefault() can be used
+event.clientX, event.clientY // mouse pointer position
+event.key, event.code        // keyboard key pressed
+</pre>
+
+<h3>4️⃣ Event Object Methods</h3>
+<pre>
+event.preventDefault();   // stop default browser action (e.g., link navigation, form submit)
+event.stopPropagation();  // stop further bubbling/capturing
+event.stopImmediatePropagation(); // stop bubbling & other listeners on same element
+</pre>
+
+<h3>5️⃣ Event Flow</h3>
+<ul>
+  <li><b>Capturing phase</b> → Document → Parent → Target</li>
+  <li><b>Target phase</b> → Actual element clicked</li>
+  <li><b>Bubbling phase</b> → Target → Parent → Document</li>
+</ul>
+
+<h3>6️⃣ Event Delegation Syntax</h3>
+<pre>
+parent.addEventListener("click", function(event) {
+  if (event.target.matches("li")) {    // OR event.target.tagName === "LI"
+    console.log("Clicked:", event.target.textContent);
+  }
+});
+</pre>
+
+<h3>7️⃣ Common Event Types</h3>
+<ul>
+  <li><b>Mouse Events</b> → click, dblclick, mouseover, mouseout, mousedown, mouseup, mousemove</li>
+  <li><b>Keyboard Events</b> → keydown, keyup, keypress</li>
+  <li><b>Form Events</b> → submit, reset, input, change, focus, blur</li>
+  <li><b>Window Events</b> → load, resize, scroll, unload</li>
+  <li><b>Clipboard Events</b> → copy, cut, paste</li>
+</ul>
+
+<h3>8️⃣ Shortcut Examples</h3>
+<pre>
+btn.onclick = () => alert("Clicked");    // DOM property
+btn.addEventListener("click", () => alert("Clicked")); // Recommended
+btn.removeEventListener("click", handler); // Remove
+</pre>
+
+<hr>
+
+<section id="events-dom-property">
+  <h2>🧩 DOM Property Event Handlers (DOM0)</h2>
+  <p>
+    Attach an event by assigning a function to an element’s event <b>property</b> like <code>onclick</code>, <code>oninput</code>, <code>onsubmit</code>, etc.
+    This is the simplest way, but it supports only <b>one handler per event</b> on an element.
+  </p>
+
+  <h3>✅ Syntax</h3>
+  <pre><code>// attach
+element.onclick = function (event) { /* ... */ };
+
+// remove
+element.onclick = null;
+
+// ⚠️ Do NOT call the function when assigning
+element.onclick = handler;      // ✅ correct
+element.onclick = handler();    // ❌ wrong (executes immediately)
+  </code></pre>
+
+  <h3>📌 Basic Example</h3>
+  <pre><code>&lt;button id="btn"&gt;Click me&lt;/button&gt;
+&lt;p id="out"&gt;&lt;/p&gt;
+
+&lt;script&gt;
+const btn = document.getElementById('btn');
+const out = document.getElementById('out');
+
+btn.onclick = function (e) {
+  out.innerText = 'Button clicked! Event type: ' + e.type;
+};
+&lt;/script&gt;
+  </code></pre>
+
+  <h3>🧠 Key Characteristics</h3>
+  <ul>
+    <li><b>One handler only:</b> assigning a new function <code>overwrites</code> the old one.</li>
+    <li><b>Remove by null:</b> <code>element.onclick = null;</code></li>
+    <li><b><code>this</code> value:</b> in a normal function, <code>this</code> is the element; in an arrow function it’s <i>lexically</i> bound (usually not the element).</li>
+    <li><b>No options:</b> you can’t use <i>capture</i>, <i>once</i>, or <i>passive</i> flags here.</li>
+    <li><b>Return false:</b> returning <code>false</code> from a property handler prevents the default action (similar to <code>event.preventDefault()</code>), but it does <i>not</i> stop propagation (use <code>event.stopPropagation()</code> for that).</li>
+  </ul>
+
+  <h3>🛑 Prevent Default (link example)</h3>
+  <pre><code>&lt;a id="go" href="https://example.com"&gt;Go&lt;/a&gt;
+
+&lt;script&gt;
+const go = document.getElementById('go');
+
+go.onclick = function (e) {
+  // Either:
+  // e.preventDefault();      // explicit
+  // Or:
+  return false;               // property-handlers: cancels default navigation
+};
+&lt;/script&gt;
+  </code></pre>
+
+  <h3>🔁 Overwrite vs Keep (why only one handler?)</h3>
+  <pre><code>const box = document.getElementById('box');
+
+box.onclick = function () {
+  console.log('First');       // this will be overwritten
+};
+
+box.onclick = function () {
+  console.log('Second');      // only this runs
+};
+// Output on click: "Second"
+  </code></pre>
+
+  <h3>👆 Using <code>this</code> correctly</h3>
+  <pre><code>const card = document.getElementById('card');
+
+// Normal function: `this` === element
+card.onclick = function () {
+  this.classList.toggle('active'); // works
+};
+
+// Arrow function: `this` is NOT the element
+card.onclick = () =&gt; {
+  // this.classList.toggle('active'); // ❌ won't work
+  card.classList.toggle('active');    // ✅ use the variable instead
+};
+  </code></pre>
+
+  <h3>🧹 Remove the handler</h3>
+  <pre><code>function handleClick() {
+  console.log('clicked');
+}
+
+btn.onclick = handleClick;
+// later...
+btn.onclick = null; // removes it
+  </code></pre>
+
+  <h3>✅ When to use DOM property handlers?</h3>
+  <ul>
+    <li>Quick demos or simple interactions.</li>
+    <li>When you’re sure you only need a single handler per event.</li>
+    <li>Small scripts without advanced options (no capture/once/passive).</li>
+  </ul>
+
+  <h3>⚠️ When NOT to use?</h3>
+  <ul>
+    <li>When you need <b>multiple handlers</b> on the same event/element.</li>
+    <li>When you need options like <b>capture</b>, <b>once</b>, or <b>passive</b>.</li>
+    <li>When you’re doing <b>event delegation</b> or complex event flow control.</li>
+  </ul>
+</section>
+
+<hr>
+
+<section id="events-addeventlistener">
+  <h2>🧩 Event Listeners (addEventListener)</h2>
+  <p>
+    Attach an event using <code>element.addEventListener(event, handler, options)</code>.  
+    Unlike DOM property handlers, this allows <b>multiple handlers</b> on the same event, advanced options, and better control.
+  </p>
+
+  <h3>✅ Syntax</h3>
+  <pre><code>element.addEventListener("eventName", callback, options);
+
+// options can be:
+// - boolean (true = capture phase, false = bubble phase [default])
+// - object: { capture: true/false, once: true/false, passive: true/false }
+  </code></pre>
+
+  <h3>📌 Basic Example</h3>
+  <pre><code>&lt;button id="btn"&gt;Click Me&lt;/button&gt;
+
+&lt;script&gt;
+const btn = document.getElementById('btn');
+
+btn.addEventListener('click', function (e) {
+  console.log('Button clicked at', e.timeStamp);
+});
+&lt;/script&gt;
+  </code></pre>
+
+  <h3>🔁 Multiple Handlers</h3>
+  <pre><code>btn.addEventListener('click', () =&gt; console.log('First'));
+btn.addEventListener('click', () =&gt; console.log('Second'));
+// ✅ Both run when clicked
+  </code></pre>
+
+  <h3>🛑 Removing Event Listeners</h3>
+  <pre><code>function greet() {
+  console.log('Hello!');
+}
+btn.addEventListener('click', greet);
+
+// later...
+btn.removeEventListener('click', greet); // ✅ removed
+// ⚠️ anonymous functions cannot be removed, only named ones
+  </code></pre>
+
+  <h3>⚙️ Options</h3>
+  <pre><code>const box = document.getElementById('box');
+
+box.addEventListener('click', e =&gt; {
+  console.log('Bubble (default)');
+});
+
+box.addEventListener('click', e =&gt; {
+  console.log('Capture');
+}, true); // or {capture: true}
+
+box.addEventListener('click', e =&gt; {
+  console.log('Runs only once');
+}, { once: true });
+
+box.addEventListener('scroll', e =&gt; {
+  console.log('scroll event');
+}, { passive: true }); // can't use preventDefault()
+  </code></pre>
+
+  <h3>🧠 Key Characteristics</h3>
+  <ul>
+    <li><b>Multiple handlers:</b> attach as many as you want.</li>
+    <li><b>Advanced options:</b> <code>capture</code>, <code>once</code>, <code>passive</code>.</li>
+    <li><b>Remove with reference:</b> must use the same function reference.</li>
+    <li><b><code>this</code> value:</b> works like property handlers (normal function → element, arrow → lexical).</li>
+    <li><b>Supported everywhere:</b> standard method, best practice.</li>
+  </ul>
+
+  <h3>🛑 Prevent Default</h3>
+  <pre><code>&lt;a href="https://example.com" id="link"&gt;Go&lt;/a&gt;
+
+&lt;script&gt;
+const link = document.getElementById('link');
+
+link.addEventListener('click', function(e) {
+  e.preventDefault(); // stops navigation
+  console.log('Navigation prevented');
+});
+&lt;/script&gt;
+  </code></pre>
+
+  <h3>⚠️ Common Pitfalls</h3>
+  <ul>
+    <li>Forgetting to use the same function reference when removing.</li>
+    <li>Using arrow functions when you need <code>this</code> to refer to the element.</li>
+    <li>Using <code>{ passive: true }</code> but still trying <code>preventDefault()</code> → throws error.</li>
+  </ul>
+
+  <h3>✅ When to use addEventListener?</h3>
+  <ul>
+    <li>Whenever you need <b>multiple event handlers</b>.</li>
+    <li>When you need advanced options (capture, once, passive).</li>
+    <li>When doing <b>event delegation</b> or complex DOM apps.</li>
+  </ul>
+
+  <h3>⚠️ When NOT to use?</h3>
+  <ul>
+    <li>For very quick one-off demos where a single handler is enough → property handler might be simpler.</li>
+    <li>But in general, <b>this is the preferred method</b>.</li>
+  </ul>
+</section>
+<!-- ========================= -->
+<!-- Event Capturing vs Bubbling -->
+<!-- ========================= -->
+
+<section class="topic">
+  <h2>🎯 Event Capturing vs Bubbling in JavaScript</h2>
+
+  <div class="definition">
+    <p>
+      When we add an event listener in JavaScript, it can run in either the <b>bubbling phase</b> (default) or the <b>capturing phase</b>.  
+    </p>
+  </div>
+
+  <div class="syntax">
+    <h3>📝 Syntax</h3>
+    <pre>
+element.addEventListener(event, handler, useCapture);
+    </pre>
+    <ul>
+      <li><b>event</b> → the event type (e.g., "click").</li>
+      <li><b>handler</b> → the function to run.</li>
+      <li><b>useCapture</b> → <code>false</code> (default → bubbling) OR <code>true</code> (capturing).</li>
+    </ul>
+  </div>
+
+  <div class="explanation">
+    <h3>📌 Explanation</h3>
+    <ul>
+      <li><b>false (default → Bubbling Phase):</b> Event goes down to the target, runs on the target, then bubbles up to ancestors.</li>
+      <li><b>true (Capturing Phase):</b> Event runs on ancestors first, while traveling down, before reaching the target.</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example</h3>
+    <pre>
+&lt;div id="outer" style="padding:20px; background:lightblue;"&gt;
+  Outer
+  &lt;button id="inner"&gt;Click Me&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+outer.addEventListener("click", () =&gt; {
+  console.log("Outer - Capturing (runs FIRST)");
+}, true);   // capturing
+
+inner.addEventListener("click", () =&gt; {
+  console.log("Inner - Target");
+});
+
+outer.addEventListener("click", () =&gt; {
+  console.log("Outer - Bubbling (runs LAST)");
+}, false);  // bubbling
+&lt;/script&gt;
+    </pre>
+  </div>
+
+  <div class="output">
+    <h3>⚡ Output (when clicking button)</h3>
+    <pre>
+Outer - Capturing (runs FIRST)
+Inner - Target
+Outer - Bubbling (runs LAST)
+    </pre>
+  </div>
+
+  <div class="usecase">
+    <h3>✅ When to Use Capturing?</h3>
+    <ul>
+      <li>To intercept/block events before children handle them.</li>
+      <li>To create global rules (e.g., disabling all child clicks).</li>
+      <li>For debugging or logging event flow.</li>
+    </ul>
+  </div>
+</section>
+
+<hr>
+
+<section id="events-object">
+  <h2>📦 Event Object</h2>
+  <p>
+    Every event handler gets passed an <code>event</code> object automatically.  
+    This object contains <b>information about the event</b> (what happened, where, when) and has <b>methods to control it</b>.
+  </p>
+
+  <h3>✅ Syntax</h3>
+  <pre><code>element.addEventListener("eventName", function(event) {
+  // use event properties
+  console.log(event.type);
+  console.log(event.target);
+});
+  </code></pre>
+
+  <h3>📌 Common Properties</h3>
+  <ul>
+    <li><code>type</code> → type of event (<code>click</code>, <code>keydown</code>, etc.)</li>
+    <li><code>target</code> → the element that triggered the event</li>
+    <li><code>currentTarget</code> → the element where the handler is attached</li>
+    <li><code>timeStamp</code> → when the event happened</li>
+    <li><code>bubbles</code> → whether it bubbles up</li>
+    <li><code>eventPhase</code> → 1 = capturing, 2 = at target, 3 = bubbling</li>
+    <li><code>defaultPrevented</code> → true if <code>preventDefault()</code> was called</li>
+  </ul>
+
+  <h3>📌 Mouse Events Extra</h3>
+  <ul>
+    <li><code>clientX</code>, <code>clientY</code> → position in viewport</li>
+    <li><code>pageX</code>, <code>pageY</code> → position in page</li>
+    <li><code>button</code> → 0 = left, 1 = middle, 2 = right</li>
+  </ul>
+
+  <h3>📌 Keyboard Events Extra</h3>
+  <ul>
+    <li><code>key</code> → actual key pressed ("a", "Enter")</li>
+    <li><code>code</code> → physical key ("KeyA", "Enter")</li>
+    <li><code>altKey</code>, <code>ctrlKey</code>, <code>shiftKey</code>, <code>metaKey</code> → modifier keys</li>
+  </ul>
+
+  <h3>🔧 Useful Methods</h3>
+  <ul>
+    <li><code>preventDefault()</code> → stops default behavior (e.g. link navigation, form submit)</li>
+    <li><code>stopPropagation()</code> → prevents event from bubbling further</li>
+    <li><code>stopImmediatePropagation()</code> → stops bubbling AND stops other handlers on same element</li>
+  </ul>
+
+  <h3>🖱 Example: Mouse Event</h3>
+  <pre><code>&lt;div id="box" style="width:100px;height:100px;background:lightblue;"&gt;&lt;/div&gt;
+
+&lt;script&gt;
+const box = document.getElementById("box");
+
+box.addEventListener("click", function(e) {
+  console.log("Type:", e.type);         // "click"
+  console.log("Target:", e.target.id);  // "box"
+  console.log("Coords:", e.clientX, e.clientY);
+});
+&lt;/script&gt;
+  </code></pre>
+
+  <h3>⌨️ Example: Keyboard Event</h3>
+  <pre><code>&lt;input id="inp" placeholder="Press a key"&gt;
+
+&lt;script&gt;
+const inp = document.getElementById("inp");
+
+inp.addEventListener("keydown", function(e) {
+  console.log("Key:", e.key);   // "a", "Enter", etc.
+  console.log("Code:", e.code); // "KeyA", "Enter"
+  console.log("Ctrl pressed?", e.ctrlKey);
+});
+&lt;/script&gt;
+  </code></pre>
+
+  <h3>🚫 Example: Prevent Default</h3>
+  <pre><code>&lt;a href="https://google.com" id="link"&gt;Go Google&lt;/a&gt;
+
+&lt;script&gt;
+document.getElementById("link").addEventListener("click", function(e) {
+  e.preventDefault(); // stops navigation
+  console.log("Navigation prevented!");
+});
+&lt;/script&gt;
+  </code></pre>
+
+  <h3>🛑 Example: Stop Propagation</h3>
+  <pre><code>&lt;div id="outer" style="padding:20px;background:lightgreen;"&gt;
+  Outer Div
+  &lt;button id="inner"&gt;Click Me&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+document.getElementById("outer").addEventListener("click", function() {
+  console.log("Outer clicked");
+});
+
+document.getElementById("inner").addEventListener("click", function(e) {
+  e.stopPropagation(); // outer won't fire
+  console.log("Inner clicked");
+});
+&lt;/script&gt;
+  </code></pre>
+
+  <h3>🧠 Key Takeaways</h3>
+  <ul>
+    <li><b>event.target</b> = element where the event started.</li>
+    <li><b>event.currentTarget</b> = element whose listener is running.</li>
+    <li>Use <code>preventDefault()</code> to stop default actions.</li>
+    <li>Use <code>stopPropagation()</code> for bubbling control.</li>
+    <li>Without stopPropagation() → Clicking inner div prints both Inner + Outer.</li>
+    <li>With stopPropagation() → Only Inner prints, outer is ignored.</li>
+  </ul>
+</section>
+
+<hr>
+
+<h2>📌 JavaScript Events — Event Flow</h2>
+
+<p>
+Event Flow in JavaScript describes the <b>order</b> in which events are received on the DOM elements.  
+There are two main phases:
+</p>
+
+<ul>
+  <li><b>Capturing Phase</b> (Event travels from <code>window ➝ document ➝ html ➝ body ➝ parent ➝ child</code>)</li>
+  <li><b>Bubbling Phase</b> (Event travels back from <code>child ➝ parent ➝ body ➝ html ➝ document ➝ window</code>)</li>
+</ul>
+
+<h3>📝 Syntax</h3>
+<pre>
+element.addEventListener(event, handler, useCapture);
+</pre>
+
+<ul>
+  <li><code>event</code> → The event type (e.g., 'click')</li>
+  <li><code>handler</code> → The function to run when the event occurs</li>
+  <li><code>useCapture</code> → <code>true</code> = capture phase, <code>false</code> (default) = bubble phase</li>
+</ul>
+
+<h3>✅ Example</h3>
+<pre>
+&lt;div id="outer" style="padding:20px; background:lightblue;"&gt;
+  Outer Div
+  &lt;div id="inner" style="padding:20px; background:lightgreen;"&gt;
+    Inner Div
+    &lt;button id="btn"&gt;Click Me&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  let outer = document.getElementById("outer");
+  let inner = document.getElementById("inner");
+  let btn = document.getElementById("btn");
+
+  // Bubbling Phase (default: false)
+  outer.addEventListener("click", () => console.log("Outer DIV - Bubbling"), false);
+  inner.addEventListener("click", () => console.log("Inner DIV - Bubbling"), false);
+  btn.addEventListener("click", () => console.log("Button - Bubbling"), false);
+
+  // Capturing Phase (true)
+  outer.addEventListener("click", () => console.log("Outer DIV - Capturing"), true);
+  inner.addEventListener("click", () => console.log("Inner DIV - Capturing"), true);
+  btn.addEventListener("click", () => console.log("Button - Capturing"), true);
+&lt;/script&gt;
+</pre>
+<h3>🔎 Output (Click on Button)</h3>
+<pre>
+Capturing Phase:
+  Outer DIV - Capturing
+  Inner DIV - Capturing
+  Button - Capturing
+
+Bubbling Phase:
+  Button - Bubbling
+  Inner DIV - Bubbling
+  Outer DIV - Bubbling
+</pre>
+
+<h3>🎯 Usage</h3>
+<ul>
+  <li><b>Capturing</b>: Used when you want the outer element to handle events before the inner element.</li>
+  <li><b>Bubbling</b>: Default in JS; mostly used since inner element handles first, then bubbles up.</li>
+</ul>
+
+<hr>
+
+<h2>📌 JavaScript Events — Event Delegation</h2>
+
+<p>
+<b>Event Delegation</b> is a technique in which you attach a single event listener to a <b>parent element</b> 
+to handle events of its child elements, instead of attaching listeners to each child individually.  
+This works because of <b>Event Bubbling</b> — the event bubbles up from the target element to its parent.
+</p>
+
+<h3>✅ Why use Event Delegation?</h3>
+<ul>
+  <li>Improves performance (fewer event listeners)</li>
+  <li>Handles dynamically added elements (children added later still work)</li>
+  <li>Keeps code clean and simple</li>
+</ul>
+
+<h3>📝 Example Without Delegation (bad)</h3>
+<ul id="list1">
+  <li>Apple</li>
+  <li>Banana</li>
+  <li>Orange</li>
+</ul>
+<pre>
+&lt;script&gt;
+  // ❌ Bad approach: adding listener to each li
+  document.querySelectorAll("#list1 li").forEach(item => {
+    item.addEventListener("click", () => {
+      alert("You clicked: " + item.textContent);
+    });
+  });
+&lt;/script&gt;
+</pre>
+<h3>📝 Example With Delegation (good)</h3>
+<ul id="list2">
+  <li>Car</li>
+  <li>Bike</li>
+  <li>Bus</li>
+</ul>
+<pre>
+&lt;script&gt;
+  let list = document.getElementById("list2");
+
+  // ✅ One event listener for all <li>
+  list.addEventListener("click", function(e) {
+    if (e.target.tagName === "LI") {   // check if clicked element is LI
+      alert("You clicked: " + e.target.textContent);
+    }
+  });
+&lt;/script&gt;
+</pre>
+
+<h3>🔎 Output</h3>
+<pre>
+Click on "Car" → "You clicked: Car"
+Click on "Bike" → "You clicked: Bike"
+Click on "Bus" → "You clicked: Bus"
+</pre>
+
+<h3>🎯 Real Use Cases</h3>
+<ul>
+  <li>Handling clicks in menus, lists, or tables</li>
+  <li>Form validation (listen on form instead of each input)</li>
+  <li>Dynamic elements created with JS</li>
+</ul>
+
+<hr>
+
+<h1>🌟 JavaScript Promise</h1>
+
+  <h2>📌 Definition</h2>
+  <p>
+    A <b>Promise</b> in JavaScript is an <b>object</b> that represents the eventual 
+    completion (success) or failure of an asynchronous operation.
+    <br>
+    It works like a <i>placeholder</i> for a value that will be available in the future.
+  </p>
+
+  <h2>📌 Syntax</h2>
+  <pre>
+let promise = new Promise(function(resolve, reject) {
+    // async task
+    if (success) {
+        resolve(value);   // success
+    } else {
+        reject(error);    // failure
+    }
+});
+  </pre>
+
+  <h2>📌 States of a Promise</h2>
+  <ul>
+    <li><b>Pending</b> → Initial state (waiting, not yet resolved or rejected).</li>
+    <li><b>Fulfilled</b> → Task completed successfully → <code>resolve()</code>.</li>
+    <li><b>Rejected</b> → Task failed → <code>reject()</code>.</li>
+  </ul>
+
+  <h2>📌 Example</h2>
+  <pre>
+&lt;script&gt;
+    let promise = new Promise((resolve, reject) => {
+        let success = true;
+
+        setTimeout(() => {
+            if (success) {
+                resolve("✅ Task completed successfully!");
+            } else {
+                reject("❌ Task failed!");
+            }
+        }, 2000);
+    });
+
+    // Using then(), catch(), finally()
+    promise
+        .then(result => console.log(result))   // success
+        .catch(error => console.log(error))    // failure
+        .finally(() => console.log("🎉 Done checking promise!"));
+&lt;/script&gt;
+  </pre>
+
+  <h2>📌 Promise Methods</h2>
+  <ul>
+    <li><b>.then()</b> → handle resolved value.</li>
+    <li><b>.catch()</b> → handle rejected value.</li>
+    <li><b>.finally()</b> → runs always (cleanup work).</li>
+  </ul>
+
+  <h2>📌 Static Methods</h2>
+  <pre>
+Promise.all([p1, p2])         // waits for all → fails if any fail
+Promise.race([p1, p2])        // first settled result
+Promise.allSettled([p1, p2])  // waits all → success/fail both
+Promise.any([p1, p2])         // first fulfilled (fails only if all fail)
+  </pre>
+
+  <h2>📌 Properties of Promise</h2>
+  <ul>
+    <li><code>[[PromiseState]]</code> → pending / fulfilled / rejected</li>
+    <li><code>[[PromiseResult]]</code> → value returned after resolved/rejected</li>
+  </ul>
+
+  <h2>✅ Summary</h2>
+  <ul>
+    <li><b>Promise</b> = "I will give you a result later."</li>
+    <li><b>then()</b> = handle success</li>
+    <li><b>catch()</b> = handle failure</li>
+    <li><b>finally()</b> = always runs</li>
+  </ul>
+
+<hr>
+
+<section class="topic">
+  <h2>⚡ Promise, async, await in JavaScript</h2>
+
+  <div class="definition">
+    <p>
+      <b>Promise</b> is an object that represents the eventual completion (or failure) of an asynchronous operation.<br><br>
+      <b>async</b> is used to declare a function that always returns a Promise.<br><br>
+      <b>await</b> pauses the execution of an async function until the Promise resolves, making async code look synchronous.
+    </p>
+  </div>
+
+  <div class="characteristics">
+    <h3>📌 Key Points</h3>
+    <ul>
+      <li><code>Promise</code> has 3 states → <b>pending</b>, <b>fulfilled</b>, <b>rejected</b>.</li>
+      <li><code>.then()</code> handles success, <code>.catch()</code> handles errors.</li>
+      <li><code>async</code> makes a function return a Promise automatically.</li>
+      <li><code>await</code> can only be used inside <code>async</code> functions.</li>
+    </ul>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example 1 – Promise</h3>
+    <pre>
+function getData() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve("✅ Data fetched successfully!");
+    }, 2000);
+  });
+}
+
+getData().then(result => console.log(result))
+         .catch(error => console.log(error));
+    </pre>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example 2 – async & await</h3>
+    <pre>
+async function fetchData() {
+  console.log("⏳ Fetching...");
+  let result = await getData();  // waits until Promise resolves
+  console.log(result);
+}
+
+fetchData();
+    </pre>
+  </div>
+
+  <div class="output">
+    <h3>⚡ Output</h3>
+    <p>
+      <code>⏳ Fetching...</code><br>
+      (after 2 seconds)<br>
+      <code>✅ Data fetched successfully!</code>
+    </p>
+  </div>
+
+  <div class="use-cases">
+    <h3>🚀 Use Cases</h3>
+    <ul>
+      <li>Fetching data from APIs</li>
+      <li>Reading files (Node.js)</li>
+      <li>Timers, background tasks</li>
+    </ul>
+  </div>
+</section>
+
+
+<section class="topic">
+  <h2>⚡ async / await </h2>
+
+  <div class="definition">
+    <p>
+      <b>async</b> marks a function so it always returns a <b>Promise</b>.<br>
+      <b>await</b> pauses inside an async function until a Promise settles and returns its value (or throws on rejection).<br>
+      Use <b>try / catch</b> with <code>await</code> to handle errors just like synchronous code.
+    </p>
+  </div>
+
+  <div class="syntax">
+    <h3>📝 Basic Syntax</h3>
+    <pre>
+// 1) async function always returns a Promise
+async function fn() {
+  return 42;           // resolves to 42
+  // throw new Error() // would reject
+}
+
+// 2) await pauses until the Promise settles
+async function run() {
+  const value = await fn(); // value = 42
+  console.log(value);
+}
+
+// 3) Error handling with try/catch
+async function safeRun() {
+  try {
+    const res = await mightReject();
+    console.log("OK:", res);
+  } catch (err) {
+    console.error("Failed:", err.message);
+  } finally {
+    console.log("Cleanup runs regardless");
+  }
+}
+    </pre>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example 1 — Converting a Promise chain to async/await</h3>
+    <pre>
+// Promise version
+function getUser() {
+  return new Promise((resolve) => setTimeout(() => resolve({ id: 7 }), 500));
+}
+function getOrders(userId) {
+  return new Promise((resolve) => setTimeout(() => resolve(["A101","A102"]), 500));
+}
+
+getUser()
+  .then(u => getOrders(u.id))
+  .then(orders => console.log("Orders:", orders))
+  .catch(err => console.error("Error:", err));
+
+// async/await version with try/catch
+async function showOrders() {
+  try {
+    const user = await getUser();
+    const orders = await getOrders(user.id);
+    console.log("Orders:", orders);
+  } catch (e) {
+    console.error("Error:", e);
+  }
+}
+showOrders();
+    </pre>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example 2 — try/catch around await (error flows like sync)</h3>
+    <pre>
+function failsRandomly() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => Math.random() &lt; 0.5 ? resolve("✅ success") : reject(new Error("❌ random fail")), 400);
+  });
+}
+
+async function run() {
+  try {
+    const msg = await failsRandomly();
+    console.log(msg);
+  } catch (err) {
+    console.error("Caught:", err.message); // handled here
+  }
+}
+run();
+    </pre>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example 3 — Sequential vs Parallel awaits</h3>
+    <pre>
+// Helpers
+const delay = (ms, value) => new Promise(r => setTimeout(() => r(value), ms));
+
+// ❌ Sequential (slow): ~1000ms total
+async function sequential() {
+  const a = await delay(500, "A");
+  const b = await delay(500, "B");
+  return [a, b];
+}
+
+// ✅ Parallel (fast): ~500ms total
+async function parallel() {
+  const pA = delay(500, "A");
+  const pB = delay(500, "B");
+  const [a, b] = await Promise.all([pA, pB]);
+  return [a, b];
+}
+
+(async () => {
+  console.time("seq");  console.log(await sequential()); console.timeEnd("seq");
+  console.time("par");  console.log(await parallel());   console.timeEnd("par");
+})();
+    </pre>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example 4 — Handling multiple results & errors</h3>
+    <pre>
+// If any rejects, Promise.all rejects
+async function allOrNothing(promises) {
+  try {
+    const results = await Promise.all(promises);
+    console.log("All OK:", results);
+  } catch (e) {
+    console.error("At least one failed:", e.message);
+  }
+}
+
+// Collect all outcomes (never throws)
+async function allSettled(promises) {
+  const results = await Promise.allSettled(promises);
+  results.forEach(r =&gt; console.log(r.status, r.value ?? r.reason));
+}
+
+// First fulfilled; rejects only if all fail
+async function firstSuccess(promises) {
+  try {
+    const val = await Promise.any(promises);
+    console.log("First success:", val);
+  } catch {
+    console.error("All failed");
+  }
+}
+    </pre>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example 5 — Retry with try/catch and loop</h3>
+    <pre>
+async function fetchWithRetry(task, retries = 3) {
+  let lastErr;
+  for (let i = 0; i &lt; retries; i++) {
+    try {
+      return await task();              // success → return
+    } catch (e) {
+      lastErr = e;                      // remember error and try again
+      await new Promise(r =&gt; setTimeout(r, 300)); // small backoff
+    }
+  }
+  throw lastErr; // after retries, rethrow
+}
+
+// Usage
+fetchWithRetry(() =&gt; failsRandomly(), 3)
+  .then(v =&gt; console.log("Result:", v))
+  .catch(e =&gt; console.error("Still failing:", e.message));
+    </pre>
+  </div>
+
+  <div class="example">
+    <h3>💻 Example 6 — Timeout wrapper (race)</h3>
+    <pre>
+function withTimeout(promise, ms) {
+  const timeout = new Promise((_, reject) =&gt; setTimeout(() =&gt; reject(new Error("Timed out")), ms));
+  return Promise.race([promise, timeout]);
+}
+
+async function runTimed() {
+  try {
+    const result = await withTimeout(delay(800, "OK"), 500);
+    console.log(result);
+  } catch (e) {
+    console.error(e.message); // "Timed out"
+  }
+}
+runTimed();
+    </pre>
+  </div>
+
+  <div class="notes">
+    <h3>🧠 Important Notes & Best Practices</h3>
+    <ul>
+      <li><b>async returns Promise:</b> returning a value resolves; <code>throw</code> rejects.</li>
+      <li><b>Error handling:</b> wrap <code>await</code> calls in <code>try/catch</code> or let the caller handle the rejection.</li>
+      <li><b>Parallel vs sequential:</b> start promises first, then <code>await Promise.all()</code> for better performance.</li>
+      <li><b>Await in loops:</b> Prefer mapping to promises + <code>Promise.all</code> over <code>forEach</code> (which ignores <code>await</code>).</li>
+      <li><b>Top-level await:</b> allowed in ES modules (<code>&lt;script type="module"&gt;</code>)—no need to wrap in a function.</li>
+      <li><b>Fire-and-forget:</b> don’t <code>await</code> if you truly don’t care about the result, but handle rejections to avoid warnings.</li>
+      <li><b>finally:</b> use for cleanup (spinners, locks) regardless of success/failure.</li>
+    </ul>
+  </div>
+
+  <div class="compare">
+    <h3>📊 then/catch vs async/await</h3>
+    <ul>
+      <li><b>then/catch:</b> good for quick chains; can get nested/less readable with branching.</li>
+      <li><b>async/await:</b> reads top-to-bottom; easier try/catch; great for complex workflows.</li>
+    </ul>
+  </div>
+
+  <div class="mini-cheats">
+    <h3>🧾 Mini Cheats</h3>
+    <pre>
+// Return value
+async function x(){ return 5; }     // resolves to 5
+
+// Throw → rejection
+async function y(){ throw new Error("no"); }
+
+// Local try/catch
+async function z(){
+  try { await y(); }
+  catch(e){ console.error(e); }
+}
+
+// Parallel group
+const [a,b] = await Promise.all([pa, pb]);
+
+// First success / all outcomes
+await Promise.any(list);
+await Promise.allSettled(list);
+    </pre>
+  </div>
+</section>
+
+<hr>
+
+<!-- Promise Basics -->
+<div class="topic">
+  <h2>Promises in JavaScript</h2>
+  <p><b>Definition:</b> A <code>Promise</code> represents a value that may be available now, in the future, or never.  
+  It is used to handle asynchronous operations without callback hell.</p>
+
+  <h3>Promise States:</h3>
+  <ul>
+    <li><b>pending</b> → initial state, not fulfilled or rejected yet</li>
+    <li><b>fulfilled</b> → operation completed successfully</li>
+    <li><b>rejected</b> → operation failed</li>
+  </ul>
+
+  <h3>Syntax:</h3>
+  <pre><code>let promise = new Promise(function(resolve, reject) {
+   // async operation
+   if(success) {
+      resolve("Success value");
+   } else {
+      reject("Error message");
+   }
+});</code></pre>
+</div>
+
+<!-- Basic Example -->
+<div class="topic">
+  <h2>Basic Example</h2>
+  <pre><code>let promise = new Promise((resolve, reject) => {
+  let dataLoaded = true;
+
+  if (dataLoaded) {
+    resolve("Data loaded successfully!");
+  } else {
+    reject("Failed to load data.");
+  }
+});
+
+promise
+  .then((result) => console.log(result))   // when resolved
+  .catch((error) => console.log(error))   // when rejected
+  .finally(() => console.log("Operation finished."));</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>Data loaded successfully!
+Operation finished.</code></pre>
+</div>
+
+<!-- Promise Chaining -->
+<div class="topic">
+  <h2>Promise Chaining</h2>
+  <p>Multiple <code>.then()</code> can be chained to handle a sequence of async operations.</p>
+
+  <pre><code>let promise = new Promise((resolve) => {
+  resolve(2);
+});
+
+promise
+  .then(num => {
+    console.log(num);    // 2
+    return num * 2;
+  })
+  .then(num => {
+    console.log(num);    // 4
+    return num * 2;
+  })
+  .then(num => {
+    console.log(num);    // 8
+  });</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>2
+4
+8</code></pre>
+</div>
+
+<!-- Promise.all -->
+<div class="topic">
+  <h2>Promise.all()</h2>
+  <p><code>Promise.all()</code> runs multiple promises in parallel and waits for all to finish.  
+  If one fails, the whole thing rejects.</p>
+
+  <pre><code>let p1 = Promise.resolve("Task 1 done");
+let p2 = Promise.resolve("Task 2 done");
+let p3 = Promise.resolve("Task 3 done");
+
+Promise.all([p1, p2, p3])
+  .then(values => console.log(values))
+  .catch(err => console.log(err));</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>["Task 1 done", "Task 2 done", "Task 3 done"]</code></pre>
+</div>
+
+<!-- Promise.race -->
+<div class="topic">
+  <h2>Promise.race()</h2>
+  <p><code>Promise.race()</code> returns the result of the first promise that settles (fulfilled or rejected).</p>
+
+  <pre><code>let p1 = new Promise(resolve => setTimeout(() => resolve("Fast"), 100));
+let p2 = new Promise(resolve => setTimeout(() => resolve("Slow"), 500));
+
+Promise.race([p1, p2])
+  .then(result => console.log(result));</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>Fast</code></pre>
+</div>
+
+<!-- Promise.allSettled -->
+<div class="topic">
+  <h2>Promise.allSettled()</h2>
+  <p><code>Promise.allSettled()</code> waits for all promises to finish (fulfilled or rejected) and returns their status.</p>
+
+  <pre><code>let p1 = Promise.resolve("Success");
+let p2 = Promise.reject("Error");
+
+Promise.allSettled([p1, p2])
+  .then(results => console.log(results));</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>[
+  { status: "fulfilled", value: "Success" },
+  { status: "rejected", reason: "Error" }
+]</code></pre>
+</div>
+
+<!-- Promise.any -->
+<div class="topic">
+  <h2>Promise.any()</h2>
+  <p><code>Promise.any()</code> returns the first <b>fulfilled</b> promise (ignores rejections).  
+  If all fail → returns <code>AggregateError</code>.</p>
+
+  <pre><code>let p1 = Promise.reject("Failed 1");
+let p2 = Promise.resolve("Success 1");
+let p3 = Promise.resolve("Success 2");
+
+Promise.any([p1, p2, p3])
+  .then(result => console.log(result));</code></pre>
+
+  <h3>Output:</h3>
+  <pre><code>Success 1</code></pre>
+</div>
+
+<hr>
+
+<section id="dom-traversal">
+    <h2>🌐 DOM Traversal (Navigating the DOM Tree)</h2>
+
+    <p>
+        DOM Traversal means moving through the DOM tree (parent → child → sibling).  
+        This helps in accessing related elements without directly using selectors.
+    </p>
+
+    <h3>📌 Parent Nodes</h3>
+    <ul>
+        <li><code>element.parentNode</code> → Returns the parent node (any type).</li>
+        <li><code>element.parentElement</code> → Returns the parent if it’s an element (otherwise <code>null</code>).</li>
+    </ul>
+    <pre><code>
+// Example
+let child = document.getElementById("myPara");
+console.log(child.parentNode);      // Shows parent (may include document, body, div, etc.)
+console.log(child.parentElement);   // Ensures it’s an element
+    </code></pre>
+
+    <h3>📌 Child Nodes</h3>
+    <ul>
+        <li><code>element.childNodes</code> → Returns all child nodes (including text, comments).</li>
+        <li><code>element.children</code> → Returns only child elements.</li>
+        <li><code>element.firstChild</code> → First child node (could be text).</li>
+        <li><code>element.firstElementChild</code> → First element child only.</li>
+        <li><code>element.lastChild</code> → Last child node.</li>
+        <li><code>element.lastElementChild</code> → Last element child only.</li>
+    </ul>
+    <pre><code>
+// Example
+let list = document.getElementById("myList");
+console.log(list.children);             // All <li> elements
+console.log(list.firstElementChild);    // First <li>
+console.log(list.lastElementChild);     // Last <li>
+    </code></pre>
+
+    <h3>📌 Sibling Nodes</h3>
+    <ul>
+        <li><code>element.nextSibling</code> → Next node (may be text).</li>
+        <li><code>element.nextElementSibling</code> → Next element only.</li>
+        <li><code>element.previousSibling</code> → Previous node (may be text).</li>
+        <li><code>element.previousElementSibling</code> → Previous element only.</li>
+    </ul>
+    <pre><code>
+// Example
+let item = document.querySelector("li");
+console.log(item.nextElementSibling);    // Next <li>
+console.log(item.previousElementSibling);// Previous <li>
+    </code></pre>
+
+    <h3>📌 Closest & Contains</h3>
+    <ul>
+        <li><code>element.closest("selector")</code> → Finds the nearest ancestor matching selector.</li>
+        <li><code>parent.contains(child)</code> → Checks if parent contains given child.</li>
+    </ul>
+    <pre><code>
+// Example
+let btn = document.getElementById("myBtn");
+console.log(btn.closest("section"));  // Nearest section element
+console.log(document.body.contains(btn)); // true if button is inside body
+    </code></pre>
+
+    <h3>🔑 Key Notes</h3>
+    <ul>
+        <li>Use <b>children</b> / <b>firstElementChild</b> / <b>lastElementChild</b> to avoid text nodes.</li>
+        <li>Traversal helps when you know an element’s position but not its exact selector.</li>
+        <li><code>closest()</code> is very useful for event delegation.</li>
+    </ul>
+</section>
+
+<hr>
+
+<section id="dom-forms">
+    <h2>📝 DOM Forms & Input Handling</h2>
+
+    <p>
+        Forms allow user input. JavaScript can capture, validate, and process this data.  
+        We use <code>value</code>, <code>checked</code>, <code>selected</code>, and events like <code>input</code>, <code>change</code>, and <code>submit</code>.
+    </p>
+
+    <h3>📌 Accessing Form Elements</h3>
+    <pre><code>
+let input = document.getElementById("username").value;
+let checkbox = document.getElementById("agree").checked;
+let select = document.getElementById("city").value;
+    </code></pre>
+
+    <h3>📌 Form Events</h3>
+    <ul>
+        <li><b>input</b> → Fires on every keystroke/change.</li>
+        <li><b>change</b> → Fires when element loses focus & value is changed.</li>
+        <li><b>focus</b> → Fires when input gets focus.</li>
+        <li><b>blur</b> → Fires when input loses focus.</li>
+        <li><b>submit</b> → Fires when form is submitted.</li>
+    </ul>
+
+    <h3>📌 Example: Simple Form</h3>
+    <pre><code>
+&lt;form id="myForm"&gt;
+    &lt;input type="text" id="username" placeholder="Enter name" required&gt;
+    &lt;input type="password" id="password" placeholder="Enter password" required&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+
+&lt;script&gt;
+document.getElementById("myForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Stop page reload
+    let user = document.getElementById("username").value;
+    let pass = document.getElementById("password").value;
+
+    if(user === "" || pass === ""){
+        alert("All fields are required!");
+    } else {
+        alert("Welcome, " + user);
+    }
+});
+&lt;/script&gt;
+    </code></pre>
+
+    <h3>📌 Example: Input & Change</h3>
+    <pre><code>
+let textBox = document.getElementById("liveInput");
+
+textBox.addEventListener("input", function() {
+    console.log("Typed:", textBox.value);
+});
+
+textBox.addEventListener("change", function() {
+    console.log("Final Value after blur:", textBox.value);
+});
+    </code></pre>
+
+    <h3>📌 Example: Checkbox & Radio</h3>
+    <pre><code>
+let checkbox = document.getElementById("agree");
+checkbox.addEventListener("change", function() {
+    console.log("Checked?", checkbox.checked);
+});
+
+let radios = document.querySelectorAll("input[name='gender']");
+radios.forEach(radio => {
+    radio.addEventListener("change", function() {
+        console.log("Selected:", this.value);
+    });
+});
+    </code></pre>
+
+    <h3>📌 Example: Select Dropdown</h3>
+    <pre><code>
+let select = document.getElementById("city");
+select.addEventListener("change", function() {
+    console.log("Selected city:", select.value);
+});
+    </code></pre>
+
+    <h3>🔑 Key Notes</h3>
+    <ul>
+        <li>Always use <code>event.preventDefault()</code> for custom form handling.</li>
+        <li><code>value</code> → text/number input &lt;br&gt;
+            <code>checked</code> → checkbox/radio &lt;br&gt;
+            <code>selected</code> → dropdown option</li>
+        <li>Validate before submission to avoid wrong data.</li>
+    </ul>
+</section>
+
+<hr>
+
+<div id="first">
+  <h1 class="firsth1">Hello h1</h1>
+  <h6>Hello h6</h6>
+</div>
+
+<div id="demo">Hello <br> World <br>
+  Visible<span style="display:none">Hidden</span></div>
+
+<button style="padding: 20px;" onclick="alert('Hello!')">inline events Click</button>
+
+     <script src="./script.js"></script>
 </body>
 </html>
