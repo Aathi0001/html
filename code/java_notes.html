@@ -11,7 +11,17 @@
       line-height: 1.6;
       padding: 20px;
       color: #333;
-    }
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+pre, table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+
 
     h1, h2, h3 {
       margin-top: 30px;
@@ -2055,7 +2065,7 @@ public class MethodRefDemo {
   </ul>
 
   <h3>Modifier Table:</h3>
-  <table border="1" cellpadding="5">
+  <table  cellpadding="5">
     <tr>
       <th>Modifier</th>
       <th>Same Class</th>
@@ -2425,7 +2435,7 @@ class Book {
 <li>Used to override methods from abstract class or interface.</li>
 </ul>
 
-<table border="1" cellpadding="5">
+<table  cellpadding="5">
 <tr><th>Name</th><th>Type</th><th>Purpose</th><th>Anonymous Class Usage?</th></tr>
 <tr><td>Runnable</td><td>Interface</td><td>Run code in a thread</td><td>✅ Yes</td></tr>
 <tr><td>Callable</td><td>Interface</td><td>Like Runnable but returns result</td><td>✅ Yes</td></tr>
@@ -3091,7 +3101,7 @@ System.out.println(sbf1.equals(sbf2));  // false
   <hr>
   <h2>String vs StringBuilder vs StringBuffer</h2>
 
-  <table border="1" cellpadding="8">
+  <table  cellpadding="8">
     <thead>
       <tr>
         <th>Feature</th>
@@ -3190,7 +3200,7 @@ System.out.println(sbf); // Hello World
 
   <hr>
   <h2>Bonus: Conversion Methods</h2>
-  <table border="1" cellpadding="8">
+  <table  cellpadding="8">
     <thead>
       <tr>
         <th>From</th>
@@ -5763,7 +5773,7 @@ Map&lt;String, Integer&gt; customMap = new TreeMap&lt;&gt;(Comparator.reverseOrd
 
 <h2>🔍 Summary Table — Map Implementations</h2>
 
-<table border="1" cellpadding="6" cellspacing="0">
+<table  cellpadding="6" cellspacing="0">
   <thead>
     <tr>
       <th>Implementation</th>
@@ -5897,7 +5907,7 @@ It stores <strong>key–value pairs</strong> — each key is <strong>unique</str
 <hr/>
 
 <h3>Main Methods</h3>
-<table border="1" cellpadding="6" cellspacing="0">
+<table  cellpadding="6" cellspacing="0">
   <thead>
     <tr>
       <th>Method</th>
@@ -5990,7 +6000,7 @@ Contains key 3? true
 <hr/>
 
 <h3>Types of Map Implementations</h3>
-<table border="1" cellpadding="6" cellspacing="0">
+<table  cellpadding="6" cellspacing="0">
   <thead>
     <tr>
       <th>Implementation</th>
