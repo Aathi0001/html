@@ -4335,5 +4335,83 @@ DEALLOCATE emp_cursor;
   </pre>
 </section>
 
+<hr>
+
+     <section id="dual">
+  <h2>DUAL Table</h2>
+  <p>
+    <b>DUAL</b> is a special dummy table provided by Oracle.  
+    It has only <b>one row and one column (called DUMMY)</b>.  
+    It is mainly used when you want to <b>select a value, expression, or function output without using a real table</b>.
+  </p>
+
+  <h3>Structure of DUAL</h3>
+  <pre>
+  DESC DUAL;
+
+  Column | DataType
+  -------|---------
+  DUMMY  | VARCHAR2(1)
+
+  SELECT * FROM DUAL;
+
+  Output:
+  D
+  -
+  X
+  </pre>
+
+  <h3>Examples</h3>
+
+  <h4>1. Display a string</h4>
+  <pre>
+  SELECT 'Hello World' FROM DUAL;
+
+  Output:
+  Hello World
+  </pre>
+
+  <h4>2. Perform calculations</h4>
+  <pre>
+  SELECT 10 + 20 AS result FROM DUAL;
+
+  Output:
+  30
+  </pre>
+
+  <h4>3. Get system date</h4>
+  <pre>
+  SELECT SYSDATE FROM DUAL;
+
+  Output:
+  22-AUG-25
+  </pre>
+
+  <h4>4. Using functions</h4>
+  <pre>
+  SELECT UPPER('oracle') FROM DUAL;
+
+  Output:
+  ORACLE
+  </pre>
+
+  <h4>5. Multiple columns</h4>
+  <pre>
+  SELECT 'Aathi' AS name, 100*5 AS marks, SYSDATE AS today
+  FROM DUAL;
+
+  Output:
+  NAME   MARKS   TODAY
+  -----  ------  ---------
+  Aathi  500     22-AUG-25
+  </pre>
+
+  <p>
+    ✅ <b>Note:</b> In Oracle, <code>DUAL</code> is used widely,  
+    but in other databases (MySQL, PostgreSQL, SQL Server) you may not need it or syntax can differ.
+  </p>
+     </section>
+     
+
 </body>
 </html>
