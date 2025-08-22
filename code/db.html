@@ -1,0 +1,4335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <style>
+          body {
+      background: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      color: #333;
+      max-width: 100%;
+    word-wrap: break-word;
+    }
+pre, table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+
+    code {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.95em;
+  color: #c7254e;
+}
+    h1, h2, h3 {
+      margin-top: 30px;
+      border-left: 5px solid #ff6347;
+      padding-left: 12px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #e91e63;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #3f51b5;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: #009688;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px 15px;
+      border-left: 5px solid #607d8b;
+      white-space: pre-wrap;
+      font-family: 'Consolas', monospace;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .highlight {
+      background-color: #fff3cd;
+      padding: 10px;
+      border-left: 4px solid #ffc107;
+    }
+     </style>
+</head>
+<body>
+  <div class="topic">
+  <h2>Data</h2>
+  <p>
+    <b>Data</b> is raw facts and figures which have no context or meaning by themselves. 
+    Example: numbers, names, dates, etc.
+  </p>
+  <p><b>Example:</b> "100", "Aathi", "2025-08-20"</p>
+</div>
+
+<div class="topic">
+  <h2>Database</h2>
+  <p>
+    A <b>Database</b> is an organized collection of data stored electronically, 
+    which can be easily accessed, managed, and updated.
+  </p>
+  <p><b>Example:</b> Student Management Database stores student details, marks, courses, etc.</p>
+</div>
+
+<div class="topic">
+  <h2>DBMS (Database Management System)</h2>
+  <p>
+    A <b>DBMS</b> is software that is used to create, manage, and manipulate databases. 
+    It provides an interface between the user and the database.
+  </p>
+  <p><b>Examples:</b> MySQL, Oracle, SQL Server, PostgreSQL, SQLite</p>
+</div>
+
+<div class="topic">
+  <h2>Types of DBMS</h2>
+  <ul>
+    <li><b>Hierarchical DBMS</b> → Data organized in tree-like structure.</li>
+    <li><b>Network DBMS</b> → Data represented as records connected with links (graph).</li>
+    <li><b>Relational DBMS (RDBMS)</b> → Data stored in tables (rows and columns). Most commonly used.</li>
+    <li><b>Object-Oriented DBMS</b> → Stores objects along with data (used in advanced applications).</li>
+  </ul>
+</div>
+
+<div class="topic">
+  <h2>RDBMS (Relational Database Management System)</h2>
+  <p>
+    <b>RDBMS</b> is a type of DBMS where data is stored in tables, and relationships exist between tables 
+    using <b>Primary Key</b> and <b>Foreign Key</b>.
+  </p>
+  <p><b>Examples:</b> MySQL, Oracle, PostgreSQL, SQL Server</p>
+</div>
+
+  <div class="topic">
+  <h2>Table</h2>
+  <p>
+    A <b>Table</b> is a collection of related data organized in <b>rows</b> and <b>columns</b>. 
+    In an RDBMS, all data is stored inside tables.
+  </p>
+  <p><b>Example:</b> Employees table with columns like emp_id, name, salary, dept.</p>
+</div>
+
+<div class="topic">
+  <h2>Row (Tuple / Record)</h2>
+  <p>
+    A <b>Row</b> represents a single record in a table. 
+    Each row contains data for all columns of that table.
+  </p>
+  <p><b>Example:</b> In Employees table, one row can be: (1, 'Aathi', 50000, 'IT')</p>
+</div>
+
+<div class="topic">
+  <h2>Column (Attribute / Field)</h2>
+  <p>
+    A <b>Column</b> represents a property of the table. 
+    Each column has a name and a specific <b>data type</b>.
+  </p>
+  <p><b>Example:</b> In Employees table → emp_id, name, salary, dept are columns.</p>
+</div>
+
+<div class="topic">
+  <h2>Cell</h2>
+  <p>
+    A <b>Cell</b> is the intersection of a row and a column in a table. 
+    It contains a single piece of data.
+  </p>
+  <p><b>Example:</b> In row (1, 'Aathi', 50000, 'IT'), the value 'Aathi' is a cell under column <i>name</i>.</p>
+</div>
+
+<div class="topic">
+  <h2>E.F. Codd's Rules (RDBMS Rules)</h2>
+  <p>
+    Dr. Edgar F. Codd, the father of RDBMS, proposed 13 rules (numbered 0 to 12) 
+    that define what a true Relational Database Management System (RDBMS) should follow.
+  </p>
+  <ol>
+    <li><b>Rule 0 – Foundation Rule:</b> A system must use the relational model to manage data.</li>
+    <li><b>Rule 1 – Information Rule:</b> All information must be stored in tables (rows & columns).</li>
+    <li><b>Rule 2 – Guaranteed Access:</b> Each value must be accessible using table name, column name, and primary key.</li>
+    <li><b>Rule 3 – Systematic Treatment of Nulls:</b> The system must support NULL values to represent missing/unknown data.</li>
+    <li><b>Rule 4 – Active Online Catalog:</b> Database schema (metadata) must be stored within tables and accessible using SQL.</li>
+    <li><b>Rule 5 – Comprehensive Data Sub-language:</b> The system must support a single language (like SQL) for data definition, manipulation, and control.</li>
+    <li><b>Rule 6 – View Updating Rule:</b> All views that are theoretically updatable must be updatable by the system.</li>
+    <li><b>Rule 7 – High-level Operations:</b> Insert, update, delete, and select must work on sets of data (not just single rows).</li>
+    <li><b>Rule 8 – Physical Data Independence:</b> Changes in storage or access methods must not affect the logical structure of queries.</li>
+    <li><b>Rule 9 – Logical Data Independence:</b> Changes in table structure (like adding/removing columns) must not affect applications.</li>
+    <li><b>Rule 10 – Integrity Independence:</b> Integrity constraints (PK, FK, etc.) must be stored in the database, not in applications.</li>
+    <li><b>Rule 11 – Distribution Independence:</b> The system must work properly even if the database is distributed across different locations.</li>
+    <li><b>Rule 12 – Nonsubversion Rule:</b> Low-level operations must not bypass integrity and security constraints.</li>
+  </ol>
+</div>
+
+
+<div class="topic">
+  <h2>Data Types</h2>
+  <p>
+    Data types define the type of values a column can store. 
+    In MySQL, data types are divided into:
+  </p>
+  <ul>
+    <li><b>Numeric</b>: INT, BIGINT, DECIMAL, FLOAT, DOUBLE</li>
+    <li><b>String</b>: CHAR, VARCHAR, TEXT, ENUM</li>
+    <li><b>Date/Time</b>: DATE, TIME, DATETIME, TIMESTAMP, YEAR</li>
+    <li><b>Other</b>: BOOLEAN, JSON</li>
+  </ul>
+</div>
+
+<div class="topic">
+  <h2>Constraints</h2>
+  <p>
+    <b>Constraints</b> are rules applied on columns to ensure valid data is entered into the table.
+  </p>
+  <ul>
+    <li><b>NOT NULL</b> → Column cannot store NULL values.</li>
+    <li><b>UNIQUE</b> → No duplicate values allowed in the column.</li>
+    <li><b>PRIMARY KEY</b> → Combines NOT NULL + UNIQUE; uniquely identifies each row.</li>
+    <li><b>FOREIGN KEY</b> → Creates relationship between two tables.</li>
+    <li><b>CHECK</b> → Ensures a condition is satisfied.</li>
+    <li><b>DEFAULT</b> → Assigns a default value if no value is given.</li>
+  </ul>
+  <pre>
+-- Example
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) NOT NULL,
+    salary DECIMAL(10,2) CHECK (salary > 0),
+    dept VARCHAR(30) DEFAULT 'IT',
+    manager_id INT,
+    FOREIGN KEY (manager_id) REFERENCES employees(emp_id)
+);
+  </pre>
+</div>
+
+<hr>
+
+
+     <div class="topic">
+  <h2>Introduction to SQL</h2>
+  <p>
+    <b>SQL (Structured Query Language)</b> is a standard language used to interact with relational databases. 
+    It allows us to create, modify, and manage data in a database.
+  </p>
+  <ul>
+    <li>SQL is used to <b>create</b> and <b>manage</b> database objects like tables, views, indexes.</li>
+    <li>SQL is used to <b>insert</b>, <b>update</b>, <b>delete</b>, and <b>retrieve</b> data.</li>
+    <li>SQL is supported by most databases: <b>MySQL, Oracle, PostgreSQL, SQLite, SQL Server</b>.</li>
+  </ul>
+</div>
+
+<div class="topic">
+  <h2>Types of SQL Commands</h2>
+  <p>SQL commands are classified into the following categories:</p>
+  <ul>
+    <li><b>DDL (Data Definition Language)</b> → Defines database structure
+      <br>Examples: <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>, <code>TRUNCATE</code>, <code>RENAME</code>
+    </li>
+    <li><b>DML (Data Manipulation Language)</b> → Manipulates data inside tables
+      <br>Examples: <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>
+    </li>
+    <li><b>DQL (Data Query Language)</b> → Queries data
+      <br>Example: <code>SELECT</code>
+    </li>
+    <li><b>TCL (Transaction Control Language)</b> → Manages transactions
+      <br>Examples: <code>COMMIT</code>, <code>ROLLBACK</code>, <code>SAVEPOINT</code>
+    </li>
+    <li><b>DCL (Data Control Language)</b> → Controls access
+      <br>Examples: <code>GRANT</code>, <code>REVOKE</code>
+    </li>
+  </ul>
+</div>
+
+<div class="topic">
+  <h2>SQL Commands Overview</h2>
+  <p>
+    SQL commands are grouped into different categories based on their functionality. 
+    The main categories are:
+  </p>
+</div>
+
+<div class="topic">
+  <h3>1. DDL (Data Definition Language)</h3>
+  <p>
+    Defines and manages the structure of the database (tables, views, indexes, etc.).
+  </p>
+  <ul>
+    <li><b>CREATE</b> → Create database objects (tables, views, indexes)</li>
+    <li><b>ALTER</b> → Modify existing table structure</li>
+    <li><b>DROP</b> → Delete database objects</li>
+    <li><b>TRUNCATE</b> → Remove all rows from a table (faster than DELETE)</li>
+    <li><b>RENAME</b> → Rename a table or column</li>
+  </ul>
+  <pre>
+-- Example
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    salary DECIMAL(10,2)
+);
+  </pre>
+</div>
+
+<div class="topic">
+  <h3>2. DML (Data Manipulation Language)</h3>
+  <p>
+    Deals with manipulation of data stored in tables.
+  </p>
+  <ul>
+    <li><b>INSERT</b> → Add new records into a table</li>
+    <li><b>UPDATE</b> → Modify existing records</li>
+    <li><b>DELETE</b> → Remove records</li>
+  </ul>
+  <pre>
+-- Example
+INSERT INTO employees (name, salary) VALUES ('Aathi', 50000);
+
+UPDATE employees SET salary = 60000 WHERE name = 'Aathi';
+
+DELETE FROM employees WHERE name = 'Aathi';
+  </pre>
+</div>
+
+<div class="topic">
+  <h3>3. DQL (Data Query Language)</h3>
+  <p>
+    Used to query and retrieve data from tables.
+    <br>Has only one main command → <b>SELECT</b>.
+  </p>
+  <ul>
+    <li><b>Projection</b> → Selecting specific columns</li>
+    <li><b>Selection</b> → Filtering rows using <code>WHERE</code></li>
+    <li><b>Joins</b> → Combining rows from multiple tables</li>
+  </ul>
+  <pre>
+-- Example
+SELECT name, salary FROM employees WHERE salary > 40000;
+  </pre>
+</div>
+
+<div class="topic">
+  <h3>4. TCL (Transaction Control Language)</h3>
+  <p>
+    Manages transactions and ensures database consistency.
+  </p>
+  <ul>
+    <li><b>COMMIT</b> → Save changes permanently</li>
+    <li><b>ROLLBACK</b> → Undo changes</li>
+    <li><b>SAVEPOINT</b> → Create intermediate points for rollback</li>
+  </ul>
+  <pre>
+-- Example
+DELETE FROM employees WHERE emp_id = 2;
+ROLLBACK; -- undo delete
+  </pre>
+</div>
+
+<div class="topic">
+  <h3>5. DCL (Data Control Language)</h3>
+  <p>
+    Controls access and permissions to the database.
+  </p>
+  <ul>
+    <li><b>GRANT</b> → Provide privileges to users</li>
+    <li><b>REVOKE</b> → Remove privileges from users</li>
+  </ul>
+  <pre>
+-- Example
+GRANT SELECT, INSERT ON employees TO 'user1'@'localhost';
+
+REVOKE INSERT ON employees FROM 'user1'@'localhost';
+  </pre>
+</div>
+
+<hr>
+
+<table cellpadding="5" cellspacing="0">
+    <tr>
+      <th>Category</th>
+      <th>Purpose</th>
+      <th>Commands</th>
+    </tr>
+    <tr>
+      <td>DDL</td>
+      <td>Define structure</td>
+      <td>CREATE, ALTER, DROP, TRUNCATE, RENAME</td>
+    </tr>
+    <tr>
+      <td>DML</td>
+      <td>Manipulate data</td>
+      <td>INSERT, UPDATE, DELETE</td>
+    </tr>
+    <tr>
+      <td>DQL</td>
+      <td>Query data</td>
+      <td>SELECT</td>
+    </tr>
+    <tr>
+      <td>TCL</td>
+      <td>Manage transactions</td>
+      <td>COMMIT, ROLLBACK, SAVEPOINT</td>
+    </tr>
+    <tr>
+      <td>DCL</td>
+      <td>Control access</td>
+      <td>GRANT, REVOKE</td>
+    </tr>
+  </table>
+
+  <hr>
+
+<div class="topic">
+  <h2>Basic SQL Syntax</h2>
+  <pre>
+-- Creating a Database
+CREATE DATABASE company;
+
+-- Using a Database
+USE company;
+
+-- Creating a Table
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50),
+    salary DECIMAL(10,2),
+    dept VARCHAR(30)
+);
+
+-- Inserting Data
+INSERT INTO employees (name, salary, dept)
+VALUES ('Aathi', 50000, 'IT');
+
+-- Querying Data
+SELECT name, salary FROM employees WHERE dept = 'IT';
+  </pre>
+</div>
+
+<hr>
+
+
+<div class="topic">
+  <h2>MySQL Data Types</h2>
+  <p>
+    Data types define the kind of values that can be stored in a column. 
+    Choosing the correct data type ensures <b>accuracy, performance, and storage optimization</b>.
+  </p>
+
+  <h3>1. Numeric Data Types</h3>
+  <ul>
+    <li><b>TINYINT</b> → Very small integers (Range: -128 to 127).  
+      <br>Example: <code>TINYINT age;</code> → 120</li>
+
+    <li><b>SMALLINT</b> → Small integers (Range: -32,768 to 32,767).  
+      <br>Example: <code>SMALLINT year;</code> → 2025</li>
+
+    <li><b>INT / INTEGER</b> → Standard integer (Range: -2,147,483,648 to 2,147,483,647).  
+      <br>Example: <code>INT id;</code> → 101</li>
+
+    <li><b>BIGINT</b> → Very large integers (Range: -2^63 to 2^63-1).  
+      <br>Example: <code>BIGINT population;</code> → 1400000000</li>
+
+    <li><b>DECIMAL(p,s)</b> / <b>NUMERIC</b> → Fixed-point numbers.  
+      <br><b>p</b> = precision (total digits), <b>s</b> = scale (digits after decimal).  
+      <br>Example: <code>DECIMAL(7,2) salary;</code> → 12345.67</li>
+
+    <li><b>FLOAT</b> → Approximate decimal with single precision.  
+      <br>Example: <code>FLOAT marks;</code> → 89.56</li>
+
+    <li><b>DOUBLE / REAL</b> → Approximate decimal with double precision.  
+      <br>Example: <code>DOUBLE distance;</code> → 123456.789</li>
+  </ul>
+  <pre>
+-- Example
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    price DECIMAL(8,2),     -- 6 digits before decimal, 2 after
+    stock INT
+);
+  </pre>
+
+  <h3>2. String Data Types</h3>
+  <ul>
+    <li><b>CHAR(n)</b> → Fixed length string (pads with spaces if shorter).  
+      <br>Example: <code>CHAR(5) code;</code> → 'SQL  '</li>
+
+    <li><b>VARCHAR(n)</b> → Variable length string (saves space).  
+      <br>Example: <code>VARCHAR(20) name;</code> → 'Aathi'</li>
+
+    <li><b>TEXT</b> → Large text values.  
+      <br>Types: <b>TINYTEXT</b> (255 chars), <b>TEXT</b> (65,535 chars), 
+      <b>MEDIUMTEXT</b> (16M chars), <b>LONGTEXT</b> (4GB).  
+      <br>Example: <code>TEXT description;</code></li>
+
+    <li><b>BLOB (Binary Large Object)</b> → Stores binary data (images, audio, video, files).  
+      <br>Types: <b>TINYBLOB</b>, <b>BLOB</b>, <b>MEDIUMBLOB</b>, <b>LONGBLOB</b>.  
+      <br>Example: <code>BLOB profile_pic;</code></li>
+
+    <li><b>ENUM</b> → One value from predefined list.  
+      <br>Example: <code>ENUM('Male','Female','Other') gender;</code></li>
+
+    <li><b>SET</b> → Multiple values from predefined list (0–64 items).  
+      <br>Example: <code>SET('Java','Python','SQL') skills;</code> → 'Java,SQL'</li>
+  </ul>
+  <pre>
+-- Example
+CREATE TABLE students (
+    name VARCHAR(50),
+    grade CHAR(1),
+    description TEXT,
+    gender ENUM('Male','Female','Other')
+);
+  </pre>
+
+  <h3>3. Date & Time Data Types</h3>
+  <ul>
+    <li><b>DATE</b> → Stores date (YYYY-MM-DD).  
+      <br>Example: <code>DATE dob;</code> → '2001-05-20'</li>
+
+    <li><b>TIME</b> → Stores time (HH:MM:SS).  
+      <br>Example: <code>TIME login_time;</code> → '09:30:45'</li>
+
+    <li><b>DATETIME</b> → Stores date & time (YYYY-MM-DD HH:MM:SS).  
+      <br>Example: <code>DATETIME order_time;</code> → '2025-08-20 14:25:00'</li>
+
+    <li><b>TIMESTAMP</b> → Date & time (auto-updates when record changes).  
+      <br>Example: <code>TIMESTAMP last_updated;</code></li>
+
+    <li><b>YEAR</b> → Year in 4-digit format.  
+      <br>Example: <code>YEAR admission_year;</code> → 2025</li>
+  </ul>
+  <pre>
+-- Example
+CREATE TABLE attendance (
+    student_id INT,
+    check_in DATETIME,
+    check_out TIME,
+    year_of_join YEAR
+);
+  </pre>
+
+  <h3>4. Boolean & JSON</h3>
+  <ul>
+    <li><b>BOOLEAN</b> → Stores TRUE/FALSE (internally treated as TINYINT 1 or 0).</li>
+    <li><b>JSON</b> → Stores JSON (JavaScript Object Notation) formatted data.</li>
+  </ul>
+  <pre>
+-- Example
+CREATE TABLE settings (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    is_active BOOLEAN,
+    config JSON
+);
+  </pre>
+
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>SQL Constraints</h2>
+  <p>
+    Constraints are rules applied on table columns to restrict the type of data that can be stored. 
+    They ensure accuracy, consistency, and reliability of the data in a database.
+  </p>
+
+  <h3>Types of Constraints</h3>
+  <ul>
+    <li><b>NOT NULL:</b> Ensures a column cannot have NULL values.</li>
+    <li><b>UNIQUE:</b> Ensures all values in a column are unique (no duplicates).</li>
+    <li><b>PRIMARY KEY:</b> A combination of NOT NULL + UNIQUE. Each table can have only one primary key.</li>
+    <li><b>FOREIGN KEY:</b> Creates a link between two tables. Ensures referential integrity.</li>
+    <li><b>CHECK:</b> Ensures that values in a column satisfy a specific condition.</li>
+    <li><b>DEFAULT:</b> Assigns a default value to a column if no value is provided.</li>
+    <li><b>AUTO_INCREMENT:</b> Automatically generates a unique number for each new row (mostly used with PRIMARY KEY).</li>
+  </ul>
+
+  <h3>Examples</h3>
+  <pre>
+-- Create table with constraints
+CREATE TABLE Students (
+  StudentID INT PRIMARY KEY AUTO_INCREMENT,
+  Name VARCHAR(50) NOT NULL,
+  Age INT CHECK (Age >= 18),
+  Email VARCHAR(100) UNIQUE,
+  CourseID INT,
+  FOREIGN KEY (CourseID) REFERENCES Courses(CourseID),
+  AdmissionDate DATE DEFAULT (CURRENT_DATE)
+);
+  </pre>
+
+  <h3>Explanation of Example:</h3>
+  <ul>
+    <li><b>StudentID:</b> Primary key with auto-increment.</li>
+    <li><b>Name:</b> Cannot be NULL.</li>
+    <li><b>Age:</b> Must be 18 or above.</li>
+    <li><b>Email:</b> Each student must have a unique email.</li>
+    <li><b>CourseID:</b> Linked to CourseID column in Courses table (Foreign Key).</li>
+    <li><b>AdmissionDate:</b> By default stores the current date.</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Keys in SQL</h2>
+  <p>
+    A <b>Key</b> in SQL is an attribute (or a set of attributes) that helps identify records uniquely 
+    in a table or establishes a relationship between tables.
+  </p>
+
+  <h3>Types of Keys</h3>
+  <ul>
+    <li>
+      <b>Primary Key:</b>  
+      - Uniquely identifies each record in a table.  
+      - A table can have only one primary key (can consist of single or multiple columns).  
+      - It cannot have NULL values.  
+      <pre>
+CREATE TABLE Students (
+  StudentID INT PRIMARY KEY,
+  Name VARCHAR(50) NOT NULL
+);
+      </pre>
+    </li>
+<hr>
+    <li>
+      <b>Foreign Key:</b>  
+      - A column (or group of columns) in one table that refers to the <b>Primary Key</b> in another table.  
+      - Enforces <b>Referential Integrity</b> between the two tables.  
+      <pre>
+CREATE TABLE Courses (
+  CourseID INT PRIMARY KEY,
+  CourseName VARCHAR(50)
+);
+
+CREATE TABLE Enrollments (
+  EnrollID INT PRIMARY KEY,
+  StudentID INT,
+  CourseID INT,
+  FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+      </pre>
+    </li>
+<hr>
+    <li>
+      <b>Candidate Key:</b>  
+      - All attributes (columns) that can uniquely identify a row.  
+      - Out of these, one is chosen as the <b>Primary Key</b>, and others are called <b>Alternate Keys</b>.  
+    </li>
+    <p>
+    Suppose we have a <b>Students</b> table:
+  </p>
+  <pre>
+CREATE TABLE Students (
+  StudentID INT,
+  RollNo VARCHAR(20),
+  Email VARCHAR(50),
+  Name VARCHAR(50),
+  PRIMARY KEY (StudentID)
+);
+  </pre>
+  <p>
+    In this table:  
+    - <b>StudentID</b>, <b>RollNo</b>, and <b>Email</b> can all uniquely identify a student.  
+    - So, all three are <b>Candidate Keys</b>.  
+    - From these, one key (say <b>StudentID</b>) is chosen as the <b>Primary Key</b>.
+  </p>
+<hr>
+    <li>
+      <b>Alternate Key:</b>  
+      - Any candidate key that is not chosen as the primary key.  
+      - Still has the ability to uniquely identify rows.  
+    </li>
+    <p>
+    Continuing from the same example:  
+    - <b>StudentID</b> is chosen as the Primary Key.  
+    - The remaining unique attributes (<b>RollNo</b> and <b>Email</b>) become <b>Alternate Keys</b>.  
+  </p>
+
+    
+<hr>
+    <li>
+      <b>Super Key:</b>  
+      - A set of one or more attributes that can uniquely identify a row.  
+      - Every Primary Key is a Super Key, but not every Super Key is a Primary Key.  
+    </li>
+    <p>
+    A <b>Super Key</b> is any set of attributes that can uniquely identify a record.  
+  </p>
+    <p>
+    In the same <b>Students</b> table:  
+  </p>
+  <ul>
+    <li>{StudentID}</li>
+    <li>{RollNo}</li>
+    <li>{Email}</li>
+    <li>{StudentID, Name}</li>
+    <li>{RollNo, Name}</li>
+  </ul>
+  <p>
+    All the above are <b>Super Keys</b>, but the minimal ones (without extra attributes) are Candidate Keys.  
+  </p>
+  <p>
+    So:  
+    - <b>Candidate Keys</b> = {StudentID}, {RollNo}, {Email}  
+    - <b>Super Keys</b> = {StudentID}, {RollNo}, {Email}, {StudentID, Name}, {RollNo, Name}, etc.  
+    - Out of Candidate Keys, one is chosen as the <b>Primary Key</b> and the rest become <b>Alternate Keys</b>.
+  </p>
+  </ul>
+<hr>
+  <li>
+      <b>Composite Key:</b>  
+      - A key made up of two or more columns together that uniquely identify a row.  
+      <pre>
+CREATE TABLE OrderDetails (
+  OrderID INT,
+  ProductID INT,
+  Quantity INT,
+  PRIMARY KEY (OrderID, ProductID)
+);
+      </pre>
+    </li>
+
+  <hr>
+
+  <h3>Primary Key vs Foreign Key</h3>
+  <table cellpadding="8" cellspacing="0">
+    <tr>
+      <th>Primary Key</th>
+      <th>Foreign Key</th>
+    </tr>
+    <tr>
+      <td>Uniquely identifies each record in a table.</td>
+      <td>Creates a link between two tables by referring to the Primary Key of another table.</td>
+    </tr>
+    <tr>
+      <td>Cannot contain NULL values.</td>
+      <td>Can contain NULL values (unless specified as NOT NULL).</td>
+    </tr>
+    <tr>
+      <td>Each table can have only one Primary Key.</td>
+      <td>A table can have multiple Foreign Keys.</td>
+    </tr>
+    <tr>
+      <td>Ensures <b>entity integrity</b>.</td>
+      <td>Ensures <b>referential integrity</b>.</td>
+    </tr>
+    <tr>
+      <td>Values in primary key must be unique.</td>
+      <td>Values may be duplicated if referencing multiple rows in another table.</td>
+    </tr>
+  </table>
+
+  <h3>Referential Integrity Constraint</h3>
+  <p>
+    - Referential Integrity ensures that the relationship between tables remains consistent.  
+    - It means that a Foreign Key in one table must always refer to an existing Primary Key in the parent table.  
+  </p>
+  <pre>
+-- Example of Referential Integrity
+INSERT INTO Enrollments (EnrollID, StudentID, CourseID)
+VALUES (1, 101, 999);
+-- ❌ Error: Cannot add or update because CourseID=999 does not exist in Courses table.
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>ER Model Basics</h2>
+
+  <h3>1. Entity</h3>
+  <p>
+    An <b>Entity</b> is a real-world object or concept that can be uniquely identified.  
+    It can be a physical object (like <i>Student</i>, <i>Teacher</i>, <i>Car</i>) or a conceptual object (like <i>Course</i>, <i>Department</i>).  
+  </p>
+  <p>
+    Example: <b>Student</b> is an entity.
+  </p>
+
+  <h3>2. Attributes</h3>
+  <p>
+    Attributes are the <b>properties</b> that describe an entity.  
+    For example, the entity <b>Student</b> can have attributes:
+  </p>
+  <ul>
+    <li>StudentID</li>
+    <li>Name</li>
+    <li>Email</li>
+    <li>Phone</li>
+  </ul>
+  <p>
+    <b>Types of Attributes:</b>
+    <ul>
+      <li><b>Simple</b> – cannot be divided further (e.g., Name, Age).</li>
+      <li><b>Composite</b> – can be divided into smaller parts (e.g., FullName → FirstName + LastName).</li>
+      <li><b>Derived</b> – values derived from other attributes (e.g., Age from DateOfBirth).</li>
+      <li><b>Multivalued</b> – can have multiple values (e.g., PhoneNumbers for a person).</li>
+    </ul>
+  </p>
+
+  <h3>3. Relationships</h3>
+  <p>
+    A <b>Relationship</b> defines how two entities are connected.  
+    Example:  
+    - <b>Student</b> <i>enrolls in</i> <b>Course</b>  
+    - <b>Teacher</b> <i>teaches</i> <b>Course</b>
+  </p>
+
+  <h3>4. Cardinality</h3>
+  <p>
+    <b>Cardinality</b> specifies the number of instances of one entity that can/must be associated with the number of instances of another entity.
+  </p>
+  <p>
+    Types of Cardinality:
+    <ul>
+      <li><b>One-to-One (1:1)</b> – One person has one passport.</li>
+      <li><b>One-to-Many (1:N)</b> – One teacher teaches many students.</li>
+      <li><b>Many-to-One (N:1)</b> – Many students belong to one department.</li>
+      <li><b>Many-to-Many (M:N)</b> – Students enroll in many courses, and each course has many students.</li>
+    </ul>
+  </p>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Normalization in DBMS</h2>
+
+  <p>
+    <b>Normalization</b> is the process of organizing data in a database to remove redundancy 
+    and improve data integrity.  
+    It divides larger tables into smaller ones and defines relationships between them.
+  </p>
+
+  <h3>Why Normalization?</h3>
+  <ul>
+    <li>To eliminate duplicate data.</li>
+    <li>To reduce data redundancy and inconsistency.</li>
+    <li>To make data retrieval efficient.</li>
+    <li>To maintain data integrity.</li>
+  </ul>
+
+  <h3>Normal Forms</h3>
+  <p>Normalization is done in stages called <b>Normal Forms (NF)</b>:</p>
+  
+  <h4>1. First Normal Form (1NF)</h4>
+  <ul>
+    <li>Each column must contain atomic (indivisible) values.</li>
+    <li>No repeating groups or arrays allowed.</li>
+  </ul>
+  <p>
+    Example:<br>
+    ❌ Wrong: Student(ID, Name, Phone1, Phone2)<br>
+    ✔ Correct: Student(ID, Name, Phone)
+  </p>
+
+  <h4>2. Second Normal Form (2NF)</h4>
+  <ul>
+    <li>Table must be in 1NF.</li>
+    <li>Functional dependency - All non-Primary key is depending on primary key column.</li>
+    <li>No partial dependency – every non-Primary key attribute must depend on the whole primary key.</li>
+  </ul>
+  <p>
+    Example: If (StudentID, CourseID) is PK, then StudentName should not depend only on StudentID.
+  </p>
+
+  <h4>3. Third Normal Form (3NF)</h4>
+  <ul>
+    <li>Table must be in 2NF.</li>
+    <li>No transitive dependency – non-Primary key attributes should not depend on other non- Primary key attributes.</li>
+  </ul>
+  <p>
+    Example:<br>
+    ❌ Wrong: Student(ID, Name, DeptID, DeptName)<br>
+    (DeptName depends on DeptID, not directly on StudentID)<br>
+    ✔ Correct: Separate Department table.
+  </p>
+
+  <h4>4. Boyce-Codd Normal Form (BCNF)</h4>
+  <ul>
+    <li>Stronger version of 3NF.</li>
+    <li>Every determinant must be a candidate key.</li>
+  </ul>
+
+  <h3>Advantages of Normalization</h3>
+  <ul>
+    <li>Removes redundancy.</li>
+    <li>Ensures data consistency.</li>
+    <li>Makes database flexible and efficient.</li>
+  </ul>
+
+  <h3>Disadvantages</h3>
+  <ul>
+    <li>Requires more joins while querying.</li>
+    <li>Too many small tables may reduce performance in complex queries.</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>DDL in MySQL</h2>
+  <p>DDL (Data Definition Language) defines and changes database objects like <b>databases</b>, <b>tables</b>, and <b>indexes</b>. DDL auto-commits (cannot be rolled back).</p>
+</div>
+
+<!-- 1) CREATE DATABASE + USE -->
+<div class="topic">
+  <h3>1) CREATE DATABASE & USE</h3>
+  <p><b>Purpose:</b> Create a new database and switch to it.</p>
+  <pre>
+-- Syntax
+CREATE DATABASE [IF NOT EXISTS] db_name
+  [DEFAULT CHARACTER SET utf8mb4]
+  [DEFAULT COLLATE utf8mb4_0900_ai_ci];
+
+USE db_name;
+
+-- Example
+CREATE DATABASE IF NOT EXISTS company_db
+  DEFAULT CHARACTER SET utf8mb4
+  DEFAULT COLLATE utf8mb4_0900_ai_ci;
+
+USE company_db;
+  </pre>
+  <p><b>Notes:</b> Always prefer <code>utf8mb4</code> for full Unicode (includes emoji).</p>
+</div>
+
+<!-- 2) CREATE TABLE -->
+<div class="topic">
+  <h3>2) CREATE TABLE</h3>
+  <p><b>Purpose:</b> Define a table’s columns, data types, and constraints.</p>
+
+  <pre>
+-- Syntax (column-level + table-level constraints)
+CREATE TABLE table_name (
+  col_name data_type [NOT NULL] [UNIQUE] [DEFAULT expr] [CHECK (condition)]
+  [AUTO_INCREMENT] [COMMENT '...'],
+  -- more columns...
+  [PRIMARY KEY (col_list)],
+  [UNIQUE (col_list)],
+  [CONSTRAINT fk_name FOREIGN KEY (child_cols)
+     REFERENCES parent_table(parent_cols)
+     ON DELETE {RESTRICT | CASCADE | SET NULL | NO ACTION}
+     ON UPDATE {RESTRICT | CASCADE | SET NULL | NO ACTION}]
+) ENGINE=InnoDB;
+  </pre>
+
+  <pre>
+-- Example: Parent table
+CREATE TABLE departments (
+  dept_id   INT PRIMARY KEY AUTO_INCREMENT,
+  dept_name VARCHAR(60) NOT NULL UNIQUE,
+  location  VARCHAR(60) DEFAULT 'HQ',
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- Example: Child table with FK
+CREATE TABLE employees (
+  emp_id     INT PRIMARY KEY AUTO_INCREMENT,
+  full_name  VARCHAR(80) NOT NULL,
+  email      VARCHAR(120) UNIQUE,
+  salary     DECIMAL(10,2) CHECK (salary >= 0),
+  hire_date  DATE NOT NULL,
+  dept_id    INT,
+  CONSTRAINT fk_emp_dept
+    FOREIGN KEY (dept_id)
+    REFERENCES departments(dept_id)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE
+) ENGINE=InnoDB;
+  </pre>
+
+  <p><b>Notes:</b>
+    <ul>
+      <li><b>CHECK</b> is enforced in MySQL 8.0.16+.</li>
+      <li><b>AUTO_INCREMENT</b> works on a key column (typically PK).</li>
+      <li>Use <b>ENGINE=InnoDB</b> for transactions + FK support.</li>
+    </ul>
+  </p>
+</div>
+
+<!-- 3) ALTER TABLE -->
+<div class="topic">
+  <h3>3) ALTER TABLE</h3>
+  <p><b>Purpose:</b> Change a table after creation — add/modify/drop columns, rename columns/tables, add/drop constraints or indexes.</p>
+
+  <h4>Common Syntax</h4>
+  <pre>
+-- Add a column
+ALTER TABLE table_name
+  ADD COLUMN col_name data_type [constraints] [AFTER other_col];
+
+-- Modify definition (type / nullability / default) without renaming
+ALTER TABLE table_name
+  MODIFY COLUMN col_name new_data_type [NOT NULL] [DEFAULT expr];
+
+-- Rename a column (MySQL 8+)
+ALTER TABLE table_name
+  RENAME COLUMN old_name TO new_name;
+
+-- Drop a column
+ALTER TABLE table_name
+  DROP COLUMN col_name;
+
+-- Rename table
+ALTER TABLE old_table_name
+  RENAME TO new_table_name;
+
+-- Add / Drop Primary Key
+ALTER TABLE table_name
+  ADD PRIMARY KEY (col_list);
+ALTER TABLE table_name
+  DROP PRIMARY KEY;
+
+-- Add / Drop Foreign Key
+ALTER TABLE child_table
+  ADD CONSTRAINT fk_name FOREIGN KEY (child_cols)
+    REFERENCES parent_table(parent_cols)
+    ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE child_table
+  DROP FOREIGN KEY fk_name;
+
+-- Defaults (alternative)
+ALTER TABLE table_name
+  ALTER COLUMN col_name SET DEFAULT expr;
+ALTER TABLE table_name
+  ALTER COLUMN col_name DROP DEFAULT;
+
+-- Indexes
+ALTER TABLE table_name ADD INDEX idx_name (col_list);
+ALTER TABLE table_name ADD UNIQUE uniq_name (col_list);
+  </pre>
+
+  <h4>Worked Examples</h4>
+  <pre>
+-- 3.1 Add a column
+ALTER TABLE employees
+  ADD COLUMN phone VARCHAR(20) AFTER email;
+
+-- 3.2 Change data type / NOT NULL / DEFAULT
+ALTER TABLE employees
+  MODIFY COLUMN phone VARCHAR(25) DEFAULT 'N/A';
+
+-- 3.3 Rename a column
+ALTER TABLE employees
+  RENAME COLUMN full_name TO name;
+
+-- 3.4 Drop a column
+ALTER TABLE employees
+  DROP COLUMN phone;
+
+-- 3.5 Add a new FK with cascade delete
+ALTER TABLE employees
+  ADD CONSTRAINT fk_emp_dept2 FOREIGN KEY (dept_id)
+  REFERENCES departments(dept_id)
+  ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- 3.6 Add a composite unique key (name + hire_date must be unique)
+ALTER TABLE employees
+  ADD UNIQUE uniq_emp_name_date (name, hire_date);
+
+-- 3.7 Add a secondary index for faster lookup by salary
+ALTER TABLE employees
+  ADD INDEX idx_emp_salary (salary);
+
+-- 3.8 Change default
+ALTER TABLE departments
+  ALTER COLUMN location SET DEFAULT 'Main-Campus';
+  </pre>
+
+  <p><b>Tips:</b> Prefer <code>RENAME COLUMN</code> on MySQL 8+. On older MySQL, use <code>CHANGE old new new_type</code>.</p>
+</div>
+
+<!-- 4) RENAME TABLE -->
+<div class="topic">
+  <h3>4) RENAME TABLE</h3>
+  <p><b>Purpose:</b> Rename a table (atomic and fast).</p>
+  <pre>
+-- Syntax
+RENAME TABLE old_name TO new_name;
+
+-- Example
+RENAME TABLE employees TO staff;
+RENAME TABLE staff TO employees; -- (rename back)
+  </pre>
+</div>
+
+<!-- 5) TRUNCATE TABLE -->
+<div class="topic">
+  <h3>5) TRUNCATE TABLE</h3>
+  <p><b>Purpose:</b> Delete <i>all</i> rows quickly and reset AUTO_INCREMENT. Structure stays.</p>
+  <pre>
+-- Syntax
+TRUNCATE TABLE table_name;
+
+-- Example
+TRUNCATE TABLE employees;
+  </pre>
+  <p><b>Important:</b> <code>TRUNCATE</code> is DDL → implicit commit before & after; cannot be rolled back. Resets AUTO_INCREMENT to start.</p>
+</div>
+
+<!-- 6) DROP (TABLE / DATABASE / INDEX) -->
+<div class="topic">
+  <h3>6) DROP (Table / Database / Index)</h3>
+  <p><b>Purpose:</b> Permanently remove objects(table).</p>
+  <pre>
+-- Drop table
+DROP TABLE [IF EXISTS] employees;
+
+-- Drop database
+DROP DATABASE [IF EXISTS] company_db;
+
+-- Drop index (MySQL syntax requires ON table)
+DROP INDEX idx_emp_salary ON employees;
+  </pre>
+  <p><b>Warning:</b> Irreversible. Use <code>IF EXISTS</code> to avoid errors.</p>
+</div>
+
+<!-- 7) CREATE INDEX (bonus) -->
+<div class="topic">
+  <h3>7) CREATE INDEX (Bonus)</h3>
+  <p><b>Purpose:</b> Speed up searches/joins on columns (reads faster; writes slightly slower).</p>
+  <pre>
+-- Syntax
+CREATE [UNIQUE] INDEX index_name ON table_name (col1[, col2 ...]);
+
+-- Example
+CREATE INDEX idx_dept_name ON departments (dept_name);
+CREATE UNIQUE INDEX uniq_emp_email ON employees (email);
+  </pre>
+  <p><b>Notes:</b> Index columns you filter/join/sort on frequently. Avoid indexing low-selectivity columns (e.g., boolean flags).</p>
+</div>
+
+<!-- Mini walkthrough -->
+<div class="topic">
+  <h3>Mini Walkthrough (from zero)</h3>
+  <pre>
+CREATE DATABASE IF NOT EXISTS company_db;
+USE company_db;
+
+CREATE TABLE departments (
+  dept_id   INT PRIMARY KEY AUTO_INCREMENT,
+  dept_name VARCHAR(60) NOT NULL UNIQUE,
+  location  VARCHAR(60) DEFAULT 'HQ'
+) ENGINE=InnoDB;
+
+CREATE TABLE employees (
+  emp_id    INT PRIMARY KEY AUTO_INCREMENT,
+  name      VARCHAR(80) NOT NULL,
+  email     VARCHAR(120) UNIQUE,
+  salary    DECIMAL(10,2) CHECK (salary >= 0),
+  hire_date DATE NOT NULL,
+  dept_id   INT,
+  CONSTRAINT fk_emp_dept
+    FOREIGN KEY (dept_id)
+    REFERENCES departments(dept_id)
+    ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- tweak structure later
+ALTER TABLE employees ADD INDEX idx_salary (salary);
+ALTER TABLE employees RENAME COLUMN name TO full_name;
+
+-- cleanup options
+-- TRUNCATE TABLE employees;  -- clears all rows, keeps table
+-- DROP TABLE employees;      -- removes table
+-- DROP DATABASE company_db;  -- removes db and all its tables
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>DDL - Data Definition Language</h2>
+  <p>
+    DDL commands are used to define and manage the structure of database objects 
+    such as <b>tables, views, indexes, schemas</b>.  
+    These commands affect the database schema and are auto-committed 
+    (changes cannot be rolled back).
+  </p>
+</div>
+
+<div class="subtopic">
+  <h3>1. CREATE</h3>
+  <p>Used to create a new database or table.</p>
+
+  <h4>Syntax:</h4>
+  <pre>
+  CREATE DATABASE dbname;
+  CREATE TABLE table_name (
+      column1 datatype constraint,
+      column2 datatype constraint,
+      ...
+  );
+  </pre>
+
+  <h4>Example:</h4>
+  <pre>
+  CREATE DATABASE SchoolDB;
+
+  USE SchoolDB;
+
+  CREATE TABLE Students (
+      student_id INT PRIMARY KEY,
+      name VARCHAR(50) NOT NULL,
+      age INT,
+      grade CHAR(2)
+  );
+  </pre>
+
+  <h4>Output:</h4>
+  <pre>
+  Query OK, 1 row affected (0.02 sec)
+  </pre>
+</div>
+
+<div class="subtopic">
+  <h3>2. ALTER</h3>
+  <p>Used to modify an existing table (add, modify, or delete columns).</p>
+
+  <h4>Syntax:</h4>
+  <pre>
+  ALTER TABLE table_name ADD column_name datatype;
+  ALTER TABLE table_name MODIFY column_name new_datatype;
+  ALTER TABLE table_name DROP column_name;
+  </pre>
+
+  <h4>Example:</h4>
+  <pre>
+  ALTER TABLE Students ADD email VARCHAR(100);
+  ALTER TABLE Students MODIFY grade VARCHAR(5);
+  ALTER TABLE Students DROP age;
+  </pre>
+
+  <h4>Output:</h4>
+  <pre>
+  Query OK, 0 rows affected (0.04 sec)
+  Records: 0  Duplicates: 0  Warnings: 0
+  </pre>
+</div>
+
+<div class="subtopic">
+  <h3>3. RENAME</h3>
+  <p>Used to rename a table.</p>
+
+  <h4>Syntax:</h4>
+  <pre>
+  RENAME TABLE old_table_name TO new_table_name;
+  </pre>
+
+  <h4>Example:</h4>
+  <pre>
+  RENAME TABLE Students TO Student_Info;
+  </pre>
+
+  <h4>Output:</h4>
+  <pre>
+  Query OK, 0 rows affected (0.01 sec)
+  </pre>
+</div>
+
+<div class="subtopic">
+  <h3>4. TRUNCATE</h3>
+  <p>
+    Used to remove all rows from a table, but the table structure remains.  
+    Unlike DELETE, TRUNCATE cannot be rolled back.
+  </p>
+
+  <h4>Syntax:</h4>
+  <pre>
+  TRUNCATE TABLE table_name;
+  </pre>
+
+  <h4>Example:</h4>
+  <pre>
+  TRUNCATE TABLE Student_Info;
+  </pre>
+
+  <h4>Output:</h4>
+  <pre>
+  Query OK, 0 rows affected (0.02 sec)
+  </pre>
+</div>
+
+<div class="subtopic">
+  <h3>5. DROP</h3>
+  <p>
+    Used to delete a table or database permanently (structure + data).  
+    Cannot be rolled back.
+  </p>
+
+  <h4>Syntax:</h4>
+  <pre>
+  DROP TABLE table_name;
+  DROP DATABASE dbname;
+  </pre>
+
+  <h4>Example:</h4>
+  <pre>
+  DROP TABLE Student_Info;
+  DROP DATABASE SchoolDB;
+  </pre>
+
+  <h4>Output:</h4>
+  <pre>
+  Query OK, 0 rows affected (0.01 sec)
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>DML - Data Manipulation Language</h2>
+  <p>
+    DML commands are used to manage data inside database tables.  
+    These operations can be rolled back (because they affect only data, not structure).  
+    Common commands: <b>INSERT, UPDATE, DELETE</b>.
+  </p>
+</div>
+
+<div class="subtopic">
+  <h3>1. INSERT</h3>
+  <p>Used to add new records into a table.</p>
+
+  <h4>Syntax:</h4>
+  <pre>
+  INSERT INTO table_name (col1, col2, col3, ...)
+  VALUES (val1, val2, val3, ...);
+
+  -- OR (if inserting into all columns)
+  INSERT INTO table_name VALUES (val1, val2, val3, ...);
+  </pre>
+
+  <h4>Example:</h4>
+  <pre>
+  CREATE TABLE Employees (
+      emp_id INT PRIMARY KEY,
+      name VARCHAR(50),
+      salary DECIMAL(10,2),
+      dept VARCHAR(20)
+  );
+
+  INSERT INTO Employees (emp_id, name, salary, dept)
+  VALUES (101, 'Aathi', 50000.00, 'IT');
+
+  INSERT INTO Employees VALUES (102, 'Siva', 60000.00, 'HR');
+  </pre>
+
+  <h4>Output:</h4>
+  <pre>
+  Query OK, 1 row affected (0.01 sec)
+  </pre>
+</div>
+
+<div class="subtopic">
+  <h3>2. UPDATE</h3>
+  <p>Used to modify existing records in a table.</p>
+
+  <h4>Syntax:</h4>
+  <pre>
+  UPDATE table_name
+  SET col1 = val1, col2 = val2, ...
+  WHERE condition;
+  </pre>
+
+  <h4>Example:</h4>
+  <pre>
+  UPDATE Employees
+  SET salary = 65000.00
+  WHERE emp_id = 102;
+  </pre>
+
+  <h4>Output:</h4>
+  <pre>
+  Query OK, 1 row affected (0.01 sec)
+  Rows matched: 1  Changed: 1  Warnings: 0
+  </pre>
+</div>
+
+<div class="subtopic">
+  <h3>3. DELETE</h3>
+  <p>Used to remove records from a table.</p>
+
+  <h4>Syntax:</h4>
+  <pre>
+  DELETE FROM table_name WHERE condition;
+
+  -- Delete all rows
+  DELETE FROM table_name;
+  </pre>
+
+  <h4>Example:</h4>
+  <pre>
+  DELETE FROM Employees WHERE emp_id = 101;
+  </pre>
+
+  <h4>Output:</h4>
+  <pre>
+  Query OK, 1 row affected (0.00 sec)
+  </pre>
+</div>
+
+<div class="subtopic note">
+  <h3>Note:</h3>
+  <ul>
+    <li><b>DELETE</b> → removes rows (can be rolled back if inside transaction).</li>
+    <li><b>TRUNCATE</b> → removes all rows (cannot be rolled back).</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>DQL — SELECT (MySQL)</h2>
+  <p><b>DQL</b> has one command: <code>SELECT</code>. With its clauses it does projection (columns), selection (rows), sorting, grouping, joins, subqueries, etc.</p>
+</div>
+
+<div class="topic">
+  <h3>Sample Data (so all outputs make sense)</h3>
+  <pre>
+CREATE TABLE departments (
+  dept_id INT PRIMARY KEY,
+  dept_name VARCHAR(40) UNIQUE,
+  location VARCHAR(40)
+);
+
+CREATE TABLE employees (
+  emp_id INT PRIMARY KEY,
+  name VARCHAR(50) NOT NULL,
+  email VARCHAR(120),
+  salary DECIMAL(10,2),
+  hire_date DATE,
+  dept_id INT NULL,
+  FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
+);
+
+INSERT INTO departments VALUES
+(1,'IT','HQ'),
+(2,'HR','Chennai'),
+(3,'Sales','Mumbai'),
+(4,'Finance','Bengaluru'); -- no employees yet
+
+INSERT INTO employees VALUES
+(101,'Aathi','aathi@example.com',50000.00,'2023-01-10',1),
+(102,'Siva','siva@example.com',65000.00,'2022-11-05',2),
+(103,'Meera',NULL,72000.00,'2024-03-15',1),
+(104,'John','john@example.com',45000.00,'2021-07-20',NULL),
+(105,'Priya','priya@example.com',65000.00,'2023-09-01',3),
+(106,'Aathi','aathi2@example.com',80000.00,'2025-02-10',1);
+  </pre>
+</div>
+
+<div class="topic">
+  <h3>1) Basic SELECT (Projection)</h3>
+  <pre>
+-- Syntax
+SELECT [DISTINCT] col_list
+FROM table_name;
+
+-- Example: pick columns
+SELECT name, salary FROM employees;
+  </pre>
+  <h4>Output:</h4>
+  <table  cellpadding="6" cellspacing="0">
+    <tr><th>name</th><th>salary</th></tr>
+    <tr><td>Aathi</td><td>50000.00</td></tr>
+    <tr><td>Siva</td><td>65000.00</td></tr>
+    <tr><td>Meera</td><td>72000.00</td></tr>
+    <tr><td>John</td><td>45000.00</td></tr>
+    <tr><td>Priya</td><td>65000.00</td></tr>
+    <tr><td>Aathi</td><td>80000.00</td></tr>
+  </table>
+  <p><b>Aliases:</b> <code>AS</code> renames columns in the result.</p>
+  <pre>
+SELECT name AS employee, salary AS ctc FROM employees;
+  </pre>
+</div>
+
+<div class="topic">
+  <h3>2) DISTINCT, LIMIT, OFFSET</h3>
+  <pre>
+-- Only different names
+SELECT DISTINCT name FROM employees;
+
+-- Top N rows (pagination)
+SELECT name, salary FROM employees
+ORDER BY salary DESC
+LIMIT 3 OFFSET 0; -- top 3
+  </pre>
+  <h4>Output (DISTINCT name):</h4>
+  <table  cellpadding="6"><tr><th>name</th></tr>
+    <tr><td>Aathi</td></tr><tr><td>Siva</td></tr><tr><td>Meera</td></tr><tr><td>John</td></tr><tr><td>Priya</td></tr>
+  </table>
+  <h4>Output (Top 3 salaries):</h4>
+  <table  cellpadding="6">
+    <tr><th>name</th><th>salary</th></tr>
+    <tr><td>Aathi</td><td>80000.00</td></tr>
+    <tr><td>Meera</td><td>72000.00</td></tr>
+    <tr><td>Siva</td><td>65000.00</td></tr>
+  </table>
+</div>
+
+<div class="topic">
+  <h3>3) WHERE — Filtering Rows (Selection)</h3>
+  <pre>
+-- Syntax
+SELECT col_list FROM table
+WHERE condition;
+
+-- Operators: =, &lt;&gt;, &gt;, &gt;=, &lt;, &lt;=, AND, OR, NOT, BETWEEN, IN, LIKE, IS NULL
+
+-- Example: salary and department filter
+SELECT emp_id, name, salary FROM employees
+WHERE salary &gt;= 60000 AND dept_id IN (1,3);
+
+-- Pattern: names starting with 'A'
+SELECT name FROM employees
+WHERE name LIKE 'A%';
+
+-- Date range
+SELECT name, hire_date FROM employees
+WHERE hire_date BETWEEN '2023-01-01' AND '2024-12-31';
+
+-- NULL check
+SELECT emp_id, name FROM employees
+WHERE dept_id IS NULL;
+  </pre>
+  <h4>Output (salary ≥ 60000 AND dept_id IN 1,3):</h4>
+  <table  cellpadding="6">
+    <tr><th>emp_id</th><th>name</th><th>salary</th></tr>
+    <tr><td>103</td><td>Meera</td><td>72000.00</td></tr>
+    <tr><td>105</td><td>Priya</td><td>65000.00</td></tr>
+    <tr><td>106</td><td>Aathi</td><td>80000.00</td></tr>
+  </table>
+</div>
+
+<div class="topic">
+  <h3>4) ORDER BY — Sorting</h3>
+  <pre>
+-- Syntax
+SELECT col_list FROM table
+ORDER BY col1 [ASC|DESC], col2 [ASC|DESC];
+
+-- Example: highest salary first, then name A→Z
+SELECT name, salary FROM employees
+ORDER BY salary DESC, name ASC;
+
+-- Place NULLs last (trick)
+SELECT name, dept_id FROM employees
+ORDER BY (dept_id IS NULL), dept_id;
+  </pre>
+  <h4>Output (salary DESC, name ASC):</h4>
+  <table  cellpadding="6">
+    <tr><th>name</th><th>salary</th></tr>
+    <tr><td>Aathi</td><td>80000.00</td></tr>
+    <tr><td>Meera</td><td>72000.00</td></tr>
+    <tr><td>Priya</td><td>65000.00</td></tr>
+    <tr><td>Siva</td><td>65000.00</td></tr>
+    <tr><td>Aathi</td><td>50000.00</td></tr>
+    <tr><td>John</td><td>45000.00</td></tr>
+  </table>
+</div>
+
+<div class="topic">
+  <h3>5) Aggregates + GROUP BY + HAVING</h3>
+  <p><b>Aggregates:</b> <code>COUNT, SUM, AVG, MIN, MAX</code></p>
+  <pre>
+-- Per-department stats
+SELECT dept_id,
+       COUNT(*) AS total_emp,
+       AVG(salary) AS avg_salary
+FROM employees
+GROUP BY dept_id;
+
+-- Use HAVING to filter grouped results (NOT WHERE)
+SELECT dept_id, COUNT(*) AS total_emp
+FROM employees
+GROUP BY dept_id
+HAVING COUNT(*) &gt;= 2;
+
+-- Friendly names with join
+SELECT d.dept_name,
+       COUNT(*) AS total_emp,
+       ROUND(AVG(e.salary), 2) AS avg_salary
+FROM departments d
+JOIN employees e ON e.dept_id = d.dept_id
+GROUP BY d.dept_name;
+  </pre>
+  <h4>Output (dept_id, count, avg):</h4>
+  <table  cellpadding="6">
+    <tr><th>dept_id</th><th>total_emp</th><th>avg_salary</th></tr>
+    <tr><td>NULL</td><td>1</td><td>45000.00</td></tr>
+    <tr><td>1</td><td>3</td><td>67333.33</td></tr>
+    <tr><td>2</td><td>1</td><td>65000.00</td></tr>
+    <tr><td>3</td><td>1</td><td>65000.00</td></tr>
+  </table>
+  <h4>Output (HAVING COUNT(*) ≥ 2):</h4>
+  <table  cellpadding="6">
+    <tr><th>dept_id</th><th>total_emp</th></tr>
+    <tr><td>1</td><td>3</td></tr>
+  </table>
+</div>
+
+<div class="topic">
+  <h3>6) JOINS — Combining Tables</h3>
+  <p><b>INNER JOIN:</b> only matching rows in both tables.</p>
+  <pre>
+SELECT e.name, d.dept_name
+FROM employees e
+INNER JOIN departments d ON d.dept_id = e.dept_id;
+  </pre>
+  <h4>Output (INNER):</h4>
+  <table  cellpadding="6">
+    <tr><th>name</th><th>dept_name</th></tr>
+    <tr><td>Aathi</td><td>IT</td></tr>
+    <tr><td>Siva</td><td>HR</td></tr>
+    <tr><td>Meera</td><td>IT</td></tr>
+    <tr><td>Priya</td><td>Sales</td></tr>
+    <tr><td>Aathi</td><td>IT</td></tr>
+  </table>
+
+  <p><b>LEFT JOIN:</b> all rows from left (employees) + matches from right; unmatched → NULL.</p>
+  <pre>
+SELECT e.name, d.dept_name
+FROM employees e
+LEFT JOIN departments d ON d.dept_id = e.dept_id;
+  </pre>
+  <h4>Output (LEFT):</h4>
+  <table  cellpadding="6">
+    <tr><th>name</th><th>dept_name</th></tr>
+    <tr><td>Aathi</td><td>IT</td></tr>
+    <tr><td>Siva</td><td>HR</td></tr>
+    <tr><td>Meera</td><td>IT</td></tr>
+    <tr><td>John</td><td>NULL</td></tr>
+    <tr><td>Priya</td><td>Sales</td></tr>
+    <tr><td>Aathi</td><td>IT</td></tr>
+  </table>
+
+  <p><b>RIGHT JOIN:</b> all rows from right (departments) + matches from left; unmatched → NULL.</p>
+  <pre>
+SELECT d.dept_name, e.name
+FROM departments d
+RIGHT JOIN employees e ON d.dept_id = e.dept_id; -- (same rows as INNER in this data)
+  </pre>
+
+  <p><b>RIGHT JOIN (dept focus):</b></p>
+  <pre>
+SELECT d.dept_name, e.name
+FROM departments d
+LEFT JOIN employees e ON d.dept_id = e.dept_id; -- dept-led view
+  </pre>
+  <h4>Output (dept-led LEFT, shows Finance with no employees):</h4>
+  <table  cellpadding="6">
+    <tr><th>dept_name</th><th>name</th></tr>
+    <tr><td>IT</td><td>Aathi</td></tr>
+    <tr><td>IT</td><td>Meera</td></tr>
+    <tr><td>IT</td><td>Aathi</td></tr>
+    <tr><td>HR</td><td>Siva</td></tr>
+    <tr><td>Sales</td><td>Priya</td></tr>
+    <tr><td>Finance</td><td>NULL</td></tr>
+  </table>
+
+  <p><b>FULL OUTER JOIN (MySQL trick):</b> simulate with UNION of left and right joins.</p>
+  <pre>
+SELECT e.name, d.dept_name
+FROM employees e LEFT JOIN departments d ON d.dept_id = e.dept_id
+UNION
+SELECT e.name, d.dept_name
+FROM employees e RIGHT JOIN departments d ON d.dept_id = e.dept_id;
+  </pre>
+
+  <p><b>CROSS JOIN:</b> Cartesian product (be careful!).</p>
+  <pre>
+SELECT d.dept_name, e.name
+FROM departments d CROSS JOIN employees e;
+  </pre>
+
+  <p><b>NATURAL JOIN:</b> Uses same-named columns automatically (e.g., <code>dept_id</code>). Use carefully.</p>
+  <pre>
+SELECT e.name, d.location
+FROM employees e NATURAL JOIN departments d; -- joins on dept_id implicitly
+  </pre>
+</div>
+
+<div class="topic">
+  <h3>7) Subqueries (Scalar, IN, EXISTS, Correlated)</h3>
+  <p><b>Scalar Subquery:</b> returns one value.</p>
+  <pre>
+SELECT name, salary FROM employees
+WHERE salary = (SELECT MAX(salary) FROM employees);
+  </pre>
+  <h4>Output:</h4>
+  <table  cellpadding="6">
+    <tr><th>name</th><th>salary</th></tr>
+    <tr><td>Aathi</td><td>80000.00</td></tr>
+  </table>
+
+  <p><b>IN Subquery:</b></p>
+  <pre>
+-- Employees in departments located at 'HQ'
+SELECT name FROM employees
+WHERE dept_id IN (SELECT dept_id FROM departments WHERE location = 'HQ');
+  </pre>
+  <h4>Output:</h4>
+  <table  cellpadding="6">
+    <tr><th>name</th></tr>
+    <tr><td>Aathi</td></tr>
+    <tr><td>Meera</td></tr>
+    <tr><td>Aathi</td></tr>
+  </table>
+
+  <p><b>EXISTS:</b> tests whether subquery returns any row.</p>
+  <pre>
+SELECT d.dept_name
+FROM departments d
+WHERE EXISTS (SELECT 1 FROM employees e WHERE e.dept_id = d.dept_id);
+  </pre>
+  <h4>Output:</h4>
+  <table  cellpadding="6">
+    <tr><th>dept_name</th></tr>
+    <tr><td>IT</td></tr>
+    <tr><td>HR</td></tr>
+    <tr><td>Sales</td></tr>
+  </table>
+
+  <p><b>Correlated Subquery:</b> compares each row to a per-group aggregate.</p>
+  <pre>
+SELECT e.emp_id, e.name, e.salary
+FROM employees e
+WHERE e.salary &gt; (
+  SELECT AVG(e2.salary)
+  FROM employees e2
+  WHERE e2.dept_id = e.dept_id
+);
+  </pre>
+  <h4>Output:</h4>
+  <table  cellpadding="6">
+    <tr><th>emp_id</th><th>name</th><th>salary</th></tr>
+    <tr><td>103</td><td>Meera</td><td>72000.00</td></tr>
+    <tr><td>106</td><td>Aathi</td><td>80000.00</td></tr>
+  </table>
+</div>
+
+<div class="topic">
+  <h3>8) CASE Expression (Derived Columns)</h3>
+  <pre>
+SELECT name,
+       salary,
+       CASE
+         WHEN salary &gt;= 70000 THEN 'High'
+         WHEN salary BETWEEN 50000 AND 69999 THEN 'Medium'
+         ELSE 'Low'
+       END AS salary_band
+FROM employees
+ORDER BY salary DESC;
+  </pre>
+  <h4>Output:</h4>
+  <table  cellpadding="6">
+    <tr><th>name</th><th>salary</th><th>salary_band</th></tr>
+    <tr><td>Aathi</td><td>80000.00</td><td>High</td></tr>
+    <tr><td>Meera</td><td>72000.00</td><td>High</td></tr>
+    <tr><td>Siva</td><td>65000.00</td><td>Medium</td></tr>
+    <tr><td>Priya</td><td>65000.00</td><td>Medium</td></tr>
+    <tr><td>Aathi</td><td>50000.00</td><td>Medium</td></tr>
+    <tr><td>John</td><td>45000.00</td><td>Low</td></tr>
+  </table>
+</div>
+
+<div class="topic">
+  <h3>9) Set Operations (UNION vs UNION ALL)</h3>
+  <pre>
+-- UNION removes duplicates
+SELECT name FROM employees WHERE dept_id = 1
+UNION
+SELECT name FROM employees WHERE salary &gt;= 70000;
+
+-- UNION ALL keeps duplicates
+SELECT name FROM employees WHERE dept_id = 1
+UNION ALL
+SELECT name FROM employees WHERE salary &gt;= 70000;
+  </pre>
+</div>
+
+<div class="topic">
+  <h3>10) Quick Reference — SELECT Order</h3>
+  <pre>
+SELECT
+  [DISTINCT] col_list
+FROM
+  table_or_joins
+WHERE
+  row_filter
+GROUP BY
+  group_cols
+HAVING
+  group_filter
+ORDER BY
+  sort_cols
+LIMIT
+  [offset,] row_count;
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>SQL Constraints</h2>
+
+  <p>
+    <b>Definition:</b> Constraints are rules applied to table columns to ensure 
+    the accuracy, reliability, and integrity of the data.
+  </p>
+
+  <h3>Types of Constraints</h3>
+  <ul>
+    <li><b>NOT NULL</b> → Ensures a column cannot have NULL values.</li>
+    <li><b>UNIQUE</b> → Ensures all values in a column are unique.</li>
+    <li><b>PRIMARY KEY</b> → Combination of NOT NULL + UNIQUE, uniquely identifies each row.</li>
+    <li><b>FOREIGN KEY</b> → Ensures referential integrity between two tables.</li>
+    <li><b>CHECK</b> → Ensures values meet a specific condition.</li>
+    <li><b>DEFAULT</b> → Provides a default value for a column if no value is specified.</li>
+  </ul>
+
+  <hr>
+
+  <h3>1. Creating Constraints (with CREATE TABLE)</h3>
+  <pre>
+CREATE TABLE Students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL,
+    email VARCHAR(50) UNIQUE,
+    age INT CHECK (age >= 18),
+    grade VARCHAR(2) DEFAULT 'NA'
+);
+  </pre>
+
+  ✅ What happens:
+  - `student_id` → Primary Key (unique + not null)  
+  - `name` → Cannot be NULL  
+  - `email` → Must be unique  
+  - `age` → Must be ≥ 18  
+  - `grade` → Default value = 'NA' if not given  
+
+  <hr>
+
+  <h3>2. Adding Constraints (ALTER TABLE)</h3>
+  <pre>
+-- Add Primary Key
+ALTER TABLE Students
+ADD CONSTRAINT pk_student PRIMARY KEY (student_id);
+
+-- Add Unique
+ALTER TABLE Students
+ADD CONSTRAINT uq_email UNIQUE (email);
+
+-- Add Check
+ALTER TABLE Students
+ADD CONSTRAINT chk_age CHECK (age >= 18);
+
+-- Add Foreign Key
+ALTER TABLE Students
+ADD CONSTRAINT fk_dept FOREIGN KEY (dept_id)
+REFERENCES Departments(dept_id);
+  </pre>
+
+  <hr>
+
+  <div class="topic">
+  <h2>Updating (Modifying) Constraints</h2>
+
+  <p>
+    In SQL, you <b>cannot directly modify a constraint</b>.  
+    Instead, you must <b>drop</b> the existing constraint and then <b>add a new one</b>.
+  </p>
+
+  <h3>Example: Update a CHECK Constraint</h3>
+  <pre>
+-- Step 1: Drop old constraint
+ALTER TABLE Students 
+DROP CONSTRAINT chk_age;
+
+-- Step 2: Add new constraint
+ALTER TABLE Students 
+ADD CONSTRAINT chk_age CHECK (age >= 16);
+  </pre>
+  ✅ Now the minimum age allowed is 16 instead of 18.
+
+  <hr>
+
+  <h3>Example: Update a DEFAULT Constraint</h3>
+  <pre>
+-- Step 1: Drop old default
+ALTER TABLE Students 
+ALTER COLUMN grade DROP DEFAULT;
+
+-- Step 2: Add new default
+ALTER TABLE Students 
+ALTER COLUMN grade SET DEFAULT 'Pending';
+  </pre>
+  ✅ New default = "Pending" instead of "NA".
+
+  <hr>
+
+  <h3>Example: Update a PRIMARY KEY</h3>
+  <pre>
+-- Drop existing primary key
+ALTER TABLE Students 
+DROP CONSTRAINT pk_student;
+
+-- Add new primary key on (student_id, email)
+ALTER TABLE Students 
+ADD CONSTRAINT pk_student PRIMARY KEY (student_id, email);
+  </pre>
+  ✅ Now the primary key is a composite key.
+
+  <hr>
+
+  <h3>Note</h3>
+  <ul>
+    <li>SQL does not allow <code>ALTER CONSTRAINT</code> directly.</li>
+    <li>Always <b>DROP</b> the old constraint → <b>ADD</b> the updated one.</li>
+    <li>For <b>DEFAULT</b>, some databases (like SQL Server, PostgreSQL) use <code>ALTER COLUMN</code> syntax directly.</li>
+  </ul>
+</div>
+
+<hr>
+
+  <h3>3. Removing Constraints (ALTER TABLE)</h3>
+  <pre>
+-- Drop Primary Key
+ALTER TABLE Students DROP CONSTRAINT pk_student;
+
+-- Drop Unique
+ALTER TABLE Students DROP CONSTRAINT uq_email;
+
+-- Drop Check
+ALTER TABLE Students DROP CONSTRAINT chk_age;
+
+-- Drop Foreign Key
+ALTER TABLE Students DROP CONSTRAINT fk_dept;
+  </pre>
+
+  <hr>
+
+  <h3>4. Inserting Data Example</h3>
+  <pre>
+INSERT INTO Students (student_id, name, email, age) 
+VALUES (1, 'Aathi', 'aathi@mail.com', 20);
+
+INSERT INTO Students (student_id, name, email, age) 
+VALUES (2, 'John', 'john@mail.com', 17); -- ❌ Error (age < 18)
+  </pre>
+
+  ✅ Output:  
+  - First row inserted successfully.  
+  - Second row rejected due to `CHECK (age >= 18)` constraint.  
+
+  <hr>
+
+  <h3>5. FOREIGN KEY Example (Referential Integrity)</h3>
+  <pre>
+CREATE TABLE Departments (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+CREATE TABLE Employees (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Departments(dept_id)
+);
+  </pre>
+
+  <pre>
+-- Insert Department
+INSERT INTO Departments VALUES (1, 'HR');
+
+-- Insert Employee with valid dept_id
+INSERT INTO Employees VALUES (101, 'Ram', 1); -- ✅ Works
+
+-- Insert Employee with invalid dept_id
+INSERT INTO Employees VALUES (102, 'Sam', 5); -- ❌ Error
+  </pre>
+
+  ✅ Referential Integrity → Ensures that the `dept_id` in Employees 
+  must exist in Departments.
+</div>
+
+<hr>
+<div class="topic">
+  <h2>Foreign Key in SQL</h2>
+
+  <p>
+    A <b>Foreign Key</b> is a column (or group of columns) in one table that refers to the <b>Primary Key</b> in another table.  
+    It enforces the <b>Referential Integrity Constraint</b>, ensuring that a record in one table corresponds to a valid record in another.
+  </p>
+
+  <h3>Key Points</h3>
+  <ul>
+    <li>Foreign key creates a <b>relationship</b> between two tables.</li>
+    <li>The referencing table (child) depends on the referenced table (parent).</li>
+    <li>Foreign key values must either <b>match</b> a primary key value in the parent table or be <b>NULL</b>.</li>
+    <li>Helps prevent <b>orphan records</b> (child without parent).</li>
+  </ul>
+
+  <h3>Syntax</h3>
+  <pre>
+-- While creating a table
+CREATE TABLE child_table (
+    column_name datatype,
+    ...
+    FOREIGN KEY (column_name) REFERENCES parent_table(parent_column)
+);
+
+-- Adding foreign key after table creation
+ALTER TABLE child_table
+ADD CONSTRAINT fk_name
+FOREIGN KEY (column_name) REFERENCES parent_table(parent_column);
+  </pre>
+
+  <h3>Example</h3>
+  <pre>
+-- Parent table
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+-- Child table
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+  </pre>
+
+  <h3>Insert Data</h3>
+  <pre>
+-- Insert into parent first
+INSERT INTO Department VALUES (1, 'HR'), (2, 'IT');
+
+-- Valid inserts
+INSERT INTO Employee VALUES (101, 'Alice', 1);
+INSERT INTO Employee VALUES (102, 'Bob', 2);
+
+-- Invalid insert (dept_id 3 doesn't exist)
+INSERT INTO Employee VALUES (103, 'Charlie', 3);
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+Employee Table:
++--------+----------+---------+
+| emp_id | emp_name | dept_id |
++--------+----------+---------+
+|   101  | Alice    |    1    |
+|   102  | Bob      |    2    |
++--------+----------+---------+
+
+(Insert for dept_id=3 fails: Foreign key constraint error)
+  </pre>
+
+  <h3>Referential Integrity</h3>
+  <p>
+    <b>Referential Integrity</b> means that every foreign key value must either:
+    <ul>
+      <li>Match a primary key in the parent table</li>
+      <li>Or be NULL</li>
+    </ul>
+  </p>
+
+  <h3>ON DELETE / ON UPDATE Actions</h3>
+  <p>
+    You can control what happens when parent data is updated or deleted:
+  </p>
+  <pre>
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+  </pre>
+  <ul>
+    <li><b>ON DELETE CASCADE</b>: If a department is deleted, all employees in that department are also deleted.</li>
+    <li><b>ON UPDATE CASCADE</b>: If dept_id in Department changes, it updates automatically in Employee.</li>
+    <li><b>SET NULL</b>: If parent is deleted/updated, child foreign key becomes NULL.</li>
+    <li><b>RESTRICT / NO ACTION</b>: Prevents delete/update if child rows exist.</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Difference Between Primary Key and Foreign Key</h2>
+
+  <h3>Primary Key</h3>
+  <ul>
+    <li>A <b>Primary Key</b> uniquely identifies each record in a table.</li>
+    <li>It does not allow <b>NULL</b> values.</li>
+    <li>A table can have only <b>one primary key</b> (can be composite with multiple columns).</li>
+    <li>Ensures <b>entity integrity</b> of the table.</li>
+  </ul>
+
+  <h3>Foreign Key</h3>
+  <ul>
+    <li>A <b>Foreign Key</b> establishes a link between two tables.</li>
+    <li>It can accept <b>NULL</b> values (unless NOT NULL constraint is specified).</li>
+    <li>A table can have <b>multiple foreign keys</b>.</li>
+    <li>Ensures <b>referential integrity</b> between parent and child tables.</li>
+  </ul>
+
+  <h3>Comparison Table</h3>
+  <table  cellpadding="5" cellspacing="0">
+    <tr>
+      <th>Feature</th>
+      <th>Primary Key</th>
+      <th>Foreign Key</th>
+    </tr>
+    <tr>
+      <td>Purpose</td>
+      <td>Uniquely identifies each record in a table</td>
+      <td>Establishes a relationship between two tables</td>
+    </tr>
+    <tr>
+      <td>NULL values</td>
+      <td>Not allowed</td>
+      <td>Allowed (unless NOT NULL specified)</td>
+    </tr>
+    <tr>
+      <td>Duplicates</td>
+      <td>Not allowed</td>
+      <td>Allowed</td>
+    </tr>
+    <tr>
+      <td>Count in a Table</td>
+      <td>Only one primary key</td>
+      <td>Can have multiple foreign keys</td>
+    </tr>
+    <tr>
+      <td>Integrity</td>
+      <td>Ensures <b>entity integrity</b></td>
+      <td>Ensures <b>referential integrity</b></td>
+    </tr>
+    <tr>
+      <td>Defined On</td>
+      <td>Parent table</td>
+      <td>Child table</td>
+    </tr>
+  </table>
+
+  <h3>Example</h3>
+  <pre>
+-- Parent table
+CREATE TABLE Department (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(50)
+);
+
+-- Child table
+CREATE TABLE Employee (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(50),
+    dept_id INT,
+    FOREIGN KEY (dept_id) REFERENCES Department(dept_id)
+);
+  </pre>
+
+  <h3>Explanation</h3>
+  <ul>
+    <li><b>dept_id</b> in Department → Primary Key (unique, no nulls)</li>
+    <li><b>dept_id</b> in Employee → Foreign Key (refers to Department’s primary key)</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Data Query Language (DQL)</h2>
+  <p>
+    <b>Definition:</b><br>
+    DQL is used to retrieve data from a database. It mainly consists of the 
+    <code>SELECT</code> statement, which allows filtering, sorting, grouping, 
+    and joining of data.
+  </p>
+
+  <h3>SELECT Statement</h3>
+  <p>
+    <b>Syntax:</b>
+  </p>
+  <pre>
+SELECT column1, column2, ...
+FROM table_name
+[WHERE condition]
+[GROUP BY column]
+[HAVING condition]
+[ORDER BY column ASC|DESC];
+  </pre>
+
+  <h3>Concepts inside SELECT</h3>
+  <ul>
+    <li><b>Selection</b> → Choosing rows based on conditions (using <code>WHERE</code>).</li>
+    <li><b>Projection</b> → Choosing specific columns to display.</li>
+    <li><b>Joins</b> → Combining rows from multiple tables.</li>
+  </ul>
+
+  <h3>Example:</h3>
+  <pre>
+-- Table: Students
+student_id | name     | age | city
+-----------------------------------
+1          | Alex     | 20  | London
+2          | Maria    | 22  | Paris
+3          | John     | 21  | London
+
+-- Selection: only rows where city = 'London'
+SELECT * FROM Students WHERE city = 'London';
+
+Output:
+student_id | name  | age | city
+--------------------------------
+1          | Alex  | 20  | London
+3          | John  | 21  | London
+
+-- Projection: only display name and city
+SELECT name, city FROM Students;
+
+Output:
+name   | city
+---------------
+Alex   | London
+Maria  | Paris
+John   | London
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>SQL Joins</h2>
+  <p>
+    <b>Definition:</b><br>
+    A JOIN is used to combine rows from two or more tables based on a related column between them.
+  </p>
+
+  <h3>Sample Tables:</h3>
+  <pre>
+-- Table: Students
+student_id | name    | course_id
+--------------------------------
+1          | Alex    | 101
+2          | Maria   | 102
+3          | John    | 103
+4          | Sophia  | NULL
+
+-- Table: Courses
+course_id | course_name
+------------------------
+101       | Database
+102       | Java
+104       | Python
+  </pre>
+
+  <!-- INNER JOIN -->
+  <h3>1. INNER JOIN</h3>
+  <p>
+    <b>Definition:</b> Returns rows that have matching values in both tables.
+  </p>
+  <pre>
+SELECT Students.name, Courses.course_name
+FROM Students
+INNER JOIN Courses ON Students.course_id = Courses.course_id;
+  </pre>
+  <b>Output:</b>
+  <pre>
+name   | course_name
+---------------------
+Alex   | Database
+Maria  | Java
+  </pre>
+
+  <!-- LEFT JOIN -->
+  <h3>2. LEFT JOIN (LEFT OUTER JOIN)</h3>
+  <p>
+    <b>Definition:</b> Returns all rows from the left table (Students), 
+    and the matched rows from the right table (Courses). 
+    If no match → NULL values.
+  </p>
+  <pre>
+SELECT Students.name, Courses.course_name
+FROM Students
+LEFT JOIN Courses ON Students.course_id = Courses.course_id;
+  </pre>
+  <b>Output:</b>
+  <pre>
+name    | course_name
+----------------------
+Alex    | Database
+Maria   | Java
+John    | NULL
+Sophia  | NULL
+  </pre>
+
+  <!-- RIGHT JOIN -->
+  <h3>3. RIGHT JOIN (RIGHT OUTER JOIN)</h3>
+  <p>
+    <b>Definition:</b> Returns all rows from the right table (Courses),
+    and the matched rows from the left table (Students).
+    If no match → NULL values.
+  </p>
+  <pre>
+SELECT Students.name, Courses.course_name
+FROM Students
+RIGHT JOIN Courses ON Students.course_id = Courses.course_id;
+  </pre>
+  <b>Output:</b>
+  <pre>
+name   | course_name
+---------------------
+Alex   | Database
+Maria  | Java
+NULL   | Python
+  </pre>
+
+  <!-- FULL OUTER JOIN -->
+  <h3>4. FULL OUTER JOIN</h3>
+  <p>
+    <b>Definition:</b> Returns all rows when there is a match in one of the tables.
+    (Not directly supported in MySQL, but we can simulate using UNION of LEFT and RIGHT JOIN.)
+  </p>
+  <pre>
+SELECT Students.name, Courses.course_name
+FROM Students
+LEFT JOIN Courses ON Students.course_id = Courses.course_id
+UNION
+SELECT Students.name, Courses.course_name
+FROM Students
+RIGHT JOIN Courses ON Students.course_id = Courses.course_id;
+  </pre>
+  <b>Output:</b>
+  <pre>
+name    | course_name
+----------------------
+Alex    | Database
+Maria   | Java
+John    | NULL
+Sophia  | NULL
+NULL    | Python
+  </pre>
+
+  <!-- NATURAL JOIN -->
+  <h3>5. NATURAL JOIN</h3>
+  <p>
+    <b>Definition:</b> Automatically joins tables based on columns with the same name.
+  </p>
+  <pre>
+SELECT name, course_id, course_name
+FROM Students
+NATURAL JOIN Courses;
+  </pre>
+  <b>Output:</b>
+  <pre>
+name   | course_id | course_name
+--------------------------------
+Alex   | 101       | Database
+Maria  | 102       | Java
+  </pre>
+
+  <!-- SELF JOIN -->
+  <h3>6. SELF JOIN</h3>
+  <p>
+    <b>Definition:</b> A table is joined with itself.
+    Useful for comparing rows in the same table.
+  </p>
+  <pre>
+-- Example: Find students enrolled in the same course
+SELECT A.name AS Student1, B.name AS Student2, A.course_id
+FROM Students A
+JOIN Students B ON A.course_id = B.course_id
+WHERE A.student_id < B.student_id;
+  </pre>
+  <b>Output:</b>
+  <pre>
+Student1 | Student2 | course_id
+--------------------------------
+Alex     | Maria    | 101
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>SQL Subqueries</h2>
+  <p>
+    <b>Definition:</b><br>
+    A <b>subquery</b> (or inner query) is a query inside another query.
+    It is enclosed in parentheses and can be used in SELECT, WHERE, or FROM clauses.
+  </p>
+
+  <h3>Types of Subqueries:</h3>
+  <ol>
+    <li><b>Single-row Subquery</b> – returns one row</li>
+    <li><b>Multi-row Subquery</b> – returns multiple rows</li>
+    <li><b>Multi-column Subquery</b> – returns multiple columns</li>
+    <li><b>Correlated Subquery</b> – depends on the outer query</li>
+  </ol>
+
+  <h3>Sample Tables:</h3>
+  <pre>
+-- Students
+student_id | name    | course_id | marks
+----------------------------------------
+1          | Alex    | 101       | 85
+2          | Maria   | 102       | 90
+3          | John    | 103       | 70
+4          | Sophia  | NULL      | 60
+
+-- Courses
+course_id | course_name
+------------------------
+101       | Database
+102       | Java
+103       | C++
+104       | Python
+  </pre>
+
+  <!-- Single-row Subquery -->
+  <h3>1. Single-row Subquery</h3>
+  <p>
+    <b>Definition:</b> Returns exactly one row. Often used with =, >, &lt;, etc.
+  </p>
+  <pre>
+-- Find the student who has the highest marks
+SELECT name, marks
+FROM Students
+WHERE marks = (SELECT MAX(marks) FROM Students);
+  </pre>
+  <b>Output:</b>
+  <pre>
+name   | marks
+----------------
+Maria  | 90
+  </pre>
+
+  <!-- Multi-row Subquery -->
+  <h3>2. Multi-row Subquery</h3>
+  <p>
+    <b>Definition:</b> Returns multiple rows. Used with IN, ANY, ALL.
+  </p>
+  <pre>
+-- Find students enrolled in courses 101 and 102
+SELECT name, course_id
+FROM Students
+WHERE course_id IN (SELECT course_id FROM Courses WHERE course_id IN (101, 102));
+  </pre>
+  <b>Output:</b>
+  <pre>
+name   | course_id
+-------------------
+Alex   | 101
+Maria  | 102
+  </pre>
+
+  <!-- Multi-column Subquery -->
+  <h3>3. Multi-column Subquery</h3>
+  <p>
+    <b>Definition:</b> Subquery returns more than one column.
+  </p>
+  <pre>
+-- Find students with the same (course_id, marks) as Alex
+SELECT name, course_id, marks
+FROM Students
+WHERE (course_id, marks) = (SELECT course_id, marks FROM Students WHERE name='Alex');
+  </pre>
+  <b>Output:</b>
+  <pre>
+name   | course_id | marks
+----------------------------
+Alex   | 101       | 85
+  </pre>
+
+  <!-- Correlated Subquery -->
+  <h3>4. Correlated Subquery</h3>
+  <p>
+    <b>Definition:</b> A subquery that depends on values from the outer query.
+    It is executed for each row of the outer query.
+  </p>
+  <pre>
+-- Find students who have marks greater than the average marks of their course
+SELECT name, marks, course_id
+FROM Students S
+WHERE marks > (SELECT AVG(marks) 
+               FROM Students 
+               WHERE course_id = S.course_id);
+  </pre>
+  <b>Output:</b>
+  <pre>
+name   | marks | course_id
+----------------------------
+Alex   | 85    | 101
+Maria  | 90    | 102
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Subquery Operators in SQL</h2>
+
+  <p>
+    Subquery operators are used when comparing a value from the main query with 
+    a set of values returned by a subquery.
+  </p>
+
+  <h3>1. IN</h3>
+  <p>
+    Checks if a value matches <b>any value</b> returned by a subquery.
+  </p>
+  <pre>
+-- Employees working in departments located in 'Chennai'
+SELECT name
+FROM Employees
+WHERE dept_id IN (
+    SELECT dept_id FROM Departments WHERE location = 'Chennai'
+);
+  </pre>
+
+  <h3>2. ANY / SOME</h3>
+  <p>
+    - <b>ANY</b> and <b>SOME</b> are the same.  
+    - They compare a value to <u>each value</u> returned by the subquery 
+      and return TRUE if the condition is satisfied by <b>at least one value</b>.
+  </p>
+  <pre>
+-- Employees earning more than at least one IT employee
+SELECT name, salary
+FROM Employees
+WHERE salary > ANY (
+    SELECT salary FROM Employees WHERE dept = 'IT'
+);
+  </pre>
+
+  <h3>3. ALL</h3>
+  <p>
+    Compares a value with <u>all values</u> from the subquery.  
+    The condition must be true for <b>every value</b> in the subquery.
+  </p>
+  <pre>
+-- Employees earning more than all IT employees
+SELECT name, salary
+FROM Employees
+WHERE salary > ALL (
+    SELECT salary FROM Employees WHERE dept = 'IT'
+);
+  </pre>
+
+  <h3>4. EXISTS</h3>
+  <p>
+    Returns TRUE if the subquery returns <b>at least one row</b>.
+  </p>
+  <pre>
+-- Employees whose department exists in the Departments table
+SELECT name
+FROM Employees E
+WHERE EXISTS (
+    SELECT 1 FROM Departments D WHERE E.dept_id = D.dept_id
+);
+  </pre>
+
+  <h3>5. NOT IN / NOT EXISTS</h3>
+  <p>
+    - <b>NOT IN</b>: TRUE if the value is not in the subquery result.  
+    - <b>NOT EXISTS</b>: TRUE if the subquery returns no rows.
+  </p>
+  <pre>
+-- Employees not working in any department in 'Chennai'
+SELECT name
+FROM Employees
+WHERE dept_id NOT IN (
+    SELECT dept_id FROM Departments WHERE location = 'Chennai'
+);
+
+-- Employees without a matching department
+SELECT name
+FROM Employees E
+WHERE NOT EXISTS (
+    SELECT 1 FROM Departments D WHERE E.dept_id = D.dept_id
+);
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Difference: Subquery vs Correlated Subquery</h2>
+
+  <table  cellpadding="6" cellspacing="0">
+    <tr>
+      <th>Feature</th>
+      <th>Subquery</th>
+      <th>Correlated Subquery</th>
+    </tr>
+
+    <tr>
+      <td><b>Definition</b></td>
+      <td>A query inside another query, executed <b>only once</b>. The result is passed to the outer query.</td>
+      <td>A query inside another query that depends on the outer query. It is executed <b>for every row</b> of the outer query.</td>
+    </tr>
+
+    <tr>
+      <td><b>Execution</b></td>
+      <td>Executed first, then its result is used by the outer query.</td>
+      <td>Executed repeatedly (row by row) because it references columns from the outer query.</td>
+    </tr>
+
+    <tr>
+      <td><b>Dependency</b></td>
+      <td>Independent of the outer query.</td>
+      <td>Dependent on the outer query for values.</td>
+    </tr>
+
+    <tr>
+      <td><b>Performance</b></td>
+      <td>Usually faster since it runs only once.</td>
+      <td>Slower for large datasets since it runs multiple times.</td>
+    </tr>
+
+    <tr>
+      <td><b>Example</b></td>
+      <td>
+        Find students with marks equal to the highest marks:<br>
+        <pre>
+SELECT name, marks
+FROM Students
+WHERE marks = (SELECT MAX(marks) FROM Students);
+        </pre>
+      </td>
+      <td>
+        Find students who scored above the average marks of their course:<br>
+        <pre>
+SELECT name, marks, course_id
+FROM Students S
+WHERE marks > (SELECT AVG(marks) 
+               FROM Students 
+               WHERE course_id = S.course_id);
+        </pre>
+      </td>
+    </tr>
+
+    <tr>
+      <td><b>Output (for example)</b></td>
+      <td>
+        <pre>
+name   | marks
+----------------
+Maria  | 90
+        </pre>
+      </td>
+      <td>
+        <pre>
+name   | marks | course_id
+----------------------------
+Alex   | 85    | 101
+Maria  | 90    | 102
+        </pre>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Aggregate Functions in SQL</h2>
+
+  <p>
+    <b>Definition:</b> Aggregate functions perform calculations on a set of values and return a single value.  
+    They are often used with <code>GROUP BY</code>.
+  </p>
+
+  <h3>1. COUNT()</h3>
+  <p>Counts the number of rows.</p>
+  <pre>
+SELECT COUNT(*) AS total_orders FROM Orders;
+
+-- Output:
+total_orders
+------------
+5
+  </pre>
+
+  <h3>2. SUM()</h3>
+  <p>Returns the total sum of a numeric column.</p>
+  <pre>
+SELECT SUM(amount) AS total_revenue FROM Orders;
+
+-- Output:
+total_revenue
+-------------
+1150
+  </pre>
+
+  <h3>3. AVG()</h3>
+  <p>Returns the average value of a numeric column.</p>
+  <pre>
+SELECT AVG(amount) AS avg_amount FROM Orders;
+
+-- Output:
+avg_amount
+----------
+230.00
+  </pre>
+
+  <h3>4. MAX()</h3>
+  <p>Returns the maximum value.</p>
+  <pre>
+SELECT MAX(amount) AS max_purchase FROM Orders;
+
+-- Output:
+max_purchase
+------------
+400
+  </pre>
+
+  <h3>5. MIN()</h3>
+  <p>Returns the minimum value.</p>
+  <pre>
+SELECT MIN(amount) AS min_purchase FROM Orders;
+
+-- Output:
+min_purchase
+------------
+100
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>ORDER BY in SQL</h2>
+
+  <p>
+    <b>Definition:</b> <code>ORDER BY</code> is used to sort the result set in ascending (ASC) or descending (DESC) order.  
+    By default, it sorts in <b>ascending order</b>.
+  </p>
+
+  <p><b>Syntax:</b></p>
+  <pre>
+SELECT column1, column2
+FROM table_name
+ORDER BY column_name [ASC|DESC];
+  </pre>
+
+  <h3>Example 1: Ascending Order</h3>
+  <pre>
+SELECT * FROM Orders
+ORDER BY amount ASC;
+
+-- Output:
+order_id | customer_id | amount
+--------------------------------
+5        | 102         | 100
+4        | 103         | 150
+1        | 101         | 200
+2        | 102         | 300
+3        | 101         | 400
+  </pre>
+
+  <h3>Example 2: Descending Order</h3>
+  <pre>
+SELECT * FROM Orders
+ORDER BY amount DESC;
+
+-- Output:
+order_id | customer_id | amount
+--------------------------------
+3        | 101         | 400
+2        | 102         | 300
+1        | 101         | 200
+4        | 103         | 150
+5        | 102         | 100
+  </pre>
+
+  <h3>Example 3: Multiple Columns</h3>
+  <pre>
+SELECT * FROM Orders
+ORDER BY customer_id ASC, amount DESC;
+
+-- Output:
+order_id | customer_id | amount
+--------------------------------
+3        | 101         | 400
+1        | 101         | 200
+2        | 102         | 300
+5        | 102         | 100
+4        | 103         | 150
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Set Operations in SQL</h2>
+
+  <p>
+    <b>Definition:</b> Set operations combine the results of two or more SELECT queries into a single result set.  
+    The queries must return the <b>same number of columns</b> and the columns must have <b>compatible data types</b>.
+  </p>
+
+  <h3>Types of Set Operations</h3>
+  <ol>
+    <li>UNION</li>
+    <li>UNION ALL</li>
+    <li>INTERSECT</li>
+    <li>EXCEPT (or MINUS in Oracle)</li>
+  </ol>
+
+  <hr>
+
+  <h3>1. UNION</h3>
+  <p>Combines results from two queries, removing <b>duplicates</b>.</p>
+  <pre>
+SELECT city FROM Customers
+UNION
+SELECT city FROM Suppliers;
+
+-- Output:
+city
+---------
+Chennai
+Delhi
+Mumbai
+Kolkata
+Bangalore
+  </pre>
+
+  <hr>
+
+  <h3>2. UNION ALL</h3>
+  <p>Combines results from two queries, <b>including duplicates</b>.</p>
+  <pre>
+SELECT city FROM Customers
+UNION ALL
+SELECT city FROM Suppliers;
+
+-- Output:
+city
+---------
+Chennai
+Delhi
+Delhi
+Mumbai
+Kolkata
+Bangalore
+  </pre>
+
+  <hr>
+
+  <h3>3. INTERSECT</h3>
+  <p>Returns only the <b>common rows</b> from both queries.</p>
+  <pre>
+SELECT city FROM Customers
+INTERSECT
+SELECT city FROM Suppliers;
+
+-- Output:
+city
+---------
+Delhi
+  </pre>
+
+  <hr>
+
+  <h3>4. EXCEPT / MINUS</h3>
+  <p>Returns rows from the first query that are <b>not present</b> in the second query.</p>
+  <pre>
+SELECT city FROM Customers
+EXCEPT
+SELECT city FROM Suppliers;
+
+-- Output:
+city
+---------
+Chennai
+Mumbai
+Kolkata
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Special Operators in SQL</h2>
+
+  <p>
+    SQL provides some special operators that help in filtering data using conditions.
+    These are commonly used inside the <b>WHERE</b> clause.
+  </p>
+
+  <h3>1. IN Operator</h3>
+  <p>
+    The <b>IN</b> operator is used to check whether a value matches any value in a list.
+  </p>
+  <pre>
+SELECT * FROM Customers
+WHERE city IN ('Delhi', 'Mumbai');
+
+-- Output:
+customer_id | name    | city
+--------------------------------
+1           | Aathi   | Delhi
+2           | Ramesh  | Mumbai
+  </pre>
+
+  <h3>2. NOT IN Operator</h3>
+  <p>
+    The <b>NOT IN</b> operator is used to exclude values from a list.
+  </p>
+  <pre>
+SELECT * FROM Customers
+WHERE city NOT IN ('Delhi', 'Mumbai');
+
+-- Output:
+customer_id | name    | city
+--------------------------------
+3           | Priya   | Chennai
+4           | Suresh  | Kolkata
+  </pre>
+
+  <h3>3. BETWEEN Operator</h3>
+  <p>
+    The <b>BETWEEN</b> operator selects values within a given range (inclusive).
+  </p>
+  <pre>
+SELECT * FROM Orders
+WHERE amount BETWEEN 1000 AND 5000;
+
+-- Output:
+order_id | customer_id | amount
+--------------------------------
+101      | 1           | 1500
+102      | 2           | 3000
+104      | 4           | 5000
+  </pre>
+
+  <h3>4. NOT BETWEEN Operator</h3>
+  <p>
+    The <b>NOT BETWEEN</b> operator selects values <b>outside</b> the range.
+  </p>
+  <pre>
+SELECT * FROM Orders
+WHERE amount NOT BETWEEN 1000 AND 5000;
+
+-- Output:
+order_id | customer_id | amount
+--------------------------------
+103      | 3           | 700
+105      | 5           | 6000
+  </pre>
+
+  <h3>5. LIKE Operator</h3>
+  <p>
+    The <b>LIKE</b> operator is used for pattern matching with wildcards:
+    <ul>
+      <li><b>%</b> → Matches zero or more characters</li>
+      <li><b>_</b> → Matches exactly one character</li>
+    </ul>
+  </p>
+  <pre>
+SELECT * FROM Customers
+WHERE name LIKE 'A%';
+
+-- Output (names starting with A):
+customer_id | name   | city
+--------------------------------
+1           | Aathi  | Delhi
+5           | Anitha | Bangalore
+
+SELECT * FROM Customers
+WHERE name LIKE '_i%';
+
+-- Output (second character is 'i'):
+customer_id | name   | city
+--------------------------------
+3           | Priya  | Chennai
+  </pre>
+
+  <h3>6. IS NULL Operator</h3>
+  <p>
+    The <b>IS NULL</b> operator checks for NULL values (missing/unknown data).
+  </p>
+  <pre>
+SELECT * FROM Customers
+WHERE phone IS NULL;
+
+-- Output:
+customer_id | name   | city    | phone
+--------------------------------
+4           | Suresh | Kolkata | NULL
+  </pre>
+
+  <h3>7. IS NOT NULL Operator</h3>
+  <p>
+    The <b>IS NOT NULL</b> operator checks for non-NULL values.
+  </p>
+  <pre>
+SELECT * FROM Customers
+WHERE phone IS NOT NULL;
+
+-- Output:
+customer_id | name   | city    | phone
+--------------------------------
+1           | Aathi  | Delhi   | 9876543210
+2           | Ramesh | Mumbai  | 8765432109
+3           | Priya  | Chennai | 7654321098
+  </pre>
+</div>
+
+  <h3>8. EXISTS Operator</h3>
+  <p>
+    <b>EXISTS</b> is used to check whether a subquery returns any rows.
+    - Returns TRUE if the subquery has at least one row.  
+    - Usually used with correlated subqueries.
+  </p>
+  <pre>
+-- Example: Find customers who have placed at least one order
+SELECT name
+FROM Customers c
+WHERE EXISTS (
+    SELECT 1 FROM Orders o
+    WHERE o.customer_id = c.customer_id
+);
+
+-- Output:
+name
+---------
+Aathi
+Ramesh
+Priya
+  </pre>
+
+  <h3>9. NOT EXISTS Operator</h3>
+  <p>
+    <b>NOT EXISTS</b> checks if a subquery returns no rows.
+  </p>
+  <pre>
+-- Example: Find customers who have not placed any order
+SELECT name
+FROM Customers c
+WHERE NOT EXISTS (
+    SELECT 1 FROM Orders o
+    WHERE o.customer_id = c.customer_id
+);
+
+-- Output:
+name
+---------
+Suresh
+Anitha
+  </pre>
+
+  <h3>10. SOME (or ANY) Operator</h3>
+  <p>
+    <b>SOME</b> (or its synonym <b>ANY</b>) compares a value with a set of values returned by a subquery.
+    It returns TRUE if the condition matches <u>at least one</u> value in the list.
+  </p>
+  <pre>
+-- Example: Find orders where amount is greater than SOME of the amounts placed by customer_id = 1
+SELECT order_id, amount
+FROM Orders
+WHERE amount > SOME (
+    SELECT amount FROM Orders WHERE customer_id = 1
+);
+
+-- Suppose customer 1 has amounts: 1500, 3000
+-- Then "greater than SOME" means: greater than at least one (1500 or 3000)
+
+-- Output:
+order_id | amount
+-----------------
+104      | 5000
+105      | 6000
+  </pre>
+
+  <h3>10. ALL Operator</h3>
+  <p>
+    <b>ALL</b> compares a value with <u>all values</u> returned by a subquery.
+    It returns TRUE only if the condition is true for every value.
+  </p>
+  <pre>
+-- Example: Find orders where amount is greater than ALL amounts placed by customer_id = 1
+SELECT order_id, amount
+FROM Orders
+WHERE amount > ALL (
+    SELECT amount FROM Orders WHERE customer_id = 1
+);
+
+-- Suppose customer 1 has amounts: 1500, 3000
+-- Then "greater than ALL" means: greater than both 1500 and 3000
+
+-- Output:
+order_id | amount
+-----------------
+104      | 5000
+105      | 6000
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>DISTINCT in SQL</h2>
+
+  <p>
+    <b>DISTINCT</b> is used to remove duplicate rows from the result set.  
+    It ensures that only <u>unique values</u> are returned.
+  </p>
+
+  <h3>1. Syntax</h3>
+  <pre>
+SELECT DISTINCT column1, column2, ...
+FROM table_name;
+  </pre>
+
+  <h3>2. Example: Single Column</h3>
+  <pre>
+-- Table: Customers
+customer_id | name   | city
+-----------------------------
+1           | Aathi  | Chennai
+2           | Ramesh | Mumbai
+3           | Priya  | Chennai
+4           | Suresh | Delhi
+5           | Anitha | Mumbai
+
+-- Query: Get unique cities
+SELECT DISTINCT city
+FROM Customers;
+
+-- Output:
+city
+---------
+Chennai
+Mumbai
+Delhi
+  </pre>
+
+  <h3>3. Example: Multiple Columns</h3>
+  <p>
+    When multiple columns are used, DISTINCT removes rows where <u>all selected column values</u> are the same.
+  </p>
+  <pre>
+-- Query: Get unique combinations of (city, name)
+SELECT DISTINCT city, name
+FROM Customers;
+
+-- Output:
+city     | name
+-----------------
+Chennai  | Aathi
+Mumbai   | Ramesh
+Chennai  | Priya
+Delhi    | Suresh
+Mumbai   | Anitha
+  </pre>
+
+  <h3>4. Example with COUNT()</h3>
+  <p>
+    Often used with <b>COUNT</b> to find number of unique values.
+  </p>
+  <pre>
+-- Query: Count unique cities
+SELECT COUNT(DISTINCT city) AS unique_cities
+FROM Customers;
+
+-- Output:
+unique_cities
+--------------
+3
+  </pre>
+
+  <h3>5. Important Notes</h3>
+  <ul>
+    <li><b>DISTINCT applies to all selected columns</b> (not just one).</li>
+    <li>If you want uniqueness on a single column but still include others, use <code>GROUP BY</code>.</li>
+    <li>DISTINCT may reduce performance on very large datasets because it requires sorting/aggregation.</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Logical Operators in SQL</h2>
+
+  <p>
+    Logical operators are used in the <b>WHERE</b> clause to filter records based on multiple conditions.
+  </p>
+
+  <h3>1. AND Operator</h3>
+  <p>
+    The <b>AND</b> operator returns records if <u>all conditions</u> separated by AND are true.
+  </p>
+  <pre>
+-- Table: Employees
+emp_id | name    | dept    | salary
+------------------------------------
+1      | Aathi   | HR      | 30000
+2      | Ramesh  | IT      | 60000
+3      | Priya   | IT      | 45000
+4      | Suresh  | HR      | 28000
+5      | Anitha  | IT      | 70000
+
+-- Query: Employees in IT dept with salary > 50000
+SELECT * 
+FROM Employees
+WHERE dept = 'IT' AND salary > 50000;
+
+-- Output:
+emp_id | name    | dept | salary
+--------------------------------
+2      | Ramesh  | IT   | 60000
+5      | Anitha  | IT   | 70000
+  </pre>
+
+  <h3>2. OR Operator</h3>
+  <p>
+    The <b>OR</b> operator returns records if <u>at least one condition</u> is true.
+  </p>
+  <pre>
+-- Query: Employees in HR dept OR salary > 60000
+SELECT *
+FROM Employees
+WHERE dept = 'HR' OR salary > 60000;
+
+-- Output:
+emp_id | name    | dept | salary
+--------------------------------
+1      | Aathi   | HR   | 30000
+4      | Suresh  | HR   | 28000
+5      | Anitha  | IT   | 70000
+  </pre>
+
+  <h3>3. NOT Operator</h3>
+  <p>
+    The <b>NOT</b> operator reverses the result of a condition.
+  </p>
+  <pre>
+-- Query: Employees not in HR dept
+SELECT *
+FROM Employees
+WHERE NOT dept = 'HR';
+
+-- Output:
+emp_id | name    | dept | salary
+--------------------------------
+2      | Ramesh  | IT   | 60000
+3      | Priya   | IT   | 45000
+5      | Anitha  | IT   | 70000
+  </pre>
+
+  <h3>4. Combining AND, OR, NOT</h3>
+  <p>
+    Multiple logical operators can be combined. Use parentheses <code>()</code> to control order of evaluation.
+  </p>
+  <pre>
+-- Query: Employees in IT dept with salary > 40000 OR NOT in HR
+SELECT *
+FROM Employees
+WHERE (dept = 'IT' AND salary > 40000) OR NOT dept = 'HR';
+
+-- Output:
+emp_id | name    | dept | salary
+--------------------------------
+2      | Ramesh  | IT   | 60000
+3      | Priya   | IT   | 45000
+5      | Anitha  | IT   | 70000
+  </pre>
+
+  <h3>5. Other Common Operators in SQL</h3>
+  <ul>
+    <li><b>=</b> → equal to</li>
+    <li><b>&lt;&gt;</b> or <b>!=</b> → not equal to</li>
+    <li><b>&gt;</b>, <b>&lt;</b>, <b>&gt;=</b>, <b>&lt;=</b> → comparison operators</li>
+    <li><b>BETWEEN ... AND ...</b> → check if value is within range</li>
+    <li><b>IN (...)</b> → check if value exists in a list</li>
+    <li><b>LIKE</b> → pattern matching (%, _)</li>
+    <li><b>IS NULL / IS NOT NULL</b> → check for NULL values</li>
+    <li><b>EXISTS</b> → check if subquery returns any rows</li>
+    <li><b>SOME / ANY / ALL</b> → compare with a set of values</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>SQL Functions</h2>
+
+  <p>
+    Functions are built-in operations provided by SQL to manipulate data, 
+    perform calculations, or format results.  
+  </p>
+
+  <h3>Types of SQL Functions</h3>
+  <ul>
+    <li><b>1. Single-row (Scalar) Functions</b> → operate on <u>one row at a time</u> and return a single value.</li>
+    <li><b>2. Multi-row (Aggregate) (Group) Functions</b> → operate on <u>multiple rows</u> and return one value for the group.</li>
+  </ul>
+
+  <hr>
+
+  <h3>1. Single-Row (Scalar) Functions</h3>
+  <p>These work on each row individually.</p>
+
+  <h4>a) String Functions</h4>
+  <pre>
+-- Convert to upper/lower
+SELECT UPPER('hello'), LOWER('HELLO');
+
+-- Get substring
+SELECT SUBSTRING('Database', 1, 4);  -- Output: Data
+
+-- String length
+SELECT LENGTH('SQL Tutorial');
+  </pre>
+
+  <h4>b) Numeric Functions</h4>
+  <pre>
+SELECT ABS(-10);     -- 10
+SELECT CEIL(12.3);   -- 13
+SELECT FLOOR(12.9);  -- 12
+SELECT ROUND(123.456, 2);  -- 123.46
+SELECT POWER(2, 3);  -- 8
+  </pre>
+
+  <h4>c) Date/Time Functions</h4>
+  <pre>
+SELECT CURRENT_DATE;        -- Today's date
+SELECT CURRENT_TIME;        -- Current time
+SELECT NOW();               -- Current timestamp
+SELECT EXTRACT(YEAR FROM NOW());  -- Extract year
+  </pre>
+
+  <h4>d) Conversion Functions</h4>
+  <pre>
+SELECT CAST('2025-08-22' AS DATE);
+SELECT CAST(123.45 AS INT);
+  </pre>
+
+  <hr>
+
+  <h3>2. Aggregate Functions</h3>
+  <p>These operate on groups of rows.</p>
+
+  <pre>
+-- Employee table (id, name, salary, dept)
+SELECT COUNT(*) FROM Employees;          -- Total rows
+SELECT MAX(salary) FROM Employees;       -- Highest salary
+SELECT MIN(salary) FROM Employees;       -- Lowest salary
+SELECT SUM(salary) FROM Employees;       -- Total salary
+SELECT AVG(salary) FROM Employees;       -- Average salary
+
+-- Grouping with aggregate
+SELECT dept, AVG(salary)
+FROM Employees
+GROUP BY dept;
+  </pre>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Transaction Control Language (TCL)</h2>
+
+  <p><b>TCL</b> is used to manage transactions in a database.  
+  A <b>transaction</b> is a set of one or more SQL statements executed as a single unit of work.</p>
+
+  <h3>Common TCL Commands</h3>
+  <ul>
+    <li><b>COMMIT</b> – Saves all changes made by the transaction permanently.</li>
+    <li><b>ROLLBACK</b> – Undoes all changes made by the current transaction.</li>
+    <li><b>SAVEPOINT</b> – Creates a point within a transaction to which you can rollback later.</li>
+    <li><b>ROLLBACK TO SAVEPOINT</b> – Undoes part of the transaction, back to the defined savepoint.</li>
+  </ul>
+
+  <h3>1. COMMIT</h3>
+  <pre>
+-- Example: Insert a record and save permanently
+INSERT INTO Employee(emp_id, emp_name, dept_id) VALUES (101, 'John', 1);
+COMMIT;
+  </pre>
+  <p><b>Output:</b> Data is permanently saved in the table.</p>
+
+  <h3>2. ROLLBACK</h3>
+  <pre>
+-- Example: Insert but undo changes
+INSERT INTO Employee(emp_id, emp_name, dept_id) VALUES (102, 'Alice', 2);
+ROLLBACK;
+  </pre>
+  <p><b>Output:</b> The record of Alice will not exist in the table (undone).</p>
+
+  <h3>3. SAVEPOINT</h3>
+  <pre>
+-- Example with SAVEPOINT
+INSERT INTO Employee(emp_id, emp_name, dept_id) VALUES (103, 'David', 1);
+SAVEPOINT sp1;
+
+INSERT INTO Employee(emp_id, emp_name, dept_id) VALUES (104, 'Emma', 2);
+SAVEPOINT sp2;
+
+-- Rollback only to sp1
+ROLLBACK TO sp1;
+COMMIT;
+  </pre>
+  <p><b>Output:</b> Record with <b>emp_id = 103</b> is saved.  
+  Record with <b>emp_id = 104</b> is removed (rolled back).</p>
+
+  <h3>Important Notes</h3>
+  <ul>
+    <li>TCL works only with <b>DML statements</b> (INSERT, UPDATE, DELETE).</li>
+    <li>DDL statements (CREATE, DROP, ALTER) auto-commit, so TCL doesn’t apply to them.</li>
+    <li>Once <b>COMMIT</b> is done, changes cannot be rolled back.</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Data Control Language (DCL)</h2>
+
+  <p><b>DCL</b> is used to control access and permissions to the data stored in the database.  
+  It ensures <b>security</b> and controls who can perform operations on tables, views, procedures, etc.</p>
+
+  <h3>Common DCL Commands</h3>
+  <ul>
+    <li><b>GRANT</b> – Provides a user specific privileges on database objects.</li>
+    <li><b>REVOKE</b> – Removes the privileges granted to a user.</li>
+  </ul>
+
+  <h3>1. GRANT</h3>
+  <p>Syntax:</p>
+  <pre>
+GRANT privilege_name 
+ON object_name 
+TO user_name;
+  </pre>
+
+  <p>Example:</p>
+  <pre>
+-- Grant SELECT and INSERT permission to user 'john'
+GRANT SELECT, INSERT
+ON Employee
+TO john;
+  </pre>
+
+  <p><b>Output:</b> User <b>john</b> can now select and insert rows into the <b>Employee</b> table.</p>
+
+  <h3>2. REVOKE</h3>
+  <p>Syntax:</p>
+  <pre>
+REVOKE privilege_name 
+ON object_name 
+FROM user_name;
+  </pre>
+
+  <p>Example:</p>
+  <pre>
+-- Remove INSERT permission from user 'john'
+REVOKE INSERT
+ON Employee
+FROM john;
+  </pre>
+
+  <p><b>Output:</b> User <b>john</b> cannot insert rows into the <b>Employee</b> table anymore,  
+  but still has <b>SELECT</b> permission (since only INSERT was revoked).</p>
+
+  <h3>Important Notes</h3>
+  <ul>
+    <li>Privileges include: <b>SELECT, INSERT, UPDATE, DELETE, ALL</b>, etc.</li>
+    <li>Only database administrators (DBA) or object owners can grant/revoke privileges.</li>
+    <li>Granting <b>ALL</b> means the user can do anything on that table.</li>
+    <li>DCL ensures <b>data security</b> by restricting unauthorized access.</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Data Control Language (DCL)</h2>
+
+  <p><b>DCL</b> is used to control access and permissions to the data stored in the database.  
+  It ensures <b>security</b> and controls who can perform operations on tables, views, procedures, etc.</p>
+
+  <h3>Common DCL Commands</h3>
+  <ul>
+    <li><b>GRANT</b> – Provides a user specific privileges on database objects.</li>
+    <li><b>REVOKE</b> – Removes the privileges granted to a user.</li>
+  </ul>
+
+  <h3>1. GRANT</h3>
+  <p>Syntax:</p>
+  <pre>
+GRANT privilege_name 
+ON object_name 
+TO user_name;
+  </pre>
+
+  <p>Example:</p>
+  <pre>
+-- Grant SELECT and INSERT permission to user 'john'
+GRANT SELECT, INSERT
+ON Employee
+TO john;
+  </pre>
+
+  <p><b>Output:</b> User <b>john</b> can now select and insert rows into the <b>Employee</b> table.</p>
+
+  <h3>2. REVOKE</h3>
+  <p>Syntax:</p>
+  <pre>
+REVOKE privilege_name 
+ON object_name 
+FROM user_name;
+  </pre>
+
+  <p>Example:</p>
+  <pre>
+-- Remove INSERT permission from user 'john'
+REVOKE INSERT
+ON Employee
+FROM john;
+  </pre>
+
+  <p><b>Output:</b> User <b>john</b> cannot insert rows into the <b>Employee</b> table anymore,  
+  but still has <b>SELECT</b> permission (since only INSERT was revoked).</p>
+
+  <h3>Important Notes</h3>
+  <ul>
+    <li>Privileges include: <b>SELECT, INSERT, UPDATE, DELETE, ALL</b>, etc.</li>
+    <li>Only database administrators (DBA) or object owners can grant/revoke privileges.</li>
+    <li>Granting <b>ALL</b> means the user can do anything on that table.</li>
+    <li>DCL ensures <b>data security</b> by restricting unauthorized access.</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>1. VIEW</h2>
+  <p>A <b>View</b> is a virtual table created using a SQL query. It does not store data itself but displays data from one or more tables.</p>
+
+  <h3>Syntax:</h3>
+  <pre>
+CREATE VIEW view_name AS
+SELECT column1, column2
+FROM table_name
+WHERE condition;
+  </pre>
+
+  <h3>Example:</h3>
+  <pre>
+CREATE VIEW EmployeeView AS
+SELECT emp_id, emp_name, salary
+FROM Employee
+WHERE salary > 40000;
+
+SELECT * FROM EmployeeView;
+  </pre>
+
+  <p><b>Output:</b> Displays employees with salary greater than 40000.</p>
+</div>
+
+---
+
+<div class="topic">
+  <h2>2. SQL Injection</h2>
+  <p><b>SQL Injection</b> is a hacking technique where malicious queries are inserted into input fields to manipulate the database.</p>
+
+  <h3>Example of Attack:</h3>
+  <pre>
+-- User enters:
+' OR 1=1 --
+  
+SELECT * FROM Users WHERE username = '' OR 1=1 -- AND password = '';
+  </pre>
+
+  <p><b>Output:</b> Returns all rows (bypasses authentication).</p>
+
+  <h3>Prevention:</h3>
+  <ul>
+    <li>Use <b>Prepared Statements</b> or <b>Parameterized Queries</b>.</li>
+    <li>Validate and sanitize user input.</li>
+  </ul>
+</div>
+
+---
+
+<div class="topic">
+  <h2>3. INDEX</h2>
+  <p>An <b>Index</b> is a database object that improves the speed of data retrieval (SELECT queries) at the cost of slower INSERT/UPDATE.</p>
+
+  <h3>Syntax:</h3>
+  <pre>
+CREATE INDEX index_name
+ON table_name (column_name);
+  </pre>
+
+  <h3>Example:</h3>
+  <pre>
+CREATE INDEX idx_emp_name
+ON Employee(emp_name);
+  </pre>
+
+  <p><b>Output:</b> Searching employees by <b>emp_name</b> becomes faster.</p>
+</div>
+
+---
+
+<div class="topic">
+  <h2>4. Hosting</h2>
+  <p><b>Database Hosting</b> means storing your database on a remote server (cloud or dedicated server) so that it can be accessed from anywhere.</p>
+
+  <h3>Examples:</h3>
+  <ul>
+    <li>Cloud: AWS RDS, Azure SQL Database, Google Cloud SQL.</li>
+    <li>Shared Hosting: cPanel MySQL.</li>
+    <li>Local Hosting: XAMPP, WAMP.</li>
+  </ul>
+</div>
+
+---
+
+<div class="topic">
+  <h2>5. DEFAULT Constraint</h2>
+  <p>The <b>DEFAULT</b> constraint provides a default value to a column if no value is given during insertion.</p>
+
+  <h3>Syntax:</h3>
+  <pre>
+CREATE TABLE Student (
+   id INT PRIMARY KEY,
+   name VARCHAR(50),
+   city VARCHAR(50) DEFAULT 'Chennai'
+);
+  </pre>
+
+  <h3>Example:</h3>
+  <pre>
+INSERT INTO Student (id, name) VALUES (1, 'Aathi');
+
+SELECT * FROM Student;
+  </pre>
+
+  <p><b>Output:</b><br>
+  1 | Aathi | Chennai</p>
+</div>
+
+---
+
+<div class="topic">
+  <h2>6. AUTO INCREMENT</h2>
+  <p><b>AUTO_INCREMENT</b> automatically generates unique values for a column (mostly used with PRIMARY KEY).</p>
+
+  <h3>Syntax:</h3>
+  <pre>
+CREATE TABLE Orders (
+   order_id INT AUTO_INCREMENT PRIMARY KEY,
+   product_name VARCHAR(50)
+);
+  </pre>
+
+  <h3>Example:</h3>
+  <pre>
+INSERT INTO Orders (product_name) VALUES ('Laptop');
+INSERT INTO Orders (product_name) VALUES ('Mobile');
+
+SELECT * FROM Orders;
+  </pre>
+
+  <p><b>Output:</b><br>
+  1 | Laptop <br>
+  2 | Mobile</p>
+</div>
+
+---
+
+<div class="topic">
+  <h2>7. BACKUP</h2>
+  <p><b>Backup</b> is the process of copying database data to protect against loss.</p>
+
+  <h3>SQL Backup Command:</h3>
+  <pre>
+-- MySQL
+BACKUP DATABASE dbname
+TO DISK = 'D:\backup\dbname.bak';
+  </pre>
+
+  <h3>Restore:</h3>
+  <pre>
+RESTORE DATABASE dbname
+FROM DISK = 'D:\backup\dbname.bak';
+  </pre>
+
+  <h3>Other Backup Methods:</h3>
+  <ul>
+    <li>mysqldump tool (MySQL)</li>
+    <li>pg_dump (PostgreSQL)</li>
+    <li>Export/Import utilities</li>
+    <li>Cloud backups (AWS, Azure, GCP)</li>
+  </ul>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>String Functions in MySQL</h2>
+  <p>String functions are used to manipulate and process string values in SQL queries.</p>
+
+  <!-- CONCAT -->
+  <div class="subtopic">
+    <h3>1. CONCAT()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT CONCAT(string1, string2, ...);</code></pre>
+    <p><b>Explanation:</b> Joins two or more strings into one.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT CONCAT('Hello', ' ', 'World') AS result;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>result
+-------
+Hello World</code></pre>
+  </div>
+
+  <!-- LENGTH -->
+  <div class="subtopic">
+    <h3>2. LENGTH()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT LENGTH(string);</code></pre>
+    <p><b>Explanation:</b> Returns the length of a string in bytes. Use CHAR_LENGTH() for character count.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT LENGTH('MySQL') AS len;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>len
+---
+5</code></pre>
+  </div>
+
+  <!-- CHAR_LENGTH -->
+  <div class="subtopic">
+    <h3>3. CHAR_LENGTH()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT CHAR_LENGTH(string);</code></pre>
+    <p><b>Explanation:</b> Returns the number of characters in a string.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT CHAR_LENGTH('MySQL') AS char_len;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>char_len
+--------
+5</code></pre>
+  </div>
+
+  <!-- UPPER -->
+  <div class="subtopic">
+    <h3>4. UPPER() / UCASE()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT UPPER(string);</code></pre>
+    <p><b>Explanation:</b> Converts string to uppercase.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT UPPER('mysql') AS upper_text;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>upper_text
+----------
+MYSQL</code></pre>
+  </div>
+
+  <!-- LOWER -->
+  <div class="subtopic">
+    <h3>5. LOWER() / LCASE()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT LOWER(string);</code></pre>
+    <p><b>Explanation:</b> Converts string to lowercase.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT LOWER('HELLO') AS lower_text;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>lower_text
+----------
+hello</code></pre>
+  </div>
+
+  <!-- SUBSTRING -->
+  <div class="subtopic">
+    <h3>6. SUBSTRING()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT SUBSTRING(string, start, length);</code></pre>
+    <p><b>Explanation:</b> Extracts part of the string starting at a given position.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT SUBSTRING('Database', 1, 4) AS part;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>part
+----
+Data</code></pre>
+  </div>
+
+  <!-- TRIM -->
+  <div class="subtopic">
+    <h3>7. TRIM()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT TRIM(string);</code></pre>
+    <p><b>Explanation:</b> Removes spaces from both sides of a string.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT TRIM('   Hello   ') AS trimmed;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>trimmed
+-------
+Hello</code></pre>
+  </div>
+
+  <!-- LTRIM & RTRIM -->
+  <div class="subtopic">
+    <h3>8. LTRIM() & RTRIM()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT LTRIM(string), RTRIM(string);</code></pre>
+    <p><b>Explanation:</b> Removes spaces from left or right side of a string.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT LTRIM('   SQL') AS left_trim, RTRIM('SQL   ') AS right_trim;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>left_trim | right_trim
+----------|-----------
+SQL       | SQL</code></pre>
+  </div>
+
+  <!-- REPLACE -->
+  <div class="subtopic">
+    <h3>9. REPLACE()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT REPLACE(string, from_substring, to_substring);</code></pre>
+    <p><b>Explanation:</b> Replaces all occurrences of a substring with another string.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT REPLACE('I like Java', 'Java', 'MySQL') AS replaced_text;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>replaced_text
+-------------
+I like MySQL</code></pre>
+  </div>
+
+  <!-- REVERSE -->
+  <div class="subtopic">
+    <h3>10. REVERSE()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT REVERSE(string);</code></pre>
+    <p><b>Explanation:</b> Reverses a string.</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT REVERSE('SQL') AS reversed;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>reversed
+--------
+LQS</code></pre>
+  </div>
+
+  <!-- LOCATE -->
+  <div class="subtopic">
+    <h3>11. LOCATE() / INSTR()</h3>
+    <p><b>Syntax:</b></p>
+    <pre><code>SELECT LOCATE(substring, string);</code></pre>
+    <p><b>Explanation:</b> Returns the position of the substring inside a string (1-based index).</p>
+    <p><b>Example:</b></p>
+    <pre><code>SELECT LOCATE('a', 'Database') AS pos;</code></pre>
+    <p><b>Output:</b></p>
+    <pre><code>pos
+---
+2</code></pre>
+  </div>
+</div>
+
+<hr>
+
+<section>
+  <h2>ACID Properties in DBMS</h2>
+  <p>
+    In database systems, especially in <b>transactions</b>, the ACID properties ensure data reliability, consistency, and correctness even in case of errors or system failures.
+  </p>
+
+  <h3>1. Atomicity</h3>
+  <p>
+    Ensures that a transaction is treated as a <b>single unit of work</b>.  
+    Either the entire transaction is executed, or none of it is.  
+    <br><b>Example:</b> If you transfer ₹1000 from Account A to Account B, both debit and credit must occur. If one fails, both are rolled back.
+  </p>
+
+  <h3>2. Consistency</h3>
+  <p>
+    Ensures that a transaction <b>brings the database from one valid state to another valid state</b>.  
+    It preserves all integrity constraints.  
+    <br><b>Example:</b> If Account A has ₹5000 and Account B has ₹2000, after transferring ₹1000, total money should remain ₹7000.
+  </p>
+
+  <h3>3. Isolation</h3>
+  <p>
+    Ensures that multiple transactions can occur <b>independently</b> without interference.  
+    The intermediate state of a transaction is not visible to other transactions.  
+    <br><b>Example:</b> If two people transfer money at the same time, their transactions should not affect each other.
+  </p>
+
+  <h3>4. Durability</h3>
+  <p>
+    Ensures that once a transaction is <b>committed</b>, it remains permanent in the database even if a system crash occurs.  
+    <br><b>Example:</b> Once money is transferred successfully, it should not be lost even if the server restarts.
+  </p>
+
+  <h3>Summary</h3>
+  <ul>
+    <li><b>A</b> - Atomicity → All or nothing</li>
+    <li><b>C</b> - Consistency → Preserves data integrity</li>
+    <li><b>I</b> - Isolation → Transactions don’t interfere</li>
+    <li><b>D</b> - Durability → Data is permanent after commit</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>Trigger in DBMS</h2>
+  <p>
+    A <b>Trigger</b> is a special kind of stored procedure in SQL that is <b>automatically executed (fired)</b> when a specific event occurs on a table or view.  
+    Triggers are commonly used to maintain <b>data integrity</b>, enforce business rules, and perform automatic actions like logging or validation.
+  </p>
+
+  <h3>Types of Triggers</h3>
+  <ul>
+    <li><b>BEFORE Trigger</b> → Executes <b>before</b> an insert, update, or delete operation.</li>
+    <li><b>AFTER Trigger</b> → Executes <b>after</b> an insert, update, or delete operation.</li>
+    <li><b>INSTEAD OF Trigger</b> → Used mainly with views, executes <b>instead of</b> the triggering action.</li>
+  </ul>
+
+  <h3>Trigger Syntax</h3>
+  <pre>
+CREATE TRIGGER trigger_name
+BEFORE | AFTER | INSTEAD OF INSERT | UPDATE | DELETE
+ON table_name
+FOR EACH ROW
+BEGIN
+   -- Trigger logic here
+END;
+  </pre>
+
+  <h3>Example 1: BEFORE INSERT Trigger</h3>
+  <p><b>Requirement:</b> Ensure that salary cannot be inserted as less than 5000.</p>
+  <pre>
+CREATE TRIGGER check_salary
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+   IF NEW.salary &lt; 5000 THEN
+      SIGNAL SQLSTATE '45000'
+      SET MESSAGE_TEXT = 'Salary must be at least 5000';
+   END IF;
+END;
+  </pre>
+
+  <h3>Example 2: AFTER INSERT Trigger</h3>
+  <p><b>Requirement:</b> Log every new employee inserted into a log table.</p>
+  <pre>
+CREATE TRIGGER log_employee
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+   INSERT INTO employee_log(emp_id, action, log_time)
+   VALUES (NEW.id, 'Inserted', NOW());
+END;
+  </pre>
+
+  <h3>Example with Output</h3>
+  <p>
+    <b>employees table:</b><br>
+    | id | name    | salary |<br>
+    |----|---------|--------|<br>
+    | 1  | Ram     | 6000   |<br>
+    | 2  | Sita    | 7000   |<br>
+    <br>
+    <b>employee_log table after insert:</b><br>
+    | log_id | emp_id | action    | log_time            |<br>
+    |--------|--------|-----------|---------------------|<br>
+    | 1      | 1      | Inserted  | 2025-08-22 20:15:00 |<br>
+    | 2      | 2      | Inserted  | 2025-08-22 20:16:10 |<br>
+  </p>
+
+  <h3>When to Use Triggers?</h3>
+  <ul>
+    <li>Auditing changes (log table updates)</li>
+    <li>Enforcing complex business rules</li>
+    <li>Validating data before insertion</li>
+    <li>Synchronizing tables automatically</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>Stored Procedures in SQL</h2>
+  <p>
+    A <b>Stored Procedure</b> is a precompiled set of SQL statements that can be saved and reused.  
+    It allows developers to encapsulate business logic, reduce redundancy, and improve performance.  
+  </p>
+
+  <h3>Syntax</h3>
+  <pre>
+CREATE PROCEDURE procedure_name (parameters)
+BEGIN
+   -- SQL statements
+END;
+  </pre>
+
+  <h3>Example: Insert Employee</h3>
+  <pre>
+CREATE PROCEDURE add_employee(IN emp_name VARCHAR(50), IN emp_salary DECIMAL(10,2))
+BEGIN
+   INSERT INTO employees(name, salary) VALUES(emp_name, emp_salary);
+END;
+  </pre>
+
+  <h3>Calling Procedure</h3>
+  <pre>
+CALL add_employee('Ravi', 8000);
+  </pre>
+
+  <h3>Advantages of Stored Procedures</h3>
+  <ul>
+    <li>Code reusability</li>
+    <li>Improved performance (precompiled)</li>
+    <li>Centralized business logic</li>
+    <li>Better security (can restrict direct table access)</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Functions in SQL</h2>
+  <p>
+    A <b>Function</b> is similar to a procedure, but it <b>always returns a single value</b>.  
+    Functions are commonly used for calculations and reusable expressions.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre>
+CREATE FUNCTION function_name (parameters)
+RETURNS datatype
+DETERMINISTIC
+BEGIN
+   -- SQL statements
+   RETURN value;
+END;
+  </pre>
+
+  <h3>Example: Calculate Bonus</h3>
+  <pre>
+CREATE FUNCTION get_bonus(salary DECIMAL(10,2))
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+   DECLARE bonus DECIMAL(10,2);
+   SET bonus = salary * 0.10;
+   RETURN bonus;
+END;
+  </pre>
+
+  <h3>Calling Function</h3>
+  <pre>
+SELECT name, salary, get_bonus(salary) AS bonus
+FROM employees;
+  </pre>
+
+  <h3>Difference: Procedure vs Function</h3>
+  <table  cellpadding="6">
+    <tr>
+      <th>Feature</th>
+      <th>Procedure</th>
+      <th>Function</th>
+    </tr>
+    <tr>
+      <td>Return Type</td>
+      <td>Can return none, one, or multiple values</td>
+      <td>Must return a single value</td>
+    </tr>
+    <tr>
+      <td>Usage</td>
+      <td>Called with <b>CALL</b></td>
+      <td>Called inside <b>SELECT</b></td>
+    </tr>
+    <tr>
+      <td>Purpose</td>
+      <td>Perform actions (insert, update, delete, logic)</td>
+      <td>Perform calculations & return result</td>
+    </tr>
+  </table>
+</section>
+
+<hr>
+
+<section>
+  <h2>Cursors in SQL</h2>
+  <p>
+    A <b>Cursor</b> is a database object used to retrieve, manipulate, and navigate through a set of rows (result set) row by row.  
+    Normally, SQL works with sets of data at once, but when row-by-row processing is required, cursors are useful.
+  </p>
+
+  <h3>Steps to Use a Cursor</h3>
+  <ol>
+    <li><b>Declare</b> the cursor</li>
+    <li><b>Open</b> the cursor</li>
+    <li><b>Fetch</b> rows from the cursor one by one</li>
+    <li><b>Close</b> the cursor</li>
+  </ol>
+
+  <h3>Syntax</h3>
+  <pre>
+DECLARE cursor_name CURSOR FOR 
+    SELECT column_list FROM table_name;
+
+OPEN cursor_name;
+
+FETCH NEXT FROM cursor_name INTO variable_list;
+
+CLOSE cursor_name;
+
+DEALLOCATE cursor_name;
+  </pre>
+
+  <h3>Example</h3>
+  <pre>
+DECLARE @emp_name VARCHAR(50), @emp_salary DECIMAL(10,2);
+
+DECLARE emp_cursor CURSOR FOR
+   SELECT name, salary FROM employees;
+
+OPEN emp_cursor;
+
+FETCH NEXT FROM emp_cursor INTO @emp_name, @emp_salary;
+
+WHILE @@FETCH_STATUS = 0
+BEGIN
+   PRINT 'Employee: ' + @emp_name + ', Salary: ' + CAST(@emp_salary AS VARCHAR);
+   FETCH NEXT FROM emp_cursor INTO @emp_name, @emp_salary;
+END;
+
+CLOSE emp_cursor;
+DEALLOCATE emp_cursor;
+  </pre>
+
+  <h3>When to Use Cursors?</h3>
+  <ul>
+    <li>When row-by-row processing is required</li>
+    <li>For complex operations where set-based queries are not sufficient</li>
+    <li>When updating or processing specific rows sequentially</li>
+  </ul>
+
+  <h3>Disadvantages of Cursors</h3>
+  <ul>
+    <li>Slower than set-based operations</li>
+    <li>Consumes more memory</li>
+    <li>Should be avoided unless absolutely necessary</li>
+  </ul>
+</section>
+
+<hr>
+
+<section id="plsql">
+  <h2>PL/SQL (Procedural Language/SQL)</h2>
+  <p>
+    <b>PL/SQL</b> stands for <b>Procedural Language extensions to SQL</b>.  
+    It is Oracle’s procedural extension of SQL. It allows you to write <b>program blocks</b> with procedural features like loops, conditions, variables, functions, and error handling.
+  </p>
+
+  <h3>Features of PL/SQL</h3>
+  <ul>
+    <li>Combines SQL with procedural constructs.</li>
+    <li>Supports variables, constants, cursors, and exceptions.</li>
+    <li>Improves performance by reducing database calls (block executes as one unit).</li>
+    <li>Supports modularity (procedures, functions, packages).</li>
+    <li>Error handling with <code>EXCEPTION</code> block.</li>
+  </ul>
+
+  <h3>PL/SQL Block Structure</h3>
+  <pre>
+  DECLARE
+      -- Declarations (variables, constants, cursors)
+  BEGIN
+      -- Executable statements (SQL + procedural code)
+  EXCEPTION
+      -- Exception handling (errors)
+  END;
+  </pre>
+
+  <h3>Example 1: Basic PL/SQL Block</h3>
+  <pre>
+  DECLARE
+      v_name VARCHAR2(20) := 'Alice';
+  BEGIN
+      DBMS_OUTPUT.PUT_LINE('Hello, ' || v_name);
+  END;
+  </pre>
+
+  <h4>Output</h4>
+  <pre>
+  Hello, Alice
+  </pre>
+
+  <h3>Variables and Constants</h3>
+  <pre>
+  DECLARE
+      v_id NUMBER := 101;
+      v_salary NUMBER(10,2);
+      c_bonus CONSTANT NUMBER := 500;
+  BEGIN
+      v_salary := 2000 + c_bonus;
+      DBMS_OUTPUT.PUT_LINE('Total Salary: ' || v_salary);
+  END;
+  </pre>
+
+  <h3>Control Structures</h3>
+  <h4>IF Statement</h4>
+  <pre>
+  DECLARE
+      v_marks NUMBER := 75;
+  BEGIN
+      IF v_marks >= 50 THEN
+          DBMS_OUTPUT.PUT_LINE('Pass');
+      ELSE
+          DBMS_OUTPUT.PUT_LINE('Fail');
+      END IF;
+  END;
+  </pre>
+
+  <h4>LOOP Example</h4>
+  <pre>
+  DECLARE
+      v_counter NUMBER := 1;
+  BEGIN
+      LOOP
+          DBMS_OUTPUT.PUT_LINE('Counter = ' || v_counter);
+          v_counter := v_counter + 1;
+          EXIT WHEN v_counter > 5;
+      END LOOP;
+  END;
+  </pre>
+
+  <h3>Cursors</h3>
+  <p>
+    A <b>cursor</b> is a pointer to the result set of a query.  
+    Used for row-by-row processing.
+  </p>
+  <pre>
+  DECLARE
+      CURSOR emp_cursor IS
+          SELECT name, salary FROM Employees;
+      v_name Employees.name%TYPE;
+      v_salary Employees.salary%TYPE;
+  BEGIN
+      OPEN emp_cursor;
+      LOOP
+          FETCH emp_cursor INTO v_name, v_salary;
+          EXIT WHEN emp_cursor%NOTFOUND;
+          DBMS_OUTPUT.PUT_LINE(v_name || ' earns ' || v_salary);
+      END LOOP;
+      CLOSE emp_cursor;
+  END;
+  </pre>
+
+  <h3>Exception Handling</h3>
+  <pre>
+  DECLARE
+      v_num NUMBER := 10;
+      v_den NUMBER := 0;
+      v_result NUMBER;
+  BEGIN
+      v_result := v_num / v_den;
+      DBMS_OUTPUT.PUT_LINE('Result: ' || v_result);
+  EXCEPTION
+      WHEN ZERO_DIVIDE THEN
+          DBMS_OUTPUT.PUT_LINE('Error: Division by zero!');
+      WHEN OTHERS THEN
+          DBMS_OUTPUT.PUT_LINE('Some other error occurred.');
+  END;
+  </pre>
+
+  <h3>Stored Procedure</h3>
+  <pre>
+  CREATE OR REPLACE PROCEDURE greet_user(p_name IN VARCHAR2) IS
+  BEGIN
+      DBMS_OUTPUT.PUT_LINE('Hello, ' || p_name || '!');
+  END;
+  </pre>
+
+  <h3>Stored Function</h3>
+  <pre>
+  CREATE OR REPLACE FUNCTION get_bonus(p_salary NUMBER)
+  RETURN NUMBER IS
+  BEGIN
+      RETURN p_salary * 0.10;
+  END;
+  </pre>
+
+  <h3>Triggers in PL/SQL</h3>
+  <pre>
+  CREATE OR REPLACE TRIGGER trg_before_insert
+  BEFORE INSERT ON Employees
+  FOR EACH ROW
+  BEGIN
+      DBMS_OUTPUT.PUT_LINE('Before inserting employee: ' || :NEW.name);
+  END;
+  </pre>
+
+  <h3>Packages</h3>
+  <p>
+    Packages group related procedures, functions, and variables together.
+  </p>
+  <pre>
+  CREATE OR REPLACE PACKAGE emp_pkg IS
+      PROCEDURE add_employee(p_name VARCHAR2, p_salary NUMBER);
+      FUNCTION get_total_employees RETURN NUMBER;
+  END emp_pkg;
+  </pre>
+</section>
+
+</body>
+</html>
