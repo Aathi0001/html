@@ -2488,6 +2488,312 @@ console.log(newObj.age); // 30
 
 <hr>
 
+<section id="destructuring">
+  <h2>Destructuring in JavaScript</h2>
+  <p>
+    Destructuring allows us to <b>unpack values</b> from arrays or <b>properties</b> from objects 
+    into separate variables in a simple and readable way.
+  </p>
+
+  <h3>1. Array Destructuring</h3>
+  <pre>
+// Example
+let colors = ["red", "green", "blue"];
+let [c1, c2, c3] = colors;
+
+console.log(c1); // red
+console.log(c2); // green
+console.log(c3); // blue
+  </pre>
+
+  <h3>2. Skipping Values</h3>
+  <pre>
+let numbers = [1, 2, 3, 4];
+let [first, , third] = numbers;
+
+console.log(first); // 1
+console.log(third); // 3
+  </pre>
+
+  <h3>3. Using Rest with Destructuring</h3>
+  <pre>
+let fruits = ["apple", "banana", "mango", "orange"];
+let [f1, f2, ...others] = fruits;
+
+console.log(f1);      // apple
+console.log(f2);      // banana
+console.log(others);  // ["mango", "orange"]
+  </pre>
+
+  <h3>4. Default Values</h3>
+  <pre>
+let [a=10, b=20] = [5];
+console.log(a); // 5
+console.log(b); // 20
+  </pre>
+
+  <h3>5. Object Destructuring</h3>
+  <pre>
+let person = { name: "Aathi", age: 22 };
+let {name, age} = person;
+
+console.log(name); // Aathi
+console.log(age);  // 22
+  </pre>
+
+  <h3>6. Renaming Variables</h3>
+  <pre>
+let user = { username: "Admin", role: "Manager" };
+let {username: u, role: r} = user;
+
+console.log(u); // Admin
+console.log(r); // Manager
+  </pre>
+
+  <h3>7. Nested Destructuring</h3>
+  <pre>
+let employee = {
+  id: 101,
+  details: { dept: "IT", salary: 50000 }
+};
+
+let { details: { dept, salary } } = employee;
+console.log(dept);   // IT
+console.log(salary); // 50000
+  </pre>
+</section>
+
+<hr>
+
+<section id="array-destructuring">
+  <h2>Array Destructuring in JavaScript</h2>
+  <p>
+    <b>Definition:</b>  
+    Array Destructuring is the process of <b>extracting data from an array</b>.  
+    To destructure, we use an <b>array pattern (square brackets)</b> on the <b>left-hand side</b> of the assignment,  
+    and the <b>actual array</b> on the <b>right-hand side</b>.  
+    Array Destructuring follows the <b>index order</b>, and we can assign values to any variable name.
+  </p>
+
+  <h3>1. Basic Example</h3>
+  <pre>
+let arr = [10, 20, 30];
+let [a, b, c] = arr;
+
+console.log(a); // 10
+console.log(b); // 20
+console.log(c); // 30
+  </pre>
+
+  <h3>2. Skipping Values</h3>
+  <pre>
+let arr = [10, 20, 30, 40];
+let [x, , y] = arr;  // skipping 20
+
+console.log(x); // 10
+console.log(y); // 30
+  </pre>
+
+  <h3>3. Default Values</h3>
+  <pre>
+let arr = [10];
+let [p = 1, q = 2] = arr;
+
+console.log(p); // 10
+console.log(q); // 2
+  </pre>
+
+  <h3>4. Nested Array Destructuring</h3>
+  <pre>
+let arr = [10, 20, 30, [40, 50, [60, 70, [80]]]];
+
+let [a, b, c, [d, e, [f, g, [h]]]] = arr;
+
+console.log(a); // 10
+console.log(b); // 20
+console.log(c); // 30
+console.log(d); // 40
+console.log(e); // 50
+console.log(f); // 60
+console.log(g); // 70
+console.log(h); // 80
+  </pre>
+
+  <h3>5. Skipping Values in Nested Array</h3>
+  <pre>
+let arr = [10, 20, 30, [40, 50, [60, 70, [80]]]];
+
+// skip 50, skip 70
+let [a, , , [d, , [f, , [h]]]] = arr;
+
+console.log(a); // 10
+console.log(d); // 40
+console.log(f); // 60
+console.log(h); // 80
+  </pre>
+</section>
+
+<hr>
+
+<section id="object-destructuring">
+  <h2>Object Destructuring in JavaScript</h2>
+  <p>
+    <b>Definition:</b>  
+    Object Destructuring is the process of <b>extracting properties from an object</b> and storing them in variables.  
+    To destructure, we use an <b>object pattern (curly braces)</b> on the <b>left-hand side</b> of the assignment,  
+    and the <b>object</b> on the <b>right-hand side</b>.  
+    Unlike arrays (which follow index order), <b>object destructuring uses property names</b>.
+  </p>
+
+  <h3>1. Basic Example</h3>
+  <pre>
+let person = { name: "John", age: 25, city: "New York" };
+
+let { name, age, city } = person;
+
+console.log(name); // John
+console.log(age);  // 25
+console.log(city); // New York
+  </pre>
+
+  <h3>2. Different Variable Names</h3>
+  <pre>
+let person = { name: "Alice", age: 22 };
+
+let { name: fullName, age: years } = person;
+
+console.log(fullName); // Alice
+console.log(years);    // 22
+  </pre>
+
+  <h3>3. Default Values</h3>
+  <pre>
+let person = { name: "Bob" };
+
+let { name, age = 30 } = person;
+
+console.log(name); // Bob
+console.log(age);  // 30 (default used)
+  </pre>
+
+  <h3>4. Nested Object Destructuring</h3>
+  <pre>
+let student = {
+  id: 101,
+  details: {
+    name: "Sam",
+    marks: {
+      math: 90,
+      science: 85
+    }
+  }
+};
+
+let { details: { name, marks: { math, science } } } = student;
+
+console.log(name);    // Sam
+console.log(math);    // 90
+console.log(science); // 85
+  </pre>
+
+  <h3>5. Skipping / Ignoring Properties</h3>
+  <pre>
+let car = { brand: "BMW", model: "X5", color: "Black" };
+
+// extract only brand, ignore others
+let { brand } = car;
+
+console.log(brand); // BMW
+  </pre>
+</section>
+
+<hr>
+
+<section id="spread-operator">
+  <h2>Spread Operator (...) in JavaScript</h2>
+  <p>
+    The <b>spread operator</b> (<code>...</code>) is used to <b>expand</b> arrays, objects, or strings 
+    into individual elements. It helps in copying, merging, and passing elements easily.
+  </p>
+
+  <h3>1. Copying Arrays</h3>
+  <pre>
+let arr1 = [1, 2, 3];
+let arr2 = [...arr1];
+
+console.log(arr2); // [1, 2, 3]
+  </pre>
+
+  <h3>2. Merging Arrays</h3>
+  <pre>
+let arr1 = [1, 2];
+let arr2 = [3, 4];
+let merged = [...arr1, ...arr2];
+
+console.log(merged); // [1, 2, 3, 4]
+  </pre>
+
+  <h3>3. Passing Elements to Functions</h3>
+  <pre>
+function add(a, b, c) {
+  return a + b + c;
+}
+let nums = [10, 20, 30];
+console.log(add(...nums)); // 60
+  </pre>
+
+  <h3>4. Copying Objects</h3>
+  <pre>
+let obj1 = { name: "Aathi", age: 22 };
+let obj2 = { ...obj1 };
+
+console.log(obj2); // { name: "Aathi", age: 22 }
+  </pre>
+
+  <h3>5. Merging Objects</h3>
+  <pre>
+let obj1 = { a: 1, b: 2 };
+let obj2 = { b: 3, c: 4 };
+let merged = { ...obj1, ...obj2 };
+
+console.log(merged); // { a: 1, b: 3, c: 4 }
+  </pre>
+</section>
+
+<section id="rest-operator">
+  <h2>Rest Operator (...) in JavaScript</h2>
+  <p>
+    The <b>rest operator</b> (<code>...</code>) collects multiple elements into a single array or object. 
+    It is mainly used in <b>function parameters</b> and <b>destructuring</b>.
+  </p>
+
+  <h3>1. Collecting Function Arguments</h3>
+  <pre>
+function sum(...numbers) {
+  return numbers.reduce((total, n) => total + n, 0);
+}
+console.log(sum(10, 20, 30)); // 60
+  </pre>
+
+  <h3>2. Array Destructuring with Rest</h3>
+  <pre>
+let [first, ...others] = [1, 2, 3, 4];
+console.log(first);  // 1
+console.log(others); // [2, 3, 4]
+  </pre>
+
+  <h3>3. Object Destructuring with Rest</h3>
+  <pre>
+let person = { name: "Aathi", age: 22, city: "Chennai" };
+let { name, ...rest } = person;
+
+console.log(name); // Aathi
+console.log(rest); // { age: 22, city: "Chennai" }
+  </pre>
+</section>
+
+<hr>
+
 <section id="window-bom">
     <h2>Window & Browser Object Model (BOM)</h2>
 
