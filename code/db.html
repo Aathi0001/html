@@ -1328,6 +1328,89 @@ ALTER TABLE employees RENAME COLUMN name TO full_name;
 
 <hr>
 
+<!-- ======================= -->
+<!-- DML -->
+<!-- ======================= -->
+<div class="topic">
+  <h2>DML in MySQL</h2>
+  <p>DML (Data Manipulation Language) is used to manage data inside tables. 
+  <b>Important:</b> Unlike DDL, DML changes <i>can be rolled back</i> if executed inside a transaction.</p>
+</div>
+
+<!-- 1) INSERT -->
+<div class="topic">
+  <h3>1) INSERT</h3>
+  <p><b>Purpose:</b> Add new rows into a table.</p>
+  <pre>
+-- Insert single row
+INSERT INTO employees (name, email, salary, hire_date, dept_id)
+VALUES ('Alice', 'alice@example.com', 50000, '2025-01-15', 1);
+
+-- Insert multiple rows
+INSERT INTO employees (name, email, salary, hire_date, dept_id)
+VALUES 
+  ('Bob', 'bob@example.com', 60000, '2025-01-20', 1),
+  ('Charlie', 'charlie@example.com', 55000, '2025-02-01', 2);
+
+-- Insert from another table
+INSERT INTO employees_backup (name, email, salary)
+SELECT name, email, salary FROM employees WHERE dept_id = 1;
+  </pre>
+</div>
+
+<!-- 2) UPDATE -->
+<div class="topic">
+  <h3>2) UPDATE</h3>
+  <p><b>Purpose:</b> Modify existing rows in a table.</p>
+  <pre>
+-- Increase salary for dept 1 employees
+UPDATE employees
+SET salary = salary + 5000
+WHERE dept_id = 1;
+
+-- Update multiple columns
+UPDATE employees
+SET salary = 65000, hire_date = '2025-03-01'
+WHERE name = 'Charlie';
+  </pre>
+  <p><b>Note:</b> Always include a <code>WHERE</code> clause to avoid updating all rows accidentally.</p>
+</div>
+
+<!-- 3) DELETE -->
+<div class="topic">
+  <h3>3) DELETE</h3>
+  <p><b>Purpose:</b> Remove rows from a table.</p>
+  <pre>
+-- Delete one employee
+DELETE FROM employees WHERE name = 'Charlie';
+
+-- Delete by condition
+DELETE FROM employees WHERE salary < 40000;
+
+-- Delete all rows (rollback possible)
+DELETE FROM employees;
+  </pre>
+  <p><b>Tip:</b> Use <code>TRUNCATE</code> if you want faster full-table deletion (DDL, cannot rollback).</p>
+</div>
+
+<!-- Mini Walkthrough -->
+<div class="topic">
+  <h3>Mini Walkthrough</h3>
+  <pre>
+-- Add data
+INSERT INTO employees (name, email, salary, hire_date, dept_id)
+VALUES ('David', 'david@example.com', 70000, '2025-02-10', 2);
+
+-- Update
+UPDATE employees SET salary = salary + 2000 WHERE name = 'David';
+
+-- Delete
+DELETE FROM employees WHERE name = 'David';
+  </pre>
+</div>
+
+<hr>
+
 <div class="topic">
   <h2>DML - Data Manipulation Language</h2>
   <p>
@@ -1425,6 +1508,132 @@ ALTER TABLE employees RENAME COLUMN name TO full_name;
     <li><b>DELETE</b> → removes rows (can be rolled back if inside transaction).</li>
     <li><b>TRUNCATE</b> → removes all rows (cannot be rolled back).</li>
   </ul>
+</div>
+
+<hr>
+
+<!-- ======================= -->
+<!-- DQL -->
+<!-- ======================= -->
+<div class="topic">
+  <h2>DQL in MySQL</h2>
+  <p>DQL (Data Query Language) is mainly about fetching and viewing data from the database. 
+  In MySQL, the primary command is <code>SELECT</code>.</p>
+</div>
+
+<!-- 1) Basic SELECT -->
+<div class="topic">
+  <h3>1) Basic SELECT</h3>
+  <pre>
+-- Select all columns
+SELECT * FROM employees;
+
+-- Select specific columns
+SELECT name, salary FROM employees;
+
+-- Rename columns with alias
+SELECT name AS employee_name, salary AS monthly_salary FROM employees;
+  </pre>
+</div>
+
+<!-- 2) WHERE Clause -->
+<div class="topic">
+  <h3>2) Filtering with WHERE</h3>
+  <pre>
+-- Employees with salary greater than 50000
+SELECT * FROM employees WHERE salary > 50000;
+
+-- Multiple conditions
+SELECT * FROM employees 
+WHERE dept_id = 1 AND salary > 60000;
+  </pre>
+</div>
+
+<!-- 3) ORDER BY -->
+<div class="topic">
+  <h3>3) Sorting Results</h3>
+  <pre>
+-- Sort employees by salary ascending
+SELECT name, salary FROM employees ORDER BY salary ASC;
+
+-- Sort by salary descending
+SELECT name, salary FROM employees ORDER BY salary DESC;
+  </pre>
+</div>
+
+<!-- 4) LIMIT -->
+<div class="topic">
+  <h3>4) LIMIT Results</h3>
+  <pre>
+-- First 5 employees
+SELECT * FROM employees LIMIT 5;
+
+-- Skip 3 rows and fetch next 5
+SELECT * FROM employees LIMIT 3, 5;
+  </pre>
+</div>
+
+<!-- 5) Aggregate Functions -->
+<div class="topic">
+  <h3>5) Aggregate Functions</h3>
+  <pre>
+-- Count employees
+SELECT COUNT(*) FROM employees;
+
+-- Average salary
+SELECT AVG(salary) FROM employees;
+
+-- Maximum and Minimum salary
+SELECT MAX(salary), MIN(salary) FROM employees;
+  </pre>
+</div>
+
+<!-- 6) GROUP BY -->
+<div class="topic">
+  <h3>6) Grouping Results</h3>
+  <pre>
+-- Total employees per department
+SELECT dept_id, COUNT(*) 
+FROM employees 
+GROUP BY dept_id;
+
+-- Average salary per department
+SELECT dept_id, AVG(salary) 
+FROM employees 
+GROUP BY dept_id;
+  </pre>
+</div>
+
+<!-- 7) HAVING -->
+<div class="topic">
+  <h3>7) HAVING (filter groups)</h3>
+  <pre>
+-- Departments with average salary > 60000
+SELECT dept_id, AVG(salary) 
+FROM employees 
+GROUP BY dept_id 
+HAVING AVG(salary) > 60000;
+  </pre>
+</div>
+
+<!-- 8) DISTINCT -->
+<div class="topic">
+  <h3>8) DISTINCT</h3>
+  <pre>
+-- Get unique department IDs
+SELECT DISTINCT dept_id FROM employees;
+  </pre>
+</div>
+
+<!-- 9) Joins (Intro) -->
+<div class="topic">
+  <h3>9) Joins (Intro)</h3>
+  <pre>
+-- Employees with their department name
+SELECT e.name, e.salary, d.dept_name
+FROM employees e
+JOIN departments d ON e.dept_id = d.dept_id;
+  </pre>
 </div>
 
 <hr>
@@ -3391,6 +3600,90 @@ GROUP BY dept;
 
 <hr>
 
+<!-- ======================= -->
+<!-- TCL -->
+<!-- ======================= -->
+<div class="topic">
+  <h2>TCL in MySQL</h2>
+  <p>
+    TCL (Transaction Control Language) commands are used to manage transactions in a database.  
+    Transactions allow multiple operations to be executed as a single unit of work.  
+    They ensure <b>ACID properties</b> (Atomicity, Consistency, Isolation, Durability).
+  </p>
+</div>
+
+<!-- 1) START TRANSACTION -->
+<div class="topic">
+  <h3>1) START TRANSACTION</h3>
+  <pre>
+-- Begin a transaction
+START TRANSACTION;
+
+-- Example
+START TRANSACTION;
+UPDATE accounts SET balance = balance - 500 WHERE acc_id = 101;
+UPDATE accounts SET balance = balance + 500 WHERE acc_id = 102;
+  </pre>
+</div>
+
+<!-- 2) COMMIT -->
+<div class="topic">
+  <h3>2) COMMIT</h3>
+  <p>Commits (saves) all changes made during the current transaction permanently to the database.</p>
+  <pre>
+COMMIT;
+  </pre>
+</div>
+
+<!-- 3) ROLLBACK -->
+<div class="topic">
+  <h3>3) ROLLBACK</h3>
+  <p>Undo all changes made in the current transaction (before commit).</p>
+  <pre>
+ROLLBACK;
+  </pre>
+</div>
+
+<!-- 4) SAVEPOINT -->
+<div class="topic">
+  <h3>4) SAVEPOINT</h3>
+  <p>Create a point inside a transaction to which you can roll back.</p>
+  <pre>
+START TRANSACTION;
+
+UPDATE accounts SET balance = balance - 100 WHERE acc_id = 101;
+SAVEPOINT sp1;
+
+UPDATE accounts SET balance = balance + 200 WHERE acc_id = 102;
+ROLLBACK TO sp1; -- Undo only changes after sp1
+  </pre>
+</div>
+
+<!-- 5) RELEASE SAVEPOINT -->
+<div class="topic">
+  <h3>5) RELEASE SAVEPOINT</h3>
+  <p>Delete a named savepoint, so it can’t be used for rollback.</p>
+  <pre>
+RELEASE SAVEPOINT sp1;
+  </pre>
+</div>
+
+<!-- 6) AUTOCOMMIT -->
+<div class="topic">
+  <h3>6) AUTOCOMMIT</h3>
+  <p>By default MySQL runs in AUTOCOMMIT mode (each query is committed automatically).  
+     You can disable it and manage transactions manually.</p>
+  <pre>
+-- Disable autocommit
+SET AUTOCOMMIT = 0;
+
+-- Enable autocommit again
+SET AUTOCOMMIT = 1;
+  </pre>
+</div>
+
+<hr>
+
 <div class="topic">
   <h2>Transaction Control Language (TCL)</h2>
 
@@ -3442,6 +3735,65 @@ COMMIT;
     <li>TCL works only with <b>DML statements</b> (INSERT, UPDATE, DELETE).</li>
     <li>DDL statements (CREATE, DROP, ALTER) auto-commit, so TCL doesn’t apply to them.</li>
     <li>Once <b>COMMIT</b> is done, changes cannot be rolled back.</li>
+  </ul>
+</div>
+
+<hr>
+
+<!-- ======================= -->
+<!-- DCL -->
+<!-- ======================= -->
+<div class="topic">
+  <h2>DCL in MySQL</h2>
+  <p>
+    DCL (Data Control Language) commands are used to control access and permissions in a database.  
+    They help in managing <b>authorization</b> and <b>security</b>.
+  </p>
+</div>
+
+<!-- 1) GRANT -->
+<div class="topic">
+  <h3>1) GRANT</h3>
+  <p>Used to provide specific privileges (permissions) to a user.</p>
+  <pre>
+-- Syntax
+GRANT privilege_list ON database.table TO 'username'@'host';
+
+-- Example: Give SELECT and INSERT permission on "student" table to user 'john'
+GRANT SELECT, INSERT ON mydb.student TO 'john'@'localhost';
+  </pre>
+</div>
+
+<!-- 2) REVOKE -->
+<div class="topic">
+  <h3>2) REVOKE</h3>
+  <p>Used to remove (take back) privileges from a user.</p>
+  <pre>
+-- Syntax
+REVOKE privilege_list ON database.table FROM 'username'@'host';
+
+-- Example: Remove INSERT permission from 'john'
+REVOKE INSERT ON mydb.student FROM 'john'@'localhost';
+  </pre>
+</div>
+
+<!-- 3) SHOW GRANTS -->
+<div class="topic">
+  <h3>3) SHOW GRANTS</h3>
+  <p>Used to display the privileges granted to a user.</p>
+  <pre>
+-- Example: Show grants for user 'john'
+SHOW GRANTS FOR 'john'@'localhost';
+  </pre>
+</div>
+
+<!-- Notes -->
+<div class="topic">
+  <h3>🔹 Notes</h3>
+  <ul>
+    <li>Privileges can be given at <b>global</b>, <b>database</b>, <b>table</b>, or <b>column</b> level.</li>
+    <li>Common privileges: <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>, <code>ALL PRIVILEGES</code>.</li>
+    <li>Only users with <b>ADMIN</b> or <b>SUPER</b> privilege can grant/revoke permissions.</li>
   </ul>
 </div>
 
