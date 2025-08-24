@@ -2031,6 +2031,264 @@ LIMIT
 
 <hr>
 
+<!-- ======================= -->
+<!-- CROSS JOIN -->
+<!-- ======================= -->
+<div class="topic">
+  <h2>CROSS JOIN in MySQL</h2>
+  <p>
+    <b>CROSS JOIN</b> returns the <i>Cartesian product</i> of two tables — every row from the first table is combined with every row from the second table.
+    No <code>ON</code> condition is used.
+  </p>
+</div>
+
+<!-- Syntax -->
+<div class="topic">
+  <h3>Syntax</h3>
+  <pre>
+SELECT d.dept_name, e.name
+FROM departments d CROSS JOIN employees e;
+-- Equivalent:
+-- SELECT d.dept_name, e.name FROM departments d, employees e;
+  </pre>
+</div>
+
+<!-- Example Data -->
+<div class="topic">
+  <h3>Example Data</h3>
+  <pre>
+-- departments
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+| 10      | HR        |
+| 20      | IT        |
++---------+-----------+
+
+-- employees
++----+-------+---------+
+| id | name  | dept_id |
++----+-------+---------+
+| 1  | Alice | 10      |
+| 2  | Bob   | 20      |
+| 3  | Carol | NULL    |
++----+-------+---------+
+  </pre>
+</div>
+
+<!-- Result -->
+<div class="topic">
+  <h3>Result (Cartesian Product)</h3>
+  <pre>
+SELECT d.dept_name, e.name
+FROM departments d CROSS JOIN employees e;
+
+-- Output (2 departments × 3 employees = 6 rows)
++-----------+-------+
+| dept_name | name  |
++-----------+-------+
+| HR        | Alice |
+| HR        | Bob   |
+| HR        | Carol |
+| IT        | Alice |
+| IT        | Bob   |
+| IT        | Carol |
++-----------+-------+
+  </pre>
+</div>
+
+<!-- Notes -->
+<div class="topic">
+  <h3>Notes & Tips</h3>
+  <ul>
+    <li>Row count = <b>M × N</b> (M rows in first table, N rows in second table).</li>
+    <li>Use <code>CROSS JOIN</code> carefully on large tables — results can explode in size.</li>
+    <li>If you want only matching pairs (e.g., employee ↔ their department), use an <b>INNER JOIN</b> with an <code>ON</code> condition.</li>
+  </ul>
+</div>
+
+<!-- Comparison -->
+<div class="topic">
+  <h3>Compare with INNER JOIN</h3>
+  <pre>
+-- Meaningful pairs (only matching dept_id)
+SELECT d.dept_name, e.name
+FROM departments d
+INNER JOIN employees e ON d.dept_id = e.dept_id;
+  </pre>
+</div>
+
+<hr>
+
+<!-- ======================= -->
+<!-- FULL OUTER JOIN -->
+<!-- ======================= -->
+<div class="topic">
+  <h2>FULL OUTER JOIN in MySQL</h2>
+  <p>
+    MySQL does not directly support <b>FULL OUTER JOIN</b>.  
+    Instead, you simulate it by combining a <code>LEFT JOIN</code> and a <code>RIGHT JOIN</code> using <code>UNION</code>.
+  </p>
+</div>
+
+<!-- Syntax -->
+<div class="topic">
+  <h3>Syntax (MySQL Simulation)</h3>
+  <pre>
+SELECT e.name, d.dept_name
+FROM employees e LEFT JOIN departments d ON e.dept_id = d.dept_id
+UNION
+SELECT e.name, d.dept_name
+FROM employees e RIGHT JOIN departments d ON e.dept_id = d.dept_id;
+  </pre>
+</div>
+
+<!-- Example Data -->
+<div class="topic">
+  <h3>Example Data</h3>
+  <pre>
+-- departments
++---------+-----------+
+| dept_id | dept_name |
++---------+-----------+
+| 10      | HR        |
+| 20      | IT        |
+| 30      | Sales     |
++---------+-----------+
+
+-- employees
++----+-------+---------+
+| id | name  | dept_id |
++----+-------+---------+
+| 1  | Alice | 10      |
+| 2  | Bob   | 20      |
+| 3  | Carol | NULL    |
++----+-------+---------+
+  </pre>
+</div>
+
+<!-- Result -->
+<div class="topic">
+  <h3>Result (Full Outer Join)</h3>
+  <pre>
++-------+-----------+
+| name  | dept_name |
++-------+-----------+
+| Alice | HR        |
+| Bob   | IT        |
+| Carol | NULL      |  -- Employee without department
+| NULL  | Sales     |  -- Department without employee
++-------+-----------+
+  </pre>
+</div>
+
+<!-- Notes -->
+<div class="topic">
+  <h3>Notes & Tips</h3>
+  <ul>
+    <li><b>LEFT JOIN</b> → keeps all employees, even if no department.</li>
+    <li><b>RIGHT JOIN</b> → keeps all departments, even if no employees.</li>
+    <li><b>UNION</b> → merges both sets, producing a <b>FULL OUTER JOIN</b>.</li>
+  </ul>
+</div>
+
+<!-- Comparison -->
+<div class="topic">
+  <h3>Compare with Other Joins</h3>
+  <pre>
+-- INNER JOIN (only matching)
+SELECT e.name, d.dept_name
+FROM employees e
+INNER JOIN departments d ON e.dept_id = d.dept_id;
+
+-- LEFT JOIN (all employees)
+SELECT e.name, d.dept_name
+FROM employees e
+LEFT JOIN departments d ON e.dept_id = d.dept_id;
+
+-- RIGHT JOIN (all departments)
+SELECT e.name, d.dept_name
+FROM employees e
+RIGHT JOIN departments d ON e.dept_id = d.dept_id;
+  </pre>
+</div>
+
+<hr>
+
+<!-- ======================= -->
+<!-- NATURAL JOIN -->
+<!-- ======================= -->
+<div class="topic">
+  <h2>NATURAL JOIN in MySQL</h2>
+  <p>
+    A <b>NATURAL JOIN</b> automatically joins two tables based on all columns 
+    with the same name and compatible data types.  
+    In this example, both <code>employees</code> and <code>departments</code> share <code>dept_id</code>, 
+    so the join happens implicitly on that column.
+  </p>
+</div>
+
+<!-- Syntax -->
+<div class="topic">
+  <h3>Syntax</h3>
+  <pre>
+SELECT e.name, d.location
+FROM employees e NATURAL JOIN departments d;
+  </pre>
+</div>
+
+<!-- Example Data -->
+<div class="topic">
+  <h3>Example Data</h3>
+  <pre>
+-- employees
++----+-------+---------+
+| id | name  | dept_id |
++----+-------+---------+
+| 1  | Alice | 10      |
+| 2  | Bob   | 20      |
+| 3  | Carol | 30      |
++----+-------+---------+
+
+-- departments
++---------+-----------+-----------+
+| dept_id | dept_name | location  |
++---------+-----------+-----------+
+| 10      | HR        | New York  |
+| 20      | IT        | London    |
+| 30      | Sales     | Sydney    |
++---------+-----------+-----------+
+  </pre>
+</div>
+
+<!-- Result -->
+<div class="topic">
+  <h3>Result (Natural Join)</h3>
+  <pre>
++-------+-----------+
+| name  | location  |
++-------+-----------+
+| Alice | New York  |
+| Bob   | London    |
+| Carol | Sydney    |
++-------+-----------+
+  </pre>
+</div>
+
+<!-- Notes -->
+<div class="topic">
+  <h3>Notes & Tips</h3>
+  <ul>
+    <li><b>No need</b> to specify the join condition explicitly.</li>
+    <li>MySQL automatically finds the common column(s) — here it is <code>dept_id</code>.</li>
+    <li>Be careful: if tables share multiple columns with the same name, 
+        <b>NATURAL JOIN will use all of them</b>, which may give unexpected results.</li>
+    <li>If you need more control, use <code>JOIN ... ON</code> instead.</li>
+  </ul>
+</div>
+
+<hr>
+
 <div class="topic">
   <h2>SQL Constraints</h2>
 
@@ -4768,8 +5026,8 @@ DEALLOCATE emp_cursor;
     but in other databases (MySQL, PostgreSQL, SQL Server) you may not need it or syntax can differ.
   </p>
      </section>
-
- <hr>
+     
+<hr>
 
 <!-- ======================= -->
 <!-- SQL ORDER OF EXECUTION -->
@@ -4834,7 +5092,6 @@ DEALLOCATE emp_cursor;
     <li>DCL is dependent on <b>admin privileges</b>, not normal user queries.</li>
   </ul>
 </div>
-
 
 </body>
 </html>
