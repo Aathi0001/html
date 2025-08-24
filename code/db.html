@@ -4183,66 +4183,187 @@ FROM john;
 
 <hr>
 
-<div class="topic">
-  <h2>Data Control Language (DCL)</h2>
 
-  <p><b>DCL</b> is used to control access and permissions to the data stored in the database.  
-  It ensures <b>security</b> and controls who can perform operations on tables, views, procedures, etc.</p>
+<h1>SQL GROUP BY</h1>
 
-  <h3>Common DCL Commands</h3>
-  <ul>
-    <li><b>GRANT</b> – Provides a user specific privileges on database objects.</li>
-    <li><b>REVOKE</b> – Removes the privileges granted to a user.</li>
-  </ul>
-
-  <h3>1. GRANT</h3>
-  <p>Syntax:</p>
-  <pre>
-GRANT privilege_name 
-ON object_name 
-TO user_name;
-  </pre>
-
-  <p>Example:</p>
-  <pre>
--- Grant SELECT and INSERT permission to user 'john'
-GRANT SELECT, INSERT
-ON Employee
-TO john;
-  </pre>
-
-  <p><b>Output:</b> User <b>john</b> can now select and insert rows into the <b>Employee</b> table.</p>
-
-  <h3>2. REVOKE</h3>
-  <p>Syntax:</p>
-  <pre>
-REVOKE privilege_name 
-ON object_name 
-FROM user_name;
-  </pre>
-
-  <p>Example:</p>
-  <pre>
--- Remove INSERT permission from user 'john'
-REVOKE INSERT
-ON Employee
-FROM john;
-  </pre>
-
-  <p><b>Output:</b> User <b>john</b> cannot insert rows into the <b>Employee</b> table anymore,  
-  but still has <b>SELECT</b> permission (since only INSERT was revoked).</p>
-
-  <h3>Important Notes</h3>
-  <ul>
-    <li>Privileges include: <b>SELECT, INSERT, UPDATE, DELETE, ALL</b>, etc.</li>
-    <li>Only database administrators (DBA) or object owners can grant/revoke privileges.</li>
-    <li>Granting <b>ALL</b> means the user can do anything on that table.</li>
-    <li>DCL ensures <b>data security</b> by restricting unauthorized access.</li>
-  </ul>
-</div>
+<p>The <b>GROUP BY</b> clause in SQL is used to group rows that have the same values into summary rows, often used with aggregate functions (<code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>).</p>
 
 <hr>
 
+<h2>1. Basic GROUP BY</h2>
+<pre>
+SELECT dept_id, COUNT(*) AS total_employees
+FROM employees
+GROUP BY dept_id;
+</pre>
+
+<p><b>Explanation:</b> Groups employees by department and counts how many are in each department.</p>
+
+<table>
+  <tr><th>dept_id</th><th>total_employees</th></tr>
+  <tr><td>101</td><td>3</td></tr>
+  <tr><td>102</td><td>2</td></tr>
+  <tr><td>103</td><td>4</td></tr>
+</table>
+
+<hr>
+
+<h2>2. GROUP BY with SUM</h2>
+<pre>
+SELECT dept_id, SUM(salary) AS total_salary
+FROM employees
+GROUP BY dept_id;
+</pre>
+<p><b>Explanation:</b> Sums salaries for each department.</p>
+
+<hr>
+
+<h2>3. GROUP BY with AVG</h2>
+<pre>
+SELECT dept_id, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY dept_id;
+</pre>
+<p><b>Explanation:</b> Finds the average salary in each department.</p>
+
+<hr>
+
+<h2>4. GROUP BY with Multiple Columns</h2>
+<pre>
+SELECT dept_id, job_role, COUNT(*) AS count_role
+FROM employees
+GROUP BY dept_id, job_role;
+</pre>
+<p><b>Explanation:</b> Groups by both <code>dept_id</code> and <code>job_role</code>.</p>
+
+<hr>
+
+<h2>5. GROUP BY with HAVING</h2>
+<pre>
+SELECT dept_id, COUNT(*) AS total_employees
+FROM employees
+GROUP BY dept_id
+HAVING COUNT(*) > 2;
+</pre>
+<p><b>Explanation:</b> Only shows departments where the number of employees is greater than 2.</p>
+
+<hr>
+
+<h2>6. GROUP BY with ORDER BY</h2>
+<pre>
+SELECT dept_id, SUM(salary) AS total_salary
+FROM employees
+GROUP BY dept_id
+ORDER BY total_salary DESC;
+</pre>
+<p><b>Explanation:</b> Groups by department, sums salaries, and sorts results in descending order.</p>
+
+<hr>
+
+<h2>7. GROUP BY with WHERE</h2>
+<pre>
+SELECT dept_id, COUNT(*) AS total_employees
+FROM employees
+WHERE salary > 50000
+GROUP BY dept_id;
+</pre>
+<p><b>Explanation:</b> First filters employees with salary greater than 50,000, then groups by department.</p>
+
+<hr>
+
+<h2>8. GROUP BY with DISTINCT (Not needed inside GROUP BY)</h2>
+<pre>
+SELECT dept_id, COUNT(DISTINCT job_role) AS unique_roles
+FROM employees
+GROUP BY dept_id;
+</pre>
+<p><b>Explanation:</b> Counts how many unique job roles are present in each department.</p>
+
+<hr>
+
+<h1>SQL HAVING Clause</h1>
+
+<p>The <b>HAVING</b> clause in SQL is used to filter groups (created by <code>GROUP BY</code>).  
+It is similar to <code>WHERE</code>, but while <code>WHERE</code> filters individual rows,  
+<b>HAVING filters groups after aggregation</b>.</p>
+
+<hr>
+
+<h2>1. Basic HAVING with COUNT</h2>
+<pre>
+SELECT dept_id, COUNT(*) AS total_employees
+FROM employees
+GROUP BY dept_id
+HAVING COUNT(*) > 2;
+</pre>
+<p><b>Explanation:</b> Counts employees in each department and shows only departments with more than 2 employees.</p>
+
+<table>
+  <tr><th>dept_id</th><th>total_employees</th></tr>
+  <tr><td>101</td><td>3</td></tr>
+  <tr><td>103</td><td>4</td></tr>
+</table>
+
+<hr>
+
+<h2>2. HAVING with SUM</h2>
+<pre>
+SELECT dept_id, SUM(salary) AS total_salary
+FROM employees
+GROUP BY dept_id
+HAVING SUM(salary) > 100000;
+</pre>
+<p><b>Explanation:</b> Shows departments where the total salary exceeds 100,000.</p>
+
+<hr>
+
+<h2>3. HAVING with AVG</h2>
+<pre>
+SELECT dept_id, AVG(salary) AS avg_salary
+FROM employees
+GROUP BY dept_id
+HAVING AVG(salary) BETWEEN 40000 AND 60000;
+</pre>
+<p><b>Explanation:</b> Displays departments whose average salary is between 40,000 and 60,000.</p>
+
+<hr>
+
+<h2>4. HAVING with Multiple Conditions</h2>
+<pre>
+SELECT dept_id, job_role, COUNT(*) AS count_role
+FROM employees
+GROUP BY dept_id, job_role
+HAVING COUNT(*) > 1 AND dept_id = 101;
+</pre>
+<p><b>Explanation:</b> Groups by department and job role, then shows only those in dept 101  
+where more than 1 employee has the same role.</p>
+
+<hr>
+
+<h2>5. Difference Between WHERE and HAVING</h2>
+<pre>
+-- Using WHERE (filters rows before grouping)
+SELECT dept_id, COUNT(*) AS total_employees
+FROM employees
+WHERE salary > 50000
+GROUP BY dept_id;
+
+-- Using HAVING (filters groups after grouping)
+SELECT dept_id, COUNT(*) AS total_employees
+FROM employees
+GROUP BY dept_id
+HAVING AVG(salary) > 50000;
+</pre>
+
+<p><b>Explanation:</b></p>
+<ul>
+  <li><code>WHERE</code> → applies before grouping (row-level condition).</li>
+  <li><code>HAVING</code> → applies after grouping (group-level condition).</li>
+</ul>
+
+<hr>
+
+<h1>Database Objects</h1>
 <div class="topic">
   <h2>1. VIEW</h2>
   <p>A <b>View</b> is a virtual table created using a SQL query. It does not store data itself but displays data from one or more tables.</p>
