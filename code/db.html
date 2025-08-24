@@ -4768,7 +4768,73 @@ DEALLOCATE emp_cursor;
     but in other databases (MySQL, PostgreSQL, SQL Server) you may not need it or syntax can differ.
   </p>
      </section>
-     
+
+ <hr>
+
+<!-- ======================= -->
+<!-- SQL ORDER OF EXECUTION -->
+<!-- ======================= -->
+<div class="topic">
+  <h2>SQL Order of Execution</h2>
+  <p>
+    SQL commands have different categories (DDL, DML, DQL, TCL, DCL).  
+    Each type of command has its own execution order inside MySQL.
+  </p>
+</div>
+
+<!-- 1) DDL -->
+<div class="topic">
+  <h3>1) DDL (Data Definition Language)</h3>
+  <ul>
+    <li><b>Execution Order:</b> CREATE → ALTER → DROP → TRUNCATE → RENAME</li>
+    <li>DDL commands are auto-committed (cannot be rolled back).</li>
+  </ul>
+</div>
+
+<!-- 2) DML -->
+<div class="topic">
+  <h3>2) DML (Data Manipulation Language)</h3>
+  <ul>
+    <li><b>Execution Order:</b> INSERT → UPDATE → DELETE → MERGE</li>
+    <li>They modify data inside tables and <b>can be rolled back</b> (before COMMIT).</li>
+  </ul>
+</div>
+
+<!-- 3) DQL -->
+<div class="topic">
+  <h3>3) DQL (Data Query Language)</h3>
+  <p>Query execution inside SELECT follows a specific order:</p>
+  <pre>
+1. FROM      → Choose tables
+2. JOIN      → Apply joins
+3. WHERE     → Filter rows
+4. GROUP BY  → Group rows
+5. HAVING    → Filter groups
+6. SELECT    → Choose columns
+7. DISTINCT  → Remove duplicates
+8. ORDER BY  → Sort results
+9. LIMIT     → Restrict output
+  </pre>
+</div>
+
+<!-- 4) TCL -->
+<div class="topic">
+  <h3>4) TCL (Transaction Control Language)</h3>
+  <ul>
+    <li><b>Execution Order:</b> BEGIN / START TRANSACTION → DML statements → COMMIT / ROLLBACK → SAVEPOINT (optional)</li>
+    <li>TCL controls how transactions are applied to the database.</li>
+  </ul>
+</div>
+
+<!-- 5) DCL -->
+<div class="topic">
+  <h3>5) DCL (Data Control Language)</h3>
+  <ul>
+    <li><b>Execution Order:</b> GRANT → REVOKE → SHOW GRANTS</li>
+    <li>DCL is dependent on <b>admin privileges</b>, not normal user queries.</li>
+  </ul>
+</div>
+
 
 </body>
 </html>
