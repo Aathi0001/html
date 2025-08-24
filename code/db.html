@@ -5093,5 +5093,55 @@ DEALLOCATE emp_cursor;
   </ul>
 </div>
 
+     <hr>
+
+ <h1>Relational Algebra vs SQL</h1>
+  <table>
+    <tr>
+      <th>Relational Algebra</th>
+      <th>Meaning</th>
+      <th>SQL Equivalent</th>
+    </tr>
+    <tr>
+      <td><b>σ (Sigma)</b></td>
+      <td>Selection (choose rows)</td>
+      <td><code>WHERE</code></td>
+    </tr>
+    <tr>
+      <td><b>π (Pi)</b></td>
+      <td>Projection (choose columns)</td>
+      <td><code>SELECT column_list</code></td>
+    </tr>
+    <tr>
+      <td><b>⋈ (Join)</b></td>
+      <td>Combine two tables based on condition</td>
+      <td><code>JOIN ... ON</code></td>
+    </tr>
+    <tr>
+      <td><b>× (Cross Product)</b></td>
+      <td>All combinations of rows</td>
+      <td><code>CROSS JOIN</code></td>
+    </tr>
+    <tr>
+      <td><b>∪ (Union)</b></td>
+      <td>Combine rows from two queries (no duplicates)</td>
+      <td><code>UNION</code></td>
+    </tr>
+    <tr>
+      <td><b>∩ (Intersection)</b></td>
+      <td>Common rows between queries</td>
+      <td><code>INTERSECT</code> (not in MySQL, use <code>INNER JOIN</code> + condition)</td>
+    </tr>
+    <tr>
+      <td><b>− (Set Difference)</b></td>
+      <td>Rows in one relation but not in another</td>
+      <td><code>EXCEPT</code> (not in MySQL, use <code>LEFT JOIN ... WHERE NULL</code>)</td>
+    </tr>
+    <tr>
+      <td><b>ρ (Rho)</b></td>
+      <td>Rename relation/attribute</td>
+      <td><code>AS</code></td>
+    </tr>
+  </table>
 </body>
 </html>
