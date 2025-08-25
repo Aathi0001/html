@@ -2664,6 +2664,73 @@ CREATE TABLE Employee (
 </div>
 
 <hr>
+<h2>💰 Salary Hike and Deduction in SQL</h2>
+
+<h3>1. Salary Hike (Increase)</h3>
+<p>We can increase salary using <b>arithmetic operators</b> in SQL. Generally hike is given in % (percentage).</p>
+
+<pre>
+-- Monthly salary hike by 10%
+SELECT name, salary AS old_salary,
+       salary * 1.10 AS new_monthly_salary
+FROM Employees;
+
+-- Annual salary hike (12 months)
+SELECT name, (salary * 12) AS old_annual_salary,
+       (salary * 12 * 1.10) AS new_annual_salary
+FROM Employees;
+</pre>
+
+<hr>
+
+<h3>2. Salary Deduction (Reduction)</h3>
+<p>Deduction means reducing the salary by a fixed % or fixed amount.</p>
+
+<pre>
+-- Monthly salary deduction by 5%
+SELECT name, salary AS old_salary,
+       salary * 0.95 AS reduced_monthly_salary
+FROM Employees;
+
+-- Annual salary deduction
+SELECT name, (salary * 12) AS old_annual_salary,
+       (salary * 12 * 0.95) AS reduced_annual_salary
+FROM Employees;
+</pre>
+
+<hr>
+
+<h3>3. Alias in SQL</h3>
+<p>An <b>Alias</b> is a temporary name for a column or table, given using the <b>AS</b> keyword. 
+It helps in making output more readable.</p>
+
+<pre>
+-- Column Alias
+SELECT salary * 12 AS annual_salary
+FROM Employees;
+
+-- Table Alias
+SELECT e.name, d.dept_name
+FROM Employees AS e
+JOIN Department AS d
+ON e.dept_id = d.dept_id;
+
+-- Without space (no quotes needed)
+SELECT salary * 12 AS annual_sal
+FROM Employees;
+
+-- With space (need quotes in standard SQL)
+SELECT salary * 12 AS "annual sal"
+FROM Employees;
+
+-- With space (MySQL style using backticks)
+SELECT salary * 12 AS `annual sal`
+FROM Employees;
+
+</pre>
+
+
+<hr>
 
 <div class="topic">
   <h2>Data Query Language (DQL)</h2>
