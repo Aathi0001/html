@@ -5,6 +5,77 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>Web</title>
      <style>
+          body { 
+          font-family: Arial, sans-serif; 
+          line-height: 1.6; 
+          background: #f9f9f9; 
+          padding: 20px; 
+          max-width: 100%;
+          word-wrap: break-word;
+          }
+
+          pre, table {
+          max-width: 100%;
+          overflow-x: auto;
+          display: block;
+          word-wrap: break-word;
+          }
+
+          /* Headings with unique border colors */
+          h1 { 
+          color: #2c3e50; 
+          border-left: 6px solid #3498db; /* blue */
+          padding-left: 12px; 
+          }
+
+          h2 { 
+          color: #2c3e50; 
+          border-left: 6px solid #e67e22; /* orange */
+          padding-left: 10px; 
+          }
+
+          h3 { 
+          color: #2c3e50; 
+          border-left: 6px solid #27ae60; /* green */
+          padding-left: 8px; 
+          }
+
+          h4 { 
+          color: #2c3e50; 
+          border-left: 6px solid #ae2785; /* green */
+          padding-left: 6px; 
+          }
+
+          h5 { 
+          color: #2c3e50; 
+          border-left: 6px solid #7127ae; /* green */
+          padding-left: 4px; 
+          }
+
+          h6 { 
+          color: #2c3e50; 
+          border-left: 6px solid #85ae27; /* green */
+          padding-left: 2px; 
+          }
+
+          pre { 
+          background: #2d2d2d; 
+          color: #f8f8f2; 
+          padding: 10px; 
+          border-radius: 5px; 
+          overflow-x: auto; 
+          }
+
+          code { 
+          font-family: Consolas, monospace; 
+          }
+
+          .periodic-table { 
+          width: 100%; 
+          border-collapse: collapse; 
+          margin: 15px 0; 
+          }
+
           .periodic-table tbody:first-of-type tr:first-of-type td:nth-child(1),
           .periodic-table tbody:first-of-type tr:nth-child(2) td:nth-child(n+5):nth-child(-n+7),
           .periodic-table tbody:first-of-type tr:nth-child(3) td:nth-child(n+6):nth-child(-n+7),
@@ -102,9 +173,46 @@
      </style>
 </head>
 <body>
-     <Section>
+     <section>
      <div>
           <h1 class="head"><ins>Heading Tags</ins></h1>
+          <p>
+               <b>Definition:</b> Heading tags (&lt;h1&gt; to &lt;h6&gt;) are used to define titles or subtitles in a webpage. 
+               They represent six levels of headings where <b>&lt;h1&gt;</b> is the largest and most important, and 
+               <b>&lt;h6&gt;</b> is the smallest and least important.
+          </p>
+
+          <p>
+               <b>Syntax:</b>  
+          </p>
+          <pre>
+          &lt;h1&gt; Heading 1 &lt;/h1&gt;
+          &lt;h2&gt; Heading 2 &lt;/h2&gt;
+          &lt;h3&gt; Heading 3 &lt;/h3&gt;
+          &lt;h4&gt; Heading 4 &lt;/h4&gt;
+          &lt;h5&gt; Heading 5 &lt;/h5&gt;
+          &lt;h6&gt; Heading 6 &lt;/h6&gt;
+          </pre>
+
+          <p>
+               <b>Notes:</b>  
+               <ul>
+                    <li>They are <b>block-level elements</b> (occupy full width).</li>
+                    <li>Heading tags are important for <b>SEO (Search Engine Optimization)</b>, as &lt;h1&gt; usually represents the main title of a webpage.</li>
+                    <li>You should use them in a hierarchical order (h1 → h2 → h3 ...).</li>
+                    <li>Default sizes may vary across browsers, but approximately:  
+                         <ul>
+                              <li>&lt;h1&gt; → 2em (32px)</li>
+                              <li>&lt;h2&gt; → 1.5em (24px)</li>
+                              <li>&lt;h3&gt; → 1.17em (18.72px)</li>
+                              <li>&lt;h4&gt; → 1em (16px)</li>
+                              <li>&lt;h5&gt; → 0.83em (13.28px)</li>
+                              <li>&lt;h6&gt; → 0.67em (10.72px)</li>
+                         </ul>
+                    </li>
+               </ul>
+          </p>
+
           <h1>Heading 1 2em (32px)</h1>
           <h2>Heading 2 1.5em (24px)</h2>
           <h3>Heading 3 1.17em (18.72px)</h3>
@@ -112,82 +220,139 @@
           <h5>Heading 5 0.83em (13.28px)</h5>
           <h6>Heading 6 0.67em (10.72px)</h6>
      </div>
-     </section>
+</section>
+
 <hr>
      <section>
      <div>
-          <h1><ins>p-Paragraph tag</ins></h1>
-          <p>p tag represent paragraph that it is a group of text as a pragraph</p>
-     </div>
-     </Section>
+     <h1><ins>p - Paragraph Tag</ins></h1>
+     <p><b>Definition:</b> The <code>&lt;p&gt;</code> tag in HTML is used to define a paragraph. It automatically adds margin/spacing before and after the text, grouping content into blocks of text.</p>
+     <p><b>Syntax:</b></p>
+     <pre>&lt;p&gt;This is a paragraph&lt;/p&gt;</pre>
+     <p>Example:</p>
+     <p>p tag represents a paragraph that is a group of text as a paragraph.</p>
+</div>
+</Section>
 <hr>
-     <div>
-          <h1><u>Formatting</u> <ins>Tag</ins></h1>
-          <p><b>Formatting</b> <strong>Tag</strong> are use to change the <i>appearance</i> of the <em>text or content</em></p>
-          <p><b>b-Bold</b></p>
-          <p><strong>strong-Same as Bold</strong></p>
-          <p><i>i-Italic</i></p>
-          <p><em>em-Same as Italic</em></p>
-          <p><ins>ins-Same as Underline</ins></p>
-          <p><mark>mark-Highlight Text</mark></p>
-          <p><del>del-Strike the text</del></p>
-          <p><strike>strike-Same as del</strike></p>
-          <p>CO<sub>2</sub> sub will give the subscript that it will lower it below the baseline</p>
-          <p>a<sup>2</sup> sup will give the superscript that it will rise it above the baseline</p>
-          <p><q>q-quotiont double quote</q></p>
-          <p><pre>pre-
-line1               line      and     space
-line2               break
-line3               display same as written
-          </pre></p>
-     </div>
-<hr>     
-     <div>
-          <h1>Element</h1>
-          <p><h2>Types of Elements: </h2></p>
-          <p><h3>Inline level Element</h3></p>
-          <p><pre>Displayed in Sameline and we cannot adjust Height and Width. 
-Eg: &lt;b&gt;, &lt;i&gt;, &lt;mark&gt;, etc.,</pre></p>
-          <p><h3>Block Level Element</h3></p>
-          <p><pre>It will take the entire width of the page and can able to adjust the Height and Width.
-Eg: &lt;h1&gt;, &lt;h2&gt;, &lt;p&gt; etc.,</pre></p>
-          <p><h3>Inline-Block Level Element</h3></p>
-          <p><pre>Combination of both display in same line and we can adjust height and width 
-Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
-     </div>
-<hr>
-     <div>
-          <p>Attributes: They proide aditional information or functionallity to HTML Element.</p>
-          <pre>Syntax: 
-          &lt;element attribute = "value"&gt;content&lt;/element&gt;
-          </pre>
-          <p>Maquee Tag: Implements Scrollable content in our web page.</p>
-          <pre>sSyntax:
-          &lt;marquee behaviour="" direction=""&gt; content &lt;/maquee&gt;
-          </pre>
-     </div>
-<hr>
-     <marquee>Maquee Tag</marquee>
-     <marquee behaviour="scroll" direction="left" scrollamount="20" loop="infinite" height="100%" Width="100%">Maquee Tag</marquee>
-     <marquee behaviour="scroll" direction="right" scrollamount="20" loop="infinite" height="100%" Width="100%">Maquee Tag</marquee>
-     <marquee behaviour="scroll" direction="up" scrollamount="6" loop="infinite" height="100%" Width="100%">Maquee Tag</marquee>
-     <marquee behaviour="scroll" direction="down" scrollamount="6" loop="infinite" height="100%" Width="100%">Maquee Tag</marquee>
-<hr>
-     <div>
-     <a href="https://www.youtube.com" target="_blank">target-blank</a>
-     <br>
-     <a href="https://www.youtube.com" target="_self">target-self</a>
-     <br>
-     <a href="https://www.youtube.com" target="_parent">target-parent</a>
-     <br>
-     <a href="tel:9150470830">Call Me</a>
-     <br>
-     <a href="Mailto:p.aathisivaganesh@gmail.com">Mail</a>
 
-     </div>
+<div>
+     <h1><u>Formatting</u> <ins>Tags</ins></h1>
+     <p><b>Definition:</b> Formatting tags are used to change the <i>appearance</i> of the <em>text or content</em>. They add visual meaning to text, such as bold, italic, highlight, underline, etc.</p>
+
+     <p><b>Tags and Examples:</b></p>
+     <p><b>&lt;b&gt; - Bold</b>: <b>This is bold</b></p>
+     <p><strong>&lt;strong&gt; - Important text (semantically bold)</strong></p>
+     <p><i>&lt;i&gt; - Italic</i></p>
+     <p><em>&lt;em&gt; - Emphasized text (semantically italic)</em></p>
+     <p><u>&lt;u&gt; - Underline</u></p>
+     <p><ins>&lt;ins&gt; - Inserted text (same as underline)</ins></p>
+     <p><small>&lt;small&gt; - Small text</small></p>
+     <p><mark>&lt;mark&gt; - Highlighted text</mark></p>
+     <p><del>&lt;del&gt; - Deleted text</del></p>
+     <p><strike>&lt;strike&gt; - Strikethrough (same as del, not recommended in HTML5)</strike></p>
+     <p>CO<sub>2</sub> → <code>&lt;sub&gt;</code> - Subscript (below baseline)</p>
+     <p>a<sup>2</sup> → <code>&lt;sup&gt;</code> - Superscript (above baseline)</p>
+     <p><q>&lt;q&gt; - Quotation text</q></p>
+     <p><pre>&lt;pre&gt; - Preformatted text:
+line1               spaces      are     preserved
+line2               line breaks
+line3               displayed same as written
+     </pre></p>
+</div>
+<hr>     
+
+<div>
+     <h1>Element</h1>
+     <p><b>Definition:</b> An HTML element is a combination of an opening tag, content, and a closing tag.</p>
+     <p><b>Syntax:</b></p>
+     <pre>&lt;tagname&gt; content &lt;/tagname&gt;</pre>
+
+     <h2>Types of Elements:</h2>
+
+     <h3>1. Inline Elements</h3>
+     <p><b>Definition:</b> Inline elements do not start on a new line. They only take up as much width as necessary. You cannot set height/width easily. Displayed in Sameline and we cannot adjust Height and Width.</p>
+     <pre>Eg: &lt;b&gt;, &lt;i&gt;, &lt;mark&gt;, &lt;span&gt;, &lt;a&gt;, &lt;sub&gt;, &lt;sup&gt; etc.</pre>
+
+     <h3>2. Block-level Elements</h3>
+     <p><b>Definition:</b> Block elements always start on a new line and take up the full width available. Their height and width can be adjusted. It will take the entire width of the page and can able to adjust the Height and Width.</p>
+     <pre>Eg: &lt;h1&gt;, &lt;h2&gt;, &lt;p&gt;, &lt;div&gt;, &lt;section&gt; etc.</pre>
+
+     <h3>3. Inline-Block Elements</h3>
+     <p><b>Definition:</b> Inline-block behaves like inline (stays in same line) but allows setting width and height like block elements. Combination of both display in same line and we can adjust height and width.</p>
+     <pre>Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, &lt;select&gt; etc.</pre>
+</div>
 <hr>
-     <div>
-          <h1>Orderedlist</h1>
+
+<div>
+     <h1>Attributes</h1>
+     <p><b>Definition:</b> Attributes provide additional information or functionality to an HTML element. They are always written in the start tag.</p>
+     <p><b>Syntax:</b></p>
+     <pre>&lt;element attribute="value"&gt;content&lt;/element&gt;</pre>
+     
+     <h2>Marquee Tag (Deprecated in HTML5)</h2>
+     <p><b>Definition:</b> The <code>&lt;marquee&gt;</code> tag creates scrolling text or images. It is obsolete but still works in some browsers.</p>
+     <p><b>Syntax:</b></p>
+     <pre>&lt;marquee behavior="scroll" direction="left" scrollamount="20" loop="infinite" height="100%" width="100%"&gt;Scrolling Text&lt;/marquee&gt;</pre>
+</div>
+<hr>
+
+<marquee>Default Marquee (left to right)</marquee>
+<marquee behavior="scroll" direction="left" scrollamount="20" loop="infinite" height="100%" width="100%">Left Scroll</marquee>
+<marquee behavior="scroll" direction="right" scrollamount="20" loop="infinite" height="100%" width="100%">Right Scroll</marquee>
+<marquee behavior="scroll" direction="up" scrollamount="6" loop="infinite" height="100%" width="100%">Up Scroll</marquee>
+<marquee behavior="scroll" direction="down" scrollamount="6" loop="infinite" height="100%" width="100%">Down Scroll</marquee>
+<hr>
+
+<div>
+     <h1>Anchor Tag (&lt;a&gt;)</h1>
+     <p><b>Definition:</b> The anchor tag is used to create hyperlinks to other web pages, files, phone numbers, or emails.</p>
+     <p><b>Syntax:</b></p>
+     <pre>&lt;a href="url" target="value"&gt;Link Text&lt;/a&gt;</pre>
+
+     <h2>Target Attribute:</h2>
+     <p><a href="https://www.youtube.com" target="_blank">target="_blank" → Opens in new tab</a></p>
+     <p><a href="https://www.youtube.com" target="_self">target="_self" → Opens in same tab (default)</a></p>
+     <p><a href="https://www.youtube.com" target="_parent">target="_parent" → Opens in parent frame</a></p>
+     
+     <h2>Special Uses:</h2>
+     <p><a href="tel:9150470830">tel: → Call a phone number</a></p>
+     <p><a href="mailto:p.aathisivaganesh@gmail.com">mailto: → Send an email</a></p>
+</div>
+
+<hr>
+     <section>
+    <div>
+        <h1><ins>Ordered List (&lt;ol&gt;)</ins></h1>
+        <p>
+            An <b>Ordered List</b> is used when the items need to be displayed in a specific order (numbered, alphabetic, or roman numerals).
+            Each item in the list is represented by the <code>&lt;li&gt;</code> tag.
+        </p>
+
+        <h3>Syntax:</h3>
+        <pre>
+&lt;ol type="1|a|A|i|I" start="number" reversed&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ol&gt;
+        </pre>
+
+        <h3>Attributes:</h3>
+        <ul>
+            <li><b>type</b>: Defines the numbering style.
+                <ul>
+                    <li><code>1</code> → Numbers (default)</li>
+                    <li><code>a</code> → Lowercase letters</li>
+                    <li><code>A</code> → Uppercase letters</li>
+                    <li><code>i</code> → Lowercase Roman numerals</li>
+                    <li><code>I</code> → Uppercase Roman numerals</li>
+                </ul>
+            </li>
+            <li><b>start</b>: Defines the starting value of the list.</li>
+            <li><b>reversed</b>: Displays the list in descending order.</li>
+        </ul>
+
+        <h3>Examples:</h3>
+        <h1>Orderedlist</h1>
           <ol>
                <li>A</li>
                <li>B</li>
@@ -254,74 +419,141 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
           </ol>
 
      </div>
+    </div>
+</section>
+
 <hr>
-     <div>
-          <h1>UnOrdered List</h1>
-          <ul>
-               <li>Disc</li>
-               <li>Square</li>
-               <li>Circle</li>
-               <li>None</li>
-          </ul>
-          <ul type="square">
-               <li>Disc</li>
-               <li>Square</li>
-               <li>Circle</li>
-               <li>None</li>
-          </ul>
-          <ul type="circle">
-               <li>Disc</li>
-               <li>Square</li>
-               <li>Circle</li>
-               <li>None</li>
-          </ul>
-          <ul type="none">
-               <li>Disc</li>
-               <li>Square</li>
-               <li>Circle</li>
-               <li>None</li>
-          </ul>
-     </div>
+
+<section>
+    <div>
+        <h1><ins>Unordered List (&lt;ul&gt;)</ins></h1>
+        <p>
+            An <b>Unordered List</b> is used to display items that don’t follow a particular sequence.  
+            Each item is marked with a <i>bullet symbol</i> (disc, circle, square, or none).
+        </p>
+
+        <h3>Syntax:</h3>
+        <pre>
+&lt;ul type="disc|circle|square|none"&gt;
+    &lt;li&gt;Item 1&lt;/li&gt;
+    &lt;li&gt;Item 2&lt;/li&gt;
+&lt;/ul&gt;
+        </pre>
+
+        <h3>Attributes:</h3>
+        <ul>
+            <li><b>type</b>: Defines the bullet style.
+                <ul>
+                    <li><code>disc</code> → ● (default)</li>
+                    <li><code>circle</code> → ○</li>
+                    <li><code>square</code> → ■</li>
+                    <li><code>none</code> → No bullets</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Examples:</h3>
+        <ul>
+            <li>Disc</li><li>Square</li><li>Circle</li><li>None</li>
+        </ul>
+
+        <ul type="circle">
+            <li>Disc</li><li>Square</li><li>Circle</li><li>None</li>
+        </ul>
+
+        <ul type="square">
+            <li>Disc</li><li>Square</li><li>Circle</li><li>None</li>
+        </ul>
+
+        <ul type="none">
+            <li>Disc</li><li>Square</li><li>Circle</li><li>None</li>
+        </ul>
+    </div>
+</section>
+
 <hr>
-     <div>
-          <h1>Description List</h1>
-          <dl>
-               <dt>HTML</dt>
-               <dd>Hypertext Markup Language</dd>
-               <dt>CSS</dt>
-               <dd>Cascading Style Sheet</dd>
-               <dt>JS</dt>
-               <dd>JavaScript</dd>
-          </dl>
-     </div>
+
+<section>
+    <div>
+        <h1><ins>Description List (&lt;dl&gt;)</ins></h1>
+        <p>
+            A <b>Description List</b> is used to define terms and their descriptions.  
+            It uses three tags:
+        </p>
+        <ul>
+            <li><code>&lt;dl&gt;</code> → Defines the list container.</li>
+            <li><code>&lt;dt&gt;</code> → Defines a <b>term</b>.</li>
+            <li><code>&lt;dd&gt;</code> → Defines the <b>description</b> of the term.</li>
+        </ul>
+
+        <h3>Syntax:</h3>
+        <pre>
+&lt;dl&gt;
+    &lt;dt&gt;Term&lt;/dt&gt;
+    &lt;dd&gt;Description&lt;/dd&gt;
+&lt;/dl&gt;
+        </pre>
+
+        <h3>Example:</h3>
+        <dl>
+            <dt>HTML</dt><dd>Hypertext Markup Language</dd>
+            <dt>CSS</dt><dd>Cascading Style Sheet</dd>
+            <dt>JS</dt><dd>JavaScript</dd>
+        </dl>
+    </div>
+</section>
+
 <hr>
-     <div>
-          <h1>Nested List</h1>
-          <ol type="I">
-               <li>Leo</li>
-               <ul type="circle">
+
+<section>
+    <div>
+        <h1><ins>Nested Lists</ins></h1>
+        <p>
+            A <b>Nested List</b> is when one list is placed inside another.  
+            It helps in creating hierarchical structures like menus, outlines, or categories.
+        </p>
+
+        <h3>Syntax:</h3>
+        <pre>
+&lt;ol&gt;
+    &lt;li&gt;Item 1
+        &lt;ul&gt;
+            &lt;li&gt;Sub-item 1&lt;/li&gt;
+            &lt;li&gt;Sub-item 2&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ol&gt;
+        </pre>
+
+        <h3>Example:</h3>
+        <ol type="I">
+            <li>Leo
+                <ul type="circle">
                     <li>Vijay</li>
                     <li>Trisha</li>
                     <li>Arjun</li>
-               </ul>
-               <li>Coolie</li>
-               <ul type="square">
-                    <li>RajiniKanth</li>
+                </ul>
+            </li>
+            <li>Coolie
+                <ul type="square">
+                    <li>Rajinikanth</li>
                     <li>Shruti Hassan</li>
                     <li>Naga Arjuna</li>
-               </ul>
-               <li>Vikram</li>
-               <ol type="1">
-                    <li>Kamala Hassan</li>
-                    <li>Maya krishan</li>
+                </ul>
+            </li>
+            <li>Vikram
+                <ol type="1">
+                    <li>Kamal Hassan</li>
+                    <li>Maya Krishnan</li>
                     <li>Vijay Sethupathi</li>
+                </ol>
+            </li>
+        </ol>
+    </div>
+</section>
 
-               </ol>
-
-          </ol>
-     </div>
 <hr>
-     <div style="width: 100vw;">
+     <div >
           <h1>Periodic Table</h1>
           <table class="periodic-table" border="1" cellpadding="10" cellspacing="10">
                <thead>
@@ -514,12 +746,64 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
           </table>
      </div>
 <hr>
-     <div>
-          <audio src="drums_of_liberation.mp3" controls loop muted autoplay>Audio</audio>
-          <video src="luffy-in-winter.960x540.mp4" controls height="170px" width="300px" loop muted autoplay>Video</video>
-          <video src="luffy-in-winter.960x540.mp4" controls height="170px" width="300px" loop muted poster="videoframe_5133.png">Video</video>
-          <iframe src="https://aathi.pythonanywhere.com/" height="170px" width="300px" frameborder="0">iframe</iframe>
-     </div>
+    <div>
+    <h1>HTML Media Elements</h1>
+
+    <!-- Audio Element -->
+    <h2>Audio Tag</h2>
+    <p>
+        The <code>&lt;audio&gt;</code> tag is used to embed sound content in a web page, such as music or audio streams.
+        It supports multiple attributes:
+    </p>
+    <ul>
+        <li><b>src</b>: Specifies the path of the audio file.</li>
+        <li><b>controls</b>: Displays default play, pause, and volume controls for the user.</li>
+        <li><b>loop</b>: Replays the audio continuously after it ends.</li>
+        <li><b>muted</b>: Starts the audio with the sound muted.</li>
+        <li><b>autoplay</b>: Starts playing automatically when the page loads (works with muted in most browsers).</li>
+    </ul>
+    <p><b>Example:</b></p>
+    <audio src="drums_of_liberation.mp3" controls loop muted autoplay>Audio</audio>
+
+    <hr>
+
+    <!-- Video Element -->
+    <h2>Video Tag</h2>
+    <p>
+        The <code>&lt;video&gt;</code> tag is used to embed video files on a webpage. It also provides several useful attributes:
+    </p>
+    <ul>
+        <li><b>src</b>: Specifies the path of the video file.</li>
+        <li><b>controls</b>: Displays play, pause, volume, and fullscreen options.</li>
+        <li><b>height</b> and <b>width</b>: Set the dimensions of the video display.</li>
+        <li><b>loop</b>: Makes the video play repeatedly.</li>
+        <li><b>muted</b>: Starts the video with no sound.</li>
+        <li><b>autoplay</b>: Automatically plays the video when the page loads (muted is usually required).</li>
+        <li><b>poster</b>: Defines an image to be shown while the video is downloading or until the user presses play.</li>
+    </ul>
+    <p><b>Examples:</b></p>
+    <video src="luffy-in-winter.960x540.mp4" controls height="170px" width="300px" loop muted autoplay>Video</video>
+    <br>
+    <video src="luffy-in-winter.960x540.mp4" controls height="170px" width="300px" loop poster="videoframe_5133.png">Video</video>
+
+    <hr>
+
+    <!-- Iframe Element -->
+    <h2>Iframe Tag</h2>
+    <p>
+        The <code>&lt;iframe&gt;</code> tag is used to embed another webpage inside the current page.
+        It is commonly used for embedding external sites, videos (like YouTube), maps, or applications.
+    </p>
+    <ul>
+        <li><b>src</b>: The URL of the page to embed.</li>
+        <li><b>height</b> and <b>width</b>: Define the dimensions of the iframe window.</li>
+        <li><b>frameborder</b>: Specifies whether the iframe should have a border (0 = no border).</li>
+    </ul>
+    <p><b>Example:</b></p>
+    <iframe src="https://aathi.pythonanywhere.com/" height="170px" width="300px" frameborder="0">iframe</iframe>
+
+</div>
+
 <hr>
      <div>
           <form action="">
@@ -529,9 +813,318 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
           </form>
      </div>
 <hr>
+
+<div>
+    <h1>HTML Forms - Detailed Explanation</h1>
+
+    <h2>1. Basic Form Structure</h2>
+    <p>
+        The <code>&lt;form&gt;</code> element is used to collect user input and send it to a server or handle it with JavaScript.  
+        Important attributes:
+    </p>
+    <ul>
+        <li><b>action</b> – URL where the form data is sent.</li>
+        <li><b>method</b> – GET (default) or POST, defines how data is sent.</li>
+    </ul>
+
+    <section>
+  <h2><ins>GET vs POST in HTML Forms</ins></h2>
+
+  <h3>1. Definition</h3>
+  <p>
+    In HTML, forms are used to send data from the client (browser) to the server.  
+    The <b>method</b> attribute of the <code>&lt;form&gt;</code> tag specifies 
+    how the data should be sent. The two most common methods are:
+  </p>
+  <ul>
+    <li><b>GET:</b> Appends the form data into the URL as query parameters.</li>
+    <li><b>POST:</b> Sends the form data in the request body, not visible in the URL.</li>
+  </ul>
+
+  <h3>2. Syntax</h3>
+  <pre>
+&lt;form action="server_page.php" method="get"&gt;
+    &lt;input type="text" name="username"&gt;
+    &lt;input type="submit"&gt;
+&lt;/form&gt;
+
+&lt;form action="server_page.php" method="post"&gt;
+    &lt;input type="text" name="username"&gt;
+    &lt;input type="submit"&gt;
+&lt;/form&gt;
+  </pre>
+
+  <h3>3. Key Differences</h3>
+  <table border="1" cellpadding="10" cellspacing="0" style="border-collapse: collapse; text-align: center;">
+    <tr>
+      <th>Aspect</th>
+      <th>GET</th>
+      <th>POST</th>
+    </tr>
+    <tr>
+     <td>Purpose</td>
+     <td>Primarily used for retrieving data from the server.</td>
+     <td>Primarily used for submitting data to the server to create or modify resources.</td>
+    </tr>
+    <tr>
+      <td>Data Visibility</td>
+      <td>Data is visible in the URL (e.g., <code>?username=John</code>)</td>
+      <td>Data is hidden, sent in the request body</td>
+    </tr>
+    <tr>
+      <td>Use Case</td>
+      <td>Fetching or requesting data (e.g., search engines, filters)</td>
+      <td>Submitting sensitive data (e.g., login, signup forms)</td>
+    </tr>
+    <tr>
+      <td>Data Length</td>
+      <td>Limited by URL length (about 2000 characters)</td>
+      <td>No restriction on data length</td>
+    </tr>
+    <tr>
+      <td>Security</td>
+      <td>Less secure (data can be bookmarked, cached, logged)</td>
+      <td>More secure (data not shown in URL)</td>
+    </tr>
+    <tr>
+      <td>Performance</td>
+      <td>Faster, as data is appended to URL</td>
+      <td>Slightly slower due to larger request</td>
+    </tr>
+    <tr>
+      <td>Idempotency</td>
+      <td>Safe to repeat (does not change server state)</td>
+      <td>Used for actions that modify server state</td>
+    </tr>
+  </table>
+
+  <h3>4. Example</h3>
+
+  <h4>GET Method</h4>
+  <form action="server_page.php" method="get">
+    <label>Username: <input type="text" name="username"></label>
+    <input type="submit" value="Submit via GET">
+  </form>
+
+  <h4>POST Method</h4>
+  <form action="server_page.php" method="post">
+    <label>Username: <input type="text" name="username"></label>
+    <input type="submit" value="Submit via POST">
+  </form>
+</section>
+
+
+    <h2>2. Text Input</h2>
+    <pre><code>&lt;input type="text"&gt;</code></pre>
+    <ul>
+        <li>Used for single-line text input.</li>
+        <li><b>id</b> – links input to a <code>&lt;label&gt;</code>.</li>
+        <li><b>name</b> – key for backend/JavaScript.</li>
+        <li><b>required</b> – makes field mandatory.</li>
+    </ul>
+
+    <h2>3. Password Input</h2>
+    <pre><code>&lt;input type="password"&gt;</code></pre>
+    <ul>
+        <li>Hides user input with dots or asterisks.</li>
+    </ul>
+
+    <h2>4. Radio Buttons (Single Choice)</h2>
+    <pre><code>&lt;input type="radio" name="gender" value="male"&gt;</code></pre>
+    <ul>
+        <li>Lets the user select one option from a group.</li>
+        <li>All radio buttons with the same <b>name</b> belong to one group.</li>
+    </ul>
+
+    <h2>5. Checkboxes (Multiple Choice)</h2>
+    <pre><code>&lt;input type="checkbox" name="skill" value="html"&gt;</code></pre>
+    <ul>
+        <li>User can select multiple options.</li>
+        <li><b>value</b> is what gets submitted when checked.</li>
+    </ul>
+
+    <h2>6. Dropdowns (Select & Option)</h2>
+    <pre><code>
+&lt;select name="lang"&gt;
+    &lt;option value="English"&gt;English&lt;/option&gt;
+&lt;/select&gt;
+    </code></pre>
+    <ul>
+        <li><code>&lt;select&gt;</code> creates a dropdown list.</li>
+        <li><code>&lt;option&gt;</code> defines choices.</li>
+        <li><code>&lt;optgroup&gt;</code> groups related options.</li>
+    </ul>
+
+    <h2>7. URL Input</h2>
+    <pre><code>&lt;input type="url"&gt;</code></pre>
+    <ul>
+        <li>Accepts valid URLs (with http:// or https://).</li>
+    </ul>
+
+    <h2>8. Number Input</h2>
+    <pre><code>&lt;input type="number" min="0" max="200"&gt;</code></pre>
+    <ul>
+        <li>Restricts input to numeric values.</li>
+        <li><b>min</b> and <b>max</b> define range.</li>
+    </ul>
+
+    <h2>9. Date & Time Inputs</h2>
+    <ul>
+        <li><code>&lt;input type="date"&gt;</code> – Date only.</li>
+        <li><code>&lt;input type="datetime-local"&gt;</code> – Date and time.</li>
+        <li><code>&lt;input type="month"&gt;</code> – Month selector.</li>
+        <li><code>&lt;input type="week"&gt;</code> – Week selector.</li>
+        <li><code>&lt;input type="time"&gt;</code> – Time picker.</li>
+    </ul>
+    <h2>10. File Upload</h2>
+    <pre><code>&lt;input type="file" name="resume"&gt;</code></pre>
+    <ul>
+        <li>Allows the user to upload files.</li>
+        <li><b>multiple</b> – allows selecting multiple files.</li>
+        <li><b>accept</b> – restrict file types (e.g. <code>accept="image/*,.pdf"</code>).</li>
+    </ul>
+
+    <h2>11. Image as Submit Button</h2>
+    <pre><code>&lt;input type="image" src="submit.png" width="50"&gt;</code></pre>
+    <ul>
+        <li>Works like a submit button but uses an image.</li>
+    </ul>
+
+    <h2>12. Range Slider</h2>
+    <pre><code>&lt;input type="range" min="0" max="100" value="50"&gt;</code></pre>
+    <ul>
+        <li>Lets user pick a value from a slider.</li>
+        <li>Use <b>min</b>, <b>max</b>, and <b>step</b> to control values.</li>
+    </ul>
+
+    <h2>13. Color Picker</h2>
+    <pre><code>&lt;input type="color" name="favcolor"&gt;</code></pre>
+    <ul>
+        <li>Opens a color palette for selection.</li>
+    </ul>
+
+    <h2>14. Search Input</h2>
+    <pre><code>&lt;input type="search" name="q"&gt;</code></pre>
+    <ul>
+        <li>Similar to text but optimized for search queries.</li>
+    </ul>
+
+    <h2>15. Hidden Input</h2>
+    <pre><code>&lt;input type="hidden" name="userid" value="101"&gt;</code></pre>
+    <ul>
+        <li>Invisible to user, but data is sent with form.</li>
+    </ul>
+
+    <h2>16. Reset Button</h2>
+    <pre><code>&lt;input type="reset" value="Reset"&gt;</code></pre>
+    <ul>
+        <li>Clears all form fields back to default values.</li>
+    </ul>
+
+    <h2>17. Submit Button</h2>
+    <pre><code>&lt;input type="submit" value="Register"&gt;</code></pre>
+    <ul>
+        <li>Sends form data to server (action URL).</li>
+    </ul>
+
+    <h2>18. Normal Button</h2>
+    <pre><code>&lt;button type="button"&gt;Click Me&lt;/button&gt;</code></pre>
+    <ul>
+        <li>Does not submit form unless <b>type="submit"</b> is given.</li>
+    </ul>
+
+    <h2>19. Textarea (Multi-line Input)</h2>
+    <pre><code>&lt;textarea rows="5" cols="30"&gt;&lt;/textarea&gt;</code></pre>
+    <ul>
+        <li>Used for multi-line input (comments, feedback).</li>
+    </ul>
+    <div>
+
+  <p>
+    The <b>&lt;textarea&gt;</b> element in HTML is used to create a <b>multi-line text input field</b>. 
+    It is commonly used in forms where users can enter longer pieces of text such as comments, feedback, or descriptions.
+  </p>
+
+  <h3>📌 Syntax</h3>
+  <pre>
+&lt;textarea name="fieldName" rows="number" cols="number"&gt;Default Text&lt;/textarea&gt;
+  </pre>
+
+  <h3>📌 Important Attributes</h3>
+  <ul>
+    <li><b>name</b> → Specifies the name of the textarea (used when submitting form data).</li>
+    <li><b>rows</b> → Defines the visible number of text lines.</li>
+    <li><b>cols</b> → Defines the visible width of the textarea (number of characters per line).</li>
+    <li><b>placeholder</b> → Provides a hint text inside the textarea until the user types something.</li>
+    <li><b>maxlength</b> → Restricts the maximum number of characters allowed.</li>
+    <li><b>readonly</b> → Makes the textarea non-editable but still selectable.</li>
+    <li><b>disabled</b> → Disables the textarea so the user cannot interact with it.</li>
+    <li><b>required</b> → Makes filling the textarea mandatory before form submission.</li>
+    <li><b>autofocus</b> → Automatically puts the cursor inside the textarea when the page loads.</li>
+    <li><b>wrap</b> → Controls text wrapping:
+      <ul>
+        <li><b>soft</b> → Text wraps visually but not stored with line breaks.</li>
+        <li><b>hard</b> → Line breaks are inserted and submitted as part of the value.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>📌 Example</h3>
+  <form action="server_page.php" method="post">
+    <label for="feedback">Your Feedback:</label><br><br>
+    <textarea name="feedback" id="feedback" rows="6" cols="40" placeholder="Write your comments here..." required></textarea>
+    <br><br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <h3>📌 Output:</h3>
+  <p>A large text box appears where users can type multiple lines of text.</p>
+</div>
+
+
+    <h2>20. Fieldset & Legend</h2>
+    <pre><code>
+&lt;fieldset&gt;
+    &lt;legend&gt;User Info&lt;/legend&gt;
+    &lt;input type="text"&gt;
+&lt;/fieldset&gt;
+    </code></pre>
+    <ul>
+        <li><code>&lt;fieldset&gt;</code> groups related inputs together. It draws a box around the related elements.</li>
+        <li><code>&lt;legend&gt;</code> provides a title for the group. used to define a caption for the &lt;fieldset&gt; element.</li>
+    </ul>
+
+    <h2>21. Datalist (Auto-suggestions)</h2>
+    <pre><code>
+&lt;input list="browsers"&gt;
+&lt;datalist id="browsers"&gt;
+    &lt;option value="Chrome"&gt;
+    &lt;option value="Firefox"&gt;
+    &lt;option value="Edge"&gt;
+&lt;/datalist&gt;
+    </code></pre>
+    <ul>
+        <li>Provides predefined suggestions as user types.</li>
+    </ul>
+
+    <h2>22. Key Form Attributes</h2>
+    <ul>
+        <li><b>placeholder</b> – hint text inside input.</li>
+        <li><b>required</b> – field must be filled before submitting.</li>
+        <li><b>readonly</b> – input cannot be changed.</li>
+        <li><b>disabled</b> – input is grayed out, not submitted.</li>
+        <li><b>maxlength</b> – max number of characters allowed.</li>
+        <li><b>pattern</b> – regex pattern for validation.</li>
+        <li><b>autocomplete="off"</b> – disables autofill.</li>
+    </ul>
+</div>
+
+<hr>
      <div>
           <h2 style="text-align: center;">Form</h2> <!--In Form the input field 'id' used to link the label that id should be same as 'for' attribute and the 'name' is used to link it with js or backend-->
           <form action="">
+               <fieldset>
+                    <legend>Form Field</legend>
                <label for="nameid">Name:</label>
                <input type="text" id="nameid" name="name" required><br><br>
                
@@ -583,7 +1176,7 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
 
                <label for="job">JOB:</label>
                <select name="job" id="job">
-               <option value="Select" style="text-align: center;">--Select JOB--</option>
+               <option value="Select" style="text-align: center;" disabled selected>--Select JOB--</option>
                <optgroup label="Software">
                     <option value="Devp">Software Developer</option>
                     <option value="test">Software Tester</option>
@@ -609,7 +1202,7 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
                <label for="file">CV:</label>
                <input type="file" name="file" id="file"><br><br>
 
-               <label for="photo">Photo:</label>
+               <label for="photo">Photo as Submit Button:</label>
                <input type="image" name="photo" id="photo" width="50px" height="30px" src="videoframe_5133.png"><br><br>
 
                <label for="vol">Range:</label>
@@ -633,6 +1226,9 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
                <label for="hidden">Hidden/Hide Any Input Type:</label>
                <input type="hidden" name="hidden" id="hidden" value="12345678"><br><br>
 
+               <label for="feedback">Feedback:</label>
+               <textarea name="feedback" id="feedback" rows="6" cols="40" placeholder="Write your comments here..." required></textarea><br><br>
+
                <label for="reset">Reset:</label>
                <input type="reset" name="reset" id="reset"><br><br>
 
@@ -641,33 +1237,88 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
 
                <label for="submit">Submit:</label>
                <input type="submit" name="submit" id="submit"><br><br>
-
+               </fieldset>
           </form>
      </div>
 <hr>
      <div>
-          <h3>HTML Non-Semetic Element</h3>
-          <table border="1" cellpadding="12" cellspacing="20" style="border-collapse: collapse; text-align: center;">
-               <tbody>
-               <tr>
-                    <td colspan="4">&lt;div&gt;</td>
-               </tr>
-               <tr>
-                    <td colspan="4">&lt;div&gt;</td>
-               </tr>
-               <tr>
-                   <td>&lt;div&gt;</td>
-                    <td rowspan="2">&lt;div&gt;</td> 
-               </tr>
-               <tr>
-                    <td>&lt;div&gt;</td>
-               </tr>
-               <tr>
-                    <td colspan="4">&lt;div&gt;</td>
-               </tr>
-               </tbody>
-          </table><br><br>
+    <h3>HTML Non-Semantic Element</h3>
+    <table border="1" cellpadding="12" cellspacing="20" style="border-collapse: collapse; text-align: center;">
+        <tbody>
+            <tr>
+                <td colspan="4">&lt;div&gt;</td>
+            </tr>
+            <tr>
+                <td colspan="4">&lt;div&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;div&gt;</td>
+                <td rowspan="2">&lt;div&gt;</td>
+            </tr>
+            <tr>
+                <td>&lt;div&gt;</td>
+            </tr>
+            <tr>
+                <td colspan="4">&lt;div&gt;</td>
+            </tr>
+        </tbody>
+    </table>
+    <br><br>
+
+    <h2><ins>HTML Non-Semantic Element</ins></h2>
+    <p>
+        In HTML, elements can be categorized as <b>semantic</b> or <b>non-semantic</b>:
+    </p>
+
+    <ul>
+        <li>
+            <b>Semantic Elements:</b> These elements have a specific meaning and clearly describe their purpose both to the browser and the developer.  
+            <br>Examples: <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code>, <code>&lt;article&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;nav&gt;</code>.
+        </li>
+        <li>
+            <b>Non-Semantic Elements:</b> These elements don’t convey any meaning about the content they contain. They are used mainly for styling or grouping content together.  
+            <br>Examples: <code>&lt;div&gt;</code>, <code>&lt;span&gt;</code>.
+        </li>
+    </ul>
+
+    <h3><ins>About &lt;div&gt; Element</ins></h3>
+    <p>
+        The <code>&lt;div&gt;</code> (division) element is a <b>block-level container</b> used to group other HTML elements. It has no semantic meaning by itself but is very useful for applying CSS styles or JavaScript functionality.
+    </p>
+
+    <h4><ins>Syntax:</ins></h4>
+    <pre>
+&lt;div&gt;
+    Content here...
+&lt;/div&gt;
+    </pre>
+
+    <h4><ins>Key Points:</ins></h4>
+    <ul>
+        <li><code>&lt;div&gt;</code> is a <b>block-level</b> element (starts on a new line).</li>
+        <li>Used to group multiple elements for styling and layout purposes.</li>
+        <li>Often used as a container for sections of a page.</li>
+        <li>Does not provide any meaning about the content inside.</li>
+    </ul>
+
+    <h4><ins>Example:</ins></h4>
+    <pre>
+&lt;div style="border: 1px solid black; padding: 10px;"&gt;
+    &lt;h2&gt;This is inside a div&lt;/h2&gt;
+    &lt;p&gt;The div groups this paragraph and heading together.&lt;/p&gt;
+&lt;/div&gt;
+    </pre>
+
+    <h4><ins>Output:</ins></h4>
+    <div style="border: 1px solid black; padding: 10px;">
+        <h2>This is inside a div</h2>
+        <p>The div groups this paragraph and heading together.</p>
+    </div>
+</div>
+
 <hr>
+<br>
+<div>
           <h3>HTML Sementic Element</h3>
           <table border="1" cellpadding="12" cellspacing="20" style="border-collapse: collapse; text-align: center;">
                <tbody>
@@ -689,6 +1340,60 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
                     </tr>
                </tbody><br><br>
           </table>     
+<h2><ins>HTML Semantic Elements</ins></h2>
+
+<p>
+Semantic elements in HTML are those that clearly describe their meaning in a human- and machine-readable way.  
+Unlike <code>&lt;div&gt;</code> or <code>&lt;span&gt;</code> (which are non-semantic), semantic elements clearly define their purpose and structure of the web page.  
+They make the code more accessible, especially for search engines and screen readers.
+</p>
+
+<h3>Common Semantic Elements</h3>
+<ul>
+  <li><b>&lt;header&gt;</b> → Defines the header section of a page or article (usually contains logo, navigation, or titles).</li>
+  <li><b>&lt;nav&gt;</b> → Represents a navigation section that links to other parts of the site.</li>
+  <li><b>&lt;main&gt;</b> → Specifies the main content of the document (unique per page).</li>
+  <li><b>&lt;section&gt;</b> → Defines a thematic grouping of content (like chapters or parts of a webpage).</li>
+  <li><b>&lt;article&gt;</b> → Represents independent, self-contained content (like a blog post, news article).</li>
+  <li><b>&lt;aside&gt;</b> → Defines content indirectly related to the main content (like a sidebar, ads, or related links).</li>
+  <li><b>&lt;footer&gt;</b> → Defines the footer of a page or section (usually contains copyright, contact info, links).</li>
+</ul>
+
+<h3>Syntax Example</h3>
+<pre>
+&lt;header&gt;
+     &lt;h1&gt;This is Header&lt;/h1&gt;
+     &lt;nav&gt;
+          &lt;a href="#"&gt;Home&lt;/a&gt;
+          &lt;a href="#"&gt;Explore&lt;/a&gt;
+          &lt;a href="#"&gt;Contact&lt;/a&gt;
+     &lt;/nav&gt;
+&lt;/header&gt;
+
+&lt;main&gt;
+     &lt;section&gt;
+          &lt;h1&gt;This is Section 1&lt;/h1&gt;
+          &lt;article&gt;&lt;h1&gt;This is Article 1&lt;/h1&gt;&lt;/article&gt;
+          &lt;article&gt;&lt;h1&gt;This is Article 2&lt;/h1&gt;&lt;/article&gt;
+     &lt;/section&gt;
+
+     &lt;aside&gt;
+          &lt;h1&gt;This is Aside&lt;/h1&gt;
+     &lt;/aside&gt;
+&lt;/main&gt;
+
+&lt;footer&gt;
+     &lt;h1&gt;This is Footer&lt;/h1&gt;
+&lt;/footer&gt;
+</pre>
+
+<h3>Output Explanation</h3>
+<ul>
+  <li>The <b>Header</b> appears at the top with navigation links.</li>
+  <li>The <b>Main</b> section contains multiple <b>Sections</b> and <b>Articles</b>.</li>
+  <li>The <b>Aside</b> is displayed as a sidebar (often styled separately with CSS).</li>
+  <li>The <b>Footer</b> appears at the bottom with additional info.</li>
+</ul>
 
           <header>
                <h1>This is Header</h1>
@@ -726,7 +1431,7 @@ Eg: &lt;img&gt;, &lt;input&gt;, &lt;button&gt;, etc.,</pre></p>
           <footer>
                <h1>This is Footer</h1>
           </footer>     
-     </div>
+</div>
 <hr>
      
 </body>
