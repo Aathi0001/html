@@ -40,6 +40,36 @@
     border-radius: 4px;
     font-family: Consolas, monospace;
   }
+  body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    h2 {
+      color: darkblue;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+    }
+    .container {
+      display: flex;
+      border: 2px solid black;
+      margin: 15px 0;
+      height: 120px;
+    }
+    .item {
+      background: lightcoral;
+      margin: 5px;
+      text-align: center;
+      color: white;
+      font-weight: bold;
+      padding: 20px;
+    }
+    .grow1 { flex-grow: 1; }
+    .grow2 { flex-grow: 2; }
+    .shrink0 { flex-shrink: 0; width: 200px; }
+    .shrink1 { flex-shrink: 1; width: 200px; }
+    .basis100 { flex-basis: 100px; }
+    .basis200 { flex-basis: 200px; }
 </style>
 
 </head>
@@ -211,7 +241,40 @@ div {
 </ul>
 
 <hr>
+<h2>flex-grow</h2>
+  <p><b>Definition:</b> Controls how much an item <u>expands</u> relative to others when extra space is available.</p>
+  <div class="container">
+    <div class="item grow1">Grow:1</div>
+    <div class="item grow2">Grow:2</div>
+    <div class="item grow1">Grow:1</div>
+  </div>
+  <p><b>Output:</b> The middle item (Grow:2) takes double the space of Grow:1 items. Ratio = 1:2:1.</p>
 
+  <h2>flex-shrink</h2>
+  <p><b>Definition:</b> Controls how much an item <u>shrinks</u> relative to others when space is too small.</p>
+  <div class="container" style="width: 300px;">
+    <div class="item shrink0">Shrink:0</div>
+    <div class="item shrink1">Shrink:1</div>
+  </div>
+  <p><b>Output:</b> The first item (Shrink:0) will NOT shrink below 200px, while the second item will shrink to fit.</p>
+
+  <h2>flex-basis</h2>
+  <p><b>Definition:</b> Sets the <u>initial size</u> of the item before grow/shrink is applied.</p>
+  <div class="container">
+    <div class="item basis100">Basis:100px</div>
+    <div class="item basis200">Basis:200px</div>
+  </div>
+  <p><b>Output:</b> The first item starts at 100px, the second at 200px. After that, grow/shrink rules may apply.</p>
+
+  <h2>Summary</h2>
+  <ul>
+    <li><b>flex-grow:</b> Distributes extra space (expand).</li>
+    <li><b>flex-shrink:</b> Distributes space reduction (shrink).</li>
+    <li><b>flex-basis:</b> Starting size of the flex item.</li>
+    <li><b>flex:</b> shorthand → <code>flex: grow shrink basis;</code></li>
+  </ul>
+  <hr>
+  
 <h4>Flex Item Properties</h4>
 
 <h4>1. order</h4>
