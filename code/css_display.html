@@ -835,8 +835,8 @@ z-index: 100; /* In front of elements with lower z-index */
   <li>animation-duration</li>
   <li>animation-delay</li>
   <li>animation-timing-function</li>
-  <li>animation-direction</li>
   <li>animation-iteration-count</li>
+  <li>animation-direction</li>
 </ul>
 
 <h5>→ @keyframes Rule</h5>
@@ -898,6 +898,42 @@ z-index: 100; /* In front of elements with lower z-index */
   <li>Any number (e.g., <code>3</code>)</li>
   <li><code>infinite</code> → animation runs forever</li>
 </ul>
+
+<h5>→ animation-fill-mode:</h5>
+<p>Specifies how a CSS animation applies styles to its target before and after execution.</p>
+<ul>
+     <li><code>none</code> → default, element does not retain animation styles</li>
+     <li><code>forwards</code> → element keeps the styles from the last keyframe</li>
+     <li><code>backwards</code> → element applies styles from first keyframe during the delay</li>
+     <li><code>both</code> → applies both forwards and backwards</li>
+</ul>
+<h5>→ animation-play-state:</h5>
+<p>Controls whether the animation is running or paused.</p>
+<ul>
+     <li><code>running</code> → animation plays (default)</li>
+     <li><code>paused</code> → animation stops</li>
+</ul>
+
+<h5>→ Shorthand Property (animation):</h5>
+<p>The <code>animation</code> shorthand allows setting all properties in one line.</p>
+<pre> animation: name duration timing-function delay iteration-count direction fill-mode play-state; </pre>
+
+✅ Only <code>name</code> and <code>duration</code> are required.
+Other values are optional.
+
+<h5>→ Example:</h5>
+<pre> .box { animation: bounce 2s ease-in-out 1s infinite alternate forwards running; } </pre>
+<ul>
+  <li><code>bounce</code> → animation-name</li>
+  <li><code>2s</code> → animation-duration</li>
+  <li><code>ease-in-out</code> → animation-timing-function</li>
+  <li><code>1s</code> → animation-delay</li>
+  <li><code>infinite</code> → animation-iteration-count</li>
+  <li><code>alternate</code> → animation-direction</li>
+  <li><code>forwards</code> → animation-fill-mode</li>
+  <li><code>running</code> → animation-play-state</li>
+</ul>
+
 <br><br>
 <h4>CSS object-fit</h4>
 
