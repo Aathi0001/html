@@ -430,7 +430,7 @@ String name = sc.next();
 
   <h2>Non-Primitive Typecasting</h2>
   <p>
-    Converting one non-primitive data type (class) into another. It is only possible when:
+    Converting one non-primitive data type (class) into another (or) converting the reference type of an object from one class/interface type to another. It is only possible when:
     <ul>
       <li>There is an <strong>is-a relationship</strong> (inheritance), or</li>
       <li>There is a <strong>common child relationship</strong>.</li>
@@ -475,6 +475,90 @@ F ref2 = (F) ref1;      // Downcasting
     🔸 Otherwise, it can throw <code>ClassCastException</code> at runtime.
   </div>
 
+  <h2>Upcasting vs Downcasting — Rules</h2>
+
+  <h3>Rule 1: Upcasting (Child → Parent)</h3>
+  <p><code>Parent p = new Child();</code></p>
+  <ul>
+    <li>You can call only <strong>methods declared in Parent</strong> (and its ancestors).</li>
+    <li>If Child <em>overrides</em> a Parent method, then <strong>Child’s version runs</strong> (runtime polymorphism).</li>
+    <li>Child-only (unique) methods are <strong>not accessible</strong> via the upcasted reference.</li>
+  </ul>
+
+  <h3>Rule 2: Downcasting (Parent → Child)</h3>
+  <p><code>Child c = (Child) p;</code></p>
+  <ul>
+    <li>Use downcasting when you <strong>need Child-only methods</strong>.</li>
+    <li>Downcast is <strong>explicit</strong> and should be guarded with <code>instanceof</code> to avoid <code>ClassCastException</code>.</li>
+  </ul>
+
+  <h3>Rule 3: Calling the Parent Version of an Overridden Method</h3>
+  <ul>
+    <li>With an upcasted reference, the <strong>Child’s overridden version runs</strong>.</li>
+    <li>To invoke the original Parent version, either:
+      <ul>
+        <li>Create a real Parent object: <code>Parent p = new Parent();</code></li>
+        <li>Or call <code>super.methodName()</code> from inside the Child class.</li>
+      </ul>
+    </li>
+  </ul>
+
+  <h3>Rule 4: Different-Name Methods</h3>
+  <ul>
+    <li><strong>Parent’s unique methods</strong> are accessible when upcasted (because they’re in Parent).</li>
+    <li><strong>Child’s unique methods</strong> require downcasting to access.</li>
+  </ul>
+
+  <hr />
+
+  <h2>Simple Summary</h2>
+  <ul>
+    <li><strong>Upcasting</strong>: Treat a Child object as its Parent type.
+      <ul>
+        <li>Access only Parent-declared methods.</li>
+        <li>Overridden calls run Child’s version.</li>
+        <li>No access to Child-only methods.</li>
+      </ul>
+    </li>
+    <li><strong>Downcasting</strong>: Convert a Parent reference (that actually points to a Child object) back to the Child type.
+      <ul>
+        <li>Gives access to Child-only methods.</li>
+        <li>Use <code>instanceof</code> before casting.</li>
+      </ul>
+    </li>
+    <li><strong>Want the Parent method’s original behavior?</strong> Use a real Parent object or <code>super</code> inside Child.</li>
+  </ul>
+
+  <hr />
+
+  <h3>Mini Example</h3>
+  <pre><code>class Animal {
+  void sound() { System.out.println("Animal sound"); }
+}
+
+class Dog extends Animal {
+  @Override
+  void sound() { System.out.println("Dog barks"); }
+  void play()  { System.out.println("Dog plays"); }
+}
+
+public class Demo {
+  public static void main(String[] args) {
+    Animal a = new Dog();  // Upcasting
+    a.sound();             // Dog barks (Child version)
+
+    // a.play();           // ❌ Not allowed (Child-only)
+
+    if (a instanceof Dog) {
+      Dog d = (Dog) a;     // Downcasting
+      d.play();            // ✅ Child-only method
+    }
+
+    Animal pure = new Animal();
+    pure.sound();          // Animal sound (Parent original)
+  }
+}</code></pre>
+<br>
   <h2>Primitive Typecasting</h2>
   <p>
     Converting one primitive data type into another.
