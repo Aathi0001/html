@@ -265,6 +265,73 @@ String name = "Aathi";
 
 </div>
 
+<h2>Java Enum</h2>
+
+<p><b>Definition:</b><br>
+<code>enum</code> (enumeration) is a special data type in Java used to define a <b>fixed set of constants</b>. 
+It makes the code more readable and type-safe.</p>
+
+<h3>Key Points:</h3>
+<ul>
+  <li>Enum constants are <b>public, static, and final</b> by default.</li>
+  <li>Enums are <b>type-safe</b> → you cannot assign values outside the defined set.</li>
+  <li>Each enum constant is an <b>object</b> of the enum type.</li>
+  <li>Enums can also have <b>methods, variables, and constructors</b>.</li>
+</ul>
+
+<h3>Basic Example:</h3>
+<pre>
+<code>
+enum Day {
+    MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+}
+
+public class TestEnum {
+    public static void main(String[] args) {
+        Day d = Day.MONDAY;
+        System.out.println(d);  // Output: MONDAY
+
+        // Looping through enum values
+        for (Day day : Day.values()) {
+            System.out.println(day);
+        }
+    }
+}
+</code>
+</pre>
+
+<h3>Output:</h3>
+<pre>
+MONDAY
+MONDAY
+TUESDAY
+WEDNESDAY
+THURSDAY
+FRIDAY
+SATURDAY
+SUNDAY
+</pre>
+
+<h3>Enum with Method:</h3>
+<pre>
+<code>
+enum Color {
+    RED, GREEN, BLUE;
+
+    void show() {
+        System.out.println("This is color: " + this);
+    }
+}
+
+public class TestColor {
+    public static void main(String[] args) {
+        Color c = Color.RED;
+        c.show();   // Output: This is color: RED
+    }
+}
+</code>
+</pre>
+
 <hr>
 
 <div class="section">
