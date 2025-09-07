@@ -1143,6 +1143,11 @@ class RecursionExample {
         System.out.println("Factorial of 5 is: " + result);
     }
 }
+
+//5 * (4 * (3 * (2 * (1 * factorial(0)))))
+//factorial(0) → returns 1
+//5 * (4 * (3 * (2 * (1 * 1))))
+//120
   </pre>
 
   <h3>🧠 Key Points</h3>
@@ -1688,6 +1693,135 @@ class Main {
     <p><b>Note:</b> Java does not support multiple inheritance with classes to avoid the <b>diamond problem</b>.</p>
 </div>
 
+
+  <h1>Types of Inheritance in Java — Simple (no CSS)</h1>
+  <p>Note: Java classes use <code>extends</code> for class inheritance and <code>implements</code> for interfaces. A class can extend only one class but can implement multiple interfaces.</p>
+
+  <h2>1) Single Inheritance</h2>
+  <p>One class inherits from one superclass.</p>
+  <pre>
+  Parent
+    |
+    v
+  Child
+  </pre>
+  <p>Example: <code>class Child extends Parent { }</code></p>
+
+  <h2>2) Multilevel Inheritance</h2>
+  <p>A chain of inheritance across generations.</p>
+  <pre>
+  Grandparent
+      |
+      v
+    Parent      //Inherit Grandparent
+      |
+      v
+    Child       //Inherit Grandparent and Parent
+  </pre>
+  <p>Example: <code>class Parent extends Grandparent { } class Child extends Parent { }</code></p>
+
+  <h2>3) Hierarchical Inheritance</h2>
+  <p>One superclass and multiple subclasses.</p>
+  <pre>
+        Parent  
+       /  |   \
+      v   v    v
+   ChildA ChildB ChildC       // all Child A,B,C Inherit Parent
+  </pre>
+  <p>Example: <code>class ChildA extends Parent { } class ChildB extends Parent { }</code></p>
+
+  <h2>4) Multiple Inheritance (via Interfaces)</h2>
+  <p>Java does not allow a class to extend more than one class. Multiple inheritance of type is achieved using interfaces.</p>
+  <pre>
+  Interface1   Interface2   Interface3
+       \         |         /
+        \        |        /
+         v       v       v
+       ConcreteClass implements Interface1, Interface2, Interface3 
+  </pre>
+  <p>Example: <code>class C implements I1, I2 { }</code></p>
+
+  <h2>5) Hybrid Inheritance (using classes + interfaces)</h2>
+  <p>Combination of different inheritance types using classes and interfaces.</p>
+  <pre>
+  InterfaceA &lt; -- BaseClass     //BaseClass Implements InterfaceA
+      |             |
+      v             v
+   MidClass      SubClass
+      \           /
+       \         /
+        v       v
+       FinalClass (extends/SubClass and implements InterfaceA)
+  </pre>
+  <p>Example: <code>class FinalClass extends SubClass implements InterfaceA { }</code></p>
+
+  <pre>
+// Interface
+interface InterfaceA {
+    void show();
+}
+
+// BaseClass implements InterfaceA
+class BaseClass implements InterfaceA {
+    public void show() {
+        System.out.println("BaseClass implementing InterfaceA");
+    }
+}
+
+// SubClass extends BaseClass
+class SubClass extends BaseClass {
+    public void display() {
+        System.out.println("SubClass extending BaseClass");
+    }
+}
+
+// MidClass also implements InterfaceA
+class MidClass implements InterfaceA {
+    public void show() {
+        System.out.println("MidClass implementing InterfaceA");
+    }
+}
+
+// FinalClass extends SubClass and implements InterfaceA
+class FinalClass extends SubClass implements InterfaceA {
+    @Override
+    public void show() {
+        System.out.println("FinalClass overriding InterfaceA show()");
+    }
+
+    public void extra() {
+        System.out.println("FinalClass own method");
+    }
+}
+
+// Main class
+public class HybridInheritanceDemo {
+    public static void main(String[] args) {
+        FinalClass obj = new FinalClass();
+
+        obj.show();      // from InterfaceA (FinalClass overrides)
+        obj.display();   // from SubClass
+        obj.extra();     // from FinalClass itself
+    }
+}
+  </pre>
+<pre>
+Output:
+
+FinalClass overriding InterfaceA show()
+SubClass extending BaseClass
+FinalClass own method
+
+</pre>
+  <hr>
+  <p>Quick rules:</p>
+  <ul>
+    <li>Class can <code>extends</code> only one class.</li>
+    <li>Class can <code>implements</code> many interfaces.</li>
+    <li>Interfaces can extend multiple interfaces.</li>
+  </ul>
+
+
 <div class="section">
     <h3>1. Single Inheritance</h3>
     <pre><code>
@@ -1947,7 +2081,7 @@ class Main {
 
 <div class="section">
     <h2>Polymorphism</h2>
-    <p><b>Definition:</b> Polymorphism means "many forms". It allows one entity (method or object) to behave differently based on the context.</p>
+    <p><b>Definition:</b> Polymorphism means "many forms". It allows one entity (method or object) to behave differently based on the context. (or) The ability of an object having members with the same name but different forms.</p>
 
     <h3>Types of Polymorphism</h3>
     <ul>
@@ -2023,6 +2157,8 @@ class B extends A {
 
     <h4>Method Shadowing / Hiding</h4>
     <p>Both parent and child class have static method with same name and signature. This is not overriding.</p>
+    <p>When a <b>static method</b> in a subclass has the same name and parameters as a static method in the superclass, it is called <b>method shadowing</b>. This is different from overriding because static methods belong to the <b>class</b>, not the <b>object</b>.</p>
+
 
 <pre><code>class A {
     static void show() {
@@ -2035,6 +2171,82 @@ class B extends A {
         System.out.println("Child static method");
     }
 }</code></pre>
+
+<h3>Why Shadowing, not Overriding?</h3>
+<ul>
+  <li>Instance methods → can be <b>overridden</b> (runtime polymorphism).</li>
+  <li>Static methods → <b>cannot be overridden</b>, because they belong to the <b>class</b>.</li>
+  <li>If a static method in child has same signature as parent → it <b>hides</b> the parent method.</li>
+</ul>
+
+<h3>Example:</h3>
+<pre>
+class Parent {
+    static void display() {
+        System.out.println("Parent static method");
+    }
+}
+
+class Child extends Parent {
+    static void display() {
+        System.out.println("Child static method");
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Parent p = new Parent();
+        p.display();  // Parent static method
+
+        Child c = new Child();
+        c.display();  // Child static method
+
+        Parent pc = new Child();
+        pc.display(); // Parent static method (NOT Child!)
+    }
+}
+</pre>
+
+<h3>Output:</h3>
+<pre>
+Parent static method
+Child static method
+Parent static method
+</pre>
+
+<h3>Key Points:</h3>
+<ul>
+  <li>Static methods are <b>class-level</b>, not object-level.</li>
+  <li>Method call is resolved at <b>compile-time</b> by reference type.</li>
+  <li>Shadowing ≠ Overriding.</li>
+</ul>
+
+<hr>
+
+<h3>Difference Between Overriding and Shadowing</h3>
+<table  cellpadding="8" cellspacing="0" style="border-collapse:collapse; text-align:center;">
+  <tr>
+    <th>Overriding</th>
+    <th>Shadowing</th>
+  </tr>
+  <tr>
+    <td>Happens with <b>instance methods</b></td>
+    <td>Happens with <b>static methods</b></td>
+  </tr>
+  <tr>
+    <td>Decided at <b>runtime</b> (object type)</td>
+    <td>Decided at <b>compile-time</b> (reference type)</td>
+  </tr>
+  <tr>
+    <td>Supports <b>polymorphism</b></td>
+    <td>No polymorphism</td>
+  </tr>
+  <tr>
+    <td>Uses <b>object</b> to decide method</td>
+    <td>Uses <b>reference type</b> to decide method</td>
+  </tr>
+</table>
+
 
     <h3>2. Runtime Polymorphism</h3>
 
@@ -2201,6 +2413,41 @@ public class MethodRefDemo {
 
   </div>
 
+  <h3>Example</h3>
+<pre>
+import java.util.function.Supplier;
+import java.util.function.Consumer;
+
+class Demo {
+    static void staticMethod() {
+        System.out.println("Static method called");
+    }
+    
+    void instanceMethod() {
+        System.out.println("Instance method called");
+    }
+    
+    public static void main(String[] args) {
+        // 1. Reference to static method
+        Runnable r = Demo::staticMethod;
+        r.run();  // Output: Static method called
+
+        // 2. Reference to instance method (object)
+        Demo obj = new Demo();
+        Runnable r2 = obj::instanceMethod;
+        r2.run(); // Output: Instance method called
+
+        // 3. Reference to instance method (class)
+        Consumer<String> c = String::toUpperCase;
+        c.accept("hello"); // Output: HELLO
+
+        // 4. Reference to constructor
+        Supplier<Demo> s = Demo::new;
+        Demo d = s.get();
+    }
+}
+</pre>
+
 <hr>
 
 <div class="topic">
@@ -2221,8 +2468,8 @@ public class MethodRefDemo {
       <th>Modifier</th>
       <th>Same Class</th>
       <th>Same Package</th>
-      <th>Subclass</th>
-      <th>Other Class</th>
+      <th>Subclass in another package</th>
+      <th>Other Class different package, not subclass</th>
     </tr>
     <tr>
       <td>public</td>
@@ -2255,28 +2502,70 @@ public class MethodRefDemo {
   </table>
 
   <h3>Example:</h3>
-  <pre><code class="language-java">
-public class Example {
-    public int a = 1;       // visible everywhere
-    protected int b = 2;    // visible in same package + subclass
-    int c = 3;              // default - visible only in same package
-    private int d = 4;      // visible only in the same class
+  <h4>File: <code>mypack/A.java</code></h4>
+<pre>
+package mypack;
 
-    public static void main(String[] args) {
-        Example obj = new Example();
-        System.out.println(obj.a); // 1
-        System.out.println(obj.b); // 2
-        System.out.println(obj.c); // 3
-        System.out.println(obj.d); // 4
+public class A {
+    public int pub = 1;
+    protected int pro = 2;
+    int def = 3;        // default
+    private int pri = 4;
+
+    public void show() {
+        System.out.println(pub); // Accessible
+        System.out.println(pro); // Accessible
+        System.out.println(def); // Accessible
+        System.out.println(pri); // Accessible
     }
 }
-  </code></pre>
+</pre>
 
-  <h4>Output:</h4>
-  <pre>1
-2
-3
-4</pre>
+<h4>File: <code>mypack/B.java</code> (same package)</h4>
+<pre>
+package mypack;
+
+public class B extends A {
+    void display() {
+        System.out.println(pub); // Accessible
+        System.out.println(pro); // Accessible
+        System.out.println(def); // Accessible
+        // System.out.println(pri); // Not Accessible
+    }
+}
+</pre>
+
+<h4>File: <code>otherpack/C.java</code> (different package, subclass)</h4>
+<pre>
+package otherpack;
+import mypack.A;
+
+public class C extends A {
+    void display() {
+        System.out.println(pub); // Accessible
+        System.out.println(pro); // Accessible (subclass in other package)
+        // System.out.println(def); // Not Accessible
+        // System.out.println(pri); // Not Accessible
+    }
+}
+</pre>
+
+<h4>File: <code>otherpack/D.java</code> (different package, not a subclass)</h4>
+<pre>
+package otherpack;
+import mypack.A;
+
+public class D {
+    void display() {
+        A obj = new A();
+        System.out.println(obj.pub); // Accessible
+        // System.out.println(obj.pro); // Not Accessible
+        // System.out.println(obj.def); // Not Accessible
+        // System.out.println(obj.pri); // Not Accessible
+    }
+}
+</pre>
+
 </div>
 
 <div class="topic">
@@ -6198,6 +6487,325 @@ Contains key 3? true
 </ul>
 
 <hr>
+
+<h2>Java Collections Framework - Core Interfaces</h2>
+<table  cellspacing="0" cellpadding="6">
+  <tr>
+    <th>Feature</th>
+    <th>List</th>
+    <th>Set</th>
+    <th>Queue</th>
+    <th>Map</th>
+  </tr>
+  <tr>
+    <td><b>Introduced in</b></td>
+    <td>Java 1.2</td>
+    <td>Java 1.2</td>
+    <td>Java 1.5</td>
+    <td>Java 1.2</td>
+  </tr>
+  <tr>
+    <td><b>Hierarchy</b></td>
+    <td>Extends Collection</td>
+    <td>Extends Collection</td>
+    <td>Extends Collection</td>
+    <td>Does NOT extend Collection (separate)</td>
+  </tr>
+  <tr>
+    <td><b>Duplicates Allowed</b></td>
+    <td>Yes</td>
+    <td>No</td>
+    <td>Yes (depending on type)</td>
+    <td>Keys: No, Values: Yes</td>
+  </tr>
+  <tr>
+    <td><b>Ordering</b></td>
+    <td>Maintains insertion order</td>
+    <td>No guaranteed order (depends on impl.)</td>
+    <td>FIFO, Priority, or custom order</td>
+    <td>Depends on implementation (unordered, insertion-ordered, or sorted)</td>
+  </tr>
+  <tr>
+    <td><b>Null Handling</b></td>
+    <td>Allowed (multiple nulls)</td>
+    <td>At most one null (depends on impl.)</td>
+    <td>Generally allows null (except PriorityQueue, ArrayDeque)</td>
+    <td>Keys: at most one null (not in TreeMap/Hashtable)<br>Values: multiple nulls (not in Hashtable)</td>
+  </tr>
+  <tr>
+    <td><b>Access Type</b></td>
+    <td>Index-based</td>
+    <td>Element-based</td>
+    <td>Head-based (FIFO/LIFO/Priority)</td>
+    <td>Key-Value pairs</td>
+  </tr>
+  <tr>
+    <td><b>Common Implementations</b></td>
+    <td>ArrayList, LinkedList, Vector, Stack</td>
+    <td>HashSet, LinkedHashSet, TreeSet</td>
+    <td>PriorityQueue, ArrayDeque, LinkedList</td>
+    <td>HashMap, LinkedHashMap, TreeMap, Hashtable</td>
+  </tr>
+  <tr>
+    <td><b>Use Case</b></td>
+    <td>When duplicates and order matter</td>
+    <td>When uniqueness is required</td>
+    <td>When processing order is important</td>
+    <td>When key-value mapping is needed</td>
+  </tr>
+</table>
+
+
+<h2>Java Collections Framework - List Implementations</h2>
+<table  cellspacing="0" cellpadding="6">
+  <tr>
+    <th>Feature</th>
+    <th>ArrayList</th>
+    <th>LinkedList</th>
+    <th>Vector</th>
+    <th>Stack</th>
+  </tr>
+  <tr>
+    <td><b>Introduced in</b></td>
+    <td>Java 1.2</td>
+    <td>Java 1.2</td>
+    <td>Java 1.0</td>
+    <td>Java 1.0 (as subclass of Vector)</td>
+  </tr>
+  <tr>
+    <td><b>Underlying Data Structure</b></td>
+    <td>Dynamic Array</td>
+    <td>Doubly Linked List</td>
+    <td>Dynamic Array (Synchronized)</td>
+    <td>Dynamic Array (Vector, LIFO stack)</td>
+  </tr>
+  <tr>
+    <td><b>Ordering</b></td>
+    <td>Maintains Insertion Order</td>
+    <td>Maintains Insertion Order</td>
+    <td>Maintains Insertion Order</td>
+    <td>Maintains Insertion Order</td>
+  </tr>
+  <tr>
+    <td><b>Null Elements</b></td>
+    <td>Allowed (multiple)</td>
+    <td>Allowed (multiple)</td>
+    <td>Allowed (multiple)</td>
+    <td>Allowed (multiple)</td>
+  </tr>
+  <tr>
+    <td><b>Synchronized</b></td>
+    <td>No</td>
+    <td>No</td>
+    <td>Yes (legacy synchronized)</td>
+    <td>Yes (inherits from Vector)</td>
+  </tr>
+  <tr>
+    <td><b>Access Performance</b></td>
+    <td>Fast (O(1) for index-based)</td>
+    <td>Slow (O(n) for index-based)</td>
+    <td>Similar to ArrayList but slower due to sync</td>
+    <td>Similar to Vector, used for LIFO</td>
+  </tr>
+  <tr>
+    <td><b>Use Case</b></td>
+    <td>Random access, frequent read</td>
+    <td>Frequent insert/delete in middle</td>
+    <td>Legacy, when sync needed</td>
+    <td>LIFO Stack operations</td>
+  </tr>
+</table>
+
+<h2>Java Collections Framework - Queue Implementations</h2>
+<table  cellspacing="0" cellpadding="6">
+  <tr>
+    <th>Feature</th>
+    <th>PriorityQueue</th>
+    <th>ArrayDeque</th>
+    <th>LinkedList (as Queue)</th>
+  </tr>
+  <tr>
+    <td><b>Introduced in</b></td>
+    <td>Java 1.5</td>
+    <td>Java 1.6</td>
+    <td>Java 1.2</td>
+  </tr>
+  <tr>
+    <td><b>Underlying Data Structure</b></td>
+    <td>Heap (priority heap)</td>
+    <td>Resizable Circular Array</td>
+    <td>Doubly Linked List</td>
+  </tr>
+  <tr>
+    <td><b>Ordering</b></td>
+    <td>Elements ordered by priority (natural/comparator)</td>
+    <td>Maintains insertion order (double-ended)</td>
+    <td>Maintains insertion order</td>
+  </tr>
+  <tr>
+    <td><b>Null Elements</b></td>
+    <td>Not Allowed</td>
+    <td>Not Allowed</td>
+    <td>Allowed (only one null)</td>
+  </tr>
+  <tr>
+    <td><b>Synchronized</b></td>
+    <td>No</td>
+    <td>No</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td><b>Performance</b></td>
+    <td>O(log n) for insertion/removal</td>
+    <td>O(1) for insertion/removal at ends</td>
+    <td>O(1) insertion/removal at ends, O(n) for search</td>
+  </tr>
+  <tr>
+    <td><b>Special Feature</b></td>
+    <td>Implements Priority Queue</td>
+    <td>Implements Deque (double-ended queue)</td>
+    <td>Can be used as Queue, Deque, or List</td>
+  </tr>
+  <tr>
+    <td><b>Use Case</b></td>
+    <td>When elements must be processed by priority</td>
+    <td>When fast insertion/removal at both ends is needed</td>
+    <td>General-purpose Queue or Deque</td>
+  </tr>
+</table>
+
+<h2>Java Collections Framework - Set Implementations</h2>
+<table  cellspacing="0" cellpadding="6">
+  <tr>
+    <th>Feature</th>
+    <th>HashSet</th>
+    <th>LinkedHashSet</th>
+    <th>TreeSet</th>
+  </tr>
+  <tr>
+    <td><b>Introduced in</b></td>
+    <td>Java 1.2</td>
+    <td>Java 1.4</td>
+    <td>Java 1.2</td>
+  </tr>
+  <tr>
+    <td><b>Underlying Data Structure</b></td>
+    <td>Hash Table</td>
+    <td>Hash Table + Linked List</td>
+    <td>Red-Black Tree</td>
+  </tr>
+  <tr>
+    <td><b>Ordering</b></td>
+    <td>No ordering (unordered)</td>
+    <td>Maintains insertion order</td>
+    <td>Maintains natural/comparator order (sorted)</td>
+  </tr>
+  <tr>
+    <td><b>Null Elements</b></td>
+    <td>Allows one null</td>
+    <td>Allows one null</td>
+    <td>Does not allow null</td>
+  </tr>
+  <tr>
+    <td><b>Synchronized</b></td>
+    <td>No</td>
+    <td>No</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td><b>Performance</b></td>
+    <td>O(1) for add, remove, contains</td>
+    <td>O(1) for add, remove, contains</td>
+    <td>O(log n) for add, remove, contains</td>
+  </tr>
+  <tr>
+    <td><b>Special Feature</b></td>
+    <td>Fastest among Sets</td>
+    <td>Maintains insertion order</td>
+    <td>Sorted set with navigation methods</td>
+  </tr>
+  <tr>
+    <td><b>Use Case</b></td>
+    <td>Best when order does not matter</td>
+    <td>Best when order matters</td>
+    <td>Best when sorting is required</td>
+  </tr>
+</table>
+
+<h2>Java Collections Framework - Map Implementations</h2>
+<table  cellspacing="0" cellpadding="6">
+  <tr>
+    <th>Feature</th>
+    <th>HashMap</th>
+    <th>LinkedHashMap</th>
+    <th>TreeMap</th>
+    <th>Hashtable</th>
+  </tr>
+  <tr>
+    <td><b>Introduced in</b></td>
+    <td>Java 1.2</td>
+    <td>Java 1.4</td>
+    <td>Java 1.2</td>
+    <td>Java 1.0</td>
+  </tr>
+  <tr>
+    <td><b>Underlying Data Structure</b></td>
+    <td>Hash Table + Linked List (Java 8: balanced tree for collisions)</td>
+    <td>Hash Table + Linked List (preserves order)</td>
+    <td>Red-Black Tree</td>
+    <td>Hash Table</td>
+  </tr>
+  <tr>
+    <td><b>Ordering</b></td>
+    <td>Unordered</td>
+    <td>Maintains insertion order</td>
+    <td>Sorted (by natural order / comparator)</td>
+    <td>Unordered</td>
+  </tr>
+  <tr>
+    <td><b>Null Keys</b></td>
+    <td>Allows one null key</td>
+    <td>Allows one null key</td>
+    <td>Does not allow null key</td>
+    <td>Does not allow null key</td>
+  </tr>
+  <tr>
+    <td><b>Null Values</b></td>
+    <td>Multiple null values allowed</td>
+    <td>Multiple null values allowed</td>
+    <td>Allows null values</td>
+    <td>Does not allow null values</td>
+  </tr>
+  <tr>
+    <td><b>Synchronized</b></td>
+    <td>No</td>
+    <td>No</td>
+    <td>No</td>
+    <td>Yes (legacy synchronized)</td>
+  </tr>
+  <tr>
+    <td><b>Performance</b></td>
+    <td>O(1) average for put/get</td>
+    <td>O(1) average for put/get</td>
+    <td>O(log n) for put/get</td>
+    <td>O(1) average, but slower due to sync</td>
+  </tr>
+  <tr>
+    <td><b>Special Feature</b></td>
+    <td>Fastest general-purpose Map</td>
+    <td>Preserves insertion order</td>
+    <td>Maintains sorted keys</td>
+    <td>Thread-safe, legacy</td>
+  </tr>
+  <tr>
+    <td><b>Use Case</b></td>
+    <td>General-purpose mapping</td>
+    <td>When order matters</td>
+    <td>When sorting/navigating keys is needed</td>
+    <td>When thread-safety is required (legacy)</td>
+  </tr>
+</table>
+
 
 </body>
 </html>
