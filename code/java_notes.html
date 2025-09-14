@@ -3006,6 +3006,246 @@ public final void notifyAll()</code></pre>
 }</code></pre>
   </section>
 
+<h1>Java <code>Object</code> Class Methods</h1>
+<p>All classes in Java implicitly extend <code>Object</code> class (unless they extend another class). The <code>Object</code> class provides 11 important methods.</p>
+
+<hr>
+
+<h2>1. <code>public String toString()</code></h2>
+<p>Returns string representation of the object.</p>
+<pre>
+class Student {
+    String name;
+    Student(String name) { this.name = name; }
+    public String toString() {
+        return "Student name: " + name;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Student s = new Student("Aathi");
+        System.out.println(s.toString());
+    }
+}
+</pre>
+<div class="output">Output:<br>Student name: Aathi</div>
+
+<hr>
+
+<h2>2. <code>public boolean equals(Object obj)</code></h2>
+<p>Compares two objects for equality.</p>
+<pre>
+class Person {
+    String name;
+    Person(String name) { this.name = name; }
+    public boolean equals(Object o) {
+        if (o instanceof Person) {
+            Person p = (Person) o;
+            return this.name.equals(p.name);
+        }
+        return false;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Person p1 = new Person("Aathi");
+        Person p2 = new Person("Aathi");
+        System.out.println(p1.equals(p2));
+    }
+}
+</pre>
+<div class="output">Output:<br>true</div>
+
+  <h1>equals() — <small>instanceof vs getClass()</small></h1>
+  <p>Short explanation and two runnable Java examples showing the difference between using <code>instanceof</code> and <code>getClass()</code> inside <code>equals(Object o)</code>.</p>
+
+  <h2>Quick summary</h2>
+  <ul>
+    <li><strong>instanceof</strong>: allows equality across subclasses (looser). Useful when subclasses should be comparable as the parent type.</li>
+    <li><strong>getClass()</strong>: requires exact same runtime class (stricter). Useful when subclass fields should prevent equality with parent.</li>
+  </ul>
+
+  <div class="example">
+    <h2>Example A — using <code>instanceof</code></h2>
+    <p>Behaviour: <code>Person</code> and <code>Employee (extends Person)</code> can be equal if parent's fields match.</p>
+    <pre><code>// PersonInstanceOf.java
+class Person {
+    String name;
+    Person(String name) { this.name = name; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false; // allows subclasses
+        Person p = (Person) o;
+        return this.name.equals(p.name);
+    }
+}
+
+class Employee extends Person {
+    Employee(String name) { super(name); }
+}
+
+public class TestInstanceOf {
+    public static void main(String[] args) {
+        Person p = new Person("Aathi");
+        Employee e = new Employee("Aathi");
+
+        System.out.println(p.equals(e)); // true (because instanceof allows it)
+        System.out.println(e.equals(p)); // true (same logic) 
+    }
+}
+</code></pre>
+    <p><strong>Output:</strong></p>
+    <pre><code>true
+true
+</code></pre>
+  </div>
+
+  <div class="example">
+    <h2>Example B — using <code>getClass()</code></h2>
+    <p>Behaviour: only exact same class instances compare equal. Subclass vs parent = <code>false</code>.</p>
+    <pre><code>// PersonGetClass.java
+class Person {
+    String name;
+    Person(String name) { this.name = name; }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false; // exact class check
+        Person p = (Person) o;
+        return this.name.equals(p.name);
+    }
+}
+
+class Employee extends Person {
+    Employee(String name) { super(name); }
+}
+
+public class TestGetClass {
+    public static void main(String[] args) {
+        Person p = new Person("Aathi");
+        Employee e = new Employee("Aathi");
+
+        System.out.println(p.equals(e)); // false (different classes)
+        System.out.println(e.equals(p)); // false
+    }
+}
+</code></pre>
+    <p><strong>Output:</strong></p>
+    <pre><code>false
+false
+</code></pre>
+  </div>
+
+  <div class="note">
+    <strong>Which to use?</strong>
+    <ul>
+      <li>Use <code>instanceof</code> when you want a looser equality that treats subclasses as compatible.</li>
+      <li>Use <code>getClass()</code> when equality must be exact and subclasses should not be equal to superclasses.</li>
+      <li>Always follow the <em>equals</em> contract (reflexive, symmetric, transitive, consistent, and <code>null</code>-safe) and override <code>hashCode()</code> when overriding <code>equals()</code>.</li>
+    </ul>
+  </div>
+
+<hr>
+
+<h2>3. <code>public int hashCode()</code></h2>
+<p>Returns integer hash code of the object.</p>
+<pre>
+public class Main {
+    public static void main(String[] args) {
+        String s = "Java";
+        System.out.println(s.hashCode());
+    }
+}
+</pre>
+<div class="output">Output:<br>2301506</div>
+
+<hr>
+
+<h2>4. <code>public final Class<?> getClass()</code></h2>
+<p>Returns runtime class of the object.</p>
+<pre>
+public class Main {
+    public static void main(String[] args) {
+        String s = "Hello";
+        System.out.println(s.getClass());
+    }
+}
+</pre>
+<div class="output">Output:<br>class java.lang.String</div>
+
+<hr>
+
+<h2>5. <code>protected Object clone()</code></h2>
+<p>Creates and returns copy of the object.</p>
+<pre>
+class Student implements Cloneable {
+    String name;
+    Student(String name) { this.name = name; }
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
+}
+public class Main {
+    public static void main(String[] args) throws Exception {
+        Student s1 = new Student("Aathi");
+        Student s2 = (Student) s1.clone();
+        System.out.println(s2.name);
+    }
+}
+</pre>
+<div class="output">Output:<br>Aathi</div>
+
+<hr>
+
+<h2>6. <code>protected void finalize()</code></h2>
+<p>Called by Garbage Collector before destroying the object.</p>
+<pre>
+class Demo {
+    protected void finalize() {
+        System.out.println("Object is garbage collected");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Demo d = new Demo();
+        d = null;
+        System.gc();
+    }
+}
+</pre>
+<div class="output">Output:<br>Object is garbage collected</div>
+
+<hr>
+
+<h2>7. <code>public final void notify()</code></h2>
+<p>Wakes up a single thread waiting on this object's monitor.</p>
+<pre>
+// Used in multithreading
+</pre>
+
+<h2>8. <code>public final void notifyAll()</code></h2>
+<p>Wakes up all threads waiting on this object's monitor.</p>
+<pre>
+// Used in multithreading
+</pre>
+
+<h2>9. <code>public final void wait()</code></h2>
+<p>Causes current thread to wait until another thread invokes notify().</p>
+<pre>
+// Used in multithreading
+</pre>
+
+<h2>10. <code>public final void wait(long timeout)</code></h2>
+<p>Causes thread to wait for specified milliseconds.</p>
+
+<h2>11. <code>public final void wait(long timeout, int nanos)</code></h2>
+<p>Causes thread to wait for specified time (ms + ns).</p>
+
+<p><b>Note:</b> Methods <code>wait()</code>, <code>notify()</code>, <code>notifyAll()</code> are part of Java's multithreading and synchronization features. They cannot be easily shown with single-thread examples.</p>
+
 <hr>
 
 <div class="section">
@@ -3435,6 +3675,139 @@ cube[1][1][1] = 8;</pre>
 
   <hr>
 
+  <h1>Java Multidimensional </h1>
+
+  <h2>1. Cube Example (3D Array using Loops)</h2>
+  <pre>
+public class CubeExample {
+    public static void main(String[] args) {
+
+        // Declare and create a 3x3x3 integer array (a cube)
+        int[][][] cube = new int[3][3][3];
+
+        // Initialize the elements of the cube using nested loops
+        int value = 1;
+        for (int z = 0; z &lt; 3; z++) {       // Layer (Depth)
+            for (int y = 0; y &lt; 3; y++) {   // Row
+                for (int x = 0; x &lt; 3; x++) {   // Column
+                    cube[z][y][x] = value++;
+                }
+            }
+        }
+
+        // Print the elements of the cube using nested loops
+        System.out.println("Printing the 3x3x3 cube:");
+        for (int z = 0; z &lt; 3; z++) {
+            System.out.println("--- Layer " + (z + 1) + " ---");
+            for (int y = 0; y &lt; 3; y++) {
+                for (int x = 0; x &lt; 3; x++) {
+                    System.out.print(cube[z][y][x] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+
+        // Access a specific element
+        System.out.println("Accessing a specific element:");
+        System.out.println("Element at cube[1][2][0]: " + cube[1][2][0]);
+    }
+}
+  </pre>
+
+  <div class="output">
+    <b>Output:</b><br>
+    Printing the 3x3x3 cube:<br>
+    --- Layer 1 ---<br>
+    1 2 3 <br>
+    4 5 6 <br>
+    7 8 9 <br><br>
+
+    --- Layer 2 ---<br>
+    10 11 12 <br>
+    13 14 15 <br>
+    16 17 18 <br><br>
+
+    --- Layer 3 ---<br>
+    19 20 21 <br>
+    22 23 24 <br>
+    25 26 27 <br><br>
+
+    Accessing a specific element:<br>
+    Element at cube[1][2][0]: 16
+  </div>
+
+  <h2>2. Cube Initializer Example (Direct Initialization)</h2>
+  <pre>
+public class CubeInitializerExample {
+    public static void main(String[] args) {
+
+        // Declare and initialize a 3D array (cube) directly with values
+        int[][][] cube = {
+            // Layer 1
+            { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} },
+            // Layer 2
+            { {10, 11, 12}, {13, 14, 15}, {16, 17, 18} },
+            // Layer 3
+            { {19, 20, 21}, {22, 23, 24}, {25, 26, 27} }
+        };
+
+        // Access and print a specific element
+        System.out.println("Element at cube[1][2][0]: " + cube[1][2][0]); // Accesses value 16
+
+        // Print the entire cube using nested loops
+        System.out.println("\\nPrinting the entire 3D cube:");
+        for (int z = 0; z &lt; cube.length; z++) {
+            System.out.println("--- Layer " + (z + 1) + " ---");
+            for (int y = 0; y &lt; cube[z].length; y++) {
+                for (int x = 0; x &lt; cube[z][y].length; x++) {
+                    System.out.print(cube[z][y][x] + " ");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+    }
+}
+  </pre>
+
+  <div class="output">
+    <b>Output:</b><br>
+    Element at cube[1][2][0]: 16<br><br>
+
+    Printing the entire 3D cube:<br>
+    --- Layer 1 ---<br>
+    1 2 3 <br>
+    4 5 6 <br>
+    7 8 9 <br><br>
+
+    --- Layer 2 ---<br>
+    10 11 12 <br>
+    13 14 15 <br>
+    16 17 18 <br><br>
+
+    --- Layer 3 ---<br>
+    19 20 21 <br>
+    22 23 24 <br>
+    25 26 27
+  </div>
+
+  
+
+  <h2>4. Note on Maximum Dimensions</h2>
+  <p>
+    In Java, arrays can be declared up to <b>255 dimensions</b>.
+    Example (not practical to use):
+  </p>
+  <pre>
+int[][][][]...[] arr = new int[2][2]...[2]; // up to 255 []
+  </pre>
+  <p>
+    ⚠️ Practically, anything beyond 3D or 4D is very hard to manage and can cause
+    <code>OutOfMemoryError</code>.
+  </p>
+
+<hr>
   <h2>Jagged Array</h2>
   <p>A jagged array is a multi-dimensional array with unequal row sizes.</p>
 
@@ -3458,6 +3831,38 @@ jagged[1][0] = 3;
     }
     System.out.println();
 }</pre>
+
+
+<h2>Jagged Array Example (Different Row Sizes)</h2>
+  <pre>
+public class JaggedArrayExample {
+    public static void main(String[] args) {
+        // Jagged Array
+        int[][] jagged = new int[3][];
+        jagged[0] = new int[]{1, 2};
+        jagged[1] = new int[]{3, 4, 5};
+        jagged[2] = new int[]{6};
+
+        // Printing
+        System.out.println("Jagged Array:");
+        for (int i = 0; i &lt; jagged.length; i++) {
+            for (int j = 0; j &lt; jagged[i].length; j++) {
+                System.out.print(jagged[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+  </pre>
+
+  <div class="output">
+    <b>Output:</b><br>
+    Jagged Array:<br>
+    1 2 <br>
+    3 4 5 <br>
+    6
+  </div>
+
 
   <hr>
 
@@ -3485,6 +3890,22 @@ int[] copy = Arrays.copyOf(data, data.length);
 // Compare arrays
 boolean same = Arrays.equals(data, copy);</pre>
 </div>
+<pre>
+import java.util.Arrays;
+
+public class ArrayEqualsDemo {
+    public static void main(String[] args) {
+        int[] a = {1, 2, 3};
+        int[] b = {1, 2, 3};
+        int[] c = a;
+
+        System.out.println(a.equals(b));            // false (different objects)
+        System.out.println(a.equals(c));            // true (same reference)
+        System.out.println(Arrays.equals(a, b));    // true (compares contents)
+    }
+}
+
+</pre>
  <div class="section">
     <h2>Common Array Methods</h2>
     <ul>
@@ -3608,7 +4029,274 @@ System.out.println(sbf); // Hello World
   <li><b>valueOf(data)</b> – Converts any data type to a string (static method).</li>
   <li><b>compareTo(String)</b> – Compares two strings lexicographically.</li>
 </ul>
+<h3>✅ String Methods (Immutable)</h3>
+<ol>
+  <li>
+    <b>length()</b> – Returns the number of characters in the string.
+    <pre>
+String str = "Hello World";
+System.out.println(str.length());
+    </pre>
+    <b>Output:</b>
+    <pre>11</pre>
+  </li>
 
+  <li>
+    <b>charAt(int index)</b> – Returns the character at the specified index.
+    <pre>
+String str = "Java";
+System.out.println(str.charAt(2));
+    </pre>
+    <b>Output:</b>
+    <pre>v</pre>
+  </li>
+
+  <li>
+    <b>substring(int beginIndex)</b> – Returns substring from index to end.
+    <pre>
+String str = "Programming";
+System.out.println(str.substring(6));
+    </pre>
+    <b>Output:</b>
+    <pre>mming</pre>
+  </li>
+
+  <li>
+    <b>substring(int begin, int end)</b> – From begin (inclusive) to end (exclusive).
+    <pre>
+String str = "Programming";
+System.out.println(str.substring(0, 6));
+    </pre>
+    <b>Output:</b>
+    <pre>Progra</pre>
+  </li>
+
+  <li>
+    <b>contains(String s)</b> – Checks substring.
+    <pre>
+String str = "Java Programming";
+System.out.println(str.contains("gram"));
+    </pre>
+    <b>Output:</b>
+    <pre>true</pre>
+  </li>
+
+  <li>
+    <b>equals(String s)</b> – Exact match.
+    <pre>
+String a = "Hello";
+String b = "Hello";
+System.out.println(a.equals(b));
+    </pre>
+    <b>Output:</b>
+    <pre>true</pre>
+  </li>
+
+  <li>
+    <b>equalsIgnoreCase(String s)</b> – Ignores case.
+    <pre>
+String a = "JAVA";
+String b = "java";
+System.out.println(a.equalsIgnoreCase(b));
+    </pre>
+    <b>Output:</b>
+    <pre>true</pre>
+  </li>
+
+  <li>
+    <b>isEmpty()</b> – Checks if empty.
+    <pre>
+String s = "";
+System.out.println(s.isEmpty());
+    </pre>
+    <b>Output:</b>
+    <pre>true</pre>
+  </li>
+
+  <li>
+    <b>toUpperCase()</b> – Converts to upper case.
+    <pre>
+String s = "hello";
+System.out.println(s.toUpperCase());
+    </pre>
+    <b>Output:</b>
+    <pre>HELLO</pre>
+  </li>
+
+  <li>
+    <b>toLowerCase()</b> – Converts to lower case.
+    <pre>
+String s = "HELLO";
+System.out.println(s.toLowerCase());
+    </pre>
+    <b>Output:</b>
+    <pre>hello</pre>
+  </li>
+
+  <li>
+    <b>trim()</b> – Removes spaces.
+    <pre>
+String s = "   Java   ";
+System.out.println(s.trim());
+    </pre>
+    <b>Output:</b>
+    <pre>Java</pre>
+  </li>
+
+  <li>
+    <b>replace(old, new)</b> – Replaces characters.
+    <pre>
+String s = "Java";
+System.out.println(s.replace('a', 'o'));
+    </pre>
+    <b>Output:</b>
+    <pre>Jovo</pre>
+  </li>
+
+  <li>
+    <b>indexOf(char/string)</b> – First occurrence index.
+    <pre>
+String s = "banana";
+System.out.println(s.indexOf('a'));
+    </pre>
+    <b>Output:</b>
+    <pre>1</pre>
+  </li>
+
+  <li>
+    <b>lastIndexOf(char/string)</b> – Last occurrence index.
+    <pre>
+String s = "banana";
+System.out.println(s.lastIndexOf('a'));
+    </pre>
+    <b>Output:</b>
+    <pre>5</pre>
+  </li>
+
+  <li>
+    <b>split(String regex)</b> – Splits into array.
+    <pre>
+String s = "a,b,c";
+String[] arr = s.split(",");
+for(String x : arr) {
+    System.out.println(x);
+}
+    </pre>
+    <b>Output:</b>
+    <pre>
+a
+b
+c
+    </pre>
+  </li>
+
+  <li>
+    <b>startsWith(String)</b> – Checks prefix.
+    <pre>
+String s = "hello";
+System.out.println(s.startsWith("he"));
+    </pre>
+    <b>Output:</b>
+    <pre>true</pre>
+  </li>
+
+  <li>
+    <b>endsWith(String)</b> – Checks suffix.
+    <pre>
+String s = "hello";
+System.out.println(s.endsWith("lo"));
+    </pre>
+    <b>Output:</b>
+    <pre>true</pre>
+  </li>
+
+  <li>
+    <b>toCharArray()</b> – Converts to char array.
+    <pre>
+String s = "java";
+char[] arr = s.toCharArray();
+for(char c : arr) {
+    System.out.print(c + " ");
+}
+    </pre>
+    <b>Output:</b>
+    <pre>j a v a </pre>
+  </li>
+
+  <li>
+    <b>valueOf(data)</b> – Converts any data type to string.
+    <pre>
+int num = 123;
+String s = String.valueOf(num);
+System.out.println(s + 10);
+    </pre>
+    <b>Output:</b>
+    <pre>12310</pre>
+  </li>
+
+  <li>
+    <b>compareTo(String)</b> – Lexicographic comparison.
+    <pre>
+String a = "apple";
+String b = "banana";
+System.out.println(a.compareTo(b));
+    </pre>
+    <b>Output:</b>
+    <pre>-1</pre>
+  </li>
+</ol>
+<h3>✅ String <code>compareTo(String)</code> – Lexicographic Comparison</h3>
+<p>The <b>compareTo()</b> method compares strings based on the Unicode values of characters.</p>
+
+<ul>
+  <li>Returns <b>0</b> → if both strings are equal.</li>
+  <li>Returns <b>&lt; 0</b> → if the first string is lexicographically smaller.</li>
+  <li>Returns <b>&gt; 0</b> → if the first string is lexicographically greater.</li>
+</ul>
+
+<h4>🔹 Examples</h4>
+
+<pre>
+String a = "apple";
+String b = "banana";
+System.out.println(a.compareTo(b));
+</pre>
+<b>Output:</b>
+<pre>-1  (because 'a'(97) - 'b'(98) = -1)</pre>
+
+<pre>
+String a = "banana";
+String b = "apple";
+System.out.println(a.compareTo(b));
+</pre>
+<b>Output:</b>
+<pre>1  (because 'b'(98) - 'a'(97) = 1)</pre>
+
+<pre>
+String a = "hello";
+String b = "hello";
+System.out.println(a.compareTo(b));
+</pre>
+<b>Output:</b>
+<pre>0  (both strings are equal)</pre>
+
+<pre>
+String a = "car";
+String b = "cat";
+System.out.println(a.compareTo(b));
+</pre>
+<b>Output:</b>
+<pre>-2  (because 'r'(114) - 't'(116) = -2)</pre>
+
+<pre>
+String a = "zebra";
+String b = "apple";
+System.out.println(a.compareTo(b));
+</pre>
+<b>Output:</b>
+<pre>25  (because 'z'(122) - 'a'(97) = 25)</pre>
+
+<hr>
 <h3>✅ StringBuilder Methods (Mutable, Not Thread-Safe)</h3>
 <ul>
   <li><b>append(String s)</b> – Adds the given string to the end.</li>
@@ -3624,7 +4312,139 @@ System.out.println(sbf); // Hello World
   <li><b>setCharAt(int index, char)</b> – Changes the character at the given index.</li>
   <li><b>toString()</b> – Converts the builder content to a string.</li>
 </ul>
+<h3>✅ StringBuilder Methods (Mutable, Not Thread-Safe)</h3>
+<ol>
+  <li>
+    <b>append(String s)</b> – Adds the given string to the end.
+    <pre>
+StringBuilder sb = new StringBuilder("Hello");
+sb.append(" World");
+System.out.println(sb);
+    </pre>
+    <b>Output:</b>
+    <pre>Hello World</pre>
+  </li>
 
+  <li>
+    <b>insert(int offset, String s)</b> – Inserts the string at the specified index.
+    <pre>
+StringBuilder sb = new StringBuilder("Hello World");
+sb.insert(6, "Java ");
+System.out.println(sb);
+    </pre>
+    <b>Output:</b>
+    <pre>Hello Java World</pre>
+  </li>
+
+  <li>
+    <b>replace(int start, int end, String s)</b> – Replaces characters from start to end with given string.
+    <pre>
+StringBuilder sb = new StringBuilder("Hello Java");
+sb.replace(6, 10, "World");
+System.out.println(sb);
+    </pre>
+    <b>Output:</b>
+    <pre>Hello World</pre>
+  </li>
+
+  <li>
+    <b>delete(int start, int end)</b> – Deletes characters from start (inclusive) to end (exclusive).
+    <pre>
+StringBuilder sb = new StringBuilder("Hello World");
+sb.delete(5, 11);
+System.out.println(sb);
+    </pre>
+    <b>Output:</b>
+    <pre>Hello</pre>
+  </li>
+
+  <li>
+    <b>deleteCharAt(int index)</b> – Deletes the character at the given index.
+    <pre>
+StringBuilder sb = new StringBuilder("Hello");
+sb.deleteCharAt(1);
+System.out.println(sb);
+    </pre>
+    <b>Output:</b>
+    <pre>Hllo</pre>
+  </li>
+
+  <li>
+    <b>reverse()</b> – Reverses the character sequence.
+    <pre>
+StringBuilder sb = new StringBuilder("Java");
+sb.reverse();
+System.out.println(sb);
+    </pre>
+    <b>Output:</b>
+    <pre>avaJ</pre>
+  </li>
+
+  <li>
+    <b>capacity()</b> – Returns the current capacity.
+    <pre>
+StringBuilder sb = new StringBuilder();
+System.out.println(sb.capacity());
+    </pre>
+    <b>Output:</b>
+    <pre>16</pre>
+  </li>
+
+  <li>
+    <b>ensureCapacity(int min)</b> – Ensures capacity is at least min.
+    <pre>
+StringBuilder sb = new StringBuilder();
+sb.ensureCapacity(50);
+System.out.println(sb.capacity());
+    </pre>
+    <b>Output:</b>
+    <pre>50</pre>
+  </li>
+
+  <li>
+    <b>length()</b> – Returns current length.
+    <pre>
+StringBuilder sb = new StringBuilder("Hello");
+System.out.println(sb.length());
+    </pre>
+    <b>Output:</b>
+    <pre>5</pre>
+  </li>
+
+  <li>
+    <b>charAt(int index)</b> – Returns the character at index.
+    <pre>
+StringBuilder sb = new StringBuilder("Java");
+System.out.println(sb.charAt(2));
+    </pre>
+    <b>Output:</b>
+    <pre>v</pre>
+  </li>
+
+  <li>
+    <b>setCharAt(int index, char)</b> – Changes the character at index.
+    <pre>
+StringBuilder sb = new StringBuilder("Java");
+sb.setCharAt(0, 'K');
+System.out.println(sb);
+    </pre>
+    <b>Output:</b>
+    <pre>Kava</pre>
+  </li>
+
+  <li>
+    <b>toString()</b> – Converts to String.
+    <pre>
+StringBuilder sb = new StringBuilder("Hello");
+String s = sb.toString();
+System.out.println(s);
+    </pre>
+    <b>Output:</b>
+    <pre>Hello</pre>
+  </li>
+</ol>
+
+<hr>
 <h3>✅ StringBuffer Methods (Mutable, Thread-Safe)</h3>
 <ul>
   <li><b>append(String s)</b> – Adds the given string to the end.</li>
@@ -3637,6 +4457,112 @@ System.out.println(sbf); // Hello World
   <li><b>setCharAt(index, char)</b> – Sets the character at the specified index.</li>
   <li><b>toString()</b> – Converts the buffer content to a string.</li>
 </ul>
+<h3>✅ StringBuffer Examples (Mutable, Thread-Safe)</h3>
+
+<h4>1. append()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("Hello");
+sb.append(" World");
+System.out.println(sb);
+</pre>
+<b>Output:</b>  
+<pre>Hello World</pre>
+
+<h4>2. insert()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("JavaWorld");
+sb.insert(4, " Programming");
+System.out.println(sb);
+</pre>
+<b>Output:</b>  
+<pre>Java ProgrammingWorld</pre>
+
+<h4>3. replace()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("I like Java");
+sb.replace(7, 11, "Python");
+System.out.println(sb);
+</pre>
+<b>Output:</b>  
+<pre>I like Python</pre>
+
+<h4>4. delete()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("Hello World");
+sb.delete(5, 11);
+System.out.println(sb);
+</pre>
+<b>Output:</b>  
+<pre>Hello</pre>
+
+<h4>5. deleteCharAt()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("abcdef");
+sb.deleteCharAt(2);
+System.out.println(sb);
+</pre>
+<b>Output:</b>  
+<pre>abdef</pre>
+
+<h4>6. reverse()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("Java");
+sb.reverse();
+System.out.println(sb);
+</pre>
+<b>Output:</b>  
+<pre>avaJ</pre>
+
+<h4>7. capacity()</h4>
+<pre>
+StringBuffer sb = new StringBuffer();
+System.out.println(sb.capacity());
+</pre>
+<b>Output:</b>  
+<pre>16</pre> <!-- Default capacity -->
+
+<h4>8. ensureCapacity()</h4>
+<pre>
+StringBuffer sb = new StringBuffer();
+sb.ensureCapacity(50);
+System.out.println(sb.capacity());
+</pre>
+<b>Output:</b>  
+<pre>50</pre>
+
+<h4>9. length()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("Hello");
+System.out.println(sb.length());
+</pre>
+<b>Output:</b>  
+<pre>5</pre>
+
+<h4>10. charAt()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("World");
+System.out.println(sb.charAt(3));
+</pre>
+<b>Output:</b>  
+<pre>l</pre>
+
+<h4>11. setCharAt()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("Java");
+sb.setCharAt(0, 'K');
+System.out.println(sb);
+</pre>
+<b>Output:</b>  
+<pre>Kava</pre>
+
+<h4>12. toString()</h4>
+<pre>
+StringBuffer sb = new StringBuffer("Buffer to String");
+String str = sb.toString();
+System.out.println(str);
+</pre>
+<b>Output:</b>  
+<pre>Buffer to String</pre>
 
   <hr>
   <h2>Bonus: Conversion Methods</h2>
@@ -3774,6 +4700,32 @@ Error   Exception
  Checked     Unchecked (Runtime)
   </pre>
 
+  <h3>✅ Java Exception Hierarchy</h3>
+<ul>
+  <li>Every class in Java ultimately extends <b>Object</b>.</li>
+  <li><b>Throwable</b> extends Object.</li>
+  <li><b>Error</b> and <b>Exception</b> both extend Throwable.</li>
+  <li><b>Checked Exceptions</b> are subclasses of Exception (but not RuntimeException).</li>
+  <li><b>Unchecked Exceptions</b> are subclasses of RuntimeException (which itself extends Exception).</li>
+</ul>
+
+<h4>🔹 Example in Code</h4>
+<pre>
+public class ExceptionHierarchyDemo {
+    public static void main(String[] args) {
+        Object obj = new Exception();          // Exception extends Object
+        Throwable t = new Exception();         // Exception extends Throwable
+        Exception e = new RuntimeException();  // RuntimeException extends Exception
+        RuntimeException re = new NullPointerException(); // NullPointerException extends RuntimeException
+
+        System.out.println(obj instanceof Object);          // true
+        System.out.println(t instanceof Throwable);         // true
+        System.out.println(e instanceof Exception);         // true
+        System.out.println(re instanceof RuntimeException); // true
+    }
+}
+</pre>
+
   <h2>Basic Syntax of try-catch</h2>
   <pre>
 try {
@@ -3782,6 +4734,76 @@ try {
     // Handling code
 }
   </pre>
+<h3>✅ try and catch in Java</h3>
+<ul>
+  <li><b>try block</b> → Used to wrap code that may cause an exception or Contains the code that may cause an exception..</li>
+  <li><b>catch block</b> → Used to handle the exception that occurs in the try block.</li>
+  <li><b>Syntax:</b> A <code>try</code> must be followed by at least one <code>catch</code> or <code>finally</code>.</li>
+  <li><b>Multiple catch</b> → You can have several catch blocks to handle different exception types.</li>
+  <li><b>Execution flow:</b> 
+    <ul>
+      <li>If no exception occurs → catch is skipped.</li>
+      <li>If an exception occurs → control jumps to the matching catch block.</li>
+      <li>After catch block → normal execution continues.</li>
+    </ul>
+  </li>
+  <li>Only one matching catch block executes, even if multiple could match.</li>
+  <li>If an exception occurs and no matching catch is found, the program will terminate abnormally.</li>
+  <li>catch can take an exception parameter (like <code>Exception e</code>) to access details of the error.</li>
+  <li>Exceptions are handled in the order of catch blocks (top to bottom).</li>
+  <li><b>Key Point:</b> try alone cannot exist → it must be followed by catch or finally.</li>
+
+</ul>
+
+<h4>🔹 Example 1: Simple try-catch</h4>
+<pre>
+public class TryCatchExample1 {
+    public static void main(String[] args) {
+        try {
+            int result = 10 / 0;   // risky code
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Error: Division by zero!");
+        }
+    }
+}
+</pre>
+<b>Output:</b>
+<pre>Error: Division by zero!</pre>
+
+<h4>🔹 Example 2: Multiple catch</h4>
+<pre>
+public class TryCatchExample2 {
+    public static void main(String[] args) {
+        try {
+            String s = null;
+            System.out.println(s.length()); // NullPointerException
+        } catch (ArithmeticException e) {
+            System.out.println("Arithmetic Exception occurred!");
+        } catch (NullPointerException e) {
+            System.out.println("Null Pointer Exception occurred!");
+        }
+    }
+}
+</pre>
+<b>Output:</b>
+<pre>Null Pointer Exception occurred!</pre>
+
+<h4>🔹 Example 3: Catching all exceptions</h4>
+<pre>
+public class TryCatchExample3 {
+    public static void main(String[] args) {
+        try {
+            int arr[] = new int[3];
+            System.out.println(arr[5]); // ArrayIndexOutOfBoundsException
+        } catch (Exception e) {
+            System.out.println("Some exception occurred: " + e);
+        }
+    }
+}
+</pre>
+<b>Output:</b>
+<pre>Some exception occurred: java.lang.ArrayIndexOutOfBoundsException: 5</pre>
 
   <table>
     <tr>
@@ -3857,21 +4879,58 @@ try {
   </table>
 
   <h3>Example:</h3>
-  <pre>
+
+<h2>Throwing Unchecked Exception Without Handling</h2>
+<pre>
 public class Demo {
     static void test(int age) {
         if (age < 18)
-            throw new ArithmeticException("Not eligible");
+            throw new ArithmeticException("Not eligible"); // unchecked exception
         else
             System.out.println("Eligible");
     }
 
     public static void main(String[] args) {
-        test(16);
+        test(16);  // Will throw ArithmeticException
     }
 }
-  </pre>
+</pre>
 
+<b>Output:</b>
+<pre>
+Exception in thread "main" java.lang.ArithmeticException: Not eligible
+    at Demo.test(Demo.java:4)
+    at Demo.main(Demo.java:10)
+</pre>
+
+<hr>
+
+<h2>Throwing Unchecked Exception With Handling</h2>
+<pre>
+public class Demo {
+    static void test(int age) {
+        if (age < 18)
+            throw new ArithmeticException("Not eligible"); // unchecked exception
+        else
+            System.out.println("Eligible");
+    }
+
+    public static void main(String[] args) {
+        try {
+            test(16);
+        } catch (ArithmeticException e) {
+            System.out.println("Handled: " + e.getMessage());
+        }
+    }
+}
+</pre>
+
+<b>Output:</b>
+<pre>
+Handled: Not eligible
+</pre>
+
+ 
   <h2>Multiple Catch Blocks</h2>
   <pre>
 try {
@@ -3900,6 +4959,42 @@ try {
     System.out.println("Null value!");
 }
   </pre>
+
+  <h3>✅ throws in Java</h3>
+<ul>
+  <li><b>throws</b> → A keyword used in method declaration to specify the exceptions that a method can throw.</li>
+  <li>It tells the <b>caller of the method</b> that this method may cause an exception.</li>
+  <li>Checked exceptions <b>must</b> be declared using <code>throws</code> (or handled with try-catch).</li>
+  <li>Unchecked exceptions (Runtime) are not mandatory to declare.</li>
+</ul>
+
+<h4>🔹 Example</h4>
+<pre>
+import java.io.*;
+
+public class ThrowsExample {
+    // Method declares that it may throw IOException
+    static void readFile() throws IOException {
+        FileReader fr = new FileReader("test.txt");  // file may not exist
+        BufferedReader br = new BufferedReader(fr);
+        System.out.println(br.readLine());
+        br.close();
+    }
+
+    public static void main(String[] args) {
+        try {
+            readFile();   // caller must handle the exception
+        } catch (IOException e) {
+            System.out.println("File not found or error while reading: " + e);
+        }
+    }
+}
+</pre>
+
+<h4>✅ Output</h4>
+<pre>
+File not found or error while reading: java.io.FileNotFoundException: test.txt (No such file or directory)
+</pre>
 
   <h2>Key Points on Exceptions</h2>
   <ul>
@@ -3935,6 +5030,156 @@ throw new NumberFormatException();
     <li>Unchecked exceptions propagate implicitly.</li>
     <li>Checked exceptions must be explicitly declared using <code>throws</code> or handled.</li>
   </ul>
+  <h3>✅ Exception Propagation Rules</h3>
+<ul>
+  <li><b>Unchecked exceptions</b> (Runtime exceptions) → propagate implicitly through the call stack.</li>
+  <li><b>Checked exceptions</b> → must be either 
+    <ul>
+      <li>explicitly declared using <code>throws</code> in the method signature, or</li>
+      <li>handled using <code>try-catch</code>.</li>
+    </ul>
+  </li>
+  <li>If a checked exception is neither declared nor handled, compilation error occurs.</li>
+  <li>If an unchecked exception is not handled, the program will terminate at runtime.</li>
+</ul>
+
+<h3>✅ Exception Propagation (Object Propagation)</h3>
+<ul>
+  <li>When an exception occurs in a method, it is <b>thrown</b> to the calling method if not handled.</li>
+  <li>This process of passing the exception object up the call stack is called <b>exception propagation</b>.</li>
+  <li>If no method in the call stack handles it, the program terminates abnormally.</li>
+</ul>
+
+<h4>🔹 Example: Propagation</h4>
+<pre>
+public class PropagationExample {
+    static void method1() {
+        int data = 10 / 0;  // ArithmeticException
+    }
+
+    static void method2() {
+        method1();  // exception propagates here
+    }
+
+    static void method3() {
+        try {
+            method2();  // exception propagates here
+        } catch (ArithmeticException e) {
+            System.out.println("Exception handled in method3");
+        }
+    }
+
+    public static void main(String[] args) {
+        method3();
+        System.out.println("Program continues...");
+    }
+}
+</pre>
+
+<h4>✅ Output</h4>
+<pre>
+Exception handled in method3
+Program continues...
+</pre>
+<h2>⚡ Exception Propagation Examples</h2>
+
+<h3>1. Unchecked Exception (Implicit Propagation)</h3>
+<pre>
+class DemoUnchecked {
+    void method1() {
+        int a = 10 / 0; // ArithmeticException
+    }
+    void method2() {
+        method1(); // Exception propagates implicitly
+    }
+    void method3() {
+        method2();
+    }
+    public static void main(String[] args) {
+        DemoUnchecked obj = new DemoUnchecked();
+        obj.method3(); // Runtime Exception occurs
+    }
+}
+</pre>
+<p><b>Output:</b></p>
+<pre>
+Exception in thread "main" java.lang.ArithmeticException: / by zero
+</pre>
+
+<hr>
+
+<h3>2. Checked Exception (Explicit Propagation using throws)</h3>
+<pre>
+import java.io.*;
+
+class DemoChecked {
+    void method1() throws IOException {
+        throw new IOException("File not found!");
+    }
+    void method2() throws IOException {
+        method1(); // Must declare throws
+    }
+    void method3() {
+        try {
+            method2(); // Must handle or declare
+        } catch (IOException e) {
+            System.out.println("Handled Exception: " + e.getMessage());
+        }
+    }
+    public static void main(String[] args) {
+        DemoChecked obj = new DemoChecked();
+        obj.method3();
+    }
+}
+</pre>
+<p><b>Output:</b></p>
+<pre>
+Handled Exception: File not found!
+</pre>
+<h3>✅ Multiple <code>throws</code> Example</h3>
+
+<p>A method can declare multiple exceptions using <code>throws</code>. 
+The caller must handle or re-declare them.</p>
+
+<pre>
+import java.io.*;
+
+class MultipleThrowsDemo {
+    // Method declares that it may throw IOException and ArithmeticException
+    static void riskyMethod(int x) throws IOException, ArithmeticException {
+        if (x == 0)
+            throw new IOException("File not found!");
+        else if (x < 0)
+            throw new ArithmeticException("Negative number not allowed");
+        else
+            System.out.println("Valid input: " + x);
+    }
+
+    public static void main(String[] args) {
+        try {
+            riskyMethod(0);   // Will throw IOException
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+        } catch (ArithmeticException e) {
+            System.out.println("Caught ArithmeticException: " + e.getMessage());
+        }
+
+        try {
+            riskyMethod(-5);  // Will throw ArithmeticException
+        } catch (IOException e) {
+            System.out.println("Caught IOException: " + e.getMessage());
+        } catch (ArithmeticException e) {
+            System.out.println("Caught ArithmeticException: " + e.getMessage());
+        }
+    }
+}
+</pre>
+
+<h4>🎯 Output:</h4>
+<pre>
+Caught IOException: File not found!
+Caught ArithmeticException: Negative number not allowed
+</pre>
 
   <h2>throws Keyword</h2>
   <ul>
@@ -3952,7 +5197,104 @@ throw new NumberFormatException();
       <li>Create a constructor with a reason and pass it to <code>super()</code>.</li>
     </ol>
   </div>
+<h3>✅ Custom Exceptions in Java</h3>
+<ul>
+  <li>A custom exception is a user-defined class that extends <code>Exception</code> or <code>RuntimeException</code>.</li>
+  <li>Used when we want our own meaningful exception type.</li>
+</ul>
 
+<h4>🔹 Example: Custom Exception</h4>
+<pre>
+// Custom exception class
+class InvalidAgeException extends Exception {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+
+public class CustomExceptionExample {
+    static void checkAge(int age) throws InvalidAgeException {
+        if (age < 18) {
+            throw new InvalidAgeException("Age must be 18 or above!");
+        } else {
+            System.out.println("Valid age: You can vote.");
+        }
+    }
+
+    public static void main(String[] args) {
+        try {
+            checkAge(15);
+        } catch (InvalidAgeException e) {
+            System.out.println("Caught Exception: " + e.getMessage());
+        }
+    }
+}
+</pre>
+
+<h4>✅ Output</h4>
+<pre>
+Caught Exception: Age must be 18 or above!
+</pre>
+<h3>✅ Custom Exceptions in Java</h3>
+
+<p>In Java, you can create custom exceptions by extending either <code>Exception</code> (checked) or <code>RuntimeException</code> (unchecked).</p>
+
+<h4>1. Checked Custom Exception (extends Exception)</h4>
+<pre>
+class MyCheckedException extends Exception {
+    MyCheckedException(String msg) { super(msg); }
+}
+
+public class DemoChecked {
+    static void testChecked() throws MyCheckedException {
+        throw new MyCheckedException("This is a checked exception!");
+    }
+
+    public static void main(String[] args) {
+        try {
+            testChecked(); // Must handle or declare
+        } catch (MyCheckedException e) {
+            System.out.println("Caught checked: " + e.getMessage());
+        }
+    }
+}
+</pre>
+
+<b>Output:</b>
+<pre>
+Caught checked: This is a checked exception!
+</pre>
+
+<h4>2. Unchecked Custom Exception (extends RuntimeException)</h4>
+<pre>
+class MyUncheckedException extends RuntimeException {
+    MyUncheckedException(String msg) { super(msg); }
+}
+
+public class DemoUnchecked {
+    static void testUnchecked() {
+        throw new MyUncheckedException("This is an unchecked exception!");
+    }
+
+    public static void main(String[] args) {
+        testUnchecked(); // No need to declare throws
+    }
+}
+</pre>
+
+<b>Output:</b>
+<pre>
+Exception in thread "main" MyUncheckedException: This is an unchecked exception!
+    at DemoUnchecked.testUnchecked(DemoUnchecked.java:...)
+    at DemoUnchecked.main(DemoUnchecked.java:...)
+</pre>
+
+<h4>🎯 Summary</h4>
+<ul>
+  <li><b>extends Exception</b> → Checked Exception (must be handled or declared).</li>
+  <li><b>extends RuntimeException</b> → Unchecked Exception (propagates without declaration).</li>
+</ul>
+<hr>
   <h2>Error</h2>
   <p>An <strong>Error</strong> represents serious problems that occur during runtime, usually caused by the system, not the code.</p>
   <div class="highlight">
@@ -3983,6 +5325,66 @@ throw new NumberFormatException();
     </tr>
   </table>
 </div>
+<h3>✅ Java Exceptions and Their Packages</h3>
+
+<p>Every Java exception belongs to a specific package. If it's in <code>java.lang</code>, it is imported automatically. Otherwise, you must explicitly <code>import</code> it.</p>
+
+<h4>📌 Summary Table</h4>
+<table cellpadding="6" cellspacing="0">
+  <tr>
+    <th>Package</th>
+    <th>Examples of Exceptions</th>
+    <th>Import Required?</th>
+  </tr>
+  <tr>
+    <td><b>java.lang</b></td>
+    <td>
+      Exception, RuntimeException, ArithmeticException, <br>
+      NullPointerException, ArrayIndexOutOfBoundsException, <br>
+      ClassCastException, NumberFormatException, IllegalArgumentException, Error
+    </td>
+    <td>No (imported automatically)</td>
+  </tr>
+  <tr>
+    <td><b>java.io</b></td>
+    <td>
+      IOException, FileNotFoundException, EOFException, <br>
+      InterruptedIOException
+    </td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><b>java.sql</b></td>
+    <td>
+      SQLException, SQLTimeoutException, SQLDataException, <br>
+      SQLIntegrityConstraintViolationException
+    </td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><b>java.net</b></td>
+    <td>
+      MalformedURLException, UnknownHostException, SocketException, ConnectException
+    </td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><b>java.text</b></td>
+    <td>ParseException</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td><b>javax.naming</b></td>
+    <td>NamingException</td>
+    <td>Yes</td>
+  </tr>
+</table>
+
+<h4>🎯 Key Point</h4>
+<ul>
+  <li>Exceptions in <b>java.lang</b> → No import required.</li>
+  <li>Exceptions in <b>java.io, java.sql, java.net, java.text, javax.naming</b> → Must import explicitly.</li>
+</ul>
 
 <hr>
 
@@ -4140,6 +5542,306 @@ public class ReadFileExample {
     }
 }
   </pre>
+
+  <h1>File Handling in Java: FileWriter vs BufferedWriter</h1>
+
+  <h2>1. FileWriter</h2>
+  <p>
+    <code>FileWriter</code> writes characters directly to a file.  
+    It writes <b>character by character</b>, so it's slower for large text.  
+    It does not add buffering, but is simple for small writing tasks.
+  </p>
+
+  <pre>
+import java.io.*;
+
+public class FileWriterDemo {
+    public static void main(String[] args) throws IOException {
+        FileWriter fw = new FileWriter("output.txt");
+        fw.write("Hello\n");
+        fw.write("Java FileWriter Example");
+        fw.close();
+        System.out.println("FileWriter: Data written to file");
+    }
+}
+  </pre>
+
+  <h3>Output in <code>output.txt</code>:</h3>
+  <pre>
+Hello
+Java FileWriter Example
+  </pre>
+
+  <hr>
+
+  <h2>2. BufferedWriter</h2>
+  <p>
+    <code>BufferedWriter</code> wraps a <code>Writer</code> (like <code>FileWriter</code>) and adds buffering.  
+    It reduces the number of disk writes by storing data in memory first.  
+    It also provides a convenient <code>newLine()</code> method to add line breaks.
+  </p>
+
+  <pre>
+import java.io.*;
+
+public class BufferedWriterDemo {
+    public static void main(String[] args) throws IOException {
+        FileWriter fw = new FileWriter("output_buffered.txt");
+        BufferedWriter bw = new BufferedWriter(fw);
+
+        bw.write("Hello");
+        bw.newLine(); // adds a new line
+        bw.write("Java BufferedWriter Example");
+        bw.close();
+        System.out.println("BufferedWriter: Data written to file");
+    }
+}
+  </pre>
+
+  <h3>Output in <code>output_buffered.txt</code>:</h3>
+  <pre>
+Hello
+Java BufferedWriter Example
+  </pre>
+
+  <hr>
+
+  <h2>Key Differences</h2>
+  <ul>
+    <li><b>FileWriter</b>: Writes characters directly, no buffering, slower for large data.</li>
+    <li><b>BufferedWriter</b>: Adds buffering, faster, has <code>newLine()</code> for line breaks.</li>
+  </ul>
+
+  <p><b>Conclusion:</b> Use <code>BufferedWriter</code> with <code>FileWriter</code> for efficient writing.</p>
+
+
+  <h1>File Handling in Java: FileReader vs BufferedReader</h1>
+
+  <h2>1. FileReader</h2>
+  <p>
+    <code>FileReader</code> reads characters directly from a file.  
+    It reads <b>one character at a time</b>, so it's slow for large files.  
+    It also does not provide a method to read a full line directly.
+  </p>
+
+  <pre>
+import java.io.*;
+
+public class FileReaderDemo {
+    public static void main(String[] args) throws IOException {
+        FileReader fr = new FileReader("data.txt");
+        int i;
+        while ((i = fr.read()) != -1) {
+            System.out.print((char) i);       //i = 65, (char) i = 'A'   type-casting the int into char.
+        }
+        fr.close();
+    }
+}
+  </pre>
+
+  <h3>Sample Output (if <code>data.txt</code> contains):</h3>
+  <pre>
+Hello
+Java File Handling
+  </pre>
+
+  <hr>
+
+  <h2>2. BufferedReader</h2>
+  <p>
+    <code>BufferedReader</code> wraps around a <code>FileReader</code> (or any <code>Reader</code>) and adds buffering.  
+    It reads <b>chunks of data</b> into memory, making it much faster.  
+    It also provides a convenient <code>readLine()</code> method to read full lines at once.
+  </p>
+
+  <pre>
+import java.io.*;
+
+public class BufferedReaderDemo {
+    public static void main(String[] args) throws IOException {
+        FileReader fr = new FileReader("data.txt");
+        BufferedReader br = new BufferedReader(fr);
+
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.println(line);
+        }
+
+        br.close();
+    }
+}
+  </pre>
+
+  <h3>Sample Output (if <code>data.txt</code> contains):</h3>
+  <pre>
+Hello
+Java File Handling
+  </pre>
+
+  <hr>
+
+  <h2>Key Differences</h2>
+  <ul>
+    <li><b>FileReader</b>: Reads one character at a time, no <code>readLine()</code> method, slower.</li>
+    <li><b>BufferedReader</b>: Uses a buffer, much faster, supports <code>readLine()</code>.</li>
+  </ul>
+
+  <p><b>Conclusion:</b> Use <code>BufferedReader</code> for efficient and line-based file reading.</p>
+
+  <h1>Java File Handling</h1>
+
+  <h2>1. Character-Based (Text Data)</h2>
+
+  <h3>FileReader vs BufferedReader</h3>
+  <ul>
+    <li><b>FileReader</b>: Reads characters one by one directly from a file.</li>
+    <li><b>BufferedReader</b>: Wraps FileReader, reads larger chunks into a buffer, faster, has <code>readLine()</code>.</li>
+  </ul>
+
+  <pre>
+import java.io.*;
+
+public class ReaderDemo {
+    public static void main(String[] args) throws IOException {
+        FileReader fr = new FileReader("data.txt");
+        BufferedReader br = new BufferedReader(fr);
+
+        System.out.println("FileReader Output:");
+        int ch;
+        while ((ch = fr.read()) != -1) {
+            System.out.print((char) ch);
+        }
+        fr.close();
+
+        System.out.println("\n\nBufferedReader Output:");
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.println(line);
+        }
+        br.close();
+    }
+}
+  </pre>
+
+  <hr>
+
+  <h3>FileWriter vs BufferedWriter</h3>
+  <ul>
+    <li><b>FileWriter</b>: Writes characters directly to a file.</li>
+    <li><b>BufferedWriter</b>: Wraps FileWriter, adds buffering, faster, has <code>newLine()</code>.</li>
+  </ul>
+
+  <pre>
+import java.io.*;
+
+public class WriterDemo {
+    public static void main(String[] args) throws IOException {
+        FileWriter fw = new FileWriter("output.txt");
+        BufferedWriter bw = new BufferedWriter(new FileWriter("output_buffered.txt"));
+
+        fw.write("Hello FileWriter");
+        fw.close();
+
+        bw.write("Hello BufferedWriter");
+        bw.newLine();
+        bw.write("Faster writing with buffer");
+        bw.close();
+    }
+}
+  </pre>
+
+  <hr>
+
+  <h2>2. Byte-Based (Binary Data)</h2>
+
+  <h3>FileInputStream vs BufferedInputStream</h3>
+  <ul>
+    <li><b>FileInputStream</b>: Reads raw bytes (images, audio, video).</li>
+    <li><b>BufferedInputStream</b>: Wraps FileInputStream, reads in chunks for efficiency.</li>
+  </ul>
+
+  <pre>
+import java.io.*;
+
+public class InputStreamDemo {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fis = new FileInputStream("image.jpg");
+        BufferedInputStream bis = new BufferedInputStream(fis);
+
+        System.out.println("Reading with FileInputStream:");
+        int byteData;
+        while ((byteData = fis.read()) != -1) {
+            // reading byte by byte (slow)
+        }
+        fis.close();
+
+        System.out.println("Reading with BufferedInputStream:");
+        while ((byteData = bis.read()) != -1) {
+            // buffered read (faster)
+        }
+        bis.close();
+    }
+}
+  </pre>
+
+  <hr>
+
+  <h3>FileOutputStream vs BufferedOutputStream</h3>
+  <ul>
+    <li><b>FileOutputStream</b>: Writes raw bytes directly to a file.</li>
+    <li><b>BufferedOutputStream</b>: Wraps FileOutputStream, writes in buffered chunks, faster.</li>
+  </ul>
+
+  <pre>
+import java.io.*;
+
+public class OutputStreamDemo {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream fos = new FileOutputStream("copy.jpg");
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream("copy_buffered.jpg"));
+
+        String text = "Hello OutputStream";
+        fos.write(text.getBytes()); // writing bytes directly
+        fos.close();
+
+        bos.write(text.getBytes()); // buffered writing
+        bos.close();
+    }
+}
+  </pre>
+
+  <hr>
+
+  <h2>Key Differences</h2>
+  <table cellpadding="6">
+    <tr>
+      <th>Type</th>
+      <th>Unbuffered</th>
+      <th>Buffered</th>
+    </tr>
+    <tr>
+      <td>Character Input</td>
+      <td>FileReader</td>
+      <td>BufferedReader (readLine())</td>
+    </tr>
+    <tr>
+      <td>Character Output</td>
+      <td>FileWriter</td>
+      <td>BufferedWriter (newLine())</td>
+    </tr>
+    <tr>
+      <td>Byte Input</td>
+      <td>FileInputStream</td>
+      <td>BufferedInputStream</td>
+    </tr>
+    <tr>
+      <td>Byte Output</td>
+      <td>FileOutputStream</td>
+      <td>BufferedOutputStream</td>
+    </tr>
+  </table>
+
+  <p><b>Conclusion:</b> Always use <code>Buffered</code> classes for better performance, especially with large data.</p>
 
   <hr>
 
@@ -4299,6 +6001,48 @@ try {
     System.out.println("Invalid number: " + e.getMessage());
 }
   </pre>
+<h3>✅ Why use <code>parseXxx()</code> if we already have Wrapper Classes?</h3>
+
+<p>Each primitive type in Java has a wrapper class:</p>
+<ul>
+  <li><code>int → Integer</code></li>
+  <li><code>double → Double</code></li>
+  <li><code>char → Character</code></li>
+  <li><code>boolean → Boolean</code></li>
+</ul>
+
+<p>Wrapper classes let you work with primitives as objects.  
+But when values come as <b>strings</b> (from user input, files, network, etc.), you need <code>parseXxx()</code> methods to convert them into actual numbers or booleans.</p>
+
+<h4>🔹 Difference:</h4>
+<ul>
+  <li><b><code>parseXxx()</code></b> → Returns a <b>primitive</b></li>
+  <li><b><code>valueOf()</code></b> → Returns a <b>wrapper object</b></li>
+</ul>
+
+<h4>🔹 Example</h4>
+<pre>
+public class ParseDemo {
+    public static void main(String[] args) {
+        String num = "42";
+
+        int n1 = Integer.parseInt(num);      // primitive int
+        Integer n2 = Integer.valueOf(num);   // Integer object
+
+        System.out.println(n1 + 10);
+        System.out.println(n2 + 10);
+    }
+}
+</pre>
+
+<h4>🔹 Output</h4>
+<pre>
+52
+52
+</pre>
+
+<p>✅ Use <code>parseXxx()</code> when you want a primitive.<br>
+✅ Use <code>valueOf()</code> when you need a wrapper object (e.g., for collections).</p>
 
   <h2>Useful wrapper methods</h2>
   <ul>
@@ -4322,6 +6066,57 @@ byte byteValue()
 short shortValue()
   </pre>
   <p>Useful when you have a generic number and need a specific primitive value.</p>
+  <h3>✅ Number Class in Java</h3>
+
+<p><code>Number</code> is an <b>abstract superclass</b> in the <code>java.lang</code> package.  
+It represents numeric values that can be converted to different primitive types.</p>
+
+<h4>🔹 Subclasses of Number</h4>
+<ul>
+  <li><code>Byte</code></li>
+  <li><code>Short</code></li>
+  <li><code>Integer</code></li>
+  <li><code>Long</code></li>
+  <li><code>Float</code></li>
+  <li><code>Double</code></li>
+</ul>
+
+<h4>🔹 Important Methods</h4>
+<p>Every subclass of <code>Number</code> implements these methods for conversion:</p>
+<ul>
+  <li><code>int intValue()</code></li>
+  <li><code>long longValue()</code></li>
+  <li><code>float floatValue()</code></li>
+  <li><code>double doubleValue()</code></li>
+  <li><code>byte byteValue()</code></li>
+  <li><code>short shortValue()</code></li>
+</ul>
+
+<h4>🔹 Example</h4>
+<pre>
+public class NumberDemo {
+    public static void main(String[] args) {
+        Number n = Integer.valueOf(100);  // Wrapper object as Number reference
+
+        System.out.println("intValue: " + n.intValue());
+        System.out.println("doubleValue: " + n.doubleValue());
+        System.out.println("floatValue: " + n.floatValue());
+        System.out.println("longValue: " + n.longValue());
+    }
+}
+</pre>
+
+<h4>🔹 Output</h4>
+<pre>
+intValue: 100
+doubleValue: 100.0
+floatValue: 100.0
+longValue: 100
+</pre>
+
+<p>✅ <code>Number</code> cannot be instantiated directly since it is abstract.<br>
+✅ Useful for writing generic code that works with any numeric wrapper class.</p>
+
 
   <h2>Important behaviors & pitfalls</h2>
   <ul>
@@ -4520,6 +6315,103 @@ if (maybe != null && maybe > 0) {  // even this may auto-unbox; check for null f
 
 <hr>
 
+  <h1>Generic vs Non-Generic Collections</h1>
+
+  <h2>1. Non-Generic Collection (Before Java 5)</h2>
+  <p>
+    In non-generic collections, we can store any type of object. 
+    But it may cause <b>ClassCastException</b> at runtime.
+  </p>
+
+  <h3>Example</h3>
+  <pre>
+import java.util.*;
+
+public class NonGenericDemo {
+    public static void main(String[] args) {
+        List list = new ArrayList();  // Non-generic
+        list.add("Hello");            // String
+        list.add(123);                // Integer
+        list.add(45.67);              // Double
+
+        for (Object obj : list) {
+            String str = (String) obj;   // ClassCastException at runtime for non-String
+            System.out.println(str);
+        }
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+Hello
+Exception in thread "main" java.lang.ClassCastException: 
+java.lang.Integer cannot be cast to java.lang.String
+  </pre>
+
+  <hr>
+
+  <h2>2. Generic Collection (After Java 5)</h2>
+  <p>
+    In generic collections, we restrict the type of objects.
+    This provides <b>type-safety</b> and avoids runtime errors.
+  </p>
+
+  <h3>Example</h3>
+  <pre>
+import java.util.*;
+
+public class GenericDemo {
+    public static void main(String[] args) {
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();  // Generic with type String
+        list.add("Java");
+        list.add("Python");
+        // list.add(123);  // Compile-time error (not allowed)
+
+        for (String str : list) {
+            System.out.println(str);  // No casting needed
+        }
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+Java
+Python
+  </pre>
+
+  <hr>
+
+  <h2>🔑 Key Differences</h2>
+  <table cellpadding="5" cellspacing="0">
+    <tr>
+      <th>Feature</th>
+      <th>Non-Generic</th>
+      <th>Generic</th>
+    </tr>
+    <tr>
+      <td>Type Safety</td>
+      <td>No (any type can be added)</td>
+      <td>Yes (restricted to one type)</td>
+    </tr>
+    <tr>
+      <td>Runtime Errors</td>
+      <td>Possible <code>ClassCastException</code></td>
+      <td>Prevented at compile time</td>
+    </tr>
+    <tr>
+      <td>Casting</td>
+      <td>Required when retrieving</td>
+      <td>Not required</td>
+    </tr>
+    <tr>
+      <td>Example</td>
+      <td><code>List list = new ArrayList();</code></td>
+      <td><code>List&lt;String&gt; list = new ArrayList&lt;&gt;();</code></td>
+    </tr>
+  </table>
+<hr>
 <h1>Java <code>List</code> Interface and Implementations</h1>
 
 <div class="section" id="list-interface">
@@ -5052,6 +6944,158 @@ Vector&lt;Type&gt; vectorWithCapacity = new Vector&lt;&gt;(initialCapacity);</co
   - Use <code>Iterator</code> for basic forward-only iteration and safe element removal.<br/>
   - Use <code>ListIterator</code> for advanced bidirectional iteration and in-place list modifications.<br/>
 </p>
+
+  <h1>Iterator and ListIterator in Java</h1>
+
+  <h2>1. Iterator</h2>
+  <p>
+    <b>Iterator</b> is used for traversing collections (List, Set, Queue). 
+    It allows forward traversal only and supports <code>remove()</code> operation.
+  </p>
+
+  <h3>Methods</h3>
+  <ul>
+    <li><code>hasNext()</code> – checks if next element exists</li>
+    <li><code>next()</code> – returns the next element</li>
+    <li><code>remove()</code> – removes the current element</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre>
+import java.util.*;
+
+public class IteratorDemo {
+    public static void main(String[] args) {
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();
+        list.add("Java");
+        list.add("Python");
+        list.add("C++");
+
+        Iterator&lt;String&gt; itr = list.iterator();
+
+        System.out.println("Forward Traversal using Iterator:");
+        while (itr.hasNext()) {
+            String lang = itr.next();
+            System.out.println(lang);
+
+            if (lang.equals("Python")) {
+                itr.remove(); // removing element during iteration
+            }
+        }
+
+        System.out.println("List after remove: " + list);
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+Forward Traversal using Iterator:
+Java
+Python
+C++
+List after remove: [Java, C++]
+  </pre>
+
+  <hr>
+
+  <h2>2. ListIterator</h2>
+  <p>
+    <b>ListIterator</b> works only on <code>List</code> implementations (ArrayList, LinkedList, Vector).
+    It supports bidirectional traversal and modification operations like <code>add()</code>, <code>set()</code>, and <code>remove()</code>.
+  </p>
+
+  <h3>Methods</h3>
+  <ul>
+    <li><code>hasNext()</code> – checks if next element exists</li>
+    <li><code>next()</code> – returns the next element</li>
+    <li><code>hasPrevious()</code> – checks if previous element exists</li>
+    <li><code>previous()</code> – returns the previous element</li>
+    <li><code>add(E e)</code> – adds an element</li>
+    <li><code>set(E e)</code> – updates an element</li>
+    <li><code>remove()</code> – removes an element</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre>
+import java.util.*;
+
+public class ListIteratorDemo {
+    public static void main(String[] args) {
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();
+        list.add("Apple");
+        list.add("Banana");
+        list.add("Cherry");
+
+        ListIterator&lt;String&gt; litr = list.listIterator();
+
+        System.out.println("Forward Traversal using ListIterator:");
+        while (litr.hasNext()) {
+            String fruit = litr.next();
+            System.out.println(fruit);
+
+            if (fruit.equals("Banana")) {
+                litr.set("Blueberry"); // update Banana → Blueberry
+                litr.add("Mango");    // add Mango after Blueberry
+            }
+        }
+
+        System.out.println("\nBackward Traversal using ListIterator:");
+        while (litr.hasPrevious()) {
+            System.out.println(litr.previous());
+        }
+
+        System.out.println("\nFinal List: " + list);
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+Forward Traversal using ListIterator:
+Apple
+Banana
+Cherry
+
+Backward Traversal using ListIterator:
+Cherry
+Mango
+Blueberry
+Apple
+
+Final List: [Apple, Blueberry, Mango, Cherry]
+  </pre>
+
+  <hr>
+
+  <h2>Comparison Table</h2>
+  <table cellpadding="5" cellspacing="0">
+    <tr>
+      <th>Feature</th>
+      <th>Iterator</th>
+      <th>ListIterator</th>
+    </tr>
+    <tr>
+      <td>Applicable On</td>
+      <td>All collections</td>
+      <td>Only List</td>
+    </tr>
+    <tr>
+      <td>Direction</td>
+      <td>Forward only</td>
+      <td>Forward + Backward</td>
+    </tr>
+    <tr>
+      <td>Modification</td>
+      <td><code>remove()</code> only</td>
+      <td><code>add()</code>, <code>set()</code>, <code>remove()</code></td>
+    </tr>
+    <tr>
+      <td>Cursor Position</td>
+      <td>Before 1st element</td>
+      <td>Between elements</td>
+    </tr>
+  </table>
 
 <hr>
 
