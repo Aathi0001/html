@@ -6411,6 +6411,473 @@ Python
       <td><code>List&lt;String&gt; list = new ArrayList&lt;&gt;();</code></td>
     </tr>
   </table>
+
+  <h1>Generics in Java</h1>
+
+  <h2>1. Generic Class</h2>
+  <p>
+    A generic class allows us to define a class with type parameters. 
+    This provides <b>type-safety</b> and reusability.
+  </p>
+
+  <h3>Example</h3>
+  <pre>
+class Box&lt;T&gt; {
+    private T value;
+
+    public void set(T value) {
+        this.value = value;
+    }
+
+    public T get() {
+        return value;
+    }
+}
+
+public class GenericClassDemo {
+    public static void main(String[] args) {
+        Box&lt;String&gt; strBox = new Box&lt;&gt;();
+        strBox.set("Hello Generics");
+        System.out.println(strBox.get());
+
+        Box&lt;Integer&gt; intBox = new Box&lt;&gt;();
+        intBox.set(100);
+        System.out.println(intBox.get());
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+Hello Generics
+100
+  </pre>
+
+  <hr>
+
+  <h2>2. Generic Method</h2>
+  <p>
+    A generic method allows us to define a method with type parameters, 
+    independent of the class.
+  </p>
+
+  <h3>Example</h3>
+  <pre>
+public class GenericMethodDemo {
+    // Generic Method
+    public static &lt;T&gt; void printArray(T[] array) {
+        for (T element : array) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Integer[] intArr = {1, 2, 3, 4};
+        String[] strArr = {"Java", "Python", "C++"};
+
+        printArray(intArr);
+        printArray(strArr);
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+1 2 3 4 
+Java Python C++ 
+  </pre>
+
+  <hr>
+
+  <h2>3. Bounded Generics</h2>
+  <p>
+    Bounded generics restrict the type parameter to a certain type or its subclasses 
+    using <code>extends</code> (for classes) and <code>implements</code> (for interfaces).
+  </p>
+
+  <h3>Example</h3>
+  <pre>
+class MathUtil {
+    // Only Number or subclasses allowed (Integer, Double, etc.)
+    public static &lt;T extends Number&gt; double square(T num) {
+        return num.doubleValue() * num.doubleValue();
+    }
+}
+
+public class BoundedGenericDemo {
+    public static void main(String[] args) {
+        System.out.println(MathUtil.square(5));      // Integer
+        System.out.println(MathUtil.square(3.14));   // Double
+        // System.out.println(MathUtil.square("Hi")); // Error: not a Number
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+25.0
+9.8596
+  </pre>
+
+  <hr>
+
+  <h2>🔑 Summary</h2>
+  <ul>
+    <li><b>Generic Class</b> – Type parameter at class level (e.g., <code>Box&lt;T&gt;</code>).</li>
+    <li><b>Generic Method</b> – Type parameter at method level (e.g., <code>&lt;T&gt; void method()</code>).</li>
+    <li><b>Bounded Generics</b> – Restrict type (e.g., <code>&lt;T extends Number&gt;</code>).</li>
+  </ul>
+
+  <h1>Generics Advanced in Java</h1>
+
+  <h2>1. Common Generic Type Parameters</h2>
+  <ul>
+    <li><b>T</b> – Type (general)</li>
+    <li><b>E</b> – Element (used in collections like List&lt;E&gt;)</li>
+    <li><b>K</b> – Key (used in maps)</li>
+    <li><b>V</b> – Value (used in maps)</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre>
+import java.util.*;
+
+public class TypeParameterDemo {
+    public static void main(String[] args) {
+        // E – Element in a list
+        List&lt;String&gt; list = new ArrayList&lt;&gt;();
+        list.add("A");
+        list.add("B");
+
+        // K, V – Key and Value in a map
+        Map&lt;Integer, String&gt; map = new HashMap&lt;&gt;();
+        map.put(1, "One");
+        map.put(2, "Two");
+
+        System.out.println(list);
+        System.out.println(map);
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+[A, B]
+{1=One, 2=Two}
+  </pre>
+
+  <hr>
+
+  <h2>2. Comparable (Natural Sorting)</h2>
+  <p>
+    The <code>Comparable&lt;T&gt;</code> interface is used to define the natural order of objects.
+    The class must implement <code>compareTo()</code>.
+  </p>
+
+  <h3>Example</h3>
+  <pre>
+import java.util.*;
+
+class Student implements Comparable&lt;Student&gt; {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Natural ordering: by id
+    public int compareTo(Student s) {
+        return this.id - s.id;
+    }
+
+    public String toString() {
+        return id + " - " + name;
+    }
+}
+
+public class ComparableDemo {
+    public static void main(String[] args) {
+        List&lt;Student&gt; list = new ArrayList&lt;&gt;();
+        list.add(new Student(3, "John"));
+        list.add(new Student(1, "Alice"));
+        list.add(new Student(2, "Bob"));
+
+        Collections.sort(list); // Uses compareTo
+        System.out.println(list);
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+[1 - Alice, 2 - Bob, 3 - John]
+  </pre>
+
+  <hr>
+
+  <h2>3. Custom Sorting (Comparator)</h2>
+  <p>
+    The <code>Comparator&lt;T&gt;</code> interface allows custom sorting logic,
+    passed into <code>Collections.sort()</code>.
+  </p>
+
+  <h3>Example</h3>
+  <pre>
+import java.util.*;
+
+class Student {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String toString() {
+        return id + " - " + name;
+    }
+}
+
+public class ComparatorDemo {
+    public static void main(String[] args) {
+        List&lt;Student&gt; list = new ArrayList&lt;&gt;();
+        list.add(new Student(3, "John"));
+        list.add(new Student(1, "Alice"));
+        list.add(new Student(2, "Bob"));
+
+        // Sort by name (custom comparator)
+        Collections.sort(list, new Comparator&lt;Student&gt;() {
+            public int compare(Student s1, Student s2) {
+                return s1.name.compareTo(s2.name);
+            }
+        });
+
+        System.out.println(list);
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+[1 - Alice, 2 - Bob, 3 - John]
+  </pre>
+
+  <hr>
+
+  <h2>4. Interface with Parameterized Method</h2>
+  <p>
+    We can define generic type parameters in interface methods.
+  </p>
+
+  <h3>Example</h3>
+  <pre>
+interface Printer {
+    &lt;T&gt; void print(T data); // Parameterized method
+}
+
+class PrinterImpl implements Printer {
+    public &lt;T&gt; void print(T data) {
+        System.out.println("Printing: " + data);
+    }
+}
+
+public class InterfaceParameterizedMethodDemo {
+    public static void main(String[] args) {
+        Printer printer = new PrinterImpl();
+        printer.print("Hello Generics");
+        printer.print(123);
+        printer.print(45.67);
+    }
+}
+  </pre>
+
+  <h3>Output</h3>
+  <pre>
+Printing: Hello Generics
+Printing: 123
+Printing: 45.67
+  </pre>
+
+  <hr>
+
+  <h2>🔑 Summary</h2>
+  <ul>
+    <li><b>T, E, K, V</b> – Standard naming for type parameters.</li>
+    <li><b>Comparable</b> – Natural ordering using <code>compareTo()</code>.</li>
+    <li><b>Comparator</b> – Custom sorting using <code>compare()</code>.</li>
+    <li><b>Parameterized Interface Method</b> – Methods can also be generic.</li>
+  </ul>
+
+  <h1>Custom Sorting using Functional Interface (Lambda)</h1>
+
+  <p>
+    In Java, <code>Comparator&lt;T&gt;</code> is a functional interface 
+    (it has only one abstract method <code>compare()</code>).
+    Since Java 8, we can use <b>lambda expressions</b> to simplify custom sorting.
+  </p>
+
+  <h2>Example: Sorting Students by Name and ID</h2>
+  <pre>
+import java.util.*;
+
+class Student {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String toString() {
+        return id + " - " + name;
+    }
+}
+
+public class LambdaSortingDemo {
+    public static void main(String[] args) {
+        List&lt;Student&gt; list = new ArrayList&lt;&gt;();
+        list.add(new Student(3, "John"));
+        list.add(new Student(1, "Alice"));
+        list.add(new Student(2, "Bob"));
+
+        // Sort by name using lambda
+        Collections.sort(list, (s1, s2) -&gt; s1.name.compareTo(s2.name));
+        System.out.println("Sorted by Name: " + list);
+
+        // Sort by id using lambda
+        Collections.sort(list, (s1, s2) -&gt; s1.id - s2.id);
+        System.out.println("Sorted by ID: " + list);
+    }
+}
+  </pre>
+
+  <h2>Output</h2>
+  <pre>
+Sorted by Name: [1 - Alice, 2 - Bob, 3 - John]
+Sorted by ID: [1 - Alice, 2 - Bob, 3 - John]
+  </pre>
+
+  <hr>
+
+  <h2>🔑 Key Points</h2>
+  <ul>
+    <li><code>Comparator&lt;T&gt;</code> is a <b>functional interface</b> → perfect for lambdas.</li>
+    <li>Lambda replaces anonymous inner classes: <code>(o1, o2) -&gt; comparison logic</code>.</li>
+    <li>Sorting becomes concise and readable with Java 8+.</li>
+  </ul>
+
+<h1>Comparable vs Comparator in Java</h1>
+
+<h2>1. Comparable</h2>
+<ul>
+  <li><b>Package:</b> java.lang</li>
+  <li><b>Definition:</b> Defines the natural ordering of objects.</li>
+  <li><b>Method:</b> <code>int compareTo(T o)</code></li>
+  <li><b>Usage:</b> A class implements Comparable when it wants to define its default sort order.</li>
+  <li><b>Functional Interface:</b> ✅ Yes (only one abstract method: <code>compareTo</code>)</li>
+</ul>
+
+<h2>2. Comparator</h2>
+<ul>
+  <li><b>Package:</b> java.util</li>
+  <li><b>Definition:</b> Defines custom sorting logic, external to the class.</li>
+  <li><b>Method:</b> <code>int compare(T o1, T o2)</code></li>
+  <li><b>Usage:</b> Used when we want to sort objects in multiple ways (e.g., by name, by age).</li>
+  <li><b>Functional Interface:</b> ✅ Yes (only one abstract method: <code>compare</code>)</li>
+</ul>
+
+<h2>🔑 Differences</h2>
+<table  cellpadding="5">
+  <tr>
+    <th>Feature</th>
+    <th>Comparable</th>
+    <th>Comparator</th>
+  </tr>
+  <tr>
+    <td>Package</td>
+    <td>java.lang</td>
+    <td>java.util</td>
+  </tr>
+  <tr>
+    <td>Method</td>
+    <td>compareTo(T o)</td>
+    <td>compare(T o1, T o2)</td>
+  </tr>
+  <tr>
+    <td>Defines ordering</td>
+    <td>Natural (default)</td>
+    <td>Custom (multiple ways possible)</td>
+  </tr>
+  <tr>
+    <td>Implementation</td>
+    <td>Inside the class</td>
+    <td>Outside the class</td>
+  </tr>
+  <tr>
+    <td>Functional Interface</td>
+    <td>✅ Yes</td>
+    <td>✅ Yes</td>
+  </tr>
+  <tr>
+    <td>Lambda Usage</td>
+    <td>Rare</td>
+    <td>Common</td>
+  </tr>
+</table>
+
+<h2>📌 Example</h2>
+<pre>
+import java.util.*;
+
+class Student implements Comparable&lt;Student&gt; {
+    int id;
+    String name;
+
+    Student(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    // Natural order: by id
+    public int compareTo(Student s) {
+        return this.id - s.id;
+    }
+
+    public String toString() {
+        return id + " - " + name;
+    }
+}
+
+public class CompareDemo {
+    public static void main(String[] args) {
+        List&lt;Student&gt; list = new ArrayList&lt;&gt;();
+        list.add(new Student(3, "John"));
+        list.add(new Student(1, "Alice"));
+        list.add(new Student(2, "Bob"));
+
+        // Uses Comparable (natural order by id)
+        Collections.sort(list);
+        System.out.println("Comparable (by ID): " + list);
+
+        // Uses Comparator (custom order by name with lambda)
+        Collections.sort(list, (s1, s2) -&gt; s1.name.compareTo(s2.name));
+        System.out.println("Comparator (by Name): " + list);
+    }
+}
+</pre>
+
+<h2>✅ Output</h2>
+<pre>
+Comparable (by ID): [1 - Alice, 2 - Bob, 3 - John]
+Comparator (by Name): [1 - Alice, 2 - Bob, 3 - John]
+</pre>
+
+
 <hr>
 <h1>Java <code>List</code> Interface and Implementations</h1>
 
