@@ -454,7 +454,7 @@ console.log(sq)
 //some
 let arr3=[15,13]
 let hasodd = arr3.some(itodd=>{
-    itodd%2!==0
+    return itodd%2!==0
 });
 console.log(hasodd) //true
 
