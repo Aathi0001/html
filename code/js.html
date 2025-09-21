@@ -105,6 +105,127 @@ th {
      <p>Object Based Language - Everything in javascript is considered as object like arrays, function, etc.,</p>
      <p>Object Oriented Programming Language - JavaScript suppport oops concept through object.</p>
      <p>light weight language - we can execute js directly on browser.</p>
+
+<h1>JavaScript Characteristics</h1>
+
+<section>
+  <h2>1. Client Side Scripting</h2>
+  <p>JavaScript runs inside the browser (client-side) to add interactivity without needing a server request.</p>
+  <pre>
+&lt;button onclick="alert('Hello from Client-Side JavaScript!')"&gt;Click Me&lt;/button&gt;
+  </pre>
+</section>
+
+<section>
+  <h2>2. Weakly / Loosely Typed Language</h2>
+  <p>No strict type declaration; variables can change type.</p>
+  <pre>
+&lt;script&gt;
+  let x = 10;       // number
+  x = "Hello";      // string
+  x = true;         // boolean
+  console.log(x);
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h2>3. Dynamic Scripting Language</h2>
+  <p>Types and values can be assigned at runtime.</p>
+  <pre>
+&lt;script&gt;
+  let y;
+  y = 100;          // number
+  console.log(y);
+  y = {name: "Aathi"}; // object
+  console.log(y);
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h2>4. Interpreter Based</h2>
+  <p>JavaScript code is executed line by line by the browser without compilation.</p>
+  <pre>
+&lt;script&gt;
+  console.log("First line executed");
+  console.log("Second line executed");
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h2>5. Synchronous Execution</h2>
+  <p>Tasks are executed in the order they appear (one after another).</p>
+  <pre>
+&lt;script&gt;
+  console.log("Task 1");
+  console.log("Task 2");
+  console.log("Task 3");
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h2>6. Single Threaded</h2>
+  <p>JavaScript executes one task at a time in a single thread.</p>
+  <pre>
+&lt;script&gt;
+  function taskOne() {
+    console.log("Task One completed");
+  }
+  function taskTwo() {
+    console.log("Task Two completed");
+  }
+  taskOne();
+  taskTwo();
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h2>7. Object-Based Language</h2>
+  <p>Everything (arrays, functions) is treated as an object.</p>
+  <pre>
+&lt;script&gt;
+  let arr = [1,2,3];
+  console.log(typeof arr); // object
+
+  function greet(){ return "Hi"; }
+  console.log(typeof greet); // function (object)
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h2>8. Object-Oriented Programming (OOP) Support</h2>
+  <p>JavaScript supports OOP concepts through objects and classes.</p>
+  <pre>
+&lt;script&gt;
+  class Person {
+    constructor(name) {
+      this.name = name;
+    }
+    greet() {
+      return "Hello, " + this.name;
+    }
+  }
+  let p1 = new Person("Aathi");
+  console.log(p1.greet());
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h2>9. Lightweight Language</h2>
+  <p>JavaScript can be directly run in the browser without any setup.</p>
+  <pre>
+&lt;script&gt;
+  alert("This runs directly in the browser!");
+&lt;/script&gt;
+  </pre>
+</section>
+
 <br>
      <h2>Tokens:</h2>
      <p>Basic building blocks of any programming language</p>
@@ -116,43 +237,123 @@ th {
      <p><strong>6. Comments:</strong> Used to add notes (e.g., <code>// single-line</code>, <code>/* multi-line */</code>)</p>
      <p><strong>7. Variables:</strong> A named block of memory which is used to store the value. (Variable-Declaration <code>var</code>, <code>let</code>, <code>const</code>)</p>
 <br>
-     <h2>Scope:</h2>
-     <p>Scope is used to define the visibility.</p>
-     <h6>Types :</h6>
-     <p>1. Global Scope - Any variable declared with var will be present in global scope. we can access it from anywhere.</p>
-     <p>2. Script Scope - Any variable declared with let an dconst will be present in script scope. we can access only after declaration.</p>
-     <p>3. Local Scope / Function Scope - Any variable defined for a specific scope like inside function will be present in local scope. we cannot access these variabe outside the function.</p>
-     <p>Note: If we assign a value to a variabe which is not declared automatically that is without variable declaration it will become global variable. eg:a=100 -> Global scope</p>
-<br>    
-     <h2>Hosting</h2>
-     <p><strong>Definition:</strong> In JavaScript, variable and function declarations are moved to the top of their scope before code execution. This is called hoisting.</p>
-     <p><strong>Function declarations</strong> are hoisted completely (name + body), so they can be used before they're defined.</p>
-     <p><strong>Variable declarations</strong> with <code>var</code> are hoisted (only the declaration, not the value).</p>
-     <p><strong>Example:</strong></p>
-     <pre><code>
-     greet(); // ✅ Works due to hoisting
-     function greet() {
-          console.log("Hello from hoisted function!");
-     }
+<table cellspacing="0" cellpadding="8">
+  <tr>
+    <th>Keyword</th>
+    <th>Declaration + Initialization<br>(d + i)</th>
+    <th>Declaration only<br>(d)</th>
+    <th>Initialization only<br>(i)</th>
+    <th>Re-initialization<br>(re-i)</th>
+    <th>Redeclaration<br>(red)</th>
+  </tr>
+  
+  <tr>
+    <td><code>var</code></td>
+    <td>✅ Allowed</td>
+    <td>✅ Allowed (undefined)</td>
+    <td>✅ Allowed later</td>
+    <td>✅ Allowed</td>
+    <td>✅ Allowed</td>
+  </tr>
+  
+  <tr>
+    <td><code>let</code></td>
+    <td>✅ Allowed</td>
+    <td>✅ Allowed</td>
+    <td>✅ Allowed later</td>
+    <td>✅ Allowed</td>
+    <td>❌ Not Allowed</td>
+  </tr>
+  
+  <tr>
+    <td><code>const</code></td>
+    <td>✅ Allowed (must be initialized)</td>
+    <td>❌ Not Allowed (error)</td>
+    <td>❌ Not Allowed (must declare + init together)</td>
+    <td>❌ Not Allowed</td>
+    <td>❌ Not Allowed</td>
+  </tr>
+</table>
+<h2>Examples for var, let, and const</h2>
 
-     console.log(x); // ❌ undefined, because only declaration is hoisted
-     var x = 10;
-     </code></pre>
-     <h2>Temporal Dead Zone</h2>
-     <p><strong>Definition:</strong> TDZ(Temporal Dead Zone) is the time between entering a block and declaring a variable with <code>let</code> or <code>const</code>. Accessing the variable in this zone throws a ReferenceError.</p>
-     <p><strong>TDZ applies to:</strong> <code>let</code> and <code>const</code> (not <code>var</code>).</p>
-     <p><strong>Example:</strong></p>
-     <pre><code>
-     console.log(a); // ❌ ReferenceError: Cannot access 'a' before initialization
-     let a = 5;
+<section>
+  <h3>1. <code>var</code> Examples</h3>
+  <pre>
+&lt;script&gt;
+  // Declaration + Initialization (d + i)
+  var a = 10;
+  document.write("var a = " + a + "&lt;br&gt;");
 
-     const b = 10;
-     console.log(b); // ✅ OK if accessed after declaration
-     </code></pre>
+  // Declaration only (d)
+  var b;
+  document.write("var b = " + b + " (undefined)&lt;br&gt;");
 
-     <p><strong>✔️ Hoisting:</strong> Moves declarations to the top. Works with <code>var</code> and functions.</p>
-     <p><strong>❌ TDZ:</strong> Accessing <code>let</code> or <code>const</code> before declaration causes an error.</p>
-<br>
+  // Initialization later (i)
+  b = 20;
+  document.write("b after initialization = " + b + "&lt;br&gt;");
+
+  // Re-initialization (re-i)
+  a = 30;
+  document.write("a after re-initialization = " + a + "&lt;br&gt;");
+
+  // Redeclaration (red)
+  var a = 40;
+  document.write("a after redeclaration = " + a + "&lt;br&gt;");
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h3>2. <code>let</code> Examples</h3>
+  <pre>
+&lt;script&gt;
+  // Declaration + Initialization (d + i)
+  let x = 100;
+  document.write("let x = " + x + "&lt;br&gt;");
+
+  // Declaration only (d)
+  let y;
+  document.write("let y = " + y + " (undefined)&lt;br&gt;");
+
+  // Initialization later (i)
+  y = 200;
+  document.write("y after initialization = " + y + "&lt;br&gt;");
+
+  // Re-initialization (re-i)
+  x = 300;
+  document.write("x after re-initialization = " + x + "&lt;br&gt;");
+
+  // Redeclaration (red) ❌ Not Allowed
+  // let x = 400; // ❌ SyntaxError: Identifier 'x' has already been declared
+&lt;/script&gt;
+  </pre>
+</section>
+
+<section>
+  <h3>3. <code>const</code> Examples</h3>
+  <pre>
+&lt;script&gt;
+  // Declaration + Initialization (d + i)
+  const p = 500;
+  document.write("const p = " + p + "&lt;br&gt;");
+
+  // Declaration only (d) ❌ Not Allowed
+  // const q; // ❌ SyntaxError: Missing initializer in const declaration
+
+  // Initialization only (i) ❌ Not Allowed
+  // q = 600; // ❌ Error: q is not defined
+
+  // Re-initialization (re-i) ❌ Not Allowed
+  // p = 700; // ❌ TypeError: Assignment to constant variable.
+
+  // Redeclaration (red) ❌ Not Allowed
+  // const p = 800; // ❌ SyntaxError: Identifier 'p' has already been declared
+&lt;/script&gt;
+  </pre>
+</section>
+
+<br> <hr>
+       
      <h2>DataType:</h2>
      <h2>Primitive Data Types:</h2>
      <p>1. <strong>Number</strong> – Represents both integer and floating-point numbers.<br>Example: <code>let a = 10;</code></p>
@@ -218,7 +419,14 @@ th {
 
 
 <hr>
-
+ <h2>Scope:</h2>
+     <p>Scope is used to define the visibility.</p>
+     <h6>Types :</h6>
+     <p>1. Global Scope - Any variable declared with var will be present in global scope. we can access it from anywhere.</p>
+     <p>2. Script Scope - Any variable declared with let and const will be present in script scope. we can access only after declaration.</p>
+     <p>3. Local Scope / Function Scope - Any variable defined for a specific scope like inside function will be present in local scope. we cannot access these variabe outside the function.</p>
+     <p>Note: If we assign a value to a variabe which is not declared automatically that is without variable declaration it will become global variable. eg:a=100 -> Global scope</p>
+<br> 
 <h1>JavaScript Scope</h1>
 <p>Scope determines where variables and functions are accessible in your code. It’s like the “visibility” or “lifetime” of a variable.</p>
 
@@ -290,6 +498,38 @@ console.log(window.c); // ❌ undefined
 
 <h2>2. Special Concepts</h2>
 
+<h2>Hoisting</h2>
+     <p><strong>Definition:</strong> In JavaScript, variable and function declarations are moved to the top of their scope before code execution. This is called hoisting.</p>
+     <p>Hoisting in JavaScript is a behavior where declarations of variables, functions, and classes are conceptually moved to the top of their containing scope during the compilation phase, before the code is executed. This allows these elements to be referenced or called before their actual declaration in the code.</p>
+     <p>Hoisting is when variable and function declarations are processed (moved to memory) before the code is executed.</p>
+     <p><strong>Function declarations</strong> are hoisted completely (name + body), so they can be used before they're defined.</p>
+     <p><strong>Variable declarations</strong> with <code>var</code> are hoisted (only the declaration, not the value).</p>
+     <p><strong>Example:</strong></p>
+     <pre><code>
+     greet(); // ✅ Works due to hoisting
+     function greet() {
+          console.log("Hello from hoisted function!");
+     }
+
+     console.log(x); // ❌ undefined, because only declaration is hoisted
+     var x = 10;
+     </code></pre>
+     <h2>Temporal Dead Zone</h2>
+     <p><strong>Definition:</strong> TDZ(Temporal Dead Zone) is the time between entering a block and declaring a variable with <code>let</code> or <code>const</code>. Accessing the variable in this zone throws a ReferenceError.</p>
+     <p><strong>TDZ applies to:</strong> <code>let</code> and <code>const</code> (not <code>var</code>).</p>
+     <p><strong>Example:</strong></p>
+     <pre><code>
+     console.log(a); // ❌ ReferenceError: Cannot access 'a' before initialization
+     let a = 5;
+
+     const b = 10;
+     console.log(b); // ✅ OK if accessed after declaration
+     </code></pre>
+
+     <p><strong>✔️ Hoisting:</strong> Moves declarations to the top. Works with <code>var</code> and functions.</p>
+     <p><strong>❌ TDZ:</strong> Accessing <code>let</code> or <code>const</code> before declaration causes an error.</p>
+<br>
+
 <h3>A. Hoisting</h3>
 <pre><code>console.log(a); // undefined
 var a = 5;
@@ -316,7 +556,36 @@ counter(); // 2
 </code></pre>
 
 <hr>
+  <h2>Scope Example (var, let, const)</h2>
+  <pre>
+&lt;script&gt;
+function showScopeDifference() {
+  // All three keywords work the same way at the function's top level.
+  var varName = "I'm a var";
+  let letName = "I'm a let";
+  const constName = "I'm a const";
 
+  if (true) {
+    var varInner = "inner var";
+    let letInner = "inner let";
+    const constInner = "inner const";
+
+    console.log(varInner);   // ✅ accessible inside the block
+    console.log(letInner);   // ✅ accessible inside the block
+    console.log(constInner); // ✅ accessible inside the block
+  }
+
+  // Check accessibility outside the inner block
+  console.log(varInner);   // ✅ Accessible here! Why? Because 'var' is function-scoped.
+  // console.log(letInner);  // ❌ ReferenceError: letInner is not defined (let is block-scoped)
+  // console.log(constInner); // ❌ ReferenceError: constInner is not defined (const is block-scoped)
+}
+
+showScopeDifference();
+&lt;/script&gt;
+  </pre>
+
+  <hr>
 <h2>3. Summary Table</h2>
 <table>
 <tr>
@@ -402,6 +671,7 @@ counter(); // 2
 
 <section>
     <h2>JavaScript typeof Operator</h2>
+    <p>typeof operator is a unary operator used to determine the data type of a given value or variable.</p>
     <p>The <code>typeof</code> operator returns a string indicating the type of the operand.</p>
     <p>It always return String</p>
 
@@ -903,7 +1173,7 @@ if (0) {
 
 <h3>Notes:</h3>
     <ul>
-        <li><strong><code>NaN</code></strong> → Whenever We perform an Airthmetic opeation that is not possible we get result as NaN.</li>
+        <li><strong><code>NaN</code></strong> → Whenever We perform an Airthmetic operation that is not possible we get result as NaN.</li>
     </ul>
 </section>
 
@@ -1400,7 +1670,7 @@ g(b)</code></pre></td>
 
   <!-- 3. Parameters vs Arguments -->
   <h3>3) Parameters &amp; Arguments</h3>
-  <p>These are the varable that get values passed during function call.</p>
+  <p>These are the variable that get values passed during function call.</p>
   <pre><code>function sum(a,b){
     console.log(a+b)
 }
@@ -1422,7 +1692,7 @@ console.log(greet("Aathi", "!!")); // arguments → "Hello, Aathi!!"
 
   <!-- 4. Named Function -->
   <h3>4) Named Function</h3>
-  <p>A function haveing a name is called as named function.</p>
+  <p>A function having a name is called as named function.</p>
   <p>Has an identifier; shows in stack traces; supports recursion by name.</p>
   <pre><code>function factorial(n) {
   if (n &lt;= 1) return 1;
@@ -1481,7 +1751,7 @@ console.log(multiply(2, 3)); // 6
 
   <!-- 8. Arrow Function -->
   <h3>8) Arrow Function</h3>
-  <p>It is the Syntactic Sugar ( reduce syntax ) or writing function. It does not have a name so we need to store it in a vaiable.</p>
+  <p>It is the Syntactic Sugar ( reduce syntax ) of writing function. It does not have a name so we need to store it in a vaiable.</p>
   <p>Concise syntax; captures <b>lexical</b> <code>this</code>; no <code>prototype</code>, no <code>arguments</code>, not constructible.</p>
   <pre><code>([parameter])=>{...}</code></pre>
   <pre><code>const ids = [1,2,3].map(x =&gt; x * 2); // [2,4,6]
@@ -1501,7 +1771,7 @@ const obj = {
 
   <!-- 9. Implicit Return (Arrow) -->
   <h3>9) Implicit Return</h3>
-  <p>If function consist of only one statement no need to mention curley braces and by default function will return the value without using return the value without using return keyword.</p>
+  <p>If function consist of only one statement no need to mention curley braces and by default function will return the value without using return keyword.</p>
   <p>Arrow functions can return the expression value without <code>return</code> if written as a single expression.</p>
   <pre><code>let add = (a,b) => a+b;
 
