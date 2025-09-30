@@ -1,0 +1,2662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Advance Java Notes</title>
+     <style>
+          body {
+      background: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      color: #333;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+pre, table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+
+
+    h1, h2, h3 {
+      margin-top: 30px;
+      border-left: 5px solid #ff6347;
+      padding-left: 12px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #e91e63;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #3f51b5;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: #009688;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px 15px;
+      border-left: 5px solid #607d8b;
+      white-space: pre-wrap;
+      font-family: 'Consolas', monospace;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .highlight {
+      background-color: #fff3cd;
+      padding: 10px;
+      border-left: 4px solid #ffc107;
+    }
+    code {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.95em;
+  color: #c7254e;
+}
+a {
+  color: #007acc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 40px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+     </style>
+</head>
+<body>
+<section>
+  <h2>JDBC - Introduction</h2>
+  <p>
+    JDBC (Java Database Connectivity) is an API that allows Java applications to connect and interact with databases.
+    It provides classes and interfaces to perform database operations such as inserting, updating, deleting, and retrieving data.
+  </p>
+
+  <h3>JDBC Architecture</h3>
+  <ul>
+    <li><b>DriverManager</b> – Manages database drivers.</li>
+    <li><b>Connection</b> – Establishes a connection with the database.</li>
+    <li><b>Statement</b> – Executes SQL queries.</li>
+    <li><b>ResultSet</b> – Stores the results of queries.</li>
+  </ul>
+
+  <h3>Steps to Connect Java with Database</h3>
+  <ol>
+    <li>Load the JDBC Driver</li>
+    <li>Establish the Connection</li>
+    <li>Create a Statement/PreparedStatement</li>
+    <li>Execute SQL queries</li>
+    <li>Process the Results</li>
+    <li>Close the Connection</li>
+  </ol>
+
+  <h3>Basic Example: JDBC Connection with MySQL</h3>
+  <pre><code class="language-java">
+// Import packages
+import java.sql.*;
+
+public class JdbcExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb"; // Database name = testdb
+        String user = "root"; // your MySQL username
+        String password = "password"; // your MySQL password
+
+        try {
+            // 1. Load the Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // 2. Establish Connection
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // 3. Create Statement
+            Statement stmt = con.createStatement();
+
+            // 4. Execute Query
+            ResultSet rs = stmt.executeQuery("SELECT * FROM students");
+
+            // 5. Process Results
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("name"));
+            }
+
+            // 6. Close Connection
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+1 - John
+2 - Mary
+3 - Alex
+  </code></pre>
+
+  <p><b>Note:</b> Before running, make sure:</p>
+  <ul>
+    <li>You have MySQL installed and running.</li>
+    <li>A database named <code>testdb</code> with a table <code>students(id INT, name VARCHAR(50))</code> exists.</li>
+    <li>You have added the MySQL JDBC driver (mysql-connector-j.jar) to your classpath.</li>
+  </ul>
+</section>
+
+<hr>
+
+<section>
+  <h2>Types of JDBC Drivers</h2>
+  <p>
+    JDBC drivers are software components that enable Java applications to interact with a database.  
+    There are four types of JDBC drivers:
+  </p>
+
+  <h3>1. Type-1 Driver (JDBC-ODBC Bridge Driver)</h3>
+  <ul>
+    <li>Translates JDBC calls into ODBC calls.</li>
+    <li>Requires ODBC driver installed on the client machine.</li>
+    <li>Not portable and very slow.</li>
+    <li><b>Deprecated</b> in Java 8.</li>
+  </ul>
+
+  <h3>2. Type-2 Driver (Native-API Driver)</h3>
+  <ul>
+    <li>Converts JDBC calls into database-specific native calls.</li>
+    <li>Requires vendor-specific libraries on the client machine.</li>
+    <li>Better performance than Type-1, but not portable.</li>
+  </ul>
+
+  <h3>3. Type-3 Driver (Network Protocol Driver)</h3>
+  <ul>
+    <li>Uses a middleware server to convert JDBC calls into database-specific protocol.</li>
+    <li>Portable because it doesn’t require database client libraries.</li>
+    <li>Extra network call adds overhead.</li>
+  </ul>
+
+  <h3>4. Type-4 Driver (Thin Driver)</h3>
+  <ul>
+    <li>Pure Java driver that converts JDBC calls directly into database-specific protocol.</li>
+    <li>No need for client-side libraries.</li>
+    <li>Fastest and most widely used.</li>
+    <li>Example: <code>com.mysql.cj.jdbc.Driver</code> for MySQL.</li>
+  </ul>
+
+  <h3>Example: Loading Different Drivers</h3>
+  <pre><code class="language-java">
+// Type-1 (Obsolete)
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+// Type-2 (Oracle Native Driver)
+Class.forName("oracle.jdbc.driver.OracleDriver");
+
+// Type-3 (Middleware Driver)
+Class.forName("ids.sql.IDSDriver");
+
+// Type-4 (Thin Driver - MySQL)
+Class.forName("com.mysql.cj.jdbc.Driver");
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Driver loaded successfully (depending on which driver is available in the classpath).
+  </code></pre>
+
+  <p><b>Conclusion:</b> In modern applications, we mostly use <b>Type-4 Thin Drivers</b> (like MySQL, Oracle, PostgreSQL drivers).</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>JDBC Statement</h2>
+  <p>
+    The <code>Statement</code> interface is used to execute simple SQL queries (without parameters).
+    It is suitable for static queries but not recommended for dynamic inputs due to SQL injection risks.
+  </p>
+
+  <h3>Common Methods of Statement</h3>
+  <ul>
+    <li><code>executeQuery(String sql)</code> – Executes SELECT queries and returns a <code>ResultSet</code>.</li>
+    <li><code>executeUpdate(String sql)</code> – Executes INSERT, UPDATE, DELETE and returns number of affected rows.</li>
+    <li><code>execute(String sql)</code> – Executes any SQL statement, returns boolean.</li>
+  </ul>
+
+  <h3>Example: Using Statement</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class StatementExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            // Load Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish Connection
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // Create Statement
+            Statement stmt = con.createStatement();
+
+            // INSERT Query
+            int rows = stmt.executeUpdate("INSERT INTO students VALUES (4, 'David')");
+            System.out.println(rows + " record inserted.");
+
+            // SELECT Query
+            ResultSet rs = stmt.executeQuery("SELECT * FROM students");
+
+            // Process Results
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("name"));
+            }
+
+            // Close Connection
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+1 record inserted.
+1 - John
+2 - Mary
+3 - Alex
+4 - David
+  </code></pre>
+
+  <p><b>Note:</b> Using <code>Statement</code> with user input is risky → prone to SQL Injection.
+  Instead, use <code>PreparedStatement</code> for safe parameterized queries.</p>
+</section>
+
+
+<hr>
+
+<section>
+  <h2>JDBC PreparedStatement</h2>
+  <p>
+    The <code>PreparedStatement</code> interface is used to execute parameterized queries.
+    It prevents SQL injection, improves performance (query is precompiled), and allows dynamic input using placeholders <code>?</code>.
+  </p>
+
+  <h3>Advantages over Statement</h3>
+  <ul>
+    <li>Prevents SQL Injection.</li>
+    <li>Reuses compiled query → better performance.</li>
+    <li>Supports dynamic parameters.</li>
+  </ul>
+
+  <h3>Common Methods of PreparedStatement</h3>
+  <ul>
+    <li><code>setInt(int index, int value)</code></li>
+    <li><code>setString(int index, String value)</code></li>
+    <li><code>setDouble(int index, double value)</code></li>
+    <li><code>executeQuery()</code></li>
+    <li><code>executeUpdate()</code></li>
+  </ul>
+
+  <h3>Example: Using PreparedStatement</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class PreparedStatementExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            // Load Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish Connection
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // INSERT using PreparedStatement
+            String insertQuery = "INSERT INTO students (id, name) VALUES (?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(insertQuery);
+            pstmt.setInt(1, 5);
+            pstmt.setString(2, "Sophia");
+            int rows = pstmt.executeUpdate();
+            System.out.println(rows + " record inserted.");
+
+            // SELECT using PreparedStatement
+            String selectQuery = "SELECT * FROM students WHERE id > ?";
+            PreparedStatement pstmt2 = con.prepareStatement(selectQuery);
+            pstmt2.setInt(1, 2);
+
+            ResultSet rs = pstmt2.executeQuery();
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("name"));
+            }
+
+            // Close Connection
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+1 record inserted.
+3 - Alex
+4 - David
+5 - Sophia
+  </code></pre>
+
+  <p><b>Conclusion:</b> <code>PreparedStatement</code> should be preferred over <code>Statement</code> when working with user input or repeated queries.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>JDBC CallableStatement</h2>
+  <p>
+    The <code>CallableStatement</code> interface is used to execute stored procedures in the database.
+    Stored procedures are precompiled SQL programs stored inside the database, which can be called by Java.
+  </p>
+
+  <h3>Steps to Use CallableStatement</h3>
+  <ol>
+    <li>Create a stored procedure in the database.</li>
+    <li>Use <code>prepareCall()</code> method to call it.</li>
+    <li>Set input parameters (if any).</li>
+    <li>Register output parameters (if any).</li>
+    <li>Execute and retrieve results.</li>
+  </ol>
+
+  <h3>Example: MySQL Stored Procedure</h3>
+  <pre><code class="language-sql">
+-- Create a table
+CREATE TABLE students (
+    id INT PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+-- Insert sample data
+INSERT INTO students VALUES (1, 'John'), (2, 'Mary'), (3, 'Alex');
+
+-- Create a stored procedure
+DELIMITER //
+CREATE PROCEDURE getStudentName(IN stud_id INT, OUT stud_name VARCHAR(50))
+BEGIN
+    SELECT name INTO stud_name FROM students WHERE id = stud_id;
+END //
+DELIMITER ;
+  </code></pre>
+
+  <h3>Java Code: Using CallableStatement</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class CallableStatementExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            // Load Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish Connection
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // Prepare CallableStatement
+            CallableStatement cstmt = con.prepareCall("{call getStudentName(?, ?)}");
+
+            // Set Input Parameter
+            cstmt.setInt(1, 2);
+
+            // Register Output Parameter
+            cstmt.registerOutParameter(2, Types.VARCHAR);
+
+            // Execute
+            cstmt.execute();
+
+            // Get Output
+            String studentName = cstmt.getString(2);
+            System.out.println("Student Name: " + studentName);
+
+            // Close Connection
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Student Name: Mary
+  </code></pre>
+
+  <p><b>Conclusion:</b> <code>CallableStatement</code> is useful for executing stored procedures,
+  which improves performance, code reusability, and security in database applications.</p>
+</section>
+
+
+<hr>
+
+<section>
+  <h2>JDBC Batch Processing</h2>
+  <p>
+    Batch processing allows us to execute multiple SQL statements in one batch instead of executing them one by one.  
+    This improves performance when inserting, updating, or deleting large amounts of data.
+  </p>
+
+  <h3>Steps in Batch Processing</h3>
+  <ol>
+    <li>Create a <code>Statement</code> or <code>PreparedStatement</code>.</li>
+    <li>Add multiple SQL statements using <code>addBatch()</code>.</li>
+    <li>Execute all statements together using <code>executeBatch()</code>.</li>
+    <li>Process the returned update counts.</li>
+  </ol>
+
+  <h3>Example: Using Statement for Batch</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class BatchExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            // Load Driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish Connection
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // Create Statement
+            Statement stmt = con.createStatement();
+
+            // Add multiple queries to batch
+            stmt.addBatch("INSERT INTO students VALUES (6, 'Emma')");
+            stmt.addBatch("INSERT INTO students VALUES (7, 'Oliver')");
+            stmt.addBatch("UPDATE students SET name='Alice' WHERE id=3");
+
+            // Execute batch
+            int[] results = stmt.executeBatch();
+
+            // Process results
+            for (int count : results) {
+                System.out.println("Affected rows: " + count);
+            }
+
+            // Close Connection
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Affected rows: 1
+Affected rows: 1
+Affected rows: 1
+  </code></pre>
+
+  <h3>Example: Using PreparedStatement for Batch</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class BatchPreparedExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            String query = "INSERT INTO students (id, name) VALUES (?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(query);
+
+            // 1st record
+            pstmt.setInt(1, 8);
+            pstmt.setString(2, "Liam");
+            pstmt.addBatch();
+
+            // 2nd record
+            pstmt.setInt(1, 9);
+            pstmt.setString(2, "Mia");
+            pstmt.addBatch();
+
+            // Execute batch
+            int[] results = pstmt.executeBatch();
+
+            for (int count : results) {
+                System.out.println("Affected rows: " + count);
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Affected rows: 1
+Affected rows: 1
+  </code></pre>
+
+  <p><b>Conclusion:</b> Batch processing is very efficient when dealing with bulk insert/update/delete operations.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>JDBC Transactions</h2>
+  <p>
+    A transaction is a group of operations that are executed as a single unit.  
+    By default, JDBC executes each statement in auto-commit mode (every SQL statement is immediately committed).  
+    To control transactions, we disable auto-commit and explicitly commit or rollback.
+  </p>
+
+  <h3>Key Methods</h3>
+  <ul>
+    <li><code>setAutoCommit(false)</code> – Disable auto-commit.</li>
+    <li><code>commit()</code> – Save all changes.</li>
+    <li><code>rollback()</code> – Undo all changes since last commit.</li>
+    <li><code>setSavepoint()</code> – Mark a point to which we can rollback.</li>
+  </ul>
+
+  <h3>Example: Commit and Rollback</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class TransactionExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // Disable auto-commit
+            con.setAutoCommit(false);
+
+            Statement stmt = con.createStatement();
+
+            // First insert
+            stmt.executeUpdate("INSERT INTO students VALUES (10, 'Noah')");
+
+            // Second insert (invalid - duplicate primary key to force error)
+            stmt.executeUpdate("INSERT INTO students VALUES (10, 'Lucas')");
+
+            // Commit if all successful
+            con.commit();
+            System.out.println("Transaction committed.");
+
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Possible Output</h3>
+  <pre><code>
+java.sql.SQLIntegrityConstraintViolationException: Duplicate entry '10' for key 'PRIMARY'
+  </code></pre>
+
+  <p>
+    In this case, since we didn’t handle rollback, the first insert might still remain.  
+    To fix this, we should use <code>rollback()</code> inside a <code>catch</code> block.
+  </p>
+
+  <h3>Improved Example: Rollback on Error</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class TransactionRollbackExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            con.setAutoCommit(false);
+            Statement stmt = con.createStatement();
+
+            stmt.executeUpdate("INSERT INTO students VALUES (11, 'Ella')");
+            stmt.executeUpdate("INSERT INTO students VALUES (11, 'James')"); // duplicate ID
+
+            con.commit();
+            System.out.println("Transaction committed.");
+
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println("Error occurred, rolling back...");
+            try {
+                Connection con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/testdb", "root", "password"
+                );
+                con.rollback();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Error occurred, rolling back...
+  </code></pre>
+
+  <h3>Example: Using Savepoint</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class SavepointExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            con.setAutoCommit(false);
+            Statement stmt = con.createStatement();
+
+            stmt.executeUpdate("INSERT INTO students VALUES (12, 'Henry')");
+
+            // Create savepoint
+            Savepoint sp = con.setSavepoint("Save1");
+
+            stmt.executeUpdate("INSERT INTO students VALUES (12, 'Ava')"); // duplicate ID
+
+            con.commit();
+            System.out.println("Transaction committed.");
+
+            con.close();
+
+        } catch (Exception e) {
+            System.out.println("Error occurred, rolling back to savepoint...");
+            try {
+                Connection con = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/testdb", "root", "password"
+                );
+                con.rollback();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Error occurred, rolling back to savepoint...
+  </code></pre>
+
+  <p><b>Conclusion:</b> Transactions ensure data integrity and consistency.  
+  Use <code>commit()</code>, <code>rollback()</code>, and <code>savepoint()</code> to manage complex database operations safely.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>JDBC ResultSet Types</h2>
+  <p>
+    A <code>ResultSet</code> represents the result of a query. By default, it is **forward-only** and **read-only**.
+    JDBC allows different types of ResultSets depending on how you want to navigate and update the data.
+  </p>
+
+  <h3>1. TYPE_FORWARD_ONLY</h3>
+  <ul>
+    <li>Default ResultSet type.</li>
+    <li>Cursor moves forward only, one row at a time.</li>
+    <li>Cannot update the ResultSet directly.</li>
+  </ul>
+
+  <h3>2. TYPE_SCROLL_INSENSITIVE</h3>
+  <ul>
+    <li>Cursor can move forward and backward.</li>
+    <li>Does not reflect changes made in the database after ResultSet creation.</li>
+  </ul>
+
+  <h3>3. TYPE_SCROLL_SENSITIVE</h3>
+  <ul>
+    <li>Cursor can move forward and backward.</li>
+    <li>Reflects changes made in the database after ResultSet creation.</li>
+  </ul>
+
+  <h3>Updatable vs Read-Only</h3>
+  <ul>
+    <li><code>CONCUR_READ_ONLY</code> – Default, cannot update ResultSet.</li>
+    <li><code>CONCUR_UPDATABLE</code> – Allows updating data directly through ResultSet.</li>
+  </ul>
+
+  <h3>Example: Scrollable and Updatable ResultSet</h3>
+  <pre><code class="language-java">
+import java.sql.*;
+
+public class ResultSetExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // Create scrollable, updatable ResultSet
+            Statement stmt = con.createStatement(
+                ResultSet.TYPE_SCROLL_INSENSITIVE, 
+                ResultSet.CONCUR_UPDATABLE
+            );
+
+            ResultSet rs = stmt.executeQuery("SELECT * FROM students");
+
+            System.out.println("Forward iteration:");
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("name"));
+            }
+
+            System.out.println("\nBackward iteration:");
+            while (rs.previous()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("name"));
+            }
+
+            // Update a row
+            rs.absolute(2); // move to 2nd row
+            rs.updateString("name", "UpdatedName");
+            rs.updateRow();
+
+            // Insert a new row
+            rs.moveToInsertRow();
+            rs.updateInt("id", 20);
+            rs.updateString("name", "NewStudent");
+            rs.insertRow();
+
+            System.out.println("\nAfter update & insert:");
+            rs.beforeFirst();
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("name"));
+            }
+
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Forward iteration:
+1 - John
+2 - Mary
+3 - Alex
+4 - David
+
+Backward iteration:
+4 - David
+3 - Alex
+2 - Mary
+1 - John
+
+After update & insert:
+1 - John
+2 - UpdatedName
+3 - Alex
+4 - David
+20 - NewStudent
+  </code></pre>
+
+  <p><b>Conclusion:</b> Scrollable and updatable ResultSets allow flexible navigation and modification of query results without executing multiple SQL statements.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>JDBC BLOB and CLOB</h2>
+  <p>
+    BLOB (Binary Large Object) and CLOB (Character Large Object) are used to store large data in the database:
+  </p>
+  <ul>
+    <li><b>BLOB</b> – Stores binary data like images, audio, video, or any files.</li>
+    <li><b>CLOB</b> – Stores large text data like documents or XML files.</li>
+  </ul>
+
+  <h3>Steps to Store BLOB</h3>
+  <ol>
+    <li>Create a table with BLOB/CLOB column.</li>
+    <li>Use <code>PreparedStatement</code> to insert data.</li>
+    <li>Use <code>getBlob()</code> or <code>getClob()</code> to read data.</li>
+  </ol>
+
+  <h3>Example: Storing and Retrieving BLOB</h3>
+  <pre><code class="language-java">
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.sql.*;
+
+public class BlobExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            // Create table (if not exists)
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS files (id INT PRIMARY KEY, file_name VARCHAR(50), file_data BLOB)");
+
+            // Insert file into BLOB
+            String filePath = "C:/images/sample.jpg";
+            FileInputStream fis = new FileInputStream(filePath);
+
+            String sql = "INSERT INTO files (id, file_name, file_data) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, 1);
+            pstmt.setString(2, "sample.jpg");
+            pstmt.setBlob(3, fis);
+
+            pstmt.executeUpdate();
+            System.out.println("File inserted into database.");
+
+            // Retrieve BLOB
+            ResultSet rs = stmt.executeQuery("SELECT file_name, file_data FROM files WHERE id=1");
+            if (rs.next()) {
+                Blob blob = rs.getBlob("file_data");
+                FileOutputStream fos = new FileOutputStream("C:/images/output.jpg");
+                fos.write(blob.getBytes(1, (int) blob.length()));
+                fos.close();
+                System.out.println("File retrieved from database.");
+            }
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+File inserted into database.
+File retrieved from database.
+  </code></pre>
+
+  <h3>Example: Storing and Retrieving CLOB</h3>
+  <pre><code class="language-java">
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.sql.*;
+
+public class ClobExample {
+    public static void main(String[] args) {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "password";
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection con = DriverManager.getConnection(url, user, password);
+
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS documents (id INT PRIMARY KEY, doc_name VARCHAR(50), doc_text CLOB)");
+
+            // Insert text file into CLOB
+            FileReader fr = new FileReader("C:/docs/sample.txt");
+            String sql = "INSERT INTO documents (id, doc_name, doc_text) VALUES (?, ?, ?)";
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, 1);
+            pstmt.setString(2, "sample.txt");
+            pstmt.setClob(3, fr);
+            pstmt.executeUpdate();
+            System.out.println("Text file inserted into database.");
+
+            // Retrieve CLOB
+            ResultSet rs = stmt.executeQuery("SELECT doc_text FROM documents WHERE id=1");
+            if (rs.next()) {
+                Clob clob = rs.getClob("doc_text");
+                FileWriter fw = new FileWriter("C:/docs/output.txt");
+                fw.write(clob.getSubString(1, (int) clob.length()));
+                fw.close();
+                System.out.println("Text file retrieved from database.");
+            }
+
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Text file inserted into database.
+Text file retrieved from database.
+  </code></pre>
+
+  <p><b>Conclusion:</b> Use BLOBs for binary data (images, videos) and CLOBs for large text data. JDBC provides <code>setBlob()</code>, <code>getBlob()</code>, <code>setClob()</code>, and <code>getClob()</code> methods for handling them.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>JDBC Connection Pooling</h2>
+  <p>
+    Connection pooling is a technique to **reuse database connections** instead of creating a new connection for every request.
+    It improves performance and resource utilization in applications.
+  </p>
+
+  <h3>Benefits of Connection Pooling</h3>
+  <ul>
+    <li>Reduces connection creation overhead.</li>
+    <li>Improves performance for high-load applications.</li>
+    <li>Manages a fixed number of connections efficiently.</li>
+  </ul>
+
+  <h3>Popular Connection Pool Libraries</h3>
+  <ul>
+    <li><b>Apache DBCP</b></li>
+    <li><b>C3P0</b></li>
+    <li><b>HikariCP</b></li>
+  </ul>
+
+  <h3>Example: Using Apache DBCP</h3>
+  <pre><code class="language-java">
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import org.apache.commons.dbcp2.BasicDataSource;
+
+public class ConnectionPoolExample {
+    public static void main(String[] args) {
+        // Create a connection pool
+        BasicDataSource ds = new BasicDataSource();
+        ds.setUrl("jdbc:mysql://localhost:3306/testdb");
+        ds.setUsername("root");
+        ds.setPassword("password");
+        ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        ds.setInitialSize(5);   // initial connections
+        ds.setMaxTotal(10);     // maximum connections
+
+        try {
+            // Get connection from pool
+            Connection con = ds.getConnection();
+
+            // Use connection
+            PreparedStatement pstmt = con.prepareStatement("SELECT * FROM students");
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                System.out.println(rs.getInt("id") + " - " + rs.getString("name"));
+            }
+
+            // Return connection to pool
+            con.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+1 - John
+2 - Mary
+3 - Alex
+4 - David
+20 - NewStudent
+  </code></pre>
+
+  <p><b>Conclusion:</b> Connection pooling allows applications to reuse a set of pre-created connections, which improves performance and resource management in database-intensive applications.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Servlets</h2>
+
+  <h3>Introduction to Web Applications</h3>
+  <p>
+    A web application is a Java program that runs on a web server and responds to client requests via HTTP.  
+    Servlets are server-side Java programs used to handle requests and generate dynamic responses (HTML, JSON, etc.).
+  </p>
+
+  <h3>Servlet Lifecycle</h3>
+  <p>
+    A servlet goes through three main phases:
+  </p>
+  <ul>
+    <li><b>init()</b> – Called once when the servlet is first loaded. Used for initialization.</li>
+    <li><b>service()</b> – Handles each request. Typically, <code>doGet()</code> or <code>doPost()</code> methods are called.</li>
+    <li><b>destroy()</b> – Called once before the servlet is removed. Used for cleanup.</li>
+  </ul>
+
+  <h3>Example: Basic Servlet</h3>
+  <pre><code class="language-java">
+import java.io.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+
+public class HelloServlet extends HttpServlet {
+    public void init() {
+        System.out.println("Servlet initialized");
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h1>Hello from Servlet</h1>");
+    }
+
+    public void destroy() {
+        System.out.println("Servlet destroyed");
+    }
+}
+  </code></pre>
+
+---
+
+<h3>HttpServletRequest & HttpServletResponse</h3>
+<p>
+    <b>HttpServletRequest</b> – Contains client request data like parameters, headers, and attributes.<br>
+    <b>HttpServletResponse</b> – Used to send response back to the client.
+</p>
+
+<h3>Example: Reading Request Parameters</h3>
+<pre><code class="language-java">
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String name = request.getParameter("name");
+    PrintWriter out = response.getWriter();
+    out.println("Hello, " + name);
+}
+</code></pre>
+
+---
+
+<h3>GET vs POST</h3>
+<ul>
+    <li><b>GET</b> – Parameters in URL, limited size, visible, idempotent.</li>
+    <li><b>POST</b> – Parameters in request body, large size, secure, can change server state.</li>
+</ul>
+
+---
+
+<h3>ServletConfig vs ServletContext</h3>
+<ul>
+    <li><b>ServletConfig</b> – Configuration for a single servlet. Access init parameters.</li>
+    <li><b>ServletContext</b> – Shared application-level context for all servlets. Can store attributes accessible by all servlets.</li>
+</ul>
+
+<pre><code class="language-java">
+// ServletConfig example
+String value = getServletConfig().getInitParameter("paramName");
+
+// ServletContext example
+ServletContext context = getServletContext();
+context.setAttribute("appName", "My Web App");
+</code></pre>
+
+---
+
+<h3>Session Management</h3>
+
+<h4>1. Cookies</h4>
+<pre><code class="language-java">
+Cookie cookie = new Cookie("username", "Aathi");
+cookie.setMaxAge(24*60*60); // 1 day
+response.addCookie(cookie);
+</code></pre>
+
+<h4>2. URL Rewriting</h4>
+<pre><code class="language-java">
+// Append session info to URL
+String url = response.encodeURL("nextPage.jsp");
+response.sendRedirect(url);
+</code></pre>
+
+<h4>3. HttpSession</h4>
+<pre><code class="language-java">
+HttpSession session = request.getSession();
+session.setAttribute("username", "Aathi");
+
+// Retrieve
+String user = (String) session.getAttribute("username");
+</code></pre>
+
+---
+
+<h3>RequestDispatcher (Forward & Include)</h3>
+<ul>
+    <li><b>forward()</b> – Forwards request to another resource. Client URL remains unchanged.</li>
+    <li><b>include()</b> – Includes content of another resource in response.</li>
+</ul>
+
+<pre><code class="language-java">
+RequestDispatcher rd = request.getRequestDispatcher("next.jsp");
+rd.forward(request, response);
+
+RequestDispatcher rd2 = request.getRequestDispatcher("header.jsp");
+rd2.include(request, response);
+</code></pre>
+
+---
+
+<h3>Filters & Listeners</h3>
+<ul>
+    <li><b>Filters</b> – Intercepts requests/responses for logging, authentication, compression, etc.</li>
+    <li><b>Listeners</b> – Listen to lifecycle events like session creation, attribute changes, context initialization.</li>
+</ul>
+
+<pre><code class="language-java">
+// Filter Example
+public class MyFilter implements Filter {
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        System.out.println("Before servlet");
+        chain.doFilter(request, response);
+        System.out.println("After servlet");
+    }
+}
+</code></pre>
+
+---
+
+<h3>Annotations in Servlets</h3>
+<p>
+    Modern Servlets use annotations instead of web.xml mapping.
+</p>
+<pre><code class="language-java">
+import jakarta.servlet.annotation.WebServlet;
+
+@WebServlet("/hello")
+public class HelloServlet extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.getWriter().println("Hello with annotation!");
+    }
+}
+</code></pre>
+
+<p><b>Conclusion:</b> Servlets form the backbone of Java web applications, handling requests, responses, session management, and integrating with JSP, filters, and listeners for robust applications.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>JSP (JavaServer Pages)</h2>
+
+  <h3>Introduction to JSP</h3>
+  <p>
+    JSP is a server-side technology that allows embedding Java code in HTML pages.  
+    It is mainly used to create dynamic web content and simplifies development compared to servlets.
+  </p>
+
+  <h3>JSP Syntax</h3>
+  <ul>
+    <li><b>Scriptlet:</b> Embed Java code: <code>&lt;% Java code %&gt;</code></li>
+    <li><b>Expression:</b> Output value: <code>&lt;%= expression %&gt;</code></li>
+    <li><b>Declaration:</b> Declare methods/variables: <code>&lt%! declaration %&gt;</code></li>
+  </ul>
+
+  <h3>Example: Basic JSP</h3>
+  <pre><code class="language-html">
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%&gt;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Hello JSP&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+
+&lt;%
+    String name = request.getParameter("name");
+    if(name == null) { name = "Guest"; }
+%>
+
+&lt;h1&gt;Hello, &lt;%= name %&gt;!&lt;/h1&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </code></pre>
+
+---
+
+<h3>JSP Implicit Objects</h3>
+<p>JSP provides 9 implicit objects accessible without declaration:</p>
+<ul>
+    <li><b>request:</b> HttpServletRequest object</li>
+    <li><b>response:</b> HttpServletResponse object</li>
+    <li><b>out:</b> JspWriter to send output to client</li>
+    <li><b>session:</b> HttpSession object</li>
+    <li><b>application:</b> ServletContext object</li>
+    <li><b>config:</b> ServletConfig object</li>
+    <li><b>pageContext:</b> Provides access to page attributes and scopes</li>
+    <li><b>page:</b> Reference to the current JSP page object</li>
+    <li><b>exception:</b> Exception object in error pages</li>
+</ul>
+
+---
+
+<h3>Form Handling in JSP</h3>
+<pre><code class="language-html">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;form action="process.jsp" method="post"&gt;
+  Name: &lt;input type="text" name="username"&gt;&lt;br&gt;
+  Age: &lt;input type="text" name="age"&gt;&lt;br&gt;
+  &lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </code></pre>
+
+```html
+<!-- process.jsp -->
+&lt;%@ page language="java" contentType="text/html; charset=UTF-8"%&gt;
+&lt;%
+    String username = request.getParameter("username");
+    String age = request.getParameter("age");
+%>
+&lt;h2&gt;Hello, &lt;%= username %&gt;! Your age is &lt;%= age %&gt;.&lt;/h2&gt;
+<h3>JSP Directives</h3> <ul> <li><b>page:</b> Defines page settings (content type, import classes)</li> <li><b>include:</b> Includes another JSP file statically</li> <li><b>taglib:</b> Defines custom tag libraries</li> </ul> <pre><code class="language-html"> &lt;%@ page contentType="text/html" import="java.util.*" %&gt; &lt;%@ include file="header.jsp" %&gt; </code></pre>
+<h3>JSP Expression Language (EL)</h3> <p> Simplifies access to JavaBeans, request/session/application attributes: <code>${attributeName}</code> </p> <pre><code class="language-html"> &lt;%@ page language="java" %&gt; &lt;% request.setAttribute("user", "Aathi"); %> Hello, ${user}! </code></pre>
+<h3>JSP Standard Actions</h3> <ul> <li><b>&lt;jsp:useBean&gt;</b> – Instantiate or locate a JavaBean</li> <li><b>&lt;jsp:setProperty&gt;</b> – Set bean property</li> <li><b>&lt;jsp:getProperty&gt;</b> – Get bean property</li> <li><b>&lt;jsp:include&gt;</b> – Include content dynamically</li> </ul> <pre><code class="language-html"> &lt;jsp:useBean id="student" class="com.example.Student" scope="request" /&gt; &lt;jsp:setProperty name="student" property="name" value="Aathi" /&gt; &lt;p&gt;Student Name: &lt;jsp:getProperty name="student" property="name" /&gt;&lt;/p&gt; </code></pre> <p><b>Conclusion:</b> JSP simplifies dynamic content creation in web applications, integrates seamlessly with Servlets, supports EL, JavaBeans, and standard actions for maintainable web pages.</p> </section>
+
+<hr>
+
+<section>
+  <h2>JSP + JDBC Integration</h2>
+  <p>
+    JSP can interact with databases directly using JDBC.  
+    Typically, we use JDBC code in JSP or delegate to a helper class/DAO for better design.
+  </p>
+
+  <h3>Steps</h3>
+  <ol>
+    <li>Import JDBC packages.</li>
+    <li>Establish database connection.</li>
+    <li>Execute SQL queries using Statement or PreparedStatement.</li>
+    <li>Display results using JSP output.</li>
+  </ol>
+
+  <h3>Example: Display Students from Database</h3>
+
+  <pre><code class="language-html">
+&lt;%@ page import="java.sql.*" %&gt;
+&lt;html&gt;
+&lt;head&gt;&lt;title&gt;Students List&lt;/title&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;h2&gt;Students List&lt;/h2&gt;
+
+&lt;%
+    String url = "jdbc:mysql://localhost:3306/testdb";
+    String user = "root";
+    String password = "password";
+
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(url, user, password);
+        Statement stmt = con.createStatement();
+        ResultSet rs = stmt.executeQuery("SELECT * FROM students");
+
+        out.println("&lt;table border='1'&gt;");
+        out.println("&lt;tr&gt;&lt;th>ID&lt;/th&gt;&lt;th>Name&lt;/th&gt;&lt;/tr&gt;");
+
+        while(rs.next()){
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            out.println("&lt;tr&gt;&lt;td&gt;" + id + "&lt;/td&gt;&lt;td&gt;" + name + "&lt;/td&gt;&lt;/tr&gt;");
+        }
+
+        out.println("&lt;/table&gt;");
+        con.close();
+    } catch(Exception e) {
+        out.println("Error: " + e);
+    }
+%>
+
+&lt;/body&gt;
+&lt;/html&gt;
+  </code></pre>
+
+---
+
+<h3>Example: Insert Student via JSP Form</h3>
+
+```html
+<!-- form.jsp -->
+&lt;html&gt;
+&lt;body&gt;
+&lt;h2&gt;Add Student&lt;/h2&gt;
+&lt;form action="insert.jsp" method="post"&gt;
+    ID: &lt;input type="text" name="id"&gt;&lt;br&gt;
+    Name: &lt;input type="text" name="name"&gt;&lt;br&gt;
+    &lt;input type="submit" value="Add"&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+<!-- insert.jsp -->
+&lt;%@ page import="java.sql.*" %&gt;
+&lt;html&gt;
+&lt;body&gt;
+&lt;%
+    int id = Integer.parseInt(request.getParameter("id"));
+    String name = request.getParameter("name");
+
+    String url = "jdbc:mysql://localhost:3306/testdb";
+    String user = "root";
+    String password = "password";
+
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection(url, user, password);
+        PreparedStatement pstmt = con.prepareStatement("INSERT INTO students (id, name) VALUES (?, ?)");
+        pstmt.setInt(1, id);
+        pstmt.setString(2, name);
+        int result = pstmt.executeUpdate();
+        if(result > 0){
+            out.println("Student added successfully.");
+        } else {
+            out.println("Failed to add student.");
+        }
+        con.close();
+    } catch(Exception e){
+        out.println("Error: " + e);
+    }
+%>
+&lt;/body&gt;
+&lt;/html&gt;
+
+<h3>Best Practices</h3> <ul> <li>Use DAO (Data Access Object) classes instead of embedding JDBC in JSP.</li> <li>Close database resources properly.</li> <li>Use PreparedStatement to prevent SQL injection.</li> </ul> <p><b>Conclusion:</b> Integrating JSP with JDBC allows dynamic web pages to read/write data from the database. Using DAO pattern and PreparedStatements ensures maintainability and security.</p> </section>
+
+<hr>
+
+<section>
+  <h2>Hibernate (ORM Framework) – Advanced Concepts</h2>
+
+  <h3>Introduction to ORM</h3>
+  <p>
+    ORM (Object Relational Mapping) frameworks map Java objects to database tables.  
+    Hibernate is a popular ORM framework that reduces JDBC boilerplate code, provides HQL, caching, and transaction management.
+  </p>
+
+  <h3>Hibernate Architecture</h3>
+  <ul>
+    <li><b>Configuration:</b> Loads <code>hibernate.cfg.xml</code> and builds SessionFactory.</li>
+    <li><b>SessionFactory:</b> Heavy object, created once, thread-safe.</li>
+    <li><b>Session:</b> Lightweight, used to interact with DB (CRUD, queries).</li>
+    <li><b>Transaction:</b> Handles DB transactions.</li>
+    <li><b>Query:</b> HQL or SQL queries.</li>
+  </ul>
+
+---
+
+  <h3>Hibernate Configuration (<code>hibernate.cfg.xml</code>)</h3>
+  <pre><code class="language-xml">
+&lt;hibernate-configuration&gt;
+   &lt;session-factory&gt;
+      &lt;property name="hibernate.connection.driver_class"&gt;com.mysql.cj.jdbc.Driver&lt;/property&gt;
+      &lt;property name="hibernate.connection.url"&gt;jdbc:mysql://localhost:3306/testdb&lt;/property&gt;
+      &lt;property name="hibernate.connection.username"&gt;root&lt;/property&gt;
+      &lt;property name="hibernate.connection.password"&gt;password&lt;/property&gt;
+      &lt;property name="hibernate.dialect"&gt;org.hibernate.dialect.MySQLDialect&lt;/property&gt;
+      &lt;property name="hibernate.hbm2ddl.auto"&gt;update&lt;/property&gt;
+      &lt;property name="show_sql"&gt;true&lt;/property&gt;
+      &lt;mapping class="com.example.Student"/&gt;
+   &lt;/session-factory&gt;
+&lt;/hibernate-configuration&gt;
+  </code></pre>
+
+---
+
+  <h3>Mapping Files (<code>.hbm.xml</code>)</h3>
+  <p>Alternatively, Hibernate supports XML mapping files:</p>
+  <pre><code class="language-xml">
+&lt;hibernate-mapping&gt;
+    &lt;class name="com.example.Student" table="students"&gt;
+        &lt;id name="id" column="id"&gt;
+            &lt;generator class="native"/&gt;
+        &lt;/id&gt;
+        &lt;property name="name" column="name"/&gt;
+        &lt;property name="city" column="city"/&gt;
+    &lt;/class&gt;
+&lt;/hibernate-mapping&gt;
+  </code></pre>
+
+---
+
+  <h3>Annotations in Hibernate</h3>
+  <pre><code class="language-java">
+import jakarta.persistence.*;
+
+@Entity
+@Table(name="students")
+public class Student {
+    @Id
+    private int id;
+
+    @Column(name="name")
+    private String name;
+
+    @Column(name="city")
+    private String city;
+
+    public Student() {}
+    public Student(int id, String name, String city) {
+        this.id = id;
+        this.name = name;
+        this.city = city;
+    }
+
+    // Getters and Setters
+}
+  </code></pre>
+
+---
+
+  <h3>CRUD Operations</h3>
+  <pre><code class="language-java">
+// Create
+Session session = factory.openSession();
+Transaction tx = session.beginTransaction();
+session.save(new Student(1, "Aathi", "Chennai"));
+tx.commit();
+session.close();
+
+// Read
+Student s = factory.openSession().get(Student.class, 1);
+
+// Update
+Session s2 = factory.openSession();
+Transaction tx2 = s2.beginTransaction();
+s.setCity("Mumbai");
+s2.update(s);
+tx2.commit();
+s2.close();
+
+// Delete
+Session s3 = factory.openSession();
+Transaction tx3 = s3.beginTransaction();
+s3.delete(s);
+tx3.commit();
+s3.close();
+  </code></pre>
+
+---
+
+  <h3>HQL (Hibernate Query Language)</h3>
+  <pre><code class="language-java">
+Session session = factory.openSession();
+
+// Select all
+List&lt;Student&gt; list = session.createQuery("from Student", Student.class).list();
+
+// Select with condition
+List&lt;Student&gt; chennai = session.createQuery("from Student where city='Chennai'", Student.class).list();
+
+// Update
+Transaction tx = session.beginTransaction();
+session.createQuery("update Student set city='Delhi' where id=1").executeUpdate();
+tx.commit();
+
+// Delete
+tx = session.beginTransaction();
+session.createQuery("delete from Student where id=2").executeUpdate();
+tx.commit();
+
+session.close();
+  </code></pre>
+
+---
+
+  <h3>Native SQL Queries</h3>
+  <pre><code class="language-java">
+Session session = factory.openSession();
+List&lt;Object[]&gt; rows = session.createNativeQuery("SELECT * FROM students").list();
+for(Object[] row : rows){
+    System.out.println(row[0] + " - " + row[1] + " - " + row[2]);
+}
+session.close();
+  </code></pre>
+
+---
+
+  <h3>Relationships in Hibernate</h3>
+
+  <h4>1. One-to-One</h4>
+  <pre><code class="language-java">
+@Entity
+public class Address {
+    @Id private int id;
+    private String city;
+
+    @OneToOne(mappedBy="address")
+    private Student student;
+}
+
+@Entity
+public class Student {
+    @Id private int id;
+    private String name;
+
+    @OneToOne
+    @JoinColumn(name="address_id")
+    private Address address;
+}
+  </code></pre>
+
+  <h4>2. One-to-Many</h4>
+  <pre><code class="language-java">
+@Entity
+public class Department {
+    @Id private int id;
+    private String name;
+
+    @OneToMany(mappedBy="department")
+    private Set&lt;Employee&gt; employees;
+}
+
+@Entity
+public class Employee {
+    @Id private int id;
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name="dept_id")
+    private Department department;
+}
+  </code></pre>
+
+  <h4>3. Many-to-One</h4>
+  <pre><code class="language-java">
+// Already shown above in Employee -> Department relationship
+  </code></pre>
+
+  <h4>4. Many-to-Many</h4>
+  <pre><code class="language-java">
+@Entity
+public class Student {
+    @Id private int id;
+    private String name;
+
+    @ManyToMany
+    @JoinTable(
+        name="student_course",
+        joinColumns=@JoinColumn(name="student_id"),
+        inverseJoinColumns=@JoinColumn(name="course_id")
+    )
+    private Set&lt;Course&gt; courses;
+}
+
+@Entity
+public class Course {
+    @Id private int id;
+    private String name;
+
+    @ManyToMany(mappedBy="courses")
+    private Set&lt;Student&gt; students;
+}
+  </code></pre>
+
+    <!-- One-to-One -->
+  <h4>One-to-One (Bidirectional)</h4>
+  <pre><code class="language-java">
+@Entity
+public class Address {
+    @Id private int id;
+    private String city;
+
+    @OneToOne(mappedBy="address")
+    private Student student;
+}
+
+@Entity
+public class Student {
+    @Id private int id;
+    private String name;
+
+    @OneToOne
+    @JoinColumn(name="address_id")
+    private Address address;
+}
+  </code></pre>
+
+  <!-- One-to-Many -->
+  <h4>One-to-Many (Bidirectional)</h4>
+  <pre><code class="language-java">
+@Entity
+public class Department {
+    @Id private int id;
+    private String name;
+
+    @OneToMany(mappedBy="department", cascade=CascadeType.ALL)
+    private Set&lt;Employee&gt; employees;
+}
+
+@Entity
+public class Employee {
+    @Id private int id;
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name="dept_id")
+    private Department department;
+}
+  </code></pre>
+
+  <!-- Many-to-Many -->
+  <h4>Many-to-Many (Bidirectional)</h4>
+  <pre><code class="language-java">
+@Entity
+public class Student {
+    @Id private int id;
+    private String name;
+
+    @ManyToMany(cascade=CascadeType.ALL)
+    @JoinTable(
+        name="student_course",
+        joinColumns=@JoinColumn(name="student_id"),
+        inverseJoinColumns=@JoinColumn(name="course_id")
+    )
+    private Set&lt;Course&gt; courses;
+}
+
+@Entity
+public class Course {
+    @Id private int id;
+    private String name;
+
+    @ManyToMany(mappedBy="courses")
+    private Set&lt;Student&gt; students;
+}
+  </code></pre>
+
+
+---
+
+  <h3>Lazy vs Eager Fetching</h3>
+  <ul>
+    <li><b>Lazy:</b> Data is loaded on-demand (default for collections).</li>
+    <li><b>Eager:</b> Data is loaded immediately with parent entity.</li>
+  </ul>
+  <pre><code class="language-java">
+@OneToMany(fetch=FetchType.LAZY) // or FetchType.EAGER
+private Set&lt;Employee&gt; employees;
+  </code></pre>
+
+---
+
+  <h3>Caching in Hibernate</h3>
+  <ul>
+    <li><b>First-Level Cache:</b> Session-level cache (enabled by default).</li>
+    <li><b>Second-Level Cache:</b> SessionFactory-level cache (requires configuration, e.g., EhCache).</li>
+    <li><b>Query Cache:</b> Caches query results.</li>
+  </ul>
+
+---
+
+  <h3>Criteria API</h3>
+  <p>Used to build type-safe queries programmatically.</p>
+  <pre><code class="language-java">
+Session session = factory.openSession();
+CriteriaBuilder cb = session.getCriteriaBuilder();
+CriteriaQuery&lt;Student&gt; cq = cb.createQuery(Student.class);
+Root&lt;Student&gt; root = cq.from(Student.class);
+cq.select(root).where(cb.equal(root.get("city"), "Chennai"));
+List&lt;Student&gt; students = session.createQuery(cq).getResultList();
+session.close();
+  </code></pre>
+
+<p><b>Conclusion:</b> Hibernate advanced features like relationships, caching, lazy/eager loading, and Criteria API provide robust ORM solutions for enterprise applications.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Spring Framework – Complete Guide</h2>
+
+  <!-- Introduction to Spring -->
+  <h3>1. Introduction to Spring</h3>
+  <p>
+    Spring is a powerful Java framework for building enterprise applications.  
+    Key features include:
+  </p>
+  <ul>
+    <li>Lightweight and POJO-based</li>
+    <li>Dependency Injection (DI) & Inversion of Control (IoC)</li>
+    <li>Aspect-Oriented Programming (AOP)</li>
+    <li>Transaction Management</li>
+    <li>Spring MVC for web applications</li>
+    <li>Integration with Hibernate, JDBC, JMS, etc.</li>
+  </ul>
+
+  <!-- IoC & DI -->
+  <h3>2. Inversion of Control (IoC) & Dependency Injection (DI)</h3>
+  <p>
+    IoC: Spring manages the creation and lifecycle of objects (beans) instead of the developer.<br>
+    DI: Injecting dependencies into objects instead of creating them manually.
+  </p>
+
+  <h4>Example: Constructor Injection</h4>
+  <pre><code class="language-java">
+public class Engine {
+    public void start() { System.out.println("Engine started"); }
+}
+
+public class Car {
+    private Engine engine;
+
+    // Constructor Injection
+    public Car(Engine engine) { this.engine = engine; }
+
+    public void drive() { 
+        engine.start(); 
+        System.out.println("Car is running"); 
+    }
+}
+
+// Spring XML configuration
+/*
+&lt;bean id="engine" class="com.example.Engine"/&gt;
+&lt;bean id="car" class="com.example.Car"&gt;
+  &lt;constructor-arg ref="engine"/&gt;
+&lt;/bean&gt;
+*/
+  </code></pre>
+
+  <h4>Example: Setter Injection</h4>
+  <pre><code class="language-java">
+public class Car {
+    private Engine engine;
+
+    // Setter Injection
+    public void setEngine(Engine engine) { this.engine = engine; }
+
+    public void drive() {
+        engine.start();
+        System.out.println("Car is running");
+    }
+}
+  </code></pre>
+
+  <!-- Spring Bean Lifecycle -->
+  <h3>3. Spring Bean Lifecycle</h3>
+  <ul>
+    <li>Bean Instantiation</li>
+    <li>Dependency Injection (setter/constructor)</li>
+    <li>BeanNameAware & BeanFactoryAware callbacks</li>
+    <li>Post-construct initialization (<code>init-method</code>)</li>
+    <li>Bean ready to use</li>
+    <li>Pre-destroy cleanup (<code>destroy-method</code>)</li>
+  </ul>
+
+  <!-- Spring Configuration -->
+  <h3>4. Spring Configuration (XML & Annotations)</h3>
+  <p>Spring supports XML and annotation-based configurations.</p>
+
+  <h4>XML Configuration Example</h4>
+  <pre><code class="language-xml">
+&lt;beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"&gt;
+
+    &lt;bean id="engine" class="com.example.Engine"/&gt;
+    &lt;bean id="car" class="com.example.Car"&gt;
+        &lt;constructor-arg ref="engine"/&gt;
+    &lt;/bean&gt;
+
+&lt;/beans&gt;
+  </code></pre>
+
+  <h4>Annotation-Based Example</h4>
+  <pre><code class="language-java">
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Component
+public class Engine {
+    public void start() { System.out.println("Engine started"); }
+}
+
+@Component
+public class Car {
+    private Engine engine;
+
+    @Autowired
+    public Car(Engine engine) { this.engine = engine; }
+
+    public void drive() {
+        engine.start();
+        System.out.println("Car is running");
+    }
+}
+  </code></pre>
+
+  <!-- Autowiring -->
+  <h3>5. Autowiring in Spring</h3>
+  <p>Automatically inject dependencies by type, name, or constructor.</p>
+  <ul>
+    <li><b>byType:</b> Matches bean type</li>
+    <li><b>byName:</b> Matches bean name</li>
+    <li><b>constructor:</b> Uses constructor injection automatically</li>
+    <li><b>annotations:</b> <code>@Autowired</code></li>
+  </ul>
+
+  <!-- Spring JDBC Template -->
+  <h3>6. Spring JDBC Template</h3>
+  <p>Spring JDBC Template simplifies JDBC operations, exception handling, and resource management.</p>
+  <pre><code class="language-java">
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+DriverManagerDataSource ds = new DriverManagerDataSource();
+ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
+ds.setUrl("jdbc:mysql://localhost:3306/testdb");
+ds.setUsername("root");
+ds.setPassword("password");
+
+JdbcTemplate jt = new JdbcTemplate(ds);
+jt.update("INSERT INTO students(id, name) VALUES(?, ?)", 1, "Aathi");
+
+// Query
+List&lt;Map&lt;String, Object&gt;&gt; students = jt.queryForList("SELECT * FROM students");
+for(Map&lt;String,Object&gt; row : students){
+    System.out.println(row.get("id") + " - " + row.get("name"));
+}
+  </code></pre>
+
+  <!-- Aspect-Oriented Programming -->
+  <h3>7. Aspect-Oriented Programming (AOP)</h3>
+  <p>AOP separates cross-cutting concerns like logging, transactions, and security from business logic.</p>
+  <pre><code class="language-java">
+// Aspect Example
+@Aspect
+@Component
+public class LoggingAspect {
+    @Before("execution(* com.example.Car.drive(..))")
+    public void logBefore() {
+        System.out.println("Car is about to drive...");
+    }
+}
+
+// Spring configuration: Enable AOP
+@Configuration
+@EnableAspectJAutoProxy
+public class AppConfig {}
+  </code></pre>
+
+  <!-- Spring MVC -->
+  <h3>8. Spring MVC</h3>
+  <p>
+    Spring MVC follows Model-View-Controller pattern:
+  </p>
+  <ul>
+    <li><b>Controller:</b> Handles requests</li>
+    <li><b>Model:</b> Business/data objects</li>
+    <li><b>View:</b> JSP or Thymeleaf templates</li>
+  </ul>
+
+  <h4>Example Controller</h4>
+  <pre><code class="language-java">
+@Controller
+public class HomeController {
+    @RequestMapping("/home")
+    public String home(Model model){
+        model.addAttribute("message", "Welcome to Spring MVC!");
+        return "home"; // home.jsp
+    }
+}
+  </code></pre>
+
+  <!-- Spring Boot Basics -->
+  <h3>9. Spring Boot Basics</h3>
+  <p>
+    Spring Boot simplifies Spring setup with auto-configuration and embedded servers.
+  </p>
+  <pre><code class="language-java">
+// Main Class
+@SpringBootApplication
+public class App {
+    public static void main(String[] args){
+        SpringApplication.run(App.class, args);
+    }
+}
+
+// REST Controller
+@RestController
+@RequestMapping("/api")
+public class StudentController {
+    @GetMapping("/students")
+    public List&lt;String&gt; getStudents(){
+        return List.of("Aathi", "Mary", "John");
+    }
+}
+  </code></pre>
+
+  <p><b>Conclusion:</b> Spring Framework provides IoC, DI, AOP, JDBC Template, MVC, and Spring Boot for rapid, scalable, and maintainable enterprise application development.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Spring Boot – Complete Guide</h2>
+
+  <!-- Difference between Spring & Spring Boot -->
+  <h3>1. Difference between Spring & Spring Boot</h3>
+  <table border="1">
+    <tr>
+      <th>Spring</th>
+      <th>Spring Boot</th>
+    </tr>
+    <tr>
+      <td>Requires manual setup of configuration, web server, dependencies.</td>
+      <td>Provides auto-configuration, embedded servers, starter dependencies.</td>
+    </tr>
+    <tr>
+      <td>More boilerplate code.</td>
+      <td>Less boilerplate, faster setup.</td>
+    </tr>
+    <tr>
+      <td>Complex project structure.</td>
+      <td>Opinionated default structure for easy project setup.</td>
+    </tr>
+  </table>
+
+  <!-- Spring Boot Starter Projects -->
+  <h3>2. Spring Boot Starter Projects</h3>
+  <p>
+    Starters are dependency descriptors for common functionalities:
+  </p>
+  <ul>
+    <li><b>spring-boot-starter-web:</b> Build REST APIs and web apps</li>
+    <li><b>spring-boot-starter-data-jpa:</b> Integrate with JPA/Hibernate</li>
+    <li><b>spring-boot-starter-security:</b> Add security</li>
+    <li><b>spring-boot-starter-test:</b> Testing support</li>
+  </ul>
+
+  <!-- Auto-Configuration -->
+  <h3>3. Auto-Configuration</h3>
+  <p>
+    Spring Boot automatically configures beans based on classpath settings and properties.  
+    Example: If <code>spring-boot-starter-web</code> is present, Spring Boot configures Tomcat and DispatcherServlet automatically.
+  </p>
+
+  <!-- Application Properties & YAML -->
+  <h3>4. Application Properties & YAML</h3>
+  <p>
+    Configure application settings in <code>application.properties</code> or <code>application.yml</code>.
+  </p>
+  <pre><code class="language-properties">
+# application.properties
+server.port=8081
+spring.datasource.url=jdbc:mysql://localhost:3306/testdb
+spring.datasource.username=root
+spring.datasource.password=password
+  </code></pre>
+  <pre><code class="language-yaml">
+# application.yml
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: password
+  </code></pre>
+
+  <!-- Creating REST APIs with Spring Boot -->
+  <h3>5. Creating REST APIs with Spring Boot</h3>
+  <pre><code class="language-java">
+@SpringBootApplication
+public class App {
+    public static void main(String[] args){
+        SpringApplication.run(App.class, args);
+    }
+}
+
+// REST Controller
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+
+    @GetMapping
+    public List&lt;String&gt; getStudents() {
+        return List.of("Aathi", "Mary", "John");
+    }
+
+    @PostMapping
+    public String addStudent(@RequestBody String name){
+        return "Added: " + name;
+    }
+}
+  </code></pre>
+
+  <!-- Spring Boot Annotations -->
+  <h3>6. Spring Boot Annotations</h3>
+  <ul>
+    <li><b>@SpringBootApplication:</b> Main entry point, combines @Configuration, @EnableAutoConfiguration, @ComponentScan</li>
+    <li><b>@RestController:</b> Combines @Controller + @ResponseBody</li>
+    <li><b>@RequestMapping:</b> Map HTTP requests</li>
+    <li><b>@GetMapping, @PostMapping, @PutMapping, @DeleteMapping:</b> Shortcut annotations for HTTP methods</li>
+    <li><b>@Autowired:</b> Inject dependencies automatically</li>
+  </ul>
+
+  <!-- Dependency Injection in Spring Boot -->
+  <h3>7. Dependency Injection in Spring Boot</h3>
+  <pre><code class="language-java">
+@Service
+public class StudentService {
+    public List&lt;String&gt; getStudents() {
+        return List.of("Aathi", "Mary", "John");
+    }
+}
+
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+
+    private final StudentService service;
+
+    @Autowired
+    public StudentController(StudentService service){
+        this.service = service;
+    }
+
+    @GetMapping
+    public List&lt;String&gt; getStudents() {
+        return service.getStudents();
+    }
+}
+  </code></pre>
+
+  <!-- Data Access with Spring Data JPA -->
+  <h3>8. Data Access with Spring Data JPA</h3>
+  <pre><code class="language-java">
+@Entity
+public class Student {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String name;
+    private String city;
+    // Getters/Setters
+}
+
+public interface StudentRepository extends JpaRepository&lt;Student, Integer&gt; {}
+
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+    @Autowired
+    private StudentRepository repo;
+
+    @GetMapping
+    public List&lt;Student&gt; getAll() { return repo.findAll(); }
+
+    @PostMapping
+    public Student create(@RequestBody Student s) { return repo.save(s); }
+}
+  </code></pre>
+
+  <!-- Spring Boot with Hibernate -->
+  <h3>9. Spring Boot with Hibernate</h3>
+  <p>Spring Data JPA internally uses Hibernate to map entities and perform CRUD operations.</p>
+
+  <!-- Exception Handling in Spring Boot -->
+  <h3>10. Exception Handling in Spring Boot</h3>
+  <pre><code class="language-java">
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class StudentNotFoundException extends RuntimeException {
+    public StudentNotFoundException(String message){ super(message); }
+}
+
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+    @Autowired StudentRepository repo;
+
+    @GetMapping("/{id}")
+    public Student getStudent(@PathVariable int id){
+        return repo.findById(id)
+                   .orElseThrow(() -> new StudentNotFoundException("Student not found"));
+    }
+}
+  </code></pre>
+
+  <!-- Actuator (Monitoring) -->
+  <h3>11. Actuator (Monitoring)</h3>
+  <p>
+    Add dependency <code>spring-boot-starter-actuator</code> to monitor app health, metrics, and endpoints.
+  </p>
+  <pre><code class="language-properties">
+# application.properties
+management.endpoints.web.exposure.include=*
+  </code></pre>
+  <p>Access endpoints like <code>/actuator/health</code> and <code>/actuator/metrics</code></p>
+
+  <!-- Spring Security Basics -->
+  <h3>12. Spring Security Basics</h3>
+  <pre><code class="language-java">
+@SpringBootApplication
+public class App { ... }
+
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .antMatchers("/api/public").permitAll()
+            .anyRequest().authenticated()
+            .and().httpBasic();
+    }
+}
+  </code></pre>
+
+  <p><b>Conclusion:</b> Spring Boot simplifies Spring application development using auto-configuration, REST APIs, JPA/Hibernate integration, dependency injection, actuator monitoring, exception handling, and security support.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Other Advanced Java Topics</h2>
+
+  <!-- RESTful Web Services -->
+  <h3>1. RESTful Web Services (JAX-RS, Jersey, Spring REST)</h3>
+  <p>
+    REST (Representational State Transfer) services communicate over HTTP using standard methods (GET, POST, PUT, DELETE).  
+    They are stateless and support JSON/XML data formats.
+  </p>
+
+  <h4>Spring REST Example</h4>
+  <pre><code class="language-java">
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+
+    @GetMapping("/{id}")
+    public Student getStudent(@PathVariable int id){
+        return new Student(id, "Aathi", "Chennai");
+    }
+
+    @PostMapping
+    public Student addStudent(@RequestBody Student student){
+        // Save to DB (mocked here)
+        return student;
+    }
+}
+  </code></pre>
+
+  <h4>JAX-RS with Jersey Example</h4>
+  <pre><code class="language-java">
+@Path("/students")
+public class StudentResource {
+
+    @GET
+    @Path("/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Student getStudent(@PathParam("id") int id){
+        return new Student(id, "Aathi", "Chennai");
+    }
+}
+  </code></pre>
+
+  <!-- SOAP Web Services -->
+  <h3>2. SOAP Web Services (JAX-WS)</h3>
+  <p>SOAP uses XML-based messages over HTTP/SMTP for communication.</p>
+  <pre><code class="language-java">
+@WebService
+public class StudentService {
+    @WebMethod
+    public Student getStudent(int id){
+        return new Student(id, "Aathi", "Chennai");
+    }
+}
+  </code></pre>
+
+  <!-- Microservices with Spring Boot -->
+  <h3>3. Microservices with Spring Boot</h3>
+  <p>
+    Microservices architecture splits an application into small, independently deployable services.  
+    Spring Boot + Spring Cloud helps build microservices with REST APIs, configuration management, and service discovery.
+  </p>
+  <pre><code class="language-java">
+// Service A: Student Service
+@RestController
+@RequestMapping("/api/students")
+public class StudentController {
+    @GetMapping
+    public List&lt;String&gt; getStudents() { return List.of("Aathi", "John"); }
+}
+  </code></pre>
+
+  <!-- Messaging with JMS & Kafka -->
+  <h3>4. Messaging with JMS & Kafka</h3>
+  <p>Messaging systems allow asynchronous communication between services.</p>
+
+  <h4>JMS Example</h4>
+  <pre><code class="language-java">
+// Send Message
+jmsTemplate.convertAndSend("queue1", "Hello JMS");
+
+// Receive Message
+@JmsListener(destination="queue1")
+public void receive(String message){ System.out.println("Received: " + message); }
+  </code></pre>
+
+  <h4>Kafka Example</h4>
+  <pre><code class="language-java">
+// Producer
+kafkaTemplate.send("topic1", "Hello Kafka");
+
+// Consumer
+@KafkaListener(topics="topic1")
+public void consume(String message){ System.out.println("Consumed: " + message); }
+  </code></pre>
+
+  <!-- Unit Testing with JUnit & Mockito -->
+  <h3>5. Unit Testing with JUnit & Mockito</h3>
+  <pre><code class="language-java">
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+
+public class StudentServiceTest {
+
+    @Test
+    void testGetStudent(){
+        StudentRepository repo = Mockito.mock(StudentRepository.class);
+        Mockito.when(repo.findById(1)).thenReturn(new Student(1,"Aathi","Chennai"));
+
+        StudentService service = new StudentService(repo);
+        Student s = service.getStudent(1);
+
+        assertEquals("Aathi", s.getName());
+    }
+}
+  </code></pre>
+
+  <!-- Build Tools: Maven & Gradle -->
+  <h3>6. Build Tools: Maven & Gradle</h3>
+  <p>
+    Maven & Gradle are build automation tools for dependency management and packaging.
+  </p>
+
+  <h4>Maven Example (pom.xml)</h4>
+  <pre><code class="language-xml">
+&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-boot-starter-web&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;
+  </code></pre>
+
+  <h4>Gradle Example (build.gradle)</h4>
+  <pre><code class="language-groovy">
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+  </code></pre>
+
+  <!-- Version Control (Git Basics) -->
+  <h3>7. Version Control (Git Basics)</h3>
+  <ul>
+    <li><b>git init:</b> Initialize repo</li>
+    <li><b>git add &lt;file&gt;:</b> Stage changes</li>
+    <li><b>git commit -m "msg":</b> Commit changes</li>
+    <li><b>git push:</b> Push to remote repository</li>
+    <li><b>git pull:</b> Pull latest changes</li>
+  </ul>
+
+  <!-- Deployment -->
+  <h3>8. Deployment (Tomcat, Docker basics)</h3>
+  <h4>Tomcat Deployment</h4>
+  <ul>
+    <li>Package Spring Boot app as WAR (if required)</li>
+    <li>Deploy WAR in Tomcat <code>webapps</code> folder</li>
+  </ul>
+
+  <h4>Docker Deployment</h4>
+  <pre><code class="language-dockerfile">
+# Dockerfile
+FROM openjdk:17-jdk
+VOLUME /tmp
+ARG JAR_FILE=target/app.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
+  </code></pre>
+  <p>Commands:</p>
+  <ul>
+    <li>docker build -t springboot-app .</li>
+    <li>docker run -p 8080:8080 springboot-app</li>
+  </ul>
+
+  <p><b>Conclusion:</b> Advanced Java topics like REST/SOAP services, microservices, messaging, unit testing, build tools, version control, and deployment are essential for professional enterprise applications.</p>
+</section>
+
+<hr>
+
+<section>
+  <h2>Java Concurrency, Lambdas, Streams & GUI</h2>
+
+  <!-- Thread class and Runnable interface -->
+  <h3>1. Thread Class and Runnable Interface</h3>
+  <p>
+    Java supports multithreading using <b>Thread class</b> or <b>Runnable interface</b>.
+  </p>
+
+  <h4>Example: Thread class</h4>
+  <pre><code class="language-java">
+class MyThread extends Thread {
+    public void run() {
+        for(int i=1; i<=5; i++){
+            System.out.println("Thread: " + i);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args){
+        MyThread t1 = new MyThread();
+        t1.start(); // starts a new thread
+    }
+}
+  </code></pre>
+
+  <h4>Example: Runnable interface</h4>
+  <pre><code class="language-java">
+class MyRunnable implements Runnable {
+    public void run() {
+        for(int i=1; i<=5; i++){
+            System.out.println("Runnable Thread: " + i);
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args){
+        Thread t1 = new Thread(new MyRunnable());
+        t1.start();
+    }
+}
+  </code></pre>
+
+  <!-- Thread lifecycle -->
+  <h3>2. Thread Lifecycle</h3>
+  <ul>
+    <li><b>New:</b> Thread object created</li>
+    <li><b>Runnable:</b> Ready to run</li>
+    <li><b>Running:</b> Thread is executing <code>run()</code></li>
+    <li><b>Waiting / Timed Waiting:</b> Waiting for notify or sleep</li>
+    <li><b>Terminated:</b> Thread execution finished</li>
+  </ul>
+
+  <!-- Synchronization -->
+  <h3>3. Thread Synchronization</h3>
+  <p>
+    Synchronization prevents race conditions when multiple threads access shared resources.
+  </p>
+
+  <h4>Example: synchronized keyword</h4>
+  <pre><code class="language-java">
+class Counter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public int getCount() { return count; }
+}
+
+public class Main {
+    public static void main(String[] args){
+        Counter counter = new Counter();
+
+        Runnable r = () -> {
+            for(int i=0; i<1000; i++) counter.increment();
+        };
+
+        Thread t1 = new Thread(r);
+        Thread t2 = new Thread(r);
+        t1.start(); t2.start();
+
+        try { t1.join(); t2.join(); } catch(Exception e){}
+
+        System.out.println(counter.getCount());
+    }
+}
+  </code></pre>
+
+  <h4>Example: Lock & ReentrantLock</h4>
+  <pre><code class="language-java">
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+class Counter {
+    private int count = 0;
+    private Lock lock = new ReentrantLock();
+
+    public void increment() {
+        lock.lock();
+        try { count++; } 
+        finally { lock.unlock(); }
+    }
+
+    public int getCount() { return count; }
+}
+  </code></pre>
+
+  <!-- Lambda Expressions & Functional Interfaces -->
+  <h3>4. Lambda Expressions & Functional Interfaces</h3>
+  <p>
+    Lambda expressions provide a concise way to implement functional interfaces (interfaces with a single abstract method).
+  </p>
+
+  <h4>Example: Lambda</h4>
+  <pre><code class="language-java">
+interface MathOperation {
+    int operation(int a, int b);
+}
+
+public class Main {
+    public static void main(String[] args){
+        MathOperation add = (a, b) -> a + b;
+        MathOperation multiply = (a, b) -> a * b;
+
+        System.out.println(add.operation(5, 3));      // 8
+        System.out.println(multiply.operation(5, 3)); // 15
+    }
+}
+  </code></pre>
+
+  <!-- Java Stream API -->
+  <h3>5. Java Stream API</h3>
+  <p>
+    Stream API allows functional-style operations on collections: map, filter, reduce, etc.
+  </p>
+
+  <h4>Example: Stream operations</h4>
+  <pre><code class="language-java">
+import java.util.*;
+import java.util.stream.*;
+
+public class Main {
+    public static void main(String[] args){
+        List&lt;Integer&gt; numbers = List.of(1,2,3,4,5,6);
+
+        // Filter even numbers
+        List&lt;Integer&gt; evens = numbers.stream()
+                                         .filter(n -> n % 2 == 0)
+                                         .collect(Collectors.toList());
+
+        System.out.println(evens); // [2,4,6]
+
+        // Sum of numbers
+        int sum = numbers.stream().mapToInt(n -> n).sum();
+        System.out.println(sum); // 21
+    }
+}
+  </code></pre>
+
+  <!-- Java GUI (Swing) -->
+  <h3>6. Java GUI (Swing / JavaFX basics)</h3>
+  <p>Java provides Swing and JavaFX for building basic GUI applications.</p>
+
+  <h4>Swing Example</h4>
+  <pre><code class="language-java">
+import javax.swing.*;
+
+public class Main {
+    public static void main(String[] args){
+        JFrame frame = new JFrame("Swing Example");
+        JButton button = new JButton("Click Me");
+
+        button.addActionListener(e -> JOptionPane.showMessageDialog(frame, "Button Clicked!"));
+
+        frame.add(button);
+        frame.setSize(300,200);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
+  </code></pre>
+
+  <h4>JavaFX Example</h4>
+  <pre><code class="language-java">
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+    @Override
+    public void start(Stage stage){
+        Button btn = new Button("Click Me");
+        btn.setOnAction(e -> System.out.println("Button clicked!"));
+
+        Scene scene = new Scene(btn, 300, 200);
+        stage.setScene(scene);
+        stage.setTitle("JavaFX Example");
+        stage.show();
+    }
+
+    public static void main(String[] args){ launch(args); }
+}
+  </code></pre>
+
+</section>
+
+</body>
+</html>
