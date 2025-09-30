@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Python Notes</title>
+     <style>
+          body {
+      background: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      color: #333;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+pre, table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+
+
+    h1, h2, h3 {
+      margin-top: 30px;
+      border-left: 5px solid #ff6347;
+      padding-left: 12px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #e91e63;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #3f51b5;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: #009688;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px 15px;
+      border-left: 5px solid #607d8b;
+      white-space: pre-wrap;
+      font-family: 'Consolas', monospace;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .highlight {
+      background-color: #fff3cd;
+      padding: 10px;
+      border-left: 4px solid #ffc107;
+    }
+    code {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.95em;
+  color: #c7254e;
+}
+a {
+  color: #007acc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 40px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+     </style>
+</head>
+
+
+<body>
+
+<h2>Introduction</h2>
+
+<h3>What is Python</h3>
+<p>
+Python is a high-level, interpreted, and general-purpose programming language. It was created by Guido van Rossum and first released in 1991. Python is known for its simplicity, readability, and ease of learning. It supports multiple programming paradigms, including procedural, object-oriented, and functional programming.
+</p>
+<p>
+Python is widely used in web development, data science, machine learning, automation, scientific computing, and more.
+</p>
+
+<h3>Features of Python</h3>
+<ul>
+    <li><strong>Simple and Easy to Learn:</strong> Python has a clean and easy-to-read syntax which makes it beginner-friendly.</li>
+    <li><strong>Interpreted:</strong> Python code is executed line by line, which makes debugging easier.</li>
+    <li><strong>High-Level Language:</strong> Python abstracts complex details of the computer from the programmer.</li>
+    <li><strong>Portable:</strong> Python programs can run on any operating system without modification.</li>
+    <li><strong>Extensive Libraries:</strong> Python has a vast standard library and many third-party libraries for different tasks.</li>
+    <li><strong>Open Source:</strong> Python is free to use and distribute.</li>
+    <li><strong>Dynamic Typing:</strong> Variable types are determined at runtime, so you don’t need to declare them explicitly.</li>
+</ul>
+
+<h3>Installing Python & IDEs</h3>
+<p>
+To start programming in Python, you need to install it on your computer:
+</p>
+<ul>
+    <li>Download Python from the official website: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
+    <li>Run the installer and make sure to check the option "Add Python to PATH".</li>
+    <li>Verify installation by opening the command prompt/terminal and typing <code>python --version</code>.</li>
+</ul>
+<p>
+You can write Python programs using any text editor, but popular IDEs include PyCharm, VS Code, Jupyter Notebook, and Thonny.
+</p>
+
+<h3>Running Python Programs</h3>
+<p>
+There are multiple ways to run Python programs:
+</p>
+<ul>
+    <li><strong>Interactive Mode:</strong> Open the Python shell by typing <code>python</code> in the terminal. You can execute Python commands line by line.</li>
+    <li><strong>Script Mode:</strong> Write your Python code in a file with <code>.py</code> extension and run it using <code>python filename.py</code> in the terminal.</li>
+    <li><strong>IDEs:</strong> Run Python programs directly in IDEs like PyCharm or VS Code using their built-in run options.</li>
+</ul>
+
+<h3>Python vs Other Languages</h3>
+<p>
+Python is often compared with languages like Java, C++, and JavaScript. Key differences include:
+</p>
+<ul>
+    <li><strong>Syntax:</strong> Python has a simpler and more readable syntax than Java and C++.</li>
+    <li><strong>Compilation:</strong> Python is interpreted, while Java and C++ are compiled.</li>
+    <li><strong>Memory Management:</strong> Python uses automatic garbage collection; C++ requires manual memory management.</li>
+    <li><strong>Use Cases:</strong> Python is popular in data science, AI, and automation. Java is widely used in enterprise apps. C++ is often used for system programming and game development.</li>
+</ul>
+
+
+
+<hr>
+
+
+
+<h2>Python Basics</h2>
+
+<h3>Python Syntax & Indentation</h3>
+<p>
+Python uses indentation (spaces or tabs) to define blocks of code instead of braces ({}) like in other languages. Proper indentation is mandatory in Python; otherwise, it will raise an <code>IndentationError</code>. Typically, 4 spaces are used for one indentation level.
+</p>
+<pre>
+# Example:
+if True:
+    print("This is indented correctly")
+</pre>
+
+<h3>Keywords & Identifiers</h3>
+<p>
+Keywords are reserved words in Python that have a special meaning and cannot be used as variable names. Examples include <code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>def</code>, etc.  
+Identifiers are names given to variables, functions, classes, and other objects. They must start with a letter (a-z, A-Z) or underscore (_), followed by letters, digits, or underscores.
+</p>
+<pre>
+# Example of identifiers:
+my_var = 10
+_name = "Python"
+</pre>
+
+<h3>Comments</h3>
+<p>
+Comments are used to explain the code and are ignored by the Python interpreter.  
+Python supports:
+</p>
+<ul>
+    <li><strong>Single-line comments:</strong> Start with <code>#</code></li>
+    <li><strong>Multi-line comments:</strong> Use triple quotes <code>''' ... '''</code> or <code>""" ... """</code></li>
+</ul>
+<pre>
+# This is a single-line comment
+
+'''
+This is a 
+multi-line comment
+'''
+</pre>
+
+<h3>Variables & Data Types</h3>
+<p>
+Variables are used to store data. Python automatically detects the type of the variable (dynamic typing). Common data types include:
+</p>
+<ul>
+    <li><strong>int:</strong> Integer numbers (e.g., 10, -5)</li>
+    <li><strong>float:</strong> Decimal numbers (e.g., 3.14, -0.5)</li>
+    <li><strong>str:</strong> Strings (e.g., "Hello")</li>
+    <li><strong>bool:</strong> Boolean values (<code>True</code>, <code>False</code>)</li>
+    <li><strong>list, tuple, set, dict:</strong> Collection data types</li>
+</ul>
+<pre>
+# Example:
+x = 5          # int
+y = 3.14       # float
+name = "Python" # str
+is_active = True # bool
+</pre>
+
+<h3>Input & Output</h3>
+<p>
+Python provides functions to get input from the user and display output:
+</p>
+<ul>
+    <li><strong>Output:</strong> <code>print()</code> function is used to display text or variables.</li>
+    <li><strong>Input:</strong> <code>input()</code> function is used to get user input as a string.</li>
+</ul>
+<pre>
+# Output example:
+print("Hello, Python!")
+
+# Input example:
+name = input("Enter your name: ")
+print("Hello, " + name)
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Operators</h2>
+
+<h3>Arithmetic Operators</h3>
+<p>
+Arithmetic operators are used to perform mathematical operations:
+</p>
+<ul>
+    <li><strong>+</strong> : Addition</li>
+    <li><strong>-</strong> : Subtraction</li>
+    <li><strong>*</strong> : Multiplication</li>
+    <li><strong>/</strong> : Division (returns float)</li>
+    <li><strong>//</strong> : Floor division (returns integer)</li>
+    <li><strong>%</strong> : Modulus (remainder)</li>
+    <li><strong>**</strong> : Exponentiation</li>
+</ul>
+<pre>
+# Example:
+a = 10
+b = 3
+print(a + b)  # 13
+print(a - b)  # 7
+print(a * b)  # 30
+print(a / b)  # 3.3333
+print(a // b) # 3
+print(a % b)  # 1
+print(a ** b) # 1000
+</pre>
+
+<h3>Relational Operators</h3>
+<p>
+Relational (comparison) operators compare values and return <code>True</code> or <code>False</code>:
+</p>
+<ul>
+    <li><strong>==</strong> : Equal to</li>
+    <li><strong>!=</strong> : Not equal to</li>
+    <li><strong>&gt;</strong> : Greater than</li>
+    <li><strong>&lt;</strong> : Less than</li>
+    <li><strong>&gt;=</strong> : Greater than or equal to</li>
+    <li><strong>&lt;=</strong> : Less than or equal to</li>
+</ul>
+<pre>
+x = 5
+y = 10
+print(x == y)  # False
+print(x != y)  # True
+print(x &gt; y)   # False
+print(x &lt; y)   # True
+print(x &gt;= 5)  # True
+print(x &lt;= 3)  # False
+</pre>
+
+<h3>Logical Operators</h3>
+<p>
+Logical operators combine conditional statements and return <code>True</code> or <code>False</code>:
+</p>
+<ul>
+    <li><strong>and</strong> : Returns True if both conditions are True</li>
+    <li><strong>or</strong> : Returns True if at least one condition is True</li>
+    <li><strong>not</strong> : Returns the opposite boolean value</li>
+</ul>
+<pre>
+a = True
+b = False
+print(a and b)  # False
+print(a or b)   # True
+print(not a)    # False
+</pre>
+
+<h3>Assignment Operators</h3>
+<p>
+Assignment operators are used to assign values to variables. They can also combine assignment with arithmetic:
+</p>
+<ul>
+    <li><strong>=</strong> : Assign</li>
+    <li><strong>+=</strong> : Add and assign</li>
+    <li><strong>-=</strong> : Subtract and assign</li>
+    <li><strong>*=</strong> : Multiply and assign</li>
+    <li><strong>/=</strong> : Divide and assign</li>
+    <li><strong>%=</strong> : Modulus and assign</li>
+    <li><strong>//=</strong> : Floor divide and assign</li>
+    <li><strong>**=</strong> : Exponentiate and assign</li>
+</ul>
+<pre>
+x = 5
+x += 3  # x = 8
+x *= 2  # x = 16
+x %= 5  # x = 1
+</pre>
+
+<h3>Bitwise Operators</h3>
+<p>
+Bitwise operators work on binary representations of integers:
+</p>
+<ul>
+    <li><strong>&amp;</strong> : AND</li>
+    <li><strong>|</strong> : OR</li>
+    <li><strong>^</strong> : XOR</li>
+    <li><strong>~</strong> : NOT</li>
+    <li><strong>&lt;&lt;</strong> : Left shift</li>
+    <li><strong>&gt;&gt;</strong> : Right shift</li>
+</ul>
+<pre>
+a = 5  # 0101
+b = 3  # 0011
+print(a & b)  # 1 (0001)
+print(a | b)  # 7 (0111)
+print(a ^ b)  # 6 (0110)
+print(~a)     # -6
+print(a &lt;&lt; 1)  # 10
+print(a &gt;&gt; 1)  # 2
+</pre>
+
+
+
+<h2>Operators: Membership & Identity</h2>
+
+<h3>Membership Operators</h3>
+<p>
+Membership operators test whether a value is present in a sequence (like a list, tuple, string, or set).  
+Python provides two membership operators:
+</p>
+<ul>
+    <li><strong>in</strong> : Returns True if the value exists in the sequence.</li>
+    <li><strong>not in</strong> : Returns True if the value does not exist in the sequence.</li>
+</ul>
+<pre>
+# Example:
+fruits = ["apple", "banana", "cherry"]
+
+print("apple" in fruits)      # True
+print("mango" not in fruits)  # True
+
+# String example
+text = "Hello Python"
+print("Python" in text)       # True
+print("Java" not in text)     # True
+</pre>
+
+<h3>Identity Operators</h3>
+<p>
+Identity operators compare whether two objects refer to the same memory location.  
+Python provides two identity operators:
+</p>
+<ul>
+    <li><strong>is</strong> : Returns True if both variables point to the same object.</li>
+    <li><strong>is not</strong> : Returns True if variables point to different objects.</li>
+</ul>
+<pre>
+# Example:
+a = [1, 2, 3]
+b = a
+c = [1, 2, 3]
+
+print(a is b)      # True (same object)
+print(a is c)      # False (different objects with same values)
+print(a is not c)  # True
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Control Flow</h2>
+
+<h3>if, elif, else</h3>
+<p>
+Conditional statements allow your program to execute certain code based on a condition.
+</p>
+<ul>
+    <li><strong>if:</strong> Executes a block of code if the condition is True.</li>
+    <li><strong>elif:</strong> Stands for "else if"; checks another condition if previous conditions are False.</li>
+    <li><strong>else:</strong> Executes a block of code if all previous conditions are False.</li>
+</ul>
+<pre>
+# Example:
+x = 20
+if x &gt; 30:
+    print("x is greater than 30")
+elif x &gt; 10:
+    print("x is greater than 10 but less than or equal to 30")
+else:
+    print("x is 10 or less")
+</pre>
+
+<h3>for loop</h3>
+<p>
+The <code>for</code> loop is used to iterate over a sequence (list, tuple, string, range, etc.).
+</p>
+<pre>
+# Example:
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# Using range:
+for i in range(5):
+    print(i)  # prints 0 1 2 3 4
+</pre>
+
+<h3>while loop</h3>
+<p>
+The <code>while</code> loop repeatedly executes a block of code as long as a condition is True.
+</p>
+<pre>
+# Example:
+i = 0
+while i &lt; 5:
+    print(i)
+    i += 1
+</pre>
+
+<h3>break, continue, pass</h3>
+<p>
+These special statements control loop execution:
+</p>
+<ul>
+    <li><strong>break:</strong> Exits the loop immediately.</li>
+    <li><strong>continue:</strong> Skips the rest of the current iteration and moves to the next iteration.</li>
+    <li><strong>pass:</strong> Does nothing; used as a placeholder for code.</li>
+</ul>
+<pre>
+# Example:
+for i in range(5):
+    if i == 2:
+        continue  # skip 2
+    if i == 4:
+        break     # exit loop
+    print(i)
+
+# pass example
+for i in range(3):
+    pass  # placeholder, does nothing
+</pre>
+
+<h3>Nested Loops</h3>
+<p>
+You can place one loop inside another loop. This is called a nested loop.
+</p>
+<pre>
+# Example:
+for i in range(1, 4):
+    for j in range(1, 4):
+        print(i, j)
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Functions</h2>
+
+<h3>Defining Functions</h3>
+<p>
+Functions are reusable blocks of code that perform a specific task. They are defined using the <code>def</code> keyword.
+</p>
+<pre>
+# Example:
+def greet():
+    print("Hello, Python!")
+
+greet()  # Calling the function
+</pre>
+
+<h3>Function Arguments (Positional, Keyword, Default, Variable-length)</h3>
+<p>
+Python functions can accept different types of arguments:
+</p>
+<ul>
+    <li><strong>Positional arguments:</strong> Values are passed in order.</li>
+    <li><strong>Keyword arguments:</strong> Values are passed using parameter names.</li>
+    <li><strong>Default arguments:</strong> Parameters have default values if not provided.</li>
+    <li><strong>Variable-length arguments:</strong> Accept arbitrary number of arguments using <code>*args</code> for tuples and <code>**kwargs</code> for dictionaries.</li>
+</ul>
+<pre>
+# Positional
+def add(a, b):
+    print(a + b)
+add(5, 3)  # 8
+
+# Keyword
+def info(name, age):
+    print(name, age)
+info(age=25, name="Alice")  # Alice 25
+
+# Default
+def greet(name="Guest"):
+    print("Hello", name)
+greet()       # Hello Guest
+greet("Bob")  # Hello Bob
+
+# Variable-length
+def sum_all(*numbers):
+    total = sum(numbers)
+    print(total)
+sum_all(1, 2, 3, 4)  # 10
+</pre>
+
+<h3>Return Statement</h3>
+<p>
+The <code>return</code> statement is used to send a value back from a function. Without it, functions return <code>None</code>.
+</p>
+<pre>
+def square(x):
+    return x * x
+
+result = square(5)
+print(result)  # 25
+</pre>
+
+<h3>Lambda Functions</h3>
+<p>
+Lambda functions are anonymous, single-line functions defined using the <code>lambda</code> keyword. They are commonly used for small, simple operations.
+</p>
+<pre>
+# Example:
+square = lambda x: x * x
+print(square(6))  # 36
+
+add = lambda a, b: a + b
+print(add(3, 4))  # 7
+</pre>
+
+<h3>Recursion</h3>
+<p>
+Recursion is when a function calls itself to solve a problem. Always include a base condition to avoid infinite recursion.
+</p>
+<pre>
+# Example: Factorial
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+print(factorial(5))  # 120
+</pre>
+
+
+
+<h2>Arguments & Return Values</h2>
+
+<h3>Default Arguments</h3>
+<p>
+Default arguments allow you to assign a default value to a function parameter. If the argument is not provided during the function call, the default value is used.
+</p>
+<pre>
+# Example:
+def greet(name="Guest"):
+    return f"Hello, {name}!"
+
+print(greet())        # Hello, Guest!
+print(greet("Alice")) # Hello, Alice!
+</pre>
+
+<h3>*args & **kwargs</h3>
+<p>
+- <strong>*args:</strong> Allows passing a variable number of positional arguments as a tuple.  
+- <strong>**kwargs:</strong> Allows passing a variable number of keyword arguments as a dictionary.
+</p>
+<pre>
+# *args example
+def add(*numbers):
+    return sum(numbers)
+
+print(add(1, 2, 3))  # 6
+
+# **kwargs example
+def info(**details):
+    for key, value in details.items():
+        print(f"{key}: {value}")
+
+info(name="Alice", age=25, city="London")
+# Output:
+# name: Alice
+# age: 25
+# city: London
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Data Structures</h2>
+
+<h3>Lists</h3>
+<p>
+Lists are ordered, mutable collections of items. They can contain elements of different data types.
+</p>
+<pre>
+# Example:
+fruits = ["apple", "banana", "cherry"]
+print(fruits[0])  # apple
+fruits.append("orange")  # Add element
+fruits.remove("banana")  # Remove element
+print(fruits)  # ['apple', 'cherry', 'orange']
+</pre>
+
+<h3>Tuples</h3>
+<p>
+Tuples are ordered, immutable collections of items. Once created, elements cannot be changed.
+</p>
+<pre>
+# Example:
+coordinates = (10, 20)
+print(coordinates[0])  # 10
+# coordinates[0] = 15  # Error: tuples are immutable
+</pre>
+
+<h3>Sets</h3>
+<p>
+Sets are unordered collections of unique elements. They are mutable and support operations like union, intersection, and difference.
+</p>
+<pre>
+# Example:
+numbers = {1, 2, 3, 4}
+numbers.add(5)
+numbers.remove(2)
+print(numbers)  # {1, 3, 4, 5}
+
+# Set operations
+a = {1, 2, 3}
+b = {2, 3, 4}
+print(a &amp; b)  # Intersection: {2, 3}
+print(a | b)  # Union: {1, 2, 3, 4}
+</pre>
+
+<h3>Dictionaries</h3>
+<p>
+Dictionaries are unordered collections of key-value pairs. Keys are unique and immutable; values can be of any type.
+</p>
+<pre>
+# Example:
+student = {"name": "Alice", "age": 25, "grade": "A"}
+print(student["name"])  # Alice
+student["age"] = 26  # Update value
+student["city"] = "London"  # Add new key-value pair
+print(student)
+</pre>
+
+<h3>Strings (Immutable, Methods)</h3>
+<p>
+Strings are immutable sequences of characters. Python provides many built-in methods for string manipulation.
+</p>
+<pre>
+# Example:
+text = "Python"
+print(text.upper())  # PYTHON
+print(text.lower())  # python
+print(text.replace("P", "J"))  # Jython
+print(text[0])  # P
+print(text[1:4])  # yth
+
+# Strings are immutable
+# text[0] = "J"  # Error
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Object-Oriented Programming</h2>
+
+<h3>Classes & Objects</h3>
+<p>
+A class is a blueprint for creating objects, and an object is an instance of a class. Classes can contain attributes (variables) and methods (functions).
+</p>
+<pre>
+# Example:
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def greet(self):
+        print("Hello, my name is", self.name)
+
+# Creating objects
+p1 = Person("Alice", 25)
+p2 = Person("Bob", 30)
+
+p1.greet()  # Hello, my name is Alice
+p2.greet()  # Hello, my name is Bob
+</pre>
+
+<h3>Constructors (__init__)</h3>
+<p>
+The <code>__init__</code> method is a special constructor method called automatically when an object is created. It is used to initialize object attributes.
+</p>
+<pre>
+# Example:
+class Car:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+c = Car("Toyota", "Corolla")
+print(c.brand, c.model)  # Toyota Corolla
+</pre>
+
+<h3>Instance & Class Variables</h3>
+<p>
+- <strong>Instance variables:</strong> Unique to each object, defined using <code>self</code>.  
+- <strong>Class variables:</strong> Shared across all objects of the class.
+</p>
+<pre>
+class Dog:
+    species = "Canine"  # Class variable
+
+    def __init__(self, name):
+        self.name = name  # Instance variable
+
+d1 = Dog("Buddy")
+d2 = Dog("Charlie")
+
+print(d1.name, d1.species)  # Buddy Canine
+print(d2.name, d2.species)  # Charlie Canine
+</pre>
+
+
+<h3>Inheritance (Single, Multiple, Multilevel)</h3>
+<p>
+Inheritance allows a class to acquire attributes and methods of another class.
+</p>
+<pre>
+# Single Inheritance
+class Parent:
+    def greet(self):
+        print("Hello from Parent")
+
+class Child(Parent):
+    pass
+
+c = Child()
+c.greet()  # Hello from Parent
+
+# Multiple Inheritance
+class A:
+    def a_method(self):
+        print("A method")
+class B:
+    def b_method(self):
+        print("B method")
+class C(A, B):
+    pass
+
+obj = C()
+obj.a_method()  # A method
+obj.b_method()  # B method
+
+# Multilevel Inheritance
+class Grandparent:
+    pass
+class Parent(Grandparent):
+    pass
+class Child(Parent):
+    pass
+</pre>
+
+<h3>Polymorphism (Method Overloading & Overriding)</h3>
+<p>
+- <strong>Method Overloading:</strong> Python does not support traditional method overloading, but default arguments can achieve similar behavior.  
+- <strong>Method Overriding:</strong> A child class can provide its own implementation of a method inherited from the parent.
+</p>
+<pre>
+# Method Overriding
+class Parent:
+    def greet(self):
+        print("Hello from Parent")
+
+class Child(Parent):
+    def greet(self):
+        print("Hello from Child")
+
+c = Child()
+c.greet()  # Hello from Child
+</pre>
+
+<h3>Encapsulation & Abstraction</h3>
+<p>
+- <strong>Encapsulation:</strong> Restrict access to methods and variables using naming conventions (<code>_protected</code>, <code>__private</code>).  
+- <strong>Abstraction:</strong> Hiding implementation details; achieved using abstract classes (from <code>abc</code> module) or by designing interfaces.
+</p>
+<pre>
+# Encapsulation example
+class Example:
+    def __init__(self):
+        self.public = "Accessible"
+        self._protected = "Internal use"
+        self.__private = "Private"
+
+e = Example()
+print(e.public)      # Accessible
+print(e._protected)  # Internal use
+# print(e.__private) # Error
+
+# Abstraction example
+from abc import ABC, abstractmethod
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def area(self):
+        return self.side * self.side
+
+s = Square(5)
+print(s.area())  # 25
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Modules & Packages</h2>
+
+<h3>Importing Modules</h3>
+<p>
+Modules are Python files containing functions, variables, and classes that can be reused. You can import modules using the <code>import</code> statement.
+</p>
+<pre>
+# Import entire module
+import math
+print(math.sqrt(16))  # 4.0
+
+# Import specific function
+from math import factorial
+print(factorial(5))  # 120
+
+# Import with alias
+import math as m
+print(m.pi)  # 3.141592653589793
+</pre>
+
+<h3>Standard Library</h3>
+<p>
+Python provides a large collection of built-in modules called the Standard Library. Examples include:
+</p>
+<ul>
+    <li><strong>os:</strong> Interact with the operating system</li>
+    <li><strong>sys:</strong> Access system-specific parameters and functions</li>
+    <li><strong>datetime:</strong> Work with dates and times</li>
+    <li><strong>random:</strong> Generate random numbers</li>
+    <li><strong>math:</strong> Mathematical operations</li>
+</ul>
+<pre>
+import datetime
+now = datetime.datetime.now()
+print(now)  # Current date and time
+</pre>
+
+<h3>Creating Packages</h3>
+<p>
+A package is a collection of Python modules organized in directories. It allows structuring large projects.  
+To create a package:
+</p>
+<ul>
+    <li>Create a folder with your package name</li>
+    <li>Add an empty <code>__init__.py</code> file to the folder</li>
+    <li>Add modules (Python files) inside the folder</li>
+</ul>
+<pre>
+# Folder structure:
+# mypackage/
+# ├── __init__.py
+# ├── module1.py
+# └── module2.py
+
+# Importing module from package
+from mypackage import module1
+module1.function()
+</pre>
+
+<h3>__name__ == "__main__"</h3>
+<p>
+This condition is used to check whether a Python file is being run directly or imported as a module. Code inside this block runs only if the file is executed directly.
+</p>
+<pre>
+# example.py
+def greet():
+    print("Hello")
+
+if __name__ == "__main__":
+    greet()  # Runs only when this file is executed directly
+</pre>
+
+
+<h2>Magic Methods (__init__, __str__, __repr__)</h2>
+
+<p>
+Magic methods (also called dunder methods) are special methods in Python with double underscores. They allow customizing object behavior.
+</p>
+<pre>
+# __init__ : Constructor to initialize objects
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+# __str__ : Returns a human-readable string
+    def __str__(self):
+        return f"{self.name}, {self.age} years old"
+
+# __repr__ : Returns a string representation used for debugging
+    def __repr__(self):
+        return f"Person(name={self.name!r}, age={self.age!r})"
+
+p = Person("Alice", 25)
+print(p)       # Alice, 25 years old
+print(repr(p)) # Person(name='Alice', age=25)
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>File Handling</h2>
+
+<h3>Reading Files</h3>
+<p>
+You can read data from files using the <code>open()</code> function. Always close the file after use or use the <code>with</code> statement for automatic closing.
+</p>
+<pre>
+# Using open() and read()
+file = open("example.txt", "r")
+content = file.read()
+print(content)
+file.close()
+
+# Using with statement
+with open("example.txt", "r") as file:
+    content = file.read()
+    print(content)
+</pre>
+
+<h3>Writing Files</h3>
+<p>
+You can write data to files using <code>write()</code> or <code>writelines()</code>.  
+Use file modes "w" (write), "a" (append), or "x" (create).
+</p>
+<pre>
+# Write to a file
+with open("output.txt", "w") as file:
+    file.write("Hello Python\n")
+    file.write("File handling example")
+
+# Append to a file
+with open("output.txt", "a") as file:
+    file.write("\nAppended line")
+</pre>
+
+<h3>File Modes</h3>
+<p>
+Common file modes in Python:
+</p>
+<ul>
+    <li><strong>"r"</strong> : Read (default)</li>
+    <li><strong>"w"</strong> : Write (creates or overwrites)</li>
+    <li><strong>"a"</strong> : Append</li>
+    <li><strong>"x"</strong> : Create (fails if file exists)</li>
+    <li><strong>"b"</strong> : Binary mode (e.g., "rb", "wb")</li>
+    <li><strong>"t"</strong> : Text mode (default, e.g., "rt", "wt")</li>
+</ul>
+
+<h3>Working with CSV & JSON</h3>
+<p>
+Python provides built-in modules to work with CSV and JSON files.
+</p>
+<pre>
+# CSV example
+import csv
+
+with open("data.csv", "r") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+
+# JSON example
+import json
+
+# Writing JSON
+data = {"name": "Alice", "age": 25}
+with open("data.json", "w") as file:
+    json.dump(data, file)
+
+# Reading JSON
+with open("data.json", "r") as file:
+    loaded_data = json.load(file)
+    print(loaded_data)
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Exception Handling</h2>
+
+<h3>try, except</h3>
+<p>
+Exceptions are errors that occur during program execution. You can handle them using <code>try</code> and <code>except</code> blocks to prevent the program from crashing.
+</p>
+<pre>
+# Example:
+try:
+    x = 10 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+</pre>
+
+<h3>else & finally</h3>
+<p>
+- <strong>else:</strong> Runs if no exception occurs in the <code>try</code> block.  
+- <strong>finally:</strong> Runs always, whether an exception occurs or not. Useful for cleanup tasks.
+</p>
+<pre>
+try:
+    x = 10 / 2
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+else:
+    print("Division successful")  # Executes if no exception
+finally:
+    print("Execution complete")    # Always executes
+</pre>
+
+<h3>Raising Exceptions</h3>
+<p>
+You can manually raise exceptions using the <code>raise</code> keyword.
+</p>
+<pre>
+# Example:
+age = -5
+if age &lt; 0:
+    raise ValueError("Age cannot be negative")
+</pre>
+
+<h3>Custom Exceptions</h3>
+<p>
+You can create your own exception classes by inheriting from the built-in <code>Exception</code> class.
+</p>
+<pre>
+# Example:
+class MyError(Exception):
+    pass
+
+def check_value(x):
+    if x &lt; 0:
+        raise MyError("Value cannot be negative")
+
+try:
+    check_value(-10)
+except MyError as e:
+    print(e)  # Value cannot be negative
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Advanced Topics</h2>
+
+<h3>Decorators</h3>
+<p>
+Decorators are functions that modify the behavior of another function without changing its code. They are often used for logging, access control, or timing functions.
+</p>
+<pre>
+# Example:
+def decorator(func):
+    def wrapper():
+        print("Before function call")
+        func()
+        print("After function call")
+    return wrapper
+
+@decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# Output:
+# Before function call
+# Hello!
+# After function call
+</pre>
+
+<h3>Generators & Iterators</h3>
+<p>
+Generators allow you to create iterators with <code>yield</code>, producing values on the fly without storing the entire sequence in memory.
+</p>
+<pre>
+# Generator example
+def generate_numbers(n):
+    for i in range(n):
+        yield i
+
+for num in generate_numbers(5):
+    print(num)  # 0 1 2 3 4
+
+# Iterator example
+my_list = [1, 2, 3]
+it = iter(my_list)
+print(next(it))  # 1
+print(next(it))  # 2
+</pre>
+
+<h3>List Comprehensions</h3>
+<p>
+List comprehensions provide a concise way to create lists.
+</p>
+<pre>
+# Example:
+squares = [x**2 for x in range(5)]
+print(squares)  # [0, 1, 4, 9, 16]
+
+# With condition
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+print(even_squares)  # [0, 4, 16, 36, 64]
+</pre>
+
+<h3>Dictionary & Set Comprehensions</h3>
+<p>
+Similar to list comprehensions, you can create dictionaries and sets concisely.
+</p>
+<pre>
+# Dictionary comprehension
+squares_dict = {x: x**2 for x in range(5)}
+print(squares_dict)  # {0:0, 1:1, 2:4, 3:9, 4:16}
+
+# Set comprehension
+squares_set = {x**2 for x in range(5)}
+print(squares_set)  # {0, 1, 4, 9, 16}
+</pre>
+
+<h3>Regular Expressions</h3>
+<p>
+Regular expressions (regex) are used for pattern matching in strings. Python provides the <code>re</code> module.
+</p>
+<pre>
+import re
+
+text = "My email is example@test.com"
+pattern = r"\w+@\w+\.\w+"
+match = re.search(pattern, text)
+if match:
+    print(match.group())  # example@test.com
+</pre>
+
+<h3>Context Managers (with statement)</h3>
+<p>
+Context managers simplify resource management (like files) and ensure proper cleanup using the <code>with</code> statement.
+</p>
+<pre>
+# Example:
+with open("example.txt", "r") as file:
+    content = file.read()
+    print(content)
+# File is automatically closed after the block
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Libraries & Frameworks</h2>
+
+<h3>NumPy</h3>
+<p>
+NumPy is a powerful library for numerical computing. It provides support for multi-dimensional arrays, matrices, and mathematical functions.
+</p>
+<pre>
+import numpy as np
+
+# Create array
+arr = np.array([1, 2, 3, 4])
+print(arr)  # [1 2 3 4]
+
+# Operations
+print(arr + 2)       # [3 4 5 6]
+print(arr.mean())    # 2.5
+print(arr.sum())     # 10
+
+# 2D array
+matrix = np.array([[1, 2], [3, 4]])
+print(matrix)
+</pre>
+
+<h3>Pandas</h3>
+<p>
+Pandas is used for data manipulation and analysis. It provides <code>DataFrame</code> and <code>Series</code> for handling tabular data.
+</p>
+<pre>
+import pandas as pd
+
+# Create DataFrame
+data = {"Name": ["Alice", "Bob"], "Age": [25, 30]}
+df = pd.DataFrame(data)
+print(df)
+
+# Access column
+print(df["Name"])
+
+# Basic statistics
+print(df.describe())
+</pre>
+
+<h3>Matplotlib</h3>
+<p>
+Matplotlib is a plotting library used to create charts, graphs, and visualizations.
+</p>
+<pre>
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [10, 20, 25, 30]
+
+plt.plot(x, y)
+plt.title("Line Chart")
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.show()
+</pre>
+
+<h3>Requests & BeautifulSoup</h3>
+<p>
+These libraries are used for web scraping and HTTP requests:
+</p>
+<pre>
+import requests
+from bs4 import BeautifulSoup
+
+# Send HTTP request
+url = "https://example.com"
+response = requests.get(url)
+
+# Parse HTML
+soup = BeautifulSoup(response.text, "html.parser")
+print(soup.title.text)
+</pre>
+
+<h3>Flask / Django</h3>
+<p>
+Flask and Django are popular web frameworks for Python:
+</p>
+<ul>
+    <li><strong>Flask:</strong> Lightweight framework for building simple web applications. Easy to set up and extend.</li>
+    <li><strong>Django:</strong> Full-featured framework for large applications. Provides built-in ORM, admin interface, authentication, and more.</li>
+</ul>
+<pre>
+# Flask example
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello, Flask!"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Miscellaneous</h2>
+
+<h3>Pythonic Idioms & Best Practices</h3>
+<p>
+"Pythonic" refers to writing code that follows Python's conventions, is readable, and uses built-in features efficiently. Some best practices:
+</p>
+<ul>
+    <li>Use list/dict/set comprehensions instead of loops where possible.</li>
+    <li>Prefer <code>enumerate()</code> over manual indexing.</li>
+    <li>Use <code>with</code> statement for file handling.</li>
+    <li>Follow PEP8 style guide: proper indentation, naming conventions.</li>
+    <li>Use meaningful variable names and avoid redundant code.</li>
+</ul>
+<pre>
+# Pythonic example
+numbers = [1, 2, 3, 4, 5]
+squares = [x**2 for x in numbers]  # instead of a loop
+print(squares)
+</pre>
+
+<h3>Virtual Environments</h3>
+<p>
+Virtual environments allow you to create isolated Python environments for different projects. This prevents package conflicts.
+</p>
+<pre>
+# Create virtual environment
+python -m venv myenv
+
+# Activate (Windows)
+myenv\Scripts\activate
+
+# Activate (Linux/Mac)
+source myenv/bin/activate
+
+# Install packages
+pip install numpy
+
+# Deactivate
+deactivate
+</pre>
+
+<h3>Type Hinting</h3>
+<p>
+Type hints allow you to indicate the expected data types for function arguments and return values. This improves code readability and helps with static analysis.
+</p>
+<pre>
+# Example:
+def greet(name: str, age: int) -> str:
+    return f"Hello {name}, you are {age} years old"
+
+message = greet("Alice", 25)
+print(message)
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Web Development: Templates, Static Files, CRUD & Database Integration</h2>
+
+<h3>Templates & Static Files</h3>
+<p>
+In web frameworks like Flask or Django, templates are used to generate dynamic HTML pages, and static files (CSS, JS, images) are used for styling and client-side scripts.
+</p>
+<pre>
+# Flask example
+from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return render_template("index.html")  # Renders templates/index.html
+
+# Place CSS/JS/images in 'static' folder
+# Example: /static/style.css
+</pre>
+
+<h3>CRUD Operations</h3>
+<p>
+CRUD stands for Create, Read, Update, Delete — basic operations to manipulate data in a database.
+</p>
+<pre>
+# Flask example using SQLite
+from flask import Flask, request, render_template
+import sqlite3
+
+app = Flask(__name__)
+conn = sqlite3.connect("test.db", check_same_thread=False)
+cursor = conn.cursor()
+
+# Create table
+cursor.execute('''CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT)''')
+
+# Create
+@app.route("/add", methods=["POST"])
+def add_user():
+    name = request.form["name"]
+    cursor.execute("INSERT INTO users (name) VALUES (?)", (name,))
+    conn.commit()
+    return "User added"
+
+# Read
+@app.route("/users")
+def list_users():
+    cursor.execute("SELECT * FROM users")
+    users = cursor.fetchall()
+    return str(users)
+
+# Update
+@app.route("/update/<int:id>", methods=["POST"])
+def update_user(id):
+    name = request.form["name"]
+    cursor.execute("UPDATE users SET name=? WHERE id=?", (name, id))
+    conn.commit()
+    return "User updated"
+
+# Delete
+@app.route("/delete/<int:id>")
+def delete_user(id):
+    cursor.execute("DELETE FROM users WHERE id=?", (id,))
+    conn.commit()
+    return "User deleted"
+</pre>
+
+<h3>Database Integration (SQLite/MySQL)</h3>
+<p>
+Python can interact with databases using built-in or external libraries. SQLite is file-based; MySQL requires a server.
+</p>
+<pre>
+# SQLite
+import sqlite3
+conn = sqlite3.connect("mydb.db")
+cursor = conn.cursor()
+cursor.execute("CREATE TABLE IF NOT EXISTS students (id INTEGER, name TEXT)")
+conn.commit()
+conn.close()
+
+# MySQL (using mysql-connector)
+import mysql.connector
+conn = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="password",
+    database="testdb"
+)
+cursor = conn.cursor()
+cursor.execute("CREATE TABLE IF NOT EXISTS students (id INT, name VARCHAR(50))")
+conn.commit()
+conn.close()
+</pre>
+
+</body>
+
+</html>
