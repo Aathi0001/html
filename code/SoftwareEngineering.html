@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Software Engineering Notes</title>
+     <style>
+          body {
+      background: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      color: #333;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+pre, table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+
+
+    h1, h2, h3 {
+      margin-top: 30px;
+      border-left: 5px solid #ff6347;
+      padding-left: 12px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #e91e63;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #3f51b5;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: #009688;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px 15px;
+      border-left: 5px solid #607d8b;
+      white-space: pre-wrap;
+      font-family: 'Consolas', monospace;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .highlight {
+      background-color: #fff3cd;
+      padding: 10px;
+      border-left: 4px solid #ffc107;
+    }
+    code {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.95em;
+  color: #c7254e;
+}
+a {
+  color: #007acc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 40px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+.model {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin: 30px 0;
+  width: 100%;
+}
+
+.step {
+  background: #007bff;
+  color: white;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  min-width: 180px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  flex-shrink: 0;
+}
+
+.arrow {
+  font-size: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.row,
+.loop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.loop {
+  border: 2px dashed #007bff;
+  padding: 15px;
+  border-radius: 10px;
+  background: #f9f9f9;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 📱 Responsive design */
+@media (max-width: 600px) {
+  .step {
+    width: 100%;
+    max-width: 280px;
+  }
+
+  .row,
+  .loop {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .arrow {
+    transform: rotate(90deg);
+  }
+}
+
+
+.vmodel {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin: 40px 0;
+}
+
+.v-left, .v-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.v-left .arrow {
+  transform: rotate(0deg);
+}
+
+.v-right .arrow {
+  transform: rotate(180deg);
+}
+
+.v-middle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.step {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 200px;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.arrow {
+  font-size: 20px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .vmodel {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .v-left, .v-right {
+    flex-direction: column;
+  }
+  
+  .v-right .arrow {
+    transform: rotate(90deg);
+  }
+  
+  .v-left .arrow {
+    transform: rotate(90deg);
+  }
+}
+
+     </style>
+</head>
+<body>
+<section id="introduction-to-software-engineering">
+  <h2>1. Introduction to Software Engineering</h2>
+
+  <h3>What is Software Engineering?</h3>
+  <p>
+    Software Engineering is the systematic approach to the design, development, operation, and maintenance of software. 
+    It applies engineering principles to ensure that software is reliable, efficient, and meets user requirements.
+  </p>
+  <p>
+    In simple terms, it’s the process of applying <b>engineering discipline</b> to software development — 
+    ensuring that the software is <b>well-designed, cost-effective, maintainable, and delivered on time.</b>
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      Building a simple website by trial and error is programming.  
+      Building a website following proper analysis, design, testing, and maintenance processes is software engineering.
+    </p>
+  </div>
+
+  <h3>Need for Software Engineering</h3>
+  <ul>
+    <li><b>Increased Software Complexity:</b> Modern systems are large and complex, requiring structured methods to manage development.</li>
+    <li><b>High Cost of Failure:</b> Errors in critical systems (like banking or aviation) can cause huge losses or risks.</li>
+    <li><b>Quality and Reliability:</b> Engineering principles ensure that software meets performance and reliability standards.</li>
+    <li><b>Team Collaboration:</b> Large software projects need coordination among multiple developers and teams.</li>
+    <li><b>Timely Delivery:</b> Proper process models help deliver software on time and within budget.</li>
+  </ul>
+
+  <h3>Characteristics of Good Software</h3>
+  <ul>
+    <li><b>Correctness:</b> The software performs all tasks as specified.</li>
+    <li><b>Reliability:</b> It operates without failure for a given time and condition.</li>
+    <li><b>Efficiency:</b> Uses minimal resources such as memory, time, and power.</li>
+    <li><b>Maintainability:</b> Easy to modify, update, and debug when requirements change.</li>
+    <li><b>Usability:</b> Easy for users to learn and operate.</li>
+    <li><b>Portability:</b> Can run on different hardware or operating systems with minimal change.</li>
+    <li><b>Security:</b> Protects data and resists unauthorized access.</li>
+  </ul>
+
+  <h3>Software Crisis</h3>
+  <p>
+    The term <b>Software Crisis</b> refers to the challenges faced by developers in the early days of software development,
+    especially during the 1960s and 1970s, when projects often:
+  </p>
+  <ul>
+    <li>Exceeded budget and deadlines.</li>
+    <li>Produced unreliable or low-quality software.</li>
+    <li>Were difficult to maintain or update.</li>
+    <li>Failed to meet user needs.</li>
+  </ul>
+  <p>
+    Software Engineering emerged as a solution to this crisis — providing structured methods and best practices for building software effectively.
+  </p>
+
+  <h3>Software Myths</h3>
+  <p>
+    <b>Software Myths</b> are false beliefs about software development that often lead to project failures.  
+    They are commonly categorized into <b>Management Myths, Customer Myths,</b> and <b>Developer Myths.</b>
+  </p>
+
+  <ul>
+    <li><b>Management Myths:</b>
+      <ul>
+        <li>"If we fall behind schedule, we can add more people to catch up."</li>
+        <li>"Once we write the code, our job is done."</li>
+      </ul>
+    </li>
+
+    <li><b>Customer Myths:</b>
+      <ul>
+        <li>"Software requirements can be easily changed at any time."</li>
+        <li>"All I need to do is say what I want; the developers will handle the rest."</li>
+      </ul>
+    </li>
+
+    <li><b>Developer Myths:</b>
+      <ul>
+        <li>"The software will work perfectly once it’s coded."</li>
+        <li>"Only the code matters — documentation is not important."</li>
+      </ul>
+    </li>
+  </ul>
+
+  <p>
+    Understanding and avoiding these myths helps teams follow proper processes and ensures the success of software projects.
+  </p>
+
+</section>
+
+<br>
+
+<section id="software-process-sdlc">
+  <h2>2. Software Process & SDLC (Software Development Life Cycle)</h2>
+
+  <h3>Definition</h3>
+  <p>
+    The <b>Software Development Life Cycle (SDLC)</b> is a systematic process that defines the steps involved in developing a high-quality software product.  
+    It describes the <b>entire life span</b> of software — from planning to maintenance — ensuring that the final product meets user expectations.
+  </p>
+  <p>
+    SDLC provides a <b>structured approach</b> to software development, helping teams manage time, cost, and quality effectively.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      Suppose a company wants to build a bus ticket booking system.  
+      They follow SDLC steps like analyzing user needs, designing the system, coding, testing, and finally deploying it for users.
+    </p>
+  </div>
+
+  <h3>Phases of SDLC (8 Phases)</h3>
+  <p>
+    In most software companies, the SDLC is divided into <b>8 key phases</b>:
+  </p>
+
+  <h4>1. Feasibility Study</h4>
+  <p>
+    In this phase, the project’s <b>feasibility or practicality</b> is analyzed.  
+    The goal is to determine whether the software project is worth pursuing.
+  </p>
+  <ul>
+    <li><b>Technical Feasibility:</b> Can the project be built with current technology?</li>
+    <li><b>Economic Feasibility:</b> Is it financially affordable?</li>
+    <li><b>Operational Feasibility:</b> Will it solve the organization’s problems effectively?</li>
+    <li><b>Legal Feasibility:</b> Are there any legal or regulatory issues?</li>
+    <li><b>Schedule Feasibility:</b> Can it be completed on time?</li>
+  </ul>
+
+  <h4>2. Requirement Analysis</h4>
+  <p>
+    This phase focuses on <b>understanding what the user needs</b> from the system.  
+    Analysts communicate with stakeholders to gather both <b>functional</b> and <b>non-functional</b> requirements.
+  </p>
+  <ul>
+    <li>Functional Requirements – What the system should do (features, actions).</li>
+    <li>Non-Functional Requirements – How the system should perform (speed, security, usability).</li>
+  </ul>
+  <p>
+    The output of this phase is the <b>Software Requirement Specification (SRS)</b> document.
+  </p>
+
+  <h4>3. Planning</h4>
+  <p>
+    Once requirements are clear, the next step is to plan how to achieve them.  
+    The planning phase defines the <b>roadmap</b> for development.
+  </p>
+  <ul>
+    <li>Project scheduling and resource allocation.</li>
+    <li>Cost estimation and timeline preparation.</li>
+    <li>Risk identification and management planning.</li>
+    <li>Team roles and responsibilities are defined.</li>
+  </ul>
+
+  <h4>4. System Design</h4>
+  <p>
+    In this phase, the system’s architecture is designed based on the SRS.  
+    The goal is to create a <b>blueprint</b> of the entire software system.
+  </p>
+  <ul>
+    <li><b>High-Level Design (HLD):</b> Defines the overall architecture, modules, and data flow.</li>
+    <li><b>Low-Level Design (LLD):</b> Specifies logic for each component, database structure, and interface details.</li>
+  </ul>
+  <p>
+    Tools like <b>Data Flow Diagrams (DFD)</b>, <b>UML diagrams</b>, and <b>ER diagrams</b> are often used in this phase.
+  </p>
+
+  <h4>5. Coding (Implementation)</h4>
+  <p>
+    In this phase, the actual <b>source code</b> is written based on the design documents.  
+    Developers use programming languages like Java, Python, or C++ depending on the project requirements.
+  </p>
+  <ul>
+    <li>Follow coding standards and best practices.</li>
+    <li>Code reviews are done to maintain quality.</li>
+    <li>Version control tools (like Git) are used to manage code.</li>
+  </ul>
+
+  <h4>6. Testing</h4>
+  <p>
+    The testing phase ensures that the developed software is <b>error-free</b> and meets all requirements.  
+    Testers execute various tests to identify and fix defects.
+  </p>
+  <ul>
+    <li><b>Unit Testing:</b> Testing individual modules.</li>
+    <li><b>Integration Testing:</b> Testing how modules work together.</li>
+    <li><b>System Testing:</b> Testing the entire system as a whole.</li>
+    <li><b>Acceptance Testing:</b> Ensures the system meets client expectations.</li>
+  </ul>
+
+  <h4>7. Deployment</h4>
+  <p>
+    After successful testing, the software is <b>deployed</b> to the user environment.  
+    This can be done in stages — first in a limited area (pilot release) and then to all users.
+  </p>
+  <ul>
+    <li>Installation and configuration of the system.</li>
+    <li>Migration of data from old systems.</li>
+    <li>Training users and providing documentation.</li>
+  </ul>
+
+  <h4>8. Maintenance</h4>
+  <p>
+    After deployment, the software enters the <b>maintenance phase</b>.  
+    Developers fix bugs, update features, and adapt the system to new environments or technologies.
+  </p>
+  <ul>
+    <li><b>Corrective Maintenance:</b> Fixing discovered defects.</li>
+    <li><b>Adaptive Maintenance:</b> Adjusting software for new hardware or OS.</li>
+    <li><b>Perfective Maintenance:</b> Enhancing performance or adding new features.</li>
+    <li><b>Preventive Maintenance:</b> Improving maintainability and preventing future problems.</li>
+  </ul>
+
+  <p>
+    The SDLC process ensures that every stage of development is properly planned and executed, 
+    leading to <b>high-quality, reliable, and efficient software</b>.
+  </p>
+
+</section>
+
+<br>
+
+<section id="sdlc-models">
+  <h2>3. SDLC Models</h2>
+  <p>
+    <b>SDLC Models</b> are different ways of organizing and managing the software development process.  
+    Each model defines how and when the phases of SDLC are carried out.
+  </p>
+  <p>
+    The choice of model depends on project type, size, requirements, and client expectations.
+  </p>
+
+  <!-- Waterfall Model -->
+  <h3>1. Waterfall Model</h3>
+  <p>
+    The <b>Waterfall Model</b> is the oldest and simplest SDLC model.  
+    It follows a <b>linear sequential flow</b> — each phase must be completed before moving to the next.
+  </p>
+  <ul>
+    <li>Phases: Requirement → Design → Coding → Testing → Deployment → Maintenance</li>
+    <li>Once a phase is completed, you cannot go back to make changes easily.</li>
+    <li>Best suited for small projects with well-defined requirements.</li>
+  </ul>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      A company developing a <b>college admission management system</b> with fixed features 
+      like student registration, fee payment, and report generation.  
+      Since requirements are clear and unlikely to change, Waterfall works well.
+    </p>
+  </div>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Simple and easy to understand.</li>
+    <li>Phases are well defined and structured.</li>
+    <li>Easy to manage due to clear milestones.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Not suitable for projects with changing requirements.</li>
+    <li>Hard to go back to a previous phase once completed.</li>
+    <li>Late discovery of issues (testing occurs at the end).</li>
+  </ul>
+
+  <!-- Iterative Model -->
+  <h3>2. Iterative Model</h3>
+  <p>
+    The <b>Iterative Model</b> develops the system in repeated cycles (iterations).  
+    Each iteration adds new features or improves existing ones.
+  </p>
+  <p>
+    Instead of delivering the whole software at once, it is built gradually through multiple versions.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      Suppose a company is developing a <b>social media app</b>.  
+      In the first iteration, they create basic login and profile features.  
+      In the second, they add messaging; in the third, they add stories.  
+      Each version improves based on feedback.
+    </p>
+  </div>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Early feedback helps improve the product.</li>
+    <li>Less risk — problems are found early.</li>
+    <li>Users can see working software after each iteration.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Requires good planning and design at each iteration.</li>
+    <li>May need more resources and time.</li>
+  </ul>
+
+  <!-- Incremental Model -->
+  <h3>3. Incremental Model</h3>
+  <p>
+    In the <b>Incremental Model</b>, the system is developed and delivered in small parts (increments).  
+    Each increment adds functionality until the full product is completed.
+  </p>
+  <p>
+    The first increment is a basic version; later increments add new features.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      A company building an <b>online food delivery system</b> may first release basic ordering and menu features.  
+      In later increments, they add live tracking, payment gateway, and restaurant ratings.
+    </p>
+  </div>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Working software is available early.</li>
+    <li>Easy to test and manage smaller modules.</li>
+    <li>Customer feedback after each release improves quality.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Requires good modular design.</li>
+    <li>Integration between increments can be complex.</li>
+  </ul>
+
+  <!-- Spiral Model -->
+  <h3>4. Spiral Model</h3>
+  <p>
+    The <b>Spiral Model</b> combines the features of both <b>Iterative</b> and <b>Waterfall</b> models.  
+    It focuses on <b>risk analysis</b> and is ideal for large, complex, and high-risk projects.
+  </p>
+  <p>
+    Each spiral (loop) represents a phase that includes planning, risk analysis, development, and evaluation.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      A company developing a <b>defense or aerospace system</b> uses the Spiral Model to continuously 
+      analyze and reduce risks at every stage before moving to the next.
+    </p>
+  </div>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Excellent for high-risk and complex projects.</li>
+    <li>Risk is identified and minimized early.</li>
+    <li>Flexible — changes can be made in every cycle.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Expensive due to continuous risk analysis.</li>
+    <li>Requires highly skilled developers and managers.</li>
+  </ul>
+
+  <!-- V-Model -->
+  <h3>5. V-Model (Verification & Validation Model)</h3>
+  <p>
+    The <b>V-Model</b> is an extension of the Waterfall Model where <b>testing activities</b> are performed in parallel with each development phase.  
+    It emphasizes <b>verification and validation</b>.
+  </p>
+  <p>
+    Each development stage has a corresponding testing stage.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      Suppose a company is creating a <b>banking software system</b>.  
+      For every design phase, a related test plan is prepared — for example, system design is verified through system testing.
+    </p>
+  </div>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Defects are detected early.</li>
+    <li>High reliability due to parallel testing.</li>
+    <li>Good for projects where quality is critical.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Not flexible for changing requirements.</li>
+    <li>Requires detailed test documentation.</li>
+  </ul>
+
+  <!-- Prototyping Model -->
+  <h3>6. Prototyping Model</h3>
+  <p>
+    In the <b>Prototyping Model</b>, a <b>working model (prototype)</b> of the system is built early to understand user requirements.  
+    Based on user feedback, the prototype is refined until the final software is ready.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      When designing a <b>hospital management system</b>, developers first create a simple interface 
+      showing patient registration and appointment screens.  
+      After feedback from doctors and staff, they improve the design and features.
+    </p>
+  </div>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Users are involved early and can give feedback.</li>
+    <li>Requirements are better understood.</li>
+    <li>Reduces the risk of user dissatisfaction.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Can be time-consuming due to repeated modifications.</li>
+    <li>May lead to confusion between prototype and final system.</li>
+  </ul>
+
+  <!-- Agile Model -->
+  <h3>7. Agile Model</h3>
+  <p>
+    The <b>Agile Model</b> is a modern and flexible approach where software is developed in <b>small iterations</b> with continuous user feedback.  
+    It focuses on <b>adaptability, collaboration, and customer satisfaction</b>.
+  </p>
+  <p>
+    Agile breaks the project into small parts called <b>sprints</b> (usually 2–4 weeks), and each sprint delivers a working feature.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      A team developing an <b>e-commerce website</b> builds login and cart features in Sprint 1,  
+      payment integration in Sprint 2, and user reviews in Sprint 3 — all based on user feedback from previous sprints.
+    </p>
+  </div>
+
+  <h4>Popular Agile Frameworks:</h4>
+  <ul>
+    <li><b>Scrum:</b> Work is divided into short cycles (sprints) managed by a Scrum Master.</li>
+    <li><b>Kanban:</b> Visual workflow management using task boards (To Do, In Progress, Done).</li>
+    <li><b>Extreme Programming (XP):</b> Focuses on coding practices, pair programming, and frequent releases.</li>
+  </ul>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Highly flexible to changes.</li>
+    <li>Faster delivery of working software.</li>
+    <li>Continuous customer involvement ensures satisfaction.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Requires experienced team and good communication.</li>
+    <li>Less documentation compared to traditional models.</li>
+  </ul>
+  
+  <!-- RAD Model -->
+<h3>8. RAD (Rapid Application Development) Model</h3>
+<p>
+  The <b>RAD Model</b> focuses on rapid development and quick iterations of prototypes 
+  with constant user feedback. It emphasizes <b>speed over planning</b>, using reusable components and tools to build the software quickly.
+</p>
+
+<div class="example">
+  <h4>Example:</h4>
+  <p>
+    While developing an <b>online shopping portal</b>, developers create basic modules for 
+    product catalog, cart, and checkout rapidly.  
+    Users test these modules, and based on their feedback, features are enhanced and new modules are added until the final system is ready.
+  </p>
+</div>
+
+<h4>Advantages:</h4>
+<ul>
+  <li>Faster development and delivery.</li>
+  <li>Users are actively involved, improving satisfaction.</li>
+  <li>Reusable components reduce coding effort.</li>
+  <li>Flexibility to make changes during development.</li>
+</ul>
+
+<h4>Disadvantages:</h4>
+<ul>
+  <li>Requires highly skilled developers.</li>
+  <li>Not suitable for large, complex systems with strict requirements.</li>
+  <li>Too much user involvement may lead to scope creep.</li>
+</ul>
+
+  <!-- Comparison -->
+  <h3>9. Comparison Between Models</h3>
+  <table border="1" cellspacing="0" cellpadding="8">
+    <tr>
+      <th>Model</th>
+      <th>Approach</th>
+      <th>Flexibility</th>
+      <th>Best Suited For</th>
+    </tr>
+    <tr>
+      <td>Waterfall</td>
+      <td>Linear and Sequential</td>
+      <td>Low</td>
+      <td>Small projects with fixed requirements</td>
+    </tr>
+    <tr>
+      <td>Iterative</td>
+      <td>Repetition of cycles</td>
+      <td>Medium</td>
+      <td>Medium projects needing gradual improvement</td>
+    </tr>
+    <tr>
+      <td>Incremental</td>
+      <td>Partial delivery in increments</td>
+      <td>High</td>
+      <td>Projects needing early working modules</td>
+    </tr>
+    <tr>
+      <td>Spiral</td>
+      <td>Risk-driven and iterative</td>
+      <td>High</td>
+      <td>Complex, high-risk systems</td>
+    </tr>
+    <tr>
+      <td>V-Model</td>
+      <td>Verification with parallel testing</td>
+      <td>Low</td>
+      <td>Critical projects requiring strong testing</td>
+    </tr>
+    <tr>
+      <td>Prototyping</td>
+      <td>Build model and refine based on feedback</td>
+      <td>High</td>
+      <td>Projects with unclear requirements</td>
+    </tr>
+    <tr>
+      <td>Agile</td>
+      <td>Iterative with customer collaboration</td>
+      <td>Very High</td>
+      <td>Dynamic projects with changing needs</td>
+    </tr>
+    <tr>
+     <td>RAD (Rapid Application Development)</td>
+     <td>Quick development using reusable components and prototypes</td>
+     <td>High</td>
+     <td>Small to medium projects requiring fast delivery and user feedback</td>
+     </tr>
+  </table>
+
+  <p>
+    Each SDLC model has its strengths and weaknesses.  
+    The right model depends on project type, complexity, time constraints, and client involvement.
+  </p>
+</section>
+
+<br>
+
+<h3>Waterfall Model</h3>
+<div class="model">
+  <div class="step">Requirement</div>
+  <div class="arrow">⬇️</div>
+  <div class="step">Design</div>
+  <div class="arrow">⬇️</div>
+  <div class="step">Implementation</div>
+  <div class="arrow">⬇️</div>
+  <div class="step">Testing</div>
+  <div class="arrow">⬇️</div>
+  <div class="step">Deployment</div>
+  <div class="arrow">⬇️</div>
+  <div class="step">Maintenance</div>
+</div>
+
+
+<h3>Iterative Model</h3>
+<div class="model">
+  <div class="loop">
+    <div class="step">Planning</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Design</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Implement</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Test</div>
+  </div>
+  <p>🔁 Each iteration improves the system</p>
+</div>
+
+
+<h3>Incremental Model</h3>
+<div class="model">
+  <div class="row">
+    <div class="step">Increment 1</div>
+    <div class="step">Increment 2</div>
+    <div class="step">Increment 3</div>
+    <div class="step">Final Product</div>
+  </div>
+  <p>✅ Each increment adds more functionality</p>
+</div>
+
+<h3>Spiral Model</h3>
+<div class="model">
+  <div class="loop">
+    <div class="step">Planning</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Risk Analysis</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Engineering</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Evaluation</div>
+  </div>
+  <p>🔄 Repeated in multiple spirals until final system</p>
+</div>
+
+<h3>V-Model (Verification & Validation)</h3>
+
+<div class="vmodel">
+  <div class="v-left">
+    <div class="step">Requirement Analysis</div>
+    <div class="arrow">⬇️</div>
+    <div class="step">System Design</div>
+    <div class="arrow">⬇️</div>
+    <div class="step">Architectural Design</div>
+    <div class="arrow">⬇️</div>
+    <div class="step">Module Design</div>
+  </div>
+
+  <div class="v-middle">
+    <div class="step">Coding</div>
+  </div>
+
+  <div class="v-right">
+    <div class="step">Unit Testing</div>
+    <div class="arrow">⬆️</div>
+    <div class="step">Integration Testing</div>
+    <div class="arrow">⬆️</div>
+    <div class="step">System Testing</div>
+    <div class="arrow">⬆️</div>
+    <div class="step">Acceptance Testing</div>
+  </div>
+</div>
+
+<p style="text-align:center;">✅ Left Side → Verification | Right Side → Validation</p>
+
+
+<h3>Prototyping Model</h3>
+<div class="model">
+  <div class="row">
+    <div class="step">Requirement</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Quick Design</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Build Prototype</div>
+    <div class="arrow">➡️</div>
+    <div class="step">User Evaluation</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Refine & Finalize</div>
+  </div>
+</div>
+
+<h3>Agile Model</h3>
+<div class="model">
+  <div class="loop">
+    <div class="step">Planning</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Design</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Development</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Testing</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Review</div>
+  </div>
+  <p>🔁 Repeated in short sprints with customer feedback</p>
+</div>
+
+<h3>RAD Model (Rapid Application Development)</h3>
+
+<div class="model">
+  <div class="loop">
+    <div class="step">Requirement Planning</div>
+    <div class="arrow">➡️</div>
+    <div class="step">User Design</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Construction</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Cutover (Implementation)</div>
+  </div>
+  <p>⚙️ Each phase involves user feedback for faster delivery.</p>
+</div>
+
+<br>
+
+<!-- SRS (Software Requirements Specification) -->
+<h3>SRS (Software Requirements Specification)</h3>
+<p>
+  <b>Software Requirements Specification (SRS)</b> is a <b>document that describes the complete behavior, functionality, and constraints of a software system</b>.  
+  It serves as a communication bridge between stakeholders (like clients and users) and the development team.
+</p>
+
+<div class="example">
+  <h4>Example:</h4>
+  <p>
+    While developing a <b>Library Management System</b>, the SRS document will include:
+    <ul>
+      <li>Functional requirements: e.g., Add new books, issue books to students, calculate fines.</li>
+      <li>Non-functional requirements: e.g., System must respond within 2 seconds, must support 100 concurrent users.</li>
+      <li>Constraints: e.g., Must work on Windows 10 and above, use MySQL as the database.</li>
+    </ul>
+  </p>
+</div>
+
+<h4>Components of SRS:</h4>
+<ul>
+  <li><b>Introduction:</b> Overview, purpose, scope of the system, and definitions.</li>
+  <li><b>Overall Description:</b> System perspective, user characteristics, constraints, and assumptions.</li>
+  <li><b>Specific Requirements:</b> Detailed functional and non-functional requirements, interface requirements, and performance specifications.</li>
+  <li><b>External Interface Requirements:</b> User interfaces, hardware interfaces, software interfaces, and communication interfaces.</li>
+  <li><b>Other Requirements:</b> Security, reliability, maintainability, scalability, and compliance requirements.</li>
+</ul>
+
+<h4>Advantages of SRS:</h4>
+<ul>
+  <li>Clear understanding of system requirements for both developers and clients.</li>
+  <li>Reduces ambiguity and miscommunication.</li>
+  <li>Serves as a reference for validation, verification, and future maintenance.</li>
+</ul>
+
+<h4>Disadvantages of SRS:</h4>
+<ul>
+  <li>Creating a detailed SRS can be time-consuming.</li>
+  <li>Frequent requirement changes can make SRS outdated quickly.</li>
+  <li>Too much detail may overwhelm developers or stakeholders.</li>
+</ul>
+
+
+</body>
+</html>
