@@ -45,6 +45,11 @@ pre, table {
       color: #009688;
     }
 
+    h4 {
+      font-size: 20px;
+      color: #964800;
+    }
+
     pre {
       background: #eee;
       padding: 10px 15px;
@@ -250,29 +255,63 @@ th {
   }
 }
 
-     </style>
+</style>
 </head>
 <body>
-<section id="introduction-to-software-engineering">
+
+  <section id="introduction-to-software-engineering">
   <h2>1. Introduction to Software Engineering</h2>
 
-  <h3>What is Software Engineering?</h3>
+  <h3>What is Software?</h3>
   <p>
-    Software Engineering is the systematic approach to the design, development, operation, and maintenance of software. 
-    It applies engineering principles to ensure that software is reliable, efficient, and meets user requirements.
-  </p>
-  <p>
-    In simple terms, it’s the process of applying <b>engineering discipline</b> to software development — 
-    ensuring that the software is <b>well-designed, cost-effective, maintainable, and delivered on time.</b>
+    Software is a set of programs and instructions that tell a computer what to do.  <br>
+    It helps the computer perform specific tasks like playing music, managing bank accounts, or browsing the internet.
   </p>
 
   <div class="example">
     <h4>Example:</h4>
     <p>
-      Building a simple website by trial and error is programming.  
-      Building a website following proper analysis, design, testing, and maintenance processes is software engineering.
+      Examples of software: MS Word, WhatsApp, Google Chrome, or a mobile banking app.
     </p>
   </div>
+
+  <h3>What is Engineering?</h3>
+  <p>
+    Engineering means applying scientific and logical methods to design and build something useful, safe, and reliable.  <br>
+    It focuses on solving real-world problems in a planned and systematic way.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      Building a bridge using proper design and testing is engineering — not just putting materials together randomly.
+    </p>
+  </div>
+
+  <h3>What is Software Engineering?</h3>
+  <p>
+    Software Engineering is the systematic approach to the design, development, operation, and maintenance of software. <br>
+    Software Engineering means applying engineering principles to develop software.  <br>
+    It ensures the software is <b>well-planned, reliable, cost-effective, and easy to maintain.</b>
+  </p>
+
+  <p>
+    It follows a proper process like <b>Requirement → Design → Coding → Testing → Maintenance</b> to make sure the final product works correctly and meets user needs.
+  </p>
+
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      Simply creating a website by trial and error is programming.  
+      But creating a website after proper planning, design, and testing is <b>Software Engineering</b>.
+    </p>
+  </div>
+
+  <h3>In Short</h3>
+  <p>
+    <b>Software Engineering</b> = <b>Software</b> (instructions for computer) + <b>Engineering</b> (systematic method)  
+    → Together, they create <b>high-quality software</b> that meets user needs effectively.
+  </p>
 
   <h3>Need for Software Engineering</h3>
   <ul>
@@ -344,14 +383,14 @@ th {
 
 </section>
 
-<br>
+<hr>
 
 <section id="software-process-sdlc">
-  <h2>2. Software Process & SDLC (Software Development Life Cycle)</h2>
+  <h2>2. SDLC (Software Development Life Cycle)</h2>
 
   <h3>Definition</h3>
   <p>
-    The <b>Software Development Life Cycle (SDLC)</b> is a systematic process that defines the steps involved in developing a high-quality software product.  
+    The <b>Software Development Life Cycle (SDLC)</b> is a systematic process that defines the steps involved in developing a high-quality software product.    <br>
     It describes the <b>entire life span</b> of software — from planning to maintenance — ensuring that the final product meets user expectations.
   </p>
   <p>
@@ -368,33 +407,38 @@ th {
 
   <h3>Phases of SDLC (8 Phases)</h3>
   <p>
-    In most software companies, the SDLC is divided into <b>8 key phases</b>:
+    Each phase has a specific purpose to ensure smooth and successful software development.
   </p>
 
-  <h4>1. Feasibility Study</h4>
+  <h4>1. Requirement</h4>
   <p>
-    In this phase, the project’s <b>feasibility or practicality</b> is analyzed.  
-    The goal is to determine whether the software project is worth pursuing.
+    In this phase, we <b>gather client requirements</b> — what the client expects from the software.  
+    All these details are clearly written in the <b>Software Requirement Specification (SRS)</b> document.
   </p>
+
+  <div class="example">
+    <b>Example:</b>
+    <p>
+      If a bank wants a mobile app for balance checking and fund transfers,  
+      we note down every feature the client needs in the SRS.
+    </p>
+  </div>
+
+  <h4>2. Analysis</h4>
+  <p>
+    After gathering requirements, the team studies them in detail to understand the <b>scope</b> of the project,  
+    <b>identify challenges</b>, and <b>find suitable solutions</b>.
+  </p>
+
+  <b>Types of Requirements:</b>
   <ul>
-    <li><b>Technical Feasibility:</b> Can the project be built with current technology?</li>
-    <li><b>Economic Feasibility:</b> Is it financially affordable?</li>
-    <li><b>Operational Feasibility:</b> Will it solve the organization’s problems effectively?</li>
-    <li><b>Legal Feasibility:</b> Are there any legal or regulatory issues?</li>
-    <li><b>Schedule Feasibility:</b> Can it be completed on time?</li>
+    <li><b>Functional Requirements:</b> What the system should do — features, actions, and tasks.</li>
+    <li><b>Non-Functional Requirements:</b> How the system should perform — speed, security, usability, etc.</li>
   </ul>
 
-  <h4>2. Requirement Analysis</h4>
   <p>
-    This phase focuses on <b>understanding what the user needs</b> from the system.  
-    Analysts communicate with stakeholders to gather both <b>functional</b> and <b>non-functional</b> requirements.
-  </p>
-  <ul>
-    <li>Functional Requirements – What the system should do (features, actions).</li>
-    <li>Non-Functional Requirements – How the system should perform (speed, security, usability).</li>
-  </ul>
-  <p>
-    The output of this phase is the <b>Software Requirement Specification (SRS)</b> document.
+    The final output of this phase is the <b>SRS (Software Requirement Specification)</b>,  
+    which acts as a blueprint for all further stages of development.
   </p>
 
   <h4>3. Planning</h4>
@@ -444,6 +488,12 @@ th {
     <li><b>System Testing:</b> Testing the entire system as a whole.</li>
     <li><b>Acceptance Testing:</b> Ensures the system meets client expectations.</li>
   </ul>
+  <b>Testing Phases:</b>
+  <ul>
+    <li><b>1. Dev Testing:</b> Initial testing done by the developer or tester to check the code functionality.</li>
+    <li><b>2. UAT (User Acceptance Testing):</b> Conducted by the client to verify that the software meets business requirements.</li>
+    <li><b>3. CUG / Pre-Production Testing:</b> Final testing done after installation at the client site to ensure the system works in the real environment.</li>
+  </ul>
 
   <h4>7. Deployment</h4>
   <p>
@@ -477,20 +527,30 @@ th {
 
 <br>
 
-<section id="sdlc-models">
-  <h2>3. SDLC Models</h2>
+<section id="software-process-model">
+  <h2>Software Process Model</h2>
+
+  <h3>Definition</h3>
   <p>
-    <b>SDLC Models</b> are different ways of organizing and managing the software development process.  
-    Each model defines how and when the phases of SDLC are carried out.
+    A <b>Software Process Model</b> is a <b>structured method</b> that defines how to plan, design, develop, test, and deliver software.  
+    It acts as a <b>roadmap</b> that guides the software development team through different phases of the project.
   </p>
   <p>
-    The choice of model depends on project type, size, requirements, and client expectations.
+    In simple words, it is the <b>step-by-step approach</b> used to build software in an organized and efficient way.
   </p>
+
+  <div class="example">
+    <b>Example:</b>
+    <p>
+      Just like a builder follows a plan to construct a house, software engineers follow a <b>process model</b> to build software.
+    </p>
+  </div>
+  <h2>Common Software Process Models</h2>
 
   <!-- Waterfall Model -->
   <h3>1. Waterfall Model</h3>
   <p>
-    The <b>Waterfall Model</b> is the oldest and simplest SDLC model.  
+    The <b>Waterfall Model</b> is the oldest and simplest Software Process Model that follows the SDLC in a linear, step-by-step sequence.  <br>
     It follows a <b>linear sequential flow</b> — each phase must be completed before moving to the next.
   </p>
   <ul>
@@ -507,12 +567,50 @@ th {
       Since requirements are clear and unlikely to change, Waterfall works well.
     </p>
   </div>
+  <h4>Documentation at Each Phase:</h4>
+  <p>
+    Each stage must be <b>completed and approved</b> (with documentation) before moving to the next phase.  
+    These documents act as a <b>contract between client and developer</b> — ensuring both agree on what is being built.
+  </p>
 
+  <ul>
+    <li><b>Requirement Phase:</b> <i>Software Requirement Specification (SRS)</i> — approved by client.</li>
+    <li><b>Design Phase:</b> <i>System Design Document (SDD)</i> — reviewed by project lead and sometimes shared with client.</li>
+    <li><b>Development Phase:</b> <i>Code Documentation / Technical Document</i> — reviewed by technical lead.</li>
+    <li><b>Testing Phase:</b> <i>Test Plan & Test Case Reports</i> — verified by QA team and signed off by client after UAT.</li>
+    <li><b>Deployment Phase:</b> <i>Deployment Document</i> — reviewed and approved by client.</li>
+    <li><b>Maintenance Phase:</b> <i>Change Logs, Issue Tracker</i> — maintained by support team.</li>
+  </ul>
+  <h4>Options When a Change Is Required:</h4>
+  <ul>
+    <li><b>Small change in early stages:</b> The team may manually revisit the relevant phase (requirement or design), make updates, and continue — but this is rare.</li>
+    <li><b>Large or late-stage change:</b> Usually requires restarting the project or creating a new version with updated requirements.</li>
+  </ul>
+
+  <p>
+    Waterfall suits projects with <b>stable and clearly defined requirements</b>.  
+    For projects needing frequent updates or feedback, <b>Iterative or Agile models</b> are preferred.
+  </p>
+
+  <h4>Waterfall Model</h4>
+  <div class="model">
+    <div class="step">Requirement</div>
+    <div class="arrow">⬇️</div>
+    <div class="step">Design</div>
+    <div class="arrow">⬇️</div>
+    <div class="step">Implementation</div>
+    <div class="arrow">⬇️</div>
+    <div class="step">Testing</div>
+    <div class="arrow">⬇️</div>
+    <div class="step">Deployment</div>
+    <div class="arrow">⬇️</div>
+    <div class="step">Maintenance</div>
+  </div>
   <h4>Advantages:</h4>
   <ul>
     <li>Simple and easy to understand.</li>
     <li>Phases are well defined and structured.</li>
-    <li>Easy to manage due to clear milestones.</li>
+    <li>Easy to manage due to clear documentation.</li>
   </ul>
 
   <h4>Disadvantages:</h4>
@@ -522,74 +620,268 @@ th {
     <li>Late discovery of issues (testing occurs at the end).</li>
   </ul>
 
+<hr>
+
   <!-- Iterative Model -->
   <h3>2. Iterative Model</h3>
   <p>
-    The <b>Iterative Model</b> develops the system in repeated cycles (iterations).  
-    Each iteration adds new features or improves existing ones.
+    The <b>Iterative Model</b> develops the software in <b>repeated cycles (iterations)</b>.   <br>
+    Each iteration produces a new version of the software — improving existing features or refining the system based on feedback.
   </p>
   <p>
     Instead of delivering the whole software at once, it is built gradually through multiple versions.
   </p>
+  <ul>
+    <li>Focuses on <b>enhancing and refining</b> the existing system rather than creating entirely new modules.</li>
+    <li>Each iteration includes <b>planning, designing, coding, and testing</b>.</li>
+    <li>Feedback from users is used to improve the next iteration.</li>
+  </ul>
+
 
   <div class="example">
-    <h4>Example:</h4>
-    <p>
-      Suppose a company is developing a <b>social media app</b>.  
-      In the first iteration, they create basic login and profile features.  
-      In the second, they add messaging; in the third, they add stories.  
-      Each version improves based on feedback.
-    </p>
+  <h4>Example:</h4>
+  <p>
+    A company is developing a <b>mobile banking app</b>.<br>
+    - 1st iteration: Release basic features like login and balance check. <b><i>(Internal testing only / Feedback)</i></b><br>
+    - 2nd iteration: Improve UI, make balance check faster,(add money transfer options). <b><i>(Still under development) and (Internal testing / limited feedback)</i></b><br>
+    - 3rd iteration: Enhance security, optimize performance. <b><i>(Still under development) and (Internal testing / limited feedback)</i></b><br>
+    - 4th iteration: Add better navigation, fix usability issues. <b><i>(Official deployment to users)</i></b><br> <br>
+    Each version is released, tested, and refined based on user feedback (tested internally or by a small group). <br>
+    Only final iteration is "deployed" to users
+  </p>
+
+  <p>
+    <b>Important Note:</b> In iterative development, you may add minor features (like money transfer) as part of refining the system.  <br>
+    The focus is <b>on improving the same system repeatedly</b>, not creating completely separate modules.
+  </p>
+
+  <p>
+    In practice, iterative development doesn’t mean you cannot add new features —  
+    it means the focus is on <b>rebuilding or improving existing parts</b> based on feedback.
+  </p>
+
+  <p>
+    So when we say: <i>“Add money transfer in the next iteration”</i> —  
+    it means we are building on the same base version by refining and extending it slightly, not creating a totally separate module.
+  </p>
+  </div>
+
+  <p><b>Build a rough version of the whole app → get feedback → improve the whole app (and optionally add minor features) → repeat until final release.</b></p>
+  <p>Iterative → Build → Evaluate → Improve</p>
+
+  <h4>Documentation at Each Phase:</h4>
+  <p>
+    Each iteration produces updated documentation reflecting changes or improvements made.  <br>
+    Documents are revised at the end of every cycle to track progress.
+  </p>
+  <h4>Client Involvement:</h4>
+  <p>
+    The <b>client is actively involved</b> after each iteration.  <br>
+    They review progress, provide feedback, and suggest improvements for the next cycle.
+  </p>
+
+  <h4>Iterative Model</h4>
+  <div class="model">
+    <div class="loop">
+      <div class="step">Planning</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Design</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Implement</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Test</div>
+    </div>
+    <p>🔁 Each iteration improves the system</p>
   </div>
 
   <h4>Advantages:</h4>
   <ul>
-    <li>Early feedback helps improve the product.</li>
-    <li>Less risk — problems are found early.</li>
+    <li>Early working model available for feedback.</li>
+    <li>Less risk — Easy to identify and fix issues in early stages.</li>
+    <li>Improves software quality through gradual enhancement.</li>
     <li>Users can see working software after each iteration.</li>
   </ul>
 
   <h4>Disadvantages:</h4>
   <ul>
-    <li>Requires good planning and design at each iteration.</li>
-    <li>May need more resources and time.</li>
+    <li>Needs more client involvement.</li>
+    <li>May require extra time and cost due to multiple revisions.</li>
+    <li>Proper planning and management are essential to control iterations.</li>
   </ul>
+
+  <h4>When It’s Used:</h4>
+  <p>
+    Used when <b>requirements are not fully clear at the beginning</b> and may change over time.  <br>
+    Common in projects where <b>continuous improvement</b> is expected — like mobile apps, web platforms, or e-commerce systems.
+  </p>
+
+  <hr>
 
   <!-- Incremental Model -->
   <h3>3. Incremental Model</h3>
   <p>
-    In the <b>Incremental Model</b>, the system is developed and delivered in small parts (increments).  
-    Each increment adds functionality until the full product is completed.
-  </p>
-  <p>
-    The first increment is a basic version; later increments add new features.
+    The <b>Incremental Model</b> divides the software into separate <b>modules or components</b>.   <br>
+    Each module (increment) is developed, tested, and deployed independently.  <br>
+    New functionality is added step by step until the complete system is delivered. 
   </p>
 
+  <ul>
+    <li><b>Focus:</b> Deliver functional modules one by one.</li>
+    <li><b>Deployment:</b> Each increment can be released to users after testing.</li>
+    <li><b>Best suited for:</b> Large projects where requirements are clear but can be implemented in parts.</li>
+  </ul>
+
+  <div class="example">
+    <h4>Example – Mobile Banking App</h4>
+    <ul>
+      <li><b>Increment 1:</b> Login module (users can log in)</li>
+      <li><b>Increment 2:</b> Balance module (users can view balance)</li>
+      <li><b>Increment 3:</b> Transaction module (users can transfer money)</li>
+      <li><b>Increment 4:</b> UI/Navigation improvements and bill payment module</li>
+    </ul>
+    <p>
+      Each increment is developed, tested, and deployed independently. Users can use the available functionality after each increment.
+    </p>
+  </div>
+
+  <h4>Modules in Incremental Model</h4>
+  <p>
+    A <b>module</b> is a self-contained part of the system that performs a specific function (technical unit of the system).  <br>
+    In incremental development, the system is split into <b>independent modules</b>.  <br>
+    Each module is delivered as a separate increment, making it easier to manage, test, and deploy gradually.
+  </p>
+
+  <ul>
+    <li><b>Login Module:</b> Handles user authentication</li>
+    <li><b>Balance Module:</b> Shows account balance</li>
+    <li><b>Transaction Module:</b> Handles money transfers</li>
+  </ul>
+  <p>
+    In the <b>Incremental Model</b>, the system is delivered <b>module by module</b>.
+  </p>
+
+  <p>
+    Each increment can be <b>developed, tested, and deployed independently</b>.
+  </p>
+  <ul>
+    <li><b>Focus:</b> Deliver functional modules step by step.</li>
+    <li><b>Deployment:</b> Each increment can be released independently.</li>
+    <li><b>Iterations inside increment:</b> Optional — improve the module internally before release.</li>
+    <li><b>Client Feedback:</b> Usually provided after each increment is delivered.</li>
+  </ul>
   <div class="example">
     <h4>Example:</h4>
     <p>
-      A company building an <b>online food delivery system</b> may first release basic ordering and menu features.  
-      In later increments, they add live tracking, payment gateway, and restaurant ratings.
+      Login module → released → Balance module → released → Transaction module → released.
     </p>
+  </div>
+
+  <h4>Incremental Model</h4>
+  <div class="model">
+    <div class="row">
+      <div class="step">Increment 1</div>
+      <div class="step">Increment 2</div>
+      <div class="step">Increment 3</div>
+      <div class="step">Final Product</div>
+    </div>
+    <p>✅ Each increment adds more functionality</p>
   </div>
 
   <h4>Advantages:</h4>
   <ul>
-    <li>Working software is available early.</li>
-    <li>Easy to test and manage smaller modules.</li>
-    <li>Customer feedback after each release improves quality.</li>
+    <li>Users get working functionality early.</li>
+    <li>Faster deployment for individual modules.</li>
+    <li>Easy to add or change features in future increments.</li>
+    <li>Reduces risk — problems are isolated to a module.</li>
   </ul>
 
   <h4>Disadvantages:</h4>
   <ul>
-    <li>Requires good modular design.</li>
+    <li>Requires careful planning to split modules effectively.</li>
     <li>Integration between increments can be complex.</li>
+    <li>Design changes late in development can affect multiple increments.</li>
   </ul>
 
-  <!-- Spiral Model -->
-  <h3>4. Spiral Model</h3>
+  <hr>
+
+  <h3>4. Agile Model</h3>
   <p>
-    The <b>Spiral Model</b> combines the features of both <b>Iterative</b> and <b>Waterfall</b> models.  
+    The <b>Agile Model</b> is an <b>iterative and incremental approach</b> that focuses on <b>customer collaboration</b> and <b>flexible development</b>.  <br>
+    The project is divided into small, time-boxed cycles called <b>sprints</b>, usually 1–4 weeks long.
+  </p>
+
+  <ul>
+    <li><b>Focus:</b> Deliver small features or user stories frequently.</li>
+    <li><b>Iteration:</b> Every sprint involves planning, designing, developing, testing, and reviewing.</li>
+    <li><b>Deployment:</b> Each sprint can deliver usable functionality to users.</li>
+    <li><b>Client Feedback:</b> Continuous — client is involved in every sprint.</li>
+    <li><b>Flexibility:</b> Easy to adapt to requirement changes in each sprint.</li>
+  </ul>
+
+  <div class="example">
+    <h4>Example – Mobile Banking App</h4>
+    <ul>
+      <li><b>Sprint 1 / Iteration 1:</b> Login + basic balance display → client feedback</li>
+      <li><b>Sprint 2 / Iteration 2:</b> Money transfer + improve UI → client feedback</li>
+      <li><b>Sprint 3 / Iteration 3:</b> Bill payments + security improvements → client feedback</li>
+      <li><b>Sprint 4 / Iteration 4:</b> Reports, notifications, final polish → final deployment</li>
+    </ul>
+    <p>
+      Sprint 1: You deliver a small increment (e.g., login + balance check). <br>
+      Customer Feedback: Client uses it and gives feedback — maybe UI is confusing, or speed is slow. <br>
+      Sprint 2: You improve the existing features based on that feedback and may add new features (like money transfer).
+    </p>
+
+    <p>
+      Each sprint delivers <b>small working features</b>, and client feedback is incorporated continuously. <br>
+      A sprint can involve multiple modules or parts of the system. <br>
+      Sprint is a time-boxed cycle delivering features.
+    </p>
+  </div>
+
+  <h4>Agile Model</h4>
+  <div class="model">
+    <div class="loop">
+      <div class="step">Sprint Planning</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Req Analysis</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Design</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Development</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Testing</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Client Feedback</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Team Review</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Next Sprint Planning</div>
+    </div>
+    <p>🔁 Each sprint delivers a working increment and improves the system based on feedback</p>
+  </div>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Faster delivery of working software.</li>
+    <li>Continuous client feedback ensures requirements are met.</li>
+    <li>High flexibility to adapt to changes.</li>
+    <li>Encourages collaboration and communication.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Requires frequent client involvement.</li>
+    <li>Can be difficult to predict overall cost and timeline.</li>
+    <li>Less emphasis on detailed documentation compared to traditional models.</li>
+  </ul>
+
+  <hr>
+
+  <!-- Spiral Model -->
+  <h3>5. Spiral Model</h3>
+  <p>
+    The <b>Spiral Model</b> combines the features of both <b>Iterative</b> and <b>Waterfall</b> models.  <br>  
     It focuses on <b>risk analysis</b> and is ideal for large, complex, and high-risk projects.
   </p>
   <p>
@@ -599,10 +891,31 @@ th {
   <div class="example">
     <h4>Example:</h4>
     <p>
-      A company developing a <b>defense or aerospace system</b> uses the Spiral Model to continuously 
-      analyze and reduce risks at every stage before moving to the next.
+      A company is developing a <b>large banking software</b>.  
+      - First spiral: Create a prototype of the account management module and identify risks. <br>
+      - Second spiral: Develop the transaction module after addressing risks from the first spiral. <br>
+      - Third spiral: Integrate reporting and security features, improving based on previous feedback.  
+      Each spiral reduces risk and enhances the system gradually.
     </p>
   </div>
+
+<h4>Spiral Model</h4>
+<div class="model">
+  <div class="loop">
+    <div class="step">Requirement Identification</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Risk Analysis & Planning</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Design & Development</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Testing / Evaluation</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Customer Evaluation</div>
+    <div class="arrow">➡️</div>
+    <div class="step">Next Spiral / Refinement</div>
+  </div>
+  <p> Repeated in multiple spirals, each refining the system and document risks.</p>
+</div>
 
   <h4>Advantages:</h4>
   <ul>
@@ -613,15 +926,17 @@ th {
 
   <h4>Disadvantages:</h4>
   <ul>
-    <li>Expensive due to continuous risk analysis.</li>
-    <li>Requires highly skilled developers and managers.</li>
+    <li>Can be expensive and time-consuming due to multiple iterations and risk analysis.</li>
+    <li>Requires customer involvement at every spiral.</li>
   </ul>
 
+  <hr>
+
   <!-- V-Model -->
-  <h3>5. V-Model (Verification & Validation Model)</h3>
+  <h3>6. V-Model (Verification & Validation Model)</h3>
   <p>
-    The <b>V-Model</b> is an extension of the Waterfall Model where <b>testing activities</b> are performed in parallel with each development phase.  
-    It emphasizes <b>verification and validation</b>.
+    The <b>V-Model</b> is a <b>software process model</b> where <b>development and testing phases run in parallel</b>. 
+    Each development phase has a corresponding testing phase, ensuring quality at every step.  
   </p>
   <p>
     Each development stage has a corresponding testing stage.
@@ -630,328 +945,344 @@ th {
   <div class="example">
     <h4>Example:</h4>
     <p>
-      Suppose a company is creating a <b>banking software system</b>.  
-      For every design phase, a related test plan is prepared — for example, system design is verified through system testing.
+      A company is developing a <b>college management system</b>. <br>
+      - Requirement Analysis → Create requirement document.<br>
+      - System Design → Prepare system architecture.<br>
+      - Module Design → Design student registration module.<br>
+      - Coding → Implement the module.<br>
+      - Unit Testing → Test the registration module.<br>
+      - Integration Testing → Combine modules like registration + fee payment.<br>
+      - System Testing → Test the entire system.<br>
+      - Acceptance Testing → Client validates that the system meets requirements.
     </p>
   </div>
 
+  <h4>V-Model (Verification & Validation)</h4>
+
+  <div class="vmodel">
+    <div class="v-left">
+      <div class="step">Requirement Analysis</div>
+      <div class="arrow">⬇️</div>
+      <div class="step">System Design</div>
+      <div class="arrow">⬇️</div>
+      <div class="step">Architectural Design</div>
+      <div class="arrow">⬇️</div>
+      <div class="step">Module Design</div>
+    </div>
+
+    <div class="v-middle">
+      <div class="step">Coding</div>
+    </div>
+
+    <div class="v-right">
+      <div class="step">Unit Testing</div>
+      <div class="arrow">⬆️</div>
+      <div class="step">Integration Testing</div>
+      <div class="arrow">⬆️</div>
+      <div class="step">System Testing</div>
+      <div class="arrow">⬆️</div>
+      <div class="step">Acceptance Testing</div>
+    </div>
+  </div>
+
+  <p style="text-align:center;"> Verification on the left side, validation on the right side. Each development step has a corresponding test step.</p>
+
   <h4>Advantages:</h4>
   <ul>
-    <li>Defects are detected early.</li>
-    <li>High reliability due to parallel testing.</li>
-    <li>Good for projects where quality is critical.</li>
+    <li>Structured and easy to understand.</li>
+    <li>Each phase has a corresponding test, improving quality.</li>
+    <li>Early detection of defects in design phases.</li>
   </ul>
 
   <h4>Disadvantages:</h4>
   <ul>
     <li>Not flexible for changing requirements.</li>
-    <li>Requires detailed test documentation.</li>
+    <li>Better suited for small to medium projects.</li>
   </ul>
+    
+  <hr>
 
   <!-- Prototyping Model -->
-  <h3>6. Prototyping Model</h3>
+  <h3>7. Prototyping Model</h3>
   <p>
-    In the <b>Prototyping Model</b>, a <b>working model (prototype)</b> of the system is built early to understand user requirements.  
-    Based on user feedback, the prototype is refined until the final software is ready.
+    The <b>Prototype Model</b> is a <b>software process model</b> where a <b>quick working version</b> of the system is built first. <br> 
+    The prototype is shown to the client for feedback, refined, and finally used to develop the complete system.
   </p>
 
   <div class="example">
     <h4>Example:</h4>
     <p>
-      When designing a <b>hospital management system</b>, developers first create a simple interface 
-      showing patient registration and appointment screens.  
-      After feedback from doctors and staff, they improve the design and features.
+      A company is developing a <b>library management system</b>. <br>
+      - Build a prototype showing basic features: book catalog, search, and issue/return. <br>
+      - Client reviews and requests changes like adding fine calculation. <br>
+      - Prototype is refined based on feedback. <br>
+      - Once approved, the final system is developed with all requested features.
     </p>
+  </div>
+
+  <h4>Prototyping Model</h4>
+  <div class="model">
+    <div class="row">
+      <div class="step">Requirement</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Quick Design</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Build Prototype</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Client Evaluation / Feedback</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Refine & Improve Prototype</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Develop Final System</div>
+    </div>
+    <p>Repeat prototype refinement until the client is satisfied. Then finalize the system for deployment.</p>
   </div>
 
   <h4>Advantages:</h4>
   <ul>
-    <li>Users are involved early and can give feedback.</li>
-    <li>Requirements are better understood.</li>
+    <li>Early client feedback ensures requirements are correct.</li>
+    <li>Reduces misunderstanding and development risk.</li>
     <li>Reduces the risk of user dissatisfaction.</li>
+
   </ul>
 
   <h4>Disadvantages:</h4>
   <ul>
-    <li>Can be time-consuming due to repeated modifications.</li>
+    <li>Frequent changes can increase time and cost.</li>
     <li>May lead to confusion between prototype and final system.</li>
+    <li>Not suitable for very large or complex projects.</li>
   </ul>
 
-  <!-- Agile Model -->
-  <h3>7. Agile Model</h3>
+  <hr>
+
+  <!-- RAD Model -->
+  <h3>8. RAD (Rapid Application Development) Model</h3>
   <p>
-    The <b>Agile Model</b> is a modern and flexible approach where software is developed in <b>small iterations</b> with continuous user feedback.  
-    It focuses on <b>adaptability, collaboration, and customer satisfaction</b>.
+    The <b>RAD Model</b> is a <b>software process model</b> focused on <b>fast development</b> using <b>reusable components</b> existing code, or purchased modules or prototypes. <br> 
+    with constant user feedback. It emphasizes <b>speed over planning</b>, using reusable components and tools to build the software quickly. <br>
+    It is suitable for small to medium projects where quick delivery is important.
   </p>
-  <p>
-    Agile breaks the project into small parts called <b>sprints</b> (usually 2–4 weeks), and each sprint delivers a working feature.
-  </p>
+
+  <ul>
+    <li>Build from existing code or modules if available.</li>
+    <li>Buy from external vendors if it meets cost and time estimates.</li>
+    <li>Otherwise, develop the required modules internally.</li>
+  </ul>
 
   <div class="example">
     <h4>Example:</h4>
     <p>
-      A team developing an <b>e-commerce website</b> builds login and cart features in Sprint 1,  
-      payment integration in Sprint 2, and user reviews in Sprint 3 — all based on user feedback from previous sprints.
+      Developing a <b>small e-commerce website</b>:<br>
+      - Business Model: Analyze what the client wants (catalog, payment, shipping).<br>
+      - Data Model: Identify products, users, orders entities.<br>
+      - Process Model: Assemble modules like shopping cart, payment gateway.<br>
+      - Application & Development: Integrate and code any missing modules.<br>
+      - Testing & Turnover: Test and deliver to client quickly.
     </p>
   </div>
 
-  <h4>Popular Agile Frameworks:</h4>
-  <ul>
-    <li><b>Scrum:</b> Work is divided into short cycles (sprints) managed by a Scrum Master.</li>
-    <li><b>Kanban:</b> Visual workflow management using task boards (To Do, In Progress, Done).</li>
-    <li><b>Extreme Programming (XP):</b> Focuses on coding practices, pair programming, and frequent releases.</li>
-  </ul>
+  <h4>RAD Model (Rapid Application Development)</h4>
+
+  <div class="model">
+    <div class="loop">
+      <div class="step">Business Modeling</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Data Modeling</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Process Modeling</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Application Generation</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Testing & Turnover</div>
+    </div>
+    <p>⚙️ Each phase involves user feedback for faster delivery.</p>
+  </div>
 
   <h4>Advantages:</h4>
   <ul>
-    <li>Highly flexible to changes.</li>
-    <li>Faster delivery of working software.</li>
-    <li>Continuous customer involvement ensures satisfaction.</li>
+    <li>Faster development and delivery.</li>
+    <li>Users are actively involved, improving satisfaction.</li>
+    <li>Reusable components reduce coding effort.</li>
+    <li>Flexibility to make changes during development.</li>
   </ul>
 
   <h4>Disadvantages:</h4>
   <ul>
-    <li>Requires experienced team and good communication.</li>
-    <li>Less documentation compared to traditional models.</li>
+    <li>Requires highly skilled developers.</li>
+    <li>Not suitable for large, complex systems with strict requirements.</li>
+    <li>Too much user involvement may lead to scope creep.</li>
   </ul>
-  
-  <!-- RAD Model -->
-<h3>8. RAD (Rapid Application Development) Model</h3>
-<p>
-  The <b>RAD Model</b> focuses on rapid development and quick iterations of prototypes 
-  with constant user feedback. It emphasizes <b>speed over planning</b>, using reusable components and tools to build the software quickly.
-</p>
 
-<div class="example">
-  <h4>Example:</h4>
+  <hr>
+
+  <h3>9. Win-Win Spiral Model</h3>
   <p>
-    While developing an <b>online shopping portal</b>, developers create basic modules for 
-    product catalog, cart, and checkout rapidly.  
-    Users test these modules, and based on their feedback, features are enhanced and new modules are added until the final system is ready.
+    The <b>Win-Win Spiral Model</b> is an <b>improved version of the Spiral Model</b> developed by <b>Barry Boehm</b>.  
+    It focuses on achieving a <b>“win-win” situation</b> between all stakeholders — developers, clients, and users.  
+    The goal is to make sure that <b>everyone’s objectives are satisfied</b> before moving to the next phase.
   </p>
-</div>
 
-<h4>Advantages:</h4>
-<ul>
-  <li>Faster development and delivery.</li>
-  <li>Users are actively involved, improving satisfaction.</li>
-  <li>Reusable components reduce coding effort.</li>
-  <li>Flexibility to make changes during development.</li>
-</ul>
+  <div class="model">
+    <div class="loop">
+      <div class="step">Identify Objectives</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Resolve Conflicts</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Develop & Validate</div>
+      <div class="arrow">➡️</div>
+      <div class="step">Review & Agreement</div>
+    </div>
+    <p>🔁 Each cycle ensures that all parties “win” by agreeing on goals, risks, and deliverables before proceeding.</p>
+  </div>
 
-<h4>Disadvantages:</h4>
-<ul>
-  <li>Requires highly skilled developers.</li>
-  <li>Not suitable for large, complex systems with strict requirements.</li>
-  <li>Too much user involvement may lead to scope creep.</li>
-</ul>
+  <h4>Phases:</h4>
+  <ul>
+    <li><b>1. Objective Identification:</b> Identify goals, constraints, and success criteria for all stakeholders.</li>
+    <li><b>2. Conflict Resolution:</b> Resolve any disagreements to ensure mutual understanding.</li>
+    <li><b>3. Development & Validation:</b> Build, test, and validate the product increment.</li>
+    <li><b>4. Customer Review:</b> Review progress and gain approval before the next cycle.</li>
+  </ul>
 
-  <!-- Comparison -->
-  <h3>9. Comparison Between Models</h3>
-  <table border="1" cellspacing="0" cellpadding="8">
+  <div class="example">
+    <h4>Example:</h4>
+    <p>
+      A company developing a <b>custom ERP system</b> for a client.  
+      - The client wants low cost and faster delivery.  
+      - Developers want enough time for testing and design quality.  
+      - Management wants risk-free implementation.  
+      All parties discuss and agree on priorities (cost, quality, timeline) before development begins — ensuring a “win-win” for everyone.
+    </p>
+  </div>
+
+  <h4>Advantages:</h4>
+  <ul>
+    <li>Encourages collaboration and open communication.</li>
+    <li>Minimizes risk through continuous client-developer agreement.</li>
+    <li>Reduces rework and misunderstandings.</li>
+  </ul>
+
+  <h4>Disadvantages:</h4>
+  <ul>
+    <li>Requires active involvement of all stakeholders.</li>
+    <li>Time-consuming due to frequent discussions and approvals.</li>
+    <li>Not suitable for small or simple projects.</li>
+  </ul>
+
+  <h3>🔹 Comparison of Software Process Models</h3>
+
+  <table cellspacing="0" cellpadding="8">
     <tr>
       <th>Model</th>
       <th>Approach</th>
       <th>Flexibility</th>
+      <th>Client Involvement</th>
+      <th>Risk Handling</th>
+      <th>Cost</th>
       <th>Best Suited For</th>
     </tr>
+
     <tr>
-      <td>Waterfall</td>
-      <td>Linear and Sequential</td>
+      <td><b>Waterfall</b></td>
+      <td>Linear sequential</td>
+      <td>Very low</td>
+      <td>Only at start & end</td>
+      <td>Poor</td>
       <td>Low</td>
       <td>Small projects with fixed requirements</td>
     </tr>
+
     <tr>
-      <td>Iterative</td>
-      <td>Repetition of cycles</td>
+      <td><b>Iterative</b></td>
+      <td>Repeated improvement cycles</td>
+      <td>High</td>
+      <td>Moderate (after each iteration)</td>
+      <td>Better than Waterfall</td>
       <td>Medium</td>
-      <td>Medium projects needing gradual improvement</td>
+      <td>Projects needing gradual refinement</td>
     </tr>
+
     <tr>
-      <td>Incremental</td>
-      <td>Partial delivery in increments</td>
+      <td><b>Incremental</b></td>
+      <td>Build module by module</td>
       <td>High</td>
-      <td>Projects needing early working modules</td>
+      <td>After each increment</td>
+      <td>Good</td>
+      <td>Medium</td>
+      <td>Large projects divided into modules</td>
     </tr>
+
     <tr>
-      <td>Spiral</td>
-      <td>Risk-driven and iterative</td>
-      <td>High</td>
-      <td>Complex, high-risk systems</td>
-    </tr>
-    <tr>
-      <td>V-Model</td>
-      <td>Verification with parallel testing</td>
-      <td>Low</td>
-      <td>Critical projects requiring strong testing</td>
-    </tr>
-    <tr>
-      <td>Prototyping</td>
-      <td>Build model and refine based on feedback</td>
-      <td>High</td>
-      <td>Projects with unclear requirements</td>
-    </tr>
-    <tr>
-      <td>Agile</td>
-      <td>Iterative with customer collaboration</td>
+      <td><b>Agile</b></td>
+      <td>Iterative + Incremental (Sprints)</td>
       <td>Very High</td>
-      <td>Dynamic projects with changing needs</td>
+      <td>Continuous (each sprint)</td>
+      <td>Excellent</td>
+      <td>Medium to High</td>
+      <td>Dynamic projects needing frequent updates</td>
     </tr>
+
     <tr>
-     <td>RAD (Rapid Application Development)</td>
-     <td>Quick development using reusable components and prototypes</td>
-     <td>High</td>
-     <td>Small to medium projects requiring fast delivery and user feedback</td>
-     </tr>
+      <td><b>Spiral</b></td>
+      <td>Iterative with risk analysis</td>
+      <td>High</td>
+      <td>Regular feedback</td>
+      <td>Very Strong</td>
+      <td>High</td>
+      <td>Large, high-risk projects</td>
+    </tr>
+
+    <tr>
+      <td><b>V-Model</b></td>
+      <td>Development & testing in parallel</td>
+      <td>Low</td>
+      <td>Only at milestones</td>
+      <td>Moderate</td>
+      <td>Medium</td>
+      <td>Projects needing strict quality control</td>
+    </tr>
+
+    <tr>
+      <td><b>Prototype</b></td>
+      <td>Build quick mock-ups for feedback</td>
+      <td>High</td>
+      <td>Very High (continuous feedback)</td>
+      <td>Good (early error detection)</td>
+      <td>Medium</td>
+      <td>Unclear or evolving requirements</td>
+    </tr>
+
+    <tr>
+      <td><b>RAD</b></td>
+      <td>Rapid module development using existing code</td>
+      <td>High</td>
+      <td>Frequent</td>
+      <td>Good</td>
+      <td>Low</td>
+      <td>Small to medium projects needing fast delivery</td>
+    </tr>
+
+    <tr>
+      <td><b>Win-Win Spiral</b></td>
+      <td>Spiral + stakeholder negotiation</td>
+      <td>High</td>
+      <td>Very High (every phase)</td>
+      <td>Excellent (mutual agreement)</td>
+      <td>High</td>
+      <td>Complex projects needing collaboration</td>
+    </tr>
   </table>
 
-  <p>
-    Each SDLC model has its strengths and weaknesses.  
-    The right model depends on project type, complexity, time constraints, and client involvement.
-  </p>
+  <p><b>Summary:</b> Waterfall is simple but rigid; Agile and Win-Win Spiral are flexible and client-centric.  
+  Spiral-based models are best for high-risk projects, while RAD suits quick, low-cost development.</p>
+
 </section>
 
-<br>
-
-<h3>Waterfall Model</h3>
-<div class="model">
-  <div class="step">Requirement</div>
-  <div class="arrow">⬇️</div>
-  <div class="step">Design</div>
-  <div class="arrow">⬇️</div>
-  <div class="step">Implementation</div>
-  <div class="arrow">⬇️</div>
-  <div class="step">Testing</div>
-  <div class="arrow">⬇️</div>
-  <div class="step">Deployment</div>
-  <div class="arrow">⬇️</div>
-  <div class="step">Maintenance</div>
-</div>
-
-
-<h3>Iterative Model</h3>
-<div class="model">
-  <div class="loop">
-    <div class="step">Planning</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Design</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Implement</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Test</div>
-  </div>
-  <p>🔁 Each iteration improves the system</p>
-</div>
-
-
-<h3>Incremental Model</h3>
-<div class="model">
-  <div class="row">
-    <div class="step">Increment 1</div>
-    <div class="step">Increment 2</div>
-    <div class="step">Increment 3</div>
-    <div class="step">Final Product</div>
-  </div>
-  <p>✅ Each increment adds more functionality</p>
-</div>
-
-<h3>Spiral Model</h3>
-<div class="model">
-  <div class="loop">
-    <div class="step">Planning</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Risk Analysis</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Engineering</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Evaluation</div>
-  </div>
-  <p>🔄 Repeated in multiple spirals until final system</p>
-</div>
-
-<h3>V-Model (Verification & Validation)</h3>
-
-<div class="vmodel">
-  <div class="v-left">
-    <div class="step">Requirement Analysis</div>
-    <div class="arrow">⬇️</div>
-    <div class="step">System Design</div>
-    <div class="arrow">⬇️</div>
-    <div class="step">Architectural Design</div>
-    <div class="arrow">⬇️</div>
-    <div class="step">Module Design</div>
-  </div>
-
-  <div class="v-middle">
-    <div class="step">Coding</div>
-  </div>
-
-  <div class="v-right">
-    <div class="step">Unit Testing</div>
-    <div class="arrow">⬆️</div>
-    <div class="step">Integration Testing</div>
-    <div class="arrow">⬆️</div>
-    <div class="step">System Testing</div>
-    <div class="arrow">⬆️</div>
-    <div class="step">Acceptance Testing</div>
-  </div>
-</div>
-
-<p style="text-align:center;">✅ Left Side → Verification | Right Side → Validation</p>
-
-
-<h3>Prototyping Model</h3>
-<div class="model">
-  <div class="row">
-    <div class="step">Requirement</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Quick Design</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Build Prototype</div>
-    <div class="arrow">➡️</div>
-    <div class="step">User Evaluation</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Refine & Finalize</div>
-  </div>
-</div>
-
-<h3>Agile Model</h3>
-<div class="model">
-  <div class="loop">
-    <div class="step">Planning</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Design</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Development</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Testing</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Review</div>
-  </div>
-  <p>🔁 Repeated in short sprints with customer feedback</p>
-</div>
-
-<h3>RAD Model (Rapid Application Development)</h3>
-
-<div class="model">
-  <div class="loop">
-    <div class="step">Requirement Planning</div>
-    <div class="arrow">➡️</div>
-    <div class="step">User Design</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Construction</div>
-    <div class="arrow">➡️</div>
-    <div class="step">Cutover (Implementation)</div>
-  </div>
-  <p>⚙️ Each phase involves user feedback for faster delivery.</p>
-</div>
-
-<br>
+<hr>
 
 <!-- SRS (Software Requirements Specification) -->
 <h3>SRS (Software Requirements Specification)</h3>
 <p>
-  <b>Software Requirements Specification (SRS)</b> is a <b>document that describes the complete behavior, functionality, and constraints of a software system</b>.  
+  <b>Software Requirements Specification (SRS)</b> is a <b>document that describes the complete behavior, functionality, and constraints of a software system</b>.  <br>
   It serves as a communication bridge between stakeholders (like clients and users) and the development team.
 </p>
 
@@ -960,9 +1291,9 @@ th {
   <p>
     While developing a <b>Library Management System</b>, the SRS document will include:
     <ul>
-      <li>Functional requirements: e.g., Add new books, issue books to students, calculate fines.</li>
-      <li>Non-functional requirements: e.g., System must respond within 2 seconds, must support 100 concurrent users.</li>
-      <li>Constraints: e.g., Must work on Windows 10 and above, use MySQL as the database.</li>
+      <li>Functional requirements(What the system should do): e.g., Add new books, issue books to students, calculate fines.</li>
+      <li>Non-functional requirements(How the system should perform): e.g., System must respond within 2 seconds, must support 100 concurrent users.</li>
+      <li>Constraints(Limit or Restriction): e.g., Must work on Windows 10 and above, use MySQL as the database.</li>
     </ul>
   </p>
 </div>
@@ -990,6 +1321,117 @@ th {
   <li>Too much detail may overwhelm developers or stakeholders.</li>
 </ul>
 
+<hr>
+
+<h3>List of Documents Maintained in a Software Project</h3>
+<div class="note">
+  <p>The following documents are maintained during a software project to ensure clarity, tracking, and proper communication throughout the Software Development Life Cycle (SDLC).</p>
+
+  <ol>
+    <li>
+      <b>Project Proposal / Feasibility Study</b><br>
+      Defines the <b>scope, goal, and objectives</b> of the project. It also checks the <b>technical, operational, and economic feasibility</b> before development starts.
+      <ul>
+        <li><b>Technical Feasibility:</b> Can the project be built with current technology?</li>
+        <li><b>Economic Feasibility:</b> Is it financially affordable?</li>
+        <li><b>Operational Feasibility:</b> Will it solve the organization’s problems effectively?</li>
+        <li><b>Legal Feasibility:</b> Are there any legal or regulatory issues?</li>
+        <li><b>Schedule Feasibility:</b> Can it be completed on time?</li>
+      </ul>
+    </li>
+
+    <li>
+      <b>SRS (Software Requirement Specification)</b><br>
+      Contains all <b>functional</b> and <b>non-functional requirements</b> of the software. It acts as an agreement between the <b>client and the developer</b>.
+    </li>
+
+    <li>
+      <b>System Design Document (SDD)</b><br>
+      Describes the <b>architecture, data flow, ER diagrams, components,</b> and <b>system structure</b>. It converts the requirements into a detailed design plan.
+    </li>
+
+    <li>
+      <b>Project Plan / Schedule</b><br>
+      Specifies the <b>timeline, milestones, resources, cost estimation,</b> and <b>team responsibilities</b> to manage and track project progress.
+    </li>
+
+    <li>
+      <b>Test Case / Test Plan</b><br>
+      Includes the <b>test inputs, expected outputs, and conditions</b> used to verify that the software meets the requirements and functions correctly.
+    </li>
+
+    <li>
+      <b>Source Code Document</b><br>
+      Contains the <b>actual program code, folder structure, naming conventions,</b> and <b>environment details</b> used for development.
+    </li>
+
+    <li>
+      <b>User Manual / User Guide</b><br>
+      Helps <b>end-users</b> understand how to <b>install, operate,</b> and <b>troubleshoot</b> the software effectively.
+    </li>
+
+    <li>
+      <b>Maintenance Report / Log</b><br>
+      Records all <b>post-deployment activities</b> such as <b>bug fixes, updates, performance improvements,</b> and version control.
+    </li>
+  </ol>
+</div>
+
+<hr>
+
+<h3>Change Management</h3>
+<div class="note">
+  <p>
+    Change Management is the process of handling <b>modifications in a software project</b>.  
+    It is a systematic process for <b>planning, implementing, and monitoring</b> changes to software systems 
+    to <b>minimize risks</b> and <b>maximize benefits</b>.
+  </p>
+
+  <h4>Steps in Change Management:</h4>
+  <ol>
+    <li><b>Request and Identification:</b> A change is requested due to <b>business needs, user feedback, or market shifts</b>.</li>
+    <li><b>Analysis:</b> Evaluate the impact of the change on the system, users, project timeline, and budget.</li>
+    <li><b>Approval / Rejection:</b> The <b>Change Control Board (CCB)</b> and stakeholders review and decide whether to approve or reject the change.</li>
+    <li><b>Implementation:</b> If approved, developers make the necessary changes in code or design.</li>
+    <li><b>Testing and Verification:</b> The new changes are tested to ensure they don't affect existing functionality.</li>
+    <li><b>Deployment and Monitoring:</b> The updated feature is deployed and monitored to ensure it works as expected.</li>
+    <li><b>Documentation and Review:</b> All relevant project documents are updated with the change details.</li>
+  </ol>
+
+  <h4>Example:</h4>
+  <p>
+    In a <b>mobile banking app</b>, users request to add a “Dark Mode” feature.
+  </p>
+  <ol>
+    <li>A change request is raised.</li>
+    <li>Developers analyze its feasibility, check UI impact, required resources, and budget.</li>
+    <li>The Project Manager approves the change.</li>
+    <li>The feature is implemented, tested, deployed, and recorded in the change log.</li>
+  </ol>
+</div>
+
+<h3>Risk Management</h3>
+<div class="note">
+  <p>
+    Risk Management involves <b>identifying, analyzing, and controlling potential risks</b> that could affect a project's success.
+  </p>
+
+  <h4>Steps in Risk Management:</h4>
+  <ol>
+    <li><b>Risk Identification:</b> List all possible risks that could impact the project.  
+        <i>Example: schedule delay, budget overrun, technology failure.</i></li>
+    <li><b>Risk Analysis:</b> Estimate the <b>probability</b> and <b>impact</b> of each risk.</li>
+    <li><b>Risk Prioritization:</b> Rank risks based on their severity and likelihood.</li>
+    <li><b>Risk Mitigation Planning:</b> Create strategies to reduce or avoid high-impact risks.</li>
+    <li><b>Risk Monitoring and Control:</b> Continuously monitor risks and take corrective actions as needed.</li>
+  </ol>
+
+  <h4>Example:</h4>
+  <p>
+    In a <b>web application project</b>, a key developer may leave the team unexpectedly.<br>
+    → Mitigation: Train backup developers and maintain proper documentation.
+  </p>
+</div>
 
 </body>
 </html>
