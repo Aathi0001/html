@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vim Shortcuts Cheat Sheet</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+    h1, h2 { color: #4ec9b0; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { border: 1px solid #555; padding: 8px; text-align: left; }
+    th { background-color: #333; }
+    code { background-color: #2d2d2d; padding: 2px 5px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<h1>Vim Shortcuts Cheat Sheet</h1>
+
+<section>
+  <h2>Normal Mode (Navigation / Editing)</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>h</td><td>Move left</td></tr>
+    <tr><td>j</td><td>Move down</td></tr>
+    <tr><td>k</td><td>Move up</td></tr>
+    <tr><td>l</td><td>Move right</td></tr>
+    <tr><td>0</td><td>Go to beginning of line</td></tr>
+    <tr><td>$</td><td>Go to end of line</td></tr>
+    <tr><td>w</td><td>Jump to next word</td></tr>
+    <tr><td>b</td><td>Jump to beginning of word</td></tr>
+    <tr><td>gg</td><td>Go to first line</td></tr>
+    <tr><td>G</td><td>Go to last line</td></tr>
+    <tr><td>Ctrl+f</td><td>Page down</td></tr>
+    <tr><td>Ctrl+b</td><td>Page up</td></tr>
+    <tr><td>dd</td><td>Delete current line</td></tr>
+    <tr><td>dw</td><td>Delete word</td></tr>
+    <tr><td>x</td><td>Delete character under cursor</td></tr>
+    <tr><td>u</td><td>Undo last action</td></tr>
+    <tr><td>Ctrl+r</td><td>Redo</td></tr>
+    <tr><td>yy</td><td>Yank (copy) line</td></tr>
+    <tr><td>p</td><td>Paste after cursor</td></tr>
+    <tr><td>ZZ</td><td>Save file (if modified) and exit Vim</td></tr>
+    <tr><td>ZQ</td><td>Quit without saving (like :q!)</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Insert Mode</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>i</td><td>Insert before cursor</td></tr>
+    <tr><td>I</td><td>Insert at beginning of line</td></tr>
+    <tr><td>a</td><td>Insert after cursor</td></tr>
+    <tr><td>A</td><td>Insert at end of line</td></tr>
+    <tr><td>o</td><td>Open new line below</td></tr>
+    <tr><td>O</td><td>Open new line above</td></tr>
+    <tr><td>Esc</td><td>Return to Normal mode</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Visual Mode</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>v</td><td>Start visual selection (character-wise)</td></tr>
+    <tr><td>V</td><td>Start visual line selection</td></tr>
+    <tr><td>Ctrl+v</td><td>Start visual block selection</td></tr>
+    <tr><td>y</td><td>Yank selection</td></tr>
+    <tr><td>d</td><td>Delete selection</td></tr>
+    <tr><td>p</td><td>Paste after selection</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Command Mode (Colon Commands)</h2>
+  <table>
+    <tr><th>Command</th><th>Action</th></tr>
+    <tr><td>:w</td><td>Save file</td></tr>
+    <tr><td>:q</td><td>Quit</td></tr>
+    <tr><td>:wq</td><td>Save and quit</td></tr>
+    <tr><td>:q!</td><td>Quit without saving</td></tr>
+    <tr><td>:x</td><td>Save and quit (same as :wq)</td></tr>
+    <tr><td>:e FILE</td><td>Open file</td></tr>
+    <tr><td>:r FILE</td><td>Read content of another file into current file</td></tr>
+    <tr><td>:%s/old/new/g</td><td>Replace all occurrences of 'old' with 'new'</td></tr>
+    <tr><td>:/pattern</td><td>Search for 'pattern'</td></tr>
+    <tr><td>:noh</td><td>Remove search highlighting</td></tr>
+    <tr><td>:set number</td><td>Show line numbers</td></tr>
+    <tr><td>:set nonumber</td><td>Hide line numbers</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Other Useful Shortcuts</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>Ctrl+o</td><td>Jump to older cursor position</td></tr>
+    <tr><td>Ctrl+i</td><td>Jump to newer cursor position</td></tr>
+    <tr><td>ggVG</td><td>Select all file content</td></tr>
+    <tr><td>zz</td><td>Center cursor line on screen</td></tr>
+    <tr><td>Ctrl+g</td><td>Show file info (line, percentage)</td></tr>
+    <tr><td>. (dot)</td><td>Repeat last command</td></tr>
+  </table>
+</section>
+
+  <!-- Marks & Jumping -->
+  <section>
+    <h2>Marks & Jumping</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>m[a-z]</td><td>Set a mark named a–z at cursor position</td></tr>
+      <tr><td>'a</td><td>Jump to beginning of line of mark 'a'</td></tr>
+      <tr><td>`a</td><td>Jump to exact position of mark 'a'</td></tr>
+    </table>
+  </section>
+
+  <!-- Registers & Yanking -->
+  <section>
+    <h2>Registers & Yanking</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>"ay</td><td>Yank (copy) into register a</td></tr>
+      <tr><td>"ap</td><td>Paste from register a</td></tr>
+      <tr><td>"0y</td><td>Yank into yank register 0 (default)</td></tr>
+    </table>
+  </section>
+
+  <!-- Macros -->
+  <section>
+    <h2>Macros</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>q[a-z]</td><td>Start recording macro into register a–z</td></tr>
+      <tr><td>@a</td><td>Execute macro stored in register a</td></tr>
+      <tr><td>@@</td><td>Repeat last executed macro</td></tr>
+    </table>
+  </section>
+
+  <!-- Folding -->
+  <section>
+    <h2>Folding</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>za</td><td>Toggle fold under cursor</td></tr>
+      <tr><td>zR</td><td>Open all folds</td></tr>
+      <tr><td>zM</td><td>Close all folds</td></tr>
+    </table>
+  </section>
+
+  <!-- Buffers & Windows -->
+  <section>
+    <h2>Buffers & Windows</h2>
+    <table>
+      <tr><th>Shortcut / Command</th><th>Action</th></tr>
+      <tr><td>:bn</td><td>Go to next buffer</td></tr>
+      <tr><td>:bp</td><td>Go to previous buffer</td></tr>
+      <tr><td>:ls</td><td>List all buffers</td></tr>
+      <tr><td>:sp file</td><td>Open file in horizontal split</td></tr>
+      <tr><td>:vsp file</td><td>Open file in vertical split</td></tr>
+      <tr><td>Ctrl+w h/j/k/l</td><td>Move cursor between split windows</td></tr>
+    </table>
+  </section>
+
+  <!-- Search Enhancements -->
+  <section>
+    <h2>Search Enhancements</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>n</td><td>Repeat last search in same direction</td></tr>
+      <tr><td>N</td><td>Repeat last search in opposite direction</td></tr>
+      <tr><td>*</td><td>Search for word under cursor forward</td></tr>
+      <tr><td>#</td><td>Search for word under cursor backward</td></tr>
+    </table>
+  </section>
+
+  <!-- Visual Block Editing -->
+  <section>
+    <h2>Visual Block Editing</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>Ctrl+v</td><td>Start visual block mode</td></tr>
+      <tr><td>I</td><td>Insert text at start of each line in block</td></tr>
+      <tr><td>A</td><td>Append text at end of each line in block</td></tr>
+      <tr><td>d</td><td>Delete selected block</td></tr>
+      <tr><td>y</td><td>Yank selected block</td></tr>
+    </table>
+  </section>
+</body>
+</html>

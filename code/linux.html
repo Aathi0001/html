@@ -1,0 +1,1415 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Linux: `ls` command — Complete Reference</title>
+  <style>
+    body{font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;margin:24px;background:#0b0b0b;color:#dfffcf}
+    header{margin-bottom:18px}
+    h1{color:#7fff7f}
+    h2{color:#a7ffa7;margin-top:18px}
+    code{background:#071; padding:2px 6px;border-radius:4px;color:#001100}
+    pre{background:#001100;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+    table{width:100%;border-collapse:collapse;margin:12px 0}
+    th,td{padding:8px;border-bottom:1px solid #2b2b2b;text-align:left}
+    .note{background:#112211;padding:10px;border-radius:6px;margin:12px 0}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Linux: <code>ls</code> command — Complete Reference</h1>
+    <p>This page explains the <code>ls</code> command (GNU coreutils) with options, examples, and usage notes so you can copy it into a file and refer to it while learning.</p>
+    <p class="note">Tip: To get the authoritative list on your system run: <code>man ls</code> or <code>ls --help</code>.</p>
+  </header>
+
+  <section>
+    <h2>Synopsis</h2>
+    <pre>ls [OPTION]... [FILE]...</pre>
+    <p><strong>Purpose:</strong> list information about the FILEs (the current directory by default).</p>
+  </section>
+
+  <section>
+    <h2>Commonly used options (practical)</h2>
+    <table>
+     <tr><th>Option</th><th>Meaning / Notes</th></tr>
+     <tr><td><code>-a</code>, <code>--all</code></td><td>Do not ignore entries starting with <code>.</code> (show hidden files)</td></tr>
+     <tr><td><code>-A</code>, <code>--almost-all</code></td><td>Like <code>-a</code> but exclude <code>.</code> and <code>..</code></td></tr>
+     <tr><td><code>-l</code></td><td>Long listing format (permissions, links, owner, group, size, timestamp, name)</td></tr>
+     <tr><td><code>-h</code>, <code>--human-readable</code></td><td>With <code>-l</code>, print sizes in human readable form (e.g. 1K 234M 2G)</td></tr>
+     <tr><td><code>-R</code>, <code>--recursive</code></td><td>List subdirectories recursively</td></tr>
+     <tr><td><code>-t</code></td><td>Sort by modification time, newest first</td></tr>
+     <tr><td><code>-S</code></td><td>Sort by file size, largest first</td></tr>
+     <tr><td><code>-r</code></td><td>Reverse order while sorting</td></tr>
+     <tr><td><code>-d</code>, <code>--directory</code></td><td>List directories themselves, not their contents (useful with globs like <code>*/</code>)</td></tr>
+     <tr><td><code>-F</code>, <code>--classify</code></td><td>Append indicator (one of <code>/</code>, <code>*</code>, <code>@</code>, <code>|</code>, <code>=</code>) to entries to show type (directory, executable, symlink, FIFO, socket)</td></tr>
+     <tr><td><code>-p</code></td><td>Append <code>/</code> to directory names (similar to part of <code>-F</code>)</td></tr>
+     <tr><td><code>--color[=WHEN]</code></td><td>Control colorized output. <code>WHEN</code> can be <code>always</code>, <code>auto</code>, or <code>never</code>. Many distros enable <code>--color=auto</code> by default.</td></tr>
+     <tr><td><code>-1</code></td><td>List one entry per line</td></tr>
+     <tr><td><code>-C</code></td><td>List entries by columns (default when output is to a terminal)</td></tr>
+     <tr><td><code>-x</code></td><td>List entries by lines instead of by columns</td></tr>
+     <tr><td><code>-i</code>, <code>--inode</code></td><td>Print the index number (inode) of each file</td></tr>
+     <tr><td><code>-s</code>, <code>--size</code></td><td>Print the allocated size of each file, in blocks</td></tr>
+     <tr><td><code>-u</code></td><td>Sort by and show access time instead of modification time (used with <code>-l</code>)</td></tr>
+     <tr><td><code>-c</code></td><td>Sort by and show status change time (ctime) instead of modification time (used with <code>-l</code>)</td></tr>
+     <tr><td><code>-T</code>, <code>--tabsize=COLS</code></td><td>Assume tab stops at each <code>COLS</code> columns</td></tr>
+     <tr><td><code>-f</code></td><td>Do not sort; list entries in directory order (also enables <code>-a</code>).</td></tr>
+     <tr><td><code>-g</code></td><td>Like <code>-l</code> but do not list owner (shows group only).</td></tr>
+     <tr><td><code>-n</code></td><td>List numeric user and group IDs instead of names (used with <code>-l</code>).</td></tr>
+     <tr><td><code>-q</code>, <code>--hide-control-chars</code></td><td>Show non-printable characters as <code>?</code>.</td></tr>
+     <tr><td><code>-U</code></td><td>Do not sort; list entries in directory (unspecified) order.</td></tr>
+     <tr><td><code>-v</code></td><td>Natural sort of (version) numbers within text (useful for file1, file2, file10 ordering).</td></tr>
+     <tr><td><code>-w</code>, <code>--width=COLS</code></td><td>Set output width to COLS (0 = no limit).</td></tr>
+     <tr><td><code>-X</code></td><td>Sort alphabetically by entry extension.</td></tr>
+     <tr><td><code>-Z</code>, <code>--context</code></td><td>Print any security context of each file (SELinux context).</td></tr>
+     <tr><td><code>-m</code></td><td>Fill width with a comma-separated list of entries (streaming across the screen).</td></tr>
+     <tr><td><code>-N</code>, <code>--literal</code></td><td>Print raw entry names (do not quote).</td></tr>
+     <tr><td><code>-Q</code>, <code>--quote-name</code></td><td>Enclose entry names in double quotes.</td></tr>
+     <tr><td><code>-b</code>, <code>--escape</code></td><td>Print C-style escapes for nongraphic characters.</td></tr>
+     <tr><td><code>-D</code>, <code>--dired</code></td><td>Generate output designed for Emacs <code>dired</code></td></tr>
+     <tr><td><code>--format=WORD</code></td><td>Across, long, single-column, verbose, horizontal - controls output format (common values: <code>long</code>, <code>single-column</code>, <code>across</code>)</td></tr>
+     <tr><td><code>--sort=WORD</code></td><td>Sort by: <code>none</code>, <code>extension</code>, <code>size</code>, <code>time</code>, <code>version</code></td></tr>
+     <tr><td><code>--zero</code></td><td>End each output line with NUL (\\0) instead of newline — useful for piping to programs like <code>xargs -0</code>.</td></tr>
+     <tr><td><code>--quoting-style=WORD</code></td><td>Choose quoting style: <code>literal</code>, <code>shell</code>, <code>shell-always</code>, <code>c</code>, <code>escape</code>, etc.</td></tr>
+     <tr><td><code>-B</code>, <code>--ignore-backups</code></td><td>Do not list entries ending with <code>~</code> (backup files).</td></tr>
+     <tr><td><code>-I</code>, <code>--ignore=PATTERN</code></td><td>Do not list entries matching PATTERN.</td></tr>
+     <tr><td><code>--hide=PATTERN</code></td><td>Hide entries that match PATTERN (complement to --ignore).</td></tr>
+     <tr><td><code>--group-directories-first</code></td><td>Group directories before files when sorting (GNU extension).</td></tr>
+     <tr><td><code>--time=WORD</code></td><td>Choose which timestamp to show/sort by: <code>atime</code>/<code>access</code>/<code>use</code>, <code>ctime</code>/<code>status</code>, or <code>birth</code> (when available).</td></tr>
+     <tr><td><code>--time-style=STYLE</code></td><td>Control time display style: <code>full-iso</code>, <code>long-iso</code>, <code>iso</code>, <code>locale</code>, or a custom format.</td></tr>
+     <tr><td><code>--block-size=SIZE</code></td><td>Scale sizes by SIZE when printing (e.g. <code>--block-size=M</code>).</td></tr>
+     <tr><td><code>--si</code></td><td>Like <code>-h</code> but use powers of 1000 (KB = 1000 bytes) instead of 1024.</td></tr>
+     <tr><td><code>-L</code>, <code>--dereference</code></td><td>List info for the file that a symbolic link references (follow symlinks).</td></tr>
+     <tr><td><code>-H</code></td><td>When command-line argument names are symbolic links to directories, follow them (affects recursive listing).</td></tr>
+     <tr><td><code>--dereference-command-line-symlink-to-dir</code></td><td>Dereference command-line symbolic links to directories (GNU specific).</td></tr>
+     <tr><td><code>--author</code></td><td>With <code>-l</code>, print the author of the file (when available).</td></tr>
+     <tr><td><code>-G</code>, <code>--no-group</code></td><td>Omit group information in the long listing (some systems use <code>-g</code> for this).</td></tr>
+     <tr><td><code>--show-control-chars</code></td><td>Opposite of <code>-q</code>; show actual control characters.</td></tr>
+     <tr><td><code>--group-directories-first</code></td><td>List directories before files (useful for clarity).</td></tr>
+     <tr><td><code>--hide=PATTERN</code></td><td>Do not list entries matching shell pattern <code>PATTERN</code> (opposite of <code>--ignore</code>).</td></tr>
+     <tr><td><code>--ignore=PATTERN</code></td><td>Do not list entries matching <code>PATTERN</code> (but list if explicitly requested).</td></tr>
+     <tr><td><code>--time=WORD</code></td><td>Specify which timestamp to display or sort by: <code>atime</code>, <code>access</code>, <code>use</code>, <code>ctime</code>, or <code>status</code>.</td></tr>
+     <tr><td><code>--time-style=STYLE</code></td><td>Show times using given style: <code>full-iso</code>, <code>long-iso</code>, <code>iso</code>, <code>locale</code>, or custom format.</td></tr>
+     <tr><td><code>--block-size=SIZE</code></td><td>Scale sizes by SIZE when printing them (e.g. <code>--block-size=M</code> shows sizes in MB).</td></tr>
+     <tr><td><code>--si</code></td><td>Like <code>-h</code> but use powers of 1000 (KB=1000 bytes) instead of 1024.</td></tr>
+     <tr><td><code>--quoting-style=WORD</code></td><td>Use quoting style: <code>literal</code>, <code>shell</code>, <code>shell-escape</code>, <code>c</code>, or <code>escape</code>.</td></tr>
+     <tr><td><code>--indicator-style=WORD</code></td><td>Control how entry type indicators (<code>/</code>, <code>*</code>, etc.) appear; WORD can be <code>none</code>, <code>classify</code>, or <code>slash</code>.</td></tr>
+     <tr><td><code>--author</code></td><td>With <code>-l</code>, print the author of each file (if available).</td></tr>
+     <tr><td><code>--full-time</code></td><td>Like <code>-l --time-style=full-iso</code> (shows complete date & time).</td></tr>
+     <tr><td><code>--version</code></td><td>Show version information and exit.</td></tr>
+     <tr><td><code>--help</code></td><td>Display help information about <code>ls</code>.</td></tr>
+
+     </table>
+  </section>
+
+  <section>
+    <h2>Shell glob example: <code>*/</code> explained</h2>
+    <p><code>*/</code> is a shell pattern (glob). It expands to every name in the current directory that ends with a slash when treated as a directory—so it effectively selects directories. Used with <code>-d</code> it lists directories themselves:</p>
+    <pre>$ ls -d */
+Documents/  Downloads/  Music/</pre>
+    <p>If you want only directory names without trailing slash you can combine with <code>basename</code> or other tools, e.g.:</p>
+    <pre>$ for d in */; do echo "${d%/}"; done</pre>
+  </section>
+
+  <section>
+    <h2>Practical examples</h2>
+    <pre>
+# List files in current directory (columns)
+ls
+
+# Long list, human readable sizes, show hidden
+ls -lah
+
+# List recursively with full timestamps
+ls -lR --full-time
+
+# List entries sorted by size (largest first)
+ls -lS
+
+# Show only directories
+ls -d */
+
+# Show inode numbers with long listing
+ls -li
+
+# Force color (even when piping)
+ls --color=always | less -R
+
+# Do not sort, very fast
+ls -f
+    </pre>
+  </section>
+
+  <section>
+    <h2>Tips & troubleshooting</h2>
+    <ul>
+      <li>If <code>ls</code> output is colored oddly, check <code>LS_COLORS</code> environment variable and whether your terminal supports ANSI colors.</li>
+      <li>Aliases: many distros set an alias like <code>alias ls='ls --color=auto'</code> in <code>~/.bashrc</code>. Check with <code>alias ls</code>.</li>
+      <li>To discover every option on your machine, run: <code>ls --help</code> or <code>man ls</code>.</li>
+    </ul>
+  </section>
+
+  <section>
+     <p>Change the current working directory.</p>
+    <h2>Synopsis</h2>
+    <pre>cd [OPTION] [DIR]</pre>
+    <p><strong>Purpose:</strong> Change the shell working directory to <code>DIR</code>. Defaults to the user's home directory if no directory is specified.</p>
+  </section>
+
+  <section>
+    <h2>Options</h2>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>--</code></td><td>End of options (treat next argument as directory even if it starts with <code>-</code>)</td></tr>
+      <tr><td><code>-L</code></td><td>Follow symbolic links (logical), default in most shells</td></tr>
+      <tr><td><code>-P</code></td><td>Use physical directory structure without following symbolic links</td></tr>
+      <tr><td><code>~</code></td><td>Shortcut for the user's home directory</td></tr>
+      <tr><td><code>-</code></td><td>Switch to previous working directory</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Examples</h2>
+    <pre>
+# Go to /usr/local
+cd /usr/local
+
+# Go to home directory
+cd
+
+# Go to previous directory
+cd -
+
+# Follow physical directory structure, ignoring symlinks
+cd -P /tmp/symlink_dir
+
+# Follow symlink path (logical)
+cd -L /tmp/symlink_dir
+    </pre>
+  </section>
+
+  <section>
+    <h2>Notes</h2>
+    <ul>
+      <li>Use <code>pwd</code> to verify current working directory.</li>
+      <li><code>cd</code> is a shell builtin, not an external command.</li>
+      <li>Some shells support shortcuts like <code>cd ~user</code> to go to another user's home directory.</li>
+    </ul>
+  </section>
+
+  <!-- MV -->
+  <section>
+    <h2><code>mv</code> — Move/Rename files</h2>
+    <pre>mv [OPTION]... SOURCE... DEST</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-i</code></td><td>Prompt before overwrite</td></tr>
+      <tr><td><code>-f</code></td><td>Do not prompt before overwriting</td></tr>
+      <tr><td><code>-n</code></td><td>Do not overwrite an existing file</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose: show what is being done</td></tr>
+      <tr><td><code>-u</code></td><td>Move only when SOURCE is newer than DEST or DEST is missing</td></tr>
+      <tr><td><code>--backup[=CONTROL]</code></td><td>Make a backup of each existing destination file</td></tr>
+      <tr><td><code>--strip-trailing-slashes</code></td><td>Remove any trailing slashes from SOURCE args</td></tr>
+    </table>
+    <pre>
+# Rename file
+mv old.txt new.txt
+
+# Move files to dir
+mv file1 file2 /tmp/backup/
+
+# Prompt before overwriting
+mv -i file.txt /tmp/
+    </pre>
+  </section>
+
+  <!-- CP -->
+  <section>
+    <h2><code>cp</code> — Copy files/directories</h2>
+    <pre>cp [OPTION]... SOURCE... DEST</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-i</code></td><td>Prompt before overwrite</td></tr>
+      <tr><td><code>-f</code></td><td>Force copy (overwrite without prompt)</td></tr>
+      <tr><td><code>-n</code></td><td>Do not overwrite existing files</td></tr>
+      <tr><td><code>-u</code></td><td>Copy only when SOURCE is newer or DEST missing</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose</td></tr>
+      <tr><td><code>-a</code></td><td>Archive mode (preserve attributes, recursive)</td></tr>
+      <tr><td><code>-r</code>, <code>-R</code></td><td>Recursive copy for directories</td></tr>
+      <tr><td><code>--backup[=CONTROL]</code></td><td>Make backup of destination file if it exists</td></tr>
+      <tr><td><code>--preserve=ATTR_LIST</code></td><td>Preserve specific attributes: mode, ownership, timestamps, context, links</td></tr>
+    </table>
+    <pre>
+# Copy file
+cp file.txt /tmp/
+
+# Copy recursively
+cp -r folder1/ folder2/
+
+# Copy with verbose and preserve attributes
+cp -av folder1/ folder_backup/
+    </pre>
+  </section>
+
+  <!-- RM -->
+  <section>
+    <h2><code>rm</code> — Remove files/directories</h2>
+    <pre>rm [OPTION]... FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-f</code></td><td>Ignore nonexistent files, never prompt</td></tr>
+      <tr><td><code>-i</code></td><td>Prompt before every removal</td></tr>
+      <tr><td><code>-I</code></td><td>Prompt once if removing more than 3 files or recursively</td></tr>
+      <tr><td><code>-r</code>, <code>-R</code></td><td>Remove directories and their contents recursively</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose</td></tr>
+      <tr><td><code>--one-file-system</code></td><td>Do not cross filesystem boundaries when removing recursively</td></tr>
+      <tr><td><code>--no-preserve-root</code></td><td>Allow recursive removal of root directory (dangerous!)</td></tr>
+      <tr><td><code>--preserve-root</code></td><td>Do not remove '/' (default)</td></tr>
+    </table>
+    <pre>
+# Remove file
+rm file.txt
+
+# Remove directory recursively
+rm -r folder/
+
+# Force remove without prompt
+rm -rf folder/
+    </pre>
+  </section>
+
+  <!-- Other essential small commands -->
+  <section>
+    <h2><code>mkdir</code> — Create directories</h2>
+    <pre>mkdir [OPTION] DIRECTORY...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning</th></tr>
+      <tr><td><code>-p</code></td><td>Create parent directories as needed</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose</td></tr>
+    </table>
+    <pre>
+mkdir new_folder
+mkdir -p /tmp/parent/child
+    </pre>
+  </section>
+
+  <section>
+    <h2><code>rmdir</code> — Remove empty directories</h2>
+    <pre>rmdir [OPTION] DIRECTORY...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning</th></tr>
+      <tr><td><code>-p</code></td><td>Remove directory and its ancestors if they are empty</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose</td></tr>
+    </table>
+    <pre>
+rmdir empty_folder
+rmdir -p /tmp/parent/child
+    </pre>
+  </section>
+
+  <section>
+    <h2><code>touch</code> — Create empty files / update timestamps</h2>
+    <pre>touch [OPTION] FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning</th></tr>
+      <tr><td><code>-a</code></td><td>Change only access time</td></tr>
+      <tr><td><code>-m</code></td><td>Change only modification time</td></tr>
+      <tr><td><code>-c</code></td><td>Do not create any files</td></tr>
+      <tr><td><code>-t STAMP</code></td><td>Use specified timestamp instead of current time</td></tr>
+      <tr><td><code>-r FILE</code></td><td>Use timestamp of another file</td></tr>
+    </table>
+    <pre>
+touch file.txt
+touch -t 202510261200 file.txt
+    </pre>
+  </section>
+
+  <section>
+    <h2><code>cat</code> — View / concatenate files</h2>
+    <pre>cat [OPTION]... [FILE]...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning</th></tr>
+      <tr><td><code>-n</code></td><td>Number all output lines</td></tr>
+      <tr><td><code>-b</code></td><td>Number non-empty output lines</td></tr>
+      <tr><td><code>-s</code></td><td>Squeeze multiple adjacent empty lines</td></tr>
+      <tr><td><code>-E</code></td><td>Show $ at end of each line</td></tr>
+      <tr><td><code>-T</code></td><td>Show TAB characters as ^I</td></tr>
+      <tr><td><code>-v</code></td><td>Show non-printing characters</td></tr>
+    </table>
+    <pre>
+cat file.txt
+cat file1.txt file2.txt > combined.txt
+cat -n file.txt
+    </pre>
+  </section>
+
+  <!-- CHMOD -->
+  <section>
+    <h2><code>chmod</code> — Change file/directory permissions</h2>
+    <pre>chmod [OPTION]... MODE[,MODE]... FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-R</code></td><td>Change files and directories recursively</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose: show files as permissions are changed</td></tr>
+      <tr><td><code>-c</code></td><td>Like verbose, but report only when changes are made</td></tr>
+      <tr><td><code>-f</code></td><td>Suppress most error messages</td></tr>
+      <tr><td><code>--reference=FILE</code></td><td>Set permissions to match those of FILE</td></tr>
+    </table>
+    <pre>
+# Add execute permission for user
+chmod u+x script.sh
+
+# Remove write permission for group
+chmod g-w file.txt
+
+# Set permissions recursively
+chmod -R 755 folder/
+
+# Match permissions of another file
+chmod --reference=template.txt file.txt
+    </pre>
+
+  <h3>Numeric (Octal) Permissions</h3>
+  <p>Permissions are represented as three sets: <strong>User / Group / Others</strong>. Each permission has a numeric value:</p>
+  <table>
+    <tr><th>Permission</th><th>Value</th></tr>
+    <tr><td>Read (r)</td><td>4</td></tr>
+    <tr><td>Write (w)</td><td>2</td></tr>
+    <tr><td>Execute (x)</td><td>1</td></tr>
+  </table>
+
+  <p>Combine values for each set to form the numeric mode:</p>
+  <table>
+    <tr><th>Permissions</th><th>Calculation</th><th>Octal</th></tr>
+    <tr><td>rwx</td><td>4+2+1</td><td>7</td></tr>
+    <tr><td>rw-</td><td>4+2+0</td><td>6</td></tr>
+    <tr><td>r--</td><td>4+0+0</td><td>4</td></tr>
+    <tr><td>--x</td><td>0+0+1</td><td>1</td></tr>
+  </table>
+
+  <h3>Examples</h3>
+  <pre>
+# Add execute permission for user
+chmod u+x script.sh
+
+# Remove write permission for group
+chmod g-w file.txt
+
+# Set permissions recursively
+chmod -R 755 folder/
+
+# Match permissions of another file
+chmod --reference=template.txt file.txt
+
+# Numeric mode examples
+chmod 644 file.txt   # rw-r--r--
+chmod 600 file.txt   # rw-------
+chmod 777 folder/    # rwxrwxrwx (everyone full access)
+chmod 754 file.txt   # rwxr-xr-- (user/group/others)
+  </pre>
+</section>
+
+
+  <!-- CHOWN -->
+  <section>
+    <h2><code>chown</code> — Change file owner and group</h2>
+    <pre>chown [OPTION]... [OWNER][:[GROUP]] FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-R</code></td><td>Recursively change ownership of files and directories</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose: show changes</td></tr>
+      <tr><td><code>-c</code></td><td>Report only when ownership is actually changed</td></tr>
+      <tr><td><code>-f</code></td><td>Suppress most error messages</td></tr>
+      <tr><td><code>--reference=FILE</code></td><td>Set owner and group same as reference file</td></tr>
+    </table>
+    <pre>
+# Change owner to user 'john'
+chown john file.txt
+
+# Change owner and group
+chown john:developers file.txt
+
+# Recursively change ownership
+chown -R john:developers /var/www
+
+# Match owner/group from another file
+chown --reference=template.txt file.txt
+    </pre>
+  </section>
+
+  <!-- FIND -->
+  <section>
+    <h2><code>find</code> — Search for files/directories</h2>
+    <pre>find [PATH] [OPTIONS] [EXPRESSION]</pre>
+    <table>
+      <tr><th>Option / Test</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-name PATTERN</code></td><td>Match file/directory name using pattern (case-sensitive)</td></tr>
+      <tr><td><code>-iname PATTERN</code></td><td>Match name case-insensitively</td></tr>
+      <tr><td><code>-type [f/d/l]</code></td><td>File type: <code>f</code> = regular, <code>d</code> = directory, <code>l</code> = symbolic link</td></tr>
+      <tr><td><code>-size [+/-]N[c/k/M/G]</code></td><td>Files larger/smaller/exact size. Suffix: c=bytes, k=KB, M=MB, G=GB</td></tr>
+      <tr><td><code>-mtime [+/-]N</code></td><td>Modified N days ago (+N = older, -N = newer)</td></tr>
+      <tr><td><code>-atime [+/-]N</code></td><td>Accessed N days ago</td></tr>
+      <tr><td><code>-ctime [+/-]N</code></td><td>Status changed N days ago</td></tr>
+      <tr><td><code>-user NAME</code></td><td>Owned by user NAME</td></tr>
+      <tr><td><code>-group NAME</code></td><td>Owned by group NAME</td></tr>
+      <tr><td><code>-perm MODE</code></td><td>Files with exact permissions (numeric or symbolic)</td></tr>
+      <tr><td><code>-maxdepth N</code></td><td>Descend at most N levels of directories</td></tr>
+      <tr><td><code>-mindepth N</code></td><td>Do not apply tests/actions to levels less than N</td></tr>
+      <tr><td><code>-exec COMMAND {} \;</code></td><td>Execute COMMAND on each matching file</td></tr>
+      <tr><td><code>-ok COMMAND {} \;</code></td><td>Like <code>-exec</code>, but prompt before running</td></tr>
+      <tr><td><code>-print</code></td><td>Print pathnames (default action if none specified)</td></tr>
+      <tr><td><code>-delete</code></td><td>Delete matching files/directories (use with caution)</td></tr>
+    </table>
+    <pre>
+# Find all .txt files
+find /home/user -name "*.txt"
+
+# Find files modified in last 7 days
+find /var/log -mtime -7
+
+# Find directories only
+find /tmp -type d
+
+# Find files larger than 10MB
+find /home/user -size +10M
+
+# Execute command on each match
+find /tmp -name "*.log" -exec rm -f {} \;
+
+# Delete empty directories
+find /tmp -type d -empty -delete
+    </pre>
+  </section>
+
+  <!-- GREP -->
+  <section>
+    <h2><code>grep</code> — Search text in files</h2>
+    <pre>grep [OPTIONS] PATTERN [FILE...]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-i</code></td><td>Ignore case distinctions</td></tr>
+      <tr><td><code>-v</code></td><td>Invert match (select non-matching lines)</td></tr>
+      <tr><td><code>-r</code>, <code>-R</code></td><td>Recursive search in directories</td></tr>
+      <tr><td><code>-l</code></td><td>List only names of files with matches</td></tr>
+      <tr><td><code>-L</code></td><td>List only names of files without matches</td></tr>
+      <tr><td><code>-c</code></td><td>Count matching lines</td></tr>
+      <tr><td><code>-n</code></td><td>Show line numbers with output</td></tr>
+      <tr><td><code>-H</code></td><td>Print filename with output</td></tr>
+      <tr><td><code>-o</code></td><td>Print only matched parts of line</td></tr>
+      <tr><td><code>--color=WHEN</code></td><td>Highlight matching text (auto, always, never)</td></tr>
+      <tr><td><code>-E</code></td><td>Use extended regular expressions (same as <code>egrep</code>)</td></tr>
+      <tr><td><code>-F</code></td><td>Interpret pattern as fixed strings (same as <code>fgrep</code>)</td></tr>
+      <tr><td><code>-P</code></td><td>Interpret pattern as Perl-compatible regex</td></tr>
+    </table>
+    <pre>
+# Search for "error" in a file
+grep "error" logfile.txt
+
+# Case-insensitive search
+grep -i "warning" logfile.txt
+
+# Recursive search in current directory
+grep -r "TODO" .
+
+# Show only filenames containing the pattern
+grep -l "main" *.c
+    </pre>
+  </section>
+
+  <!-- AWK -->
+  <section>
+    <h2><code>awk</code> — Pattern scanning and processing language</h2>
+    <pre>awk [OPTIONS] 'PROGRAM' FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-F fs</code></td><td>Use fs as input field separator</td></tr>
+      <tr><td><code>-v var=value</code></td><td>Assign value to variable var before execution</td></tr>
+      <tr><td><code>-f program-file</code></td><td>Read program source from file</td></tr>
+      <tr><td><code>-W compat</code></td><td>Compatibility mode</td></tr>
+      <tr><td><code>--version</code></td><td>Show version</td></tr>
+      <tr><td><code>--help</code></td><td>Show help message</td></tr>
+    </table>
+    <pre>
+# Print 2nd column of a file
+awk '{print $2}' file.txt
+
+# Print lines where 3rd column > 100
+awk '$3 > 100 {print $0}' data.txt
+
+# Use comma as field separator
+awk -F, '{print $1, $3}' file.csv
+
+# Assign variable
+awk -v min=10 '$2 > min {print $1, $2}' data.txt
+    </pre>
+  </section>
+
+  <!-- SED -->
+  <section>
+    <h2><code>sed</code> — Stream editor for text manipulation</h2>
+    <pre>sed [OPTIONS] 'SCRIPT' [INPUTFILE...]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-e SCRIPT</code></td><td>Add script to commands to run</td></tr>
+      <tr><td><code>-f SCRIPTFILE</code></td><td>Add script file with commands</td></tr>
+      <tr><td><code>-i[SUFFIX]</code></td><td>Edit files in-place (optionally backup with SUFFIX)</td></tr>
+      <tr><td><code>-n</code></td><td>Suppress automatic printing (use with <code>p</code> command)</td></tr>
+      <tr><td><code>-r</code></td><td>Use extended regex (modern sed: often <code>-E</code> instead)</td></tr>
+      <tr><td><code>--version</code></td><td>Show version</td></tr>
+      <tr><td><code>--help</code></td><td>Show help</td></tr>
+    </table>
+    <pre>
+# Replace 'apple' with 'orange' in file.txt
+sed 's/apple/orange/' file.txt
+
+# Replace all occurrences
+sed 's/apple/orange/g' file.txt
+
+# Delete lines containing "error"
+sed '/error/d' logfile.txt
+
+# Print only matching lines (use -n)
+sed -n '/TODO/p' file.txt
+
+# In-place editing with backup
+sed -i.bak 's/old/new/g' file.txt
+    </pre>
+  </section>
+
+  <!-- TAR -->
+  <section>
+    <h2><code>tar</code> — Archive files</h2>
+    <pre>tar [OPTIONS] [ARCHIVE] [FILES...]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-c</code></td><td>Create a new archive</td></tr>
+      <tr><td><code>-x</code></td><td>Extract archive</td></tr>
+      <tr><td><code>-t</code></td><td>List contents of archive</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose output</td></tr>
+      <tr><td><code>-f FILE</code></td><td>Specify archive file</td></tr>
+      <tr><td><code>-z</code></td><td>Compress with gzip</td></tr>
+      <tr><td><code>-j</code></td><td>Compress with bzip2</td></tr>
+      <tr><td><code>-J</code></td><td>Compress with xz</td></tr>
+      <tr><td><code>--exclude=PATTERN</code></td><td>Exclude files matching pattern</td></tr>
+      <tr><td><code>-C DIR</code></td><td>Change to directory DIR before performing operation</td></tr>
+    </table>
+    <pre>
+# Create a tar archive
+tar -cvf archive.tar folder/
+
+# Create a gzip compressed archive
+tar -czvf archive.tar.gz folder/
+
+# Extract archive
+tar -xvf archive.tar
+
+# List archive contents
+tar -tvf archive.tar
+    </pre>
+  </section>
+
+  <!-- HEAD -->
+  <section>
+    <h2><code>head</code> — Show first lines of a file</h2>
+    <pre>head [OPTION]... [FILE]...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-n NUM</code></td><td>Show first NUM lines (default 10)</td></tr>
+      <tr><td><code>-c NUM</code></td><td>Show first NUM bytes</td></tr>
+      <tr><td><code>-q</code></td><td>Do not print headers when multiple files</td></tr>
+      <tr><td><code>-v</code></td><td>Always print headers with filenames</td></tr>
+    </table>
+    <pre>
+# Show first 10 lines
+head file.txt
+
+# Show first 20 lines
+head -n 20 file.txt
+
+# Show first 50 bytes
+head -c 50 file.txt
+    </pre>
+  </section>
+
+  <!-- TAIL -->
+  <section>
+    <h2><code>tail</code> — Show last lines of a file</h2>
+    <pre>tail [OPTION]... [FILE]...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-n NUM</code></td><td>Show last NUM lines (default 10)</td></tr>
+      <tr><td><code>-c NUM</code></td><td>Show last NUM bytes</td></tr>
+      <tr><td><code>-f</code></td><td>Follow file as it grows (live updates)</td></tr>
+      <tr><td><code>--retry</code></td><td>Keep trying to open a file if it’s temporarily unavailable</td></tr>
+      <tr><td><code>-q</code></td><td>Suppress headers with multiple files</td></tr>
+      <tr><td><code>-v</code></td><td>Always print headers</td></tr>
+    </table>
+    <pre>
+# Show last 10 lines
+tail file.txt
+
+# Show last 50 lines
+tail -n 50 file.txt
+
+# Follow file (like live log)
+tail -f logfile.txt
+    </pre>
+  </section>
+
+  <!-- LESS -->
+  <section>
+    <h2><code>less</code> — View file contents interactively</h2>
+    <pre>less [OPTION]... FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-N</code></td><td>Show line numbers</td></tr>
+      <tr><td><code>-S</code></td><td>Chop long lines instead of wrapping</td></tr>
+      <tr><td><code>-X</code></td><td>Do not clear screen after exit</td></tr>
+      <tr><td><code>-i</code></td><td>Ignore case in searches</td></tr>
+      <tr><td><code>+F</code></td><td>Start in “follow” mode (like tail -f)</td></tr>
+    </table>
+    <pre>
+# View file interactively
+less file.txt
+
+# View with line numbers
+less -N file.txt
+
+# Follow updates in file
+less +F logfile.txt
+    </pre>
+  </section>
+
+  <!-- SORT -->
+  <section>
+    <h2><code>sort</code> — Sort lines of text files</h2>
+    <pre>sort [OPTION]... [FILE]...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-r</code></td><td>Reverse order</td></tr>
+      <tr><td><code>-n</code></td><td>Sort numerically</td></tr>
+      <tr><td><code>-k N,M</code></td><td>Sort by key starting at field N, ending at M</td></tr>
+      <tr><td><code>-t CHAR</code></td><td>Use CHAR as field separator</td></tr>
+      <tr><td><code>-u</code></td><td>Output only first of an equal run (unique)</td></tr>
+      <tr><td><code>-b</code></td><td>Ignore leading blanks</td></tr>
+      <tr><td><code>-M</code></td><td>Sort by month name</td></tr>
+    </table>
+    <pre>
+# Sort lines alphabetically
+sort file.txt
+
+# Sort numerically
+sort -n numbers.txt
+
+# Sort in reverse
+sort -r file.txt
+
+# Sort by 2nd column (comma separated)
+sort -t, -k2 file.csv
+    </pre>
+  </section>
+
+  <!-- UNIQ -->
+  <section>
+    <h2><code>uniq</code> — Remove duplicate adjacent lines</h2>
+    <pre>uniq [OPTION]... [INPUT [OUTPUT]]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-c</code></td><td>Prefix lines with count of occurrences</td></tr>
+      <tr><td><code>-d</code></td><td>Only print duplicate lines</td></tr>
+      <tr><td><code>-u</code></td><td>Only print unique lines</td></tr>
+      <tr><td><code>-i</code></td><td>Ignore case</td></tr>
+      <tr><td><code>-f N</code></td><td>Ignore first N fields when comparing</td></tr>
+      <tr><td><code>-s N</code></td><td>Ignore first N characters when comparing</td></tr>
+    </table>
+    <pre>
+# Remove adjacent duplicates
+uniq file.txt
+
+# Count occurrences
+uniq -c file.txt
+
+# Show only duplicates
+uniq -d file.txt
+
+# Show only unique lines
+uniq -u file.txt
+    </pre>
+  </section>
+
+  <!-- PS -->
+  <section>
+    <h2><code>ps</code> — Show process status</h2>
+    <pre>ps [OPTIONS]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-e</code>, <code>-A</code></td><td>Show all processes</td></tr>
+      <tr><td><code>-f</code></td><td>Full-format listing</td></tr>
+      <tr><td><code>-u USER</code></td><td>Show processes for specific user</td></tr>
+      <tr><td><code>-x</code></td><td>Include processes without controlling terminal</td></tr>
+      <tr><td><code>-o FORMAT</code></td><td>Output format (custom columns)</td></tr>
+      <tr><td><code>--sort FIELD</code></td><td>Sort by FIELD</td></tr>
+    </table>
+    <pre>
+# Show all processes
+ps -e
+
+# Show full details
+ps -ef
+
+# Show processes for user 'john'
+ps -u john
+
+# Show custom columns
+ps -eo pid,user,cmd,%mem,%cpu --sort=-%cpu
+    </pre>
+  </section>
+
+  <!-- TOP -->
+  <section>
+    <h2><code>top</code> — Interactive process viewer</h2>
+    <pre>top [OPTIONS]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-d SECONDS</code></td><td>Delay between updates</td></tr>
+      <tr><td><code>-u USER</code></td><td>Show processes of a specific user</td></tr>
+      <tr><td><code>-p PID</code></td><td>Monitor specific PID(s)</td></tr>
+      <tr><td><code>-n NUM</code></td><td>Number of iterations before exiting</td></tr>
+    </table>
+    <pre>
+# Start top with 5-second delay
+top -d 5
+
+# Show only processes of user 'john'
+top -u john
+
+# Monitor specific process
+top -p 1234
+    </pre>
+  </section>
+
+  <!-- KILL -->
+  <section>
+    <h2><code>kill</code> — Terminate processes</h2>
+    <pre>kill [OPTIONS] PID...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-l</code></td><td>List all signals</td></tr>
+      <tr><td><code>-s SIGNAL</code></td><td>Send specific signal</td></tr>
+      <tr><td><code>-9</code></td><td>Send SIGKILL (force termination)</td></tr>
+    </table>
+    <pre>
+# Kill process with PID 1234
+kill 1234
+
+# Force kill
+kill -9 1234
+
+# List all signals
+kill -l
+    </pre>
+  </section>
+
+  <!-- DF -->
+  <section>
+    <h2><code>df</code> — Disk space usage of filesystems</h2>
+    <pre>df [OPTIONS] [FILESYSTEM]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-h</code></td><td>Human-readable sizes (KB, MB, GB)</td></tr>
+      <tr><td><code>-T</code></td><td>Show filesystem type</td></tr>
+      <tr><td><code>-a</code></td><td>Include dummy filesystems</td></tr>
+      <tr><td><code>-i</code></td><td>Show inode usage instead of blocks</td></tr>
+    </table>
+    <pre>
+# Show disk usage in human-readable format
+df -h
+
+# Show filesystem type
+df -T
+
+# Show inode usage
+df -i
+    </pre>
+  </section>
+
+  <!-- DU -->
+  <section>
+    <h2><code>du</code> — Disk usage of files/directories</h2>
+    <pre>du [OPTIONS] [FILE/DIR]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-h</code></td><td>Human-readable sizes</td></tr>
+      <tr><td><code>-s</code></td><td>Display only total size</td></tr>
+      <tr><td><code>-a</code></td><td>Show sizes of all files, not just directories</td></tr>
+      <tr><td><code>-c</code></td><td>Show grand total</td></tr>
+      <tr><td><code>--max-depth=N</code></td><td>Limit depth of directories displayed</td></tr>
+    </table>
+    <pre>
+# Show size of directory in human-readable format
+du -h /home/user
+
+# Show total size only
+du -sh /home/user
+
+# Show sizes of all files
+du -ah /home/user
+
+# Limit depth to 1
+du -h --max-depth=1 /home/user
+    </pre>
+  </section>
+
+  <!-- FREE -->
+  <section>
+    <h2><code>free</code> — Show memory usage</h2>
+    <pre>free [OPTIONS]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-h</code></td><td>Human-readable output</td></tr>
+      <tr><td><code>-m</code></td><td>Show memory in MB</td></tr>
+      <tr><td><code>-g</code></td><td>Show memory in GB</td></tr>
+      <tr><td><code>-t</code></td><td>Show total memory</td></tr>
+      <tr><td><code>-s N</code></td><td>Repeat every N seconds</td></tr>
+    </table>
+    <pre>
+# Show memory usage in human-readable format
+free -h
+
+# Show memory in MB
+free -m
+
+# Continuous memory updates every 2 seconds
+free -h -s 2
+    </pre>
+  </section>
+
+  <!-- MOUNT -->
+  <section>
+    <h2><code>mount</code> — Mount a filesystem</h2>
+    <pre>mount [OPTIONS] DEVICE DIR</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-t TYPE</code></td><td>Filesystem type (ext4, ntfs, vfat, etc.)</td></tr>
+      <tr><td><code>-o OPTIONS</code></td><td>Comma-separated mount options (ro, rw, noexec, etc.)</td></tr>
+      <tr><td><code>--bind</code></td><td>Bind mount a directory to another location</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose output</td></tr>
+    </table>
+    <pre>
+# Mount a device
+mount /dev/sdb1 /mnt/usb
+
+# Mount with filesystem type and read-only
+mount -t ext4 -o ro /dev/sdb1 /mnt/usb
+
+# Bind mount
+mount --bind /home/user /mnt/user
+    </pre>
+  </section>
+
+  <!-- UMOUNT -->
+  <section>
+    <h2><code>umount</code> — Unmount a filesystem</h2>
+    <pre>umount [OPTIONS] TARGET</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-l</code></td><td>Lazy unmount (detach immediately, cleanup later)</td></tr>
+      <tr><td><code>-f</code></td><td>Force unmount (use carefully)</td></tr>
+      <tr><td><code>-a</code></td><td>Unmount all filesystems mentioned in /etc/fstab</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose output</td></tr>
+    </table>
+    <pre>
+# Unmount a filesystem
+umount /mnt/usb
+
+# Force unmount
+umount -f /mnt/usb
+
+# Lazy unmount
+umount -l /mnt/usb
+    </pre>
+  </section>
+
+  <!-- ZIP -->
+  <section>
+    <h2><code>zip</code> — Create compressed zip archives</h2>
+    <pre>zip [OPTIONS] ARCHIVE FILES...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-r</code></td><td>Recursively include directories</td></tr>
+      <tr><td><code>-e</code></td><td>Encrypt with password</td></tr>
+      <tr><td><code>-q</code></td><td>Quiet mode</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose mode</td></tr>
+    </table>
+    <pre>
+# Create zip archive
+zip archive.zip file1.txt file2.txt
+
+# Recursively add a folder
+zip -r archive.zip folder/
+
+# Create encrypted archive
+zip -e archive.zip file.txt
+    </pre>
+  </section>
+
+  <!-- UNZIP -->
+  <section>
+    <h2><code>unzip</code> — Extract zip archives</h2>
+    <pre>unzip [OPTIONS] ARCHIVE</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-d DIR</code></td><td>Extract to directory DIR</td></tr>
+      <tr><td><code>-l</code></td><td>List contents of archive</td></tr>
+      <tr><td><code>-o</code></td><td>Overwrite existing files without prompting</td></tr>
+      <tr><td><code>-q</code></td><td>Quiet mode</td></tr>
+    </table>
+    <pre>
+# Extract archive
+unzip archive.zip
+
+# Extract to specific directory
+unzip archive.zip -d /tmp/extract
+
+# List contents
+unzip -l archive.zip
+    </pre>
+  </section>
+
+  <!-- GZIP / GUNZIP -->
+  <section>
+    <h2><code>gzip</code> / <code>gunzip</code> — Compress / decompress files</h2>
+    <pre>gzip [OPTIONS] FILE</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-d</code></td><td>Decompress (equivalent to gunzip)</td></tr>
+      <tr><td><code>-c</code></td><td>Write output to stdout</td></tr>
+      <tr><td><code>-r</code></td><td>Recursively compress directories</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose</td></tr>
+      <tr><td><code>-k</code></td><td>Keep original files</td></tr>
+    </table>
+    <pre>
+# Compress file
+gzip file.txt
+
+# Decompress
+gunzip file.txt.gz
+
+# Compress and keep original
+gzip -k file.txt
+    </pre>
+  </section>
+
+  <!-- JOB CONTROL: JOBS, BG, FG -->
+  <section>
+    <h2>Job Control — <code>jobs</code>, <code>bg</code>, <code>fg</code></h2>
+    <pre>
+jobs           # List background jobs
+bg %1          # Resume job 1 in background
+fg %1          # Bring job 1 to foreground
+    </pre>
+  </section>
+
+  <!-- LN -->
+  <section>
+    <h2><code>ln</code> — Create links</h2>
+    <pre>ln [OPTIONS] TARGET LINK_NAME</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-s</code></td><td>Create symbolic (soft) link</td></tr>
+      <tr><td><code>-f</code></td><td>Force overwrite existing link</td></tr>
+      <tr><td><code>-v</code></td><td>Verbose</td></tr>
+    </table>
+    <pre>
+# Create hard link
+ln file.txt link.txt
+
+# Create symbolic link
+ln -s file.txt link.txt
+    </pre>
+  </section>
+
+  <!-- WC -->
+  <section>
+    <h2><code>wc</code> — Word / line / character count</h2>
+    <pre>wc [OPTIONS] FILE</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-l</code></td><td>Count lines</td></tr>
+      <tr><td><code>-w</code></td><td>Count words</td></tr>
+      <tr><td><code>-c</code></td><td>Count bytes</td></tr>
+      <tr><td><code>-m</code></td><td>Count characters</td></tr>
+      <tr><td><code>-L</code></td><td>Print length of longest line</td></tr>
+    </table>
+    <pre>
+# Count lines, words, characters
+wc file.txt
+wc -l file.txt
+wc -w file.txt
+    </pre>
+  </section>
+
+  <!-- DIRNAME / BASENAME -->
+  <section>
+    <h2><code>dirname</code> / <code>basename</code> — Extract parts of path</h2>
+    <pre>
+dirname /path/to/file.txt     # Outputs: /path/to
+basename /path/to/file.txt    # Outputs: file.txt
+    </pre>
+  </section>
+
+  <!-- UMASK -->
+  <section>
+    <h2><code>umask</code> — Set default file permissions</h2>
+    <pre>
+umask          # Show current umask
+umask 022      # Set default new files to 755 / 644
+    </pre>
+  </section>
+
+  <!-- TYPE -->
+  <section>
+    <h2><code>type</code> — Show command type</h2>
+    <pre>
+type ls       # Indicates if 'ls' is builtin, alias, or file
+type cd
+    </pre>
+  </section>
+
+  <!-- HISTORY -->
+  <section>
+    <h2><code>history</code> — Show command history</h2>
+    <pre>
+history       # Show all commands
+history 10    # Show last 10 commands
+!123          # Run command number 123
+!!            # Repeat last command
+    </pre>
+  </section>
+
+  <!-- CLEAR -->
+  <section>
+    <h2><code>clear</code> — Clear terminal screen</h2>
+    <pre>
+clear
+Ctrl+L       # Shortcut to clear screen
+    </pre>
+  </section>
+
+  <!-- READ (tinput) -->
+  <section>
+    <h2><code>read</code> — Get input from user</h2>
+    <pre>
+read VAR        # Read input into variable VAR
+read -p "Enter name: " NAME
+read -s PASS    # Silent input (for passwords)
+    </pre>
+  </section>
+
+  <!-- EXPORT -->
+  <section>
+    <h2><code>export</code> — Set environment variables</h2>
+    <pre>
+export VAR=value      # Set variable
+export PATH=$PATH:/new/path
+    </pre>
+  </section>
+
+  <!-- PASSWD -->
+  <section>
+    <h2><code>passwd</code> — Change user password</h2>
+    <pre>
+passwd               # Change own password
+sudo passwd user     # Change password for another user
+    </pre>
+  </section>
+
+  <!-- TOUCH -->
+  <section>
+    <h2><code>touch</code> — Create empty files / update timestamps</h2>
+    <pre>touch [OPTIONS] FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-c</code></td><td>Do not create file if it does not exist</td></tr>
+      <tr><td><code>-a</code></td><td>Change only access time</td></tr>
+      <tr><td><code>-m</code></td><td>Change only modification time</td></tr>
+      <tr><td><code>-t STAMP</code></td><td>Use specified timestamp</td></tr>
+    </table>
+    <pre>
+# Create empty file
+touch file.txt
+
+# Update timestamps
+touch -a -m file.txt
+    </pre>
+  </section>
+
+  <!-- STAT -->
+  <section>
+    <h2><code>stat</code> — Show detailed file information</h2>
+    <pre>stat [OPTIONS] FILE</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-c FORMAT</code></td><td>Custom output format</td></tr>
+      <tr><td><code>-f</code></td><td>Show filesystem info instead of file</td></tr>
+    </table>
+    <pre>
+# Show file details
+stat file.txt
+
+# Show filesystem info
+stat -f /home
+    </pre>
+  </section>
+
+  <!-- FILE -->
+  <section>
+    <h2><code>file</code> — Detect file type</h2>
+    <pre>file [OPTIONS] FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-b</code></td><td>Brief output (no filename)</td></tr>
+      <tr><td><code>-i</code></td><td>Show MIME type</td></tr>
+      <tr><td><code>-z</code></td><td>Try to look inside compressed files</td></tr>
+    </table>
+    <pre>
+file file.txt
+file -i file.txt
+    </pre>
+  </section>
+
+  <!-- WHICH -->
+  <section>
+    <h2><code>which</code> — Show location of executable</h2>
+    <pre>
+which ls
+which python3
+    </pre>
+  </section>
+
+  <!-- ALIAS / UNALIAS -->
+  <section>
+    <h2><code>alias</code> / <code>unalias</code> — Command shortcuts</h2>
+    <pre>
+# Create alias
+alias ll='ls -la'
+
+# Show all aliases
+alias
+
+# Remove alias
+unalias ll
+    </pre>
+  </section>
+
+  <!-- UPTIME -->
+  <section>
+    <h2><code>uptime</code> — Show system uptime</h2>
+    <pre>
+uptime
+# Example output: 13:15:02 up 5 days,  2:32, 3 users, load average: 0.15, 0.22, 0.18
+    </pre>
+  </section>
+
+  <!-- DATE -->
+  <section>
+    <h2><code>date</code> — Show or set date/time</h2>
+    <pre>
+date                  # Show current date/time
+date "+%Y-%m-%d %H:%M:%S"   # Custom format
+sudo date -s "2025-10-26 14:00"  # Set system date/time
+    </pre>
+  </section>
+
+  <!-- WHO / W -->
+  <section>
+    <h2><code>who</code> / <code>w</code> — Users logged in</h2>
+    <pre>
+who        # Show logged in users
+w          # Show users and what they are doing
+    </pre>
+  </section>
+
+  <!-- SLEEP -->
+  <section>
+    <h2><code>sleep</code> — Pause execution</h2>
+    <pre>
+sleep 5          # Sleep for 5 seconds
+sleep 2m         # Sleep 2 minutes
+sleep 1h         # Sleep 1 hour
+    </pre>
+  </section>
+
+  <!-- NICE / RENICE -->
+  <section>
+    <h2><code>nice</code> / <code>renice</code> — Set process priority</h2>
+    <pre>
+# Run command with priority 10
+nice -n 10 command
+
+# Change priority of running process
+renice -n 5 -p 1234
+    </pre>
+  </section>
+
+  <!-- PKILL / KILLALL -->
+  <section>
+    <h2><code>pkill</code> / <code>killall</code> — Kill processes by name</h2>
+    <pre>
+pkill firefox       # Kill processes with name 'firefox'
+killall -u user     # Kill all processes of user
+    </pre>
+  </section>
+
+  <!-- DPKG -->
+  <section>
+    <h2><code>dpkg</code> — Debian package information</h2>
+    <pre>
+dpkg -l            # List installed packages
+dpkg -s PACKAGE     # Show package status
+dpkg -L PACKAGE     # List files installed by package
+dpkg -i file.deb    # Install .deb package
+    </pre>
+  </section>
+
+  <!-- RPM -->
+  <section>
+    <h2><code>rpm</code> — RedHat package management</h2>
+    <pre>
+rpm -qa            # List all installed packages
+rpm -qi PACKAGE    # Show package info
+rpm -ql PACKAGE    # List files installed by package
+rpm -ivh file.rpm  # Install package
+    </pre>
+  </section>
+
+  <!-- CAT / TAC -->
+  <section>
+    <h2><code>cat</code> / <code>tac</code> — View file content</h2>
+    <pre>cat [OPTIONS] FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-n</code></td><td>Number all output lines</td></tr>
+      <tr><td><code>-b</code></td><td>Number non-empty lines only</td></tr>
+      <tr><td><code>-E</code></td><td>Show $ at end of each line</td></tr>
+      <tr><td><code>-s</code></td><td>Squeeze multiple blank lines</td></tr>
+    </table>
+    <pre>
+# View file content
+cat file.txt
+
+# Number lines
+cat -n file.txt
+
+# View file in reverse line order
+tac file.txt
+    </pre>
+  </section>
+
+  <!-- ECHO -->
+  <section>
+    <h2><code>echo</code> — Print text or variables</h2>
+    <pre>echo [OPTIONS] [STRING]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-n</code></td><td>Do not print trailing newline</td></tr>
+      <tr><td><code>-e</code></td><td>Enable interpretation of backslash escapes</td></tr>
+      <tr><td><code>-E</code></td><td>Disable interpretation of backslash escapes (default)</td></tr>
+    </table>
+    <pre>
+# Print simple text
+echo "Hello World"
+
+# Print without newline
+echo -n "Hello"
+
+# Print with colors/newlines
+echo -e "Line1\nLine2"
+    </pre>
+  </section>
+
+  <!-- ENV -->
+  <section>
+    <h2><code>env</code> — Show or run commands in environment</h2>
+    <pre>env [OPTIONS] [COMMAND]</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-i</code></td><td>Start with empty environment</td></tr>
+      <tr><td><code>-u NAME</code></td><td>Remove variable NAME</td></tr>
+    </table>
+    <pre>
+# Show all environment variables
+env
+
+# Run command with empty environment
+env -i bash
+    </pre>
+  </section>
+
+  <!-- TEXT EDITORS -->
+  <section>
+    <h2>Text Editors — <code>gedit</code>, <code>nano</code>, <code>vim</code></h2>
+
+    <!-- GEDIT -->
+    <h3><code>gedit</code> — GUI text editor</h3>
+    <pre>gedit [OPTIONS] FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-w</code></td><td>Wait until file is closed</td></tr>
+      <tr><td><code>-s</code></td><td>Stand-alone mode</td></tr>
+      <tr><td><code>-x</code></td><td>Run in a new window</td></tr>
+    </table>
+    <pre>
+# Open a file
+gedit file.txt
+
+# Open multiple files
+gedit file1.txt file2.txt
+    </pre>
+
+    <!-- NANO -->
+    <h3><code>nano</code> — Terminal text editor</h3>
+    <pre>nano [OPTIONS] FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-w</code></td><td>Disable wrapping</td></tr>
+      <tr><td><code>-c</code></td><td>Show line numbers</td></tr>
+      <tr><td><code>-m</code></td><td>Enable mouse support</td></tr>
+    </table>
+    <pre>
+# Open file in nano
+nano file.txt
+
+# Save and exit: Ctrl+O, Ctrl+X
+# Exit without saving: Ctrl+X, then N
+    </pre>
+
+    <!-- VIM -->
+    <h3><code>vim</code> — Powerful terminal editor</h3>
+    <pre>vim [OPTIONS] FILE...</pre>
+    <table>
+      <tr><th>Option</th><th>Meaning / Notes</th></tr>
+      <tr><td><code>-R</code></td><td>Read-only mode</td></tr>
+      <tr><td><code>+NUM</code></td><td>Start at line NUM</td></tr>
+      <tr><td><code>-c CMD</code></td><td>Run Vim command on startup</td></tr>
+      <tr><td><code>-y</code></td><td>Easy mode (like simplified Vim)</td></tr>
+    </table>
+    <pre>
+# Open file
+vim file.txt
+
+# Insert mode: i
+# Save file: :w
+# Quit: :q
+# Save & quit: :wq
+# Force quit without saving: :q!
+# Delete line: dd
+# Undo: u
+# Redo: Ctrl+r
+# Search: /pattern
+# Replace: :%s/old/new/g
+    </pre>
+  </section>
+
+</body>
+</html>
