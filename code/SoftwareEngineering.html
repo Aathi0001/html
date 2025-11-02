@@ -198,7 +198,7 @@ th {
   margin: 40px 0;
 }
 
-.v-left, .v-right {
+.v-left {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -209,8 +209,11 @@ th {
   transform: rotate(0deg);
 }
 
-.v-right .arrow {
-  transform: rotate(180deg);
+.v-right  {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+  gap: 12px;
 }
 
 .v-middle {
@@ -236,24 +239,7 @@ th {
   color: #333;
 }
 
-@media (max-width: 768px) {
-  .vmodel {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .v-left, .v-right {
-    flex-direction: column;
-  }
-  
-  .v-right .arrow {
-    transform: rotate(90deg);
-  }
-  
-  .v-left .arrow {
-    transform: rotate(90deg);
-  }
-}
+
 
 </style>
 </head>
@@ -821,9 +807,9 @@ th {
   <div class="example">
     <h4>Example – Mobile Banking App</h4>
     <ul>
-      <li><b>Sprint 1 / Iteration 1:</b> Login + basic balance display → client feedback</li>
-      <li><b>Sprint 2 / Iteration 2:</b> Money transfer + improve UI → client feedback</li>
-      <li><b>Sprint 3 / Iteration 3:</b> Bill payments + security improvements → client feedback</li>
+      <li><b>Sprint 1 / Iteration 1:</b> Login + basic balance display → client feedback and deployment</li>
+      <li><b>Sprint 2 / Iteration 2:</b> Money transfer + improve UI → client feedback and deployment</li>
+      <li><b>Sprint 3 / Iteration 3:</b> Bill payments + security improvements → client feedback and deployment</li>
       <li><b>Sprint 4 / Iteration 4:</b> Reports, notifications, final polish → final deployment</li>
     </ul>
     <p>
@@ -856,10 +842,20 @@ th {
       <div class="arrow">➡️</div>
       <div class="step">Team Review</div>
       <div class="arrow">➡️</div>
+      <div class="step">Deployment (Optional)</div>
+      <div class="arrow">➡️</div>
       <div class="step">Next Sprint Planning</div>
     </div>
     <p>🔁 Each sprint delivers a working increment and improves the system based on feedback</p>
+
   </div>
+
+  <p>
+    <b>Note:</b> Each sprint produces a <b>potentially shippable product increment</b>. 
+    Deployment to end users may occur after every sprint (in continuous delivery) 
+    or after several sprints (in a release cycle), depending on the project strategy.
+  </p>
+
 
   <h4>Advantages:</h4>
   <ul>
@@ -1279,45 +1275,59 @@ th {
 
 <hr>
 
-<!-- SRS (Software Requirements Specification) -->
-<h3>SRS (Software Requirements Specification)</h3>
+<h3>Software Requirements Specification (SRS)</h3>
+
 <p>
-  <b>Software Requirements Specification (SRS)</b> is a <b>document that describes the complete behavior, functionality, and constraints of a software system</b>.  <br>
-  It serves as a communication bridge between stakeholders (like clients and users) and the development team.
+  The <b>Software Requirements Specification (SRS)</b> is a document that describes the complete behavior, functionality, and constraints of a software system. 
+  It defines <b>what the software is going to do</b> and acts as a <b>communication bridge</b> between the customer and the development team. 
+  It also serves as a <b>contract</b> between both parties. Once the SRS is verified and approved by the customer, the actual development process begins.
 </p>
 
-<div class="example">
-  <h4>Example:</h4>
-  <p>
-    While developing a <b>Library Management System</b>, the SRS document will include:
-    <ul>
-      <li>Functional requirements(What the system should do): e.g., Add new books, issue books to students, calculate fines.</li>
-      <li>Non-functional requirements(How the system should perform): e.g., System must respond within 2 seconds, must support 100 concurrent users.</li>
-      <li>Constraints(Limit or Restriction): e.g., Must work on Windows 10 and above, use MySQL as the database.</li>
-    </ul>
-  </p>
-</div>
-
-<h4>Components of SRS:</h4>
+<h4>Example – Library Management System</h4>
 <ul>
-  <li><b>Introduction:</b> Overview, purpose, scope of the system, and definitions.</li>
-  <li><b>Overall Description:</b> System perspective, user characteristics, constraints, and assumptions.</li>
-  <li><b>Specific Requirements:</b> Detailed functional and non-functional requirements, interface requirements, and performance specifications.</li>
-  <li><b>External Interface Requirements:</b> User interfaces, hardware interfaces, software interfaces, and communication interfaces.</li>
-  <li><b>Other Requirements:</b> Security, reliability, maintainability, scalability, and compliance requirements.</li>
+  <li><b>Functional Requirements (What the system should do):</b> Add new books, issue books to students, calculate fines.</li>
+  <li><b>Non-Functional Requirements (How the system should perform):</b> System must respond within 2 seconds, support 100 concurrent users, ensure data security and quality performance.</li>
+  <li><b>Constraints:</b> Must work on Windows 10 or above, and use MySQL as the database.</li>
 </ul>
 
-<h4>Advantages of SRS:</h4>
+<h4>Purpose of SRS</h4>
 <ul>
-  <li>Clear understanding of system requirements for both developers and clients.</li>
-  <li>Reduces ambiguity and miscommunication.</li>
+  <li>Establishes communication between the customer, analyst, system designer, developer, and maintainer.</li>
+  <li>Acts as a contract between the customer and developer.</li>
+  <li>Reduces developer effort by providing clarity of requirements.</li>
+  <li>Helps in cost estimation and project planning.</li>
+  <li>Provides a clear understanding of software development objectives.</li>
+  <li>Assists in verification and validation of the system.</li>
+</ul>
+
+<h4>Components of SRS</h4>
+<ol>
+  <li><b>Introduction:</b> Overview, purpose, scope of the system, project information, references, and definitions.</li>
+  <li><b>Overall Description:</b> System perspective, user characteristics, constraints, and assumptions.</li>
+  <li><b>Specific Requirements:</b> Detailed functional and non-functional requirements, interface, and performance specifications.</li>
+  <li><b>External Interface Requirements:</b> User interfaces, hardware interfaces, software interfaces, system interfaces, and communication interfaces.</li>
+  <li><b>Other Non-Functional Requirements:</b> Performance, safety, security, reliability, maintainability, scalability, and compliance requirements.</li>
+  <li><b>Other Requirements:</b> Terminology and definition list.</li>
+  <li><b>Constraints:</b> Budget, deadlines, and rules to be followed.</li>
+</ol>
+
+<h4>Characteristics of a Good SRS</h4>
+<p>
+  A good SRS should be:
+  <b>Correct</b>, <b>Consistent</b>, <b>Verifiable</b>, <b>Unambiguous</b>, <b>Traceable</b>, and <b>Ranked for importance</b>.
+</p>
+
+<h4>Advantages</h4>
+<ul>
+  <li>Provides a clear understanding of system requirements for both developers and clients.</li>
+  <li>Reduces miscommunication and ambiguity.</li>
   <li>Serves as a reference for validation, verification, and future maintenance.</li>
 </ul>
 
-<h4>Disadvantages of SRS:</h4>
+<h4>Disadvantages</h4>
 <ul>
   <li>Creating a detailed SRS can be time-consuming.</li>
-  <li>Frequent requirement changes can make SRS outdated quickly.</li>
+  <li>Frequent requirement changes can make the SRS outdated quickly.</li>
   <li>Too much detail may overwhelm developers or stakeholders.</li>
 </ul>
 
@@ -1379,6 +1389,367 @@ th {
 
 <hr>
 
+<h3>List of Documents Maintained in a Project</h3>
+
+<h4>1. Business Requirement Document (BRD)</h4>
+<p>
+  This document explains <b>why</b> the project is being built and outlines the <b>goals</b> of the project.
+</p>
+<p><b>Prepared by:</b> Business stakeholders, project sponsors</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Business goals and objectives</li>
+  <li>Stakeholders involved</li>
+  <li>High-level project scope and boundaries</li>
+  <li>Expected deliverables (outputs or results to be completed)</li>
+  <li>Timeline and constraints</li>
+  <li>Business rules and regulations</li>
+</ul>
+
+<h4>2. Scope Document</h4>
+<p>
+  Defines the <b>scope</b> of the project — what is included and what is excluded.
+</p>
+<p><b>Prepared by:</b> Project manager, development team</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Detailed list of features and functionalities to be delivered</li>
+  <li>Definition of in-scope vs. out-of-scope items</li>
+  <li>Assumptions, constraints, and dependencies</li>
+</ul>
+
+<h4>3. Software Requirement Specification (SRS)</h4>
+<p>
+  Describes the complete behavior, functionality, and constraints of a software system.
+</p>
+<p><b>Prepared by:</b> Developers, testers, technical team</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Functional requirements (what the system should do)</li>
+  <li>Non-functional requirements (performance, security, scalability)</li>
+  <li>User interface and system interfaces</li>
+  <li>Constraints, assumptions, and dependencies</li>
+</ul>
+
+<h4>4. Document of Understanding (DOU)</h4>
+<p>
+  Sets out an agreement between the client and the team about project objectives, deliverables, and terms.
+</p>
+<p><b>Involved Parties:</b> Client, vendor, service provider, project manager</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Project objectives and deliverables</li>
+  <li>Roles and responsibilities of each party</li>
+  <li>Terms and conditions (service level agreements, timelines, costs)</li>
+</ul>
+
+<h4>5. Architecture Design Document (ADD)</h4>
+<p>
+  Describes the system architecture and design, showing how it will meet the requirements defined in the SRS.
+</p>
+<p><b>Prepared by:</b> Developers, architects, technical lead</p>
+<h5>Contents:</h5>
+<ul>
+  <li>High-level architecture</li>
+  <li>Detailed component designs (UI, backend, etc.)</li>
+  <li>Design patterns and technologies used</li>
+</ul>
+
+<h4>6. Database Design Document (DBD)</h4>
+<p>
+  Defines the structure and design of the database, including how data will be stored and related.
+</p>
+<p><b>Prepared by:</b> Database administrator, developer</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Entity-relationship diagrams (ERD)</li>
+  <li>Tables, fields, and relationships</li>
+  <li>Indexing, normalization, and data integrity rules</li>
+</ul>
+
+<h4>7. Functional Specification Document (FSD)</h4>
+<p>
+  Describes the software’s features and functionality from a user’s perspective.
+</p>
+<p><b>Prepared by:</b> Developers, testers</p>
+<h5>Contents:</h5>
+<ul>
+  <li>List of features</li>
+  <li>UI/UX flow and design</li>
+  <li>Input and output specifications</li>
+  <li>Business rules and exceptions</li>
+</ul>
+
+<h4>8. Integration Document</h4>
+<p>
+  Describes how different systems, services, or components will interact and integrate with each other.
+</p>
+<p><b>Prepared by:</b> Developers, integration specialists, system architects</p>
+<h5>Contents:</h5>
+
+<ul>
+  <li><b>API Specifications:</b>
+    <ul>
+      <li>Defines communication methods with external services via APIs.</li>
+      <li>Example:<br>
+      <code>GET /api/services?category=balance</code><br>
+      Parameters: <code>category</code> (e.g., balance, withdraw)
+      </li>
+    </ul>
+  </li>
+
+  <li><b>Data Transfer Protocols (JSON, XML, PHP):</b>
+    <ul>
+      <li>Defines the format for data exchange between systems.</li>
+      <li>Example: JSON for APIs, XML for legacy systems.</li>
+    </ul>
+  </li>
+
+  <li><b>Integration Points and Flow:</b>
+    <ul>
+      <li>Describes how systems connect and interact.</li>
+      <li>Example – Payment Gateway Integration:
+        <ol>
+          <li>User initiates payment.</li>
+          <li>Frontend sends request to backend.</li>
+          <li>Backend calls external payment API (e.g., Stripe).</li>
+          <li>API responds with success or failure.</li>
+          <li>Backend updates user with payment status.</li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+
+  <li><b>Error Handling and Logging:</b>
+    <ul>
+      <li>Defines how integration errors are managed and logged.</li>
+      <li>Example: <code>ERROR: Payment API request failed. Response Code: 500</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h4>9. Schedule Document</h4>
+<p>
+  A plan outlining when each part of the project will be completed, including milestones and deadlines.
+</p>
+<p><b>Prepared by:</b> Project managers</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Detailed project schedule (start and end dates)</li>
+  <li>Milestones and key deliverables</li>
+  <li>Resource allocation and dependencies</li>
+</ul>
+
+<h4>10. Test Case Document</h4>
+<p>
+  Defines test cases and scenarios to ensure the system works as expected.
+</p>
+<p><b>Prepared by:</b> QA testers, developers</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Test case ID, description, and expected result</li>
+  <li>Preconditions, test steps, and postconditions</li>
+  <li>Expected outcomes (success/failure)</li>
+</ul>
+
+<h4>11. User Manual Document</h4>
+<p>
+  Provides instructions and guidance for end-users on how to use the software.
+</p>
+<p><b>Prepared for:</b> End users</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Step-by-step usage instructions</li>
+  <li>Screenshots and UI walkthroughs</li>
+  <li>Troubleshooting tips</li>
+</ul>
+
+<h4>12. Deployment Checklist Document</h4>
+<p>
+  A checklist ensuring the system is properly deployed and configured in production.
+</p>
+<p><b>Prepared by:</b> Developers, system administrators</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Pre-deployment checks (backups, configurations)</li>
+  <li>Deployment steps (code migration, database updates)</li>
+  <li>Post-deployment validation (system health checks)</li>
+</ul>
+
+<h4>13. Frontend and Admin Login Document</h4>
+<p>
+  Defines the login process, permissions, and access levels for users and administrators.
+</p>
+<p><b>Prepared by:</b> Developers, testers</p>
+<h5>Contents:</h5>
+<ul>
+  <li>User authentication process</li>
+  <li>Frontend and backend login flow</li>
+  <li>Role-based access control (RBAC) details</li>
+</ul>
+
+<h4>14. Enhancement and Change Document</h4>
+<p>
+  Tracks system changes or enhancements after initial release.
+</p>
+<p><b>Prepared by:</b> Development team, project manager</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Details of requested changes/enhancements</li>
+  <li>Justification for changes</li>
+  <li>Impact on system functionality and performance</li>
+</ul>
+
+<h4>15. Support Tracker Document</h4>
+<p>
+  Records user issues and problems after software deployment.
+</p>
+<p><b>Maintained by:</b> Support team</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Issue ID, description, and priority</li>
+  <li>Status (open, in progress, resolved)</li>
+  <li>Resolution steps</li>
+</ul>
+
+<h4>16. Engineers and Client List Document</h4>
+<p>
+  Lists all people involved in the project, including team members and clients.
+</p>
+<p><b>Prepared by:</b> Project manager, team lead</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Names of engineers, developers, testers, and clients</li>
+  <li>Contact details and responsibilities</li>
+</ul>
+
+<h4>17. Resource Tracker Document</h4>
+<p>
+  Tracks allocation and usage of project resources (team, tools, equipment).
+</p>
+<p><b>Prepared by:</b> Project manager, team lead</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Resource allocation (who is working on what)</li>
+  <li>Resource utilization and availability</li>
+  <li>Capacity planning</li>
+</ul>
+
+<h4>18. Release Note Document</h4>
+<p>
+  Summarizes new features, bug fixes, and changes for each software release.
+</p>
+<p><b>Prepared by:</b> Support team, testers</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Version number and release date</li>
+  <li>New features, enhancements, and fixes</li>
+  <li>Known issues and workarounds</li>
+</ul>
+
+<h4>19. Sign-Off Tracker Document</h4>
+<p>
+  Tracks approvals for different project stages such as design, development, and testing.
+</p>
+<p><b>Prepared by:</b> Project manager, client</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Stakeholder sign-offs with date and comments</li>
+  <li>Approval conditions</li>
+</ul>
+
+<h4>20. Workflow (or) Network Document</h4>
+<p>
+  Describes the flow of tasks, processes, and responsibilities in the project.
+</p>
+<p><b>Prepared by:</b> Developers, team lead, project manager</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Process diagrams (flowcharts, swimlane diagrams)</li>
+  <li>Task dependencies</li>
+  <li>Roles and responsibilities</li>
+</ul>
+
+<h4>21. Training Document</h4>
+<p>
+  Provides training materials for users and administrators.
+</p>
+<p><b>Prepared by:</b> Support engineers</p>
+<h5>Contents:</h5>
+<ul>
+  <li>User guides and documentation</li>
+  <li>Training sessions and agendas</li>
+  <li>FAQs and troubleshooting tips</li>
+</ul>
+
+<h4>22. Port Opening Document</h4>
+<p>
+  Specifies which network ports must be opened for communication between systems.
+</p>
+<p><b>Prepared by:</b> Network engineers, system administrators</p>
+<h5>Contents:</h5>
+<ul>
+  <li>List of ports, protocols, and IP addresses</li>
+  <li>Security considerations</li>
+</ul>
+
+<h4>23. Load Test Document</h4>
+<p>
+  Describes performance testing to ensure the system can handle heavy user traffic.
+</p>
+<p><b>Prepared by:</b> QA testers, performance engineers</p>
+<h5>Contents:</h5>
+<ul>
+  <li>Test scenarios and load conditions (e.g., number of users, transaction types)</li>
+  <li>Load testing tools and configurations</li>
+  <li>Performance metrics and thresholds</li>
+</ul>
+
+<hr>
+<h3>Project Management</h3>
+<p>
+  <b>Project Management</b> is the process that spans from the initial requirement gathering to deployment. <br>
+  <b>Who all involved:</b> Project Manager, Team Lead
+</p>
+
+<h4>4 Factors of Project Management:</h4>
+<ul>
+  <li><b>People:</b> Who all work on the project.</li>
+  <li><b>Project:</b> The task being executed for a client or organization.</li>
+  <li><b>Product:</b> A project aligned with current company trends or market needs.</li>
+  <li><b>Process:</b> The steps involved in creating and completing the project.</li>
+</ul>
+
+<h4>Software Team Types:</h4>
+<ol>
+  <li><b>Democratic Decentralized:</b> No team lead. The team members, with client collaboration, complete the project and modules collectively.</li>
+  <li><b>Controlled Decentralized:</b> Multiple team leads. Each lead manages specific aspects of the project, with different teams working on various components.</li>
+  <li><b>Controlled Centralized:</b> A single team lead oversees and allocates work to the team based on project needs.</li>
+</ol>
+
+<h4>Project Failure Reasons:</h4>
+<ul>
+  <li>Lack of time management</li>
+  <li>Lack of resources</li>
+  <li>Budget issues</li>
+  <li>Not meeting client needs</li>
+  <li>No proper documentation</li>
+  <li>Poor team handling</li>
+  <li>Technology changes</li>
+  <li>Client drops the project</li>
+  <li>Environmental problems</li>
+  <li>Sponsorship losses</li>
+  <li>Misunderstanding within the team</li>
+</ul>
+
+<h4>To Avoid Failure:</h4>
+<ul>
+  <li>Maintain regular interaction between the client and developer.</li>
+  <li>Track the progress of the team consistently.</li>
+  <li>Test the project thoroughly.</li>
+  <li>Update the project status to the customer periodically.</li>
+</ul>
+
 <h3>Change Management</h3>
 <div class="note">
   <p>
@@ -1411,27 +1782,144 @@ th {
 </div>
 
 <h3>Risk Management</h3>
-<div class="note">
-  <p>
-    Risk Management involves <b>identifying, analyzing, and controlling potential risks</b> that could affect a project's success.
-  </p>
+<p>
+  <b>Risk Management</b> involves identifying, analyzing, and controlling potential risks to a project's success. <br>
+  Risk involves uncertainty and potential losses. <br>
+  Risk analysis and management help a software team understand and manage uncertainty during the development process.
+</p>
 
-  <h4>Steps in Risk Management:</h4>
-  <ol>
-    <li><b>Risk Identification:</b> List all possible risks that could impact the project.  
-        <i>Example: schedule delay, budget overrun, technology failure.</i></li>
-    <li><b>Risk Analysis:</b> Estimate the <b>probability</b> and <b>impact</b> of each risk.</li>
-    <li><b>Risk Prioritization:</b> Rank risks based on their severity and likelihood.</li>
-    <li><b>Risk Mitigation Planning:</b> Create strategies to reduce or avoid high-impact risks.</li>
-    <li><b>Risk Monitoring and Control:</b> Continuously monitor risks and take corrective actions as needed.</li>
-  </ol>
+<h4>Key Phases of Risk Management:</h4>
+<ol>
+  <li>Identify Risks</li>
+  <li>Analyze and Prioritize Risks</li>
+  <li>Plan and Schedule Risk Responses</li>
+  <li>Track and Report Risk Status</li>
+  <li>Control and Mitigate Risks</li>
+  <li>Learn from Risks</li>
+  <li>Document Lessons Learned</li>
+</ol>
 
-  <h4>Example:</h4>
-  <p>
-    In a <b>web application project</b>, a key developer may leave the team unexpectedly.<br>
-    → Mitigation: Train backup developers and maintain proper documentation.
-  </p>
-</div>
+<h4>Steps:</h4>
+<ul>
+  <li><b>Risk Identification:</b> List all possible risks that could affect the project. 
+      <br>Example: Schedule delay, budget overrun, technology failure.</li>
+  <li><b>Analysis:</b> Estimate the probability of each risk and potential impact on the project.</li>
+  <li><b>Risk Response Planning:</b> Develop strategies and plans to address the identified risks.</li>
+  <li><b>Risk Monitoring and Control:</b> Track the status of risks and the effectiveness of plans throughout the project lifecycle.</li>
+</ul>
+
+<h4>Types of Risk:</h4>
+
+<h5>1. Project Risk</h5>
+<p>
+  Project risks are factors that could cause the project to fail or adversely affect its objectives.
+</p>
+<h5>Key Project Risks:</h5>
+<ul>
+  <li><b>System/Technology Complexity:</b> Complex systems can fail or introduce unforeseen challenges.</li>
+  <li><b>Client or Target Environment:</b> Changes or lack of understanding in the client environment can impact project success.</li>
+  <li><b>Team Environment:</b> Lack of skill, motivation, or poor communication within the team.</li>
+  <li><b>Business Risks:</b> Changes in business goals, strategies, or external factors like regulatory changes.</li>
+</ul>
+
+<h5>2. Technical Risk</h5>
+<p>
+  Technical risks refer to the possibility that technology, software, or systems could fail to meet requirements or cause issues during implementation.
+</p>
+<h5>Examples:</h5>
+<ul>
+  <li>Technology chosen for the project may not scale.</li>
+  <li>Integration challenges with existing infrastructure.</li>
+  <li>Unforeseen technical debt or legacy system issues.</li>
+</ul>
+
+<h5>3. Business Risk</h5>
+<p>
+  These risks affect the overall business, including revenue, budget, and strategic alignment.
+</p>
+<h5>Examples:</h5>
+<ul>
+  <li>Loss of revenue if the project does not meet business objectives.</li>
+  <li>Budget overruns that impact business profitability.</li>
+  <li>Failure to meet market expectations or deliverables.</li>
+</ul>
+
+<h4>Risk Identification:</h4>
+<p>
+  The process of determining risks that could potentially prevent the program, enterprise, or investment from achieving its objectives. <br>
+  It includes documenting and communicating the concerns. <br>
+  Risk identification involves recognizing risks that might affect the project and documenting their characteristics. <br>
+  Risk management is an <b>iterative process</b>.
+</p>
+
+<h4>Diagram:</h4>
+<p>
+  <b>Identify Risks ➡️ Analyze Risks ➡️ Rank and Evaluate Risks ➡️ Treat the Risks ➡️ Monitor & Review Risks</b>
+</p>
+
+<hr>
+
+<h3>PCI DSS (Payment Card Industry Data Security Standard)</h3>
+<p>
+  <b>PCI DSS</b> stands for <b>Payment Card Industry Data Security Standard</b>. <br>
+  It is a set of rules and practices that businesses must follow to keep <b>credit card information safe</b>. <br>
+  PCI DSS defines <b>security standards</b> to ensure that all companies that process, store, or transmit credit card information 
+  maintain a <b>secure environment</b> to protect that data.
+</p>
+
+<h4>Key Principles of PCI DSS:</h4>
+<p>The PCI DSS has <b>12 main requirements</b> grouped into six key principles:</p>
+
+<ol>
+  <li>
+    <b>Build and Maintain a Secure Network and Systems (Secure Network)</b>
+    <ul>
+      <li><b>Requirement 1:</b> Install and maintain a firewall configuration to protect cardholder data. <i>(Firewall Setup)</i></li>
+      <li><b>Requirement 2:</b> Do not use vendor-supplied defaults for system passwords and other security parameters. <i>(Change Default Passwords)</i></li>
+    </ul>
+  </li>
+
+  <li>
+    <b>Protect Cardholder Data (Protect Data)</b>
+    <ul>
+      <li><b>Requirement 3:</b> Protect stored cardholder data. <i>(Protect Stored Data)</i></li>
+      <li><b>Requirement 4:</b> Encrypt transmission of cardholder data across open, public networks. <i>(Encrypt Data Transmission)</i></li>
+    </ul>
+  </li>
+
+  <li>
+    <b>Maintain a Vulnerability Management Program (Manage Vulnerabilities)</b>
+    <ul>
+      <li><b>Requirement 5:</b> Protect all systems against malware and regularly update anti-virus software or programs. <i>(Anti-Malware)</i></li>
+      <li><b>Requirement 6:</b> Develop and maintain secure systems and applications. <i>(Apply Security Patches)</i></li>
+    </ul>
+  </li>
+
+  <li>
+    <b>Implement Strong Access Control Measures (Access Control)</b>
+    <ul>
+      <li><b>Requirement 7:</b> Restrict access to cardholder data by business need to know. <i>(Restrict Access)</i></li>
+      <li><b>Requirement 8:</b> Identify and authenticate access to system components. <i>(Unique IDs)</i></li>
+      <li><b>Requirement 9:</b> Restrict physical access to cardholder data. <i>(Physical Security)</i></li>
+    </ul>
+  </li>
+
+  <li>
+    <b>Regularly Monitor and Test Networks (Monitor & Test)</b>
+    <ul>
+      <li><b>Requirement 10:</b> Track and monitor all access to network resources and cardholder data. <i>(Logging & Tracking)</i></li>
+      <li><b>Requirement 11:</b> Regularly test security systems and processes. <i>(Regular Testing)</i></li>
+    </ul>
+  </li>
+
+  <li>
+    <b>Maintain an Information Security Policy (Security Policy)</b>
+    <ul>
+      <li><b>Requirement 12:</b> Maintain a policy that addresses information security for all personnel. <i>(Maintain Security Policy)</i></li>
+    </ul>
+  </li>
+</ol>
+
 
 </body>
 </html>
