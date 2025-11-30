@@ -1,0 +1,2402 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>RDBMS Basics</title>
+     <style>
+          body {
+      background: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      color: #333;
+      max-width: 100%;
+    word-wrap: break-word;
+    }
+pre, table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+
+    code {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.95em;
+  color: #c7254e;
+}
+    h1, h2, h3 {
+      margin-top: 30px;
+      border-left: 5px solid #ff6347;
+      padding-left: 12px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #e91e63;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #3f51b5;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: #009688;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px 15px;
+      border-left: 5px solid #607d8b;
+      white-space: pre-wrap;
+      font-family: 'Consolas', monospace;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .highlight {
+      background-color: #fff3cd;
+      padding: 10px;
+      border-left: 4px solid #ffc107;
+    }
+     </style>
+</head>
+<body>
+
+<div class="topic">
+  <h2>ER Model Basics</h2>
+
+  <h3>1. Entity</h3>
+  <p>
+    An <b>Entity</b> is a real-world object or concept that can be uniquely identified.  
+    It can be a physical object (like <i>Student</i>, <i>Teacher</i>, <i>Car</i>) or a conceptual object (like <i>Course</i>, <i>Department</i>).  
+  </p>
+  <p>
+    Example: <b>Student</b> is an entity.
+  </p>
+
+  <h3>2. Attributes</h3>
+  <p>
+    Attributes are the <b>properties</b> that describe an entity.  
+    For example, the entity <b>Student</b> can have attributes:
+  </p>
+  <ul>
+    <li>StudentID</li>
+    <li>Name</li>
+    <li>Email</li>
+    <li>Phone</li>
+  </ul>
+  <p>
+    <b>Types of Attributes:</b>
+    <ul>
+      <li><b>Simple</b> – cannot be divided further (e.g., Name, Age).</li>
+      <li><b>Composite</b> – can be divided into smaller parts (e.g., FullName → FirstName + LastName).</li>
+      <li><b>Derived</b> – values derived from other attributes (e.g., Age from DateOfBirth).</li>
+      <li><b>Multivalued</b> – can have multiple values (e.g., PhoneNumbers for a person).</li>
+    </ul>
+  </p>
+
+  <h3>3. Relationships</h3>
+  <p>
+    A <b>Relationship</b> defines how two entities are connected.  
+    Example:  
+    - <b>Student</b> <i>enrolls in</i> <b>Course</b>  
+    - <b>Teacher</b> <i>teaches</i> <b>Course</b>
+  </p>
+
+  <h3>4. Cardinality</h3>
+  <p>
+    <b>Cardinality</b> specifies the number of instances of one entity that can/must be associated with the number of instances of another entity.
+  </p>
+  <p>
+    Types of Cardinality:
+    <ul>
+      <li><b>One-to-One (1:1)</b> – One person has one passport.</li>
+      <li><b>One-to-Many (1:N)</b> – One teacher teaches many students.</li>
+      <li><b>Many-to-One (N:1)</b> – Many students belong to one department.</li>
+      <li><b>Many-to-Many (M:N)</b> – Students enroll in many courses, and each course has many students.</li>
+    </ul>
+  </p>
+</div>
+
+<hr>
+
+<div class="topic">
+  <h2>Normalization in DBMS</h2>
+
+  <p>
+    <b>Normalization</b> is the process of organizing data in a database to remove redundancy 
+    and improve data integrity.  
+    It divides larger tables into smaller ones and defines relationships between them.
+  </p>
+
+  <h3>Why Normalization?</h3>
+  <ul>
+    <li>To eliminate duplicate data.</li>
+    <li>To reduce data redundancy and inconsistency.</li>
+    <li>To make data retrieval efficient.</li>
+    <li>To maintain data integrity.</li>
+  </ul>
+
+  <h3>Normal Forms</h3>
+  <p>Normalization is done in stages called <b>Normal Forms (NF)</b>:</p>
+  
+  <h4>1. First Normal Form (1NF)</h4>
+  <ul>
+    <li>Each column must contain atomic (indivisible) values.</li>
+    <li>No repeating groups or arrays allowed.</li>
+  </ul>
+  <p>
+    Example:<br>
+    ❌ Wrong: Student(ID, Name, Phone1, Phone2)<br>
+    ✔ Correct: Student(ID, Name, Phone)
+  </p>
+
+  <h4>2. Second Normal Form (2NF)</h4>
+  <ul>
+    <li>Table must be in 1NF.</li>
+    <li>Functional dependency - All non-Primary key is depending on primary key column.</li>
+    <li>No partial dependency – every non-Primary key attribute must depend on the whole primary key.</li>
+  </ul>
+  <p>
+    Example: If (StudentID, CourseID) is PK, then StudentName should not depend only on StudentID.
+  </p>
+
+  <h4>3. Third Normal Form (3NF)</h4>
+  <ul>
+    <li>Table must be in 2NF.</li>
+    <li>No transitive dependency – non-Primary key attributes should not depend on other non- Primary key attributes.</li>
+  </ul>
+  <p>
+    Example:<br>
+    ❌ Wrong: Student(ID, Name, DeptID, DeptName)<br>
+    (DeptName depends on DeptID, not directly on StudentID)<br>
+    ✔ Correct: Separate Department table.
+  </p>
+
+  <h4>4. Boyce-Codd Normal Form (BCNF)</h4>
+  <ul>
+    <li>Stronger version of 3NF.</li>
+    <li>Every determinant must be a candidate key.</li>
+  </ul>
+
+  <h3>Advantages of Normalization</h3>
+  <ul>
+    <li>Removes redundancy.</li>
+    <li>Ensures data consistency.</li>
+    <li>Makes database flexible and efficient.</li>
+  </ul>
+
+  <h3>Disadvantages</h3>
+  <ul>
+    <li>Requires more joins while querying.</li>
+    <li>Too many small tables may reduce performance in complex queries.</li>
+  </ul>
+</div>
+
+<hr>
+
+<section class="card">
+
+    <h2>Normalization: <strong>1NF — First Normal Form</strong></h2>
+    <p class="note">Goal: Ensure that each table column holds <em>atomic</em> (indivisible) values and that each row is unique. 1NF is the foundation for higher normal forms.</p>
+
+    <h3>What 1NF requires</h3>
+    <ul>
+      <li>Every column must contain atomic (single) values — no repeating groups or arrays inside a column.</li>
+      <li>Each row must be unique (usually enforced by a primary key).</li>
+      <li>The order of rows and columns does not matter.</li>
+    </ul>
+
+    <h3 class="example-title">Example — a table that <em>violates</em> 1NF</h3>
+    <p class="note">Consider a simple <code>Students</code> table where phone numbers are stored as a comma-separated list in the <code>phones</code> column:</p>
+
+    <table>
+      <thead>
+        <tr><th>student_id</th><th>name</th><th>phones</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>101</td><td>Asha</td><td>+91-99999-11111, +91-99999-22222</td></tr>
+        <tr><td>102</td><td>Vikram</td><td>+91-88888-33333</td></tr>
+        <tr><td>103</td><td>Meera</td><td>+91-77777-44444, +91-77777-55555, +91-77777-66666</td></tr>
+      </tbody>
+    </table>
+
+    <p class="note">Problem: the <code>phones</code> column contains multiple values (lists). This violates 1NF because values are not atomic. It makes querying and indexing phone numbers difficult.</p>
+
+    <h3 class="example-title">Normalized to 1NF — make values atomic</h3>
+    <p class="note">Split phone numbers into a separate table so each cell holds a single phone number and each row represents one student-phone relationship.</p>
+
+    <table>
+      <caption style="text-align:left;font-weight:600;margin-bottom:6px">Students</caption>
+      <thead><tr><th>student_id</th><th>name</th></tr></thead>
+      <tbody>
+        <tr><td>101</td><td>Asha</td></tr>
+        <tr><td>102</td><td>Vikram</td></tr>
+        <tr><td>103</td><td>Meera</td></tr>
+      </tbody>
+    </table>
+
+    <table>
+      <caption style="text-align:left;font-weight:600;margin-bottom:6px">StudentPhones</caption>
+      <thead><tr><th>phone_id</th><th>student_id</th><th>phone</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>101</td><td>+91-99999-11111</td></tr>
+        <tr><td>2</td><td>101</td><td>+91-99999-22222</td></tr>
+        <tr><td>3</td><td>102</td><td>+91-88888-33333</td></tr>
+        <tr><td>4</td><td>103</td><td>+91-77777-44444</td></tr>
+        <tr><td>5</td><td>103</td><td>+91-77777-55555</td></tr>
+        <tr><td>6</td><td>103</td><td>+91-77777-66666</td></tr>
+      </tbody>
+ 
+</table>
+
+    <h3 class="example-title">SQL example (create + insert)</h3>
+    <pre><code>-- Students table (student_id is primary key)
+CREATE TABLE Students (
+  student_id INT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL
+);
+
+-- StudentPhones table (each row stores one phone number)
+CREATE TABLE StudentPhones (
+  phone_id INT PRIMARY KEY AUTO_INCREMENT,
+  student_id INT NOT NULL,
+  phone VARCHAR(30) NOT NULL,
+  FOREIGN KEY (student_id) REFERENCES Students(student_id)
+);
+
+-- Insert sample data
+INSERT INTO Students (student_id, name) VALUES (101, 'Asha'), (102, 'Vikram'), (103, 'Meera');
+INSERT INTO StudentPhones (student_id, phone) VALUES
+  (101, '+91-99999-11111'),
+  (101, '+91-99999-22222'),
+  (102, '+91-88888-33333'),
+  (103, '+91-77777-44444'),
+  (103, '+91-77777-55555'),
+  (103, '+91-77777-66666');
+</code></pre>
+
+    <h3 class="example-title">Why 1NF matters</h3>
+    <ul>
+      <li>Queries like <code>WHERE phone = '...'</code> are simple and efficient when phones are atomic.</li>
+      <li>Data integrity and indexing are much easier (each phone can be indexed separately).</li>
+      <li>Prepares the schema for higher normal forms (2NF, 3NF, etc.).</li>
+    </ul>
+
+    <h3 class="example-title">Quick checklist to confirm 1NF</h3>
+    <ol>
+      <li>Are all columns atomic (no lists or sets inside a cell)?</li>
+      <li>Is there a clear primary key to identify each row?</li>
+      <li>Can you query/filter each value directly without string parsing?</li>
+    </ol>
+
+    <p class="note" style="margin-top:10px">That's 1NF — would you like me to generate the next HTML file for <strong>2NF (Second Normal Form)</strong> now?</p>
+  </section>
+<section id="1nf-repeating-groups">
+  <h2>📘 Understanding "No Repeating Groups" in <code>1NF</code></h2>
+
+  <h3>🔹 What Does “No Repeating Groups” Mean?</h3>
+  <p>
+    It does <b>not</b> mean you cannot have repeated values.  
+    It means that you should <b>not create multiple columns to store the same type of data</b>.
+  </p>
+  <p>
+    Each column must store <b>atomic (single) values</b>, and there should be only <b>one column per data type</b>.
+  </p>
+
+  <h3>❌ Example: Not in 1NF (Repeating Groups)</h3>
+  <p>This table uses multiple columns for the same kind of data (phone numbers):</p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Student_ID</th>
+      <th>Name</th>
+      <th>Phone1</th>
+      <th>Phone2</th>
+      <th>Phone3</th>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Aathi</td>
+      <td>98765...</td>
+      <td>97543...</td>
+      <td>98452...</td>
+    </tr>
+  </table>
+
+  <p>
+    🔸 This violates 1NF because:
+  </p>
+  <ul>
+    <li>There are <b>repeating groups</b> (Phone1, Phone2, Phone3).</li>
+    <li>Columns are <b>not atomic</b> — they represent multiple values for the same attribute.</li>
+    <li>It’s hard to add or remove phone numbers without changing the table structure.</li>
+  </ul>
+
+  <h3>✅ Example: In 1NF (No Repeating Groups)</h3>
+  <p>Store each phone number as a separate row instead of separate columns:</p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Student_ID</th>
+      <th>Name</th>
+      <th>Phone</th>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Aathi</td>
+      <td>98765...</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Aathi</td>
+      <td>97543...</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>Aathi</td>
+      <td>98452...</td>
+    </tr>
+  </table>
+
+  <p>
+    🔹 Now the table is in <b>First Normal Form (1NF)</b> because:
+  </p>
+  <ul>
+    <li>Each column has only <b>one value</b> per row.</li>
+    <li>No repeating columns for the same attribute.</li>
+    <li>Table structure is <b>flexible</b> — you can add more phones by inserting new rows.</li>
+  </ul>
+
+  <h3>🧠 Quick Summary</h3>
+  <ul>
+    <li>❌ “Repeating groups” → multiple columns for same kind of data (e.g., Phone1, Phone2...)</li>
+    <li>✅ “No repeating groups” → one column, multiple rows if needed</li>
+    <li>❌ Does <b>not</b> mean no repeated values — duplicates are allowed if they represent valid data.</li>
+  </ul>
+</section>
+
+  <!-- 2NF — Second Normal Form (copy this section only) -->
+<section id="2nf">
+  <h2>Normalization: <strong>2NF — Second Normal Form</strong></h2>
+  <p><em>Goal:</em> Remove <strong>partial dependencies</strong> — every non-key column must depend on the <strong>whole</strong> primary key, not just part of it. (Applies only when the table has a composite primary key.)</p>
+
+  <h3>What 2NF requires</h3>
+  <ul>
+    <li>Table must already be in <strong>1NF</strong>.</li>
+    <li>If the primary key is composite (more than one column), no non-key attribute may depend on only part of that key.</li>
+    <li>Solve partial dependencies by splitting into separate tables so each non-key attribute depends on the full key.</li>
+  </ul>
+
+  <h3>Example — table that <em>violates</em> 2NF (has partial dependency)</h3>
+  <p>Imagine an <code>OrderDetails</code> table where the primary key is (<code>order_id</code>, <code>product_id</code>), but product-related info repeats:</p>
+
+  <table>
+    <thead>
+      <tr><th>order_id</th><th>product_id</th><th>product_name</th><th>price</th><th>quantity</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>5001</td><td>101</td><td>Pen</td><td>10</td><td>2</td></tr>
+      <tr><td>5001</td><td>102</td><td>Notebook</td><td>40</td><td>1</td></tr>
+      <tr><td>5002</td><td>101</td><td>Pen</td><td>10</td><td>5</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Problem:</strong> <code>product_name</code> and <code>price</code> depend only on <code>product_id</code> (part of the composite key), not on the full key (<code>order_id, product_id</code>). This is a partial dependency → violates 2NF.</p>
+
+  <h3>Normalize to 2NF — split into tables</h3>
+  <p>Separate product details into a <code>Products</code> table; keep order-specific columns in <code>OrderDetails</code> (or <code>OrderItems</code>).</p>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">Orders (example)</caption>
+    <thead><tr><th>order_id</th><th>order_date</th><th>customer_id</th></tr></thead>
+    <tbody>
+      <tr><td>5001</td><td>2025-11-01</td><td>200</td></tr>
+      <tr><td>5002</td><td>2025-11-02</td><td>201</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">Products</caption>
+    <thead><tr><th>product_id</th><th>product_name</th><th>price</th></tr></thead>
+    <tbody>
+      <tr><td>101</td><td>Pen</td><td>10</td></tr>
+      <tr><td>102</td><td>Notebook</td><td>40</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">OrderItems (composite PK: order_id, product_id)</caption>
+    <thead><tr><th>order_id</th><th>product_id</th><th>quantity</th></tr></thead>
+    <tbody>
+      <tr><td>5001</td><td>101</td><td>2</td></tr>
+      <tr><td>5001</td><td>102</td><td>1</td></tr>
+      <tr><td>5002</td><td>101</td><td>5</td></tr>
+    </tbody>
+  </table>
+
+  <h3>SQL (create + sample inserts)</h3>
+  <pre><code>-- Products: product_id is primary key
+CREATE TABLE Products (
+  product_id INT PRIMARY KEY,
+  product_name VARCHAR(100) NOT NULL,
+  price DECIMAL(10,2) NOT NULL
+);
+
+-- Orders: order header
+CREATE TABLE Orders (
+  order_id INT PRIMARY KEY,
+  order_date DATE,
+  customer_id INT
+);
+
+-- OrderItems: composite primary key (order_id, product_id)
+CREATE TABLE OrderItems (
+  order_id INT NOT NULL,
+  product_id INT NOT NULL,
+  quantity INT NOT NULL,
+  PRIMARY KEY (order_id, product_id),
+  FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+  FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+-- sample data
+INSERT INTO Products VALUES (101, 'Pen', 10.00), (102, 'Notebook', 40.00);
+INSERT INTO Orders VALUES (5001, '2025-11-01', 200), (5002, '2025-11-02', 201);
+INSERT INTO OrderItems VALUES (5001, 101, 2), (5001, 102, 1), (5002, 101, 5);
+</code></pre>
+
+  <h3>Why this fixes 2NF</h3>
+  <ul>
+    <li>Product attributes (<code>product_name</code>, <code>price</code>) now depend solely on <code>Products.product_id</code>, not on (<code>order_id, product_id</code>).</li>
+    <li>Order-specific attributes (like <code>quantity</code>) depend on the full composite key (<code>order_id, product_id</code>) in <code>OrderItems</code>.</li>
+    <li>This removes redundancy (product info stored once) and prevents update anomalies.</li>
+  </ul>
+
+  <h3>Quick checklist to confirm 2NF</h3>
+  <ol>
+    <li>Is the table already in <strong>1NF</strong>?</li>
+    <li>Does the table use a composite primary key? If yes, check each non-key column — does it depend on the full key or just part of it?</li>
+    <li>If partial dependencies exist, split the table so each non-key column depends on the whole key.</li>
+  </ol>
+</section>
+
+<!-- 3NF — Third Normal Form (copy this section only) -->
+<section id="3nf">
+  <h2>Normalization: <strong>3NF — Third Normal Form</strong></h2>
+  <p><em>Goal:</em> Remove <strong>transitive dependencies</strong> — every non-key attribute must depend <strong>only on the primary key</strong> and not on another non-key attribute.</p>
+
+  <h3>What 3NF requires</h3>
+  <ul>
+    <li>Table must already be in <strong>2NF</strong>.</li>
+    <li>No non-key attribute should depend on another non-key attribute (transitive dependency).</li>
+    <li>Each non-key column should depend directly on the key and nothing else.</li>
+  </ul>
+
+  <h3>Example — table that <em>violates</em> 3NF (has transitive dependency)</h3>
+  <p>Consider an <code>Orders</code> table where <code>customer_city</code> depends on <code>customer_id</code> instead of directly on the primary key (<code>order_id</code>):</p>
+
+  <table>
+    <thead>
+      <tr><th>order_id</th><th>customer_id</th><th>customer_name</th><th>customer_city</th><th>order_date</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>5001</td><td>201</td><td>Asha</td><td>Chennai</td><td>2025-11-01</td></tr>
+      <tr><td>5002</td><td>202</td><td>Vikram</td><td>Delhi</td><td>2025-11-02</td></tr>
+      <tr><td>5003</td><td>201</td><td>Asha</td><td>Chennai</td><td>2025-11-03</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Problem:</strong> <code>customer_name</code> and <code>customer_city</code> depend on <code>customer_id</code> (a non-key), not directly on <code>order_id</code>. This creates redundancy — if a customer’s city changes, it must be updated in multiple rows.</p>
+
+  <h3>Normalize to 3NF — remove transitive dependency</h3>
+  <p>Separate customer details into their own <code>Customers</code> table. Keep only <code>customer_id</code> in the <code>Orders</code> table.</p>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">Customers</caption>
+    <thead><tr><th>customer_id</th><th>customer_name</th><th>customer_city</th></tr></thead>
+    <tbody>
+      <tr><td>201</td><td>Asha</td><td>Chennai</td></tr>
+      <tr><td>202</td><td>Vikram</td><td>Delhi</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">Orders</caption>
+    <thead><tr><th>order_id</th><th>order_date</th><th>customer_id</th></tr></thead>
+    <tbody>
+      <tr><td>5001</td><td>2025-11-01</td><td>201</td></tr>
+      <tr><td>5002</td><td>2025-11-02</td><td>202</td></tr>
+      <tr><td>5003</td><td>2025-11-03</td><td>201</td></tr>
+    </tbody>
+  </table>
+
+  <h3>SQL (create + sample inserts)</h3>
+  <pre><code>-- Customers table
+CREATE TABLE Customers (
+  customer_id INT PRIMARY KEY,
+  customer_name VARCHAR(100) NOT NULL,
+  customer_city VARCHAR(100)
+);
+
+-- Orders table
+CREATE TABLE Orders (
+  order_id INT PRIMARY KEY,
+  order_date DATE,
+  customer_id INT,
+  FOREIGN KEY (customer_id) REFERENCES Customers(customer_id)
+);
+
+-- Insert sample data
+INSERT INTO Customers VALUES
+  (201, 'Asha', 'Chennai'),
+  (202, 'Vikram', 'Delhi');
+
+INSERT INTO Orders VALUES
+  (5001, '2025-11-01', 201),
+  (5002, '2025-11-02', 202),
+  (5003, '2025-11-03', 201);
+</code></pre>
+
+  <h3>Why this fixes 3NF</h3>
+  <ul>
+    <li>All non-key attributes in <code>Orders</code> now depend directly on <code>order_id</code>.</li>
+    <li>Customer data is stored once in <code>Customers</code>, removing redundancy.</li>
+    <li>Changing a customer’s city now requires updating only one record.</li>
+  </ul>
+
+  <h3>Quick checklist to confirm 3NF</h3>
+  <ol>
+    <li>Is the table already in 2NF?</li>
+    <li>Does any non-key attribute depend on another non-key attribute? (If yes, move it to a separate table.)</li>
+    <li>Do all non-key attributes depend directly on the key?</li>
+  </ol>
+</section>
+
+<section id="bcnf">
+  <h2>🧩 <code>BCNF</code> — Boyce–Codd Normal Form (3.5NF)</h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    BCNF (Boyce–Codd Normal Form), also known as <b>3.5 Normal Form</b>, is an advanced version of the Third Normal Form (3NF).  
+    It removes anomalies that 3NF cannot handle by ensuring <b>every determinant is a candidate key</b>.
+  </p>
+
+  <h3>💡 Rule</h3>
+  <ul>
+    <li>The table must already satisfy 3NF.</li>
+    <li>For every functional dependency <code>X → Y</code>, <b>X must be a super key</b>.</li>
+    <li>No dependency should exist where a non-prime attribute determines part of a candidate key.</li>
+  </ul>
+
+  <h3>📊 Example (Before BCNF)</h3>
+  <p>Consider a table of university courses and professors:</p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Professor</th>
+      <th>Subject</th>
+      <th>Textbook</th>
+    </tr>
+    <tr>
+      <td>Dr. Smith</td>
+      <td>Database</td>
+      <td>DBMS by Korth</td>
+    </tr>
+    <tr>
+      <td>Dr. Smith</td>
+      <td>SQL</td>
+      <td>DBMS by Korth</td>
+    </tr>
+  </table>
+
+  <p>
+    Functional dependencies:  
+    <code>Professor → Textbook</code> and <code>Subject → Professor</code>.
+  </p>
+
+  <p>
+    The key here is <code>{Subject, Professor}</code>.  
+    But since <code>Professor → Textbook</code> and Professor is not a super key, this violates BCNF.
+  </p>
+
+  <h3>✅ After Applying BCNF</h3>
+  <p>We decompose the table into two BCNF tables:</p>
+
+  <h4>📄 Professor_Textbook</h4>
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Professor</th>
+      <th>Textbook</th>
+    </tr>
+    <tr>
+      <td>Dr. Smith</td>
+      <td>DBMS by Korth</td>
+    </tr>
+  </table>
+
+  <h4>📄 Subject_Professor</h4>
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Subject</th>
+      <th>Professor</th>
+    </tr>
+    <tr>
+      <td>Database</td>
+      <td>Dr. Smith</td>
+    </tr>
+    <tr>
+      <td>SQL</td>
+      <td>Dr. Smith</td>
+    </tr>
+  </table>
+
+  <h3>📈 SQL Example</h3>
+  <pre><code class="language-sql">
+CREATE TABLE Professor_Textbook (
+  Professor VARCHAR(50) PRIMARY KEY,
+  Textbook VARCHAR(100)
+);
+
+CREATE TABLE Subject_Professor (
+  Subject VARCHAR(50) PRIMARY KEY,
+  Professor VARCHAR(50)
+);
+  </code></pre>
+
+  <h3>🧠 Summary</h3>
+  <ul>
+    <li>BCNF fixes anomalies not handled by 3NF.</li>
+    <li>Every determinant must be a candidate key.</li>
+    <li>Stronger form of 3NF; ensures better data integrity.</li>
+  </ul>
+</section>
+
+<!-- 4NF — Fourth Normal Form (copy this section only) -->
+<section id="4nf">
+  <h2>Normalization: <strong>4NF — Fourth Normal Form</strong></h2>
+  <p><em>Goal:</em> Remove <strong>multi-valued dependencies</strong>. Each table should represent one type of independent relationship between entities. A record should not contain two or more independent multi-valued facts about the same key.</p>
+
+  <h3>What 4NF requires</h3>
+  <ul>
+    <li>Table must already be in <strong>Boyce–Codd Normal Form (BCNF)</strong>.</li>
+    <li>There should be no <strong>multi-valued dependencies</strong> — where one key determines multiple independent sets of values.</li>
+    <li>Each fact in a table must describe one and only one relationship.</li>
+  </ul>
+
+  <h3>Example — table that <em>violates</em> 4NF</h3>
+  <p>Consider a <code>Teacher</code> table where each teacher can teach multiple <code>Subjects</code> and also handle multiple <code>Classes</code>. Both are independent relationships.</p>
+
+  <table>
+    <thead>
+      <tr><th>teacher_id</th><th>teacher_name</th><th>subject</th><th>class</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Ravi</td><td>Maths</td><td>10A</td></tr>
+      <tr><td>1</td><td>Ravi</td><td>Maths</td><td>10B</td></tr>
+      <tr><td>1</td><td>Ravi</td><td>Science</td><td>10A</td></tr>
+      <tr><td>1</td><td>Ravi</td><td>Science</td><td>10B</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Problem:</strong> The table mixes two independent many-to-many relationships:</p>
+  <ul>
+    <li>Teacher → Subject (Ravi teaches Maths, Science)</li>
+    <li>Teacher → Class (Ravi handles 10A, 10B)</li>
+  </ul>
+  <p>This causes redundancy — each combination of subject and class creates extra rows (cross-product effect).</p>
+
+  <h3>Normalize to 4NF — separate independent relationships</h3>
+  <p>We split into two tables: one for which subjects a teacher teaches, and another for which classes they handle.</p>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">TeacherSubjects</caption>
+    <thead><tr><th>teacher_id</th><th>subject</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Maths</td></tr>
+      <tr><td>1</td><td>Science</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">TeacherClasses</caption>
+    <thead><tr><th>teacher_id</th><th>class</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>10A</td></tr>
+      <tr><td>1</td><td>10B</td></tr>
+    </tbody>
+  </table>
+
+  <h3>SQL (create + sample inserts)</h3>
+  <pre><code>-- Teachers table
+CREATE TABLE Teachers (
+  teacher_id INT PRIMARY KEY,
+  teacher_name VARCHAR(100)
+);
+
+-- TeacherSubjects (teacher_id + subject form composite key)
+CREATE TABLE TeacherSubjects (
+  teacher_id INT,
+  subject VARCHAR(50),
+  PRIMARY KEY (teacher_id, subject),
+  FOREIGN KEY (teacher_id) REFERENCES Teachers(teacher_id)
+);
+
+-- TeacherClasses (teacher_id + class form composite key)
+CREATE TABLE TeacherClasses (
+  teacher_id INT,
+  class VARCHAR(50),
+  PRIMARY KEY (teacher_id, class),
+  FOREIGN KEY (teacher_id) REFERENCES Teachers(teacher_id)
+);
+
+-- Sample data
+INSERT INTO Teachers VALUES (1, 'Ravi');
+
+INSERT INTO TeacherSubjects VALUES
+  (1, 'Maths'),
+  (1, 'Science');
+
+INSERT INTO TeacherClasses VALUES
+  (1, '10A'),
+  (1, '10B');
+</code></pre>
+
+  <h3>Why this fixes 4NF</h3>
+  <ul>
+    <li>Each table now represents one independent relationship.</li>
+    <li>No multi-valued dependencies remain (subjects and classes are separate).</li>
+    <li>Redundancy and unnecessary combinations are eliminated.</li>
+  </ul>
+
+  <h3>Quick checklist to confirm 4NF</h3>
+  <ol>
+    <li>Is the table already in BCNF?</li>
+    <li>Does any key determine multiple independent multi-valued attributes? (If yes, separate them.)</li>
+    <li>Does each table represent a single relationship type?</li>
+  </ol>
+</section>
+
+<!-- 5NF — Fifth Normal Form (copy this section only) -->
+<section id="5nf">
+  <h2>Normalization: <strong>5NF — Fifth Normal Form</strong></h2>
+  <p><em>Goal:</em> Eliminate <strong>join dependencies</strong> — a table should not be decomposable into smaller tables that can be joined back together without data loss, unless necessary. Also known as <strong>Project-Join Normal Form (PJNF)</strong>.</p>
+
+  <h3>What 5NF requires</h3>
+  <ul>
+    <li>Table must already be in <strong>4NF</strong>.</li>
+    <li>All join dependencies must be implied by candidate keys.</li>
+    <li>Each table should store facts that cannot be reconstructed by joining smaller tables without introducing redundancy.</li>
+  </ul>
+
+  <h3>Example — table that <em>violates</em> 5NF</h3>
+  <p>Consider a table showing which <strong>Suppliers</strong> supply which <strong>Products</strong> to which <strong>Projects</strong>.</p>
+
+  <table>
+    <thead>
+      <tr><th>supplier</th><th>product</th><th>project</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>S1</td><td>P1</td><td>J1</td></tr>
+      <tr><td>S1</td><td>P2</td><td>J1</td></tr>
+      <tr><td>S1</td><td>P1</td><td>J2</td></tr>
+      <tr><td>S2</td><td>P1</td><td>J1</td></tr>
+    </tbody>
+  </table>
+
+  <p><strong>Observation:</strong> Supplier <code>S1</code> supplies products <code>P1</code> and <code>P2</code> for projects <code>J1</code> and <code>J2</code>. The relationships between supplier–product, supplier–project, and product–project can be independent but overlap redundantly here.</p>
+
+  <p><strong>Problem:</strong> The table combines three independent relationships — if we try to infer new combinations, it can cause spurious tuples when joining decomposed tables improperly.</p>
+
+  <h3>Normalize to 5NF — split by independent relationships</h3>
+  <p>We decompose into three separate tables representing independent binary relationships:</p>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">SupplierProduct</caption>
+    <thead><tr><th>supplier</th><th>product</th></tr></thead>
+    <tbody>
+      <tr><td>S1</td><td>P1</td></tr>
+      <tr><td>S1</td><td>P2</td></tr>
+      <tr><td>S2</td><td>P1</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">SupplierProject</caption>
+    <thead><tr><th>supplier</th><th>project</th></tr></thead>
+    <tbody>
+      <tr><td>S1</td><td>J1</td></tr>
+      <tr><td>S1</td><td>J2</td></tr>
+      <tr><td>S2</td><td>J1</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <caption style="text-align:left;font-weight:600;margin-bottom:6px">ProductProject</caption>
+    <thead><tr><th>product</th><th>project</th></tr></thead>
+    <tbody>
+      <tr><td>P1</td><td>J1</td></tr>
+      <tr><td>P1</td><td>J2</td></tr>
+      <tr><td>P2</td><td>J1</td></tr>
+    </tbody>
+  </table>
+
+  <h3>SQL (create + sample inserts)</h3>
+  <pre><code>-- SupplierProduct table
+CREATE TABLE SupplierProduct (
+  supplier VARCHAR(10),
+  product VARCHAR(10),
+  PRIMARY KEY (supplier, product)
+);
+
+-- SupplierProject table
+CREATE TABLE SupplierProject (
+  supplier VARCHAR(10),
+  project VARCHAR(10),
+  PRIMARY KEY (supplier, project)
+);
+
+-- ProductProject table
+CREATE TABLE ProductProject (
+  product VARCHAR(10),
+  project VARCHAR(10),
+  PRIMARY KEY (product, project)
+);
+
+-- sample data
+INSERT INTO SupplierProduct VALUES
+  ('S1', 'P1'), ('S1', 'P2'), ('S2', 'P1');
+
+INSERT INTO SupplierProject VALUES
+  ('S1', 'J1'), ('S1', 'J2'), ('S2', 'J1');
+
+INSERT INTO ProductProject VALUES
+  ('P1', 'J1'), ('P1', 'J2'), ('P2', 'J1');
+</code></pre>
+
+  <h3>Why this fixes 5NF</h3>
+  <ul>
+    <li>Each table now represents one independent relationship.</li>
+    <li>No redundancy — every combination can be reconstructed by proper joins if valid.</li>
+    <li>Prevents insertion and deletion anomalies caused by overlapping relationships.</li>
+  </ul>
+
+  <h3>Quick checklist to confirm 5NF</h3>
+  <ol>
+    <li>Is the table already in 4NF?</li>
+    <li>Can it be decomposed into smaller tables without losing information? (If yes, decompose.)</li>
+    <li>Do all join dependencies come from candidate keys?</li>
+  </ol>
+</section>
+
+<section id="6nf">
+  <h2>🧩 <code>6NF</code> — Sixth Normal Form</h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    Sixth Normal Form (6NF) is the highest level of normalization used in databases.  
+    It deals with <b>temporal data (time-variant data)</b> — data that changes over time.  
+    A table is in 6NF if it is in 5NF and <b>cannot be decomposed any further</b> without losing information, 
+    especially when time-based attributes are involved.
+  </p>
+
+  <h3>💡 Rule</h3>
+  <ul>
+    <li>The table must already satisfy 5NF.</li>
+    <li>Every non-trivial join dependency must be a consequence of candidate keys.</li>
+    <li>Used to handle changes in attribute values over time efficiently.</li>
+  </ul>
+
+  <h3>📊 Example (Before 6NF)</h3>
+  <p>Consider a table tracking employee department history:</p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Emp_ID</th>
+      <th>Dept_ID</th>
+      <th>Start_Date</th>
+      <th>End_Date</th>
+      <th>Salary</th>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>D01</td>
+      <td>2020-01-01</td>
+      <td>2021-12-31</td>
+      <td>45000</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>D02</td>
+      <td>2022-01-01</td>
+      <td>NULL</td>
+      <td>50000</td>
+    </tr>
+  </table>
+
+  <p>
+    Here, both department and salary can change independently over time.
+    The table mixes two time-dependent facts (department history and salary history),
+    so it violates 6NF.
+  </p>
+
+  <h3>✅ After Applying 6NF</h3>
+  <p>We split the table into two separate time-dependent tables:</p>
+
+  <h4>📄 Employee_Department</h4>
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Emp_ID</th>
+      <th>Dept_ID</th>
+      <th>Start_Date</th>
+      <th>End_Date</th>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>D01</td>
+      <td>2020-01-01</td>
+      <td>2021-12-31</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>D02</td>
+      <td>2022-01-01</td>
+      <td>NULL</td>
+    </tr>
+  </table>
+
+  <h4>📄 Employee_Salary</h4>
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Emp_ID</th>
+      <th>Salary</th>
+      <th>Start_Date</th>
+      <th>End_Date</th>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>45000</td>
+      <td>2020-01-01</td>
+      <td>2021-12-31</td>
+    </tr>
+    <tr>
+      <td>101</td>
+      <td>50000</td>
+      <td>2022-01-01</td>
+      <td>NULL</td>
+    </tr>
+  </table>
+
+  <h3>📈 SQL Example</h3>
+  <pre><code class="language-sql">
+CREATE TABLE Employee_Department (
+  Emp_ID INT,
+  Dept_ID VARCHAR(10),
+  Start_Date DATE,
+  End_Date DATE
+);
+
+CREATE TABLE Employee_Salary (
+  Emp_ID INT,
+  Salary DECIMAL(10,2),
+  Start_Date DATE,
+  End_Date DATE
+);
+  </code></pre>
+
+  <h3>🧠 Summary</h3>
+  <ul>
+    <li>6NF is rarely used in practical systems.</li>
+    <li>Mainly applies to temporal databases.</li>
+    <li>It ensures each fact is stored in its smallest, indivisible form.</li>
+  </ul>
+</section>
+
+<section id="normalization-summary">
+  <h2>🧾 <code>Normalization Summary Table (1NF → 6NF + BCNF)</code></h2>
+
+  <table  cellspacing="0" cellpadding="8">
+    <tr style="background:#f0f0f0;">
+      <th>Normal Form</th>
+      <th>Main Rule / Condition</th>
+      <th>Removes</th>
+      <th>Example Idea</th>
+    </tr>
+
+    <tr>
+      <td><b>1NF</b> (First Normal Form)</td>
+      <td>Each cell must contain only atomic (single) values.</td>
+      <td>Repeating groups, multi-valued attributes.</td>
+      <td>Splitting comma-separated phone numbers into rows.</td>
+    </tr>
+
+    <tr>
+      <td><b>2NF</b> (Second Normal Form)</td>
+      <td>Be in 1NF and remove partial dependencies.</td>
+      <td>Partial dependency (non-key depends on part of composite key).</td>
+      <td>Split student-course table so course details are stored separately.</td>
+    </tr>
+
+    <tr>
+      <td><b>3NF</b> (Third Normal Form)</td>
+      <td>Be in 2NF and remove transitive dependencies.</td>
+      <td>Non-key depending on another non-key attribute.</td>
+      <td>Move city & state info to a separate city table.</td>
+    </tr>
+
+    <tr>
+      <td><b>BCNF</b> (Boyce–Codd Normal Form / 3.5NF)</td>
+      <td>Every determinant must be a candidate key.</td>
+      <td>Dependency anomalies that 3NF can’t handle.</td>
+      <td>Separate Professor → Textbook and Subject → Professor.</td>
+    </tr>
+
+    <tr>
+      <td><b>4NF</b> (Fourth Normal Form)</td>
+      <td>No multi-valued dependencies except candidate keys.</td>
+      <td>Multi-valued dependency anomalies.</td>
+      <td>Split student’s multiple skills and hobbies into different tables.</td>
+    </tr>
+
+    <tr>
+      <td><b>5NF</b> (Fifth Normal Form)</td>
+      <td>No join dependency — data cannot be reconstructed incorrectly via joins.</td>
+      <td>Join anomalies.</td>
+      <td>Break down complex supplier–part–project relations.</td>
+    </tr>
+
+    <tr>
+      <td><b>6NF</b> (Sixth Normal Form)</td>
+      <td>Handle temporal (time-based) data; every fact is indivisible.</td>
+      <td>Redundancy in time-variant data.</td>
+      <td>Split employee’s department and salary history tables by time periods.</td>
+    </tr>
+  </table>
+
+  <h3>🧠 Quick Notes</h3>
+  <ul>
+    <li>1NF → 3NF are most commonly used in real-world databases.</li>
+    <li>BCNF fixes deeper dependency problems that 3NF misses.</li>
+    <li>4NF–6NF are rare, used in specialized or temporal systems.</li>
+  </ul>
+</section>
+
+<hr>
+<section id="data-model">
+  <h2>🧩 <code>Data Model</code> — In RDBMS</h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    A <b>Data Model</b> is a logical structure that defines how data is stored, organized, and related within a database.  
+    It provides a blueprint for designing and implementing databases effectively.
+  </p>
+  <p>
+    Simply put, a data model tells <b>how data is connected, stored, and accessed</b>.
+  </p>
+
+  <h3>💡 Purpose of Data Models</h3>
+  <ul>
+    <li>Defines structure and relationships between data.</li>
+    <li>Improves consistency and data integrity.</li>
+    <li>Acts as a communication bridge between developers, designers, and users.</li>
+  </ul>
+
+  <h3>📊 Types of Data Models</h3>
+
+  <h4>1️⃣ Conceptual Data Model</h4>
+  <p>
+    - High-level model used for understanding data at the business level.  
+    - Focuses on entities, relationships, and rules — not technical details.  
+  </p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Concept</th><th>Description</th><th>Example</th></tr>
+    <tr>
+      <td>Entity</td>
+      <td>Objects in the system</td>
+      <td>Student, Course</td>
+    </tr>
+    <tr>
+      <td>Relationship</td>
+      <td>Association between entities</td>
+      <td>Student <b>enrolls in</b> Course</td>
+    </tr>
+  </table>
+
+  <h4>2️⃣ Logical Data Model</h4>
+  <p>
+    - Describes <b>how data is structured logically</b> — includes tables, columns, and relationships.  
+    - Independent of physical storage details.  
+  </p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Table</th><th>Columns</th></tr>
+    <tr>
+      <td>Student</td>
+      <td>Student_ID, Name, Email</td>
+    </tr>
+    <tr>
+      <td>Course</td>
+      <td>Course_ID, Course_Name</td>
+    </tr>
+    <tr>
+      <td>Enrollment</td>
+      <td>Student_ID, Course_ID</td>
+    </tr>
+  </table>
+
+  <h4>3️⃣ Physical Data Model</h4>
+  <p>
+    - Shows how data is physically stored in the database.  
+    - Includes indexes, data types, constraints, and keys.  
+  </p>
+
+  <pre><code class="language-sql">
+CREATE TABLE Student (
+  Student_ID INT PRIMARY KEY,
+  Name VARCHAR(50),
+  Email VARCHAR(100)
+);
+
+CREATE TABLE Course (
+  Course_ID INT PRIMARY KEY,
+  Course_Name VARCHAR(50)
+);
+
+CREATE TABLE Enrollment (
+  Student_ID INT,
+  Course_ID INT,
+  FOREIGN KEY (Student_ID) REFERENCES Student(Student_ID),
+  FOREIGN KEY (Course_ID) REFERENCES Course(Course_ID)
+);
+  </code></pre>
+
+  <h3>🧠 Summary</h3>
+  <ul>
+    <li><b>Conceptual Model</b> — High-level view (entities + relationships).</li>
+    <li><b>Logical Model</b> — Detailed structure (tables + columns).</li>
+    <li><b>Physical Model</b> — Implementation in the database (SQL schema).</li>
+  </ul>
+</section>
+
+<hr>
+
+<section id="er-model">
+  <h2>🧩 <code>E–R Model</code> — Entity Relationship Model</h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    The <b>Entity–Relationship (E–R) Model</b> is a high-level conceptual data model used to describe the structure of a database in terms of entities, attributes, and relationships.  
+    It was proposed by <b>Peter Chen in 1976</b>.
+  </p>
+
+  <p>
+    The E–R model is often represented using an <b>ER diagram</b>, which visually shows how data is connected.
+  </p>
+
+  <h3>💡 Components of E–R Model</h3>
+
+  <h4>1️⃣ Entity</h4>
+  <p>
+    - An <b>entity</b> represents a real-world object or concept that can be distinctly identified.  
+    - Each entity has a set of attributes.
+  </p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Entity Type</th><th>Description</th><th>Example</th></tr>
+    <tr><td>Strong Entity</td><td>Has a primary key that uniquely identifies it.</td><td>Student, Course</td></tr>
+    <tr><td>Weak Entity</td><td>Cannot be identified uniquely without a related strong entity.</td><td>Dependent of Employee</td></tr>
+  </table>
+
+  <h4>2️⃣ Attribute</h4>
+  <p>
+    - Attributes describe the properties or characteristics of an entity.
+  </p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Attribute Type</th><th>Description</th><th>Example</th></tr>
+    <tr><td>Simple</td><td>Cannot be divided further</td><td>Name, Age</td></tr>
+    <tr><td>Composite</td><td>Can be divided into smaller parts</td><td>Full_Name → (First_Name, Last_Name)</td></tr>
+    <tr><td>Derived</td><td>Can be derived from another attribute</td><td>Age (from DOB)</td></tr>
+    <tr><td>Multivalued</td><td>Can have multiple values</td><td>Phone Numbers</td></tr>
+  </table>
+
+  <h4>3️⃣ Relationship</h4>
+  <p>
+    - A <b>relationship</b> represents the association between two or more entities.
+  </p>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+    <tr><td>One-to-One (1:1)</td><td>One entity is related to exactly one other entity.</td><td>Student → ID Card</td></tr>
+    <tr><td>One-to-Many (1:N)</td><td>One entity is related to many others.</td><td>Teacher → Students</td></tr>
+    <tr><td>Many-to-Many (M:N)</td><td>Many entities are related to many others.</td><td>Student ↔ Course</td></tr>
+  </table>
+
+  <h3>🧩 Example</h3>
+  <p><b>Entities:</b> Student, Course</p>
+  <p><b>Relationship:</b> Student <code>enrolls in</code> Course</p>
+
+  <pre><code class="language-text">
+  [STUDENT] ───── enrolls in ───── [COURSE]
+  </code></pre>
+
+  <h4>🗂️ Tables After Conversion</h4>
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Student</th><th>Attributes</th></tr>
+    <tr><td>Student_ID (PK)</td><td>Name, Email</td></tr>
+  </table>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Course</th><th>Attributes</th></tr>
+    <tr><td>Course_ID (PK)</td><td>Course_Name</td></tr>
+  </table>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Enrollment (Relation)</th><th>Attributes</th></tr>
+    <tr><td>Student_ID (FK)</td><td>Course_ID (FK)</td></tr>
+  </table>
+
+  <h3>🧠 Summary</h3>
+  <ul>
+    <li>📍 Entity → Real-world object (e.g., Student, Course)</li>
+    <li>🏷️ Attribute → Properties of entities (e.g., Name, Email)</li>
+    <li>🔗 Relationship → Links entities together (e.g., Enrolls In)</li>
+    <li>💡 ER Model helps in designing a clear database structure before implementation.</li>
+  </ul>
+</section>
+
+<section id="er-model">
+  <h2>🧩 <code>E–R Model</code> — Entity Relationship Model (ER Model)</h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    The <b>Entity–Relationship (E–R) Model</b> is a high-level data model used to design the logical structure of a database.
+    It visually represents <b>entities</b> (objects), their <b>attributes</b> (properties), and <b>relationships</b> (associations).
+    It was introduced by <b>Peter Chen in 1976</b>.
+  </p>
+
+  <h3>🎯 Purpose</h3>
+  <p>
+    ➤ To create a simple and clear diagram of how data is stored and connected in a database before actual implementation.
+  </p>
+
+  <h3>🧩 Components of ER Model</h3>
+
+  <h4>1️⃣ Entity (Rectangle)</h4>
+  <p>
+    - An <b>Entity</b> represents a real-world object such as <code>Student</code>, <code>Course</code>, <code>Employee</code>, etc.  
+    - Each entity has a set of <b>attributes</b> describing it.
+  </p>
+  <ul>
+    <li>🟩 <b>Rectangle:</b> Used to represent an Entity.</li>
+    <li>🟧 <b>Double Rectangle:</b> Used for a <b>Weak Entity</b> (depends on another entity).</li>
+  </ul>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Type</th><th>Symbol</th><th>Description</th><th>Example</th></tr>
+    <tr><td>Strong Entity</td><td>⬜ Rectangle</td><td>Can exist independently</td><td>Student, Course</td></tr>
+    <tr><td>Weak Entity</td><td>⬜ Double Rectangle</td><td>Depends on a strong entity</td><td>Dependent (of Employee)</td></tr>
+  </table>
+
+  <h4>2️⃣ Attributes (Oval)</h4>
+  <p>
+    - <b>Attributes</b> describe properties of entities or relationships.
+  </p>
+  <ul>
+    <li>⚪ <b>Oval:</b> Represents an Attribute.</li>
+    <li>⚪ <b>Double Oval:</b> Represents a <b>Multivalued Attribute</b>.</li>
+    <li>⚪ <b>Dashed Oval:</b> Represents a <b>Derived Attribute</b>.</li>
+    <li>⚪ <b>Oval with underline:</b> Represents a <b>Key Attribute</b>.</li>
+  </ul>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Attribute Type</th><th>Symbol</th><th>Description</th><th>Example</th></tr>
+    <tr><td>Simple</td><td>Oval</td><td>Cannot be divided further</td><td>Name, Age</td></tr>
+    <tr><td>Composite</td><td>Linked Ovals</td><td>Can be divided into sub-parts</td><td>Full_Name → (First, Last)</td></tr>
+    <tr><td>Derived</td><td>Dashed Oval</td><td>Derived from another value</td><td>Age (from DOB)</td></tr>
+    <tr><td>Multivalued</td><td>Double Oval</td><td>Can have multiple values</td><td>Phone Numbers</td></tr>
+    <tr><td>Key Attribute</td><td>Underlined Oval</td><td>Uniquely identifies entity</td><td>Roll_No, Emp_ID</td></tr>
+  </table>
+
+  <h4>3️⃣ Relationship (Diamond)</h4>
+  <p>
+    - A <b>Relationship</b> connects two or more entities.
+  </p>
+  <ul>
+    <li>🔷 <b>Diamond:</b> Represents a Relationship.</li>
+    <li>🔷 <b>Double Diamond:</b> Represents a <b>Weak Relationship</b>.</li>
+  </ul>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Type</th><th>Symbol</th><th>Description</th><th>Example</th></tr>
+    <tr><td>Regular Relationship</td><td>Diamond</td><td>Normal connection</td><td>Student ─ Enrolls ─ Course</td></tr>
+    <tr><td>Weak Relationship</td><td>Double Diamond</td><td>Connects Weak Entity to Strong Entity</td><td>Dependent ─ Related_To ─ Employee</td></tr>
+  </table>
+
+  <h3>🔗 Types of Relationships (Cardinality Ratios)</h3>
+
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Type</th><th>Notation</th><th>Description</th><th>Example</th></tr>
+    <tr>
+      <td>One-to-One</td>
+      <td>1 : 1</td>
+      <td>One entity of A is related to one entity of B</td>
+      <td>Person ↔ Passport</td>
+    </tr>
+    <tr>
+      <td>One-to-Many</td>
+      <td>1 : N</td>
+      <td>One entity of A is related to many entities of B</td>
+      <td>Teacher → Students</td>
+    </tr>
+    <tr>
+      <td>Many-to-One</td>
+      <td>N : 1</td>
+      <td>Many entities of A are related to one entity of B</td>
+      <td>Students → Department</td>
+    </tr>
+    <tr>
+      <td>Many-to-Many</td>
+      <td>M : N</td>
+      <td>Many entities of A are related to many entities of B</td>
+      <td>Student ↔ Course</td>
+    </tr>
+  </table>
+
+  <h3>🧱 Participation Types</h3>
+  <ul>
+    <li>🔸 <b>Total Participation:</b> All entities are involved in the relationship (represented by <b>double line</b>).</li>
+    <li>🔸 <b>Partial Participation:</b> Only some entities are involved (represented by <b>single line</b>).</li>
+  </ul>
+
+  <h3>🏷️ Example ER Diagram Description</h3>
+  <pre><code class="language-text">
+  [STUDENT] ───── Enrolls ───── [COURSE]
+        |                         |
+     (Roll_No)                (Course_ID)
+        |                         |
+      (Name)                   (Course_Name)
+  </code></pre>
+
+  <h3>🧩 Conversion to Tables</h3>
+  <table  cellspacing="0" cellpadding="6">
+    <tr><th>Entity</th><th>Attributes</th></tr>
+    <tr><td>STUDENT</td><td>Roll_No (PK), Name, Age</td></tr>
+    <tr><td>COURSE</td><td>Course_ID (PK), Course_Name</td></tr>
+    <tr><td>ENROLLMENT</td><td>Roll_No (FK), Course_ID (FK)</td></tr>
+  </table>
+
+  <h3>🧠 Summary</h3>
+  <ul>
+    <li>🟩 Rectangle → Entity</li>
+    <li>⬜ Double Rectangle → Weak Entity</li>
+    <li>🔷 Diamond → Relationship</li>
+    <li>🔷 Double Diamond → Weak Relationship</li>
+    <li>⚪ Oval → Attribute</li>
+    <li>⚪ Double Oval → Multivalued Attribute</li>
+    <li>⚪ Dashed Oval → Derived Attribute</li>
+    <li>⚪ Underlined → Key Attribute</li>
+    <li>➕ Lines → Connect entities and attributes</li>
+    <li>➕ Double Line → Total Participation</li>
+    <li>➕ Single Line → Partial Participation</li>
+    <li>🔢 Cardinalities → 1:1, 1:N, N:1, M:N</li>
+  </ul>
+
+  <h3>📘 Advantages of ER Model</h3>
+  <ul>
+    <li>Easy to understand and visualize database structure.</li>
+    <li>Helps in identifying entities, relationships, and attributes clearly.</li>
+    <li>Used as a blueprint before creating physical database tables.</li>
+  </ul>
+
+  <h3>🧩 Example Real-World Case</h3>
+  <p>
+    <b>Example:</b> In a school database —  
+    <code>Student</code> enrolls in <code>Course</code>, and each <code>Course</code> is taught by a <code>Teacher</code>.
+  </p>
+
+  <pre><code class="language-text">
+  STUDENT (Roll_No, Name)
+        |
+        | Enrolls
+        |
+  COURSE (Course_ID, Course_Name)
+        |
+        | Taught_By
+        |
+  TEACHER (T_ID, T_Name)
+  </code></pre>
+
+</section>
+
+<section id="er-attributes">
+  <h2>🧩 <code>Types of Attributes</code> — in ER Model</h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    In an <b>Entity–Relationship (ER) Model</b>, <b>Attributes</b> describe properties or characteristics of an <b>Entity</b> or <b>Relationship</b>.  
+    Each attribute represents a <b>data field</b> that stores information about the entity.
+  </p>
+  <p>
+    Example: For an entity <code>STUDENT</code>, attributes can be <code>Roll_No, Name, Age, Email</code>, etc.
+  </p>
+
+  <h3>🏷️ Attribute Types</h3>
+
+  <h4>1️⃣ Simple Attribute</h4>
+  <p>
+    ➤ Cannot be divided further.  
+    ➤ Represented by a <b>single oval</b>.
+  </p>
+  <p><b>Example:</b> Name, Age, Gender</p>
+  <pre><code class="language-text">
+  STUDENT
+     |
+     ├── (Name)
+     ├── (Age)
+     └── (Gender)
+  </code></pre>
+
+  <h4>2️⃣ Composite Attribute</h4>
+  <p>
+    ➤ Can be divided into smaller sub-parts.  
+    ➤ Represented by <b>oval connected to sub-ovals</b>.
+  </p>
+  <p><b>Example:</b> Full_Name → (First_Name, Last_Name)</p>
+  <pre><code class="language-text">
+  STUDENT
+     |
+     └── (Full_Name)
+             ├── (First_Name)
+             └── (Last_Name)
+  </code></pre>
+
+  <h4>3️⃣ Derived Attribute</h4>
+  <p>
+    ➤ Value can be derived from another attribute.  
+    ➤ Represented by a <b>dashed oval</b>.
+  </p>
+  <p><b>Example:</b> Age derived from Date_of_Birth</p>
+  <pre><code class="language-text">
+  STUDENT
+     |
+     ├── (DOB)
+     └── (---Age---)
+  </code></pre>
+
+  <h4>4️⃣ Multivalued Attribute</h4>
+  <p>
+    ➤ Can have multiple values for the same entity.  
+    ➤ Represented by a <b>double oval</b>.
+  </p>
+  <p><b>Example:</b> Phone_Number can have more than one value for a student.</p>
+  <pre><code class="language-text">
+  STUDENT
+     |
+     └══ (Phone_Number)
+  </code></pre>
+
+  <h4>5️⃣ Key Attribute</h4>
+  <p>
+    ➤ Uniquely identifies each entity in a set.  
+    ➤ Represented by an <b>underlined oval</b>.
+  </p>
+  <p><b>Example:</b> Roll_No uniquely identifies each student.</p>
+  <pre><code class="language-text">
+  STUDENT
+     |
+     ├── <u>Roll_No</u>
+     ├── (Name)
+     └── (Email)
+  </code></pre>
+
+  <h3>📊 Summary Table</h3>
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Type</th>
+      <th>Symbol</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td>Simple Attribute</td>
+      <td>Oval</td>
+      <td>Cannot be divided further</td>
+      <td>Name, Gender</td>
+    </tr>
+    <tr>
+      <td>Composite Attribute</td>
+      <td>Oval connected to sub-ovals</td>
+      <td>Can be divided into sub-parts</td>
+      <td>Full_Name → First, Last</td>
+    </tr>
+    <tr>
+      <td>Derived Attribute</td>
+      <td>Dashed Oval</td>
+      <td>Derived from other attributes</td>
+      <td>Age (from DOB)</td>
+    </tr>
+    <tr>
+      <td>Multivalued Attribute</td>
+      <td>Double Oval</td>
+      <td>Can have multiple values</td>
+      <td>Phone_Number, Email_IDs</td>
+    </tr>
+    <tr>
+      <td>Key Attribute</td>
+      <td>Underlined Oval</td>
+      <td>Uniquely identifies entity</td>
+      <td>Roll_No, Emp_ID</td>
+    </tr>
+  </table>
+
+  <h3>🧠 Quick Summary</h3>
+  <ul>
+    <li>⚪ <b>Simple:</b> Single, indivisible value.</li>
+    <li>⚪ <b>Composite:</b> Can be divided into smaller attributes.</li>
+    <li>⚪ <b>Derived:</b> Calculated or derived from another attribute.</li>
+    <li>⚪ <b>Multivalued:</b> Can have multiple values per entity.</li>
+    <li>⚪ <b>Key:</b> Unique identifier of entity instances.</li>
+  </ul>
+</section>
+
+<section id="er-entities">
+  <h2>🧩 <code>Types of Entities</code> — in ER Model</h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    In the <b>Entity–Relationship (ER) Model</b>, an <b>Entity</b> represents any real-world object, concept, or thing
+    that can have data stored about it in a database.
+  </p>
+  <p>
+    Example: <code>Student</code>, <code>Teacher</code>, <code>Course</code>, <code>Employee</code>.
+  </p>
+
+  <h3>🧩 Classification of Entities</h3>
+
+  <h4>1️⃣ Strong Entity (Independent Entity)</h4>
+  <p>
+    ➤ Exists independently and has its own <b>primary key</b>.  
+    ➤ Represented by a <b>single rectangle</b> in ER diagram.
+  </p>
+  <p><b>Example:</b> STUDENT (Roll_No, Name, Email)</p>
+  <pre><code class="language-text">
+  [STUDENT]
+     ├── Roll_No (PK)
+     ├── Name
+     └── Email
+  </code></pre>
+
+  <h4>2️⃣ Weak Entity (Dependent Entity)</h4>
+  <p>
+    ➤ Cannot exist without being linked to a <b>Strong Entity</b>.  
+    ➤ Does not have a unique key of its own — identified by a <b>Partial Key</b>.  
+    ➤ Represented by a <b>Double Rectangle</b>.  
+    ➤ Linked with a <b>Double Diamond</b> to its owner (Strong Entity).
+  </p>
+  <p><b>Example:</b> DEPENDENT (Dependent_Name, Age) depends on EMPLOYEE (Emp_ID)</p>
+  <pre><code class="language-text">
+  [EMPLOYEE] ──<⩸>── [DEPENDENT]
+     |                  |
+   (Emp_ID)           (Dependent_Name, Age)
+  </code></pre>
+
+  <h4>3️⃣ Associative Entity (Bridge Entity)</h4>
+  <p>
+    ➤ Used to convert <b>many-to-many (M:N)</b> relationships into <b>two one-to-many (1:N)</b> relationships.  
+    ➤ Has attributes of its own that describe the relationship.  
+    ➤ Represented as a <b>rectangle inside a diamond</b>.
+  </p>
+  <p><b>Example:</b> ENROLLMENT connects STUDENT and COURSE.</p>
+  <pre><code class="language-text">
+  [STUDENT] ─── Enrolls ─── [COURSE]
+         ↘                ↙
+           [ENROLLMENT]
+              ├── Roll_No (FK)
+              ├── Course_ID (FK)
+              └── Date_of_Join
+  </code></pre>
+
+  <h4>4️⃣ Super Entity and Sub Entity (Generalization / Specialization)</h4>
+  <p>
+    ➤ Used when entities share common attributes but also have unique ones.  
+    ➤ <b>Super Entity</b> (general) contains common attributes.  
+    ➤ <b>Sub Entities</b> (specialized) contain unique attributes.  
+    ➤ Represented using a <b>triangle</b> symbol for specialization/generalization.
+  </p>
+  <p><b>Example:</b> EMPLOYEE can be a TEACHER or an ADMIN.</p>
+  <pre><code class="language-text">
+        [EMPLOYEE]
+          /     \
+ [TEACHER]     [ADMIN]
+  </code></pre>
+
+  <h3>📊 Summary Table</h3>
+  <table  cellspacing="0" cellpadding="6">
+    <tr>
+      <th>Entity Type</th>
+      <th>Symbol</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td>Strong Entity</td>
+      <td>Single Rectangle</td>
+      <td>Can exist independently</td>
+      <td>Student, Employee</td>
+    </tr>
+    <tr>
+      <td>Weak Entity</td>
+      <td>Double Rectangle</td>
+      <td>Depends on Strong Entity</td>
+      <td>Dependent (of Employee)</td>
+    </tr>
+    <tr>
+      <td>Associative Entity</td>
+      <td>Rectangle inside Diamond</td>
+      <td>Used in M:N relationships</td>
+      <td>Enrollment between Student & Course</td>
+    </tr>
+    <tr>
+      <td>Super Entity</td>
+      <td>Rectangle connected to Triangle</td>
+      <td>General (common) entity</td>
+      <td>Employee</td>
+    </tr>
+    <tr>
+      <td>Sub Entity</td>
+      <td>Triangle to Rectangle</td>
+      <td>Specialized version of super entity</td>
+      <td>Teacher, Admin</td>
+    </tr>
+  </table>
+
+  <h3>🧠 Quick Summary</h3>
+  <ul>
+    <li>🟩 <b>Strong Entity:</b> Exists independently (Single Rectangle).</li>
+    <li>⬜ <b>Weak Entity:</b> Needs a strong entity to exist (Double Rectangle).</li>
+    <li>🔷 <b>Associative Entity:</b> Resolves M:N relationships.</li>
+    <li>🔺 <b>Super/Sub Entity:</b> Shows inheritance (Generalization/Specialization).</li>
+  </ul>
+
+  <h3>📘 Example Case</h3>
+  <pre><code class="language-text">
+  STUDENT (Roll_No, Name)
+  COURSE (Course_ID, Title)
+  ENROLLMENT (Roll_No, Course_ID, Grade)
+  TEACHER (Emp_ID, Subject)
+  ADMIN (Emp_ID, Department)
+  </code></pre>
+
+</section>
+<section id="types-of-relationships">
+  <h2>🔗 <code>Types of Relationships in ER Model</code></h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    In an <b>Entity Relationship (ER) Model</b>, a relationship defines how two or more entities are connected to each other.
+    Relationships help represent <b>real-world associations</b> such as “Student enrolls in Course” or “Employee works in Department”.
+  </p>
+
+  <h3>💠 Relationship Symbols</h3>
+  <ul>
+    <li>🔸 <b>Diamond (◊)</b> — Represents a <b>relationship</b> between entities.</li>
+    <li>🔸 <b>Double Diamond (⧫⧫)</b> — Used for <b>weak relationships</b> (when a weak entity depends on a strong entity).</li>
+    <li>🔸 <b>Rectangle ▭</b> — Represents an <b>entity</b>.</li>
+    <li>🔸 <b>Double Rectangle ▭▭</b> — Represents a <b>weak entity</b>.</li>
+    <li>🔸 <b>Line</b> — Connects entities and relationships.</li>
+    <li>🔸 <b>Oval (◯)</b> — Represents an <b>attribute</b>.</li>
+    <li>🔸 <b>Double Oval</b> — Represents a <b>multivalued attribute</b>.</li>
+    <li>🔸 <b>Dashed Oval</b> — Represents a <b>derived attribute</b>.</li>
+  </ul>
+
+  <h3>🧩 Types of Relationships</h3>
+
+  <h4>1️⃣ One-to-One (1:1)</h4>
+  <p>
+    In this type, <b>one entity</b> in set A is associated with <b>only one entity</b> in set B.
+  </p>
+  <pre><code>Example: Each person has one passport.</code></pre>
+  <p><b>Diagram:</b> PERSON ▭ ——◊—— ▭ PASSPORT</p>
+
+  <h4>2️⃣ One-to-Many (1:N)</h4>
+  <p>
+    One entity from set A can be related to <b>many entities</b> in set B, but each entity in B is related to <b>only one</b> entity in A.
+  </p>
+  <pre><code>Example: One department has many employees.</code></pre>
+  <p><b>Diagram:</b> DEPARTMENT ▭ ——◊——<sub>(N)</sub> ▭ EMPLOYEE</p>
+
+  <h4>3️⃣ Many-to-One (N:1)</h4>
+  <p>
+    Many entities from set A are related to <b>one entity</b> in set B.
+  </p>
+  <pre><code>Example: Many employees work in one department.</code></pre>
+  <p><b>Diagram:</b> EMPLOYEE ▭<sub>(N)</sub> ——◊—— ▭ DEPARTMENT</p>
+
+  <h4>4️⃣ Many-to-Many (M:N)</h4>
+  <p>
+    Entities from both sides can be related to multiple entities from the other side.
+  </p>
+  <pre><code>Example: A student can enroll in many courses, and each course can have many students.</code></pre>
+  <p><b>Diagram:</b> STUDENT ▭<sub>(M)</sub> ——◊——<sub>(N)</sub> ▭ COURSE</p>
+
+  <h4>5️⃣ Recursive (Unary) Relationship</h4>
+  <p>
+    A relationship between <b>the same entity set</b>. An entity is related to itself.
+  </p>
+  <pre><code>Example: An employee supervises another employee.</code></pre>
+  <p><b>Diagram:</b> EMPLOYEE ▭ ——◊—— (supervises) —— back to EMPLOYEE ▭</p>
+
+  <h4>6️⃣ Ternary Relationship</h4>
+  <p>
+    A relationship that involves <b>three entities</b> simultaneously.
+  </p>
+  <pre><code>Example: A Doctor prescribes a Drug to a Patient.</code></pre>
+  <p><b>Diagram:</b> DOCTOR ▭ ——◊ (prescribes) ◊—— ▭ DRUG ——◊—— ▭ PATIENT</p>
+
+  <h3>📊 Summary Table</h3>
+  <table  cellpadding="5">
+    <tr><th>Type</th><th>Meaning</th><th>Example</th></tr>
+    <tr><td>1:1</td><td>One entity linked to exactly one other</td><td>Person ↔ Passport</td></tr>
+    <tr><td>1:N</td><td>One entity linked to many others</td><td>Department → Employees</td></tr>
+    <tr><td>N:1</td><td>Many entities linked to one</td><td>Employees → Department</td></tr>
+    <tr><td>M:N</td><td>Many entities linked both ways</td><td>Student ↔ Course</td></tr>
+    <tr><td>Unary</td><td>Entity linked to itself</td><td>Employee supervises Employee</td></tr>
+    <tr><td>Ternary</td><td>Three entities linked</td><td>Doctor, Patient, Drug</td></tr>
+  </table>
+
+  <h3>🧠 Quick Tip</h3>
+  <p>
+    👉 If you see <b>double diamonds</b> or <b>double rectangles</b>, it means <b>weak entities or weak relationships</b> — they depend on a strong entity for identification.
+  </p>
+
+</section>
+
+<section id="participation-cardinality">
+  <h2>📏 <code>Participation & Cardinality in ER Model</code></h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    In an <b>Entity Relationship (ER) Model</b>, <b>cardinality</b> and <b>participation</b> describe how entities are related in a relationship set.
+    They define <b>how many instances</b> of one entity can be associated with instances of another entity and whether participation is <b>mandatory or optional</b>.
+  </p>
+
+  <h3>🔹 Cardinality (Multiplicity)</h3>
+  <p>
+    Cardinality defines the <b>number of occurrences</b> of one entity that can be associated with another entity.
+  </p>
+
+  <h4>💠 Common Types</h4>
+  <ul>
+    <li><b>1:1 (One-to-One)</b> — One entity of A is related to one entity of B.</li>
+    <li><b>1:N (One-to-Many)</b> — One entity of A can relate to many entities of B.</li>
+    <li><b>N:1 (Many-to-One)</b> — Many entities of A relate to one entity of B.</li>
+    <li><b>M:N (Many-to-Many)</b> — Many entities of A relate to many entities of B.</li>
+  </ul>
+
+  <h4>📊 Example</h4>
+  <pre><code>Entity A: DEPARTMENT
+Entity B: EMPLOYEE
+Relationship: WORKS_IN
+Cardinality: 1:N (One department has many employees)</code></pre>
+
+  <table  cellpadding="5">
+    <tr><th>Cardinality</th><th>Meaning</th><th>Example</th></tr>
+    <tr><td>1:1</td><td>One entity of A → one entity of B</td><td>Person ↔ Passport</td></tr>
+    <tr><td>1:N</td><td>One entity of A → many entities of B</td><td>Department → Employees</td></tr>
+    <tr><td>N:1</td><td>Many entities of A → one entity of B</td><td>Employees → Department</td></tr>
+    <tr><td>M:N</td><td>Many entities of A ↔ many entities of B</td><td>Student ↔ Course</td></tr>
+  </table>
+
+  <h3>🔸 Participation</h3>
+  <p>
+    Participation indicates whether <b>all entities</b> in a set take part in the relationship or only <b>some</b> of them do.
+  </p>
+
+  <h4>Types of Participation</h4>
+  <ul>
+    <li><b>Total Participation</b> — Every entity in the set must participate in the relationship.<br>
+      <i>Notation:</i> Double line between entity and relationship.<br>
+      <i>Example:</i> Every employee must belong to a department.
+    </li>
+    <li><b>Partial Participation</b> — Only some entities participate in the relationship.<br>
+      <i>Notation:</i> Single line between entity and relationship.<br>
+      <i>Example:</i> Some employees may not have a manager.
+    </li>
+  </ul>
+
+  <h3>📉 Min–Max Notation</h3>
+  <p>
+    Another way to represent cardinality is the <b>(min, max)</b> notation, which defines the minimum and maximum number of relationships an entity can participate in.
+  </p>
+
+  <pre><code>Example:
+STUDENT ── (0, N) ENROLLS (1, 1) ── COURSE
+
+Meaning:
+A student can enroll in zero or many courses.
+A course must have at least one student.</code></pre>
+
+  <table  cellpadding="5">
+    <tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr>
+    <tr><td>(0,1)</td><td>Optional, at most one</td><td>Employee may manage at most one project</td></tr>
+    <tr><td>(1,1)</td><td>Mandatory, exactly one</td><td>Each person must have one passport</td></tr>
+    <tr><td>(0,N)</td><td>Optional, many</td><td>Student may enroll in many courses or none</td></tr>
+    <tr><td>(1,N)</td><td>Mandatory, many</td><td>Department must have at least one employee</td></tr>
+  </table>
+
+  <h3>🧠 Quick Tip</h3>
+  <ul>
+    <li>💡 <b>Total Participation</b> = double line connection.</li>
+    <li>💡 <b>Partial Participation</b> = single line connection.</li>
+    <li>💡 <b>Min–Max notation</b> gives exact participation counts.</li>
+  </ul>
+
+</section>
+
+<section id="generalization-specialization">
+  <h2>🧭 <code>Generalization, Specialization & Aggregation in ER Model</code></h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    These are advanced concepts in the <b>Entity Relationship (ER) Model</b> that help simplify and organize complex data relationships.
+    They are mainly used to represent <b>hierarchies and real-world inheritance</b> among entities.
+  </p>
+
+  <h3>🌳 1️⃣ Generalization</h3>
+  <p>
+    <b>Generalization</b> is the process of combining two or more entities with similar attributes into a <b>single, generalized (superclass) entity</b>.
+  </p>
+  <pre><code>Example:
+Entities: Car, Bike
+Common attributes → Vehicle
+
+Generalized Entity: Vehicle
+Sub-entities: Car, Bike</code></pre>
+
+  <h4>💠 Symbol</h4>
+  <ul>
+    <li>Shown using a <b>triangle (Δ)</b> pointing <b>upwards</b>.</li>
+    <li>Superclass (generalized entity) at the <b>top</b>.</li>
+    <li>Subclasses (specific entities) at the <b>bottom</b>.</li>
+  </ul>
+
+  <p><b>Diagram Representation:</b></p>
+  <pre><code>     Vehicle
+        △
+       / \
+     Car  Bike</code></pre>
+
+  <h3>🧩 2️⃣ Specialization</h3>
+  <p>
+    <b>Specialization</b> is the reverse of generalization. It creates <b>subclasses</b> from an existing <b>superclass</b> based on specific attributes.
+  </p>
+  <pre><code>Example:
+Entity: Employee
+Specialized entities:
+  - Manager (has team)
+  - Developer (has programming language)</code></pre>
+
+  <h4>💠 Symbol</h4>
+  <ul>
+    <li>Shown using a <b>triangle (Δ)</b> pointing <b>downwards</b>.</li>
+    <li>Superclass (general entity) at the <b>top</b>.</li>
+    <li>Subclasses (special entities) at the <b>bottom</b>.</li>
+  </ul>
+
+  <p><b>Diagram Representation:</b></p>
+  <pre><code>     Employee
+        ▽
+       / \
+  Manager  Developer</code></pre>
+
+  <h3>🧮 3️⃣ Aggregation</h3>
+  <p>
+    <b>Aggregation</b> is an abstraction where a <b>relationship itself acts as an entity</b> and participates in another relationship.
+    It is used when a relationship involves another relationship.
+  </p>
+  <pre><code>Example:
+  A project is assigned to a department, and employees work on that project.
+  The "Works_On" relationship between Employee and Project can be aggregated with Department.
+  </code></pre>
+
+  <h4>💠 Symbol</h4>
+  <ul>
+    <li>Represented by a <b>rectangle around a diamond</b>.</li>
+    <li>Shows that a relationship is treated as a <b>higher-level entity</b>.</li>
+  </ul>
+
+  <p><b>Diagram Representation:</b></p>
+  <pre><code>EMPLOYEE ──◊ Works_On ◊── PROJECT
+       ⬚
+        \
+        DEPARTMENT</code></pre>
+
+  <h3>🧱 4️⃣ Difference Summary</h3>
+  <table  cellpadding="5">
+    <tr>
+      <th>Concept</th>
+      <th>Direction</th>
+      <th>Purpose</th>
+      <th>Example</th>
+    </tr>
+    <tr>
+      <td>Generalization</td>
+      <td>Bottom → Top</td>
+      <td>Combine similar entities</td>
+      <td>Car + Bike → Vehicle</td>
+    </tr>
+    <tr>
+      <td>Specialization</td>
+      <td>Top → Bottom</td>
+      <td>Divide entity into sub-entities</td>
+      <td>Employee → Manager, Developer</td>
+    </tr>
+    <tr>
+      <td>Aggregation</td>
+      <td>Relationship → Entity</td>
+      <td>Represent relationship between relationships</td>
+      <td>Works_On (Employee–Project) linked with Department</td>
+    </tr>
+  </table>
+
+  <h3>🧠 Quick Tips</h3>
+  <ul>
+    <li>🔼 <b>Generalization</b> — Triangle points upward (merge entities).</li>
+    <li>🔽 <b>Specialization</b> — Triangle points downward (split entity).</li>
+    <li>⬚ <b>Aggregation</b> — Rectangle around diamond (relationship as entity).</li>
+  </ul>
+</section>
+
+<section id="mapping-er-to-relational">
+  <h2>🗺️ <code>Mapping ER Diagram to Relational Model (Conversion Rules)</code></h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    The process of <b>converting an ER (Entity–Relationship) Diagram</b> into a <b>Relational Model</b> is known as 
+    <b>ER-to-Relational Mapping</b>.  
+    This step helps to transform a conceptual design (ERD) into a logical schema (tables in RDBMS).
+  </p>
+
+  <h3>⚙️ Steps / Conversion Rules</h3>
+
+  <h4>1️⃣ Mapping of Strong Entities</h4>
+  <p>
+    For every <b>strong entity</b> in the ER diagram, create a <b>table</b>.  
+    Each <b>attribute</b> of the entity becomes a <b>column</b> of the table, and the <b>primary key</b> remains the same.
+  </p>
+  <pre><code>Entity: STUDENT (Student_ID, Name, Age)
+→ Table: STUDENT(Student_ID PRIMARY KEY, Name, Age)</code></pre>
+
+  <h4>2️⃣ Mapping of Weak Entities</h4>
+  <p>
+    A <b>weak entity</b> cannot be identified by its own attributes, so it depends on a <b>strong entity</b>.
+    Create a table for the weak entity and include the <b>primary key of the strong entity</b> as a <b>foreign key</b>.
+  </p>
+  <pre><code>Entity: DEPENDENT (Dep_Name, Age) depends on EMPLOYEE(Emp_ID)
+→ Table: DEPENDENT(Emp_ID, Dep_Name, Age, PRIMARY KEY(Emp_ID, Dep_Name),
+   FOREIGN KEY(Emp_ID) REFERENCES EMPLOYEE(Emp_ID))</code></pre>
+
+  <h4>3️⃣ Mapping 1:1 Relationships</h4>
+  <p>
+    For a <b>one-to-one relationship</b>, choose one side (preferably the side with total participation)
+    and include the <b>primary key of the other entity</b> as a <b>foreign key</b>.
+  </p>
+  <pre><code>Entities: PERSON(Person_ID, Name), PASSPORT(Passport_No)
+Relationship: Each person has one passport
+→ Add Person_ID as foreign key in PASSPORT table</code></pre>
+
+  <h4>4️⃣ Mapping 1:N Relationships</h4>
+  <p>
+    For a <b>one-to-many relationship</b>, add the <b>primary key of the “one” side</b> as a <b>foreign key</b> in the table of the “many” side.
+  </p>
+  <pre><code>Entities: DEPARTMENT(Dept_ID, Name), EMPLOYEE(Emp_ID, Name)
+Relationship: One department has many employees
+→ Add Dept_ID as foreign key in EMPLOYEE table</code></pre>
+
+  <h4>5️⃣ Mapping M:N Relationships</h4>
+  <p>
+    For a <b>many-to-many relationship</b>, create a <b>new table</b> that stores the primary keys of both entities as <b>foreign keys</b>.
+    These two foreign keys together form the <b>composite primary key</b> of the new table.
+  </p>
+  <pre><code>Entities: STUDENT(Student_ID), COURSE(Course_ID)
+Relationship: Enrolls
+→ Create table: ENROLLS(Student_ID, Course_ID, PRIMARY KEY(Student_ID, Course_ID),
+   FOREIGN KEY(Student_ID) REFERENCES STUDENT(Student_ID),
+   FOREIGN KEY(Course_ID) REFERENCES COURSE(Course_ID))</code></pre>
+
+  <h4>6️⃣ Mapping Multivalued Attributes</h4>
+  <p>
+    For each <b>multivalued attribute</b>, create a <b>new table</b> containing:
+    <ul>
+      <li>The <b>attribute name</b> itself</li>
+      <li>The <b>primary key</b> of the original entity</li>
+    </ul>
+    Both together form the <b>composite primary key</b>.
+  </p>
+  <pre><code>Entity: STUDENT(Student_ID, Phone_Number)
+→ Create new table: STUDENT_PHONE(Student_ID, Phone_Number,
+   PRIMARY KEY(Student_ID, Phone_Number))</code></pre>
+
+  <h4>7️⃣ Mapping Derived Attributes</h4>
+  <p>
+    Derived attributes (calculated values) are <b>not stored</b> in the relational model;
+    they can be <b>computed using queries</b> when needed.
+  </p>
+  <pre><code>Example: Age (derived from DOB) → Not stored in table.</code></pre>
+
+  <h4>8️⃣ Mapping Ternary (or Higher-Order) Relationships</h4>
+  <p>
+    For relationships involving <b>three or more entities</b>, create a <b>separate table</b>
+    containing the <b>primary keys of all participating entities</b> as foreign keys.
+  </p>
+  <pre><code>Example: DOCTOR prescribes DRUG to PATIENT
+→ Table: PRESCRIPTION(Doctor_ID, Drug_ID, Patient_ID, Date, Dose)</code></pre>
+
+  <h3>📊 Summary Table</h3>
+  <table  cellpadding="5">
+    <tr><th>ER Component</th><th>Relational Model Representation</th><th>Example</th></tr>
+    <tr><td>Strong Entity</td><td>One table</td><td>STUDENT(Student_ID, Name)</td></tr>
+    <tr><td>Weak Entity</td><td>Table + foreign key of owner</td><td>DEPENDENT(Emp_ID, Dep_Name)</td></tr>
+    <tr><td>1:1 Relationship</td><td>Foreign key in one table</td><td>PASSPORT(Person_ID)</td></tr>
+    <tr><td>1:N Relationship</td><td>Foreign key in "many" side</td><td>EMPLOYEE(Dept_ID)</td></tr>
+    <tr><td>M:N Relationship</td><td>New relationship table</td><td>ENROLLS(Student_ID, Course_ID)</td></tr>
+    <tr><td>Multivalued Attribute</td><td>New table with key + attribute</td><td>STUDENT_PHONE</td></tr>
+    <tr><td>Derived Attribute</td><td>Not stored, computed via query</td><td>Age from DOB</td></tr>
+    <tr><td>Ternary Relationship</td><td>New table with all keys</td><td>PRESCRIPTION</td></tr>
+  </table>
+
+  <h3>🧠 Quick Tips</h3>
+  <ul>
+    <li>💡 Each <b>entity → table</b>.</li>
+    <li>💡 Each <b>relationship → foreign key</b> or <b>new table</b>.</li>
+    <li>💡 <b>Multivalued attributes</b> become separate tables.</li>
+    <li>💡 <b>Derived attributes</b> are <b>not stored</b>.</li>
+  </ul>
+
+ 
+</section>
+
+<hr>
+
+<section id="relational-model">
+  <h2>🧮 <code>Relational Model in DBMS</code></h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    The <b>Relational Model</b> is the most widely used model in <b>Relational Database Management Systems (RDBMS)</b>.
+    It represents data in the form of <b>tables (relations)</b>, where each table consists of <b>rows (tuples)</b> and <b>columns (attributes)</b>.
+  </p>
+
+  <h3>🧱 Components of the Relational Model</h3>
+
+  <h4>1️⃣ Relation (Table)</h4>
+  <p>
+    A <b>relation</b> is a <b>table</b> that stores data.  
+    Each <b>row</b> in the table is called a <b>tuple</b> and represents a single record.
+    Each <b>column</b> represents an <b>attribute</b>.
+  </p>
+  <pre><code>Example Table: STUDENT
++------------+----------+--------+
+| Student_ID | Name     | Age    |
++------------+----------+--------+
+| S1         | Arjun    | 21     |
+| S2         | Priya    | 22     |
++------------+----------+--------+</code></pre>
+
+  <h4>2️⃣ Tuple (Row)</h4>
+  <p>
+    A <b>tuple</b> is a single row in a relation that represents one record.
+  </p>
+  <pre><code>Example: (S1, Arjun, 21)</code></pre>
+
+  <h4>3️⃣ Attribute (Column)</h4>
+  <p>
+    An <b>attribute</b> is a column that defines a property of the entity.
+  </p>
+  <pre><code>Example: Student_ID, Name, Age</code></pre>
+
+  <h4>4️⃣ Domain</h4>
+  <p>
+    A <b>domain</b> is the set of all possible values that an attribute can take.
+  </p>
+  <pre><code>Example:
+Attribute: Age
+Domain: {18, 19, 20, 21, 22, 23, ...}</code></pre>
+
+  <h4>5️⃣ Degree and Cardinality</h4>
+  <ul>
+    <li><b>Degree</b> → Number of attributes (columns) in a relation.</li>
+    <li><b>Cardinality</b> → Number of tuples (rows) in a relation.</li>
+  </ul>
+  <pre><code>Example:
+STUDENT(Student_ID, Name, Age)
+→ Degree = 3, Cardinality = 2</code></pre>
+
+  <h4>6️⃣ Schema and Instance</h4>
+  <ul>
+    <li><b>Schema</b> — Structure of the relation (table definition).</li>
+    <li><b>Instance</b> — Actual content or data present at a specific time.</li>
+  </ul>
+  <pre><code>Schema: STUDENT(Student_ID, Name, Age)
+Instance:
++------------+----------+--------+
+| Student_ID | Name     | Age    |
++------------+----------+--------+
+| S1         | Arjun    | 21     |
+| S2         | Priya    | 22     |
++------------+----------+--------+</code></pre>
+
+  <h4>7️⃣ Keys</h4>
+  <p>
+    Keys are used to <b>uniquely identify</b> tuples in a relation and establish <b>relationships</b> between tables.
+  </p>
+  <ul>
+    <li><b>Primary Key</b> — Uniquely identifies each tuple.</li>
+    <li><b>Foreign Key</b> — Links one table to another.</li>
+    <li><b>Candidate Key</b> — Attributes that can act as primary keys.</li>
+    <li><b>Alternate Key</b> — Remaining candidate keys after choosing the primary key.</li>
+    <li><b>Composite Key</b> — Key made of two or more attributes.</li>
+    <li><b>Super Key</b> — Any key that can uniquely identify a tuple.</li>
+  </ul>
+
+  <h3>🧩 Example</h3>
+  <p><b>Entities:</b> STUDENT and COURSE</p>
+  <pre><code>STUDENT(Student_ID, Name, Age, Course_ID)
+COURSE(Course_ID, Course_Name)
+
+Primary Key: Student_ID
+Foreign Key: Course_ID (references COURSE table)</code></pre>
+
+  <h3>📊 Relational Model Diagram</h3>
+  <pre><code>+------------+-------------+
+|  STUDENT   |  COURSE     |
++------------+-------------+
+| Student_ID | Course_ID   |
+| Name       | Course_Name |
+| Age        |             |
++------------+-------------+
+        │
+        │ (Foreign Key)
+        ▼
+   COURSE.Course_ID</code></pre>
+
+  <h3>🧠 Characteristics of Relational Model</h3>
+  <ul>
+    <li>✅ Data is stored in <b>tables (relations)</b>.</li>
+    <li>✅ Each table has a unique <b>primary key</b>.</li>
+    <li>✅ Data integrity is maintained using <b>keys</b> and <b>constraints</b>.</li>
+    <li>✅ Operations like <b>SELECT, INSERT, UPDATE, DELETE</b> are used to manipulate data.</li>
+    <li>✅ Relationships are established using <b>foreign keys</b>.</li>
+  </ul>
+
+  <h3>🧠 Advantages</h3>
+  <ul>
+    <li>✔️ Simple and easy to understand (table-based).</li>
+    <li>✔️ Ensures <b>data consistency</b> and <b>integrity</b>.</li>
+    <li>✔️ Supports powerful <b>SQL operations</b>.</li>
+    <li>✔️ Allows <b>relationships</b> between data.</li>
+  </ul>
+
+  <h3>⚠️ Disadvantages</h3>
+  <ul>
+    <li>❌ May be slower for very large or complex data (compared to NoSQL).</li>
+    <li>❌ Requires <b>normalization</b> to reduce redundancy.</li>
+    <li>❌ Not ideal for <b>hierarchical</b> or <b>graph-based</b> data.</li>
+  </ul>
+</section>
+
+<hr>
+<section id="buffer-management">
+  <h2>💾 <code>Buffer Management in DBMS</code></h2>
+
+  <h3>📘 Description</h3>
+  <p>
+    <b>Buffer Management</b> is a crucial part of the <b>DBMS storage management system</b>.
+    It is responsible for efficiently handling <b>data transfer between disk and main memory (RAM)</b> using a temporary storage area called the <b>Buffer Pool</b> or <b>Buffer Cache</b>.
+  </p>
+
+  <h3>🎯 Purpose</h3>
+  <ul>
+    <li>Reduce the number of <b>disk I/O operations</b>.</li>
+    <li>Provide faster data access by keeping frequently used data in main memory.</li>
+    <li>Improve overall <b>DBMS performance</b> and query speed.</li>
+  </ul>
+
+  <h3>⚙️ How It Works</h3>
+  <ol>
+    <li>When a query requests data, DBMS checks if that data (page) exists in the <b>Buffer Pool</b>.</li>
+    <li>If the page is found → Data is fetched directly from memory (fast access).</li>
+    <li>If not found → DBMS loads it from the disk into an available buffer frame (slow access).</li>
+    <li>If the buffer is full → DBMS uses a <b>replacement policy</b> to decide which page to remove.</li>
+    <li>Modified pages (called <b>dirty pages</b>) are written back to the disk before being replaced.</li>
+  </ol>
+
+  <h3>🧱 Components of Buffer Management</h3>
+  <table  cellspacing="0" cellpadding="5">
+    <tr>
+      <th>Component</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><b>Buffer Pool</b></td>
+      <td>Reserved area in main memory where database pages are temporarily stored.</td>
+    </tr>
+    <tr>
+      <td><b>Frame</b></td>
+      <td>A single slot in the buffer pool that holds one page of data.</td>
+    </tr>
+    <tr>
+      <td><b>Page Table</b></td>
+      <td>Data structure that keeps track of which database pages are currently in the buffer.</td>
+    </tr>
+    <tr>
+      <td><b>Dirty Page</b></td>
+      <td>A page that has been modified in the buffer but not yet written to disk.</td>
+    </tr>
+  </table>
+
+  <h3>🔄 Buffer Replacement Policies</h3>
+  <p>When the buffer pool is full, one of the following algorithms decides which page to remove:</p>
+  <table  cellspacing="0" cellpadding="5">
+    <tr>
+      <th>Policy</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><b>LRU (Least Recently Used)</b></td>
+      <td>Replaces the page that has not been used for the longest time.</td>
+    </tr>
+    <tr>
+      <td><b>MRU (Most Recently Used)</b></td>
+      <td>Replaces the page that was most recently accessed.</td>
+    </tr>
+    <tr>
+      <td><b>FIFO (First In First Out)</b></td>
+      <td>Replaces the page that entered the buffer first.</td>
+    </tr>
+    <tr>
+      <td><b>LFU (Least Frequently Used)</b></td>
+      <td>Removes the page that is used the least often.</td>
+    </tr>
+    <tr>
+      <td><b>Clock Algorithm</b></td>
+      <td>A circular list-based efficient version of LRU that uses reference bits to track usage.</td>
+    </tr>
+  </table>
+
+  <h3>🧮 Example</h3>
+  <pre><code>Suppose the STUDENT table is stored on disk.
+1️⃣ When a query requests data for a student record, DBMS checks if it’s in buffer.
+2️⃣ If not, it loads the page from disk into a buffer frame.
+3️⃣ After update, the page becomes “dirty”.
+4️⃣ When buffer is full, LRU policy may remove the least used page and write dirty pages back to disk.</code></pre>
+
+  <h3>🚀 Advantages</h3>
+  <ul>
+    <li>Reduces disk I/O operations (faster query execution).</li>
+    <li>Improves CPU–I/O overlap efficiency.</li>
+    <li>Maintains data consistency through controlled write-back (dirty page handling).</li>
+    <li>Enhances DBMS performance for large databases.</li>
+  </ul>
+
+  <h3>⚠️ Disadvantages</h3>
+  <ul>
+    <li>Requires careful tuning of buffer size for best performance.</li>
+    <li>Dirty page handling adds complexity to transaction management.</li>
+    <li>Poor replacement policy may cause frequent page faults.</li>
+  </ul>
+
+</section>
+
+<hr>
+
+ <h1>Relational Algebra vs SQL</h1>
+  <table>
+    <tr>
+      <th>Relational Algebra</th>
+      <th>Meaning</th>
+      <th>SQL Equivalent</th>
+    </tr>
+    <tr>
+      <td><b>σ (Sigma)</b></td>
+      <td>Selection (choose rows)</td>
+      <td><code>WHERE</code></td>
+    </tr>
+    <tr>
+      <td><b>π (Pi)</b></td>
+      <td>Projection (choose columns)</td>
+      <td><code>SELECT column_list</code></td>
+    </tr>
+    <tr>
+      <td><b>⋈ (Join)</b></td>
+      <td>Combine two tables based on condition</td>
+      <td><code>JOIN ... ON</code></td>
+    </tr>
+    <tr>
+      <td><b>× (Cross Product)</b></td>
+      <td>All combinations of rows</td>
+      <td><code>CROSS JOIN</code></td>
+    </tr>
+    <tr>
+      <td><b>∪ (Union)</b></td>
+      <td>Combine rows from two queries (no duplicates)</td>
+      <td><code>UNION</code></td>
+    </tr>
+    <tr>
+      <td><b>∩ (Intersection)</b></td>
+      <td>Common rows between queries</td>
+      <td><code>INTERSECT</code> (not in MySQL, use <code>INNER JOIN</code> + condition)</td>
+    </tr>
+    <tr>
+      <td><b>− (Set Difference)</b></td>
+      <td>Rows in one relation but not in another</td>
+      <td><code>EXCEPT</code> (not in MySQL, use <code>LEFT JOIN ... WHERE NULL</code>)</td>
+    </tr>
+    <tr>
+      <td><b>ρ (Rho)</b></td>
+      <td>Rename relation/attribute</td>
+      <td><code>AS</code></td>
+    </tr>
+  </table>
+  
+
+
+</body>  
+</html>
