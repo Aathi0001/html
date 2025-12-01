@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vim Shortcuts Cheat Sheet</title>
+  <style>
+    body { font-family: Arial, sans-serif; line-height: 1.6; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+    h1, h2 { color: #4ec9b0; }
+    table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    th, td { border: 1px solid #555; padding: 8px; text-align: left; }
+    th { background-color: #333; }
+    code { background-color: #2d2d2d; padding: 2px 5px; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<h1>Vim Shortcuts Cheat Sheet</h1>
+
+<section>
+  <h2>Normal Mode (Navigation / Editing)</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>h</td><td>Move left</td></tr>
+    <tr><td>j</td><td>Move down</td></tr>
+    <tr><td>k</td><td>Move up</td></tr>
+    <tr><td>l</td><td>Move right</td></tr>
+    <tr><td>0</td><td>Go to beginning of line</td></tr>
+    <tr><td>$</td><td>Go to end of line</td></tr>
+    <tr><td>w</td><td>Jump to next word</td></tr>
+    <tr><td>b</td><td>Jump to beginning of word</td></tr>
+    <tr><td>gg</td><td>Go to first line</td></tr>
+    <tr><td>G</td><td>Go to last line</td></tr>
+    <tr><td>Ctrl+f</td><td>Page down</td></tr>
+    <tr><td>Ctrl+b</td><td>Page up</td></tr>
+    <tr><td>dd</td><td>Delete current line</td></tr>
+    <tr><td>dw</td><td>Delete word</td></tr>
+    <tr><td>x</td><td>Delete character under cursor</td></tr>
+    <tr><td>u</td><td>Undo last action</td></tr>
+    <tr><td>Ctrl+r</td><td>Redo</td></tr>
+    <tr><td>yy</td><td>Yank (copy) line</td></tr>
+    <tr><td>p</td><td>Paste after cursor</td></tr>
+    <tr><td>ZZ</td><td>Save file (if modified) and exit Vim</td></tr>
+    <tr><td>ZQ</td><td>Quit without saving (like :q!)</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Insert Mode</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>i</td><td>Insert before cursor</td></tr>
+    <tr><td>I</td><td>Insert at beginning of line</td></tr>
+    <tr><td>a</td><td>Insert after cursor</td></tr>
+    <tr><td>A</td><td>Insert at end of line</td></tr>
+    <tr><td>o</td><td>Open new line below</td></tr>
+    <tr><td>O</td><td>Open new line above</td></tr>
+    <tr><td>Esc</td><td>Return to Normal mode</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Visual Mode</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>v</td><td>Start visual selection (character-wise)</td></tr>
+    <tr><td>V</td><td>Start visual line selection</td></tr>
+    <tr><td>Ctrl+v</td><td>Start visual block selection</td></tr>
+    <tr><td>y</td><td>Yank selection</td></tr>
+    <tr><td>d</td><td>Delete selection</td></tr>
+    <tr><td>p</td><td>Paste after selection</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Command Mode (Colon Commands)</h2>
+  <table>
+    <tr><th>Command</th><th>Action</th></tr>
+    <tr><td>:w</td><td>Save file</td></tr>
+    <tr><td>:q</td><td>Quit</td></tr>
+    <tr><td>:wq</td><td>Save and quit</td></tr>
+    <tr><td>:q!</td><td>Quit without saving</td></tr>
+    <tr><td>:x</td><td>Save and quit (same as :wq)</td></tr>
+    <tr><td>:e FILE</td><td>Open file</td></tr>
+    <tr><td>:r FILE</td><td>Read content of another file into current file</td></tr>
+    <tr><td>:%s/old/new/g</td><td>Replace all occurrences of 'old' with 'new'</td></tr>
+    <tr><td>:/pattern</td><td>Search for 'pattern'</td></tr>
+    <tr><td>:noh</td><td>Remove search highlighting</td></tr>
+    <tr><td>:set number</td><td>Show line numbers</td></tr>
+    <tr><td>:set nonumber</td><td>Hide line numbers</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2>Other Useful Shortcuts</h2>
+  <table>
+    <tr><th>Shortcut</th><th>Action</th></tr>
+    <tr><td>Ctrl+o</td><td>Jump to older cursor position</td></tr>
+    <tr><td>Ctrl+i</td><td>Jump to newer cursor position</td></tr>
+    <tr><td>ggVG</td><td>Select all file content</td></tr>
+    <tr><td>zz</td><td>Center cursor line on screen</td></tr>
+    <tr><td>Ctrl+g</td><td>Show file info (line, percentage)</td></tr>
+    <tr><td>. (dot)</td><td>Repeat last command</td></tr>
+  </table>
+</section>
+
+  <!-- Marks & Jumping -->
+  <section>
+    <h2>Marks & Jumping</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>m[a-z]</td><td>Set a mark named a–z at cursor position</td></tr>
+      <tr><td>'a</td><td>Jump to beginning of line of mark 'a'</td></tr>
+      <tr><td>`a</td><td>Jump to exact position of mark 'a'</td></tr>
+    </table>
+  </section>
+
+  <!-- Registers & Yanking -->
+  <section>
+    <h2>Registers & Yanking</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>"ay</td><td>Yank (copy) into register a</td></tr>
+      <tr><td>"ap</td><td>Paste from register a</td></tr>
+      <tr><td>"0y</td><td>Yank into yank register 0 (default)</td></tr>
+    </table>
+  </section>
+
+  <!-- Macros -->
+  <section>
+    <h2>Macros</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>q[a-z]</td><td>Start recording macro into register a–z</td></tr>
+      <tr><td>@a</td><td>Execute macro stored in register a</td></tr>
+      <tr><td>@@</td><td>Repeat last executed macro</td></tr>
+    </table>
+  </section>
+
+  <!-- Folding -->
+  <section>
+    <h2>Folding</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>za</td><td>Toggle fold under cursor</td></tr>
+      <tr><td>zR</td><td>Open all folds</td></tr>
+      <tr><td>zM</td><td>Close all folds</td></tr>
+    </table>
+  </section>
+
+  <!-- Buffers & Windows -->
+  <section>
+    <h2>Buffers & Windows</h2>
+    <table>
+      <tr><th>Shortcut / Command</th><th>Action</th></tr>
+      <tr><td>:bn</td><td>Go to next buffer</td></tr>
+      <tr><td>:bp</td><td>Go to previous buffer</td></tr>
+      <tr><td>:ls</td><td>List all buffers</td></tr>
+      <tr><td>:sp file</td><td>Open file in horizontal split</td></tr>
+      <tr><td>:vsp file</td><td>Open file in vertical split</td></tr>
+      <tr><td>Ctrl+w h/j/k/l</td><td>Move cursor between split windows</td></tr>
+    </table>
+  </section>
+
+  <!-- Search Enhancements -->
+  <section>
+    <h2>Search Enhancements</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>n</td><td>Repeat last search in same direction</td></tr>
+      <tr><td>N</td><td>Repeat last search in opposite direction</td></tr>
+      <tr><td>ctrl + shift + *</td><td>Search for word under cursor forward</td></tr>
+      <tr><td>ctrl + shift + #</td><td>Search for word under cursor backward</td></tr>
+    </table>
+  </section>
+
+  <!-- Visual Block Editing -->
+  <section>
+    <h2>Visual Block Editing</h2>
+    <table>
+      <tr><th>Shortcut</th><th>Action</th></tr>
+      <tr><td>Ctrl+v</td><td>Start visual block mode</td></tr>
+      <tr><td>I</td><td>Insert text at start of each line in block</td></tr>
+      <tr><td>A</td><td>Append text at end of each line in block</td></tr>
+      <tr><td>d</td><td>Delete selected block</td></tr>
+      <tr><td>y</td><td>Yank selected block</td></tr>
+    </table>
+  </section>
+
+<section id="vim">
+  <h2>🖋️ Vim Cheat Sheet</h2>
+
+  <!-- 1. Modes -->
+  <h3>1️⃣ Vim Modes</h3>
+  <table>
+    <thead>
+      <tr><th>Mode</th><th>How to Enter</th><th>Usage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Normal</td><td>Esc</td><td>Navigation, deletion, copying, pasting, searching, saving</td></tr>
+      <tr><td>Insert</td><td>i / I / a / A / o / O</td><td>Insert text</td></tr>
+      <tr><td>Visual</td><td>v / V / Ctrl+v</td><td>Select text (character, line, block)</td></tr>
+      <tr><td>Command-line</td><td>:</td><td>Execute commands like save, quit, search, replace</td></tr>
+    </tbody>
+  </table>
+
+  <pre><code>
+i     -> insert before cursor
+I     -> insert at beginning of line
+a     -> append after cursor
+A     -> append at end of line
+o     -> open new line below
+O     -> open new line above
+  </code></pre>
+
+  <!-- 2. Navigation -->
+  <h3>2️⃣ Navigation Commands (Normal Mode)</h3>
+  <table>
+    <thead>
+      <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>h</td><td>Move left</td><td>3h → move 3 chars left</td></tr>
+      <tr><td>l</td><td>Move right</td><td>5l → move 5 chars right</td></tr>
+      <tr><td>j</td><td>Move down</td><td>2j → move 2 lines down</td></tr>
+      <tr><td>k</td><td>Move up</td><td>k → move up 1 line</td></tr>
+      <tr><td>0</td><td>Start of line</td><td></td></tr>
+      <tr><td>^</td><td>First non-blank char</td><td></td></tr>
+      <tr><td>$</td><td>End of line</td><td></td></tr>
+      <tr><td>gg</td><td>Start of file</td><td></td></tr>
+      <tr><td>G</td><td>End of file</td><td></td></tr>
+      <tr><td>Ctrl+d</td><td>Down half-page</td><td></td></tr>
+      <tr><td>Ctrl+u</td><td>Up half-page</td><td></td></tr>
+      <tr><td>w</td><td>Next word</td><td></td></tr>
+      <tr><td>e</td><td>End of word</td><td></td></tr>
+      <tr><td>b</td><td>Beginning of word</td><td></td></tr>
+      <tr><td>f&lt;char&gt;</td><td>Find char forward</td><td>f: → jump to next :</td></tr>
+      <tr><td>F&lt;char&gt;</td><td>Find char backward</td><td>F: → jump backward to :</td></tr>
+      <tr><td>t&lt;char&gt;</td><td>Till char forward</td><td>t: → jump before :</td></tr>
+      <tr><td>T&lt;char&gt;</td><td>Till char backward</td><td>T: → jump before : backward</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 3. Insert -->
+  <h3>3️⃣ Inserting Text</h3>
+  <pre><code>
+i - Insert before cursor
+I - Insert at beginning of line
+a - Append after cursor
+A - Append at end of line
+o - Open new line below
+O - Open new line above
+  </code></pre>
+
+  <!-- 4. Deleting -->
+  <h3>4️⃣ Deleting Text</h3>
+  <table>
+    <thead>
+      <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>x</td><td>Delete char under cursor</td><td>3x → delete 3 chars</td></tr>
+      <tr><td>X</td><td>Delete char before cursor</td><td>X → delete 1 char left</td></tr>
+      <tr><td>dw</td><td>Delete word</td><td>dw → delete word from cursor</td></tr>
+      <tr><td>d$</td><td>Delete till end of line</td><td></td></tr>
+      <tr><td>dd</td><td>Delete entire line</td><td>3dd → delete 3 lines</td></tr>
+      <tr><td>d^</td><td>Delete from cursor to first non-blank</td><td></td></tr>
+      <tr><td>d0</td><td>Delete from cursor to start of line</td><td></td></tr>
+    </tbody>
+  </table>
+
+  <!-- 5. Copy & Paste -->
+  <h3>5️⃣ Copying and Pasting</h3>
+  <pre><code>
+yy - Yank (copy) line, 3yy → copy 3 lines
+y$ - Yank to end of line
+yw - Yank word
+p  - Paste after cursor
+P  - Paste before cursor
+  </code></pre>
+
+  <!-- 6. Undo/Redo -->
+  <h3>6️⃣ Undo / Redo</h3>
+  <pre><code>
+u       - Undo last change
+Ctrl+r  - Redo undone change
+  </code></pre>
+
+  <!-- 7. Search & Replace -->
+  <h3>7️⃣ Search & Replace</h3>
+  <pre><code>
+/pattern       - Search forward
+?pattern       - Search backward
+n              - Repeat search in same direction
+N              - Repeat search in opposite direction
+:%s/old/new/g  - Replace all in file
+:s/old/new/g   - Replace in current line
+:%s/old/new/gc - Replace with confirmation
+  </code></pre>
+
+  <!-- 8. Visual Mode -->
+  <h3>8️⃣ Visual Mode Commands</h3>
+  <pre><code>
+v       - Character-wise visual select
+V       - Line-wise visual select
+Ctrl+v  - Block visual select
+y       - Yank selected text
+d       - Delete selected text
+>       - Indent selection
+<       - Un-indent selection
+  </code></pre>
+
+  <!-- 9. File Commands -->
+  <h3>9️⃣ File Commands (: Command-Line Mode)</h3>
+  <pre><code>
+:w            - Save file
+:w filename   - Save as new file
+:q            - Quit
+:q!           - Quit without saving
+:wq / :x      - Save and quit
+:e filename   - Open file
+:r filename   - Insert file content at cursor
+:set number   - Show line numbers
+:set nonumber - Hide line numbers
+  </code></pre>
+
+  <!-- 10. Escape Sequences -->
+  <h3>🔟 Escape Sequences (Special Keys)</h3>
+  <pre><code>
+Esc       - Return to normal mode
+Ctrl+c    - Interrupt current command
+Ctrl+[    - Another way to Esc
+Ctrl+v    - Literal insert (special chars)
+Ctrl+d    - Scroll half page down
+Ctrl+u    - Scroll half page up
+Ctrl+f    - Scroll full page down
+Ctrl+b    - Scroll full page up
+  </code></pre>
+
+  <!-- 11. Marks -->
+  <h3>1️⃣1️⃣ Marks & Navigation</h3>
+  <pre><code>
+m{a-z}    - Set mark at cursor (e.g., ma)
+'{a-z}    - Jump to beginning of marked line (e.g., 'a)
+`{a-z}    - Jump to exact cursor position of mark
+  </code></pre>
+
+  <!-- 12. Exiting Vim -->
+  <h3>1️⃣2️⃣ Exiting Vim Quickly</h3>
+  <pre><code>
+:wq    - Save & quit
+ZZ     - Save & quit (Normal mode)
+:x     - Save & quit
+:q!    - Quit without saving
+ZQ     - Quit without saving (Normal mode)
+  </code></pre>
+
+  <!-- 13. Example Workflow -->
+  <h3>1️⃣3️⃣ Example Workflow</h3>
+  <pre><code>
+# Open file
+vim file.txt
+
+# Insert text
+iHello, this is Vim!   # press Esc to exit insert mode
+
+# Save changes
+:w
+
+# Copy line
+yy
+
+# Paste line
+p
+
+# Search
+/this
+
+# Replace
+:%s/Vim/Vi/g
+
+# Quit
+:wq
+  </code></pre>
+</section>
+
+<section id="vim-complete">
+  <h2>🖋️ Complete Vim Cheat Sheet with Examples</h2>
+
+  <!-- 1. Modes -->
+  <h3>1️⃣ Vim Modes</h3>
+  <table>
+    <thead>
+      <tr><th>Mode</th><th>How to Enter</th><th>Usage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Normal</td><td>Esc</td><td>Navigation, deletion, copying, pasting, searching, saving</td></tr>
+      <tr><td>Insert</td><td>i / I / a / A / o / O</td><td>Insert text</td></tr>
+      <tr><td>Visual</td><td>v / V / Ctrl+v</td><td>Select text (character, line, block)</td></tr>
+      <tr><td>Command-line</td><td>:</td><td>Execute commands like save, quit, search, replace</td></tr>
+    </tbody>
+  </table>
+
+  <pre><code>
+i     -> insert before cursor
+I     -> insert at beginning of line
+a     -> append after cursor
+A     -> append at end of line
+o     -> open new line below
+O     -> open new line above
+  </code></pre>
+
+  <!-- 2. Screen Navigation -->
+  <h3>2️⃣ Screen Navigation</h3>
+  <table>
+    <thead>
+      <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>K</td><td>Open man page for word under cursor</td><td>Place cursor on "ls" → press K → opens man page for ls</td></tr>
+      <tr><td>H</td><td>Move to top of screen</td><td>Press H → cursor jumps to top line of visible screen</td></tr>
+      <tr><td>M</td><td>Move to middle of screen</td><td>Press M → cursor jumps to middle line</td></tr>
+      <tr><td>L</td><td>Move to bottom of screen</td><td>Press L → cursor jumps to bottom line</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 3. Word Motions -->
+  <h3>3️⃣ Word Motions</h3>
+  <table>
+    <thead>
+      <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>w</td><td>Jump forward to start of a word</td><td>Cursor at "This is a test", press w → jumps to "is"</td></tr>
+      <tr><td>W</td><td>Jump forward to start of a word (ignores punctuation)</td><td>Cursor at "Hello,world", press W → jumps to "world"</td></tr>
+      <tr><td>e</td><td>Jump forward to end of a word</td><td>Cursor at "This", press e → jumps to "s"</td></tr>
+      <tr><td>E</td><td>Jump forward to end of word (ignores punctuation)</td><td>Cursor at "Hello,world", press E → jumps to "d"</td></tr>
+      <tr><td>b</td><td>Jump backward to start of a word</td><td>Cursor at "test", press b → jumps to "a"</td></tr>
+      <tr><td>B</td><td>Jump backward to start of a word (ignores punctuation)</td><td>Cursor at "world", press B → jumps to "Hello"</td></tr>
+      <tr><td>ge</td><td>Jump backward to end of a word</td><td>Cursor at "test", press ge → jumps to "t" in "a"</td></tr>
+      <tr><td>gE</td><td>Jump backward to end of word (ignores punctuation)</td><td>Cursor at "world", press gE → jumps to "o" in "Hello"</td></tr>
+      <tr><td>%</td><td>Move cursor to matching character</td><td>Cursor on "(", press % → jumps to matching ")"</td></tr>
+      <tr><td>g_</td><td>Jump to last non-blank character of the line</td><td>Press g_ → cursor jumps to last character</td></tr>
+      <tr><td>;</td><td>Repeat previous f, t, F or T movement</td><td>Press ; → repeats last find motion</td></tr>
+      <tr><td>,</td><td>Repeat previous f, t, F or T movement backward</td><td>Press , → repeat find motion in opposite direction</td></tr>
+      <tr><td>}</td><td>Jump to next paragraph / function</td><td>Press } → cursor moves to next blank-line separated paragraph</td></tr>
+      <tr><td>{</td><td>Jump to previous paragraph / function</td><td>Press { → cursor moves to previous paragraph</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 4. Insert Mode Ctrl Commands -->
+  <h3>4️⃣ Insert Mode Ctrl Commands</h3>
+  <table>
+    <thead>
+      <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Ctrl+h</td><td>Delete character before cursor</td><td>Insert "Hello", press Ctrl+h → deletes "o"</td></tr>
+      <tr><td>Ctrl+w</td><td>Delete word before cursor</td><td>Insert "Hello World", press Ctrl+w → deletes "World"</td></tr>
+      <tr><td>Ctrl+j</td><td>Add line break at cursor</td><td>Insert "Hello|World", press Ctrl+j → splits line at "|"</td></tr>
+      <tr><td>Ctrl+t</td><td>Indent line one shiftwidth</td><td>Press Ctrl+t → indents line right</td></tr>
+      <tr><td>Ctrl+d</td><td>De-indent line one shiftwidth</td><td>Press Ctrl+d → moves line left</td></tr>
+      <tr><td>Ctrl+n</td><td>Auto-complete next match before cursor</td><td>Insert "pri", press Ctrl+n → completes to "print"</td></tr>
+      <tr><td>Ctrl+p</td><td>Auto-complete previous match before cursor</td><td>Insert "pri", press Ctrl+p → completes to previous match</td></tr>
+      <tr><td>Ctrl+rx</td><td>Insert contents of register x</td><td>Press Ctrl+r then x → inserts text from register x</td></tr>
+      <tr><td>Ctrl+ox</td><td>Temporarily enter normal mode to issue one command</td><td>Press Ctrl+o then d → deletes current line</td></tr>
+    </tbody>
+  </table>
+
+  
+
+  <!-- 5. Example Workflow -->
+  <h3>5️⃣ Example Workflow</h3>
+  <pre><code>
+# Open file
+vim file.txt
+
+# Insert text
+iHello, this is Vim!   # press Esc to exit insert mode
+
+# Navigate
+w          # jump to start of next word
+b          # jump backward to start of word
+%          # jump to matching parenthesis
+H          # move to top of screen
+M          # move to middle
+L          # move to bottom
+
+# Edit text
+Ctrl+h     # delete char before cursor
+Ctrl+w     # delete word before cursor
+Ctrl+t     # indent line
+Ctrl+d     # de-indent line
+Ctrl+j     # insert line break
+
+# Copy & Paste
+yy         # copy line
+p          # paste line
+
+# Search & Replace
+/this      # search for 'this'
+:%s/Vim/Vi/g  # replace Vim with Vi
+
+# Save & Quit
+:wq
+  </code></pre>
+
+  <!-- 6. Deleting Text -->
+<h3>6️⃣ Deleting Text</h3>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>x</td><td>Delete character under cursor</td><td>x → deletes the character under cursor</td></tr>
+    <tr><td>X</td><td>Delete character before cursor</td><td>X → deletes the character before cursor</td></tr>
+    <tr><td>dw</td><td>Delete word from cursor</td><td>dw → deletes word starting at cursor</td></tr>
+    <tr><td>d$</td><td>Delete from cursor to end of line</td><td>d$ → deletes everything from cursor to line end</td></tr>
+    <tr><td>dd</td><td>Delete entire line</td><td>dd → deletes the current line</td></tr>
+    <tr><td>d^</td><td>Delete from cursor to first non-blank character</td><td>d^ → deletes from cursor to first non-space char</td></tr>
+    <tr><td>d0</td><td>Delete from cursor to start of line</td><td>d0 → deletes from cursor to beginning of line</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Example usage:
+# Suppose the line contains: "Hello Vim World"
+
+# Cursor on 'V' in Vim:
+x       -> deletes 'V', line becomes: "Hello im World"
+X       -> deletes 'i' before 'V', line becomes: "Hello m World"
+dw      -> deletes 'Vim', line becomes: "Hello  World"
+d$      -> deletes everything from 'V' to end, line becomes: "Hello "
+dd      -> deletes the entire line
+d^      -> deletes from 'V' to first non-space char on line
+d0      -> deletes from 'V' to beginning of line
+</code></pre>
+
+<!-- 7. Change / Replace & Misc Commands -->
+<h3>7️⃣ Change / Replace & Misc Commands</h3>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>r</td><td>Replace a single character</td><td>rX → replaces character under cursor with 'X'</td></tr>
+    <tr><td>R</td><td>Replace multiple characters until ESC</td><td>R → type text to overwrite until ESC</td></tr>
+    <tr><td>J</td><td>Join line below with current line (with space)</td><td>J → joins next line with a space</td></tr>
+    <tr><td>gJ</td><td>Join line below with current line (no space)</td><td>gJ → joins next line without adding space</td></tr>
+    <tr><td>gwip</td><td>Reflow paragraph</td><td>gwip → reformats the current paragraph</td></tr>
+    <tr><td>g~</td><td>Switch case up to motion</td><td>g~w → toggles case of the next word</td></tr>
+    <tr><td>gu</td><td>Change to lowercase up to motion</td><td>guw → makes next word lowercase</td></tr>
+    <tr><td>gU</td><td>Change to uppercase up to motion</td><td>gUw → makes next word uppercase</td></tr>
+    <tr><td>cc</td><td>Change (replace) entire line</td><td>cc → delete line and start insert mode</td></tr>
+    <tr><td>c$ or C</td><td>Change to end of line</td><td>C → delete till end of line and start insert</td></tr>
+    <tr><td>ciw</td><td>Change (replace) entire word</td><td>ciw → deletes word under cursor and start insert</td></tr>
+    <tr><td>cw or ce</td><td>Change to end of word</td><td>cw → deletes till end of word and insert</td></tr>
+    <tr><td>s</td><td>Delete char and substitute text (same as cl)</td><td>s → deletes character under cursor and enters insert</td></tr>
+    <tr><td>S</td><td>Delete line and substitute text (same as cc)</td><td>S → deletes line and enters insert</td></tr>
+    <tr><td>xp</td><td>Transpose two letters (delete + paste)</td><td>xp → swaps two letters under cursor</td></tr>
+    <tr><td>u</td><td>Undo last change</td><td>u → undo last action</td></tr>
+    <tr><td>U</td><td>Restore (undo) last changed line</td><td>U → undo all changes in current line</td></tr>
+    <tr><td>Ctrl+r</td><td>Redo undone changes</td><td>Ctrl+r → redo undone action</td></tr>
+    <tr><td>.</td><td>Repeat last command</td><td>. → repeat previous edit command</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Replace character under cursor
+# "Hello" with cursor on 'H':
+rJ  → changes line to "Jello"
+
+# Replace multiple characters
+RHello<ESC> → replaces text starting at cursor until ESC
+
+# Join lines
+# Line1: Hello
+# Line2: World
+J → Line1 becomes: "Hello World"
+gJ → Line1 becomes: "HelloWorld"
+
+# Change case
+g~w → toggles case of next word
+guw → makes next word lowercase
+gUw → makes next word uppercase
+
+# Change commands
+cc → delete current line & start insert
+C  → delete till end of line & start insert
+ciw → delete current word & start insert
+cw → delete to end of word & start insert
+s  → delete character & insert
+S  → delete line & insert
+
+# Transpose letters
+xp → swaps two letters under cursor
+
+# Undo/Redo
+u → undo last change
+U → undo all changes in line
+Ctrl+r → redo
+. → repeat last command
+</code></pre>
+
+<!-- 8. Visual Mode Commands -->
+<h3>8️⃣ Visual Mode Commands</h3>
+<p>Visual mode allows selecting text for operations like indenting, yanking, deleting, changing case, etc.</p>
+
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example / Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>v</td><td>Enter character-wise visual mode</td><td>v → start selecting characters</td></tr>
+    <tr><td>V</td><td>Enter line-wise visual mode</td><td>V → select entire lines</td></tr>
+    <tr><td>Ctrl+v</td><td>Enter block-wise visual mode</td><td>Ctrl+v → select a rectangular block</td></tr>
+    <tr><td>y</td><td>Yank (copy) selected text</td><td>y → copy marked text</td></tr>
+    <tr><td>d</td><td>Delete selected text</td><td>d → deletes marked text</td></tr>
+    <tr><td>~</td><td>Switch case of selection</td><td>~ → toggles case of selection</td></tr>
+    <tr><td>u</td><td>Change selection to lowercase</td><td>u → converts selection to lowercase</td></tr>
+    <tr><td>U</td><td>Change selection to uppercase</td><td>U → converts selection to uppercase</td></tr>
+    <tr><td>&gt;</td><td>Indent selection right</td><td>> → shift selected text right by one shiftwidth</td></tr>
+    <tr><td>&lt;</td><td>Indent selection left</td><td>< → shift selected text left by one shiftwidth</td></tr>
+    <tr><td>o</td><td>Move cursor to other end of selection</td><td>o → toggle between start and end of selection</td></tr>
+    <tr><td>gv</td><td>Reselect last visual selection</td><td>gv → useful to repeat operation on same selection</td></tr>
+    <tr><td>gU</td><td>Uppercase selection</td><td>gU → works with motion or selection</td></tr>
+    <tr><td>gu</td><td>Lowercase selection</td><td>gu → works with motion or selection</td></tr>
+    <tr><td>g~</td><td>Switch case of selection</td><td>g~ → works with motion or selection</td></tr>
+    <tr><td>CTRL+o</td><td>Run normal-mode command on selected text (Visual Block)</td><td>Ctrl+o → allows running a single command on each line/block</td></tr>
+    <tr><td>I</td><td>Insert text at start of block (Visual Block)</td><td>I → insert before each selected line</td></tr>
+    <tr><td>A</td><td>Append text at end of block (Visual Block)</td><td>A → append to end of each selected line</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Indenting text
+# Select lines in visual mode, then:
+>  → shifts all selected lines right
+<  → shifts all selected lines left
+
+# Changing case
+v + motion + ~ → toggle case of selection
+V + motion + U → make selection uppercase
+V + motion + u → make selection lowercase
+
+# Moving cursor in visual mode
+o → move cursor to other end of selection
+
+# Block mode edits
+Ctrl+v → select rectangular block
+I → insert at beginning of each line in block
+A → append at end of each line in block
+Ctrl+o → run a single normal command on selected lines (e.g., delete first char on each line)
+</code></pre>
+
+<!-- 9. Indenting & Exiting -->
+<h3>9️⃣ Indenting & Exiting</h3>
+
+<h4>🟢 Indenting Text</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example / Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>>></td><td>Indent line right by one shiftwidth</td><td>>> → indent current line</td></tr>
+    <tr><td><<</td><td>De-indent line left by one shiftwidth</td><td><< → de-indent current line</td></tr>
+    <tr><td>>%</td><td>Indent a block with () or {} (cursor on brace)</td><td>>% → indent entire block</td></tr>
+    <tr><td><%</td><td>De-indent a block with () or {} (cursor on brace)</td><td><% → de-indent entire block</td></tr>
+    <tr><td>>ib</td><td>Indent inner block with ()</td><td>>ib → indent inside parentheses</td></tr>
+    <tr><td>>at</td><td>Indent a block with &lt;&gt; tags</td><td>>at → indent HTML/XML block</td></tr>
+    <tr><td>3==</td><td>Re-indent 3 lines</td><td>3== → reformat next 3 lines</td></tr>
+    <tr><td>=%</td><td>Re-indent a block with () or {} (cursor on brace)</td><td>=% → reformat the block</td></tr>
+    <tr><td>=iB</td><td>Re-indent inner block with {}</td><td>=iB → reformat code inside braces</td></tr>
+    <tr><td>gg=G</td><td>Re-indent entire buffer</td><td>gg=G → reformat all lines in file</td></tr>
+    <tr><td>]p</td><td>Paste and adjust indent to current line</td><td>]p → auto-align pasted code</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Indent line
+>> → moves line right by one shiftwidth
+<< → moves line left by one shiftwidth
+
+# Indent blocks
+>% → indent entire block surrounded by braces
+<% → de-indent entire block
+>ib → indent inside parentheses
+>at → indent HTML/XML block
+
+# Re-indent multiple lines
+3== → reformat 3 lines
+=%  → reformat block under cursor
+=iB → reformat inner block
+gg=G → reformat entire file
+
+# Paste with adjusted indent
+]p → paste text and adjust to current line indentation
+</code></pre>
+
+<h4>🔴 Exiting Vim</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example / Notes</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:w</td><td>Write (save) file, don't exit</td><td>:w → save changes</td></tr>
+    <tr><td>:w !sudo tee %</td><td>Write file using sudo</td><td>:w !sudo tee % → save protected file</td></tr>
+    <tr><td>:wq / :x / ZZ</td><td>Write and quit</td><td>Save changes and exit Vim</td></tr>
+    <tr><td>:q</td><td>Quit</td><td>Fails if unsaved changes exist</td></tr>
+    <tr><td>:q! / ZQ</td><td>Quit and discard unsaved changes</td><td>Force quit without saving</td></tr>
+    <tr><td>:wqa</td><td>Write and quit all tabs</td><td>Save all open files and exit Vim</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+:w       → save file
+:w !sudo tee % → save file as root
+:wq / :x / ZZ → save & quit
+:q       → quit (fails if unsaved changes)
+:q! / ZQ → quit without saving
+:wqa     → save and quit all open tabs
+</code></pre>
+
+<!-- 10. Search & Replace -->
+<h3>🔍 Search & Replace</h3>
+
+<h4>🟢 Searching</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>/pattern</td><td>Search forward for pattern</td><td>/foo → searches forward for 'foo'</td></tr>
+    <tr><td>?pattern</td><td>Search backward for pattern</td><td>?foo → searches backward for 'foo'</td></tr>
+    <tr><td>\vpattern</td><td>'Very magic' regex: non-alphanumeric characters are treated as regex symbols</td><td>/\v\d{3}-\d{2}-\d{4} → searches for SSN-like pattern</td></tr>
+    <tr><td>n</td><td>Repeat last search in same direction</td><td>n → moves to next match</td></tr>
+    <tr><td>N</td><td>Repeat last search in opposite direction</td><td>N → moves to previous match</td></tr>
+    <tr><td>:noh[lsearch]</td><td>Remove highlighting of search matches</td><td>:nohl → stop highlighting</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Replace</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:%s/old/new/g</td><td>Replace all occurrences of 'old' with 'new' in entire file</td><td>:%s/foo/bar/g → replace all 'foo' with 'bar'</td></tr>
+    <tr><td>:%s/old/new/gc</td><td>Replace all occurrences with confirmation</td><td>:%s/foo/bar/gc → confirm each replacement</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Search in Multiple Files</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:vim[grep] /pattern/ {file}</td><td>Search for pattern in multiple files</td><td>:vimgrep /foo/ **/* → search 'foo' in all files recursively</td></tr>
+    <tr><td>:cn[ext]</td><td>Jump to next match in quickfix list</td><td>:cn → move to next match</td></tr>
+    <tr><td>:cp[revious]</td><td>Jump to previous match in quickfix list</td><td>:cp → move to previous match</td></tr>
+    <tr><td>:cope[n]</td><td>Open window with list of matches</td><td>:copen → open quickfix window</td></tr>
+    <tr><td>:ccl[ose]</td><td>Close quickfix window</td><td>:cclose → close quickfix window</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Search
+/foo      → search forward for 'foo'
+?foo      → search backward
+/\v\d{3}-\d{2}-\d{4} → very magic regex search
+
+# Repeat search
+n → next match
+N → previous match
+:noh → remove highlighting
+
+# Replace
+:%s/foo/bar/g  → replace all 'foo' with 'bar' in file
+:%s/foo/bar/gc → replace all 'foo' with 'bar' with confirmation
+
+# Multi-file search
+:vimgrep /foo/ **/* → search 'foo' in all files
+:cn  → jump to next match
+:cp  → jump to previous match
+:copen → open list of matches
+:cclose → close quickfix window
+</code></pre>
+
+<!-- 12. Range, Global & Regex in Vim -->
+<h3>🔧 Range, Global & Regex in Vim</h3>
+
+<h4>🟢 Line Ranges</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:.,$d</td><td>Delete from current line to end of file</td><td>:.,$d → deletes current line to EOF</td></tr>
+    <tr><td>:.,1d</td><td>Delete from current line to beginning of file</td><td>:.,1d → deletes from current line to line 1</td></tr>
+    <tr><td>:10,1d</td><td>Delete from line 10 to line 1</td><td>:10,1d → deletes lines 10 through 1</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Global Commands</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:g/{pattern}/d</td><td>Delete all lines containing pattern</td><td>:g/foo/d → deletes all lines with 'foo'</td></tr>
+    <tr><td>:g!/{pattern}/d</td><td>Delete all lines NOT containing pattern</td><td>:g!/foo/d → deletes all lines without 'foo'</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Search & Replace with Regex</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:%s/old/new/g</td><td>Replace all occurrences of old with new</td><td>:%s/foo/bar/g</td></tr>
+    <tr><td>:%s/old/new/gc</td><td>Replace all occurrences with confirmation</td><td>:%s/foo/bar/gc</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Common Escape Sequences in Patterns</h4>
+<table>
+  <thead>
+    <tr><th>Sequence</th><th>Meaning</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>\n</td><td>Newline</td><td>:%s/foo\nbar/baz/g → replace 'foo' followed by newline and 'bar' with 'baz'</td></tr>
+    <tr><td>\t</td><td>Tab</td><td>:%s/\t/    /g → replace tab with spaces</td></tr>
+    <tr><td>\d</td><td>Digit [0-9]</td><td>:%s/\d/X/g → replace digits with 'X'</td></tr>
+    <tr><td>\D</td><td>Non-digit</td><td>:%s/\D/X/g → replace non-digits with 'X'</td></tr>
+    <tr><td>\w</td><td>Word character [a-zA-Z0-9_]</td><td>:%s/\w/X/g → replace each word char with 'X'</td></tr>
+    <tr><td>\W</td><td>Non-word character</td><td>:%s/\W/X/g → replace non-word chars with 'X'</td></tr>
+    <tr><td>\s</td><td>Whitespace [space, tab]</td><td>:%s/\s/-/g → replace whitespace with '-'</td></tr>
+    <tr><td>\S</td><td>Non-whitespace</td><td>:%s/\S/X/g → replace non-whitespace with 'X'</td></tr>
+    <tr><td>\+</td><td>One or more of preceding atom</td><td>:%s/\d\+/NUM/g → replace one or more digits with 'NUM'</td></tr>
+    <tr><td>\z</td><td>Matches end of buffer</td><td>:%s/foo\z/bar/g → replace 'foo' at end of file</td></tr>
+    <tr><td>\v</td><td>'Very magic' mode (minimal escaping)</td><td>:%s/\v\d{3}-\d{2}-\d{4}/SSN/g</td></tr>
+    <tr><td>[a-z]</td><td>Character class (lowercase letters)</td><td>:%s/[a-z]/X/g → replace lowercase letters</td></tr>
+    <tr><td>[A-Z]</td><td>Character class (uppercase letters)</td><td>:%s/[A-Z]/X/g → replace uppercase letters</td></tr>
+    <tr><td>[0-9]</td><td>Digits 0-9</td><td>:%s/[0-9]/X/g → replace digits</td></tr>
+    <tr><td>^</td><td>Start of line</td><td>:%s/^foo/bar/g → replace 'foo' at line start</td></tr>
+    <tr><td>$</td><td>End of line</td><td>:%s/foo$/bar/g → replace 'foo' at line end</td></tr>
+    <tr><td>^A</td><td>Inverse/Negate inside class [^...] → matches anything not in class</td><td>:%s/[^a-z]/X/g → replace non-lowercase letters</td></tr>
+    <tr><td>\{n,m}</td><td>Repetition (min n, max m)</td><td>:%s/a\{2,4}/X/g → replace 2-4 'a' with 'X'</td></tr>
+    <tr><td>\( ... \)</td><td>Grouping</td><td>:%s/\(foo\)bar/\1baz/g → replace 'foobar' with 'foobaz'</td></tr>
+    <tr><td>\1, \2 ...</td><td>Backreference to group</td><td>:%s/\(foo\)\(bar\)/\2\1/g → swap 'foobar' to 'barfoo'</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Delete ranges
+:.,$d → delete from current line to end
+:.,1d → delete from current to beginning
+:10,1d → delete lines 10 to 1
+
+# Delete lines containing pattern
+:g/foo/d → delete lines with 'foo'
+:g!/foo/d → delete lines without 'foo'
+
+# Replace with regex
+:%s/\d\+/NUM/g → replace digits with NUM
+:%s/^\w\+/WORD/g → replace first word in each line
+:%s/[^a-zA-Z0-9]/_/g → replace non-alphanumeric with '_'
+:%s/\v(\d{3})-(\d{2})-(\d{4})/SSN/g → very magic: replace SSN pattern
+:%s/\t/    /g → replace tabs with spaces
+:%s/foo\nbar/baz/g → replace 'foo' + newline + 'bar' with 'baz'
+</code></pre>
+
+</section>
+
+<!-- 13. Marks, Jumps & Positions -->
+<h3>📌 Marks, Jumps & Positions</h3>
+
+<h4>🟢 Marks</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:marks</td><td>List all marks</td><td>:marks → show marks and positions</td></tr>
+    <tr><td>ma</td><td>Set mark A at current position</td><td>ma → set mark 'a' at cursor</td></tr>
+    <tr><td>`a</td><td>Jump to position of mark A</td><td>`a → go to mark 'a'</td></tr>
+    <tr><td>y`a</td><td>Yank text up to position of mark A</td><td>y`a → yank from cursor to mark 'a'</td></tr>
+    <tr><td>`0</td><td>Go to position where Vim was previously exited</td><td>`0 → restore cursor on last exit</td></tr>
+    <tr><td>`"</td><td>Go to position when last editing this file</td><td>`" → jump to last edit position</td></tr>
+    <tr><td>`.</td><td>Go to position of last change in this file</td><td>`.</td></tr>
+    <tr><td>``</td><td>Go to position before last jump</td><td>`` → jump back to previous cursor location</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Jump List</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:ju[mps]</td><td>List jump locations</td><td>:jumps → shows jump list</td></tr>
+    <tr><td>Ctrl + i</td><td>Go to newer position in jump list</td><td>Ctrl+i → move forward in jump list</td></tr>
+    <tr><td>Ctrl + o</td><td>Go to older position in jump list</td><td>Ctrl+o → move backward in jump list</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Change List</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:changes</td><td>List changes made in file</td><td>:changes → shows change list</td></tr>
+    <tr><td>g,</td><td>Go to newer change in list</td><td>g, → jump to newer change</td></tr>
+    <tr><td>g;</td><td>Go to older change in list</td><td>g; → jump to older change</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Tags</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Ctrl + ]</td><td>Jump to the tag under cursor</td><td>Ctrl+] → go to function/variable definition</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Marks
+ma       → set mark 'a' at cursor
+`a       → jump to mark 'a'
+y`a      → yank text to mark 'a'
+`0       → go to last exit position
+`"       → go to last edit position
+`.       → go to last change
+``       → jump to position before last jump
+:marks   → list all marks
+
+# Jump List
+:ju[mps] → list jumps
+Ctrl+i   → go to newer jump
+Ctrl+o   → go to older jump
+
+# Change List
+:changes → list changes
+g,       → newer change
+g;       → older change
+
+# Tags
+Ctrl+]   → jump to tag under cursor
+</code></pre>
+
+<!-- 14. Tabs -->
+<h3>📑 Tabs</h3>
+
+<h4>🟢 Tab Management</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:tabnew or :tabnew {file}</td><td>Open a file in a new tab</td><td>:tabnew test.txt → open test.txt in a new tab</td></tr>
+    <tr><td>Ctrl + wT</td><td>Move current split window into its own tab</td><td></td></tr>
+    <tr><td>gt or :tabn[ext]</td><td>Move to next tab</td><td>gt → next tab</td></tr>
+    <tr><td>gT or :tabp[revious]</td><td>Move to previous tab</td><td>gT → previous tab</td></tr>
+    <tr><td>#gt</td><td>Move to tab number #</td><td>2gt → go to tab 2</td></tr>
+    <tr><td>:tabm[ove] #</td><td>Move current tab to #th position (0-indexed)</td><td>:tabmove 1 → move current tab to 2nd position</td></tr>
+    <tr><td>:tabc[lose]</td><td>Close current tab and all its windows</td><td>:tabclose</td></tr>
+    <tr><td>:tabo[nly]</td><td>Close all tabs except the current one</td><td>:tabonly</td></tr>
+    <tr><td>:tabdo command</td><td>Run command on all tabs</td><td>:tabdo q → close all tabs</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Open a file in a new tab
+:tabnew test.txt
+
+# Move current split into a new tab
+Ctrl+w T
+
+# Navigate tabs
+gt        → next tab
+gT        → previous tab
+2gt       → go to tab 2
+
+# Move current tab
+:tabmove 1 → move current tab to position 2 (0-indexed)
+
+# Close tabs
+:tabclose  → close current tab
+:tabonly   → close all other tabs
+:tabdo q   → close all tabs
+</code></pre>
+
+<!-- 15. Diff & Folding -->
+<h3>🔍 Diff & Folding</h3>
+
+<h4>🟢 Folding Commands</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>zf</td><td>Manually define a fold up to motion</td><td>zfap → fold a paragraph</td></tr>
+    <tr><td>zd</td><td>Delete fold under the cursor</td><td>zd → remove fold at cursor</td></tr>
+    <tr><td>za</td><td>Toggle fold under the cursor</td><td>za → open/close fold</td></tr>
+    <tr><td>zo</td><td>Open fold under the cursor</td><td>zo → open fold</td></tr>
+    <tr><td>zc</td><td>Close fold under the cursor</td><td>zc → close fold</td></tr>
+    <tr><td>zr</td><td>Reduce (open) all folds by one level</td><td>zr → open folds slightly</td></tr>
+    <tr><td>zm</td><td>Fold more (close) all folds by one level</td><td>zm → close folds slightly</td></tr>
+    <tr><td>zi</td><td>Toggle folding functionality</td><td>zi → enable/disable folding</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Diff Commands</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>]c</td><td>Jump to start of next change</td><td>]</td></tr>
+    <tr><td>[c</td><td>Jump to start of previous change</td><td>[c</td></tr>
+    <tr><td>do or :diffg[et]</td><td>Obtain (get) difference from other buffer</td><td>do → get change from other buffer</td></tr>
+    <tr><td>dp or :diffpu[t]</td><td>Put difference to other buffer</td><td>dp → send change to other buffer</td></tr>
+    <tr><td>:diffthis</td><td>Make current window part of diff</td><td>:diffthis → mark window for diff</td></tr>
+    <tr><td>:dif[fupdate]</td><td>Update differences</td><td>:diffupdate → refresh diff</td></tr>
+    <tr><td>:diffo[ff]</td><td>Switch off diff mode for current window</td><td>:diffoff → exit diff mode</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Folding
+zfap     → fold a paragraph
+zd       → delete fold under cursor
+za       → toggle fold
+zo       → open fold
+zc       → close fold
+zr       → reduce all folds by one level
+zm       → fold more (close) all folds
+zi       → toggle folding on/off
+
+# Diff
+:diffthis        → make current window part of diff
+:difffupdate     → update differences
+:diffoff         → turn off diff mode
+]c               → jump to next change
+[c               → jump to previous change
+do or :diffget   → get change from other buffer
+dp or :diffput   → put change to other buffer
+</code></pre>
+
+<!-- 16. Yank, Paste & Delete (Cut) -->
+<h3>📋 Yank, Paste & Delete (Cut)</h3>
+
+<h4>🟢 Yank (Copy)</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>yy</td><td>Yank (copy) current line</td><td>yy → copy current line</td></tr>
+    <tr><td>2yy</td><td>Yank 2 lines</td><td>2yy → copy current + next line</td></tr>
+    <tr><td>yw</td><td>Yank characters from cursor to start of next word</td><td>yw → copy from cursor to end of word</td></tr>
+    <tr><td>yiw</td><td>Yank word under cursor</td><td>yiw → copy word at cursor</td></tr>
+    <tr><td>yaw</td><td>Yank word under cursor including space</td><td>yaw → copy word + surrounding space</td></tr>
+    <tr><td>y$ or Y</td><td>Yank to end of line</td><td>y$ → copy from cursor to end of line</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Paste</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>p</td><td>Put (paste) after cursor</td><td>p → paste after cursor</td></tr>
+    <tr><td>P</td><td>Put (paste) before cursor</td><td>P → paste before cursor</td></tr>
+    <tr><td>gp</td><td>Paste after cursor and leave cursor after new text</td><td>gp → paste and move cursor after pasted text</td></tr>
+    <tr><td>gP</td><td>Paste before cursor and leave cursor after new text</td><td>gP → paste before cursor and keep cursor after text</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Delete (Cut)</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>dd</td><td>Delete (cut) current line</td><td>dd → cut current line</td></tr>
+    <tr><td>2dd</td><td>Delete 2 lines</td><td>2dd → cut current + next line</td></tr>
+    <tr><td>dw</td><td>Delete characters from cursor to start of next word</td><td>dw → cut from cursor to end of word</td></tr>
+    <tr><td>diw</td><td>Delete word under cursor</td><td>diw → cut word at cursor</td></tr>
+    <tr><td>daw</td><td>Delete word under cursor including space</td><td>daw → cut word + surrounding space</td></tr>
+    <tr><td>:3,5d</td><td>Delete lines 3 to 5</td><td>:3,5d → cut lines 3,4,5</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Yank (Copy)
+yy       → copy current line
+2yy      → copy 2 lines
+yw       → copy from cursor to end of word
+yiw      → copy word under cursor
+yaw      → copy word + surrounding space
+y$ or Y  → copy from cursor to end of line
+
+# Paste
+p        → paste after cursor
+P        → paste before cursor
+gp       → paste after cursor, move cursor after text
+gP       → paste before cursor, keep cursor after text
+
+# Delete (Cut)
+dd       → delete current line
+2dd      → delete 2 lines
+dw       → delete from cursor to end of word
+diw      → delete word under cursor
+daw      → delete word + surrounding space
+:3,5d    → delete lines 3 to 5
+</code></pre>
+
+
+<!-- 17. Search Case Sensitivity -->
+<h3>🔎 Search Case Sensitivity</h3>
+
+<h4>🟢 Case-insensitive Search</h4>
+<table>
+  <thead>
+    <tr><th>Pattern</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>/pattern\c</td><td>Search for 'pattern' case-insensitively</td><td>/hello\c → matches Hello, HELLO, hElLo, etc.</td></tr>
+    <tr><td>?\pattern\c</td><td>Search backward case-insensitively</td><td>?hello\c → search backward for Hello, HELLO, etc.</td></tr>
+    <tr><td>:%s/old\c/new/g</td><td>Replace all occurrences of 'old' with 'new' ignoring case</td><td>:%s/hello\c/hi/g → replace Hello, HELLO, hello, etc. with hi</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Case-insensitive search
+/hello\c      → search forward for Hello, HELLO, hElLo, etc.
+/hello\C      → search forward case-sensitively (override default ignorecase)
+
+# Case-insensitive replace
+:%s/hello\c/hi/g → replace all occurrences of hello (any case) with hi
+</code></pre>
+
+
+<!-- 18. Change Case -->
+<h3>🔠 Change Case</h3>
+
+<h4>🟢 Uppercase, Lowercase, and Toggle Case</h4>
+<table>
+  <thead>
+    <tr><th>Command</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>gU{motion}</td><td>Change text to uppercase</td><td>gUw → change current word to uppercase</td></tr>
+    <tr><td>gu{motion}</td><td>Change text to lowercase</td><td>guw → change current word to lowercase</td></tr>
+    <tr><td>g~{motion}</td><td>Switch (toggle) case of text</td><td>g~w → toggle case of current word</td></tr>
+    <tr><td>gUG</td><td>Change entire file (from cursor to end) to uppercase</td><td>gUG → uppercase all lines from cursor down</td></tr>
+    <tr><td>guG</td><td>Change entire file (from cursor to end) to lowercase</td><td>guG → lowercase all lines from cursor down</td></tr>
+    <tr><td>g~G</td><td>Toggle case for entire file (from cursor to end)</td><td>g~G → switch case for all lines from cursor down</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Uppercase
+gUw      → uppercase current word
+gU$      → uppercase to end of line
+gUG      → uppercase entire file from cursor down
+
+# Lowercase
+guw      → lowercase current word
+gu$      → lowercase to end of line
+guG      → lowercase entire file from cursor down
+
+# Toggle Case
+g~w      → switch case of current word
+g~$      → switch case to end of line
+g~G      → switch case of entire file from cursor down
+</code></pre>
+
+<!-- 19. Vim Options / Startup Commands -->
+<h3>⚙️ Vim Options / Startup Commands</h3>
+
+<h4>🟢 Command-line Options</h4>
+<table>
+  <thead>
+    <tr><th>Option</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>vim -o file1 file2</td><td>Open multiple files in horizontal split</td><td>vim -o file1.txt file2.txt</td></tr>
+    <tr><td>vim -O file1 file2</td><td>Open multiple files in vertical split</td><td>vim -O file1.txt file2.txt</td></tr>
+    <tr><td>vim -p file1 file2</td><td>Open multiple files in tabs</td><td>vim -p file1.txt file2.txt</td></tr>
+    <tr><td>vim +num file</td><td>Open file and jump to line <code>num</code></td><td>vim +10 test.txt → go to line 10</td></tr>
+    <tr><td>vim -R file</td><td>Open file in read-only mode</td><td>vim -R test.txt</td></tr>
+    <tr><td>vim -y file</td><td>Open file in easy mode (like simplified editor)</td><td>vim -y test.txt</td></tr>
+    <tr><td>vim -u NONE file</td><td>Start Vim without any config (no vimrc)</td><td>vim -u NONE test.txt</td></tr>
+    <tr><td>vim -c "command" file</td><td>Execute a Vim command after opening file</td><td>vim -c "set number" test.txt → open with line numbers</td></tr>
+  </tbody>
+</table>
+
+<h4>🟢 Common :set Options (Inside Vim)</h4>
+<table>
+  <thead>
+    <tr><th>Option</th><th>Action</th><th>Example</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>:set number</td><td>Show line numbers</td><td>:set number → display line numbers</td></tr>
+    <tr><td>:set relativenumber</td><td>Show relative line numbers</td><td>:set relativenumber</td></tr>
+    <tr><td>:set ignorecase</td><td>Ignore case in searches</td><td>:set ignorecase</td></tr>
+    <tr><td>:set smartcase</td><td>Search is case-sensitive only if uppercase used</td><td>:set smartcase</td></tr>
+    <tr><td>:set tabstop=4</td><td>Set tab width to 4 spaces</td><td>:set tabstop=4</td></tr>
+    <tr><td>:set shiftwidth=4</td><td>Set indentation width to 4 spaces</td><td>:set shiftwidth=4</td></tr>
+    <tr><td>:set expandtab</td><td>Convert tabs to spaces</td><td>:set expandtab</td></tr>
+    <tr><td>:set autoindent</td><td>Enable automatic indentation</td><td>:set autoindent</td></tr>
+    <tr><td>:set hlsearch</td><td>Highlight search matches</td><td>:set hlsearch</td></tr>
+    <tr><td>:set incsearch</td><td>Show search matches incrementally</td><td>:set incsearch</td></tr>
+    <tr><td>:set wrap</td><td>Enable line wrapping</td><td>:set wrap</td></tr>
+    <tr><td>:set nowrap</td><td>Disable line wrapping</td><td>:set nowrap</td></tr>
+    <tr><td>:set cursorline</td><td>Highlight current line</td><td>:set cursorline</td></tr>
+  </tbody>
+</table>
+
+<pre><code>
+# Examples:
+
+# Command-line startup
+vim -o file1.txt file2.txt  → horizontal split
+vim -O file1.txt file2.txt  → vertical split
+vim -p file1.txt file2.txt  → open files in tabs
+vim +20 test.txt            → jump to line 20
+vim -R test.txt             → read-only mode
+vim -u NONE test.txt        → start without config
+vim -c "set number" test.txt → execute command after opening
+
+# Common :set options inside Vim
+:set number        → show line numbers
+:set relativenumber → show relative line numbers
+:set ignorecase     → ignore case in searches
+:set smartcase      → case-sensitive if uppercase present
+:set tabstop=4      → tab width 4 spaces
+:set shiftwidth=4   → indentation width 4 spaces
+:set expandtab      → convert tabs to spaces
+:set autoindent     → enable auto-indent
+:set hlsearch       → highlight search matches
+:set incsearch      → show matches while typing
+:set wrap           → enable line wrapping
+:set nowrap         → disable line wrapping
+:set cursorline     → highlight current line
+</code></pre>
+
+</body>
+</html>
