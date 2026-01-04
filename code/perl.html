@@ -1,0 +1,9415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSQL</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+  table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+</style>
+</head>
+<body>
+<section id="perl-overview">
+
+    <h2>Perl Overview</h2>
+
+    <h3>What is Perl</h3>
+    <p>
+        Perl (Practical Extraction and Report Language) is a high-level,
+        interpreted programming language mainly designed for
+        text processing, file handling, automation, and system scripting.
+    </p>
+
+    <p>
+        Perl programs are written in text files and executed using
+        the Perl interpreter.
+    </p>
+
+    <h4>Perl File Extensions</h4>
+    <ul>
+        <li>.pl – Standard Perl script</li>
+        <li>.pm – Perl module</li>
+        <li>.pod – Perl documentation</li>
+        <li>.t – Perl test files</li>
+    </ul>
+
+    <h4>Example Perl Program</h4>
+<pre>
+print "Hello, Perl!";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Hello, Perl!
+</pre>
+
+    <h4>How to Run</h4>
+<pre>
+perl filename.pl
+</pre>
+
+    <h3>History of Perl</h3>
+    <p>
+        Perl was created by Larry Wall in 1987.
+        It was originally developed to process text files and generate reports.
+        Perl combines features from C, awk, sed, and shell scripting.
+    </p>
+
+    <h3>Perl Philosophy</h3>
+    <p>
+        Perl follows the philosophy:
+        <strong>"There’s More Than One Way To Do It"</strong>.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+print "Perl Philosophy\n";
+print "Perl Philosophy\n";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Perl Philosophy
+Perl Philosophy
+</pre>
+
+    <p>
+        Both statements do the same work, showing Perl’s flexibility.
+    </p>
+
+    <h3>Features of Perl</h3>
+    <ul>
+        <li>Interpreted language</li>
+        <li>Powerful string and text processing</li>
+        <li>Supports procedural and object-oriented programming</li>
+        <li>Platform independent</li>
+        <li>Huge library support via CPAN</li>
+        <li>Strong regular expression support</li>
+    </ul>
+
+    <h4>Example – Text Processing</h4>
+<pre>
+my $text = "Perl is Powerful";
+$text =~ s/Powerful/Awesome/;
+print $text;
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Perl is Awesome
+</pre>
+
+    <h3>Perl Applications</h3>
+    <ul>
+        <li>System administration</li>
+        <li>Automation scripts</li>
+        <li>Log file analysis</li>
+        <li>Web development (CGI)</li>
+        <li>Database programming</li>
+    </ul>
+
+    <h4>Example – Automation</h4>
+<pre>
+print "Backup completed successfully";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Backup completed successfully
+</pre>
+
+    <h3>Perl 5 vs Perl 6 (Raku)</h3>
+    <p>
+        Perl 5 is the traditional and widely used version.
+        Perl 6 was renamed to Raku and is a different language.
+    </p>
+
+    <h4>Example (Perl 5)</h4>
+<pre>
+print "This is Perl 5";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+This is Perl 5
+</pre>
+
+    <h3>Perl Advantages and Limitations</h3>
+
+    <h4>Advantages</h4>
+    <ul>
+        <li>Excellent for text processing</li>
+        <li>Fast script development</li>
+        <li>Strong OS integration</li>
+    </ul>
+
+    <h4>Limitations</h4>
+    <ul>
+        <li>Complex syntax for beginners</li>
+        <li>Less readable if not written properly</li>
+    </ul>
+
+    <h3>Perl vs Shell Script</h3>
+    <p>
+        Shell scripts are suitable for simple tasks,
+        while Perl handles complex logic easily.
+    </p>
+
+    <h3>Perl vs Python</h3>
+    <p>
+        Python focuses on readability,
+        while Perl focuses on flexibility and power.
+    </p>
+
+    <h3>Perl vs Ruby</h3>
+    <p>
+        Ruby is popular for web apps,
+        Perl is strong in system scripting and text processing.
+    </p>
+
+</section><br>
+
+<section id="installation-setup">
+
+    <h2>Installation and Setup</h2>
+
+    <h3>Installing Perl on Windows</h3>
+    <p>
+        Install Strawberry Perl or ActivePerl.
+        These include the Perl interpreter and tools.
+    </p>
+
+    <h3>Installing Perl on Linux</h3>
+    <p>
+        Perl is usually pre-installed.
+        It can also be installed using package managers.
+    </p>
+
+    <h3>Installing Perl on macOS</h3>
+    <p>
+        Perl comes pre-installed on macOS.
+        Homebrew can be used to install newer versions.
+    </p>
+
+    <h3>Perl Interpreter</h3>
+    <p>
+        The Perl interpreter reads and executes Perl code line by line.
+    </p>
+
+    <h4>Check Perl Version</h4>
+<pre>
+perl -v
+</pre>
+
+    <h3>Perl Environment Variables</h3>
+    <p>
+        Environment variables control Perl’s behavior.
+    </p>
+
+    <h3>PERL5LIB</h3>
+    <p>
+        PERL5LIB tells Perl where to find external modules.
+    </p>
+
+    <h3>Perl Command Line Options</h3>
+<pre>
+perl -e "print 'Hello'"
+perl -c script.pl
+perl -w script.pl
+</pre>
+
+    <h3>POD (Plain Old Documentation)</h3>
+    <p>
+        POD allows documentation inside Perl programs.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+=head1 Description
+This is a sample Perl program
+=cut
+</pre>
+
+    <h3>Perl Documentation (perldoc)</h3>
+<pre>
+perldoc perl
+perldoc print
+</pre>
+
+    <h3>Strict and Warnings</h3>
+    <p>
+        These help write safe and error-free code.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+use strict;
+use warnings;
+
+my $x = 10;
+print $x;
+</pre>
+
+    <h4>Output</h4>
+<pre>
+10
+</pre>
+
+    <h3>Running Perl Scripts</h3>
+    <p>
+        Perl scripts are executed using the perl command.
+    </p>
+
+<pre>
+perl script.pl
+</pre>
+
+    <h3>Shebang Line</h3>
+    <p>
+        The shebang tells the OS which interpreter to use.It is commonly used in Unix/Linux systems.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+#!/usr/bin/perl
+print "Shebang example";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Shebang example
+</pre>
+
+</section><br>
+
+<section id="perl-program-structure">
+
+    <h2>Perl Program Structure</h2>
+
+    <h3>Script Layout</h3>
+    <p>
+        A Perl script is a plain text file that contains Perl statements.
+        The file is usually saved with a <strong>.pl</strong> extension.
+        Perl scripts are executed from top to bottom.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+print "First Line\n";
+print "Second Line\n";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+First Line
+Second Line
+</pre>
+
+    <h3>Shebang Line</h3>
+    <p>
+        The shebang line tells the operating system which interpreter
+        should be used to execute the script.
+        It is mainly used in Linux and macOS.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+#!/usr/bin/perl
+print "Hello from Perl";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Hello from Perl
+</pre>
+
+    <h3>Basic Perl Script Structure</h3>
+    <p>
+        A basic Perl script usually contains:
+    </p>
+    <ul>
+        <li>Shebang line (optional on Windows)</li>
+        <li>Pragmas like strict and warnings</li>
+        <li>Perl statements</li>
+    </ul>
+
+    <h4>Example</h4>
+<pre>
+#!/usr/bin/perl
+use strict;
+use warnings;
+
+print "Basic Perl Script";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Basic Perl Script
+</pre>
+
+    <h3>Statements and Expressions</h3>
+    <p>
+        A statement is an instruction that performs an action.
+        An expression is something that produces a value.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+my $a = 10 + 20;
+print $a;
+</pre>
+
+    <h4>Output</h4>
+<pre>
+30
+</pre>
+
+    <h3>Semicolons</h3>
+    <p>
+        In Perl, every statement must end with a semicolon.
+        The semicolon tells Perl that the statement is complete.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+print "Semicolon example";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Semicolon example
+</pre>
+
+    <h3>Code Blocks</h3>
+    <p>
+        Code blocks group multiple statements together.
+        They are enclosed within curly braces <strong>{ }</strong>.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+{
+    print "Inside block\n";
+    print "Still inside block\n";
+}
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Inside block
+Still inside block
+</pre>
+
+    <h3>Whitespace Rules</h3>
+    <p>
+        Perl ignores extra spaces, tabs, and new lines.
+        Whitespace is mainly used to improve readability.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+print        "Whitespace works";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Whitespace works
+</pre>
+
+    <h3>Whitespace and Indentation</h3>
+    <p>
+        Indentation is not required by Perl,
+        but it is strongly recommended for clean and readable code.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+if (1) {
+    print "Properly indented";
+}
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Properly indented
+</pre>
+
+    <h3>Comments</h3>
+    <p>
+        Comments are used to explain code.
+        Perl supports single-line comments using <strong>#</strong>.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+# This is a comment
+print "Comments example";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Comments example
+</pre>
+
+    <h2>Comments and Multiline Documentation in Perl</h2>
+
+    <h3>Important Clarification (Very Important)</h3>
+    <p>
+        Perl does <strong>NOT</strong> have a traditional multiline comment syntax
+        like <code>/* ... */</code> (C/Java).
+    </p>
+    <p>
+        Instead, Perl supports:
+    </p>
+    <ul>
+        <li>Single-line comments using <strong>#</strong></li>
+        <li>Multiline documentation using <strong>POD (Plain Old Documentation)</strong></li>
+    </ul>
+    <p>
+        POD behaves like multiline comments during execution,
+        but it is actually a <strong>documentation system</strong>,
+        not just comments.
+    </p>
+
+    <h3>Why Perl Uses POD Instead of Multiline Comments</h3>
+    <p>
+        Perl was designed for large scripts and modules.
+        Simple comments were not enough for documentation.
+    </p>
+    <p>
+        POD allows:
+    </p>
+    <ul>
+        <li>Readable documentation inside source code</li>
+        <li>Automatic documentation generation</li>
+        <li>Man pages using <code>perldoc</code></li>
+    </ul>
+
+    <h3>How Perl Interpreter Treats POD</h3>
+    <p>
+        During execution:
+    </p>
+    <ul>
+        <li>POD sections are completely ignored</li>
+        <li>They do not affect memory or performance</li>
+        <li>They are skipped before code execution</li>
+    </ul>
+
+    <h3>Single-Line Comment (Recap)</h3>
+
+<pre>
+# This is a single-line comment
+print "Executed";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Executed
+</pre>
+
+    <h3>POD – Plain Old Documentation</h3>
+    <p>
+        POD is Perl’s built-in documentation language.
+        It starts with a POD directive (<code>=</code>) and ends with <code>=cut</code>.
+    </p>
+
+    <h3>Basic POD Block (Multiline Comment Style)</h3>
+
+<pre>
+=pod
+This is a multiline documentation block.
+It can span many lines.
+It is ignored during execution.
+=cut
+
+print "POD block ignored";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+POD block ignored
+</pre>
+
+    <h4>Explanation</h4>
+    <p>
+        Everything between <code>=pod</code> and <code>=cut</code>
+        is skipped by the interpreter.
+    </p>
+
+    <h3>Common POD Directives (IMPORTANT)</h3>
+
+    <h4>=head1, =head2 (Headings)</h4>
+<pre>
+=head1 NAME
+Sample Program
+
+=head2 DESCRIPTION
+This program shows POD usage.
+=cut
+
+print "Headings example";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Headings example
+</pre>
+
+    <p>
+        These headings are visible in <code>perldoc</code>
+        but ignored during execution.
+    </p>
+
+    <h3>=begin and =end Blocks</h3>
+    <p>
+        These are advanced POD blocks used for format-specific documentation.
+    </p>
+
+<pre>
+=begin comment
+This is a comment block.
+Multiple lines supported.
+=end comment
+
+print "Begin-End example";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Begin-End example
+</pre>
+
+    <h4>Why Use =begin/=end</h4>
+    <ul>
+        <li>Better structured documentation</li>
+        <li>Used in large modules</li>
+        <li>Cleaner separation of code and docs</li>
+    </ul>
+
+    <h3>Using POD as Multiline Comment (Common Trick)</h3>
+    <p>
+        Developers often use POD blocks
+        to temporarily disable large blocks of code.
+    </p>
+
+<pre>
+=pod
+print "This will not run";
+print "Still ignored";
+=cut
+
+print "Only this runs";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Only this runs
+</pre>
+
+    <h3>WARNING – When NOT to Use POD</h3>
+    <ul>
+        <li>Inside expressions</li>
+        <li>Inside subroutine arguments</li>
+        <li>Inside quoted strings</li>
+    </ul>
+
+    <p>
+        POD must start at the beginning of a line.
+    </p>
+
+    <h3>Difference: POD vs # Comments</h3>
+
+    <table border="1" cellpadding="6">
+        <tr>
+            <th># Comment</th>
+            <th>POD</th>
+        </tr>
+        <tr>
+            <td>Single-line only</td>
+            <td>Multiline documentation</td>
+        </tr>
+        <tr>
+            <td>For small explanations</td>
+            <td>For full documentation</td>
+        </tr>
+        <tr>
+            <td>Ignored silently</td>
+            <td>Readable via perldoc</td>
+        </tr>
+    </table>
+
+    <h3>Real-Time Usage in Company Projects</h3>
+    <ul>
+        <li>POD used in Perl modules (.pm files)</li>
+        <li>Used to generate man pages</li>
+        <li>Used for API documentation</li>
+        <li>Used in CPAN modules</li>
+    </ul>
+
+    <h3>Viewing POD Documentation</h3>
+
+<pre>
+perldoc script.pl
+perldoc Module::Name
+</pre>
+
+    <h3>Best Practices</h3>
+    <ul>
+        <li>Use # for logic-level comments</li>
+        <li>Use POD for documentation</li>
+        <li>Do not misuse POD inside code logic</li>
+        <li>Always end POD with =cut</li>
+    </ul>
+
+</section><br>
+
+
+
+<section id="perl-syntax-context">
+
+    <h2>Perl Syntax and Context</h2>
+
+    <h3>Tokens</h3>
+    <p>
+        Tokens are the smallest elements of a Perl program.
+        Examples include variables, operators, and keywords.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+my $x = 10;
+</pre>
+
+    <p>
+        Here, <strong>my</strong>, <strong>$x</strong>, <strong>=</strong>, and <strong>10</strong>
+        are tokens.
+    </p>
+
+    <h3>Keywords</h3>
+    <p>
+        Keywords are reserved words with special meaning in Perl.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+use strict;
+print "Keyword example";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+Keyword example
+</pre>
+
+    <h3>Identifiers</h3>
+    <p>
+        Identifiers are names given to variables, subroutines, and packages.
+        They must start with a letter or underscore.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+my $count = 5;
+print $count;
+</pre>
+
+    <h4>Output</h4>
+<pre>
+5
+</pre>
+
+    <h3>Case Sensitivity</h3>
+    <p>
+        Perl is case-sensitive.
+        Variables with different cases are treated as different variables.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+my $var = 10;
+my $Var = 20;
+print $var;
+</pre>
+
+    <h4>Output</h4>
+<pre>
+10
+</pre>
+
+    <h3>Scalar Context</h3>
+    <p>
+        Scalar context means Perl expects a single value.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+my @nums = (10, 20, 30);
+my $count = @nums;
+print $count;
+</pre>
+
+    <h4>Output</h4>
+<pre>
+3
+</pre>
+
+    <h3>List Context</h3>
+    <p>
+        List context means Perl expects multiple values.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+my @nums = (10, 20, 30);
+my @copy = @nums;
+print "@copy";
+</pre>
+
+    <h4>Output</h4>
+<pre>
+10 20 30
+</pre>
+
+    <h3>Void Context</h3>
+    <p>
+        Void context means the return value is ignored.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+my @nums = (1, 2, 3);
+push(@nums, 4);
+</pre>
+
+    <p>
+        Here, the return value of push is ignored.
+    </p>
+
+    <h3>wantarray</h3>
+    <p>
+        wantarray is used inside subroutines to detect context.
+        It returns true for list context and false for scalar context.
+    </p>
+
+    <h4>Example</h4>
+<pre>
+sub test {
+    return wantarray ? (1, 2, 3) : 3;
+}
+
+my @list = test();
+my $scalar = test();
+
+print "@list\n";
+print $scalar;
+</pre>
+
+    <h4>Output</h4>
+<pre>
+1 2 3
+3
+</pre>
+
+</section><br>
+
+
+<section id="perl-variables-scoping">
+
+<h2>Variables and Scoping in Perl</h2>
+
+<h3>Introduction to Perl Variables</h3>
+<p>
+Perl is a dynamically typed language. Variables do not need explicit data type declarations.
+The type of variable is identified using a special symbol called a <strong>sigil</strong>.
+</p>
+
+<ul>
+  <li><strong>$</strong> → Scalar</li>
+  <li><strong>@</strong> → Array</li>
+  <li><strong>%</strong> → Hash</li>
+</ul>
+
+<p>
+Variable names are case-sensitive and can contain letters, numbers, and underscores.
+</p>
+
+<hr>
+
+<h3>Scalar Variables</h3>
+<p>
+Scalar variables store a single value such as:
+</p>
+<ul>
+  <li>Number</li>
+  <li>String</li>
+  <li>Boolean</li>
+  <li>Reference</li>
+  <li>undef</li>
+</ul>
+
+<pre>
+my $age = 25;
+my $name = "Perl";
+print $age, "\n";
+print $name;
+</pre>
+
+<h4>Output</h4>
+<pre>
+25
+Perl
+</pre>
+
+<p>
+Scalars can change type dynamically at runtime.
+</p>
+
+<pre>
+my $value = 10;
+$value = "Ten";
+print $value;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Ten
+</pre>
+
+<hr>
+
+<h3>Array Variables</h3>
+<p>
+Arrays store ordered lists of scalar values.
+</p>
+
+<pre>
+my @numbers = (10, 20, 30);
+print $numbers[0];
+</pre>
+
+<h4>Output</h4>
+<pre>
+10
+</pre>
+
+<p>
+Accessing array in scalar context returns number of elements.
+</p>
+
+<pre>
+my $count = @numbers;
+print $count;
+</pre>
+
+<h4>Output</h4>
+<pre>
+3
+</pre>
+
+<hr>
+
+<h3>Hash Variables</h3>
+<p>
+Hashes store key-value pairs. Keys are strings, values are scalars.
+</p>
+
+<pre>
+my %student = (
+  name => "Aathi",
+  age  => 21
+);
+
+print $student{name};
+</pre>
+
+<h4>Output</h4>
+<pre>
+Aathi
+</pre>
+
+<p>
+Hashes are unordered.
+</p>
+
+<hr>
+
+<h3>Lexical Variables (my)</h3>
+<p>
+Variables declared using <code>my</code> are limited to a block scope.
+</p>
+
+<pre>
+my $x = 10;
+
+{
+  my $y = 20;
+  print $y;
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+20
+</pre>
+
+<p>
+Variable <code>$y</code> cannot be accessed outside the block.
+</p>
+
+<hr>
+
+<h3>Global Variables (our)</h3>
+<p>
+Variables declared with <code>our</code> are package global variables.
+</p>
+
+<pre>
+our $company = "BKSystem";
+
+sub show {
+  print $company;
+}
+
+show();
+</pre>
+
+<h4>Output</h4>
+<pre>
+BKSystem
+</pre>
+
+<p>
+<code>our</code> works with <code>use strict</code>.
+</p>
+
+<hr>
+
+<h3>Dynamic Scope (local)</h3>
+<p>
+<code>local</code> temporarily changes a global variable's value within a scope.
+</p>
+
+<pre>
+our $x = 5;
+
+sub test {
+  print $x, "\n";
+}
+
+{
+  local $x = 20;
+  test();
+}
+
+test();
+</pre>
+
+<h4>Output</h4>
+<pre>
+20
+5
+</pre>
+
+<p>
+Dynamic scoping affects subroutine calls.
+</p>
+
+<hr>
+
+<h3>State Variables (state)</h3>
+<p>
+State variables retain their value between function calls.
+</p>
+
+<pre>
+use feature 'state';
+
+sub counter {
+  state $count = 0;
+  $count++;
+  print $count, "\n";
+}
+
+counter();
+counter();
+</pre>
+
+<h4>Output</h4>
+<pre>
+1
+2
+</pre>
+
+<hr>
+
+<h3>Variable Declaration</h3>
+<p>
+Declaring variables defines scope and memory.
+</p>
+
+<pre>
+my $a;
+</pre>
+
+<h3>Variable Initialization</h3>
+<pre>
+my $a = 10;
+</pre>
+
+<hr>
+
+<h3>Variable Scope Summary</h3>
+
+<table border="1" cellpadding="6">
+<tr>
+<th>Keyword</th>
+<th>Scope</th>
+</tr>
+<tr>
+<td>my</td>
+<td>Lexical (block)</td>
+</tr>
+<tr>
+<td>our</td>
+<td>Package global</td>
+</tr>
+<tr>
+<td>local</td>
+<td>Dynamic</td>
+</tr>
+<tr>
+<td>state</td>
+<td>Persistent</td>
+</tr>
+</table>
+
+<hr>
+
+<h3>Variable Interpolation</h3>
+<p>
+Perl replaces variable values inside double-quoted strings.
+</p>
+
+<pre>
+my $name = "Perl";
+print "Language: $name";
+</pre>
+
+<h4>Output</h4>
+<pre>
+Language: Perl
+</pre>
+
+<p>
+Interpolation does NOT work in single quotes.
+</p>
+
+<hr>
+
+<h2>Perl Data Types</h2>
+
+<h3>Scalars</h3>
+<p>
+A scalar is a single value.
+</p>
+
+<pre>
+my $num = 100;
+my $str = "Hello";
+</pre>
+
+<hr>
+
+<h3>Arrays</h3>
+<pre>
+my @colors = ("Red", "Green", "Blue");
+print $colors[1];
+</pre>
+
+<h4>Output</h4>
+<pre>
+Green
+</pre>
+
+<hr>
+
+<h3>Hashes</h3>
+<pre>
+my %capitals = (
+  India => "Delhi",
+  USA   => "Washington"
+);
+
+print $capitals{India};
+</pre>
+
+<h4>Output</h4>
+<pre>
+Delhi
+</pre>
+
+<hr>
+
+<h3>References</h3>
+<p>
+References store memory addresses.
+</p>
+
+<pre>
+my $x = 10;
+my $ref = \$x;
+print $$ref;
+</pre>
+
+<h4>Output</h4>
+<pre>
+10
+</pre>
+
+<hr>
+
+<h3>Typeglobs</h3>
+<p>
+Typeglobs allow symbol table manipulation.
+</p>
+
+<pre>
+*var = \$x;
+print $var;
+</pre>
+
+<h4>Output</h4>
+<pre>
+10
+</pre>
+
+<hr>
+
+<h3>Complex Data Structures</h3>
+
+<pre>
+my $data = {
+  name => "Aathi",
+  skills => ["Perl", "Linux"]
+};
+
+print $data->{skills}[0];
+</pre>
+
+<h4>Output</h4>
+<pre>
+Perl
+</pre>
+
+<hr>
+
+<h3>Numbers</h3>
+<p>Integer and Floating values supported.</p>
+
+<pre>
+my $a = 10;
+my $b = 3.14;
+print $a + $b;
+</pre>
+
+<h4>Output</h4>
+<pre>
+13.14
+</pre>
+
+<hr>
+
+<h3>Strings</h3>
+<pre>
+my $s = "Perl Language";
+print length($s);
+</pre>
+
+<h4>Output</h4>
+<pre>
+13
+</pre>
+
+<hr>
+
+<h3>Boolean Values</h3>
+<p>
+False values:
+</p>
+<ul>
+<li>0</li>
+<li>"0"</li>
+<li>""</li>
+<li>undef</li>
+</ul>
+
+<pre>
+my $flag = 0;
+print "False" unless $flag;
+</pre>
+
+<h4>Output</h4>
+<pre>
+False
+</pre>
+
+<hr>
+
+<h3>Undefined Values (undef)</h3>
+
+<pre>
+my $x;
+print defined($x) ? "Defined" : "Undefined";
+</pre>
+
+<h4>Output</h4>
+<pre>
+Undefined
+</pre>
+
+<hr>
+
+<h3>Type Conversion</h3>
+
+<pre>
+my $n = "10";
+print $n + 5;
+</pre>
+
+<h4>Output</h4>
+<pre>
+15
+</pre>
+
+<hr>
+
+<h3>chomp vs chop</h3>
+
+<h4>chomp</h4>
+<p>Removes newline only.</p>
+
+<pre>
+my $line = "Hello\n";
+chomp($line);
+print $line;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hello
+</pre>
+
+<h4>chop</h4>
+<p>Removes last character blindly.</p>
+
+<pre>
+my $word = "Hello";
+chop($word);
+print $word;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hell
+</pre>
+
+</section><br>
+
+<section id="perl-constants-pragmas">
+
+<h2>Constants and Pragmas in Perl</h2>
+
+<h3>What are Pragmas?</h3>
+<p>
+Pragmas are special modules in Perl that change the behavior of the compiler or interpreter.
+They affect how Perl code is parsed and executed.
+</p>
+
+<p>
+Pragmas are enabled using the <code>use</code> keyword and generally apply
+to the current lexical scope.
+</p>
+
+<p>
+Examples of pragmas:
+</p>
+<ul>
+  <li>use strict</li>
+  <li>use warnings</li>
+  <li>use feature</li>
+  <li>use utf8</li>
+</ul>
+
+<hr>
+
+<h3>use constant</h3>
+
+<p>
+Constants are variables whose values cannot be changed once defined.
+They improve code readability, safety, and maintainability.
+</p>
+
+<h4>Why use constants?</h4>
+<ul>
+  <li>Avoid magic numbers</li>
+  <li>Prevent accidental modification</li>
+  <li>Improve readability</li>
+  <li>Used for configuration values</li>
+</ul>
+
+<h4>Syntax</h4>
+<pre>
+use constant PI => 3.14159;
+</pre>
+
+<h4>Example</h4>
+<pre>
+use constant MAX_USERS => 100;
+
+print MAX_USERS;
+</pre>
+
+<h4>Output</h4>
+<pre>
+100
+</pre>
+
+<h4>Why This Works</h4>
+<p>
+<code>use constant</code> creates a subroutine internally.
+The value is inlined by the compiler.
+</p>
+
+<hr>
+
+<h3>Readonly Variables</h3>
+
+<p>
+Readonly variables prevent modification after assignment.
+They are often used when values should not change during runtime.
+</p>
+
+<h4>Example (using Readonly module)</h4>
+<pre>
+use Readonly;
+
+Readonly my $APP_NAME => "Payroll";
+
+print $APP_NAME;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Payroll
+</pre>
+
+<h4>Attempting Modification</h4>
+<pre>
+$APP_NAME = "HR";
+</pre>
+
+<p>
+This will cause a runtime error.
+</p>
+
+<h4>When to Use Readonly</h4>
+<ul>
+  <li>Configuration constants</li>
+  <li>Environment-based values</li>
+  <li>Shared variables</li>
+</ul>
+
+<hr>
+
+<h3>use strict</h3>
+
+<p>
+<code>use strict</code> forces good coding practices by preventing unsafe constructs.
+</p>
+
+<h4>What strict Enforces</h4>
+<ul>
+  <li>Variable declaration required</li>
+  <li>Symbolic references prohibited</li>
+  <li>Package scoping enforced</li>
+</ul>
+
+<h4>Example Without strict</h4>
+<pre>
+$x = 10;
+print $x;
+</pre>
+
+<h4>Example With strict</h4>
+<pre>
+use strict;
+my $x = 10;
+print $x;
+</pre>
+
+<h4>Why strict is Important</h4>
+<ul>
+  <li>Catches typos</li>
+  <li>Prevents accidental globals</li>
+  <li>Improves maintainability</li>
+</ul>
+
+<hr>
+
+<h3>use warnings</h3>
+
+<p>
+<code>use warnings</code> enables runtime warnings for suspicious behavior.
+</p>
+
+<h4>Example</h4>
+<pre>
+use warnings;
+
+my $x;
+print $x;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Use of uninitialized value $x
+</pre>
+
+<h4>Why warnings Matter</h4>
+<ul>
+  <li>Detect logical bugs</li>
+  <li>Improve code quality</li>
+  <li>Prevent unexpected output</li>
+</ul>
+
+<hr>
+
+<h3>use feature</h3>
+
+<p>
+<code>use feature</code> enables modern Perl features in older versions.
+</p>
+
+<h4>Example: state Variable</h4>
+<pre>
+use feature 'state';
+
+sub counter {
+  state $count = 0;
+  $count++;
+  print $count, "\n";
+}
+
+counter();
+counter();
+</pre>
+
+<h4>Output</h4>
+<pre>
+1
+2
+</pre>
+
+<h4>Why feature Exists</h4>
+<ul>
+  <li>Backward compatibility</li>
+  <li>Controlled feature rollout</li>
+</ul>
+
+<hr>
+
+<h3>use utf8</h3>
+
+<p>
+<code>use utf8</code> tells Perl that the source code is written in UTF-8.
+</p>
+
+<h4>Example</h4>
+<pre>
+use utf8;
+
+my $text = "தமிழ்";
+print $text;
+</pre>
+
+<h4>Output</h4>
+<pre>
+தமிழ்
+</pre>
+
+<h4>Why utf8 is Needed</h4>
+<ul>
+  <li>Internationalization</li>
+  <li>Multilingual applications</li>
+  <li>Unicode-safe source files</li>
+</ul>
+
+<hr>
+
+<h3>Scope of Pragmas</h3>
+
+<p>
+Pragmas apply only to the current block unless specified globally.
+</p>
+
+<pre>
+{
+  use strict;
+  my $x = 10;
+}
+</pre>
+
+<hr>
+
+<h3>Best Practices (Company Standard)</h3>
+
+<ul>
+  <li>Always use <code>use strict;</code></li>
+  <li>Always use <code>use warnings;</code></li>
+  <li>Use constants for configuration values</li>
+  <li>Enable required features explicitly</li>
+</ul>
+
+</section><br>
+
+<section id="perl-operators">
+
+<h2>Operators in Perl</h2>
+
+<p>
+Operators are symbols or keywords used to perform operations on variables and values.
+Perl provides rich and expressive operators for numeric, string, logical, file, and system-level operations.
+</p>
+
+<hr>
+
+<h3>Arithmetic Operators</h3>
+
+<p>
+Used to perform mathematical calculations.
+</p>
+
+<table border="1" cellpadding="6">
+<tr><th>Operator</th><th>Description</th></tr>
+<tr><td>+</td><td>Addition</td></tr>
+<tr><td>-</td><td>Subtraction</td></tr>
+<tr><td>*</td><td>Multiplication</td></tr>
+<tr><td>/</td><td>Division</td></tr>
+<tr><td>%</td><td>Modulus</td></tr>
+<tr><td>**</td><td>Exponentiation</td></tr>
+</table>
+
+<pre>
+my $a = 10;
+my $b = 3;
+
+print $a + $b, "\n";
+print $a - $b, "\n";
+print $a * $b, "\n";
+print $a / $b, "\n";
+print $a % $b, "\n";
+print $a ** $b;
+</pre>
+
+<h4>Output</h4>
+<pre>
+13
+7
+30
+3.33333333333333
+1
+1000
+</pre>
+
+<hr>
+
+<h3>Relational (Comparison) Operators</h3>
+
+<p>
+Used to compare numeric values.
+</p>
+
+<table border="1" cellpadding="6">
+<tr><th>Operator</th><th>Meaning</th></tr>
+<tr><td>==</td><td>Equal</td></tr>
+<tr><td>!=</td><td>Not equal</td></tr>
+<tr><td>&lt;</td><td>Less than</td></tr>
+<tr><td>&gt;</td><td>Greater than</td></tr>
+<tr><td>&lt;=</td><td>Less or equal</td></tr>
+<tr><td>&gt;=</td><td>Greater or equal</td></tr>
+<tr><td>&lt;=&gt;</td><td>Spaceship</td></tr>
+</table>
+<pre>
+my $x = 10;
+my $y = 20;
+
+print $x == $y, "\n";
+print $x < $y, "\n";
+print $x <=> $y;
+</pre>
+
+<h4>Output</h4>
+<pre>
+0
+1
+-1
+</pre>
+
+<p>
+Perl distinguishes between numeric and string comparisons.
+Using numeric operators on strings can lead to incorrect results.
+</p>
+
+<p>
+To avoid ambiguity, Perl provides dedicated string comparison operators.
+</p>
+
+
+<h3>List of String Comparison Operators</h3>
+
+<table border="1" cellpadding="6">
+<tr>
+  <th>Operator</th>
+  <th>Meaning</th>
+</tr>
+<tr><td>eq</td><td>Equal</td></tr>
+<tr><td>ne</td><td>Not equal</td></tr>
+<tr><td>lt</td><td>Less than</td></tr>
+<tr><td>gt</td><td>Greater than</td></tr>
+<tr><td>le</td><td>Less than or equal</td></tr>
+<tr><td>ge</td><td>Greater than or equal</td></tr>
+<tr><td>cmp</td><td>String comparison (spaceship)</td></tr>
+</table>
+
+
+<h3>String Equality Comparison (eq / ne)</h3>
+
+<pre>
+my $a = "Perl";
+my $b = "perl";
+
+print ($a eq $b), "\n";
+print ($a ne $b);
+</pre>
+
+<h4>Output</h4>
+<pre>
+0
+1
+</pre>
+
+<p>
+String comparisons are case-sensitive.
+</p>
+
+<h3>String Ordering Comparison (lt, gt, le, ge)</h3>
+
+<pre>
+my $x = "apple";
+my $y = "banana";
+
+print ($x lt $y), "\n";
+print ($x gt $y);
+</pre>
+
+<h4>Output</h4>
+<pre>
+1
+0
+</pre>
+
+<p>
+Comparison is done lexicographically (dictionary order).
+</p>
+
+<h4>String Spaceship Operator (cmp)</h4>
+
+<p>
+The <code>cmp</code> operator compares two strings and returns:
+</p>
+<ul>
+  <li>-1 if left is smaller</li>
+  <li>0 if equal</li>
+  <li>1 if greater</li>
+</ul>
+
+<pre>
+print "a" cmp "b", "\n";
+print "a" cmp "a", "\n";
+print "b" cmp "a";
+</pre>
+
+<h4>Output</h4>
+<pre>
+-1
+0
+1
+</pre>
+
+
+<h3>Numeric vs String Comparison – Common Bug</h3>
+
+<pre>
+print "10" > "2";
+</pre>
+
+<h4>Output</h4>
+<pre>
+0
+</pre>
+
+<p>
+Because <code>&gt;</code> is numeric comparison, both values are converted to numbers.
+</p>
+
+<p><strong>Correct way:</strong></p>
+
+<pre>
+print "10" gt "2";
+</pre>
+
+<h4>Output</h4>
+<pre>
+1
+</pre>
+
+<h4>Comparing User Input</h4>
+
+<pre>
+my $username = "admin";
+
+if ($username eq "admin") {
+  print "Access granted";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Access granted
+</pre>
+
+
+<h4>Sorting Strings Using cmp</h4>
+
+<pre>
+my @names = ("Perl", "Python", "C");
+
+my @sorted = sort { $a cmp $b } @names;
+print "@sorted";
+</pre>
+
+<h4>Output</h4>
+<pre>
+C Perl Python
+</pre>
+
+<hr>
+
+<h3>Logical Operators</h3>
+
+<p>
+Used to combine conditions.
+</p>
+
+<table border="1" cellpadding="6">
+<tr><th>Operator</th><th>Description</th></tr>
+<tr><td>&&</td><td>Logical AND</td></tr>
+<tr><td>||</td><td>Logical OR</td></tr>
+<tr><td>!</td><td>Logical NOT</td></tr>
+<tr><td>and</td><td>Low precedence AND</td></tr>
+<tr><td>or</td><td>Low precedence OR</td></tr>
+<tr><td>not</td><td>Low precedence NOT</td></tr>
+</table>
+
+<pre>
+my $a = 1;
+my $b = 0;
+
+print ($a && $b), "\n";
+print ($a || $b), "\n";
+print (!$a);
+</pre>
+
+<h4>Output</h4>
+<pre>
+0
+1
+0
+</pre>
+
+<hr>
+
+<h3>Assignment Operators</h3>
+
+<p>
+Used to assign and update values.
+</p>
+
+<table border="1" cellpadding="6">
+<tr><th>Operator</th><th>Description</th></tr>
+<tr><td>=</td><td>Assignment</td></tr>
+<tr><td>+=</td><td>Add and assign</td></tr>
+<tr><td>-=</td><td>Subtract and assign</td></tr>
+<tr><td>*=</td><td>Multiply and assign</td></tr>
+<tr><td>/=</td><td>Divide and assign</td></tr>
+<tr><td>.=</td><td>Concatenate and assign</td></tr>
+</table>
+
+<pre>
+my $x = 10;
+$x += 5;
+print $x;
+</pre>
+
+<h4>Output</h4>
+<pre>
+15
+</pre>
+
+<hr>
+
+<h3>Bitwise Operators</h3>
+
+<p>
+Operate at the binary level.
+</p>
+
+<table border="1" cellpadding="6">
+<tr><th>Operator</th><th>Description</th></tr>
+<tr><td>&</td><td>AND</td></tr>
+<tr><td>|</td><td>OR</td></tr>
+<tr><td>^</td><td>XOR</td></tr>
+<tr><td>~</td><td>NOT</td></tr>
+<tr><td>&lt;&lt;</td><td>Left shift</td></tr>
+<tr><td>&gt;&gt;</td><td>Right shift</td></tr>
+</table>
+
+<pre>
+my $a = 5;
+my $b = 3;
+
+print ($a & $b), "\n";
+print ($a | $b), "\n";
+print ($a ^ $b);
+</pre>
+
+<h4>Output</h4>
+<pre>
+1
+7
+6
+</pre>
+
+<hr>
+
+<h3>String Operators</h3>
+
+<p>
+Perl separates numeric and string operations.
+</p>
+
+<table border="1" cellpadding="6">
+<tr><th>Operator</th><th>Use</th></tr>
+<tr><td>.</td><td>Concatenation</td></tr>
+<tr><td>x</td><td>String repetition</td></tr>
+<tr><td>eq</td><td>String equal</td></tr>
+<tr><td>ne</td><td>String not equal</td></tr>
+<tr><td>lt</td><td>String less than</td></tr>
+<tr><td>gt</td><td>String greater than</td></tr>
+</table>
+
+<pre>
+my $s = "Perl";
+print $s . " Language\n";
+print "Hi " x 3;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Perl Language
+Hi Hi Hi 
+</pre>
+
+<hr>
+
+<h3>Range Operator</h3>
+
+<p>
+Used to generate a list of values.
+</p>
+
+<pre>
+my @nums = (1..5);
+print @nums;
+</pre>
+
+<h4>Output</h4>
+<pre>
+12345
+</pre>
+
+<hr>
+
+<h3>File Test Operators</h3>
+
+<p>
+Used to test file properties.
+</p>
+
+<table border="1" cellpadding="6">
+<tr><th>Operator</th><th>Meaning</th></tr>
+<tr><td>-e</td><td>Exists</td></tr>
+<tr><td>-f</td><td>Regular file</td></tr>
+<tr><td>-d</td><td>Directory</td></tr>
+<tr><td>-r</td><td>Readable</td></tr>
+<tr><td>-w</td><td>Writable</td></tr>
+<tr><td>-x</td><td>Executable</td></tr>
+</table>
+
+<pre>
+if (-e "test.txt") {
+  print "File exists";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+File exists
+</pre>
+
+<hr>
+
+<h3>Autoincrement and Autodecrement</h3>
+
+<pre>
+my $i = 5;
+print ++$i, "\n";
+print $i++;
+</pre>
+
+<h4>Output</h4>
+<pre>
+6
+6
+</pre>
+
+<hr>
+
+<h3>Operator Precedence</h3>
+
+<p>
+Defines the order in which operators are evaluated.
+</p>
+
+<pre>
+print 2 + 3 * 4;
+</pre>
+
+<h4>Output</h4>
+<pre>
+14
+</pre>
+
+<hr>
+
+<h3>Quote-like Operators</h3>
+
+<p>
+Perl provides multiple quoting mechanisms.
+</p>
+
+<table border="1" cellpadding="6">
+<tr><th>Operator</th><th>Description</th></tr>
+<tr><td>q//</td><td>Single quotes</td></tr>
+<tr><td>qq//</td><td>Double quotes</td></tr>
+<tr><td>qw//</td><td>List of words</td></tr>
+<tr><td>qx//</td><td>Execute command</td></tr>
+</table>
+
+<pre>
+my $a = q/Hello/;
+my $b = qq/Hi $a/;
+my @list = qw/one two three/;
+
+print "$b\n";
+print "@list";
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hi Hello
+one two three
+</pre>
+
+<p>
+The <code>qx//</code> operator executes a system command
+and captures its output.
+</p>
+
+<p>
+It is equivalent to using backticks (<code>`command`</code>).
+</p>
+
+<pre>
+my $date = qx/date/;
+print $date;
+</pre>
+
+<h4>Output (example)</h4>
+<pre>
+Sun Jan  5 10:30:12 IST 2026
+</pre>
+
+<p>
+The output depends on the operating system.
+</p>
+
+
+<pre>
+my $files = qx/ls/;
+print $files;
+</pre>
+
+<h4>Output (example)</h4>
+<pre>
+file1.txt
+file2.pl
+script.pl
+</pre>
+
+<hr>
+
+<h3>qx with Windows Command</h3>
+
+<pre>
+my $dir = qx/dir/;
+print $dir;
+</pre>
+
+<h4>Output (example)</h4>
+<pre>
+ Volume in drive C is OS
+ Directory of C:\Perl
+</pre>
+
+<hr>
+
+<h3>qx in Scalar vs List Context</h3>
+
+<pre>
+my @lines = qx/ls/;
+print $lines[0];
+</pre>
+
+<h4>Output</h4>
+<pre>
+file1.txt
+</pre>
+
+<p>
+In list context, each line becomes an array element.
+</p>
+
+<hr>
+
+<h3>Security Warning</h3>
+
+<p>
+Never use untrusted input inside <code>qx</code>.
+It can cause command injection.
+</p>
+
+<pre>
+# Dangerous
+qx/rm $user_input/;
+</pre>
+
+
+<hr>
+
+<h2>Arrow Operator (->)</h2>
+
+<h3>What is the Arrow Operator?</h3>
+<p>
+The arrow operator <code>-></code> is used to dereference references.
+It allows accessing arrays, hashes, and objects that are stored inside scalar variables.
+</p>
+
+<p>
+In real Perl programs, complex data structures are almost always accessed using <code>-></code>.
+</p>
+
+<hr>
+
+<h3>Why Arrow Operator is Needed</h3>
+<p>
+Perl stores references inside scalar variables.
+To access the actual data (array, hash, object),
+Perl needs an explicit dereferencing operator — this is <code>-></code>.
+</p>
+
+<p>
+Without <code>-></code>, Perl does not know whether you want the reference or the value.
+</p>
+
+<hr>
+
+<h3>Arrow Operator with Array Reference</h3>
+
+<pre>
+my $arr_ref = [10, 20, 30];
+
+print $arr_ref->[0];
+</pre>
+
+<h4>Output</h4>
+<pre>
+10
+</pre>
+
+<h4>Explanation</h4>
+<ul>
+  <li><code>$arr_ref</code> holds a reference</li>
+  <li><code>-></code> dereferences the array</li>
+  <li><code>[0]</code> accesses the first element</li>
+</ul>
+
+<h3>What Are Quote-like Operators?</h3>
+<p>
+Quote-like operators allow Perl to create strings, lists, or execute commands
+without using traditional single (<code>' '</code>) or double (<code>" "</code>) quotes.
+</p>
+
+<p>
+Perl allows <strong>multiple delimiter styles</strong> to make code readable
+and to avoid escaping characters like <code>/</code> and <code>"</code>.
+</p>
+
+<h3>Why Perl Supports Multiple Delimiters</h3>
+<ul>
+  <li>Avoid excessive escaping</li>
+  <li>Improve readability</li>
+  <li>Easier handling of paths, regex, and commands</li>
+</ul>
+
+<p>
+Delimiters can be:
+</p>
+<ul>
+  <li><code>()</code></li>
+  <li><code>{}</code></li>
+  <li><code>[]</code></li>
+  <li><code>&lt;&gt;</code></li>
+  <li><code>//</code></li>
+  <li><code>''</code> or <code>""</code> (only for qw)</li>
+</ul>
+
+<h3>q – Single Quote Equivalent</h3>
+<p>
+<code>q</code> works like single quotes. No variable interpolation.
+</p>
+
+<h4>All Valid Forms</h4>
+
+<pre>
+my $a = q(Hello);
+my $b = q{Hello};
+my $c = q[Hello];
+my $d = q&lt;Hello&gt;;
+my $e = q/Hello/;
+
+print "$a $b $c $d $e";
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hello Hello Hello Hello Hello
+</pre>
+
+<h3>qq – Double Quote Equivalent</h3>
+<p>
+<code>qq</code> works like double quotes. Variable interpolation works.
+</p>
+
+<pre>
+my $name = "Perl";
+
+print qq(Hello $name), "\n";
+print qq{Hello $name}, "\n";
+print qq[Hello $name], "\n";
+print qq&lt;Hello $name&gt;;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hello Perl
+Hello Perl
+Hello Perl
+Hello Perl
+</pre>
+
+<h3>qw – Quote Word (List Generator)</h3>
+<p>
+<code>qw</code> generates a list of words separated by whitespace.
+No quotes or commas needed.
+</p>
+
+<h4>All Valid Forms</h4>
+
+<pre>
+my @a = qw(one two three);
+my @b = qw{one two three};
+my @c = qw[one two three];
+my @d = qw&lt;one two three&gt;;
+my @e = qw/one two three/;
+my @f = qw"one two three";
+my @g = qw'one two three';
+
+print "@a\n";
+print "@f";
+</pre>
+
+<h4>Output</h4>
+<pre>
+one two three
+one two three
+</pre>
+
+<h4>Why qw is Useful</h4>
+<ul>
+  <li>Cleaner syntax</li>
+  <li>No commas or quotes</li>
+  <li>Commonly used for configuration lists</li>
+</ul>
+
+<h3>qx – Execute System Command</h3>
+<p>
+<code>qx</code> executes an OS command and captures its output.
+Equivalent to backticks (<code>`command`</code>).
+</p>
+
+<h4>All Valid Forms</h4>
+
+<pre>
+my $date1 = qx(date);
+my $date2 = qx{date};
+my $date3 = qx/date/;
+
+print $date1;
+</pre>
+
+<h4>Output (example)</h4>
+<pre>
+Sun Jan  5 11:20:30 IST 2026
+</pre>
+
+
+<h4>Bad Example (Too Many Escapes)</h4>
+<pre>
+my $path = "C:\\Program Files\\Perl";
+</pre>
+
+<h4>Good Example</h4>
+<pre>
+my $path = q{C:\Program Files\Perl};
+print $path;
+</pre>
+
+<h4>Output</h4>
+<pre>
+C:\Program Files\Perl
+</pre>
+
+<ul>
+  <li>Using <code>q</code> when interpolation is needed</li>
+  <li>Using numeric operators inside <code>qw</code></li>
+  <li>Passing user input directly to <code>qx</code></li>
+</ul>
+
+<h3>Summary Table</h3>
+
+<table border="1" cellpadding="6">
+<tr>
+  <th>Operator</th>
+  <th>Interpolation</th>
+  <th>Purpose</th>
+</tr>
+<tr>
+  <td>q</td>
+  <td>No</td>
+  <td>Single-quoted string</td>
+</tr>
+<tr>
+  <td>qq</td>
+  <td>Yes</td>
+  <td>Double-quoted string</td>
+</tr>
+<tr>
+  <td>qw</td>
+  <td>No</td>
+  <td>Word list</td>
+</tr>
+<tr>
+  <td>qx</td>
+  <td>N/A</td>
+  <td>Execute command</td>
+</tr>
+</table>
+
+<hr>
+
+<h3>Arrow Operator with Hash Reference</h3>
+
+<pre>
+my $hash_ref = {
+  name => "Aathi",
+  role => "Developer"
+};
+
+print $hash_ref->{name};
+</pre>
+
+<h4>Output</h4>
+<pre>
+Aathi
+</pre>
+
+<h4>Explanation</h4>
+<ul>
+  <li><code>$hash_ref</code> is a scalar holding a hash reference</li>
+  <li><code>->{name}</code> accesses the hash key</li>
+</ul>
+
+<hr>
+
+<h3>Arrow Operator with Nested Data Structures</h3>
+
+<pre>
+my $data = {
+  user => {
+    name => "Aathi",
+    skills => ["Perl", "Linux"]
+  }
+};
+
+print $data->{user}->{skills}->[0];
+</pre>
+
+<h4>Output</h4>
+<pre>
+Perl
+</pre>
+
+<h4>Why This Is Important</h4>
+<p>
+This pattern is extremely common in:
+</p>
+<ul>
+  <li>JSON parsing</li>
+  <li>API responses</li>
+  <li>Configuration files</li>
+  <li>Database results</li>
+</ul>
+
+<hr>
+
+<h3>Arrow Operator in Object-Oriented Perl</h3>
+
+<pre>
+$object->method();
+$object->{property};
+</pre>
+
+<p>
+In OOP, <code>-></code> is mandatory to call methods and access object data.
+</p>
+
+<hr>
+
+<h3>Difference Between => and -></h3>
+
+<table border="1" cellpadding="6">
+<tr>
+  <th>Operator</th>
+  <th>Purpose</th>
+</tr>
+<tr>
+  <td>=&gt;</td>
+  <td>Key-value association (hashes)</td>
+</tr>
+<tr>
+  <td>-></td>
+  <td>Dereferencing arrays, hashes, objects</td>
+</tr>
+</table>
+
+<hr>
+
+<h3>Arrow Operator (=>)</h3>
+
+<p>
+Used to associate keys and values in hashes.
+It also auto-quotes the left-hand side.
+</p>
+
+<pre>
+my %data = (
+  name => "Aathi",
+  role => "Developer"
+);
+
+print $data{name};
+</pre>
+
+<h4>Output</h4>
+<pre>
+Aathi
+</pre>
+
+<hr>
+
+<h3>Best Practices</h3>
+
+<ul>
+  <li>Use numeric operators for numbers</li>
+  <li>Use string operators for strings</li>
+  <li>Use parentheses for clarity</li>
+  <li>Enable strict and warnings</li>
+  <li>Use <code>-></code> for all reference access</li>
+  <li>Use <code>qx</code> only when system interaction is needed</li>
+  <li>Always validate inputs passed to system commands</li>
+</ul>
+
+
+</ul>
+
+</section><br>
+
+<section id="perl-input-output">
+
+<h2>Input / Output in Perl</h2>
+
+<p>
+Input and Output (I/O) are fundamental operations in any program.
+Perl provides powerful and flexible mechanisms to interact with users,
+files, and system streams.
+</p>
+
+<hr>
+
+<h3>print</h3>
+
+<p>
+<code>print</code> is the most commonly used output function in Perl.
+It sends output to <strong>STDOUT</strong> by default.
+</p>
+
+<h4>Basic Example</h4>
+<pre>
+print "Hello Perl";
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hello Perl
+</pre>
+
+<h4>Important Notes</h4>
+<ul>
+  <li><code>print</code> does NOT automatically add a newline</li>
+  <li>You must explicitly use <code>\n</code></li>
+</ul>
+
+<pre>
+print "Hello\nPerl";
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hello
+Perl
+</pre>
+
+<hr>
+
+<h3>say</h3>
+
+<p>
+<code>say</code> is similar to <code>print</code> but automatically appends a newline.
+It is available using <code>use feature 'say'</code>.
+</p>
+
+<pre>
+use feature 'say';
+say "Hello Perl";
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hello Perl
+</pre>
+
+<h4>Why say Exists</h4>
+<ul>
+  <li>Cleaner syntax</li>
+  <li>Avoids repetitive <code>\n</code></li>
+</ul>
+
+<hr>
+
+<h3>printf</h3>
+
+<p>
+<code>printf</code> is used for formatted output.
+It works similarly to C’s printf.
+</p>
+
+<pre>
+my $name = "Perl";
+my $version = 5.38;
+
+printf "Language: %s Version: %.2f", $name, $version;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Language: Perl Version: 5.38
+</pre>
+
+<h4>Why printf is Used</h4>
+<ul>
+  <li>Precise formatting</li>
+  <li>Align numbers</li>
+  <li>Control decimal places</li>
+</ul>
+
+<hr>
+
+<h3>STDIN / STDOUT / STDERR</h3>
+
+<p>
+Perl follows Unix-style standard streams.
+</p>
+
+<table border="1" cellpadding="6">
+<tr>
+  <th>Stream</th>
+  <th>Purpose</th>
+</tr>
+<tr>
+  <td>STDIN</td>
+  <td>Input (keyboard, pipe, file)</td>
+</tr>
+<tr>
+  <td>STDOUT</td>
+  <td>Normal output</td>
+</tr>
+<tr>
+  <td>STDERR</td>
+  <td>Error output</td>
+</tr>
+</table>
+
+<h4>STDOUT Example</h4>
+<pre>
+print STDOUT "Normal message\n";
+</pre>
+
+<h4>STDERR Example</h4>
+<pre>
+print STDERR "Error occurred\n";
+</pre>
+
+<h4>Why STDERR is Important</h4>
+<ul>
+  <li>Error messages separated from output</li>
+  <li>Useful for logging</li>
+  <li>Used in production scripts</li>
+</ul>
+
+<hr>
+
+<h3>Reading User Input (STDIN)</h3>
+
+<p>
+<code>&lt;STDIN&gt;</code> reads input from the user.
+</p>
+
+<pre>
+print "Enter your name: ";
+my $name = <STDIN>;
+print "Hello $name";
+</pre>
+
+<h4>Output (User Input: Aathi)</h4>
+<pre>
+Enter your name: Aathi
+Hello Aathi
+</pre>
+
+<h4>IMPORTANT ISSUE</h4>
+<p>
+User input always includes a newline character (<code>\n</code>).
+This causes unexpected behavior.
+</p>
+
+<hr>
+
+<h3>chomp</h3>
+
+<p>
+<code>chomp</code> removes the trailing newline character from input.
+</p>
+
+<h4>WHY chomp is Needed</h4>
+<ul>
+  <li>User input includes <code>\n</code></li>
+  <li>String comparison fails without chomp</li>
+  <li>Extra line breaks appear in output</li>
+</ul>
+
+<h4>Example WITHOUT chomp (Bug)</h4>
+<pre>
+my $input = <STDIN>;
+
+if ($input eq "yes") {
+  print "Confirmed";
+}
+</pre>
+
+<p>This will FAIL because <code>$input</code> is actually <code>"yes\n"</code>.</p>
+
+<h4>Correct Example WITH chomp</h4>
+<pre>
+my $input = <STDIN>;
+chomp($input);
+
+if ($input eq "yes") {
+  print "Confirmed";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Confirmed
+</pre>
+
+<h4>chomp Behavior</h4>
+<ul>
+  <li>Removes only newline</li>
+  <li>Safe for strings</li>
+  <li>Used after STDIN and file reading</li>
+</ul>
+
+<hr>
+
+<h3>chop</h3>
+
+<p>
+<code>chop</code> removes the last character of a string blindly.
+</p>
+
+<h4>Example</h4>
+<pre>
+my $word = "Hello";
+chop($word);
+print $word;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Hell
+</pre>
+
+<h4>Why chop is Dangerous</h4>
+<ul>
+  <li>Removes characters even if not newline</li>
+  <li>Can corrupt data</li>
+  <li>Rarely used in modern code</li>
+</ul>
+
+<hr>
+
+<h3>chomp vs chop (REAL DIFFERENCE)</h3>
+
+<table border="1" cellpadding="6">
+<tr>
+  <th>Feature</th>
+  <th>chomp</th>
+  <th>chop</th>
+</tr>
+<tr>
+  <td>Purpose</td>
+  <td>Remove newline</td>
+  <td>Remove last character</td>
+</tr>
+<tr>
+  <td>Safe</td>
+  <td>Yes</td>
+  <td>No</td>
+</tr>
+<tr>
+  <td>Used With</td>
+  <td>STDIN, files</td>
+  <td>Rare legacy cases</td>
+</tr>
+</table>
+
+<hr>
+
+<h3>Diamond Operator (&lt;&gt;)</h3>
+
+<p>
+The diamond operator reads input from:
+</p>
+<ul>
+  <li>Files provided via command line</li>
+  <li>STDIN if no files are provided</li>
+</ul>
+
+<h4>Example</h4>
+<pre>
+while (my $line = <>) {
+  chomp($line);
+  print $line;
+}
+</pre>
+
+<h4>How It Works</h4>
+<ul>
+  <li>Reads line by line</li>
+  <li>Automatically handles multiple files</li>
+  <li>Commonly used in filters</li>
+</ul>
+
+<hr>
+
+<h3>Reading File or STDIN Automatically</h3>
+
+<pre>
+perl script.pl file1.txt file2.txt
+</pre>
+
+<p>
+The diamond operator reads both files sequentially.
+</p>
+
+<hr>
+
+<h3>Input in List Context</h3>
+
+<pre>
+my @lines = <STDIN>;
+chomp(@lines);
+print @lines;
+</pre>
+
+<h4>Output</h4>
+<pre>
+(All input lines printed)
+</pre>
+
+<hr>
+
+<h3>Best Practices (Company Standard)</h3>
+
+<ul>
+  <li>Always <code>chomp</code> user input</li>
+  <li>Use <code>say</code> for cleaner output</li>
+  <li>Use <code>STDERR</code> for error messages</li>
+  <li>Prefer diamond operator for flexible input</li>
+</ul>
+
+</section><br>
+
+<section id="perl-control-statements">
+
+<h2>Control Statements in Perl</h2>
+
+<p>
+Control statements determine the flow of execution in a Perl program.
+They decide which code runs, how many times it runs, and under what conditions.
+</p>
+
+<hr>
+
+<h3>if Statement</h3>
+
+<p>
+The <code>if</code> statement executes a block of code only if a condition is true.
+</p>
+
+<pre>
+my $age = 20;
+
+if ($age >= 18) {
+    print "Eligible to vote\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Eligible to vote
+</pre>
+
+<h4>Why if is Used</h4>
+<ul>
+  <li>Decision making</li>
+  <li>Validation logic</li>
+  <li>Conditional execution</li>
+</ul>
+
+<hr>
+
+<h3>if - else Statement</h3>
+
+<p>
+Executes one block if condition is true, otherwise executes else block.
+</p>
+
+<pre>
+my $num = 5;
+
+if ($num % 2 == 0) {
+    print "Even number\n";
+} else {
+    print "Odd number\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Odd number
+</pre>
+
+<hr>
+
+<h3>elsif Statement</h3>
+
+<p>
+Used to check multiple conditions sequentially.
+</p>
+
+<pre>
+my $marks = 75;
+
+if ($marks >= 90) {
+    print "Grade A\n";
+} elsif ($marks >= 75) {
+    print "Grade B\n";
+} elsif ($marks >= 60) {
+    print "Grade C\n";
+} else {
+    print "Fail\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Grade B
+</pre>
+
+<hr>
+
+<h3>unless Statement</h3>
+
+<p>
+<code>unless</code> is the opposite of <code>if</code>.
+It executes code only when the condition is false.
+</p>
+
+<pre>
+my $logged_in = 0;
+
+unless ($logged_in) {
+    print "Please login\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Please login
+</pre>
+
+<h4>Why unless Exists</h4>
+<ul>
+  <li>Improves readability</li>
+  <li>Avoids negative conditions</li>
+</ul>
+
+<hr>
+
+<h3>given - when (Switch Case)</h3>
+
+<p>
+<code>given-when</code> works like switch-case.
+It requires <code>use feature 'switch'</code>.
+</p>
+
+<pre>
+use feature 'switch';
+
+my $day = "Mon";
+
+given ($day) {
+    when ("Mon") { print "Monday\n"; }
+    when ("Tue") { print "Tuesday\n"; }
+    when ("Wed") { print "Wednesday\n"; }
+    default      { print "Invalid day\n"; }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Monday
+</pre>
+
+<h4>Important Notes</h4>
+<ul>
+  <li>Experimental in newer Perl versions</li>
+  <li>Not recommended for new production code</li>
+</ul>
+
+<hr>
+
+<h3>Ternary Operator</h3>
+
+<p>
+The ternary operator is a short form of if-else.
+</p>
+
+<pre>
+my $age = 16;
+my $status = ($age >= 18) ? "Adult" : "Minor";
+print $status;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Minor
+</pre>
+
+<h4>Syntax</h4>
+<pre>
+condition ? true_value : false_value
+</pre>
+
+<hr>
+
+<h3>goto Statement</h3>
+
+<p>
+<code>goto</code> transfers control to another label in the program.
+</p>
+
+<pre>
+my $count = 1;
+
+START:
+print "Count: $count\n";
+$count++;
+
+if ($count <= 3) {
+    goto START;
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Count: 1
+Count: 2
+Count: 3
+</pre>
+
+<h4>Why goto is Discouraged</h4>
+<ul>
+  <li>Makes code unreadable</li>
+  <li>Hard to debug</li>
+  <li>Creates spaghetti code</li>
+</ul>
+
+<h4>When goto is Used</h4>
+<ul>
+  <li>Low-level error recovery</li>
+  <li>Legacy Perl scripts</li>
+</ul>
+
+<hr>
+
+<h3>Conditional Modifiers</h3>
+
+<p>
+Perl allows conditions to be written at the end of a statement.
+</p>
+
+<h4>if Modifier</h4>
+<pre>
+print "Adult\n" if $age >= 18;
+</pre>
+
+<h4>unless Modifier</h4>
+<pre>
+print "Login required\n" unless $logged_in;
+</pre>
+
+<h4>while Modifier</h4>
+<pre>
+print $count++, "\n" while $count <= 3;
+</pre>
+
+<h4>until Modifier</h4>
+<pre>
+print $count++, "\n" until $count > 3;
+</pre>
+
+<hr>
+
+<h3>Nested if Statements</h3>
+
+<pre>
+my $username = "admin";
+my $password = "1234";
+
+if ($username eq "admin") {
+    if ($password eq "1234") {
+        print "Login successful\n";
+    } else {
+        print "Wrong password\n";
+    }
+} else {
+    print "Invalid user\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Login successful
+</pre>
+
+<hr>
+
+<h3>Nested unless</h3>
+
+<pre>
+my $active = 0;
+my $blocked = 0;
+
+unless ($active) {
+    unless ($blocked) {
+        print "User inactive but not blocked\n";
+    }
+}
+</pre>
+
+<hr>
+
+<h3>Nested Ternary Operator</h3>
+
+<pre>
+my $score = 85;
+
+my $grade = ($score >= 90) ? "A" :
+            ($score >= 75) ? "B" :
+            ($score >= 60) ? "C" : "Fail";
+
+print $grade;
+</pre>
+
+<h4>Output</h4>
+<pre>
+B
+</pre>
+
+<hr>
+
+<h3>Best Practices</h3>
+
+<ul>
+  <li>Prefer <code>if / elsif / else</code> for clarity</li>
+  <li>Use ternary only for simple conditions</li>
+  <li>Avoid <code>goto</code> in production</li>
+  <li>Use conditional modifiers for one-liners</li>
+</ul>
+
+</section><br>
+<section id="perl-nested-control-statements">
+
+<h2>Nested Control Statements in Perl</h2>
+
+<p>
+Nested control statements mean placing one conditional statement inside another.
+They are commonly used for validation, authentication, permission checks,
+and complex decision-making logic.
+</p>
+
+<hr>
+
+<h3>Nested if Statement</h3>
+
+<p>
+An <code>if</code> statement inside another <code>if</code>.
+</p>
+
+<pre>
+my $age = 25;
+my $citizen = 1;
+
+if ($age >= 18) {
+    if ($citizen) {
+        print "Eligible to vote\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Eligible to vote
+</pre>
+
+<h4>Use Case</h4>
+<ul>
+  <li>Multi-level validation</li>
+  <li>Dependent conditions</li>
+</ul>
+
+<hr>
+
+<h3>Nested if - else Statement</h3>
+
+<pre>
+my $username = "admin";
+my $password = "1234";
+
+if ($username eq "admin") {
+    if ($password eq "1234") {
+        print "Login successful\n";
+    } else {
+        print "Wrong password\n";
+    }
+} else {
+    print "Invalid username\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Login successful
+</pre>
+
+<hr>
+
+<h3>Nested if - elsif - else</h3>
+
+<p>
+Used when multiple dependent conditions exist inside another condition.
+</p>
+
+<pre>
+my $marks = 82;
+my $attendance = 80;
+
+if ($attendance >= 75) {
+    if ($marks >= 90) {
+        print "Grade A\n";
+    } elsif ($marks >= 75) {
+        print "Grade B\n";
+    } elsif ($marks >= 60) {
+        print "Grade C\n";
+    } else {
+        print "Fail\n";
+    }
+} else {
+    print "Attendance shortage\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Grade B
+</pre>
+
+<hr>
+
+<h3>Nested unless Statement</h3>
+
+<p>
+<code>unless</code> executes when the condition is false.
+Nested <code>unless</code> is useful for negative validations.
+</p>
+
+<pre>
+my $blocked = 0;
+my $expired = 0;
+
+unless ($blocked) {
+    unless ($expired) {
+        print "Account is active\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Account is active
+</pre>
+
+<h4>Important Note</h4>
+<p>
+Avoid deep nesting with <code>unless</code> as it reduces readability.
+</p>
+
+<hr>
+
+<h3>Nested if inside unless</h3>
+
+<pre>
+my $logged_in = 0;
+my $attempts = 2;
+
+unless ($logged_in) {
+    if ($attempts < 3) {
+        print "Please login\n";
+    } else {
+        print "Account locked\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Please login
+</pre>
+
+<hr>
+
+<h3>Nested unless inside if</h3>
+
+<pre>
+my $is_admin = 1;
+my $suspended = 0;
+
+if ($is_admin) {
+    unless ($suspended) {
+        print "Admin access granted\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Admin access granted
+</pre>
+
+<hr>
+
+<h3>Nested Ternary Operator</h3>
+
+<p>
+Nested ternary operators are used for compact multi-condition assignment.
+</p>
+
+<pre>
+my $score = 78;
+
+my $result = ($score >= 90) ? "A" :
+             ($score >= 75) ? "B" :
+             ($score >= 60) ? "C" : "Fail";
+
+print $result;
+</pre>
+
+<h4>Output</h4>
+<pre>
+B
+</pre>
+
+<h4>Warning</h4>
+<ul>
+  <li>Hard to read if overused</li>
+  <li>Use only for simple logic</li>
+</ul>
+
+<hr>
+
+<h3>Nested Conditional Modifiers</h3>
+
+<p>
+Conditional modifiers can also be nested logically.
+</p>
+
+<pre>
+print "Access granted\n"
+    if $is_admin
+    if !$suspended;
+</pre>
+
+<h4>How It Works</h4>
+<ul>
+  <li>Second condition is checked first</li>
+  <li>Then the first condition</li>
+</ul>
+
+<hr>
+
+<h3>Nested given - when</h3>
+
+<pre>
+use feature 'switch';
+
+my $role = "admin";
+my $action = "edit";
+
+given ($role) {
+    when ("admin") {
+        given ($action) {
+            when ("edit") { print "Edit allowed\n"; }
+            when ("view") { print "View allowed\n"; }
+            default       { print "No permission\n"; }
+        }
+    }
+    default {
+        print "Invalid role\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Edit allowed
+</pre>
+
+<hr>
+
+<h3>Best Practices for Nested Conditions</h3>
+
+<ul>
+  <li>Avoid deep nesting (use early returns)</li>
+  <li>Prefer <code>elsif</code> over multiple nested <code>if</code></li>
+  <li>Use meaningful variable names</li>
+  <li>Use comments for clarity</li>
+</ul>
+
+</section><br>
+<section id="perl-unless-elsif-else">
+
+<h2>unless with elsif and else in Perl</h2>
+
+<p>
+In Perl, <code>unless</code> is the logical opposite of <code>if</code>.
+It executes code when the condition is FALSE.
+</p>
+
+<hr>
+
+<h3>Basic unless</h3>
+
+<pre>
+my $logged_in = 0;
+
+unless ($logged_in) {
+    print "Please login\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Please login
+</pre>
+
+<p>
+Explanation: Condition is false (0), so the block executes.
+</p>
+
+<hr>
+
+<h3>unless with else</h3>
+
+<p>
+<code>else</code> executes when the <code>unless</code> condition is TRUE.
+</p>
+
+<pre>
+my $connected = 1;
+
+unless ($connected) {
+    print "Not connected\n";
+} else {
+    print "Connected successfully\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Connected successfully
+</pre>
+
+<p>
+Explanation:
+<ul>
+  <li><code>$connected</code> is true</li>
+  <li><code>unless</code> block is skipped</li>
+  <li><code>else</code> block runs</li>
+</ul>
+</p>
+
+<hr>
+
+<h3>unless with elsif and else</h3>
+
+<p>
+Yes, <code>elsif</code> CAN be used with <code>unless</code>,
+but it is evaluated like a normal <code>elsif</code> chain.
+</p>
+
+<pre>
+my $status = "warning";
+
+unless ($status eq "error") {
+    print "No error\n";
+}
+elsif ($status eq "warning") {
+    print "Warning state\n";
+}
+else {
+    print "Error occurred\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+No error
+</pre>
+
+<h4>How Perl Evaluates This</h4>
+<ol>
+  <li>Check <code>unless ($status eq "error")</code></li>
+  <li>If FALSE → run block and stop</li>
+  <li>If TRUE → move to <code>elsif</code></li>
+</ol>
+
+<hr>
+
+<h3>Real-World Example: Account Status Check</h3>
+
+<pre>
+my $account_status = "inactive";
+
+unless ($account_status eq "blocked") {
+    print "Account not blocked\n";
+}
+elsif ($account_status eq "inactive") {
+    print "Account inactive\n";
+}
+else {
+    print "Account blocked\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Account not blocked
+</pre>
+
+<hr>
+
+<h3>Nested unless with elsif and else</h3>
+
+<pre>
+my $is_admin = 1;
+my $suspended = 0;
+
+unless ($is_admin) {
+    print "Not an admin\n";
+}
+elsif ($suspended) {
+    print "Admin suspended\n";
+}
+else {
+    print "Admin active\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Admin active
+</pre>
+
+<hr>
+
+<h3>unless inside else (Nested)</h3>
+
+<pre>
+my $user_exists = 1;
+my $verified = 0;
+
+if ($user_exists) {
+    unless ($verified) {
+        print "User not verified\n";
+    } else {
+        print "User verified\n";
+    }
+} else {
+    print "User does not exist\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+User not verified
+</pre>
+
+<hr>
+
+<h3>IMPORTANT WARNING (Company-Level Rule)</h3>
+
+<p>
+Using <code>unless</code> with <code>elsif</code> and deep nesting
+reduces readability and is discouraged in production code.
+</p>
+
+<h4>BAD (Hard to Read)</h4>
+<pre>
+unless ($a) {
+    ...
+} elsif ($b) {
+    ...
+} elsif ($c) {
+    ...
+}
+</pre>
+
+<h4>GOOD (Recommended)</h4>
+<pre>
+if (!$a) {
+    ...
+} elsif ($b) {
+    ...
+} elsif ($c) {
+    ...
+}
+</pre>
+
+<hr>
+
+<h3>Comparison: if vs unless</h3>
+
+<table border="1" cellpadding="6">
+<tr>
+  <th>Feature</th>
+  <th>if</th>
+  <th>unless</th>
+</tr>
+<tr>
+  <td>Condition</td>
+  <td>True executes</td>
+  <td>False executes</td>
+</tr>
+<tr>
+  <td>Readability</td>
+  <td>High</td>
+  <td>Medium</td>
+</tr>
+<tr>
+  <td>Best use</td>
+  <td>Complex logic</td>
+  <td>Simple negative checks</td>
+</tr>
+</table>
+
+<hr>
+
+<h3>Best Practices</h3>
+
+<ul>
+  <li>Use <code>unless</code> only for simple negative conditions</li>
+  <li>Avoid <code>elsif</code> chains with <code>unless</code></li>
+  <li>Prefer <code>if (!condition)</code> for clarity</li>
+  <li>Never deeply nest <code>unless</code></li>
+</ul>
+
+</section><br>
+<section id="perl-looping-statements">
+
+<h2>Looping Statements in Perl</h2>
+
+<p>
+Loops allow a block of code to execute repeatedly based on a condition.
+Perl provides multiple looping constructs for different scenarios.
+</p>
+
+<hr>
+
+<h3>for Loop</h3>
+
+<p>
+The <code>for</code> loop is used when the number of iterations is known.
+</p>
+
+<pre>
+for (my $i = 1; $i <= 3; $i++) {
+    print "Count: $i\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Count: 1
+Count: 2
+Count: 3
+</pre>
+
+<h4>Nested for Loop</h4>
+
+<pre>
+for (my $i = 1; $i <= 2; $i++) {
+    for (my $j = 1; $j <= 2; $j++) {
+        print "i=$i j=$j\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1 j=1
+i=1 j=2
+i=2 j=1
+i=2 j=2
+</pre>
+
+<hr>
+
+<h3>foreach Loop</h3>
+
+<p>
+<code>foreach</code> is used to iterate over arrays and lists.
+</p>
+
+<pre>
+my @names = ("Aathi", "Perl", "Linux");
+
+foreach my $name (@names) {
+    print "$name\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Aathi
+Perl
+Linux
+</pre>
+
+<h4>Nested foreach Loop</h4>
+
+<pre>
+my @dept = ("IT", "HR");
+my @level = ("Junior", "Senior");
+
+foreach my $d (@dept) {
+    foreach my $l (@level) {
+        print "$d - $l\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+IT - Junior
+IT - Senior
+HR - Junior
+HR - Senior
+</pre>
+
+<hr>
+
+<h3>while Loop</h3>
+
+<p>
+The <code>while</code> loop executes as long as the condition is true.
+</p>
+
+<pre>
+my $i = 1;
+
+while ($i <= 3) {
+    print "Value: $i\n";
+    $i++;
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Value: 1
+Value: 2
+Value: 3
+</pre>
+
+<h4>Nested while Loop</h4>
+
+<pre>
+my $i = 1;
+
+while ($i <= 2) {
+    my $j = 1;
+    while ($j <= 2) {
+        print "i=$i j=$j\n";
+        $j++;
+    }
+    $i++;
+}
+</pre>
+
+<hr>
+
+<h3>until Loop</h3>
+
+<p>
+<code>until</code> is the opposite of <code>while</code>.
+It runs while the condition is false.
+</p>
+
+<pre>
+my $i = 1;
+
+until ($i > 3) {
+    print "Value: $i\n";
+    $i++;
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+Value: 1
+Value: 2
+Value: 3
+</pre>
+
+<h4>Nested until Loop</h4>
+
+<pre>
+my $i = 1;
+
+until ($i > 2) {
+    my $j = 1;
+    until ($j > 2) {
+        print "i=$i j=$j\n";
+        $j++;
+    }
+    $i++;
+}
+</pre>
+
+<hr>
+
+<h3>do - while Loop</h3>
+
+<p>
+The <code>do-while</code> loop executes at least once,
+even if the condition is false.
+</p>
+
+<pre>
+my $i = 1;
+
+do {
+    print "Value: $i\n";
+    $i++;
+} while ($i <= 3);
+</pre>
+
+<h4>Output</h4>
+<pre>
+Value: 1
+Value: 2
+Value: 3
+</pre>
+
+<h4>Nested do - while</h4>
+
+<pre>
+my $i = 1;
+
+do {
+    my $j = 1;
+    do {
+        print "i=$i j=$j\n";
+        $j++;
+    } while ($j <= 2);
+    $i++;
+} while ($i <= 2);
+</pre>
+
+<hr>
+
+<h3>next Statement</h3>
+
+<p>
+<code>next</code> skips the current iteration and moves to the next loop cycle.
+</p>
+
+<pre>
+for (my $i = 1; $i <= 5; $i++) {
+    next if $i == 3;
+    print "$i\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+1
+2
+4
+5
+</pre>
+
+<hr>
+
+<h3>last Statement</h3>
+
+<p>
+<code>last</code> exits the loop completely.
+</p>
+
+<pre>
+for (my $i = 1; $i <= 5; $i++) {
+    last if $i == 3;
+    print "$i\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+1
+2
+</pre>
+
+<hr>
+
+<h3>redo Statement</h3>
+
+<p>
+<code>redo</code> restarts the current iteration without checking the condition.
+</p>
+
+<pre>
+my $i = 1;
+
+while ($i <= 3) {
+    print "i=$i\n";
+    $i++;
+    redo if $i == 2;
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1
+i=2
+i=2
+i=3
+</pre>
+
+<h4>Important Note</h4>
+<p>
+Use <code>redo</code> carefully as it can create infinite loops.
+</p>
+
+<hr>
+
+<h3>Loop Labels</h3>
+
+<p>
+Loop labels allow control statements to act on outer loops.
+</p>
+
+<pre>
+OUTER:
+for (my $i = 1; $i <= 3; $i++) {
+    for (my $j = 1; $j <= 3; $j++) {
+        last OUTER if $j == 2;
+        print "i=$i j=$j\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1 j=1
+</pre>
+
+<hr>
+
+<h3>next with Loop Label</h3>
+
+<pre>
+OUTER:
+for (my $i = 1; $i <= 2; $i++) {
+    INNER:
+    for (my $j = 1; $j <= 3; $j++) {
+        next OUTER if $j == 2;
+        print "i=$i j=$j\n";
+    }
+}
+</pre>
+
+<hr>
+
+<h3>Best Practices</h3>
+
+<ul>
+  <li>Use <code>foreach</code> for arrays</li>
+  <li>Avoid deep nesting where possible</li>
+  <li>Use labels only when required</li>
+  <li>Avoid <code>redo</code> in production</li>
+</ul>
+
+</section><br>
+<section id="perl-nested-loops">
+
+<h2>Nested Loops in Perl</h2>
+
+<p>
+Nested loops mean placing one loop inside another.
+They are used for matrix processing, combinations,
+multi-level validations, and complex data traversal.
+</p>
+
+<hr>
+
+<h3>Nested for Loop</h3>
+
+<pre>
+for (my $i = 1; $i <= 2; $i++) {
+    for (my $j = 1; $j <= 3; $j++) {
+        print "i=$i j=$j\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1 j=1
+i=1 j=2
+i=1 j=3
+i=2 j=1
+i=2 j=2
+i=2 j=3
+</pre>
+
+<hr>
+
+<h3>Nested foreach Loop</h3>
+
+<pre>
+my @rows = (1, 2);
+my @cols = ("A", "B", "C");
+
+foreach my $r (@rows) {
+    foreach my $c (@cols) {
+        print "$r$c\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+1A
+1B
+1C
+2A
+2B
+2C
+</pre>
+
+<hr>
+
+<h3>Nested while Loop</h3>
+
+<pre>
+my $i = 1;
+
+while ($i <= 2) {
+    my $j = 1;
+    while ($j <= 3) {
+        print "i=$i j=$j\n";
+        $j++;
+    }
+    $i++;
+}
+</pre>
+
+<hr>
+
+<h3>Nested until Loop</h3>
+
+<pre>
+my $i = 1;
+
+until ($i > 2) {
+    my $j = 1;
+    until ($j > 3) {
+        print "i=$i j=$j\n";
+        $j++;
+    }
+    $i++;
+}
+</pre>
+
+<hr>
+
+<h3>Nested do-while Loop</h3>
+
+<pre>
+my $i = 1;
+
+do {
+    my $j = 1;
+    do {
+        print "i=$i j=$j\n";
+        $j++;
+    } while ($j <= 3);
+    $i++;
+} while ($i <= 2);
+</pre>
+
+<hr>
+
+<h3>Nested Loop with next</h3>
+
+<pre>
+for (my $i = 1; $i <= 2; $i++) {
+    for (my $j = 1; $j <= 3; $j++) {
+        next if $j == 2;
+        print "i=$i j=$j\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1 j=1
+i=1 j=3
+i=2 j=1
+i=2 j=3
+</pre>
+
+<hr>
+
+<h3>Nested Loop with last</h3>
+
+<pre>
+for (my $i = 1; $i <= 3; $i++) {
+    for (my $j = 1; $j <= 3; $j++) {
+        last if $j == 2;
+        print "i=$i j=$j\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1 j=1
+i=2 j=1
+i=3 j=1
+</pre>
+
+<hr>
+
+<h3>Nested Loop with redo</h3>
+
+<pre>
+my $i = 1;
+
+while ($i <= 2) {
+    my $j = 1;
+    while ($j <= 3) {
+        print "i=$i j=$j\n";
+        $j++;
+        redo if $j == 2;
+    }
+    $i++;
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1 j=1
+i=1 j=1
+i=1 j=2
+i=1 j=3
+i=2 j=1
+i=2 j=1
+i=2 j=2
+i=2 j=3
+</pre>
+
+<hr>
+
+<h3>Nested Loop with Loop Label + last</h3>
+
+<pre>
+OUTER:
+for (my $i = 1; $i <= 3; $i++) {
+    for (my $j = 1; $j <= 3; $j++) {
+        last OUTER if $j == 2;
+        print "i=$i j=$j\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1 j=1
+</pre>
+
+<hr>
+
+<h3>Nested Loop with Loop Label + next</h3>
+
+<pre>
+OUTER:
+for (my $i = 1; $i <= 2; $i++) {
+    INNER:
+    for (my $j = 1; $j <= 3; $j++) {
+        next OUTER if $j == 2;
+        print "i=$i j=$j\n";
+    }
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+i=1 j=1
+i=2 j=1
+</pre>
+
+<hr>
+
+<h3>Nested foreach + while (Mixed Loops)</h3>
+
+<pre>
+my @users = ("admin", "guest");
+
+foreach my $u (@users) {
+    my $i = 1;
+    while ($i <= 2) {
+        print "$u attempt $i\n";
+        $i++;
+    }
+}
+</pre>
+
+<hr>
+
+<h3>Nested Loops – Real World Example (Login Attempts)</h3>
+
+<pre>
+my @users = ("user1", "user2");
+
+foreach my $u (@users) {
+    for (my $attempt = 1; $attempt <= 3; $attempt++) {
+        print "$u login attempt $attempt\n";
+        last if $attempt == 2;
+    }
+}
+</pre>
+
+<hr>
+
+<h3>Best Practices for Nested Loops</h3>
+
+<ul>
+  <li>Avoid deep nesting (more than 3 levels)</li>
+  <li>Use labels only when necessary</li>
+  <li>Avoid <code>redo</code> unless unavoidable</li>
+  <li>Use meaningful variable names</li>
+</ul>
+
+</section><br>
+<section id="perl-arrays">
+
+<h2>Arrays in Perl</h2>
+
+<p>
+An array in Perl is an ordered list of scalar values.
+Arrays are used to store multiple values in a single variable.
+Array variables always start with <code>@</code>.
+</p>
+
+<hr>
+
+<h3>Array Creation</h3>
+
+<p>
+Arrays can be created using a list of values.
+</p>
+
+<pre>
+my @numbers = (10, 20, 30);
+my @names   = ("Perl", "Python", "Java");
+</pre>
+
+<h4>Why Arrays Are Used</h4>
+<ul>
+  <li>Store multiple related values</li>
+  <li>Process collections of data</li>
+  <li>Loop through data easily</li>
+</ul>
+
+<hr>
+
+<h3>Accessing Array Elements</h3>
+
+<p>
+Array elements are accessed using an index.
+Indexes start from <strong>0</strong>.
+</p>
+
+<pre>
+my @colors = ("Red", "Green", "Blue");
+
+print $colors[0];
+print $colors[2];
+</pre>
+
+<h4>Output</h4>
+<pre>
+Red
+Blue
+</pre>
+
+<p>
+Note: When accessing a single element, use <code>$</code> instead of <code>@</code>.
+</p>
+
+<hr>
+
+<h3>Array Indexing</h3>
+
+<p>
+Perl supports positive and negative indexing.
+</p>
+
+<pre>
+my @nums = (1, 2, 3, 4);
+
+print $nums[-1];
+print $nums[-2];
+</pre>
+
+<h4>Output</h4>
+<pre>
+4
+3
+</pre>
+
+<p>
+Negative indexes count from the end of the array.
+</p>
+
+<hr>
+
+<h3>Array Size</h3>
+
+<p>
+Array size can be obtained in multiple ways.
+</p>
+
+<h4>Method 1: Scalar Context</h4>
+<pre>
+my @arr = (10, 20, 30);
+my $size = scalar @arr;
+print $size;
+</pre>
+
+<h4>Output</h4>
+<pre>
+3
+</pre>
+
+<h4>Method 2: $#array</h4>
+<pre>
+print $#arr;
+</pre>
+
+<h4>Output</h4>
+<pre>
+2
+</pre>
+
+<p>
+<code>$#array</code> gives the last index, not the size.
+</p>
+
+<hr>
+
+<h3>push</h3>
+
+<p>
+<code>push</code> adds elements to the end of an array.
+</p>
+
+<pre>
+my @arr = (1, 2);
+push(@arr, 3, 4);
+print "@arr";
+</pre>
+
+<h4>Output</h4>
+<pre>
+1 2 3 4
+</pre>
+
+<hr>
+
+<h3>pop</h3>
+
+<p>
+<code>pop</code> removes the last element from an array.
+</p>
+
+<pre>
+my @arr = (1, 2, 3);
+my $val = pop(@arr);
+print "$val\n";
+print "@arr";
+</pre>
+
+<h4>Output</h4>
+<pre>
+3
+1 2
+</pre>
+
+<hr>
+
+<h3>shift</h3>
+
+<p>
+<code>shift</code> removes the first element of an array.
+</p>
+
+<pre>
+my @arr = (10, 20, 30);
+my $x = shift(@arr);
+print "$x\n";
+print "@arr";
+</pre>
+
+<h4>Output</h4>
+<pre>
+10
+20 30
+</pre>
+
+<hr>
+
+<h3>unshift</h3>
+
+<p>
+<code>unshift</code> adds elements to the beginning of an array.
+</p>
+
+<pre>
+my @arr = (20, 30);
+unshift(@arr, 10);
+print "@arr";
+</pre>
+
+<h4>Output</h4>
+<pre>
+10 20 30
+</pre>
+
+<hr>
+
+<h3>splice</h3>
+
+<p>
+<code>splice</code> is used to add, remove, or replace elements in an array.
+</p>
+
+<h4>Remove Elements</h4>
+<pre>
+my @arr = (1, 2, 3, 4);
+splice(@arr, 1, 2);
+print "@arr";
+</pre>
+
+<h4>Output</h4>
+<pre>
+1 4
+</pre>
+
+<h4>Replace Elements</h4>
+<pre>
+my @arr = (1, 2, 3);
+splice(@arr, 1, 1, 99);
+print "@arr";
+</pre>
+
+<h4>Output</h4>
+<pre>
+1 99 3
+</pre>
+
+<hr>
+
+<h3>join</h3>
+
+<p>
+<code>join</code> converts an array into a string.
+</p>
+
+<pre>
+my @words = ("Perl", "is", "powerful");
+my $str = join("-", @words);
+print $str;
+</pre>
+
+<h4>Output</h4>
+<pre>
+Perl-is-powerful
+</pre>
+
+<hr>
+
+<h3>split</h3>
+
+<p>
+<code>split</code> converts a string into an array.
+</p>
+
+<pre>
+my $line = "red,green,blue";
+my @colors = split(",", $line);
+print "@colors";
+</pre>
+
+<h4>Output</h4>
+<pre>
+red green blue
+</pre>
+
+<hr>
+
+<h3>Sorting Arrays</h3>
+
+<p>
+<code>sort</code> sorts arrays alphabetically by default.
+</p>
+
+<pre>
+my @names = ("Perl", "Java", "C");
+my @sorted = sort @names;
+print "@sorted";
+</pre>
+
+<h4>Output</h4>
+<pre>
+C Java Perl
+</pre>
+
+<h4>Numeric Sort</h4>
+<pre>
+my @nums = (10, 2, 30);
+my @sorted = sort { $a <=> $b } @nums;
+print "@sorted";
+</pre>
+
+<h4>Output</h4>
+<pre>
+2 10 30
+</pre>
+
+<hr>
+
+<h3>Array Slices</h3>
+
+<p>
+Array slices allow accessing multiple elements at once.
+</p>
+
+<pre>
+my @arr = (10, 20, 30, 40);
+my @slice = @arr[1, 3];
+print "@slice";
+</pre>
+
+<h4>Output</h4>
+<pre>
+20 40
+</pre>
+
+<hr>
+
+<h3>Multidimensional Arrays</h3>
+
+<p>
+Perl does not have true multidimensional arrays.
+It uses arrays of array references.
+</p>
+
+<pre>
+my @matrix = (
+    [1, 2, 3],
+    [4, 5, 6]
+);
+
+print $matrix[0][1];
+print $matrix[1][2];
+</pre>
+
+<h4>Output</h4>
+<pre>
+2
+6
+</pre>
+
+<h4>Looping Through 2D Array</h4>
+
+<pre>
+foreach my $row (@matrix) {
+    foreach my $val (@$row) {
+        print "$val ";
+    }
+    print "\n";
+}
+</pre>
+
+<h4>Output</h4>
+<pre>
+1 2 3
+4 5 6
+</pre>
+
+<hr>
+
+<h3>Best Practices</h3>
+
+<ul>
+  <li>Use <code>foreach</code> for arrays</li>
+  <li>Use <code>splice</code> carefully</li>
+  <li>Prefer array slices for readability</li>
+  <li>Use references for multidimensional data</li>
+</ul>
+
+</section><br>
+<section>
+  <h2>Hashes in Perl</h2>
+
+  <p>
+    A <b>Hash</b> in Perl is a collection of <b>key–value pairs</b>.
+    It is used when data needs to be stored and accessed using a
+    <b>meaningful key</b> instead of numeric index.
+  </p>
+
+  <p>
+    Hashes are especially useful for:
+  </p>
+  <ul>
+    <li>Storing structured data</li>
+    <li>Fast lookup using keys</li>
+    <li>Representing objects, configurations, JSON-like data</li>
+  </ul>
+
+  <p>
+    Hash variables start with the <b>%</b> symbol.
+  </p>
+</section><br>
+
+<section>
+  <h3>Hash Creation</h3>
+
+  <p>
+    A hash is created by assigning key–value pairs.
+    Keys are usually strings and values can be any data type.
+  </p>
+
+  <pre><code>
+my %student = (
+    "name" => "Aathi",
+    "age"  => 22,
+    "dept" => "CSE"
+);
+  </code></pre>
+
+  <p><b>Output (logical view):</b></p>
+  <pre><code>
+name = Aathi
+age  = 22
+dept = CSE
+  </code></pre>
+
+  <p>
+    The operator <b>=></b> is called the <b>fat comma</b>.
+    It automatically treats the left side as a string.
+  </p>
+</section><br>
+
+<section>
+  <h3>Accessing Hash Elements</h3>
+
+  <p>
+    To access a single value from a hash, use:
+  </p>
+
+  <pre><code>
+$hash{key}
+  </code></pre>
+
+  <pre><code>
+print $student{"name"};
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <p>
+    Note:
+    <ul>
+      <li><b>%</b> → entire hash</li>
+      <li><b>$</b> → single value</li>
+    </ul>
+  </p>
+</section><br>
+
+<section>
+  <h3>Adding & Deleting Keys</h3>
+
+  <h4>Adding a new key</h4>
+  <pre><code>
+$student{"city"} = "Chennai";
+  </code></pre>
+
+  <h4>Deleting a key</h4>
+  <pre><code>
+delete $student{"age"};
+  </code></pre>
+
+  <p>
+    After deletion, the key and value are completely removed from memory.
+  </p>
+</section><br>
+
+<section>
+  <h3>keys & values Functions</h3>
+
+  <p>
+    Perl provides built-in functions to fetch all keys or values.
+  </p>
+
+  <pre><code>
+my @keys = keys %student;
+my @values = values %student;
+  </code></pre>
+
+  <pre><code>
+print "@keys\n";
+print "@values\n";
+  </code></pre>
+
+  <p><b>Sample Output:</b></p>
+  <pre><code>
+name dept city
+Aathi CSE Chennai
+  </code></pre>
+
+  <p>
+    ⚠ Order is <b>not guaranteed</b>.
+  </p>
+</section><br>
+
+<section>
+  <h3>exists Function</h3>
+
+  <p>
+    The <b>exists</b> function checks whether a key is present in a hash.
+  </p>
+
+  <pre><code>
+if (exists $student{"name"}) {
+    print "Name exists\n";
+}
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Name exists
+  </code></pre>
+
+  <p>
+    Use <b>exists</b> instead of checking value,
+    because value may be <b>undef</b>.
+  </p>
+</section><br>
+
+<section>
+  <h3>each Function</h3>
+
+  <p>
+    The <b>each</b> function retrieves key–value pairs one at a time.
+    Mostly used in loops.
+  </p>
+
+  <pre><code>
+while (my ($key, $value) = each %student) {
+    print "$key : $value\n";
+}
+  </code></pre>
+
+  <p><b>Sample Output:</b></p>
+  <pre><code>
+name : Aathi
+dept : CSE
+city : Chennai
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Hash Slices</h3>
+
+  <p>
+    Hash slices allow retrieving multiple values at once.
+  </p>
+
+  <pre><code>
+my @info = @student{"name", "dept"};
+  </code></pre>
+
+  <pre><code>
+print "@info";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Aathi CSE
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Ordered Hashes</h3>
+
+  <p>
+    Perl hashes are <b>unordered</b> by default.
+    Order should not be relied upon.
+  </p>
+
+  <p>
+    If order matters:
+  </p>
+  <ul>
+    <li>Use arrays for order</li>
+    <li>Or use modules like <b>Tie::IxHash</b></li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>Nested Hashes</h3>
+
+  <p>
+    Hashes can contain other hashes as values.
+  </p>
+
+  <pre><code>
+my %company = (
+    "employee1" => {
+        "name" => "Aathi",
+        "role" => "Developer"
+    },
+    "employee2" => {
+        "name" => "Ravi",
+        "role" => "Tester"
+    }
+);
+  </code></pre>
+
+  <pre><code>
+print $company{"employee1"}{"name"};
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <p>
+    The <b>arrow operator (->)</b> is optional but recommended for clarity.
+  </p>
+</section><br>
+
+<section>
+  <h3>Hash Context</h3>
+
+  <p>
+    Hash behavior changes depending on context.
+  </p>
+
+  <h4>List Context</h4>
+  <pre><code>
+my @data = %student;
+  </code></pre>
+
+  <p>
+    Produces key–value pairs as a list.
+  </p>
+
+  <h4>Scalar Context</h4>
+  <pre><code>
+my $count = %student;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+3
+  </code></pre>
+
+  <p>
+    In scalar context, a hash returns the number of key–value pairs.
+  </p>
+</section><br>
+<section>
+  <h2>Strings in Perl</h2>
+
+  <p>
+    A <b>String</b> in Perl is a sequence of characters.
+    Strings are one of the most commonly used data types in Perl,
+    especially because Perl is very powerful in <b>text processing</b>.
+  </p>
+
+  <p>
+    Strings in Perl are stored inside <b>scalar variables</b> (variables starting with <code>$</code>).
+  </p>
+</section><br>
+
+<section>
+  <h3>Single Quoted Strings</h3>
+
+  <p>
+    Single quoted strings are <b>literal strings</b>.
+    Perl does <b>not interpret variables or escape sequences</b> inside single quotes
+    (except <code>\\</code> and <code>\'</code>).
+  </p>
+
+  <pre><code>
+my $name = 'Aathi';
+print 'Hello $name\n';
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Hello $name\n
+  </code></pre>
+
+  <p>
+    ✔ Variables are NOT replaced<br>
+    ✔ Escape sequences are NOT processed
+  </p>
+
+  <p>
+    Use single quotes when:
+  </p>
+  <ul>
+    <li>You want exact text</li>
+    <li>No variable interpolation is required</li>
+    <li>Better performance for fixed strings</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>Double Quoted Strings</h3>
+
+  <p>
+    Double quoted strings are <b>interpolated strings</b>.
+    Perl replaces variables and processes escape sequences.
+  </p>
+
+  <pre><code>
+my $name = "Aathi";
+print "Hello $name\n";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Hello Aathi
+  </code></pre>
+
+  <p>
+    ✔ Variables are replaced<br>
+    ✔ Escape sequences like <code>\n</code>, <code>\t</code> work
+  </p>
+
+  <p>
+    Use double quotes when:
+  </p>
+  <ul>
+    <li>You need variable values inside strings</li>
+    <li>You need formatting using escape characters</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>String Functions</h3>
+
+  <p>
+    Perl provides many built-in functions to manipulate strings.
+    Below are the most important and frequently used ones.
+  </p>
+</section><br>
+
+<section>
+  <h3>length()</h3>
+
+  <p>
+    The <b>length()</b> function returns the number of characters in a string.
+  </p>
+
+  <pre><code>
+my $text = "Perl Programming";
+print length($text);
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+16
+  </code></pre>
+
+  <p>
+    Useful for:
+  </p>
+  <ul>
+    <li>Validating input length</li>
+    <li>Password checks</li>
+    <li>Text processing</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>substr()</h3>
+
+  <p>
+    The <b>substr()</b> function extracts a portion of a string.
+  </p>
+
+  <pre><code>
+substr(string, start_position, length)
+  </code></pre>
+
+  <pre><code>
+my $text = "Perl Programming";
+print substr($text, 0, 4);
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Perl
+  </code></pre>
+
+  <p>
+    You can also modify a string using <b>substr()</b>.
+  </p>
+
+  <pre><code>
+substr($text, 5, 11) = "Language";
+print $text;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Perl Language
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>index() & rindex()</h3>
+
+  <p>
+    These functions find the position of a substring.
+  </p>
+
+  <h4>index()</h4>
+  <p>Finds the first occurrence.</p>
+
+  <pre><code>
+my $text = "Perl Programming";
+print index($text, "g");
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+8
+  </code></pre>
+
+  <h4>rindex()</h4>
+  <p>Finds the last occurrence.</p>
+
+  <pre><code>
+print rindex($text, "g");
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+14
+  </code></pre>
+
+  <p>
+    If substring is not found, both return <b>-1</b>.
+  </p>
+</section><br>
+
+<section>
+  <h3>lc, uc, ucfirst, lcfirst</h3>
+
+  <p>
+    These functions are used to change the case of strings.
+  </p>
+
+  <pre><code>
+my $text = "perl PROGRAMMING";
+  </code></pre>
+
+  <pre><code>
+print lc($text);
+print uc($text);
+print ucfirst($text);
+print lcfirst($text);
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+perl programming
+PERL PROGRAMMING
+Perl PROGRAMMING
+perl PROGRAMMING
+  </code></pre>
+
+  <p>
+    Useful for:
+  </p>
+  <ul>
+    <li>Input normalization</li>
+    <li>Case-insensitive comparison</li>
+    <li>Formatting names</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>String Interpolation</h3>
+
+  <p>
+    String interpolation means replacing variables with their values
+    inside double quoted strings.
+  </p>
+
+  <pre><code>
+my $name = "Aathi";
+my $age  = 22;
+
+print "My name is $name and I am $age years old\n";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+My name is Aathi and I am 22 years old
+  </code></pre>
+
+  <p>
+    Interpolation works only in:
+  </p>
+  <ul>
+    <li>Double quoted strings</li>
+    <li>qq// operator</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>sprintf()</h3>
+
+  <p>
+    The <b>sprintf()</b> function formats a string and returns it
+    instead of printing directly.
+  </p>
+
+  <pre><code>
+sprintf(format, values)
+  </code></pre>
+
+  <pre><code>
+my $name = "Aathi";
+my $marks = 85.567;
+
+my $result = sprintf("Name: %s | Marks: %.2f", $name, $marks);
+print $result;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Name: Aathi | Marks: 85.57
+  </code></pre>
+
+  <p>
+    Useful for:
+  </p>
+  <ul>
+    <li>Formatted output</li>
+    <li>Reports</li>
+    <li>Storing formatted strings</li>
+  </ul>
+</section><br>
+<section>
+  <h2>Subroutines in Perl</h2>
+
+  <p>
+    A <b>Subroutine</b> in Perl is a reusable block of code that performs
+    a specific task. Subroutines help in:
+  </p>
+
+  <ul>
+    <li>Code reusability</li>
+    <li>Better readability</li>
+    <li>Modular programming</li>
+    <li>Easy maintenance</li>
+  </ul>
+
+  <p>
+    Subroutines in Perl are similar to functions in other languages.
+  </p>
+</section><br>
+
+<section>
+  <h3>Defining Subroutines</h3>
+
+  <p>
+    A subroutine is defined using the <code>sub</code> keyword.
+  </p>
+
+  <pre><code>
+sub greet {
+    print "Hello from Perl subroutine\n";
+}
+  </code></pre>
+
+  <p>
+    Subroutine definitions are processed at compile time,
+    so they can be called before or after their definition.
+  </p>
+</section><br>
+
+<section>
+  <h3>Calling Subroutines</h3>
+
+  <p>
+    A subroutine is called using its name followed by parentheses.
+  </p>
+
+  <pre><code>
+greet();
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Hello from Perl subroutine
+  </code></pre>
+
+  <p>
+    Parentheses are optional when there is no ambiguity.
+  </p>
+</section><br>
+
+<section>
+  <h3>Arguments Passing</h3>
+
+  <p>
+    Perl does not define parameters in the subroutine signature.
+    All arguments are automatically passed to a special array called <b>@_</b>.
+  </p>
+
+  <pre><code>
+sub add {
+    my ($a, $b) = @_;
+    print $a + $b, "\n";
+}
+
+add(10, 20);
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+30
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>@_ Array</h3>
+
+  <p>
+    <b>@_</b> is a special array that holds all arguments passed to a subroutine.
+  </p>
+
+  <pre><code>
+sub show_args {
+    print "@_\n";
+}
+
+show_args("Perl", "is", "powerful");
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Perl is powerful
+  </code></pre>
+
+  <p>
+    Arguments in <b>@_</b> are aliases, not copies.
+    Modifying <code>$_[0]</code> will modify the original variable.
+  </p>
+</section><br>
+
+<section>
+  <h3>Arguments (@_)</h3>
+
+  <p>
+    Individual arguments can be accessed using index positions.
+  </p>
+
+  <pre><code>
+sub multiply {
+    print $_[0] * $_[1], "\n";
+}
+
+multiply(4, 5);
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+20
+  </code></pre>
+
+  <p>
+    This approach is less readable and generally avoided in large programs.
+  </p>
+</section><br>
+
+<section>
+  <h3>Return Values</h3>
+
+  <p>
+    Perl subroutines return the value of the last expression evaluated.
+    The <code>return</code> keyword is optional but recommended.
+  </p>
+
+  <pre><code>
+sub square {
+    return $_[0] * $_[0];
+}
+
+my $result = square(6);
+print $result;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+36
+  </code></pre>
+
+  <p>
+    Multiple values can be returned using a list.
+  </p>
+
+  <pre><code>
+sub stats {
+    return (10, 20, 30);
+}
+
+my @data = stats();
+print "@data";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+10 20 30
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Local Variables in Subroutines</h3>
+
+  <p>
+    Variables inside subroutines should be declared using <b>my</b>
+    to limit their scope.
+  </p>
+
+  <pre><code>
+sub counter {
+    my $count = 0;
+    $count++;
+    print $count, "\n";
+}
+
+counter();
+counter();
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+1
+1
+  </code></pre>
+
+  <p>
+    Each call gets a new copy of lexical variables.
+  </p>
+</section><br>
+
+<section>
+  <h3>Prototypes</h3>
+
+  <p>
+    Prototypes allow you to define how arguments are parsed.
+    They provide compile-time checking but are rarely used.
+  </p>
+
+  <pre><code>
+sub add_numbers ($$) {
+    my ($a, $b) = @_;
+    return $a + $b;
+}
+
+print add_numbers 5, 10;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+15
+  </code></pre>
+
+  <p>
+    ⚠ Prototypes do NOT work like C function prototypes.
+    Use carefully.
+  </p>
+</section><br>
+
+<section>
+  <h3>Recursive Subroutines</h3>
+
+  <p>
+    A recursive subroutine is one that calls itself.
+  </p>
+
+  <pre><code>
+sub factorial {
+    my ($n) = @_;
+    return 1 if $n == 0;
+    return $n * factorial($n - 1);
+}
+
+print factorial(5);
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+120
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>wantarray</h3>
+
+  <p>
+    <b>wantarray</b> detects the context (list or scalar)
+    in which a subroutine is called.
+  </p>
+
+  <pre><code>
+sub data {
+    if (wantarray) {
+        return (1, 2, 3);
+    } else {
+        return 3;
+    }
+}
+
+my @list = data();
+my $count = data();
+
+print "@list\n";
+print "$count\n";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+1 2 3
+3
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Anonymous Subroutines</h3>
+
+  <p>
+    Anonymous subroutines are subroutines without a name.
+    They are commonly used with references, callbacks, and closures.
+  </p>
+
+  <pre><code>
+my $sum = sub {
+    my ($a, $b) = @_;
+    return $a + $b;
+};
+
+print $sum->(10, 20);
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+30
+  </code></pre>
+
+  <p>
+    Anonymous subroutines return a reference,
+    which is invoked using the arrow operator.
+  </p>
+</section><br>
+<section>
+  <h2>References & Data Structures in Perl</h2>
+
+  <p>
+    A <b>Reference</b> in Perl is a scalar value that points to another data
+    structure such as a scalar, array, hash, or subroutine.
+  </p>
+
+  <p>
+    References allow Perl to create:
+  </p>
+  <ul>
+    <li>Complex data structures</li>
+    <li>Nested arrays and hashes</li>
+    <li>Efficient memory usage</li>
+    <li>Pass large data to subroutines</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>Scalar References</h3>
+
+  <p>
+    A scalar reference points to another scalar variable.
+    It is created using the <b>backslash (\)</b> operator.
+  </p>
+
+  <pre><code>
+my $num = 100;
+my $ref = \$num;
+
+print $$ref;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+100
+  </code></pre>
+
+  <p>
+    Explanation:
+  </p>
+  <ul>
+    <li><code>$ref</code> → holds address</li>
+    <li><code>$$ref</code> → dereferences and gets value</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>Array References</h3>
+
+  <p>
+    An array reference points to an array.
+  </p>
+
+  <pre><code>
+my @nums = (10, 20, 30);
+my $aref = \@nums;
+
+print $aref->[1];
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+20
+  </code></pre>
+
+  <p>
+    Use <b>-></b> operator to access array elements via reference.
+  </p>
+</section><br>
+
+<section>
+  <h3>Hash References</h3>
+
+  <p>
+    A hash reference points to a hash.
+  </p>
+
+  <pre><code>
+my %emp = (
+    name => "Aathi",
+    role => "Developer"
+);
+
+my $href = \%emp;
+
+print $href->{name};
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Aathi
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Dereferencing</h3>
+
+  <p>
+    Dereferencing means accessing the original value
+    from a reference.
+  </p>
+
+  <pre><code>
+$$scalar_ref
+@$array_ref
+%$hash_ref
+  </code></pre>
+
+  <p>
+    Arrow operator (<code>-></code>) is preferred for clarity.
+  </p>
+</section><br>
+
+<section>
+  <h3>Anonymous Arrays</h3>
+
+  <p>
+    Anonymous arrays are arrays without a variable name.
+    They return an array reference.
+  </p>
+
+  <pre><code>
+my $nums = [1, 2, 3, 4];
+
+print $nums->[2];
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+3
+  </code></pre>
+
+  <p>
+    Useful when:
+  </p>
+  <ul>
+    <li>Passing data to subroutines</li>
+    <li>Building nested structures</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>Anonymous Hashes</h3>
+
+  <p>
+    Anonymous hashes are hashes without names.
+  </p>
+
+  <pre><code>
+my $user = {
+    name => "Aathi",
+    age  => 22
+};
+
+print $user->{age};
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+22
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Anonymous Data Structures</h3>
+
+  <p>
+    Perl allows mixing anonymous arrays and hashes
+    to form complex structures.
+  </p>
+
+  <pre><code>
+my $company = {
+    employees => [
+        { name => "Aathi", role => "Dev" },
+        { name => "Ravi",  role => "Tester" }
+    ]
+};
+
+print $company->{employees}[0]{name};
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <p>
+    This structure is similar to JSON.
+  </p>
+</section><br>
+
+<section>
+  <h3>Circular References</h3>
+
+  <p>
+    A circular reference occurs when two references
+    point to each other.
+  </p>
+
+  <pre><code>
+my $a = {};
+my $b = {};
+
+$a->{ref} = $b;
+$b->{ref} = $a;
+  </code></pre>
+
+  <p>
+    ⚠ Circular references can cause <b>memory leaks</b>
+    because Perl cannot free the memory automatically.
+  </p>
+</section><br>
+
+<section>
+  <h3>Nested Data Structures</h3>
+
+  <p>
+    Nested data structures allow storing data
+    inside data recursively.
+  </p>
+
+  <pre><code>
+my $data = {
+    dept => {
+        name => "IT",
+        employees => [
+            "Aathi",
+            "Ravi"
+        ]
+    }
+};
+
+print $data->{dept}{employees}[1];
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Ravi
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Weak References</h3>
+
+  <p>
+    Weak references do not increase reference count.
+    They prevent memory leaks in circular structures.
+  </p>
+
+  <pre><code>
+use Scalar::Util 'weaken';
+
+my $a = {};
+my $b = {};
+
+$a->{ref} = $b;
+$b->{ref} = $a;
+
+weaken($a->{ref});
+  </code></pre>
+
+  <p>
+    Weak references are mostly used in:
+  </p>
+  <ul>
+    <li>Large applications</li>
+    <li>Object-oriented Perl</li>
+    <li>Memory-critical systems</li>
+  </ul>
+</section><br>
+<section>
+  <h2>Perl File Handling</h2>
+
+  <p>
+    File handling in Perl allows programs to interact with files stored
+    on the system. Perl is very strong in file processing and text
+    manipulation, which makes it ideal for log processing, automation,
+    configuration handling, and report generation.
+  </p>
+
+  <p>
+    Perl supports reading, writing, appending, locking, and inspecting files
+    using built-in functions.
+  </p>
+</section><br>
+
+<section>
+  <h3>Opening Files</h3>
+
+  <p>
+    Files are opened using the <code>open</code> function.
+    It associates a file with a <b>filehandle</b>.
+  </p>
+
+  <pre><code>
+open(filehandle, mode, filename)
+  </code></pre>
+
+  <pre><code>
+open(my $fh, "<", "data.txt") or die "Cannot open file";
+  </code></pre>
+
+  <p>
+    If the file cannot be opened, <code>die</code> stops execution
+    and prints the error.
+  </p>
+</section><br>
+
+<section>
+  <h3>File Modes</h3>
+
+  <p>
+    File mode determines how the file is accessed.
+  </p>
+
+  <ul>
+    <li><b>&lt;</b>  → Read mode</li>
+    <li><b>&gt;</b>  → Write mode (overwrite)</li>
+    <li><b>&gt;&gt;</b> → Append mode</li>
+    <li><b>+&lt;</b> → Read & write</li>
+    <li><b>+&gt;</b> → Read & write (truncate)</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>Reading Files</h3>
+
+  <p>
+    Files can be read line by line using a loop.
+    Perl automatically assigns each line to <code>$_</code>.
+  </p>
+
+  <pre><code>
+open(my $fh, "<", "data.txt") or die "Cannot open file";
+
+while (my $line = <$fh>) {
+    print $line;
+}
+
+close($fh);
+  </code></pre>
+
+  <p><b>Sample Output:</b></p>
+  <pre><code>
+Line 1
+Line 2
+Line 3
+  </code></pre>
+
+  <p>
+    The <b>diamond operator (&lt;$fh&gt;)</b> reads one line at a time.
+  </p>
+</section><br>
+
+<section>
+  <h3>Writing Files</h3>
+
+  <p>
+    Writing to a file overwrites existing content.
+  </p>
+
+  <pre><code>
+open(my $fh, ">", "output.txt") or die "Cannot write file";
+
+print $fh "Hello Perl\n";
+print $fh "File Handling Example\n";
+
+close($fh);
+  </code></pre>
+
+  <p><b>File Content:</b></p>
+  <pre><code>
+Hello Perl
+File Handling Example
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Appending Files</h3>
+
+  <p>
+    Appending adds data to the end of a file without deleting existing content.
+  </p>
+
+  <pre><code>
+open(my $fh, ">>", "output.txt") or die "Cannot append";
+
+print $fh "New line added\n";
+
+close($fh);
+  </code></pre>
+
+  <p>
+    This is commonly used for log files.
+  </p>
+</section><br>
+
+<section>
+  <h3>File Handles</h3>
+
+  <p>
+    A filehandle is a reference that represents an open file.
+    Modern Perl uses <b>lexical filehandles</b>.
+  </p>
+
+  <pre><code>
+open(my $fh, "<", "data.txt");
+  </code></pre>
+
+  <p>
+    Advantages:
+  </p>
+  <ul>
+    <li>Safer</li>
+    <li>Automatically closed when out of scope</li>
+    <li>No naming conflicts</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>close Function</h3>
+
+  <p>
+    The <code>close</code> function closes a filehandle and releases resources.
+  </p>
+
+  <pre><code>
+close($fh);
+  </code></pre>
+
+  <p>
+    Always close files to avoid data loss or memory leaks.
+  </p>
+</section><br>
+
+<section>
+  <h3>File Locks</h3>
+
+  <p>
+    File locking prevents multiple programs from modifying a file
+    at the same time.
+  </p>
+
+  <pre><code>
+use Fcntl ':flock';
+
+open(my $fh, ">>", "log.txt") or die "Cannot open";
+
+flock($fh, LOCK_EX);
+
+print $fh "Process running\n";
+
+flock($fh, LOCK_UN);
+close($fh);
+  </code></pre>
+
+  <p>
+    LOCK_EX → Exclusive lock<br>
+    LOCK_SH → Shared lock
+  </p>
+</section><br>
+
+<section>
+  <h3>Seek & Tell</h3>
+
+  <p>
+    <b>tell()</b> returns the current position of file pointer.
+  </p>
+
+  <pre><code>
+my $pos = tell($fh);
+  </code></pre>
+
+  <p>
+    <b>seek()</b> moves the file pointer to a specified position.
+  </p>
+
+  <pre><code>
+seek($fh, 0, 0);
+  </code></pre>
+
+  <p>
+    Used for random file access.
+  </p>
+</section><br>
+
+<section>
+  <h3>File Test Operators</h3>
+
+  <p>
+    File test operators check file properties.
+  </p>
+
+  <ul>
+    <li><b>-e</b> → Exists</li>
+    <li><b>-f</b> → Regular file</li>
+    <li><b>-d</b> → Directory</li>
+    <li><b>-r</b> → Readable</li>
+    <li><b>-w</b> → Writable</li>
+    <li><b>-x</b> → Executable</li>
+    <li><b>-s</b> → File size</li>
+  </ul>
+
+  <pre><code>
+if (-e "data.txt") {
+    print "File exists\n";
+}
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+File exists
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>File Permissions</h3>
+
+  <p>
+    File permissions can be modified using <code>chmod</code>.
+  </p>
+
+  <pre><code>
+chmod 0644, "data.txt";
+  </code></pre>
+
+  <p>
+    Permissions follow Unix style:
+    read (4), write (2), execute (1)
+  </p>
+</section><br>
+
+<section>
+  <h3>Stat Function</h3>
+
+  <p>
+    The <code>stat</code> function retrieves detailed file information.
+  </p>
+
+  <pre><code>
+my @info = stat("data.txt");
+
+print "Size: $info[7]\n";
+print "Modified: $info[9]\n";
+  </code></pre>
+
+  <p><b>Output (example):</b></p>
+  <pre><code>
+Size: 120
+Modified: 1700000000
+  </code></pre>
+
+  <p>
+    <b>stat</b> is useful for file monitoring and system scripts.
+  </p>
+</section><br>
+<section>
+  <h2>Perl Directory Handling</h2>
+
+  <p>
+    Directory handling in Perl allows programs to work with folders
+    (directories) on the file system. It is commonly used in:
+  </p>
+
+  <ul>
+    <li>File management scripts</li>
+    <li>Backup automation</li>
+    <li>Log file processing</li>
+    <li>Server maintenance tasks</li>
+  </ul>
+
+  <p>
+    Perl provides built-in functions to open, read, create, delete,
+    and navigate directories.
+  </p>
+</section><br>
+
+<section>
+  <h3>opendir</h3>
+
+  <p>
+    The <code>opendir</code> function opens a directory and associates
+    it with a directory handle.
+  </p>
+
+  <pre><code>
+opendir(DIRHANDLE, directory_path)
+  </code></pre>
+
+  <pre><code>
+opendir(my $dh, ".") or die "Cannot open directory";
+  </code></pre>
+
+  <p>
+    <b>"."</b> represents the current directory.
+  </p>
+</section><br>
+
+<section>
+  <h3>readdir</h3>
+
+  <p>
+    The <code>readdir</code> function reads entries from a directory.
+    It returns file and folder names.
+  </p>
+
+  <pre><code>
+while (my $file = readdir($dh)) {
+    print "$file\n";
+}
+  </code></pre>
+
+  <p><b>Sample Output:</b></p>
+  <pre><code>
+.
+..
+script.pl
+data.txt
+logs
+  </code></pre>
+
+  <p>
+    "." → current directory<br>
+    ".." → parent directory
+  </p>
+</section><br>
+
+<section>
+  <h3>closedir</h3>
+
+  <p>
+    The <code>closedir</code> function closes a directory handle
+    and releases system resources.
+  </p>
+
+  <pre><code>
+closedir($dh);
+  </code></pre>
+
+  <p>
+    Always close directories after reading.
+  </p>
+</section><br>
+
+<section>
+  <h3>mkdir</h3>
+
+  <p>
+    The <code>mkdir</code> function creates a new directory.
+  </p>
+
+  <pre><code>
+mkdir(directory_name, permission)
+  </code></pre>
+
+  <pre><code>
+mkdir("backup", 0755) or die "Cannot create directory";
+  </code></pre>
+
+  <p>
+    Permission <b>0755</b> means:
+    read/write/execute for owner,
+    read/execute for others.
+  </p>
+</section><br>
+
+<section>
+  <h3>rmdir</h3>
+
+  <p>
+    The <code>rmdir</code> function removes an empty directory.
+  </p>
+
+  <pre><code>
+rmdir("backup") or die "Cannot remove directory";
+  </code></pre>
+
+  <p>
+    ⚠ Directory must be empty before removal.
+  </p>
+</section><br>
+
+<section>
+  <h3>chdir</h3>
+
+  <p>
+    The <code>chdir</code> function changes the current working directory.
+  </p>
+
+  <pre><code>
+chdir("logs") or die "Cannot change directory";
+  </code></pre>
+
+  <p>
+    After <code>chdir</code>, all file operations occur in that directory.
+  </p>
+</section><br>
+
+<section>
+  <h3>Glob</h3>
+
+  <p>
+    <b>Glob</b> is used to match filenames using patterns,
+    similar to shell wildcards.
+  </p>
+
+  <pre><code>
+my @files = glob("*.txt");
+  </code></pre>
+
+  <pre><code>
+foreach my $file (@files) {
+    print "$file\n";
+}
+  </code></pre>
+
+  <p><b>Sample Output:</b></p>
+  <pre><code>
+data.txt
+report.txt
+  </code></pre>
+
+  <p>
+    Common glob patterns:
+  </p>
+
+  <ul>
+    <li><b>*</b> → Matches any characters</li>
+    <li><b>?</b> → Matches single character</li>
+    <li><b>[a-z]</b> → Range match</li>
+  </ul>
+
+  <p>
+    Glob is useful for batch file processing.
+  </p>
+</section><br>
+<section>
+  <h2>Perl Regular Expressions</h2>
+
+  <p>
+    A <b>Regular Expression (Regex)</b> is a pattern used to match,
+    search, replace, or manipulate text.
+    Perl has one of the most powerful and flexible regex engines.
+  </p>
+
+  <p>
+    Regex is heavily used in:
+  </p>
+  <ul>
+    <li>Input validation</li>
+    <li>Log file processing</li>
+    <li>Search and replace operations</li>
+    <li>Parsing structured text</li>
+  </ul>
+</section><br>
+
+<section>
+  <h3>Pattern Matching</h3>
+
+  <p>
+    Pattern matching is done using the <code>=~</code> operator
+    with the <code>m//</code> operator.
+  </p>
+
+  <pre><code>
+my $text = "Perl is powerful";
+
+if ($text =~ /Perl/) {
+    print "Match found\n";
+}
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Match found
+  </code></pre>
+
+  <p>
+    <code>/Perl/</code> is the regex pattern.
+  </p>
+</section><br>
+
+<section>
+  <h3>Substitution</h3>
+
+  <p>
+    Substitution replaces matched text using <code>s///</code>.
+  </p>
+
+  <pre><code>
+my $text = "I like Java";
+$text =~ s/Java/Perl/;
+
+print $text;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+I like Perl
+  </code></pre>
+
+  <p>
+    This modifies the original string.
+  </p>
+</section><br>
+
+<section>
+  <h3>Transliteration</h3>
+
+  <p>
+    Transliteration replaces characters one-to-one
+    using <code>tr///</code>.
+  </p>
+
+  <pre><code>
+my $text = "hello";
+$text =~ tr/a-z/A-Z/;
+
+print $text;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+HELLO
+  </code></pre>
+
+  <p>
+    Unlike substitution, transliteration does not use regex patterns.
+  </p>
+</section><br>
+
+<section>
+  <h3>Modifiers</h3>
+
+  <p>
+    Modifiers change the behavior of regex.
+  </p>
+
+  <ul>
+    <li><b>i</b> → Case-insensitive</li>
+    <li><b>g</b> → Global match</li>
+    <li><b>m</b> → Multiline</li>
+    <li><b>s</b> → Dot matches newline</li>
+    <li><b>x</b> → Extended (readable)</li>
+  </ul>
+
+  <pre><code>
+my $text = "Perl PERL perl";
+
+$text =~ s/perl/Python/gi;
+print $text;
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Python Python Python
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Lookahead & Lookbehind</h3>
+
+  <p>
+    Lookarounds match patterns without consuming characters.
+  </p>
+
+  <h4>Positive Lookahead</h4>
+  <pre><code>
+my $text = "100USD";
+
+if ($text =~ /\d+(?=USD)/) {
+    print "Amount found\n";
+}
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Amount found
+  </code></pre>
+
+  <h4>Positive Lookbehind</h4>
+  <pre><code>
+if ($text =~ /(?<=USD)\d+/) {
+    print "Matched\n";
+}
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Greedy vs Non-greedy</h3>
+
+  <p>
+    Greedy matching consumes as much text as possible.
+    Non-greedy consumes minimum.
+  </p>
+
+  <pre><code>
+my $text = "<tag>data</tag>";
+
+$text =~ /<.*>/;
+print "$&\n";
+
+$text =~ /<.*?>/;
+print "$&\n";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+<tag>data</tag>
+<tag>
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Character Classes</h3>
+
+  <p>
+    Character classes match a group of characters.
+  </p>
+
+  <ul>
+    <li><b>\d</b> → digit</li>
+    <li><b>\w</b> → word character</li>
+    <li><b>\s</b> → whitespace</li>
+    <li><b>[a-z]</b> → lowercase letters</li>
+    <li><b>[^0-9]</b> → not digits</li>
+  </ul>
+
+  <pre><code>
+my $text = "User123";
+
+if ($text =~ /\d+/) {
+    print "Contains numbers\n";
+}
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Quantifiers</h3>
+
+  <p>
+    Quantifiers specify how many times a pattern must occur.
+  </p>
+
+  <ul>
+    <li><b>*</b> → 0 or more</li>
+    <li><b>+</b> → 1 or more</li>
+    <li><b>?</b> → 0 or 1</li>
+    <li><b>{n}</b> → exactly n</li>
+    <li><b>{n,}</b> → at least n</li>
+    <li><b>{n,m}</b> → between n and m</li>
+  </ul>
+
+  <pre><code>
+my $phone = "9876543210";
+
+if ($phone =~ /^\d{10}$/) {
+    print "Valid phone number\n";
+}
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Anchors</h3>
+
+  <p>
+    Anchors match positions, not characters.
+  </p>
+
+  <ul>
+    <li><b>^</b> → Start of string</li>
+    <li><b>$</b> → End of string</li>
+    <li><b>\b</b> → Word boundary</li>
+  </ul>
+
+  <pre><code>
+if ("Perl" =~ /^Perl$/) {
+    print "Exact match\n";
+}
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Capturing Groups</h3>
+
+  <p>
+    Parentheses capture matched parts for later use.
+  </p>
+
+  <pre><code>
+my $date = "2026-01-04";
+
+$date =~ /(\d{4})-(\d{2})-(\d{2})/;
+
+print "Year=$1 Month=$2 Day=$3\n";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Year=2026 Month=01 Day=04
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Non-capturing Groups</h3>
+
+  <p>
+    Non-capturing groups group patterns without storing matches.
+  </p>
+
+  <pre><code>
+my $text = "cat dog";
+
+if ($text =~ /(?:cat|dog)/) {
+    print "Matched\n";
+}
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Backreferences</h3>
+
+  <p>
+    Backreferences reuse captured groups.
+  </p>
+
+  <pre><code>
+my $text = "hello hello";
+
+if ($text =~ /(\w+)\s\1/) {
+    print "Repeated word found\n";
+}
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Repeated word found
+  </code></pre>
+</section><br>
+
+<section>
+  <h3>Regex Variables</h3>
+
+  <p>
+    Perl stores regex results in special variables.
+  </p>
+
+  <ul>
+    <li><b>$&</b> → Entire match</li>
+    <li><b>$`</b> → Before match</li>
+    <li><b>$'</b> → After match</li>
+    <li><b>$1, $2...</b> → Captured groups</li>
+  </ul>
+
+  <pre><code>
+my $text = "Hello Perl World";
+
+$text =~ /Perl/;
+
+print "Match: $&\n";
+print "Before: $`\n";
+print "After: $'\n";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Match: Perl
+Before: Hello 
+After:  World
+  </code></pre>
+</section><br>
+<section id="perl-packages-modules">
+  <h1>Perl Packages & Modules</h1>
+
+  <!-- ======================= -->
+  <h2>What is a Package in Perl?</h2>
+  <p>
+    A <b>package</b> in Perl is used to create a separate namespace.
+    It helps avoid variable and subroutine name conflicts in large programs.
+  </p>
+
+  <p>
+    By default, all Perl variables belong to the <b>main</b> package.
+  </p>
+
+  <h3>Why Packages are Needed?</h3>
+  <ul>
+    <li>Organize large programs</li>
+    <li>Avoid variable name collision</li>
+    <li>Support modular programming</li>
+    <li>Improve code reusability</li>
+  </ul>
+
+  <h3>Package Syntax</h3>
+  <pre><code>
+package PackageName;
+  </code></pre>
+
+  <h3>Example: Package Creation</h3>
+  <pre><code>
+package MathUtil;
+
+sub add {
+    return $_[0] + $_[1];
+}
+
+1;
+  </code></pre>
+
+  <p>
+    <b>Note:</b> The value <code>1;</code> at the end is mandatory.
+    It tells Perl that the module loaded successfully.
+  </p>
+
+  <!-- ======================= -->
+  <h2>What is a Module in Perl?</h2>
+  <p>
+    A <b>module</b> is a reusable Perl file containing packages and subroutines.
+    Perl modules usually have the extension <b>.pm</b>.
+  </p>
+
+  <h3>Why Use Modules?</h3>
+  <ul>
+    <li>Code reuse</li>
+    <li>Clean project structure</li>
+    <li>Easy maintenance</li>
+    <li>Better readability</li>
+  </ul>
+
+  <h3>Module Naming Rules</h3>
+  <ul>
+    <li>File name must match package name</li>
+    <li>Ends with <code>.pm</code></li>
+    <li>Use CamelCase convention</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>use Statement</h2>
+  <p>
+    The <code>use</code> statement loads a module at <b>compile time</b>.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>
+use ModuleName;
+  </code></pre>
+
+  <h3>Example</h3>
+  <pre><code>
+use MathUtil;
+
+print MathUtil::add(10, 20);
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+30
+  </code></pre>
+
+  <p>
+    <b>Important:</b> <code>use</code> automatically calls <code>import()</code>.
+  </p>
+
+  <!-- ======================= -->
+  <h2>require Statement</h2>
+  <p>
+    The <code>require</code> statement loads a module at <b>runtime</b>.
+  </p>
+
+  <h3>Difference Between use and require</h3>
+  <table border="1">
+    <tr>
+      <th>use</th>
+      <th>require</th>
+    </tr>
+    <tr>
+      <td>Compile time</td>
+      <td>Runtime</td>
+    </tr>
+    <tr>
+      <td>Calls import()</td>
+      <td>Does not call import()</td>
+    </tr>
+    <tr>
+      <td>No file extension needed</td>
+      <td>.pm extension required</td>
+    </tr>
+  </table>
+
+  <h3>Example</h3>
+  <pre><code>
+require "MathUtil.pm";
+
+print MathUtil::add(5, 5);
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+10
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Exporter Module</h2>
+  <p>
+    The <b>Exporter</b> module allows functions to be imported into another package.
+  </p>
+
+  <h3>Why Exporter is Used?</h3>
+  <ul>
+    <li>Avoid package prefix usage</li>
+    <li>Clean function calls</li>
+  </ul>
+
+  <h3>Example Module with Exporter</h3>
+  <pre><code>
+package MathUtil;
+
+use Exporter 'import';
+our @EXPORT = qw(add multiply);
+
+sub add {
+    return $_[0] + $_[1];
+}
+
+sub multiply {
+    return $_[0] * $_[1];
+}
+
+1;
+  </code></pre>
+
+  <h3>Using Exported Functions</h3>
+  <pre><code>
+use MathUtil;
+
+print add(2, 3), "\n";
+print multiply(4, 5);
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+5
+20
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>CPAN (Comprehensive Perl Archive Network)</h2>
+  <p>
+    CPAN is a repository of thousands of Perl modules.
+  </p>
+
+  <h3>Why CPAN?</h3>
+  <ul>
+    <li>Ready-made solutions</li>
+    <li>Tested and optimized code</li>
+    <li>Industry standard libraries</li>
+  </ul>
+
+  <h3>Installing CPAN Modules (Command)</h3>
+  <pre><code>
+cpan Module::Name
+  </code></pre>
+
+  <h3>Example</h3>
+  <pre><code>
+cpan DBI
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Creating a Custom Perl Module</h2>
+
+  <h3>Step 1: Create Module File</h3>
+  <pre><code>
+File: Calculator.pm
+  </code></pre>
+
+  <pre><code>
+package Calculator;
+
+sub subtract {
+    return $_[0] - $_[1];
+}
+
+1;
+  </code></pre>
+
+  <h3>Step 2: Use Module in Script</h3>
+  <pre><code>
+use lib '.';
+use Calculator;
+
+print Calculator::subtract(10, 4);
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+6
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Module Search Path (@INC)</h2>
+  <p>
+    Perl searches modules in directories listed in the <code>@INC</code> array.
+  </p>
+
+  <h3>View @INC</h3>
+  <pre><code>
+print join("\n", @INC);
+  </code></pre>
+
+  <h3>Adding Custom Path</h3>
+  <pre><code>
+use lib '/my/custom/modules';
+  </code></pre>
+
+</section><br>
+<section id="perl-oop">
+  <h1>Perl Object-Oriented Programming (OOP)</h1>
+
+  <!-- ======================= -->
+  <h2>Introduction to OOP in Perl</h2>
+  <p>
+    Perl supports Object-Oriented Programming using <b>packages</b>,
+    <b>references</b>, and the <b>bless</b> function.
+    Perl OOP is flexible and does not enforce strict rules like Java or C++.
+  </p>
+
+  <p>
+    In Perl:
+  </p>
+  <ul>
+    <li>A <b>class</b> is a package</li>
+    <li>An <b>object</b> is a blessed reference</li>
+    <li><b>Methods</b> are subroutines</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>Classes and Objects</h2>
+
+  <h3>What is a Class?</h3>
+  <p>
+    A class is a blueprint that defines properties (data) and behaviors (methods).
+    In Perl, a class is simply a <b>package</b>.
+  </p>
+
+  <h3>What is an Object?</h3>
+  <p>
+    An object is an instance of a class.
+    In Perl, objects are usually references to hashes.
+  </p>
+
+  <h3>Example: Simple Class and Object</h3>
+  <pre><code>
+package Person;
+
+sub new {
+    my $class = shift;
+    my $self = {
+        name => "Aathi",
+        age  => 25
+    };
+    bless $self, $class;
+    return $self;
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use Person;
+
+my $obj = Person->new();
+print $obj->{name};
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Bless Function</h2>
+
+  <p>
+    The <b>bless</b> function associates a reference with a package (class).
+    This is how Perl knows an object belongs to a class.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>
+bless reference, class_name;
+  </code></pre>
+
+  <h3>Why bless is Required?</h3>
+  <ul>
+    <li>Turns normal reference into an object</li>
+    <li>Enables method calls</li>
+    <li>Links object to class namespace</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>Constructors</h2>
+
+  <p>
+    A constructor is a special method used to create objects.
+    In Perl, constructors are usually named <code>new</code>.
+  </p>
+
+  <h3>Parameterized Constructor Example</h3>
+  <pre><code>
+package Student;
+
+sub new {
+    my ($class, $name, $roll) = @_;
+    my $self = {
+        name => $name,
+        roll => $roll
+    };
+    bless $self, $class;
+    return $self;
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use Student;
+
+my $s = Student->new("Ravi", 101);
+print $s->{name}, " ", $s->{roll};
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Ravi 101
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Methods</h2>
+
+  <p>
+    Methods are subroutines that operate on objects.
+    The first argument of a method is always the object itself.
+  </p>
+
+  <h3>Example: Object Method</h3>
+  <pre><code>
+package Employee;
+
+sub new {
+    my ($class, $salary) = @_;
+    my $self = { salary => $salary };
+    bless $self, $class;
+    return $self;
+}
+
+sub get_salary {
+    my $self = shift;
+    return $self->{salary};
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use Employee;
+
+my $e = Employee->new(50000);
+print $e->get_salary();
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+50000
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Inheritance</h2>
+
+  <p>
+    Inheritance allows a class to acquire properties and methods of another class.
+    Perl uses the <code>@ISA</code> array to implement inheritance.
+  </p>
+
+  <h3>Example: Inheritance</h3>
+  <pre><code>
+package Animal;
+
+sub sound {
+    return "Some sound";
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+package Dog;
+our @ISA = qw(Animal);
+
+sub sound {
+    return "Bark";
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use Dog;
+
+my $d = bless {}, "Dog";
+print $d->sound();
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Bark
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Method Overriding</h2>
+
+  <p>
+    Method overriding occurs when a child class provides its own implementation
+    of a parent class method.
+  </p>
+
+  <p>
+    Perl automatically picks the child method first during method lookup.
+  </p>
+
+  <!-- ======================= -->
+  <h2>Encapsulation</h2>
+
+  <p>
+    Encapsulation is the concept of hiding internal data and exposing it through methods.
+    Perl does not have access modifiers like private or public,
+    but encapsulation is achieved by convention.
+  </p>
+
+  <h3>Encapsulation Example</h3>
+  <pre><code>
+package Bank;
+
+sub new {
+    my ($class, $balance) = @_;
+    my $self = { _balance => $balance };
+    bless $self, $class;
+    return $self;
+}
+
+sub get_balance {
+    my $self = shift;
+    return $self->{_balance};
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use Bank;
+
+my $b = Bank->new(1000);
+print $b->get_balance();
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+1000
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Method Resolution Order (MRO)</h2>
+
+  <p>
+    Method Resolution Order defines how Perl searches for methods in inheritance.
+    Perl uses <b>Depth-First Search (DFS)</b> by default.
+  </p>
+
+  <h3>Linearized Method Lookup</h3>
+  <pre><code>
+Child → Parent → Grandparent
+  </code></pre>
+
+  <h3>Viewing MRO</h3>
+  <pre><code>
+use mro 'dfs';
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>AUTOLOAD</h2>
+
+  <p>
+    <code>AUTOLOAD</code> is a special subroutine that gets called
+    when a method does not exist.
+  </p>
+
+  <h3>Why AUTOLOAD is Used?</h3>
+  <ul>
+    <li>Dynamic method handling</li>
+    <li>Lazy loading</li>
+    <li>Error handling</li>
+  </ul>
+
+  <h3>Example: AUTOLOAD</h3>
+  <pre><code>
+package Dynamic;
+
+our $AUTOLOAD;
+
+sub AUTOLOAD {
+    my $method = $AUTOLOAD;
+    $method =~ s/.*:://;
+    return "You called method: $method";
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use Dynamic;
+
+my $obj = bless {}, "Dynamic";
+print $obj->unknown_method();
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+You called method: unknown_method
+  </code></pre>
+
+</section><br>
+<section id="perl-exception-handling">
+  <h1>Perl Exception & Error Handling</h1>
+
+  <!-- ======================= -->
+  <h2>Introduction to Error Handling in Perl</h2>
+  <p>
+    Error handling is used to detect, report, and handle runtime errors
+    without crashing the program unexpectedly.
+  </p>
+
+  <p>
+    Perl handles errors mainly using:
+  </p>
+  <ul>
+    <li><code>die</code></li>
+    <li><code>warn</code></li>
+    <li><code>eval</code></li>
+    <li>Special error variables</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>die</h2>
+
+  <h3>What is die?</h3>
+  <p>
+    <code>die</code> immediately terminates the program and prints an error message.
+    It is used for <b>fatal errors</b>.
+  </p>
+
+  <h3>Why die is Used?</h3>
+  <ul>
+    <li>Stop execution on critical failure</li>
+    <li>Prevent incorrect results</li>
+    <li>Display meaningful error messages</li>
+  </ul>
+
+  <h3>Syntax</h3>
+  <pre><code>
+die "Error message";
+  </code></pre>
+
+  <h3>Example</h3>
+  <pre><code>
+my $age = -5;
+
+die "Invalid age\n" if $age &lt; 0;
+
+print "Age is valid";
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Invalid age
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>warn</h2>
+
+  <h3>What is warn?</h3>
+  <p>
+    <code>warn</code> prints a warning message but does NOT stop the program.
+    It is used for <b>non-fatal issues</b>.
+  </p>
+
+  <h3>Why warn is Used?</h3>
+  <ul>
+    <li>Notify potential problems</li>
+    <li>Continue execution safely</li>
+    <li>Debugging support</li>
+  </ul>
+
+  <h3>Syntax</h3>
+  <pre><code>
+warn "Warning message";
+  </code></pre>
+
+  <h3>Example</h3>
+  <pre><code>
+my $marks = 110;
+
+warn "Marks exceed maximum\n" if $marks &gt; 100;
+
+print "Processing marks...";
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Marks exceed maximum
+Processing marks...
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>eval</h2>
+
+  <h3>What is eval?</h3>
+  <p>
+    <code>eval</code> is used to trap runtime errors and prevent program termination.
+    It works like a <b>try-catch</b> mechanism.
+  </p>
+
+  <h3>Why eval is Used?</h3>
+  <ul>
+    <li>Handle runtime exceptions</li>
+    <li>Prevent application crash</li>
+    <li>Graceful error recovery</li>
+  </ul>
+
+  <h3>Syntax (Block eval)</h3>
+  <pre><code>
+eval {
+    # risky code
+};
+  </code></pre>
+
+  <h3>Example</h3>
+  <pre><code>
+eval {
+    die "Something went wrong\n";
+};
+
+print "Program continues";
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Program continues
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>$@ Variable</h2>
+
+  <h3>What is $@?</h3>
+  <p>
+    <code>$@</code> stores the error message generated inside an <code>eval</code> block.
+  </p>
+
+  <h3>Why $@ is Important?</h3>
+  <ul>
+    <li>Detect whether eval failed</li>
+    <li>Retrieve exact error message</li>
+    <li>Conditional error handling</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code>
+eval {
+    die "File not found\n";
+};
+
+if ($@) {
+    print "Caught error: $@";
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Caught error: File not found
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Error Variables</h2>
+
+  <p>
+    Perl provides special variables to capture system and runtime errors.
+  </p>
+
+  <h3>$!</h3>
+  <p>
+    <code>$!</code> contains system error messages related to file operations.
+  </p>
+
+  <h3>Example</h3>
+  <pre><code>
+open(my $fh, "&lt;", "missing.txt") or die "Error: $!";
+  </code></pre>
+
+  <h3>Possible Output</h3>
+  <pre><code>
+Error: No such file or directory
+  </code></pre>
+
+  <h3>$?</h3>
+  <p>
+    <code>$?</code> holds the exit status of the last system command.
+  </p>
+
+  <h3>Example</h3>
+  <pre><code>
+system("invalid_command");
+print "Exit code: $?";
+  </code></pre>
+
+  <h3>$^E</h3>
+  <p>
+    Provides extended error information on some platforms.
+  </p>
+
+  <h3>$$</h3>
+  <p>
+    Holds the process ID of the current Perl script.
+  </p>
+
+  <!-- ======================= -->
+  <h2>Combining eval, die, and warn</h2>
+
+  <h3>Best Practice Example</h3>
+  <pre><code>
+eval {
+    open(my $fh, "&lt;", "data.txt") or die "Cannot open file\n";
+};
+
+if ($@) {
+    warn "Handled error: $@";
+}
+else {
+    print "File opened successfully";
+}
+  </code></pre>
+
+  <h3>Possible Output</h3>
+  <pre><code>
+Handled error: Cannot open file
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Best Practices for Error Handling</h2>
+  <ul>
+    <li>Use <code>die</code> for fatal errors</li>
+    <li>Use <code>warn</code> for recoverable issues</li>
+    <li>Wrap risky code inside <code>eval</code></li>
+    <li>Always check <code>$@</code> after eval</li>
+    <li>Use meaningful error messages</li>
+  </ul>
+
+</section><br>
+<section id="perl-special-variables">
+  <h1>Perl Special Variables</h1>
+
+  <!-- ======================= -->
+  <h2>Introduction to Special Variables</h2>
+  <p>
+    Perl provides many built-in special variables that store
+    internal state, system information, input values, and error details.
+  </p>
+
+  <p>
+    These variables reduce the need for extra code and are heavily used
+    in real-world Perl programs.
+  </p>
+
+  <!-- ======================= -->
+  <h2>$_ (Default Variable)</h2>
+
+  <h3>What is $_?</h3>
+  <p>
+    <code>$_</code> is the default scalar variable in Perl.
+    Many functions automatically operate on <code>$_</code> when no argument is provided.
+  </p>
+
+  <h3>Why $_ is Used?</h3>
+  <ul>
+    <li>Reduces boilerplate code</li>
+    <li>Used in loops, regex, and input handling</li>
+    <li>Makes Perl scripts concise</li>
+  </ul>
+
+  <h3>Example: Implicit Usage</h3>
+  <pre><code>
+$_ = "perl language";
+
+print uc;
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+PERL LANGUAGE
+  </code></pre>
+
+  <h3>Example: $_ in Loop</h3>
+  <pre><code>
+foreach (1, 2, 3) {
+    print $_, "\n";
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+1
+2
+3
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>@ARGV (Command Line Arguments Array)</h2>
+
+  <h3>What is @ARGV?</h3>
+  <p>
+    <code>@ARGV</code> stores all command-line arguments passed to a Perl script.
+  </p>
+
+  <h3>Why @ARGV is Used?</h3>
+  <ul>
+    <li>Pass inputs without modifying code</li>
+    <li>Automation and scripting</li>
+    <li>Batch processing</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code>
+print "Arguments:\n";
+
+foreach (@ARGV) {
+    print "$_\n";
+}
+  </code></pre>
+
+  <h3>Command</h3>
+  <pre><code>
+perl script.pl apple banana
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Arguments:
+apple
+banana
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>$ARGV (Current File or Argument)</h2>
+
+  <h3>What is $ARGV?</h3>
+  <p>
+    <code>$ARGV</code> holds the current filename when reading files
+    using the diamond operator (<code>&lt;&gt;</code>).
+  </p>
+
+  <h3>Why $ARGV is Useful?</h3>
+  <ul>
+    <li>Identify which file is being processed</li>
+    <li>Useful in log processing</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code>
+while (&lt;&gt;) {
+    print "Reading from: $ARGV\n";
+    print $_;
+}
+  </code></pre>
+
+  <h3>Command</h3>
+  <pre><code>
+perl script.pl file1.txt file2.txt
+  </code></pre>
+
+  <h3>Output (Sample)</h3>
+  <pre><code>
+Reading from: file1.txt
+...
+Reading from: file2.txt
+...
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>$0 (Program Name)</h2>
+
+  <h3>What is $0?</h3>
+  <p>
+    <code>$0</code> contains the name of the currently executing Perl script.
+  </p>
+
+  <h3>Why $0 is Used?</h3>
+  <ul>
+    <li>Logging</li>
+    <li>Usage messages</li>
+    <li>Self-identification</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code>
+print "Script name: $0";
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Script name: script.pl
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>$$ (Process ID)</h2>
+
+  <h3>What is $$?</h3>
+  <p>
+    <code>$$</code> stores the Process ID (PID) of the current Perl program.
+  </p>
+
+  <h3>Why $$ is Used?</h3>
+  <ul>
+    <li>Create unique temporary files</li>
+    <li>Process tracking</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code>
+print "Process ID: $$";
+  </code></pre>
+
+  <h3>Output (Example)</h3>
+  <pre><code>
+Process ID: 12345
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>$! (System Error Message)</h2>
+
+  <h3>What is $!?</h3>
+  <p>
+    <code>$!</code> contains the last system error message.
+  </p>
+
+  <h3>Why $! is Important?</h3>
+  <ul>
+    <li>File error diagnostics</li>
+    <li>System call debugging</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code>
+open(my $fh, "&lt;", "no_file.txt")
+    or die "Error: $!";
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Error: No such file or directory
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>%ENV (Environment Variables)</h2>
+
+  <h3>What is %ENV?</h3>
+  <p>
+    <code>%ENV</code> is a hash that stores environment variables.
+  </p>
+
+  <h3>Why %ENV is Used?</h3>
+  <ul>
+    <li>Read OS environment settings</li>
+    <li>Configuration management</li>
+    <li>Security-based access</li>
+  </ul>
+
+  <h3>Example: Reading ENV</h3>
+  <pre><code>
+print $ENV{PATH};
+  </code></pre>
+
+  <h3>Example: Setting ENV</h3>
+  <pre><code>
+$ENV{APP_MODE} = "production";
+print $ENV{APP_MODE};
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+production
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Summary of Important Special Variables</h2>
+
+  <table border="1">
+    <tr>
+      <th>Variable</th>
+      <th>Purpose</th>
+    </tr>
+    <tr>
+      <td>$_</td>
+      <td>Default variable</td>
+    </tr>
+    <tr>
+      <td>@ARGV</td>
+      <td>Command line arguments</td>
+    </tr>
+    <tr>
+      <td>$ARGV</td>
+      <td>Current input file</td>
+    </tr>
+    <tr>
+      <td>$0</td>
+      <td>Script name</td>
+    </tr>
+    <tr>
+      <td>$$</td>
+      <td>Process ID</td>
+    </tr>
+    <tr>
+      <td>$!</td>
+      <td>System error</td>
+    </tr>
+    <tr>
+      <td>%ENV</td>
+      <td>Environment variables</td>
+    </tr>
+  </table>
+
+</section><br>
+<section id="perl-tied-variables">
+  <h1>Perl Tied Variables</h1>
+
+  <!-- ======================= -->
+  <h2>Introduction to Tied Variables</h2>
+  <p>
+    Tied variables allow you to connect (bind) a normal Perl variable
+    to a class so that all operations on the variable are handled
+    by user-defined methods.
+  </p>
+
+  <p>
+    This enables <b>custom behavior</b> for scalars, arrays, and hashes.
+  </p>
+
+  <h3>Why Tied Variables are Used?</h3>
+  <ul>
+    <li>Intercept variable access</li>
+    <li>Implement lazy loading</li>
+    <li>Build database-like structures</li>
+    <li>Custom storage mechanisms</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>tie Function</h2>
+
+  <h3>What is tie?</h3>
+  <p>
+    <code>tie</code> associates a variable with a package (class)
+    that defines how the variable behaves.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>
+tie VARIABLE, CLASSNAME, LIST;
+  </code></pre>
+
+  <h3>General Example</h3>
+  <pre><code>
+tie my $var, 'MyClass';
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>untie Function</h2>
+
+  <h3>What is untie?</h3>
+  <p>
+    <code>untie</code> removes the association between the variable
+    and the tied class.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>
+untie VARIABLE;
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Tied Scalars</h2>
+
+  <h3>How Tied Scalars Work?</h3>
+  <p>
+    Tied scalars use the following methods:
+  </p>
+  <ul>
+    <li><code>TIESCALAR</code> – constructor</li>
+    <li><code>FETCH</code> – read operation</li>
+    <li><code>STORE</code> – write operation</li>
+  </ul>
+
+  <h3>Example: Tied Scalar</h3>
+  <pre><code>
+package MyScalar;
+
+sub TIESCALAR {
+    my $class = shift;
+    return bless { value => 0 }, $class;
+}
+
+sub FETCH {
+    my $self = shift;
+    return $self->{value};
+}
+
+sub STORE {
+    my ($self, $value) = @_;
+    $self->{value} = $value * 2;
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use MyScalar;
+
+tie my $x, 'MyScalar';
+
+$x = 10;
+print $x;
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+20
+  </code></pre>
+
+  <p>
+    <b>Explanation:</b> The STORE method doubles the value before storing it.
+  </p>
+
+  <!-- ======================= -->
+  <h2>Tied Arrays</h2>
+
+  <h3>How Tied Arrays Work?</h3>
+  <p>
+    Tied arrays use these core methods:
+  </p>
+  <ul>
+    <li><code>TIEARRAY</code></li>
+    <li><code>FETCH</code></li>
+    <li><code>STORE</code></li>
+    <li><code>FETCHSIZE</code></li>
+    <li><code>PUSH</code></li>
+    <li><code>POP</code></li>
+  </ul>
+
+  <h3>Example: Tied Array</h3>
+  <pre><code>
+package MyArray;
+
+sub TIEARRAY {
+    my $class = shift;
+    return bless [], $class;
+}
+
+sub STORE {
+    my ($self, $index, $value) = @_;
+    $self->[$index] = uc($value);
+}
+
+sub FETCH {
+    my ($self, $index) = @_;
+    return $self->[$index];
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use MyArray;
+
+tie my @arr, 'MyArray';
+
+$arr[0] = "perl";
+$arr[1] = "tied";
+
+print join(", ", @arr);
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+PERL, TIED
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Tied Hashes</h2>
+
+  <h3>How Tied Hashes Work?</h3>
+  <p>
+    Tied hashes use these methods:
+  </p>
+  <ul>
+    <li><code>TIEHASH</code></li>
+    <li><code>FETCH</code></li>
+    <li><code>STORE</code></li>
+    <li><code>EXISTS</code></li>
+    <li><code>DELETE</code></li>
+    <li><code>CLEAR</code></li>
+  </ul>
+
+  <h3>Example: Tied Hash</h3>
+  <pre><code>
+package MyHash;
+
+sub TIEHASH {
+    my $class = shift;
+    return bless {}, $class;
+}
+
+sub STORE {
+    my ($self, $key, $value) = @_;
+    $self->{$key} = $value . "_saved";
+}
+
+sub FETCH {
+    my ($self, $key) = @_;
+    return $self->{$key};
+}
+
+1;
+  </code></pre>
+
+  <pre><code>
+use MyHash;
+
+tie my %h, 'MyHash';
+
+$h{name} = "Perl";
+print $h{name};
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Perl_saved
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>When to Use Tied Variables?</h2>
+  <ul>
+    <li>Virtual filesystems</li>
+    <li>Database-backed variables</li>
+    <li>Data validation layers</li>
+    <li>Transparent caching</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>Important Notes</h2>
+  <ul>
+    <li>Tied variables are slower than normal variables</li>
+    <li>Use only when behavior customization is required</li>
+    <li>Always use <code>untie</code> when finished</li>
+  </ul>
+
+  <h3>Untie Example</h3>
+  <pre><code>
+untie $x;
+untie @arr;
+untie %h;
+  </code></pre>
+
+</section><br>
+<section id="perl-formats-reports">
+
+  <h1>Formats & Reports in Perl</h1>
+
+  <!-- ======================= -->
+  <h2>Introduction to Formats</h2>
+  <p>
+    Perl <b>formats</b> are used to produce nicely aligned, fixed-width
+    formatted output. They are mainly used for generating reports.
+  </p>
+
+  <h3>Why Formats are Used?</h3>
+  <ul>
+    <li>Tabular report generation</li>
+    <li>Column alignment</li>
+    <li>Readable output</li>
+    <li>Legacy reporting systems</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>format Keyword</h2>
+
+  <h3>What is format?</h3>
+  <p>
+    <code>format</code> defines a template that controls how data is printed.
+  </p>
+
+  <h3>Syntax</h3>
+  <pre><code>
+format FORMATNAME =
+FIELD
+.
+  </code></pre>
+
+  <h3>Common Format Fields</h3>
+  <ul>
+    <li><code>@&lt;&lt;&lt;</code> Left aligned</li>
+    <li><code>@&gt;&gt;&gt;</code> Right aligned</li>
+    <li><code>@|||</code> Center aligned</li>
+    <li><code>^&lt;&lt;&lt;</code> Text wrapping</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>write Function</h2>
+
+  <h3>What is write?</h3>
+  <p>
+    <code>write</code> prints output using the currently selected format.
+  </p>
+
+  <h3>Why write is Required?</h3>
+  <ul>
+    <li>Triggers the format output</li>
+    <li>Separates data from presentation</li>
+  </ul>
+
+  <!-- ======================= -->
+  <h2>Example: Simple Report</h2>
+
+  <pre><code>
+format EMPLOYEE =
+Name:   @<<<<<<<<
+Salary: @>>>>>>>
+$name,  $salary
+.
+  </code></pre>
+
+  <pre><code>
+$name = "Ravi";
+$salary = 45000;
+
+write;
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Name:   Ravi
+Salary:   45000
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>Report Generation</h2>
+
+  <p>
+    Formats are mainly used for generating structured reports
+    such as payroll, marksheets, invoices, and logs.
+  </p>
+
+  <h3>Example: Multi-line Report</h3>
+
+  <pre><code>
+format REPORT =
+@<<<<<<<<   @>>>>>>>
+$name       $marks
+.
+  </code></pre>
+
+  <pre><code>
+@students = (
+  ["Aathi", 90],
+  ["Ravi", 85]
+);
+
+foreach (@students) {
+  ($name, $marks) = @$_;
+  write;
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Aathi       90
+Ravi        85
+  </code></pre>
+
+</section><br>
+
+<!-- =================================================== -->
+
+<section id="perl-signal-process">
+
+  <h1>Signals & Process Handling in Perl</h1>
+
+  <!-- ======================= -->
+  <h2>Introduction to Process Handling</h2>
+  <p>
+    Perl provides system-level functions to create, control,
+    and communicate with operating system processes.
+  </p>
+
+  <!-- ======================= -->
+  <h2>Signal Handling</h2>
+
+  <h3>What is a Signal?</h3>
+  <p>
+    A signal is a notification sent to a process to notify it
+    of events like termination, interruption, or errors.
+  </p>
+
+  <h3>Why Signal Handling?</h3>
+  <ul>
+    <li>Graceful shutdown</li>
+    <li>Cleanup resources</li>
+    <li>Handle interruptions (Ctrl+C)</li>
+  </ul>
+
+  <h3>%SIG Hash</h3>
+  <p>
+    Perl uses the <code>%SIG</code> hash to handle signals.
+  </p>
+
+  <h3>Example: SIGINT</h3>
+  <pre><code>
+$SIG{INT} = sub {
+    print "Program interrupted\n";
+    exit;
+};
+
+while (1) {
+    print "Running...\n";
+}
+  </code></pre>
+
+  <h3>Output (on Ctrl+C)</h3>
+  <pre><code>
+Program interrupted
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>fork</h2>
+
+  <h3>What is fork?</h3>
+  <p>
+    <code>fork</code> creates a new child process.
+  </p>
+
+  <h3>Return Value</h3>
+  <ul>
+    <li>Parent gets child PID</li>
+    <li>Child gets 0</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code>
+my $pid = fork();
+
+if ($pid == 0) {
+    print "Child process\n";
+}
+else {
+    print "Parent process\n";
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Parent process
+Child process
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>exec</h2>
+
+  <h3>What is exec?</h3>
+  <p>
+    <code>exec</code> replaces the current process with a new program.
+  </p>
+
+  <h3>Important Note</h3>
+  <p>
+    Code after <code>exec</code> will never execute if exec succeeds.
+  </p>
+
+  <h3>Example</h3>
+  <pre><code>
+exec("perl", "-e", "print 'Hello from exec'");
+print "This will not print";
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Hello from exec
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>system</h2>
+
+  <h3>What is system?</h3>
+  <p>
+    <code>system</code> executes an external command and returns control to Perl.
+  </p>
+
+  <h3>Difference: system vs exec</h3>
+  <table border="1">
+    <tr>
+      <th>system</th>
+      <th>exec</th>
+    </tr>
+    <tr>
+      <td>Returns to Perl</td>
+      <td>Does not return</td>
+    </tr>
+    <tr>
+      <td>Creates child process</td>
+      <td>Replaces process</td>
+    </tr>
+  </table>
+
+  <h3>Example</h3>
+  <pre><code>
+system("perl -e \"print 'Hello system'\"");
+print "Back to Perl";
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Hello system
+Back to Perl
+  </code></pre>
+
+  <!-- ======================= -->
+  <h2>wait</h2>
+
+  <h3>What is wait?</h3>
+  <p>
+    <code>wait</code> pauses the parent process until a child process exits.
+  </p>
+
+  <h3>Why wait is Used?</h3>
+  <ul>
+    <li>Synchronize processes</li>
+    <li>Prevent zombie processes</li>
+  </ul>
+
+  <h3>Example</h3>
+  <pre><code>
+my $pid = fork();
+
+if ($pid == 0) {
+    print "Child running\n";
+    exit;
+}
+else {
+    wait();
+    print "Child finished\n";
+}
+  </code></pre>
+
+  <h3>Output</h3>
+  <pre><code>
+Child running
+Child finished
+  </code></pre>
+
+</section><br>
+<!-- ===================================================== -->
+<section id="perl-networking-ipc">
+
+<h1>Networking & Interprocess Communication (IPC) in Perl</h1>
+
+<!-- ======================= -->
+<h2>Introduction to Networking & IPC</h2>
+<p>
+Networking allows Perl programs to communicate over a network,
+while IPC allows communication between processes running on the same system.
+</p>
+
+<p>
+These concepts are heavily used in:
+</p>
+<ul>
+  <li>Client-server applications</li>
+  <li>Microservices</li>
+  <li>Automation tools</li>
+  <li>Daemon processes</li>
+</ul>
+
+<!-- ======================= -->
+<h2>Sockets</h2>
+
+<h3>What is a Socket?</h3>
+<p>
+A socket is an endpoint for communication between two machines or processes.
+Perl provides socket support using the <code>Socket</code> module.
+</p>
+
+<h3>Why Sockets are Used?</h3>
+<ul>
+  <li>Network communication</li>
+  <li>Client-server architecture</li>
+  <li>Data transfer over TCP/UDP</li>
+</ul>
+
+<!-- ======================= -->
+<h2>TCP (Transmission Control Protocol)</h2>
+
+<h3>What is TCP?</h3>
+<p>
+TCP is a connection-oriented protocol that guarantees reliable data delivery.
+</p>
+
+<h3>Example: TCP Client</h3>
+<pre><code>
+use IO::Socket::INET;
+
+my $socket = IO::Socket::INET->new(
+    PeerAddr => 'localhost',
+    PeerPort => 5000,
+    Proto    => 'tcp'
+) or die "Cannot connect";
+
+print $socket "Hello Server\n";
+print &lt;$socket&gt;;
+close $socket;
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+Hello Client
+</code></pre>
+
+<!-- ======================= -->
+<h2>UDP (User Datagram Protocol)</h2>
+
+<h3>What is UDP?</h3>
+<p>
+UDP is a connectionless protocol.
+It is faster but does not guarantee delivery.
+</p>
+
+<h3>Use Cases</h3>
+<ul>
+  <li>Streaming</li>
+  <li>Online games</li>
+  <li>Broadcast messages</li>
+</ul>
+
+<h3>Example: UDP Sender</h3>
+<pre><code>
+use IO::Socket::INET;
+
+my $sock = IO::Socket::INET->new(
+    PeerAddr => 'localhost',
+    PeerPort => 6000,
+    Proto    => 'udp'
+);
+
+$sock->send("Hello UDP");
+</code></pre>
+
+<!-- ======================= -->
+<h2>Pipes</h2>
+
+<h3>What is a Pipe?</h3>
+<p>
+A pipe allows one process to send output directly to another process as input.
+</p>
+
+<h3>Why Pipes?</h3>
+<ul>
+  <li>Process chaining</li>
+  <li>Command output processing</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>
+open(my $fh, "ls |") or die "Pipe failed";
+
+while (&lt;$fh&gt;) {
+    print $_;
+}
+close $fh;
+</code></pre>
+
+<h3>Output (Example)</h3>
+<pre><code>
+file1.txt
+file2.txt
+script.pl
+</code></pre>
+
+<!-- ======================= -->
+<h2>Interprocess Communication (IPC)</h2>
+
+<h3>What is IPC?</h3>
+<p>
+IPC allows processes to exchange data and signals.
+</p>
+
+<h3>IPC Methods in Perl</h3>
+<ul>
+  <li>Pipes</li>
+  <li>Sockets</li>
+  <li>Signals</li>
+  <li>Shared memory</li>
+</ul>
+
+</section><br>
+
+<!-- ===================================================== -->
+<section id="perl-database-programming">
+
+<h1>Database Programming in Perl</h1>
+
+<!-- ======================= -->
+<h2>DBI Module</h2>
+
+<h3>What is DBI?</h3>
+<p>
+DBI (Database Independent Interface) is the standard Perl module
+for database access.
+</p>
+
+<h3>Why DBI?</h3>
+<ul>
+  <li>Database independent</li>
+  <li>Secure data handling</li>
+  <li>Supports MySQL, PostgreSQL, Oracle, SQLite</li>
+</ul>
+
+<!-- ======================= -->
+<h2>Database Connections</h2>
+
+<h3>Syntax</h3>
+<pre><code>
+use DBI;
+
+my $dbh = DBI->connect(
+    "DBI:mysql:database=test;host=localhost",
+    "user",
+    "password",
+    { RaiseError => 1 }
+);
+</code></pre>
+
+<h3>Explanation</h3>
+<ul>
+  <li><code>$dbh</code> → Database handle</li>
+  <li><code>RaiseError</code> → Auto error handling</li>
+</ul>
+
+<!-- ======================= -->
+<h2>Prepared Statements</h2>
+
+<h3>What are Prepared Statements?</h3>
+<p>
+Prepared statements improve performance and prevent SQL injection.
+</p>
+
+<h3>Example</h3>
+<pre><code>
+my $sth = $dbh->prepare(
+    "SELECT name FROM users WHERE id = ?"
+);
+
+$sth->execute(1);
+
+while (my @row = $sth->fetchrow_array) {
+    print $row[0];
+}
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+Aathi
+</code></pre>
+
+<!-- ======================= -->
+<h2>Insert Example</h2>
+<pre><code>
+my $sth = $dbh->prepare(
+    "INSERT INTO users (name, age) VALUES (?, ?)"
+);
+
+$sth->execute("Ravi", 30);
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+Record inserted successfully
+</code></pre>
+
+<!-- ======================= -->
+<h2>Transactions</h2>
+
+<h3>What is a Transaction?</h3>
+<p>
+A transaction ensures multiple database operations
+either succeed together or fail together.
+</p>
+
+<h3>Example</h3>
+<pre><code>
+$dbh->{AutoCommit} = 0;
+
+eval {
+    $dbh->do("INSERT INTO account VALUES (1, 1000)");
+    $dbh->do("INSERT INTO account VALUES (2, 2000)");
+    $dbh->commit;
+};
+
+if ($@) {
+    $dbh->rollback;
+}
+</code></pre>
+
+<h3>Explanation</h3>
+<ul>
+  <li>commit → save changes</li>
+  <li>rollback → undo changes</li>
+</ul>
+
+<!-- ======================= -->
+<h2>Error Handling in DBI</h2>
+
+<h3>Error Variables</h3>
+<ul>
+  <li><code>$DBI::err</code></li>
+  <li><code>$DBI::errstr</code></li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>
+my $sth = $dbh->prepare("SELECT * FROM unknown");
+
+$sth->execute or die $DBI::errstr;
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+Table 'unknown' doesn't exist
+</code></pre>
+
+<!-- ======================= -->
+<h2>Disconnecting Database</h2>
+
+<pre><code>
+$dbh->disconnect;
+</code></pre>
+
+<h3>Why Disconnect?</h3>
+<ul>
+  <li>Release resources</li>
+  <li>Avoid memory leaks</li>
+</ul>
+
+</section><br>
+<!-- ===================================================== -->
+<section id="perl-debugging-optimization">
+
+<h1>Debugging & Optimization in Perl</h1>
+
+<!-- ======================= -->
+<h2>Introduction</h2>
+<p>
+Debugging is the process of finding and fixing errors (bugs) in a Perl program.
+Optimization focuses on improving performance, memory usage, and execution speed.
+</p>
+
+<p>
+In real-world company projects:
+</p>
+<ul>
+  <li>Bug-free code is mandatory</li>
+  <li>Slow scripts are rejected</li>
+  <li>Memory leaks cause crashes</li>
+</ul>
+
+<!-- ======================= -->
+<h2>Perl Debugger</h2>
+
+<h3>What is Perl Debugger?</h3>
+<p>
+The Perl Debugger is a built-in interactive tool that allows developers
+to inspect program execution line by line.
+</p>
+
+<h3>Why Use Perl Debugger?</h3>
+<ul>
+  <li>To trace execution flow</li>
+  <li>To inspect variable values</li>
+  <li>To find logical errors</li>
+</ul>
+
+<h3>How to Start Debugger</h3>
+<pre><code>
+perl -d script.pl
+</code></pre>
+
+<h3>Common Debugger Commands</h3>
+<ul>
+  <li><code>n</code> → execute next line</li>
+  <li><code>s</code> → step into subroutine</li>
+  <li><code>c</code> → continue execution</li>
+  <li><code>p $var</code> → print variable value</li>
+  <li><code>q</code> → quit debugger</li>
+</ul>
+
+<!-- ======================= -->
+<h2>use strict</h2>
+
+<h3>What is use strict?</h3>
+<p>
+<code>use strict</code> forces disciplined coding by restricting unsafe constructs.
+</p>
+
+<h3>Why is it Important?</h3>
+<ul>
+  <li>Prevents undeclared variables</li>
+  <li>Catches typos early</li>
+  <li>Mandatory in production code</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>
+use strict;
+
+$x = 10;
+</code></pre>
+
+<h3>Error</h3>
+<pre><code>
+Global symbol "$x" requires explicit package name
+</code></pre>
+
+<h3>Correct Code</h3>
+<pre><code>
+use strict;
+my $x = 10;
+</code></pre>
+
+<!-- ======================= -->
+<h2>use warnings</h2>
+
+<h3>What is use warnings?</h3>
+<p>
+<code>use warnings</code> alerts about potential problems that may not be fatal errors.
+</p>
+
+<h3>Why Use warnings?</h3>
+<ul>
+  <li>Detects uninitialized values</li>
+  <li>Warns about deprecated syntax</li>
+  <li>Improves code quality</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>
+use warnings;
+my $x;
+print $x;
+</code></pre>
+
+<h3>Warning Output</h3>
+<pre><code>
+Use of uninitialized value $x
+</code></pre>
+
+<!-- ======================= -->
+<h2>Common Errors in Perl</h2>
+
+<h3>Syntax Errors</h3>
+<p>
+Occur due to missing semicolons, brackets, or keywords.
+</p>
+
+<h3>Runtime Errors</h3>
+<p>
+Occur during execution (file not found, division by zero).
+</p>
+
+<h3>Logical Errors</h3>
+<p>
+Program runs but produces wrong output due to faulty logic.
+</p>
+
+<h3>Example</h3>
+<pre><code>
+my $x = 10;
+if ($x = 5) {
+    print "Equal";
+}
+</code></pre>
+
+<h3>Explanation</h3>
+<p>
+Assignment (=) is used instead of comparison (==).
+</p>
+
+<!-- ======================= -->
+<h2>Profiling</h2>
+
+<h3>What is Profiling?</h3>
+<p>
+Profiling measures where time and memory are spent in a program.
+</p>
+
+<h3>Why Profiling?</h3>
+<ul>
+  <li>Find performance bottlenecks</li>
+  <li>Optimize slow sections</li>
+</ul>
+
+<h3>Devel::NYTProf (Popular Profiler)</h3>
+<pre><code>
+perl -d:NYTProf script.pl
+</code></pre>
+
+<h3>Output</h3>
+<p>
+Detailed report showing time spent in each subroutine.
+</p>
+
+<!-- ======================= -->
+<h2>Memory Management</h2>
+
+<h3>How Perl Manages Memory?</h3>
+<p>
+Perl uses reference counting to automatically free unused memory.
+</p>
+
+<h3>Memory Leak Causes</h3>
+<ul>
+  <li>Circular references</li>
+  <li>Large global variables</li>
+</ul>
+
+<h3>Good Practice</h3>
+<pre><code>
+undef $large_variable;
+</code></pre>
+
+<!-- ======================= -->
+<h2>Performance Tuning</h2>
+
+<h3>Optimization Techniques</h3>
+<ul>
+  <li>Avoid unnecessary loops</li>
+  <li>Use built-in functions</li>
+  <li>Limit global variables</li>
+  <li>Use references instead of copying data</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>
+# Faster
+my $count = @array;
+
+# Slower
+my $count = scalar(@array);
+</code></pre>
+
+</section><br>
+
+<!-- ===================================================== -->
+<section id="perl-security-best-practices">
+
+<h1>Security & Best Practices in Perl</h1>
+
+<!-- ======================= -->
+<h2>Taint Mode</h2>
+
+<h3>What is Taint Mode?</h3>
+<p>
+Taint mode prevents unsafe data from being used in sensitive operations.
+</p>
+
+<h3>Why Taint Mode?</h3>
+<ul>
+  <li>Prevents command injection</li>
+  <li>Used in CGI and web scripts</li>
+</ul>
+
+<h3>Enable Taint Mode</h3>
+<pre><code>
+perl -T script.pl
+</code></pre>
+
+<h3>Example</h3>
+<pre><code>
+my $input = &lt;STDIN&gt;;
+system("ls $input");
+</code></pre>
+
+<h3>Error</h3>
+<pre><code>
+Insecure dependency in system
+</code></pre>
+
+<!-- ======================= -->
+<h2>Secure File Handling</h2>
+
+<h3>Why Secure File Handling?</h3>
+<ul>
+  <li>Prevent unauthorized access</li>
+  <li>Avoid file overwrite attacks</li>
+</ul>
+
+<h3>Good Practice</h3>
+<pre><code>
+open(my $fh, "&lt;", $file) or die "Cannot open file";
+</code></pre>
+
+<h3>Bad Practice</h3>
+<pre><code>
+open(FH, $file);
+</code></pre>
+
+<!-- ======================= -->
+<h2>Input Validation</h2>
+
+<h3>Why Input Validation?</h3>
+<p>
+User input is untrusted and must always be validated.
+</p>
+
+<h3>Example</h3>
+<pre><code>
+if ($input =~ /^[a-zA-Z0-9_]+$/) {
+    print "Valid input";
+}
+</code></pre>
+
+<h3>Explanation</h3>
+<p>
+Only allows safe characters to prevent injection.
+</p>
+
+<!-- ======================= -->
+<h2>Coding Standards</h2>
+
+<h3>Why Coding Standards?</h3>
+<ul>
+  <li>Readable code</li>
+  <li>Easy maintenance</li>
+  <li>Team collaboration</li>
+</ul>
+
+<h3>Best Practices</h3>
+<ul>
+  <li>Always use <code>use strict</code> and <code>use warnings</code></li>
+  <li>Meaningful variable names</li>
+  <li>Consistent indentation</li>
+  <li>Comment complex logic</li>
+  <li>Modularize code using subroutines</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>
+use strict;
+use warnings;
+
+sub calculate_total {
+    my ($price, $qty) = @_;
+    return $price * $qty;
+}
+</code></pre>
+
+</section><br>
+<!-- ===================================================== -->
+<section id="perl-command-line-arguments">
+
+<h1>Perl Command Line Arguments</h1>
+
+<p>
+Command line arguments allow passing data to a Perl script
+at the time of execution. This is heavily used in:
+</p>
+
+<ul>
+  <li>Automation scripts</li>
+  <li>Batch processing</li>
+  <li>System administration</li>
+  <li>DevOps pipelines</li>
+</ul>
+
+<!-- ======================= -->
+<h2>Accessing Arguments</h2>
+
+<h3>@ARGV Array</h3>
+<p>
+Perl stores all command line arguments in the built-in array <code>@ARGV</code>.
+</p>
+
+<p>
+Each argument is separated by space.
+</p>
+
+<h3>Example</h3>
+<pre><code>
+# script.pl
+use strict;
+use warnings;
+
+print "First Argument: $ARGV[0]\n";
+print "Second Argument: $ARGV[1]\n";
+</code></pre>
+
+<h3>Command</h3>
+<pre><code>
+perl script.pl apple orange
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+First Argument: apple
+Second Argument: orange
+</code></pre>
+
+<!-- ======================= -->
+<h3>Iterating Arguments</h3>
+
+<pre><code>
+foreach my $arg (@ARGV) {
+    print "$arg\n";
+}
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+apple
+orange
+</code></pre>
+
+<!-- ======================= -->
+<h3>Number of Arguments</h3>
+
+<pre><code>
+my $count = scalar(@ARGV);
+print "Total Arguments: $count\n";
+</code></pre>
+
+<!-- ======================= -->
+<h2>Argument Validation</h2>
+
+<h3>Why Argument Validation?</h3>
+<ul>
+  <li>Prevent runtime errors</li>
+  <li>Ensure correct input format</li>
+  <li>Improve script reliability</li>
+</ul>
+
+<!-- ======================= -->
+<h3>Check Required Arguments</h3>
+
+<pre><code>
+if (@ARGV &lt; 2) {
+    die "Usage: perl script.pl arg1 arg2\n";
+}
+</code></pre>
+
+<h3>Explanation</h3>
+<p>
+Script exits if required arguments are missing.
+</p>
+
+<!-- ======================= -->
+<h3>Validate Numeric Arguments</h3>
+
+<pre><code>
+my $num = $ARGV[0];
+
+if ($num !~ /^\d+$/) {
+    die "Argument must be a number\n";
+}
+</code></pre>
+
+<!-- ======================= -->
+<h3>Validate File Argument</h3>
+
+<pre><code>
+my $file = $ARGV[0];
+
+if (!-e $file) {
+    die "File does not exist\n";
+}
+</code></pre>
+
+<!-- ======================= -->
+<h2>Using Getopt::Long (Professional Way)</h2>
+
+<p>
+For real projects, named options are preferred.
+</p>
+
+<pre><code>
+use Getopt::Long;
+
+my $name;
+my $age;
+
+GetOptions(
+    "name=s" => \$name,
+    "age=i"  => \$age,
+);
+
+print "Name: $name\n";
+print "Age: $age\n";
+</code></pre>
+
+<h3>Command</h3>
+<pre><code>
+perl script.pl --name=Aathi --age=25
+</code></pre>
+
+</section><br>
+
+<!-- ===================================================== -->
+<section id="perl-best-practices">
+
+<h1>Perl Best Practices</h1>
+
+<!-- ======================= -->
+<h2>Coding Standards</h2>
+
+<h3>Why Coding Standards?</h3>
+<p>
+Coding standards ensure readability, maintainability,
+and team collaboration.
+</p>
+
+<h3>Mandatory Rules</h3>
+<ul>
+  <li>Always use <code>use strict;</code></li>
+  <li>Always use <code>use warnings;</code></li>
+  <li>Declare variables with <code>my</code></li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>
+use strict;
+use warnings;
+
+my $total = 0;
+</code></pre>
+
+<!-- ======================= -->
+<h3>Naming Conventions</h3>
+
+<ul>
+  <li>Variables: lowercase with underscores</li>
+  <li>Subroutines: meaningful verbs</li>
+  <li>Constants: uppercase</li>
+</ul>
+
+<pre><code>
+use constant MAX_SIZE => 100;
+</code></pre>
+
+<!-- ======================= -->
+<h2>Performance Tips</h2>
+
+<h3>Use Built-in Functions</h3>
+<pre><code>
+# Faster
+my $count = @array;
+
+# Slower
+my $count = scalar(@array);
+</code></pre>
+
+<h3>Avoid Unnecessary Copies</h3>
+<pre><code>
+sub process {
+    my ($ref) = @_;
+}
+</code></pre>
+
+<h3>Use References for Large Data</h3>
+<p>
+Passing arrays by reference saves memory.
+</p>
+
+<!-- ======================= -->
+<h3>Limit Global Variables</h3>
+<p>
+Global variables increase memory usage and bugs.
+</p>
+
+<!-- ======================= -->
+<h2>Security Practices</h2>
+
+<h3>Input Validation</h3>
+<pre><code>
+if ($input =~ /^[a-zA-Z0-9_]+$/) {
+    print "Valid input";
+}
+</code></pre>
+
+<h3>Enable Taint Mode</h3>
+<pre><code>
+perl -T script.pl
+</code></pre>
+
+<h3>Secure System Calls</h3>
+<pre><code>
+system("ls", $dir);
+</code></pre>
+
+<p>
+Avoid string interpolation in system commands.
+</p>
+
+<!-- ======================= -->
+<h3>Secure File Handling</h3>
+<pre><code>
+open(my $fh, "&lt;", $file) or die "Cannot open file";
+</code></pre>
+
+<!-- ======================= -->
+<h3>Error Handling</h3>
+<pre><code>
+open(my $fh, "&lt;", $file) or die "Error: $!";
+</code></pre>
+
+<!-- ======================= -->
+<h2>Professional Perl Checklist</h2>
+
+<ul>
+  <li>✔ use strict & warnings</li>
+  <li>✔ Validate all input</li>
+  <li>✔ Avoid hardcoded paths</li>
+  <li>✔ Modularize code</li>
+  <li>✔ Comment business logic</li>
+</ul>
+
+</section><br>
+<!-- ===================================================== -->
+<section id="perl-real-time-use-cases">
+
+<h1>Perl Real-Time Use Cases</h1>
+
+<p>
+Perl is widely used in real-world systems due to its powerful
+text processing, system interaction, and automation capabilities.
+</p>
+
+<!-- ======================= -->
+<h2>System Administration</h2>
+
+<h3>What is System Administration in Perl?</h3>
+<p>
+Using Perl scripts to manage servers, users, files, processes,
+and system health.
+</p>
+
+<h3>Why Perl?</h3>
+<ul>
+  <li>Strong OS integration</li>
+  <li>Fast scripting</li>
+  <li>Excellent text & file handling</li>
+</ul>
+
+<h3>Example: Check Disk Usage</h3>
+<pre><code>
+my $usage = `df -h`;
+print $usage;
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+Filesystem Size Used Avail Use%
+/dev/sda1 50G 30G 20G 60%
+</code></pre>
+
+<!-- ======================= -->
+<h2>Log File Processing</h2>
+
+<h3>What is Log Processing?</h3>
+<p>
+Analyzing application or server logs to extract errors,
+statistics, or usage data.
+</p>
+
+<h3>Example: Extract ERROR lines</h3>
+<pre><code>
+open(my $fh, "&lt;", "app.log") or die $!;
+
+while (&lt;$fh&gt;) {
+    if (/ERROR/) {
+        print $_;
+    }
+}
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+ERROR: Database connection failed
+ERROR: Timeout occurred
+</code></pre>
+
+<!-- ======================= -->
+<h2>Automation Scripts</h2>
+
+<h3>Purpose</h3>
+<p>
+Automate repetitive tasks like backups, file cleanup,
+and report generation.
+</p>
+
+<h3>Example: Automatic Backup</h3>
+<pre><code>
+system("cp data.txt backup/data.txt");
+print "Backup completed\n";
+</code></pre>
+
+<!-- ======================= -->
+<h2>Text Processing</h2>
+
+<h3>Why Perl for Text Processing?</h3>
+<ul>
+  <li>Powerful Regular Expressions</li>
+  <li>Fast string manipulation</li>
+</ul>
+
+<h3>Example: Word Count</h3>
+<pre><code>
+my $text = "Perl is powerful and flexible";
+my @words = split(/\s+/, $text);
+print scalar(@words);
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+5
+</code></pre>
+
+<!-- ======================= -->
+<h2>Database Interaction</h2>
+
+<h3>What is DB Interaction?</h3>
+<p>
+Using Perl scripts to read/write data from databases.
+</p>
+
+<h3>Example: Fetch Data</h3>
+<pre><code>
+use DBI;
+
+my $dbh = DBI->connect("DBI:mysql:db=test", "user", "pass");
+
+my $sth = $dbh->prepare("SELECT name FROM users");
+$sth->execute();
+
+while (my $row = $sth->fetchrow_arrayref) {
+    print "$row->[0]\n";
+}
+</code></pre>
+
+<!-- ======================= -->
+<h2>Web Development (CGI)</h2>
+
+<h3>What is CGI?</h3>
+<p>
+Common Gateway Interface allows Perl scripts
+to generate dynamic web pages.
+</p>
+
+<h3>Example: Simple CGI Output</h3>
+<pre><code>
+print "Content-type: text/html\n\n";
+print "&lt;h1&gt;Hello from Perl CGI&lt;/h1&gt;";
+</code></pre>
+
+<!-- ======================= -->
+<h2>Data Extraction</h2>
+
+<h3>Purpose</h3>
+<p>
+Extract required data from files, logs, or APIs.
+</p>
+
+<h3>Example</h3>
+<pre><code>
+if ($line =~ /User:\s(\w+)/) {
+    print "User Found: $1\n";
+}
+</code></pre>
+
+<!-- ======================= -->
+<h2>ETL Scripts</h2>
+
+<h3>ETL Meaning</h3>
+<ul>
+  <li>Extract</li>
+  <li>Transform</li>
+  <li>Load</li>
+</ul>
+
+<h3>Example</h3>
+<pre><code>
+my $data = "100,200";
+$data =~ s/,/|/g;
+print $data;
+</code></pre>
+
+<h3>Output</h3>
+<pre><code>
+100|200
+</code></pre>
+
+<!-- ======================= -->
+<h2>Monitoring Scripts</h2>
+
+<h3>Purpose</h3>
+<p>
+Monitor CPU, memory, services, or application status.
+</p>
+
+<h3>Example: Process Check</h3>
+<pre><code>
+my $process = `ps -ef | grep apache`;
+print $process;
+</code></pre>
+
+</section><br>
+
+<!-- ===================================================== -->
+<section id="perl-advanced-topics">
+
+<h1>Perl Advanced Topics</h1>
+
+<!-- ======================= -->
+<h2>One-liners</h2>
+
+<h3>What are Perl One-liners?</h3>
+<p>
+Single-line Perl programs executed from command line.
+</p>
+
+<h3>Example: Print Lines with ERROR</h3>
+<pre><code>
+perl -ne 'print if /ERROR/' app.log
+</code></pre>
+
+<!-- ======================= -->
+<h2>Perl Internals</h2>
+
+<h3>What are Perl Internals?</h3>
+<p>
+Internal mechanisms of how Perl parses, compiles,
+and executes code.
+</p>
+
+<ul>
+  <li>Lexer</li>
+  <li>Parser</li>
+  <li>Opcode Tree</li>
+</ul>
+
+<!-- ======================= -->
+<h2>Symbol Table</h2>
+
+<h3>What is Symbol Table?</h3>
+<p>
+A hash that stores all variables, subroutines,
+and filehandles of a package.
+</p>
+
+<h3>Example</h3>
+<pre><code>
+print keys %main::;
+</code></pre>
+
+<!-- ======================= -->
+<h2>Garbage Collection</h2>
+
+<h3>How Perl Frees Memory?</h3>
+<p>
+Perl uses reference counting to automatically
+free unused variables.
+</p>
+
+<h3>Example</h3>
+<pre><code>
+my $x = [];
+undef $x;
+</code></pre>
+
+<!-- ======================= -->
+<h2>XS & Inline C</h2>
+
+<h3>What is XS?</h3>
+<p>
+XS allows writing C code that can be called from Perl
+for performance-critical operations.
+</p>
+
+<h3>Why Use XS?</h3>
+<ul>
+  <li>High performance</li>
+  <li>Low-level system access</li>
+</ul>
+
+<h3>Inline C Example</h3>
+<pre><code>
+use Inline C => 'DATA';
+
+int add(int a, int b) {
+    return a + b;
+}
+</code></pre>
+
+</section><br>
+
+</body>
+</html>
