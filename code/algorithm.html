@@ -1,0 +1,2606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Algorithm</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+  table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+</style>
+</head>
+<body>
+
+<section id="algorithm-basics">
+
+  <h2>Algorithm Basics</h2>
+
+  <h3>Definition of Algorithm</h3>
+  <p>
+    An algorithm is a finite sequence of well-defined, unambiguous steps
+    that takes input, processes it, and produces output to solve a problem.
+  </p>
+
+  <h4>Key Points</h4>
+  <ul>
+    <li>An algorithm is independent of any programming language</li>
+    <li>It focuses on logic, not syntax</li>
+    <li>Same algorithm can be implemented in multiple languages</li>
+  </ul>
+
+  <h4>Example</h4>
+  <pre>
+Algorithm to add two numbers:
+1. Start
+2. Read number A
+3. Read number B
+4. Compute SUM = A + B
+5. Print SUM
+6. Stop
+  </pre>
+
+  <h4>Explanation</h4>
+  <p>
+    Each step is clearly defined. The algorithm takes two inputs (A, B),
+    performs addition, and produces one output (SUM).
+  </p>
+
+  <hr>
+
+  <h3>Characteristics of an Algorithm</h3>
+
+  <h4>1. Input</h4>
+  <p>
+    An algorithm must accept zero or more inputs.
+  </p>
+
+  <h4>2. Output</h4>
+  <p>
+    An algorithm must produce at least one output.
+  </p>
+
+  <h4>3. Definiteness</h4>
+  <p>
+    Every step must be precise and unambiguous.
+  </p>
+
+  <h4>4. Finiteness</h4>
+  <p>
+    The algorithm must terminate after a finite number of steps.
+  </p>
+
+  <h4>5. Effectiveness</h4>
+  <p>
+    Each step must be simple enough to be executed in a finite amount of time.
+  </p>
+
+  <h4>Example (Violation of Finiteness)</h4>
+  <pre>
+1. Start
+2. Print "Hello"
+3. Go to step 2
+  </pre>
+
+  <p>
+    This is NOT a valid algorithm because it never stops.
+  </p>
+
+  <hr>
+
+  <h3>Algorithm Design Techniques</h3>
+
+  <h4>Brute Force</h4>
+  <p>
+    Try all possible solutions and choose the correct one.
+  </p>
+  <pre>
+Example: Linear Search
+Check each element one by one until found
+  </pre>
+
+  <h4>Divide and Conquer</h4>
+  <p>
+    Divide the problem into smaller subproblems, solve them,
+    and combine their results.
+  </p>
+  <pre>
+Example: Binary Search
+1. Divide array into two halves
+2. Search in the relevant half
+  </pre>
+
+  <h4>Greedy Technique</h4>
+  <p>
+    Make the best choice at each step without worrying about future consequences.
+  </p>
+  <pre>
+Example: Coin Change (using largest coin first)
+  </pre>
+
+  <h4>Dynamic Programming</h4>
+  <p>
+    Solve overlapping subproblems and store results for reuse.
+  </p>
+  <pre>
+Example: Fibonacci using memoization
+  </pre>
+
+  <h4>Backtracking</h4>
+  <p>
+    Try a solution, if it fails, undo and try another.
+  </p>
+  <pre>
+Example: N-Queens problem
+  </pre>
+
+  <hr>
+
+  <h3>Algorithm Representation</h3>
+
+  <h4>Pseudocode</h4>
+  <pre>
+IF number % 2 == 0
+  PRINT "Even"
+ELSE
+  PRINT "Odd"
+END IF
+  </pre>
+
+  <p>
+    Pseudocode uses plain language and programming-like structure
+    without strict syntax rules.
+  </p>
+
+  <h4>Flowchart</h4>
+  <ul>
+    <li>Oval – Start/End</li>
+    <li>Parallelogram – Input/Output</li>
+    <li>Rectangle – Processing</li>
+    <li>Diamond – Decision</li>
+  </ul>
+
+</section>
+
+<hr>
+
+<section id="algorithm-analysis">
+
+  <h2>Algorithm Analysis</h2>
+
+  <h3>Time Complexity</h3>
+  <p>
+    Time complexity measures how execution time grows
+    as input size increases.
+  </p>
+
+  <h4>Example</h4>
+  <pre>
+for i = 1 to n
+  print i
+  </pre>
+
+  <p>
+    Loop runs n times → Time Complexity = O(n)
+  </p>
+
+  <h3>Space Complexity</h3>
+  <p>
+    Space complexity measures extra memory used by the algorithm.
+  </p>
+
+  <pre>
+int a, b, sum;
+  </pre>
+
+  <p>
+    Uses constant space → O(1)
+  </p>
+
+  <hr>
+
+  <h3>Best Case, Average Case, Worst Case</h3>
+
+  <h4>Example: Linear Search</h4>
+  <ul>
+    <li>Best Case: Element found at first position → O(1)</li>
+    <li>Average Case: Element found in middle → O(n)</li>
+    <li>Worst Case: Element not found or last position → O(n)</li>
+  </ul>
+
+  <hr>
+
+  <h3>Asymptotic Analysis</h3>
+  <p>
+    Asymptotic analysis evaluates algorithm performance
+    for very large input sizes.
+  </p>
+
+  <h4>Why Asymptotic Analysis?</h4>
+  <ul>
+    <li>Ignores hardware differences</li>
+    <li>Ignores constant values</li>
+    <li>Focuses on growth rate</li>
+  </ul>
+
+  <h4>Example</h4>
+  <pre>
+T(n) = 3n² + 5n + 10
+As n grows large → O(n²)
+  </pre>
+
+</section>
+
+<br>
+<section id="asymptotic-notations">
+
+  <h2>Asymptotic Notations</h2>
+
+  <p>
+    Asymptotic notations are mathematical tools used to describe the
+    performance of an algorithm as input size (n) grows very large.
+    They help us compare algorithms independent of hardware, language,
+    or implementation.
+  </p>
+
+  <hr>
+
+  <h3>Big-O Notation (O)</h3>
+  <p>
+    Big-O represents the <strong>upper bound</strong> of an algorithm.
+    It tells the <strong>worst-case performance</strong>.
+  </p>
+
+  <h4>Formal Definition</h4>
+  <p>
+    f(n) = O(g(n)) if there exist constants c > 0 and n₀ such that
+    f(n) ≤ c·g(n) for all n ≥ n₀
+  </p>
+
+  <h4>Example</h4>
+  <pre>
+for i = 1 to n
+  print i
+  </pre>
+
+  <p>
+    Loop runs n times → Time Complexity = O(n)
+  </p>
+
+  <h4>Another Example</h4>
+  <pre>
+for i = 1 to n
+  for j = 1 to n
+    print i, j
+  </pre>
+
+  <p>
+    Nested loop → n × n → O(n²)
+  </p>
+
+  <h4>Why Big-O is Important</h4>
+  <ul>
+    <li>Guarantees maximum time required</li>
+    <li>Used most in interviews</li>
+    <li>Focuses on worst-case scenario</li>
+  </ul>
+
+  <hr>
+
+  <h3>Omega Notation (Ω)</h3>
+  <p>
+    Omega represents the <strong>lower bound</strong> of an algorithm.
+    It tells the <strong>best-case performance</strong>.
+  </p>
+
+  <h4>Formal Definition</h4>
+  <p>
+    f(n) = Ω(g(n)) if there exist constants c > 0 and n₀ such that
+    f(n) ≥ c·g(n) for all n ≥ n₀
+  </p>
+
+  <h4>Example: Linear Search</h4>
+  <ul>
+    <li>Best case: element found at first position</li>
+    <li>Comparisons = 1 → Ω(1)</li>
+  </ul>
+
+  <p>
+    Omega tells us the algorithm cannot perform better than this bound.
+  </p>
+
+  <hr>
+
+  <h3>Theta Notation (Θ)</h3>
+  <p>
+    Theta represents the <strong>tight bound</strong>.
+    It gives both upper and lower bounds.
+  </p>
+
+  <h4>Formal Definition</h4>
+  <p>
+    f(n) = Θ(g(n)) if f(n) is both O(g(n)) and Ω(g(n))
+  </p>
+
+  <h4>Example</h4>
+  <pre>
+for i = 1 to n
+  print i
+  </pre>
+
+  <p>
+    Best case = n operations  
+    Worst case = n operations  
+    Therefore → Θ(n)
+  </p>
+
+  <p>
+    Theta is used when an algorithm’s performance is predictable.
+  </p>
+
+  <hr>
+
+  <h3>Little-o Notation (o)</h3>
+  <p>
+    Little-o represents a <strong>strict upper bound</strong>.
+    It grows strictly slower than another function.
+  </p>
+
+  <h4>Example</h4>
+  <p>
+    n = o(n²)  
+    Because n grows slower than n²
+  </p>
+
+  <p>
+    Little-o is mainly used in mathematical analysis,
+    not common in interviews.
+  </p>
+
+  <hr>
+
+  <h3>Little-ω Notation (ω)</h3>
+  <p>
+    Little-ω represents a <strong>strict lower bound</strong>.
+    It grows strictly faster than another function.
+  </p>
+
+  <h4>Example</h4>
+  <p>
+    n² = ω(n)
+  </p>
+
+  <p>
+    Used in theoretical computer science.
+  </p>
+
+</section>
+
+<hr>
+
+<section id="brute-force-algorithms">
+
+  <h2>Brute Force Algorithms</h2>
+
+  <p>
+    Brute force algorithms solve a problem by trying
+    <strong>all possible solutions</strong> without optimization.
+  </p>
+
+  <h3>Characteristics</h3>
+  <ul>
+    <li>Simple to understand</li>
+    <li>Easy to implement</li>
+    <li>Inefficient for large inputs</li>
+  </ul>
+
+  <hr>
+
+  <h3>Linear Search</h3>
+
+  <p>
+    Linear search checks each element one by one
+    until the target is found or the list ends.
+  </p>
+
+  <h4>Algorithm Steps</h4>
+  <ol>
+    <li>Start from first element</li>
+    <li>Compare with target</li>
+    <li>If match found → stop</li>
+    <li>If end reached → not found</li>
+  </ol>
+
+  <h4>Example</h4>
+  <pre>
+Array = [10, 20, 30, 40]
+Target = 30
+
+Compare 10 → no
+Compare 20 → no
+Compare 30 → yes
+  </pre>
+
+  <h4>Time Complexity</h4>
+  <ul>
+    <li>Best Case: O(1)</li>
+    <li>Worst Case: O(n)</li>
+    <li>Average Case: O(n)</li>
+  </ul>
+
+  <hr>
+
+  <h3>Naive String Matching</h3>
+
+  <p>
+    Checks for pattern match at every possible position in the text.
+  </p>
+
+  <h4>Example</h4>
+  <pre>
+Text    = ABCDABCD
+Pattern = ABC
+
+Check from index 0 → match
+Check from index 1 → no
+Check from index 4 → match
+  </pre>
+
+  <h4>Time Complexity</h4>
+  <p>
+    Worst Case: O(n × m)
+    where n = text length, m = pattern length
+  </p>
+
+</section>
+
+<hr>
+
+<section id="divide-and-conquer">
+
+  <h2>Divide and Conquer</h2>
+
+  <p>
+    Divide and Conquer works by dividing a problem into smaller
+    subproblems, solving them, and combining their results.
+  </p>
+
+  <h3>Steps</h3>
+  <ul>
+    <li>Divide</li>
+    <li>Conquer</li>
+    <li>Combine</li>
+  </ul>
+
+  <hr>
+
+  <h3>Binary Search</h3>
+
+  <p>
+    Binary search works on sorted arrays by repeatedly
+    dividing the search space in half.
+  </p>
+
+  <h4>Example</h4>
+  <pre>
+Array = [10, 20, 30, 40, 50]
+Target = 40
+
+Mid = 30 → target > 30 → right half
+Mid = 40 → found
+  </pre>
+
+  <h4>Time Complexity</h4>
+  <p>O(log n)</p>
+
+  <hr>
+
+  <h3>Merge Sort</h3>
+
+  <p>
+    Merge sort divides the array into halves,
+    sorts each half, and merges them.
+  </p>
+
+  <h4>Working</h4>
+  <ul>
+    <li>Divide array until single element</li>
+    <li>Merge sorted subarrays</li>
+  </ul>
+
+  <h4>Time Complexity</h4>
+  <p>O(n log n)</p>
+
+  <hr>
+
+  <h3>Quick Sort</h3>
+
+  <p>
+    Quick sort selects a pivot and partitions the array
+    around the pivot.
+  </p>
+
+  <h4>Steps</h4>
+  <ul>
+    <li>Select pivot</li>
+    <li>Elements smaller → left</li>
+    <li>Elements larger → right</li>
+    <li>Recursively sort</li>
+  </ul>
+
+  <h4>Time Complexity</h4>
+  <ul>
+    <li>Best/Average: O(n log n)</li>
+    <li>Worst: O(n²)</li>
+  </ul>
+
+  <hr>
+
+  <h3>Strassen’s Matrix Multiplication</h3>
+
+  <p>
+    Optimized matrix multiplication reducing
+    time complexity compared to standard method.
+  </p>
+
+  <h4>Comparison</h4>
+  <ul>
+    <li>Normal: O(n³)</li>
+    <li>Strassen: O(n<sup>2.81</sup>)</li>
+  </ul>
+
+</section>
+<br>
+
+<section id="greedy-algorithms">
+
+  <h2>Greedy Algorithms</h2>
+
+  <p>
+    A Greedy Algorithm builds a solution step by step by choosing the
+    <strong>locally optimal choice</strong> at each step,
+    hoping it leads to a globally optimal solution.
+  </p>
+
+  <h3>Key Idea</h3>
+  <ul>
+    <li>No backtracking</li>
+    <li>No reconsideration of previous choices</li>
+    <li>Fast and efficient</li>
+  </ul>
+
+  <hr>
+
+  <!-- ================= ACTIVITY SELECTION ================= -->
+
+  <h3>Activity Selection Problem</h3>
+
+  <p>
+    Given activities with start and finish times,
+    select the maximum number of activities
+    such that no activities overlap.
+  </p>
+
+  <h4>Greedy Choice</h4>
+  <p>
+    Always select the activity that finishes earliest.
+  </p>
+
+  <h4>Input</h4>
+  <pre>
+Activity   Start   Finish
+A1           1        3
+A2           2        5
+A3           4        6
+A4           6        7
+A5           5        8
+A6           8        9
+  </pre>
+
+  <h4>Step 1: Sort by Finish Time</h4>
+  <pre>
+A1 (1,3)
+A3 (4,6)
+A4 (6,7)
+A2 (2,5)
+A5 (5,8)
+A6 (8,9)
+  </pre>
+
+  <h4>Step 2: Select First Activity</h4>
+  <p>
+    Select A1 because it finishes earliest.
+  </p>
+
+  <h4>Step 3: Select Next Compatible Activity</h4>
+  <ul>
+    <li>A3 starts at 4 ≥ 3 → select</li>
+    <li>A4 starts at 6 ≥ 6 → select</li>
+    <li>A6 starts at 8 ≥ 7 → select</li>
+  </ul>
+
+  <h4>Final Selected Activities</h4>
+  <pre>
+A1, A3, A4, A6
+  </pre>
+
+  <h4>Time Complexity</h4>
+  <p>O(n log n)</p>
+
+  <hr>
+
+  <!-- ================= FRACTIONAL KNAPSACK ================= -->
+
+  <h3>Fractional Knapsack</h3>
+
+  <p>
+    Given items with weights and profits,
+    maximize profit by allowing <strong>fractions</strong> of items.
+  </p>
+
+  <h4>Greedy Choice</h4>
+  <p>
+    Select items based on highest profit/weight ratio.
+  </p>
+
+  <h4>Input</h4>
+  <pre>
+Item   Weight   Profit
+I1       10        60
+I2       20       100
+I3       30       120
+Capacity = 50
+  </pre>
+
+  <h4>Step 1: Calculate Profit/Weight Ratio</h4>
+  <pre>
+I1 → 6
+I2 → 5
+I3 → 4
+  </pre>
+
+  <h4>Step 2: Sort by Ratio</h4>
+  <pre>
+I1, I2, I3
+  </pre>
+
+  <h4>Step 3: Fill Knapsack</h4>
+  <ul>
+    <li>Take I1 completely → weight = 10, profit = 60</li>
+    <li>Take I2 completely → weight = 30, profit = 160</li>
+    <li>Take 20/30 of I3 → profit = 80</li>
+  </ul>
+
+  <h4>Final Profit</h4>
+  <pre>
+Total Profit = 240
+  </pre>
+
+  <h4>Time Complexity</h4>
+  <p>O(n log n)</p>
+
+  <hr>
+
+  <!-- ================= HUFFMAN CODING ================= -->
+
+  <h3>Huffman Coding</h3>
+
+  <p>
+    Huffman Coding is a lossless data compression algorithm
+    that assigns shorter codes to more frequent characters.
+  </p>
+
+  <h4>Greedy Choice</h4>
+  <p>
+    Always merge the two least frequent characters.
+  </p>
+
+  <h4>Input</h4>
+  <pre>
+Character  Frequency
+A            5
+B            9
+C           12
+D           13
+E           16
+F           45
+  </pre>
+
+  <h4>Step-by-Step Tree Construction</h4>
+  <pre>
+Merge A(5) + B(9) → 14
+Merge C(12) + D(13) → 25
+Merge 14 + E(16) → 30
+Merge 25 + 30 → 55
+Merge F(45) + 55 → Root
+  </pre>
+
+  <h4>Assign Codes</h4>
+  <p>
+    Left = 0, Right = 1
+  </p>
+
+  <h4>Result</h4>
+  <p>
+    Characters with higher frequency get shorter codes.
+  </p>
+
+  <h4>Time Complexity</h4>
+  <p>O(n log n)</p>
+
+  <hr>
+
+  <!-- ================= PRIM ================= -->
+
+  <h3>Prim’s Algorithm</h3>
+
+  <p>
+    Prim’s algorithm finds the <strong>Minimum Spanning Tree</strong>
+    by growing the tree one vertex at a time.
+  </p>
+
+  <h4>Greedy Choice</h4>
+  <p>
+    Always pick the smallest edge connected to the tree.
+  </p>
+
+  <h4>Step-by-Step</h4>
+  <ul>
+    <li>Start with any vertex</li>
+    <li>Select minimum weight edge</li>
+    <li>Add vertex to MST</li>
+    <li>Repeat until all vertices included</li>
+  </ul>
+
+  <h4>Final Output</h4>
+  <p>
+    A tree connecting all vertices with minimum total cost.
+  </p>
+
+  <h4>Time Complexity</h4>
+  <p>O(E log V)</p>
+
+  <hr>
+
+  <!-- ================= KRUSKAL ================= -->
+
+  <h3>Kruskal’s Algorithm</h3>
+
+  <p>
+    Kruskal’s algorithm builds MST by selecting
+    the smallest edge that does not form a cycle.
+  </p>
+
+  <h4>Greedy Choice</h4>
+  <p>
+    Always pick the minimum weight edge globally.
+  </p>
+
+  <h4>Step-by-Step</h4>
+  <ul>
+    <li>Sort edges by weight</li>
+    <li>Pick smallest edge</li>
+    <li>Check for cycle</li>
+    <li>If no cycle → add to MST</li>
+    <li>Repeat until MST has V-1 edges</li>
+  </ul>
+
+  <h4>Difference from Prim</h4>
+  <ul>
+    <li>Prim → vertex-based</li>
+    <li>Kruskal → edge-based</li>
+  </ul>
+
+  <h4>Time Complexity</h4>
+  <p>O(E log E)</p>
+
+</section>
+
+<br>
+
+<section id="dynamic-programming">
+
+  <h2>Dynamic Programming</h2>
+
+  <p>
+    Dynamic Programming (DP) is an algorithmic technique used to solve
+    problems by breaking them into smaller overlapping subproblems,
+    solving each subproblem once, and storing the result for reuse.
+  </p>
+
+  <h3>When to Use Dynamic Programming</h3>
+  <ul>
+    <li>Overlapping Subproblems</li>
+    <li>Optimal Substructure</li>
+  </ul>
+
+  <hr>
+
+  <h3>Introduction to Dynamic Programming</h3>
+
+  <p>
+    DP avoids repeated computation by storing intermediate results.
+    This significantly improves performance over naive recursion.
+  </p>
+
+  <h4>Example (Without DP)</h4>
+  <pre>
+Fibonacci(5)
+= Fibonacci(4) + Fibonacci(3)
+  </pre>
+
+  <p>
+    Same Fibonacci values are recalculated many times → inefficient.
+  </p>
+
+  <hr>
+
+  <h3>Memoization (Top-Down DP)</h3>
+
+  <p>
+    Memoization uses recursion and stores results of subproblems
+    in a cache (array or map).
+  </p>
+
+  <h4>Working</h4>
+  <ol>
+    <li>Check if result already exists</li>
+    <li>If yes → return it</li>
+    <li>If no → compute and store</li>
+  </ol>
+
+  <h4>Example: Fibonacci (Memoization)</h4>
+  <pre>
+fib(5)
+→ fib(4) + fib(3)
+→ stored results reused
+  </pre>
+
+  <p>
+    Each Fibonacci number is computed only once.
+  </p>
+
+  <hr>
+
+  <h3>Tabulation (Bottom-Up DP)</h3>
+
+  <p>
+    Tabulation builds the solution iteratively from base cases.
+  </p>
+
+  <h4>Working</h4>
+  <ol>
+    <li>Initialize base cases</li>
+    <li>Fill table step by step</li>
+    <li>Final answer at last index</li>
+  </ol>
+
+  <h4>Example: Fibonacci (Tabulation)</h4>
+  <pre>
+Index:   0  1  2  3  4  5
+Value:   0  1  1  2  3  5
+  </pre>
+
+  <hr>
+
+  <h3>Fibonacci Series</h3>
+
+  <p>
+    Fibonacci follows the relation:
+    F(n) = F(n-1) + F(n-2)
+  </p>
+
+  <h4>Step-by-Step Table</h4>
+  <pre>
+n = 6
+
+dp[0] = 0
+dp[1] = 1
+dp[2] = 1
+dp[3] = 2
+dp[4] = 3
+dp[5] = 5
+dp[6] = 8
+  </pre>
+
+  <h4>Final Answer</h4>
+  <p>Fibonacci(6) = 8</p>
+
+  <hr>
+
+  <h3>Longest Common Subsequence (LCS)</h3>
+
+  <p>
+    LCS finds the longest sequence that appears in both strings
+    in the same order (not necessarily contiguous).
+  </p>
+
+  <h4>Input</h4>
+  <pre>
+X = ABCDGH
+Y = AEDFHR
+  </pre>
+
+  <h4>DP Table Meaning</h4>
+  <p>
+    dp[i][j] = length of LCS of X[0..i-1] and Y[0..j-1]
+  </p>
+
+  <h4>DP Relation</h4>
+  <pre>
+If X[i-1] == Y[j-1]
+  dp[i][j] = 1 + dp[i-1][j-1]
+Else
+  dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+  </pre>
+
+  <h4>Final Answer</h4>
+  <p>LCS length = 3 (ADH)</p>
+
+  <hr>
+
+  <h3>Longest Increasing Subsequence (LIS)</h3>
+
+  <p>
+    LIS finds the longest subsequence where elements are strictly increasing.
+  </p>
+
+  <h4>Input</h4>
+  <pre>
+Array = [10, 9, 2, 5, 3, 7, 101, 18]
+  </pre>
+
+  <h4>DP Meaning</h4>
+  <p>
+    dp[i] = length of LIS ending at index i
+  </p>
+
+  <h4>Step-by-Step</h4>
+  <pre>
+dp = [1,1,1,2,2,3,4,4]
+  </pre>
+
+  <h4>Final Answer</h4>
+  <p>LIS length = 4 (2,3,7,101)</p>
+
+  <hr>
+
+  <h3>0/1 Knapsack</h3>
+
+  <p>
+    Choose items to maximize profit without exceeding capacity.
+    Each item can be chosen at most once.
+  </p>
+
+  <h4>Input</h4>
+  <pre>
+Weights = [1, 3, 4, 5]
+Values  = [1, 4, 5, 7]
+Capacity = 7
+  </pre>
+
+  <h4>DP Meaning</h4>
+  <p>
+    dp[i][w] = max value using first i items with capacity w
+  </p>
+
+  <h4>DP Relation</h4>
+  <pre>
+If weight[i] ≤ w:
+  dp[i][w] = max(
+    value[i] + dp[i-1][w-weight[i]],
+    dp[i-1][w]
+  )
+Else:
+  dp[i][w] = dp[i-1][w]
+  </pre>
+
+  <h4>Final Answer</h4>
+  <p>Maximum value = 9</p>
+
+  <hr>
+
+  <h3>Matrix Chain Multiplication</h3>
+
+  <p>
+    Finds the minimum number of multiplications needed
+    to multiply matrices.
+  </p>
+
+  <h4>Input</h4>
+  <pre>
+Dimensions = [1, 2, 3, 4]
+  </pre>
+
+  <h4>DP Meaning</h4>
+  <p>
+    dp[i][j] = minimum cost to multiply matrices i to j
+  </p>
+
+  <h4>Final Answer</h4>
+  <p>Minimum multiplications = 18</p>
+
+  <hr>
+
+  <h3>Coin Change Problem</h3>
+
+  <p>
+    Find the minimum number of coins required
+    to make a given amount.
+  </p>
+
+  <h4>Input</h4>
+  <pre>
+Coins = [1, 2, 5]
+Amount = 11
+  </pre>
+
+  <h4>DP Meaning</h4>
+  <p>
+    dp[i] = minimum coins needed for amount i
+  </p>
+
+  <h4>DP Relation</h4>
+  <pre>
+dp[i] = min(dp[i - coin] + 1)
+  </pre>
+
+  <h4>Step-by-Step</h4>
+  <pre>
+dp[11] = 3 (5 + 5 + 1)
+  </pre>
+
+  <h4>Final Answer</h4>
+  <p>Minimum coins = 3</p>
+
+</section>
+
+<br>
+
+<section id="backtracking">
+
+  <h2>Backtracking</h2>
+
+  <p>
+    Backtracking is a problem-solving technique where we build a solution
+    step by step, and <strong>remove (backtrack)</strong> a step as soon as
+    we realize it cannot lead to a valid solution.
+  </p>
+
+  <h3>Core Idea</h3>
+  <ul>
+    <li>Try a choice</li>
+    <li>Go deeper (recursion)</li>
+    <li>If invalid → undo the choice</li>
+    <li>Try next option</li>
+  </ul>
+
+  <h3>When to Use Backtracking</h3>
+  <ul>
+    <li>Combinational problems</li>
+    <li>Constraint satisfaction problems</li>
+    <li>When brute force is too slow</li>
+  </ul>
+
+  <hr>
+
+  <!-- ================= N-QUEENS ================= -->
+
+  <h3>N-Queens Problem</h3>
+
+  <p>
+    Place N queens on an N×N chessboard such that
+    no two queens attack each other.
+  </p>
+
+  <h4>Constraints</h4>
+  <ul>
+    <li>No two queens in the same row</li>
+    <li>No two queens in the same column</li>
+    <li>No two queens on the same diagonal</li>
+  </ul>
+
+  <h4>Backtracking Strategy</h4>
+  <ol>
+    <li>Place queen row by row</li>
+    <li>Try each column in current row</li>
+    <li>Check if safe</li>
+    <li>If safe → place and recurse</li>
+    <li>If not → try next column</li>
+    <li>If no column works → backtrack</li>
+  </ol>
+
+  <h4>Example: 4-Queens</h4>
+  <pre>
+Step 1: Place Q at (0,1)
+Step 2: Place Q at (1,3)
+Step 3: Place Q at (2,0)
+Step 4: Place Q at (3,2)
+  </pre>
+
+  <h4>Board Representation</h4>
+  <pre>
+. Q . .
+. . . Q
+Q . . .
+. . Q .
+  </pre>
+
+  <h4>Final Answer</h4>
+  <p>All valid arrangements are found using backtracking.</p>
+
+  <hr>
+
+  <!-- ================= SUDOKU ================= -->
+
+  <h3>Sudoku Solver</h3>
+
+  <p>
+    Fill a 9×9 Sudoku board so that each row, column,
+    and 3×3 subgrid contains digits 1–9 exactly once.
+  </p>
+
+  <h4>Backtracking Strategy</h4>
+  <ol>
+    <li>Find an empty cell</li>
+    <li>Try digits 1 to 9</li>
+    <li>Check if valid</li>
+    <li>If valid → place digit and recurse</li>
+    <li>If failure → remove digit (backtrack)</li>
+  </ol>
+
+  <h4>Key Insight</h4>
+  <p>
+    As soon as a digit violates Sudoku rules,
+    recursion stops and backtracking happens.
+  </p>
+
+  <h4>Why Backtracking Works Here</h4>
+  <ul>
+    <li>Huge number of combinations</li>
+    <li>Constraints prune invalid paths early</li>
+  </ul>
+
+  <hr>
+
+  <!-- ================= SUBSET GENERATION ================= -->
+
+  <h3>Subset Generation</h3>
+
+  <p>
+    Generate all possible subsets (power set) of a given set.
+  </p>
+
+  <h4>Example Input</h4>
+  <pre>
+Set = [1, 2]
+  </pre>
+
+  <h4>Decision Tree</h4>
+  <p>
+    For each element, we have two choices:
+    include it or exclude it.
+  </p>
+
+  <h4>Step-by-Step</h4>
+  <pre>
+[]
+Include 1 → [1]
+  Include 2 → [1,2]
+  Exclude 2 → [1]
+Exclude 1 → []
+  Include 2 → [2]
+  Exclude 2 → []
+  </pre>
+
+  <h4>Final Subsets</h4>
+  <pre>
+[], [1], [2], [1,2]
+  </pre>
+
+  <h4>Total Subsets</h4>
+  <p>2ⁿ subsets for n elements</p>
+
+  <hr>
+
+  <!-- ================= PERMUTATION ================= -->
+
+  <h3>Permutation Generation</h3>
+
+  <p>
+    Generate all possible arrangements of elements.
+  </p>
+
+  <h4>Example Input</h4>
+  <pre>
+Array = [1, 2, 3]
+  </pre>
+
+  <h4>Backtracking Strategy</h4>
+  <ol>
+    <li>Fix one element at a position</li>
+    <li>Swap with remaining elements</li>
+    <li>Recurse for next position</li>
+    <li>Undo swap (backtrack)</li>
+  </ol>
+
+  <h4>Step-by-Step</h4>
+  <pre>
+[1,2,3]
+→ fix 1 → [1,2,3], [1,3,2]
+→ fix 2 → [2,1,3], [2,3,1]
+→ fix 3 → [3,1,2], [3,2,1]
+  </pre>
+
+  <h4>Final Permutations</h4>
+  <pre>
+123, 132, 213, 231, 312, 321
+  </pre>
+
+  <h4>Total Permutations</h4>
+  <p>n! permutations</p>
+
+  <hr>
+
+  <h3>Why Backtracking is Powerful</h3>
+  <ul>
+    <li>Eliminates invalid solutions early</li>
+    <li>Explores solution space efficiently</li>
+    <li>Guarantees correct solution if exists</li>
+  </ul>
+
+</section>
+
+<br>
+
+<section id="searching-algorithms">
+
+  <h2>Searching Algorithms</h2>
+
+  <p>
+    Searching algorithms are used to find the position of a target element
+    in a collection (array, list, etc).
+  </p>
+
+  <hr>
+
+  <!-- ================= LINEAR SEARCH ================= -->
+
+  <h3>Linear Search</h3>
+
+  <p>
+    Linear Search checks each element one by one until the target is found
+    or the list ends.
+  </p>
+
+  <h4>How It Works</h4>
+  <ol>
+    <li>Start from first element</li>
+    <li>Compare with target</li>
+    <li>If match → stop</li>
+    <li>If not → move to next element</li>
+  </ol>
+
+  <h4>Example</h4>
+  <pre>
+Array: [10, 20, 30, 40, 50]
+Target: 40
+  </pre>
+
+  <h4>Step-by-Step Execution</h4>
+  <pre>
+Compare 10 → not match
+Compare 20 → not match
+Compare 30 → not match
+Compare 40 → match found
+  </pre>
+
+  <h4>Result</h4>
+  <p>Target found at index 3</p>
+
+  <h4>Time Complexity</h4>
+  <p>Best: O(1), Worst: O(n)</p>
+
+  <h4>When to Use</h4>
+  <ul>
+    <li>Unsorted data</li>
+    <li>Small datasets</li>
+  </ul>
+
+  <hr>
+
+  <!-- ================= BINARY SEARCH ================= -->
+
+  <h3>Binary Search</h3>
+
+  <p>
+    Binary Search repeatedly divides the sorted array into halves.
+  </p>
+
+  <h4>Precondition</h4>
+  <p>Array must be sorted</p>
+
+  <h4>How It Works</h4>
+  <ol>
+    <li>Find middle element</li>
+    <li>Compare with target</li>
+    <li>If equal → found</li>
+    <li>If smaller → search left half</li>
+    <li>If larger → search right half</li>
+  </ol>
+
+  <h4>Example</h4>
+  <pre>
+Array: [10, 20, 30, 40, 50]
+Target: 30
+  </pre>
+
+  <h4>Step-by-Step Execution</h4>
+  <pre>
+Middle = 30 → match found
+  </pre>
+
+  <h4>Result</h4>
+  <p>Target found at index 2</p>
+
+  <h4>Time Complexity</h4>
+  <p>O(log n)</p>
+
+  <h4>Why Faster?</h4>
+  <p>
+    Each step reduces search space by half.
+  </p>
+
+  <hr>
+
+  <!-- ================= JUMP SEARCH ================= -->
+
+  <h3>Jump Search</h3>
+
+  <p>
+    Jump Search jumps ahead by fixed steps instead of checking every element.
+  </p>
+
+  <h4>Precondition</h4>
+  <p>Array must be sorted</p>
+
+  <h4>Jump Size</h4>
+  <p>√n (square root of array size)</p>
+
+  <h4>Example</h4>
+  <pre>
+Array: [10,20,30,40,50,60,70,80,90]
+Target: 60
+Jump size: 3
+  </pre>
+
+  <h4>Step-by-Step Execution</h4>
+  <pre>
+Jump to index 3 → 40
+Jump to index 6 → 70 (greater than target)
+Linear search between index 3 and 6
+Check 50 → no
+Check 60 → found
+  </pre>
+
+  <h4>Result</h4>
+  <p>Target found at index 5</p>
+
+  <h4>Time Complexity</h4>
+  <p>O(√n)</p>
+
+  <hr>
+
+  <!-- ================= INTERPOLATION SEARCH ================= -->
+
+  <h3>Interpolation Search</h3>
+
+  <p>
+    Interpolation Search estimates the position of the target using values.
+  </p>
+
+  <h4>Best For</h4>
+  <ul>
+    <li>Uniformly distributed sorted data</li>
+  </ul>
+
+  <h4>Position Formula</h4>
+  <pre>
+pos = low + ((target - arr[low]) * (high - low)) / (arr[high] - arr[low])
+  </pre>
+
+  <h4>Example</h4>
+  <pre>
+Array: [10,20,30,40,50,60,70]
+Target: 50
+  </pre>
+
+  <h4>Step-by-Step</h4>
+  <pre>
+Estimated position = index 4
+Check arr[4] → 50 found
+  </pre>
+
+  <h4>Time Complexity</h4>
+  <p>Best: O(log log n), Worst: O(n)</p>
+
+  <h4>Why Faster Than Binary?</h4>
+  <p>
+    It predicts closer position instead of middle.
+  </p>
+
+  <hr>
+
+  <!-- ================= EXPONENTIAL SEARCH ================= -->
+
+  <h3>Exponential Search</h3>
+
+  <p>
+    Exponential Search finds the range where the target exists,
+    then applies Binary Search.
+  </p>
+
+  <h4>How It Works</h4>
+  <ol>
+    <li>Check index 1</li>
+    <li>Double index: 2, 4, 8, 16...</li>
+    <li>Stop when value exceeds target</li>
+    <li>Apply Binary Search in found range</li>
+  </ol>
+
+  <h4>Example</h4>
+  <pre>
+Array: [10,20,30,40,50,60,70,80]
+Target: 70
+  </pre>
+
+  <h4>Step-by-Step</h4>
+  <pre>
+Index 1 → 20
+Index 2 → 30
+Index 4 → 50
+Index 8 → out of range
+Binary search between index 4 and 8
+Find 70
+  </pre>
+
+  <h4>Time Complexity</h4>
+  <p>O(log n)</p>
+
+  <hr>
+
+  <h3>Comparison Summary</h3>
+
+  <pre>
+Linear        → O(n)
+Binary        → O(log n)
+Jump          → O(√n)
+Interpolation → O(log log n)
+Exponential   → O(log n)
+  </pre>
+
+</section>
+
+<br>
+
+<section id="sorting-algorithms">
+
+<h2>Sorting Algorithms</h2>
+
+<p>
+Sorting algorithms arrange data in a specific order (ascending or descending).
+Sorting improves searching, data analysis, and performance.
+</p>
+
+<hr>
+
+<!-- ================= BUBBLE SORT ================= -->
+
+<h3>Bubble Sort</h3>
+
+<p>
+Bubble Sort repeatedly compares adjacent elements and swaps them
+if they are in the wrong order.
+Largest elements move to the end like bubbles.
+</p>
+
+<h4>Example</h4>
+<pre>
+Array: [5, 3, 8, 4, 2]
+</pre>
+
+<h4>Step-by-Step Execution</h4>
+<pre>
+Pass 1:
+(5,3) → swap → [3,5,8,4,2]
+(5,8) → no swap
+(8,4) → swap → [3,5,4,8,2]
+(8,2) → swap → [3,5,4,2,8]
+
+Pass 2:
+(3,5) → no
+(5,4) → swap → [3,4,5,2,8]
+(5,2) → swap → [3,4,2,5,8]
+
+Pass 3:
+(3,4) → no
+(4,2) → swap → [3,2,4,5,8]
+
+Pass 4:
+(3,2) → swap → [2,3,4,5,8]
+</pre>
+
+<h4>Final Result</h4>
+<p>[2,3,4,5,8]</p>
+
+<h4>Time Complexity</h4>
+<p>Worst & Average: O(n²), Best: O(n)</p>
+
+<hr>
+
+<!-- ================= SELECTION SORT ================= -->
+
+<h3>Selection Sort</h3>
+
+<p>
+Selection Sort selects the minimum element and places it at the correct position.
+</p>
+
+<h4>Example</h4>
+<pre>
+Array: [64, 25, 12, 22, 11]
+</pre>
+
+<h4>Step-by-Step</h4>
+<pre>
+Find min → 11 → swap with 64
+[11,25,12,22,64]
+
+Find min → 12 → swap with 25
+[11,12,25,22,64]
+
+Find min → 22 → swap with 25
+[11,12,22,25,64]
+</pre>
+
+<h4>Final Result</h4>
+<p>[11,12,22,25,64]</p>
+
+<h4>Time Complexity</h4>
+<p>O(n²)</p>
+
+<hr>
+
+<!-- ================= INSERTION SORT ================= -->
+
+<h3>Insertion Sort</h3>
+
+<p>
+Insertion Sort builds sorted array one element at a time.
+Works like inserting cards in hand.
+</p>
+
+<h4>Example</h4>
+<pre>
+Array: [8,3,5,2]
+</pre>
+
+<h4>Step-by-Step</h4>
+<pre>
+Start with 8 (sorted)
+
+Insert 3 → shift 8 → [3,8]
+Insert 5 → shift 8 → [3,5,8]
+Insert 2 → shift all → [2,3,5,8]
+</pre>
+
+<h4>Final Result</h4>
+<p>[2,3,5,8]</p>
+
+<h4>Best Use</h4>
+<p>Small or nearly sorted arrays</p>
+
+<hr>
+
+<!-- ================= MERGE SORT ================= -->
+
+<h3>Merge Sort</h3>
+
+<p>
+Merge Sort uses Divide and Conquer.
+Array is divided until single elements then merged in sorted order.
+</p>
+
+<h4>Example</h4>
+<pre>
+Array: [38,27,43,3,9,82,10]
+</pre>
+
+<h4>Divide Phase</h4>
+<pre>
+[38,27,43,3] | [9,82,10]
+[38,27] [43,3] | [9,82] [10]
+[38] [27] [43] [3] [9] [82] [10]
+</pre>
+
+<h4>Merge Phase</h4>
+<pre>
+[27,38]
+[3,43]
+[27,38] + [3,43] → [3,27,38,43]
+[9,10,82]
+Final merge → [3,9,10,27,38,43,82]
+</pre>
+
+<h4>Time Complexity</h4>
+<p>O(n log n)</p>
+
+<hr>
+
+<!-- ================= QUICK SORT ================= -->
+
+<h3>Quick Sort</h3>
+
+<p>
+Quick Sort selects a pivot and partitions elements
+less than pivot to left and greater to right.
+</p>
+
+<h4>Example</h4>
+<pre>
+Array: [10,80,30,90,40]
+Pivot: 40
+</pre>
+
+<h4>Step-by-Step</h4>
+<pre>
+Left: [10,30]
+Pivot: 40
+Right: [80,90]
+
+Recursively sort left & right
+Final → [10,30,40,80,90]
+</pre>
+
+<h4>Time Complexity</h4>
+<p>Best & Avg: O(n log n), Worst: O(n²)</p>
+
+<hr>
+
+<!-- ================= HEAP SORT ================= -->
+
+<h3>Heap Sort</h3>
+
+<p>
+Heap Sort uses Binary Heap (Max Heap).
+Largest element always at root.
+</p>
+
+<h4>Steps</h4>
+<ol>
+  <li>Build Max Heap</li>
+  <li>Swap root with last</li>
+  <li>Reduce heap size</li>
+  <li>Heapify</li>
+</ol>
+
+<h4>Final Result</h4>
+<p>Sorted array obtained by repeated extraction</p>
+
+<h4>Time Complexity</h4>
+<p>O(n log n)</p>
+
+<hr>
+
+<!-- ================= COUNTING SORT ================= -->
+
+<h3>Counting Sort</h3>
+
+<p>
+Counting Sort counts frequency of elements.
+Does not use comparisons.
+</p>
+
+<h4>Example</h4>
+<pre>
+Array: [4,2,2,8,3,3,1]
+Count: [1,2,2,1,0,0,0,1]
+</pre>
+
+<h4>Final Result</h4>
+<p>[1,2,2,3,3,4,8]</p>
+
+<h4>Use Case</h4>
+<p>Small integer range</p>
+
+<hr>
+
+<!-- ================= RADIX SORT ================= -->
+
+<h3>Radix Sort</h3>
+
+<p>
+Radix Sort sorts numbers digit by digit using Counting Sort.
+</p>
+
+<h4>Example</h4>
+<pre>
+Array: [170,45,75,90,802,24,2,66]
+</pre>
+
+<h4>Steps</h4>
+<pre>
+Sort by units → tens → hundreds
+Final → [2,24,45,66,75,90,170,802]
+</pre>
+
+<hr>
+
+<!-- ================= BUCKET SORT ================= -->
+
+<h3>Bucket Sort</h3>
+
+<p>
+Bucket Sort distributes elements into buckets,
+sorts each bucket, then merges.
+</p>
+
+<h4>Example</h4>
+<pre>
+Input: [0.42,0.32,0.33,0.52,0.37,0.47]
+Buckets created and sorted individually
+</pre>
+
+<h4>Final Result</h4>
+<p>[0.32,0.33,0.37,0.42,0.47,0.52]</p>
+
+<hr>
+
+<h3>Sorting Comparison Summary</h3>
+
+<pre>
+Bubble     → O(n²)
+Selection  → O(n²)
+Insertion  → O(n²)
+Merge      → O(n log n)
+Quick      → O(n log n)
+Heap       → O(n log n)
+Counting   → O(n+k)
+Radix      → O(d(n+k))
+Bucket     → O(n+k)
+</pre>
+
+</section>
+
+<br>
+
+<section id="string-algorithms">
+
+<h2>String Algorithms</h2>
+
+<p>
+String algorithms are used to search a pattern inside a text efficiently.
+</p>
+
+<hr>
+
+<!-- ================= NAIVE STRING MATCHING ================= -->
+
+<h3>Naive String Matching</h3>
+
+<p>
+Naive string matching checks the pattern at every possible position
+in the text.
+</p>
+
+<h4>Text and Pattern</h4>
+<pre>
+Text    = "ABABCABAB"
+Pattern = "ABAB"
+</pre>
+
+<h4>How It Works</h4>
+<ol>
+  <li>Align pattern with text start</li>
+  <li>Compare characters one by one</li>
+  <li>If mismatch → shift pattern by one</li>
+</ol>
+
+<h4>Step-by-Step Execution</h4>
+<pre>
+Index 0:
+ABAB
+ABAB  → match found
+
+Index 1:
+ BABC
+ ABAB → mismatch
+
+Index 2:
+  ABAB
+  ABAB → match found
+</pre>
+
+<h4>Result</h4>
+<p>Pattern found at index 0 and 2</p>
+
+<h4>Time Complexity</h4>
+<p>Worst case: O(n × m)</p>
+
+<hr>
+
+<!-- ================= KMP ALGORITHM ================= -->
+
+<h3>KMP (Knuth-Morris-Pratt) Algorithm</h3>
+
+<p>
+KMP avoids unnecessary comparisons by using prefix information.
+</p>
+
+<h4>Main Idea</h4>
+<p>
+When mismatch occurs, do not restart from beginning.
+Use LPS array.
+</p>
+
+<h4>LPS (Longest Prefix Suffix)</h4>
+<pre>
+Pattern = ABAB
+LPS     = [0,0,1,2]
+</pre>
+
+<h4>Why LPS Works</h4>
+<p>
+It stores longest prefix which is also suffix.
+</p>
+
+<h4>Step-by-Step Matching</h4>
+<pre>
+Text:    ABABCABAB
+Pattern: ABAB
+
+Compare A=A
+Compare B=B
+Compare A=A
+Compare B=B → match
+</pre>
+
+<h4>Result</h4>
+<p>Pattern found efficiently without backtracking</p>
+
+<h4>Time Complexity</h4>
+<p>O(n + m)</p>
+
+<hr>
+
+<!-- ================= RABIN-KARP ================= -->
+
+<h3>Rabin-Karp Algorithm</h3>
+
+<p>
+Rabin-Karp uses hashing to compare pattern with substrings.
+</p>
+
+<h4>Key Concept</h4>
+<p>
+Compare hash values instead of characters.
+</p>
+
+<h4>Example</h4>
+<pre>
+Text    = "GEEKS FOR GEEKS"
+Pattern = "GEEK"
+</pre>
+
+<h4>Step-by-Step</h4>
+<pre>
+Hash(pattern) = Hash(text[0..3]) → match
+Verify characters → match
+</pre>
+
+<h4>Handling Collision</h4>
+<p>
+If hash matches but strings differ, it's a collision.
+Character check resolves it.
+</p>
+
+<h4>Time Complexity</h4>
+<p>Average: O(n+m), Worst: O(n×m)</p>
+
+<hr>
+
+<!-- ================= Z ALGORITHM ================= -->
+
+<h3>Z Algorithm</h3>
+
+<p>
+Z Algorithm computes array where each position stores
+length of substring matching prefix.
+</p>
+
+<h4>Combined String</h4>
+<pre>
+Pattern + "$" + Text
+ABAB$ABABCABAB
+</pre>
+
+<h4>Z Array Meaning</h4>
+<p>
+Z[i] = number of characters matching prefix from position i
+</p>
+
+<h4>Step-by-Step</h4>
+<pre>
+Z values computed
+Where Z[i] = pattern length → match found
+</pre>
+
+<h4>Result</h4>
+<p>Pattern found using Z values</p>
+
+<h4>Time Complexity</h4>
+<p>O(n + m)</p>
+
+<hr>
+
+<h3>Comparison Summary</h3>
+
+<pre>
+Naive      → O(n×m)
+KMP        → O(n+m)
+Rabin-Karp → O(n+m) average
+Z Algo     → O(n+m)
+</pre>
+
+</section>
+
+<br>
+
+<section id="graph-algorithms">
+
+<h2>Graph Algorithms</h2>
+
+<p>
+A graph consists of vertices (nodes) and edges (connections).
+Graphs can be directed or undirected, weighted or unweighted.
+</p>
+
+<hr>
+
+<!-- ================= BFS ================= -->
+
+<h3>Breadth First Search (BFS)</h3>
+
+<p>
+BFS explores a graph level by level starting from a source node.
+It uses a Queue.
+</p>
+
+<h4>Data Structure Used</h4>
+<p>Queue</p>
+
+<h4>Graph Example</h4>
+<pre>
+A -- B -- C
+|    |
+D -- E
+</pre>
+
+<h4>Steps</h4>
+<ol>
+  <li>Start from source node</li>
+  <li>Mark it visited</li>
+  <li>Push into queue</li>
+  <li>Visit neighbors level-wise</li>
+</ol>
+
+<h4>Step-by-Step Execution (Start = A)</h4>
+<pre>
+Queue: A
+Visit A → enqueue B, D
+
+Queue: B, D
+Visit B → enqueue C, E
+
+Queue: D, C, E
+Visit D → no new nodes
+
+Queue: C, E
+Visit C → no new nodes
+Visit E → done
+</pre>
+
+<h4>Traversal Order</h4>
+<p>A → B → D → C → E</p>
+
+<h4>Time Complexity</h4>
+<p>O(V + E)</p>
+
+<hr>
+
+<!-- ================= DFS ================= -->
+
+<h3>Depth First Search (DFS)</h3>
+
+<p>
+DFS explores as deep as possible before backtracking.
+Uses Stack or Recursion.
+</p>
+
+<h4>Data Structure Used</h4>
+<p>Stack / Recursion</p>
+
+<h4>Step-by-Step Execution (Start = A)</h4>
+<pre>
+Visit A
+Go to B
+Go to C
+Backtrack
+Go to E
+Backtrack
+Go to D
+</pre>
+
+<h4>Traversal Order</h4>
+<p>A → B → C → E → D</p>
+
+<h4>Time Complexity</h4>
+<p>O(V + E)</p>
+
+<h4>Uses</h4>
+<ul>
+  <li>Cycle detection</li>
+  <li>Topological sort</li>
+</ul>
+
+<hr>
+
+<!-- ================= SHORTEST PATH ================= -->
+
+<h3>Shortest Path Algorithms</h3>
+
+<p>
+Shortest path algorithms find minimum distance between nodes.
+</p>
+
+<h4>Types</h4>
+<ul>
+  <li>Single source → single destination</li>
+  <li>Single source → all nodes</li>
+  <li>All pairs shortest path</li>
+</ul>
+
+<hr>
+
+<!-- ================= DIJKSTRA ================= -->
+
+<h3>Dijkstra’s Algorithm</h3>
+
+<p>
+Finds shortest path from a source node to all other nodes
+in a graph with non-negative weights.
+</p>
+
+<h4>Data Structure Used</h4>
+<p>Priority Queue</p>
+
+<h4>Example Graph</h4>
+<pre>
+A --1--> B
+A --4--> C
+B --2--> C
+C --1--> D
+</pre>
+
+<h4>Step-by-Step</h4>
+<pre>
+Initialize distances:
+A=0, B=∞, C=∞, D=∞
+
+Visit A:
+Update B=1, C=4
+
+Visit B:
+Update C=min(4,1+2)=3
+
+Visit C:
+Update D=4
+
+Done
+</pre>
+
+<h4>Final Distances</h4>
+<p>A=0, B=1, C=3, D=4</p>
+
+<h4>Limitation</h4>
+<p>Does NOT work with negative weights</p>
+
+<hr>
+
+<!-- ================= BELLMAN FORD ================= -->
+
+<h3>Bellman-Ford Algorithm</h3>
+
+<p>
+Finds shortest paths even with negative weights.
+</p>
+
+<h4>Main Idea</h4>
+<p>
+Relax all edges V-1 times.
+</p>
+
+<h4>Step-by-Step</h4>
+<pre>
+Repeat relaxation for all edges
+If distance improves → update
+After V-1 iterations → shortest path found
+</pre>
+
+<h4>Negative Cycle Detection</h4>
+<p>
+If relaxation still possible → negative cycle exists
+</p>
+
+<h4>Time Complexity</h4>
+<p>O(V × E)</p>
+
+<hr>
+
+<!-- ================= FLOYD WARSHALL ================= -->
+
+<h3>Floyd-Warshall Algorithm</h3>
+
+<p>
+Finds shortest paths between ALL pairs of vertices.
+</p>
+
+<h4>Approach</h4>
+<p>Dynamic Programming</p>
+
+<h4>Core Formula</h4>
+<pre>
+dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+</pre>
+
+<h4>Steps</h4>
+<ol>
+  <li>Initialize distance matrix</li>
+  <li>Use each vertex as intermediate</li>
+  <li>Update shortest paths</li>
+</ol>
+
+<h4>Time Complexity</h4>
+<p>O(V³)</p>
+
+<hr>
+
+<!-- ================= TOPOLOGICAL SORT ================= -->
+
+<h3>Topological Sorting</h3>
+
+<p>
+Linear ordering of vertices such that
+for every directed edge u → v, u comes before v.
+</p>
+
+<h4>Applicable Only For</h4>
+<p>Directed Acyclic Graph (DAG)</p>
+
+<h4>Methods</h4>
+<ul>
+  <li>DFS based</li>
+  <li>Kahn’s Algorithm (BFS)</li>
+</ul>
+
+<h4>Example</h4>
+<pre>
+A → B → C
+A → D
+</pre>
+
+<h4>Result</h4>
+<p>A → D → B → C</p>
+
+<h4>Use Case</h4>
+<p>Task scheduling, dependency resolution</p>
+
+<hr>
+
+<!-- ================= SCC ================= -->
+
+<h3>Strongly Connected Components</h3>
+
+<p>
+A strongly connected component is a group of vertices
+where each vertex is reachable from every other.
+</p>
+
+<h4>Algorithms</h4>
+<ul>
+  <li>Kosaraju’s Algorithm</li>
+  <li>Tarjan’s Algorithm</li>
+</ul>
+
+<h4>Kosaraju’s Steps</h4>
+<ol>
+  <li>Perform DFS and store finish order</li>
+  <li>Reverse graph</li>
+  <li>DFS in reverse finish order</li>
+</ol>
+
+<h4>Result</h4>
+<p>Each DFS tree is one SCC</p>
+
+<hr>
+
+<h3>Graph Algorithm Comparison</h3>
+
+<pre>
+BFS            → Level-wise traversal
+DFS            → Depth-wise traversal
+Dijkstra       → No negative edges
+Bellman-Ford  → Handles negative edges
+Floyd-Warshall→ All pairs shortest path
+Topological   → DAG ordering
+SCC            → Cycle components
+</pre>
+
+</section>
+
+<br>
+
+<section id="randomized-approximation-algorithms">
+
+<!-- ================= RANDOMIZED ALGORITHMS ================= -->
+
+<h2>Randomized Algorithms</h2>
+
+<p>
+Randomized algorithms use random numbers at some point
+to make decisions during execution.
+The output or running time may depend on randomness.
+</p>
+
+<h4>Why Randomized Algorithms?</h4>
+<ul>
+  <li>Simple implementation</li>
+  <li>Good average performance</li>
+  <li>Avoid worst-case scenarios</li>
+</ul>
+
+<hr>
+
+<!-- ================= LAS VEGAS ================= -->
+
+<h3>Las Vegas Algorithms</h3>
+
+<p>
+Las Vegas algorithms always produce the correct answer.
+Randomness affects only the running time, not correctness.
+</p>
+
+<h4>Key Properties</h4>
+<ul>
+  <li>Answer is always correct</li>
+  <li>Execution time is random</li>
+</ul>
+
+<h4>General Working</h4>
+<ol>
+  <li>Random choice is made</li>
+  <li>Algorithm checks correctness</li>
+  <li>If condition fails → repeat</li>
+</ol>
+
+<h4>Example: Randomized Quick Sort</h4>
+
+<p>
+Pivot is chosen randomly instead of fixed position.
+</p>
+
+<h4>Step-by-Step</h4>
+<pre>
+Array: [10, 7, 8, 9, 1, 5]
+Random pivot selected: 8
+Partition array
+Recursively sort subarrays
+</pre>
+
+<h4>Why It Works</h4>
+<p>
+Random pivot avoids worst-case input patterns.
+</p>
+
+<h4>Guarantee</h4>
+<p>
+Result is always a correctly sorted array.
+</p>
+
+<h4>Expected Time Complexity</h4>
+<p>O(n log n)</p>
+
+<hr>
+
+<!-- ================= MONTE CARLO ================= -->
+
+<h3>Monte Carlo Algorithms</h3>
+
+<p>
+Monte Carlo algorithms may give incorrect answers,
+but probability of error is very small.
+</p>
+
+<h4>Key Properties</h4>
+<ul>
+  <li>Fast execution</li>
+  <li>Correctness not guaranteed</li>
+  <li>Error probability can be reduced</li>
+</ul>
+
+<h4>General Working</h4>
+<ol>
+  <li>Use random sampling</li>
+  <li>Make decision based on probability</li>
+  <li>Accept small chance of error</li>
+</ol>
+
+<h4>Example: Primality Testing</h4>
+
+<p>
+To check if a number is prime, test random values instead
+of checking all divisors.
+</p>
+
+<h4>Step-by-Step</h4>
+<pre>
+Choose random number a
+Check a^(n-1) mod n
+If condition fails → composite
+If passes → probably prime
+</pre>
+
+<h4>Error Control</h4>
+<p>
+Repeating the test reduces probability of wrong answer.
+</p>
+
+<h4>Time Complexity</h4>
+<p>Very fast compared to deterministic methods</p>
+
+<hr>
+
+<h3>Las Vegas vs Monte Carlo</h3>
+
+<pre>
+Las Vegas  → Always correct, time varies
+Monte Carlo→ Fast, may be incorrect
+</pre>
+
+<hr>
+
+<!-- ================= APPROXIMATION ALGORITHMS ================= -->
+
+<h2>Approximation Algorithms</h2>
+
+<p>
+Approximation algorithms provide near-optimal solutions
+for problems where exact solution is expensive (NP-Hard).
+</p>
+
+<h4>Why Approximation?</h4>
+<ul>
+  <li>Exact solution takes exponential time</li>
+  <li>Approximate solution is acceptable</li>
+  <li>Guaranteed performance bound</li>
+</ul>
+
+<hr>
+
+<!-- ================= VERTEX COVER ================= -->
+
+<h3>Vertex Cover (Approximation)</h3>
+
+<p>
+Vertex cover is a set of vertices such that
+every edge has at least one endpoint in the set.
+</p>
+
+<h4>Problem Nature</h4>
+<p>NP-Hard</p>
+
+<h4>Approximation Idea</h4>
+<p>
+Pick edges and include both endpoints.
+</p>
+
+<h4>Step-by-Step Algorithm</h4>
+<ol>
+  <li>Select any edge (u, v)</li>
+  <li>Add both u and v to vertex cover</li>
+  <li>Remove all edges incident to u or v</li>
+  <li>Repeat until no edges remain</li>
+</ol>
+
+<h4>Example</h4>
+<pre>
+Edges: (A,B), (B,C), (C,D)
+Pick (A,B) → cover {A,B}
+Remaining: (C,D)
+Pick (C,D) → cover {A,B,C,D}
+</pre>
+
+<h4>Approximation Ratio</h4>
+<p>2-Approximation</p>
+
+<h4>Why It Works</h4>
+<p>
+Each edge must be covered by at least one vertex,
+choosing both ensures coverage.
+</p>
+
+<hr>
+
+<!-- ================= TSP ================= -->
+
+<h3>Travelling Salesman Problem (Approximation)</h3>
+
+<p>
+TSP finds the shortest route visiting all cities
+exactly once and returning to start.
+</p>
+
+<h4>Problem Nature</h4>
+<p>NP-Hard</p>
+
+<h4>Approximation Approach (Metric TSP)</h4>
+<p>
+Use Minimum Spanning Tree (MST).
+</p>
+
+<h4>Step-by-Step</h4>
+<ol>
+  <li>Construct MST of graph</li>
+  <li>Perform preorder traversal of MST</li>
+  <li>Visit cities in traversal order</li>
+  <li>Return to starting city</li>
+</ol>
+
+<h4>Example Flow</h4>
+<pre>
+Cities → MST → Preorder Walk → Approximate Tour
+</pre>
+
+<h4>Approximation Guarantee</h4>
+<p>
+Tour length ≤ 2 × Optimal
+</p>
+
+<h4>Why It Works</h4>
+<p>
+MST gives minimum cost structure covering all nodes.
+</p>
+
+<hr>
+
+<h3>Approximation Summary</h3>
+
+<pre>
+Vertex Cover → 2-Approximation
+TSP          → 2-Approximation (Metric)
+</pre>
+
+</section>
+
+</body>
+</html>

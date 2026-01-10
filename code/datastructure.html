@@ -1,0 +1,2607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Structure</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+  table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+</style>
+</head>
+<body>
+<section id="data-structure-basics">
+
+<h1>Data Structures – Topics Index</h1>
+
+<!-- ================= DATA STRUCTURE BASICS ================= -->
+
+<h2>Data Structure Basics</h2>
+
+<h3>Definition of Data Structure</h3>
+
+<p>
+A Data Structure is a systematic way of organizing, storing,
+and managing data so that it can be accessed, modified,
+and processed efficiently.
+</p>
+
+<h4>Why Data Structures Are Needed</h4>
+<ul>
+  <li>To store large amounts of data efficiently</li>
+  <li>To improve performance of algorithms</li>
+  <li>To reduce time and memory usage</li>
+</ul>
+
+<h4>Real-World Analogy</h4>
+<ul>
+  <li>Books arranged in a library (organized access)</li>
+  <li>Contacts saved in a phone (fast lookup)</li>
+</ul>
+
+<h4>Relation with Algorithms</h4>
+<p>
+Algorithms operate on data structures.
+Efficient data structures make algorithms faster.
+</p>
+
+<hr>
+
+<h3>Classification of Data Structures</h3>
+
+<p>
+Data Structures are classified based on how data is stored
+and accessed.
+</p>
+
+<h4>1. Primitive Data Structures</h4>
+<p>
+Basic data types that store single values.
+</p>
+
+<h4>2. Non-Primitive Data Structures</h4>
+<p>
+Data structures that store multiple values and relationships.
+</p>
+
+<h4>Further Classification</h4>
+<ul>
+  <li>Linear Data Structures</li>
+  <li>Non-Linear Data Structures</li>
+</ul>
+
+<h4>Linear Data Structures</h4>
+<ul>
+  <li>Array</li>
+  <li>Linked List</li>
+  <li>Stack</li>
+  <li>Queue</li>
+</ul>
+
+<h4>Non-Linear Data Structures</h4>
+<ul>
+  <li>Tree</li>
+  <li>Graph</li>
+  <li>Heap</li>
+</ul>
+
+<hr>
+
+<h3>Abstract Data Types (ADT)</h3>
+
+<p>
+ADT defines what operations are performed,
+not how they are implemented.
+</p>
+
+<h4>Key Idea</h4>
+<p>
+ADT focuses on behavior, not implementation.
+</p>
+
+<h4>Example: Stack ADT</h4>
+<ul>
+  <li>push()</li>
+  <li>pop()</li>
+  <li>peek()</li>
+</ul>
+
+<h4>Important Note</h4>
+<p>
+Stack can be implemented using array or linked list,
+but ADT remains same.
+</p>
+
+<hr>
+
+<!-- ================= PRIMITIVE DATA STRUCTURES ================= -->
+
+<h2>Primitive Data Structures</h2>
+
+<p>
+Primitive data structures store simple, single values.
+They are building blocks for all other data structures.
+</p>
+
+<hr>
+
+<h3>Integer</h3>
+
+<p>
+Integer stores whole numbers without decimal points.
+</p>
+
+<h4>Examples</h4>
+<pre>
+-10, 0, 25, 100
+</pre>
+
+<h4>Internal Storage</h4>
+<p>
+Stored in binary form using fixed number of bits.
+</p>
+
+<h4>Operations</h4>
+<ul>
+  <li>Addition</li>
+  <li>Subtraction</li>
+  <li>Multiplication</li>
+  <li>Division</li>
+</ul>
+
+<h4>Use Case</h4>
+<p>
+Counting, indexing, loop control.
+</p>
+
+<hr>
+
+<h3>Float</h3>
+
+<p>
+Float stores numbers with decimal values.
+</p>
+
+<h4>Examples</h4>
+<pre>
+3.14, -0.5, 99.99
+</pre>
+
+<h4>Internal Representation</h4>
+<p>
+Stored using IEEE floating-point format.
+</p>
+
+<h4>Use Case</h4>
+<p>
+Scientific calculations, measurements.
+</p>
+
+<hr>
+
+<h3>Character</h3>
+
+<p>
+Character stores a single symbol or letter.
+</p>
+
+<h4>Examples</h4>
+<pre>
+'A', 'z', '9', '#'
+</pre>
+
+<h4>Encoding</h4>
+<ul>
+  <li>ASCII</li>
+  <li>Unicode</li>
+</ul>
+
+<h4>Use Case</h4>
+<p>
+Text processing, strings.
+</p>
+
+<hr>
+
+<h3>Boolean</h3>
+
+<p>
+Boolean stores only two values: true or false.
+</p>
+
+<h4>Examples</h4>
+<pre>
+true, false
+</pre>
+
+<h4>Internal Representation</h4>
+<p>
+Stored as 0 or 1.
+</p>
+
+<h4>Use Case</h4>
+<p>
+Decision making, conditions, flags.
+</p>
+
+<hr>
+
+<h3>Primitive Data Structure Summary</h3>
+
+<pre>
+Integer   → Whole numbers
+Float     → Decimal numbers
+Character → Single symbol
+Boolean   → True / False
+</pre>
+
+</section>
+
+<br>
+
+<section id="non-primitive-data-structures">
+
+<!-- ================= NON-PRIMITIVE DATA STRUCTURES ================= -->
+
+<h2>Non-Primitive Data Structures</h2>
+
+<p>
+Non-Primitive Data Structures store multiple values
+and define relationships between data elements.
+They are built using primitive data types.
+</p>
+
+<h3>Classification</h3>
+
+<h4>Linear Data Structures</h4>
+<p>
+Data elements are arranged sequentially.
+Each element has a unique predecessor and successor (except first and last).
+</p>
+
+<ul>
+  <li>Array</li>
+  <li>Linked List</li>
+  <li>Stack</li>
+  <li>Queue</li>
+</ul>
+
+<h4>Non-Linear Data Structures</h4>
+<p>
+Data elements are not arranged sequentially.
+Hierarchical or graph-based relationships exist.
+</p>
+
+<ul>
+  <li>Tree</li>
+  <li>Graph</li>
+</ul>
+
+<hr>
+
+<!-- ================= ARRAYS ================= -->
+
+<h2>Arrays</h2>
+
+<p>
+An Array is a linear data structure that stores
+elements of the same data type in contiguous memory locations.
+</p>
+
+<h3>Key Characteristics</h3>
+<ul>
+  <li>Fixed size</li>
+  <li>Same data type</li>
+  <li>Index-based access</li>
+  <li>Contiguous memory</li>
+</ul>
+
+<h3>Memory Representation</h3>
+<pre>
+Base Address + (Index × Size of Data Type)
+</pre>
+
+<hr>
+
+<!-- ================= 1D ARRAY ================= -->
+
+<h3>One-Dimensional Array</h3>
+
+<p>
+A one-dimensional array stores elements in a single row.
+</p>
+
+<h4>Example</h4>
+<pre>
+Array: [10, 20, 30, 40, 50]
+Index:  0   1   2   3   4
+</pre>
+
+<h4>How Access Works</h4>
+<pre>
+arr[2] → 30
+Address = Base + (2 × size)
+</pre>
+
+<h4>Traversal</h4>
+<p>
+Elements are accessed sequentially using loops.
+</p>
+
+<hr>
+
+<!-- ================= 2D ARRAY ================= -->
+
+<h3>Two-Dimensional Array</h3>
+
+<p>
+A two-dimensional array stores data in rows and columns (matrix form).
+</p>
+
+<h4>Example</h4>
+<pre>
+1  2  3
+4  5  6
+7  8  9
+</pre>
+
+<h4>Indexing</h4>
+<pre>
+arr[row][column]
+arr[1][2] → 6
+</pre>
+
+<h4>Memory Mapping (Row-Major)</h4>
+<pre>
+Address = Base + ((row × columns + column) × size)
+</pre>
+
+<hr>
+
+<!-- ================= MULTI-D ARRAY ================= -->
+
+<h3>Multi-Dimensional Array</h3>
+
+<p>
+Arrays with more than two dimensions.
+Used for complex data representation.
+</p>
+
+<h4>Example</h4>
+<pre>
+arr[depth][row][column]
+</pre>
+
+<h4>Use Case</h4>
+<ul>
+  <li>3D graphics</li>
+  <li>Scientific simulations</li>
+</ul>
+
+<hr>
+
+<!-- ================= JAGGED ARRAY ================= -->
+
+<h3>Jagged Array</h3>
+
+<p>
+A jagged array is an array of arrays
+where each row can have different length.
+</p>
+
+<h4>Example</h4>
+<pre>
+Row 0 → [1, 2, 3]
+Row 1 → [4, 5]
+Row 2 → [6, 7, 8, 9]
+</pre>
+
+<h4>Key Difference</h4>
+<p>
+Memory is not continuous across rows.
+</p>
+
+<hr>
+
+<!-- ================= ARRAY OPERATIONS ================= -->
+
+<h3>Array Operations</h3>
+
+<h4>Insertion</h4>
+<p>
+Insert element at specific index by shifting elements.
+</p>
+
+<h4>Deletion</h4>
+<p>
+Remove element and shift remaining elements left.
+</p>
+
+<h4>Searching</h4>
+<ul>
+  <li>Linear Search</li>
+  <li>Binary Search (sorted array)</li>
+</ul>
+
+<h4>Traversal</h4>
+<p>
+Access each element sequentially.
+</p>
+
+<h4>Time Complexity Summary</h4>
+<pre>
+Access    → O(1)
+Search    → O(n)
+Insert    → O(n)
+Delete    → O(n)
+</pre>
+
+<hr>
+
+<!-- ================= STRINGS ================= -->
+
+<h2>Strings</h2>
+
+<p>
+A string is a sequence of characters stored in contiguous memory.
+</p>
+
+<h3>String Representation</h3>
+
+<h4>Character Array</h4>
+<pre>
+'H' 'E' 'L' 'L' 'O' '\0'
+</pre>
+
+<h4>Null Character</h4>
+<p>
+Marks end of string.
+</p>
+
+<hr>
+
+<h3>String Operations</h3>
+
+<h4>Length</h4>
+<p>
+Count characters until null character.
+</p>
+
+<h4>Concatenation</h4>
+<p>
+Join two strings end to end.
+</p>
+
+<h4>Comparison</h4>
+<p>
+Compare characters one by one using ASCII values.
+</p>
+
+<h4>Substring</h4>
+<p>
+Extract part of a string.
+</p>
+
+<hr>
+
+<h3>Pattern Matching</h3>
+
+<p>
+Pattern matching finds a substring inside a string.
+</p>
+
+<h4>Basic Approach</h4>
+<ul>
+  <li>Naive matching</li>
+  <li>KMP</li>
+  <li>Rabin-Karp</li>
+</ul>
+
+<h4>Why Pattern Matching Matters</h4>
+<ul>
+  <li>Text editors</li>
+  <li>Search engines</li>
+  <li>Data validation</li>
+</ul>
+
+<hr>
+
+<h3>Summary</h3>
+<pre>
+Array   → Fixed size, fast access
+String  → Character sequence
+Jagged  → Variable row size
+</pre>
+
+</section>
+
+<br>
+
+<section id="linked-lists">
+
+<h2>Linked Lists</h2>
+
+<p>
+A Linked List is a dynamic linear data structure
+where elements (nodes) are connected using pointers.
+</p>
+
+<h3>Why Linked List?</h3>
+<ul>
+  <li>Dynamic size</li>
+  <li>Efficient insertion and deletion</li>
+  <li>No need for contiguous memory</li>
+</ul>
+
+<h3>Node Structure</h3>
+<pre>
+| Data | Next |
+</pre>
+
+<hr>
+
+<!-- ================= SINGLY LINKED LIST ================= -->
+
+<h3>Singly Linked List</h3>
+
+<p>
+Each node contains data and a reference to the next node.
+Traversal is only in one direction.
+</p>
+
+<h4>Structure</h4>
+<pre>
+Head → [10 | * ] → [20 | * ] → [30 | NULL]
+</pre>
+
+<h4>Traversal (Step-by-Step)</h4>
+<pre>
+Start at Head
+Print 10
+Move to next → 20
+Move to next → 30
+Stop at NULL
+</pre>
+
+<h4>Insertion at Beginning</h4>
+<pre>
+New node → next = head
+head = new node
+</pre>
+
+<h4>Insertion at End</h4>
+<pre>
+Traverse till last node
+last.next = new node
+new.next = NULL
+</pre>
+
+<h4>Deletion at Beginning</h4>
+<pre>
+head = head.next
+</pre>
+
+<h4>Deletion at End</h4>
+<pre>
+Traverse till second last
+secondLast.next = NULL
+</pre>
+
+<hr>
+
+<!-- ================= DOUBLY LINKED LIST ================= -->
+
+<h3>Doubly Linked List</h3>
+
+<p>
+Each node has two pointers: previous and next.
+Allows traversal in both directions.
+</p>
+
+<h4>Structure</h4>
+<pre>
+NULL ← [10 | * | * ] ↔ [20 | * | * ] ↔ [30 | * | * ] → NULL
+</pre>
+
+<h4>Traversal</h4>
+<pre>
+Forward: Head → Tail
+Backward: Tail → Head
+</pre>
+
+<h4>Insertion</h4>
+<p>
+Update both next and prev pointers.
+</p>
+
+<h4>Deletion</h4>
+<p>
+Reconnect prev and next of adjacent nodes.
+</p>
+
+<hr>
+
+<!-- ================= CIRCULAR LINKED LIST ================= -->
+
+<h3>Circular Linked List</h3>
+
+<p>
+Last node points back to the first node instead of NULL.
+</p>
+
+<h4>Structure</h4>
+<pre>
+Head → [10] → [20] → [30]
+   ↑___________________|
+</pre>
+
+<h4>Traversal</h4>
+<pre>
+Start at head
+Continue until reaching head again
+</pre>
+
+<h4>Use Case</h4>
+<ul>
+  <li>Round-robin scheduling</li>
+  <li>Multiplayer games</li>
+</ul>
+
+<hr>
+
+<!-- ================= LINKED LIST OPERATIONS ================= -->
+
+<h3>Linked List Operations</h3>
+
+<h4>Searching</h4>
+<p>
+Traverse node by node and compare data.
+</p>
+
+<h4>Insertion</h4>
+<ul>
+  <li>At beginning</li>
+  <li>At end</li>
+  <li>At specific position</li>
+</ul>
+
+<h4>Deletion</h4>
+<ul>
+  <li>From beginning</li>
+  <li>From end</li>
+  <li>By value</li>
+</ul>
+
+<h4>Time Complexity</h4>
+<pre>
+Access   → O(n)
+Search   → O(n)
+Insert   → O(1) (if position known)
+Delete   → O(1) (if position known)
+</pre>
+
+<hr>
+
+<h3>Linked List vs Array</h3>
+
+<pre>
+Array        → Fast access, fixed size
+Linked List  → Dynamic size, slow access
+</pre>
+
+</section>
+
+<br>
+
+<section id="stacks">
+
+<h2>Stacks</h2>
+
+<p>
+A Stack is a linear data structure that follows the
+<b>LIFO (Last In, First Out)</b> principle.
+</p>
+
+<p>
+The element inserted last is removed first.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+  <li>Stack of plates</li>
+  <li>Undo / Redo operations</li>
+  <li>Function call stack</li>
+</ul>
+
+<hr>
+
+<!-- ================= STACK IMPLEMENTATION ================= -->
+
+<h3>Stack Implementation</h3>
+
+<p>
+A stack can be implemented using:
+</p>
+
+<ul>
+  <li>Array</li>
+  <li>Linked List</li>
+</ul>
+
+<h4>Stack Using Array</h4>
+
+<p>
+We use an array and a variable called <b>TOP</b>.
+</p>
+
+<pre>
+Stack size = 5
+TOP = -1 (empty stack)
+</pre>
+
+<h4>Initial State</h4>
+<pre>
+Index: 0 1 2 3 4
+Stack: _ _ _ _ _
+TOP = -1
+</pre>
+
+<h4>Push Operation (Insert)</h4>
+
+<p>
+Steps:
+</p>
+<ol>
+  <li>Check if TOP == size - 1 (Overflow)</li>
+  <li>Increment TOP</li>
+  <li>Insert element at stack[TOP]</li>
+</ol>
+
+<h4>Push Example</h4>
+<pre>
+Push 10
+TOP = 0
+
+Push 20
+TOP = 1
+
+Push 30
+TOP = 2
+
+Stack:
+[10, 20, 30, _, _]
+</pre>
+
+<h4>Pop Operation (Delete)</h4>
+
+<p>
+Steps:
+</p>
+<ol>
+  <li>Check if TOP == -1 (Underflow)</li>
+  <li>Remove element at stack[TOP]</li>
+  <li>Decrement TOP</li>
+</ol>
+
+<h4>Pop Example</h4>
+<pre>
+Pop → removes 30
+TOP = 1
+
+Stack:
+[10, 20, _, _, _]
+</pre>
+
+<h4>Peek Operation</h4>
+<p>
+Returns the top element without removing it.
+</p>
+
+<pre>
+Peek → 20
+</pre>
+
+<hr>
+
+<!-- ================= STACK USING LINKED LIST ================= -->
+
+<h3>Stack Using Linked List</h3>
+
+<p>
+Each node contains data and a pointer to the next node.
+The top of the stack is the head of the linked list.
+</p>
+
+<h4>Structure</h4>
+<pre>
+TOP → [30 | * ] → [20 | * ] → [10 | NULL]
+</pre>
+
+<h4>Push in Linked List Stack</h4>
+<pre>
+Create new node
+new.next = top
+top = new
+</pre>
+
+<h4>Pop in Linked List Stack</h4>
+<pre>
+temp = top
+top = top.next
+delete temp
+</pre>
+
+<hr>
+
+<!-- ================= STACK OPERATIONS ================= -->
+
+<h3>Stack Operations</h3>
+
+<h4>Push</h4>
+<p>
+Adds an element to the top of the stack.
+</p>
+
+<h4>Pop</h4>
+<p>
+Removes the top element from the stack.
+</p>
+
+<h4>Peek</h4>
+<p>
+Returns the top element without deletion.
+</p>
+
+<h4>isEmpty</h4>
+<p>
+Checks if the stack is empty.
+</p>
+
+<h4>isFull</h4>
+<p>
+Checks if the stack is full (array implementation).
+</p>
+
+<h4>Time Complexity</h4>
+<pre>
+Push → O(1)
+Pop  → O(1)
+Peek → O(1)
+</pre>
+
+<hr>
+
+<!-- ================= APPLICATIONS OF STACK ================= -->
+
+<h3>Applications of Stack</h3>
+
+<h4>1. Function Calls</h4>
+<p>
+Each function call is stored in the call stack.
+When function returns, it is popped.
+</p>
+
+<h4>2. Expression Evaluation</h4>
+<p>
+Used to evaluate postfix and prefix expressions.
+</p>
+
+<h4>3. Parenthesis Checking</h4>
+<p>
+Ensures opening and closing brackets are balanced.
+</p>
+
+<h4>4. Undo / Redo</h4>
+<p>
+Stores previous states in stack form.
+</p>
+
+<h4>5. Reversal of Data</h4>
+<p>
+Stack reverses strings, arrays, and lists.
+</p>
+
+<hr>
+
+<h3>Advantages of Stack</h3>
+<ul>
+  <li>Simple implementation</li>
+  <li>Fast operations</li>
+</ul>
+
+<h3>Disadvantages of Stack</h3>
+<ul>
+  <li>Limited access (only top)</li>
+  <li>Overflow and underflow issues</li>
+</ul>
+
+<hr>
+
+<h3>Stack vs Array</h3>
+<pre>
+Stack → Controlled access (LIFO)
+Array → Random access
+</pre>
+
+</section>
+
+<br>
+<section id="queues">
+
+<h2>Queues</h2>
+
+<p>
+A Queue is a linear data structure that follows the
+<b>FIFO (First In, First Out)</b> principle.
+</p>
+
+<p>
+The element inserted first is removed first.
+</p>
+
+<h3>Real-Life Examples</h3>
+<ul>
+  <li>People standing in a queue</li>
+  <li>Printer job scheduling</li>
+  <li>CPU process scheduling</li>
+  <li>Call center systems</li>
+</ul>
+
+<hr>
+
+<!-- ================= SIMPLE QUEUE ================= -->
+
+<h3>Simple Queue</h3>
+
+<p>
+A Simple Queue has two pointers:
+</p>
+<ul>
+  <li><b>Front</b> → position of deletion</li>
+  <li><b>Rear</b> → position of insertion</li>
+</ul>
+
+<h4>Initial State</h4>
+<pre>
+Queue size = 5
+Front = -1
+Rear  = -1
+
+[ _ _ _ _ _ ]
+</pre>
+
+<h4>Enqueue (Insert Operation)</h4>
+
+<p>Steps:</p>
+<ol>
+  <li>Check if Rear == size - 1 (Overflow)</li>
+  <li>If Front == -1, set Front = 0</li>
+  <li>Increment Rear</li>
+  <li>Insert element at queue[Rear]</li>
+</ol>
+
+<h4>Enqueue Example</h4>
+<pre>
+Enqueue 10
+Front = 0, Rear = 0
+[10 _ _ _ _]
+
+Enqueue 20
+Front = 0, Rear = 1
+[10 20 _ _ _]
+
+Enqueue 30
+Front = 0, Rear = 2
+[10 20 30 _ _]
+</pre>
+
+<h4>Dequeue (Delete Operation)</h4>
+
+<p>Steps:</p>
+<ol>
+  <li>Check if Front == -1 or Front > Rear (Underflow)</li>
+  <li>Remove element at queue[Front]</li>
+  <li>Increment Front</li>
+</ol>
+
+<h4>Dequeue Example</h4>
+<pre>
+Dequeue → removes 10
+Front = 1, Rear = 2
+[_ 20 30 _ _]
+</pre>
+
+<h4>Problem with Simple Queue</h4>
+<p>
+Unused spaces cannot be reused after deletion.
+This causes memory wastage.
+</p>
+
+<hr>
+
+<!-- ================= CIRCULAR QUEUE ================= -->
+
+<h3>Circular Queue</h3>
+
+<p>
+In Circular Queue, the last position is connected back to the first position.
+This solves memory wastage.
+</p>
+
+<h4>Formula Used</h4>
+<pre>
+Rear = (Rear + 1) % size
+Front = (Front + 1) % size
+</pre>
+
+<h4>Initial State</h4>
+<pre>
+Front = -1
+Rear = -1
+[ _ _ _ _ _ ]
+</pre>
+
+<h4>Enqueue Example</h4>
+<pre>
+Enqueue 10 → Front = 0, Rear = 0
+[10 _ _ _ _]
+
+Enqueue 20 → Rear = 1
+[10 20 _ _ _]
+
+Enqueue 30 → Rear = 2
+[10 20 30 _ _]
+</pre>
+
+<h4>Dequeue Example</h4>
+<pre>
+Dequeue → removes 10
+Front = 1
+[_ 20 30 _ _]
+</pre>
+
+<h4>Wrap Around Example</h4>
+<pre>
+Rear moves from last index to index 0
+This reuse space efficiently.
+</pre>
+
+<h4>Advantages</h4>
+<ul>
+  <li>No memory wastage</li>
+  <li>Efficient use of space</li>
+</ul>
+
+<hr>
+
+<!-- ================= PRIORITY QUEUE ================= -->
+
+<h3>Priority Queue</h3>
+
+<p>
+In Priority Queue, each element has a priority.
+Higher priority elements are served first.
+</p>
+
+<h4>Types</h4>
+<ul>
+  <li>Ascending Priority Queue</li>
+  <li>Descending Priority Queue</li>
+</ul>
+
+<h4>Example</h4>
+<pre>
+Element : Priority
+A : 1
+B : 3
+C : 2
+</pre>
+
+<h4>Order of Dequeue</h4>
+<pre>
+B → C → A
+</pre>
+
+<h4>Implementation</h4>
+<ul>
+  <li>Array</li>
+  <li>Linked List</li>
+  <li>Heap (Efficient)</li>
+</ul>
+
+<h4>Applications</h4>
+<ul>
+  <li>CPU scheduling</li>
+  <li>Hospital emergency systems</li>
+  <li>Dijkstra’s Algorithm</li>
+</ul>
+
+<hr>
+
+<!-- ================= DEQUE ================= -->
+
+<h3>Deque (Double Ended Queue)</h3>
+
+<p>
+Deque allows insertion and deletion from both ends.
+</p>
+
+<h4>Types of Deque</h4>
+<ul>
+  <li>Input Restricted Deque</li>
+  <li>Output Restricted Deque</li>
+</ul>
+
+<h4>Operations</h4>
+<ul>
+  <li>Insert Front</li>
+  <li>Insert Rear</li>
+  <li>Delete Front</li>
+  <li>Delete Rear</li>
+</ul>
+
+<h4>Example</h4>
+<pre>
+Insert Rear 10 → [10]
+Insert Front 20 → [20 10]
+Insert Rear 30 → [20 10 30]
+
+Delete Front → removes 20
+Delete Rear → removes 30
+Remaining → [10]
+</pre>
+
+<h4>Applications</h4>
+<ul>
+  <li>Sliding Window Problems</li>
+  <li>Palindrome Checking</li>
+  <li>Undo / Redo systems</li>
+</ul>
+
+<hr>
+
+<!-- ================= QUEUE OPERATIONS ================= -->
+
+<h3>Queue Operations Summary</h3>
+
+<pre>
+Enqueue → Insert
+Dequeue → Delete
+Peek    → Front element
+isEmpty → Front == -1
+isFull  → Rear == size - 1
+</pre>
+
+<h4>Time Complexity</h4>
+<pre>
+Enqueue → O(1)
+Dequeue → O(1)
+Peek    → O(1)
+</pre>
+
+<hr>
+
+<h3>Queue vs Stack</h3>
+<pre>
+Stack → LIFO
+Queue → FIFO
+</pre>
+
+<h3>Advantages of Queue</h3>
+<ul>
+  <li>Orderly processing</li>
+  <li>Fair scheduling</li>
+</ul>
+
+<h3>Disadvantages of Queue</h3>
+<ul>
+  <li>Fixed size (array)</li>
+  <li>Complex implementation (circular)</li>
+</ul>
+
+</section>
+
+<br>
+
+<section id="trees">
+
+<h2>Trees</h2>
+
+<p>
+A Tree is a <b>non-linear hierarchical data structure</b> used to represent
+parent-child relationships.
+</p>
+
+<p>
+Unlike arrays and linked lists, trees organize data in levels.
+</p>
+
+<hr>
+
+<h3>Basic Terminology of Trees</h3>
+<ul>
+  <li><b>Node</b> – Each element in the tree</li>
+  <li><b>Root</b> – Topmost node</li>
+  <li><b>Parent</b> – Node having child</li>
+  <li><b>Child</b> – Node derived from parent</li>
+  <li><b>Leaf</b> – Node with no children</li>
+  <li><b>Edge</b> – Connection between nodes</li>
+  <li><b>Height</b> – Longest path from root to leaf</li>
+  <li><b>Level</b> – Depth of a node</li>
+</ul>
+
+<hr>
+
+<!-- ================= BINARY TREE ================= -->
+
+<h3>Binary Tree</h3>
+
+<p>
+A Binary Tree is a tree where each node has
+<b>at most two children</b>:
+</p>
+
+<ul>
+  <li>Left Child</li>
+  <li>Right Child</li>
+</ul>
+
+<h4>Example</h4>
+<pre>
+        A
+       / \
+      B   C
+     / \
+    D   E
+</pre>
+
+<h4>Types of Binary Tree</h4>
+<ul>
+  <li>Full Binary Tree</li>
+  <li>Complete Binary Tree</li>
+  <li>Perfect Binary Tree</li>
+  <li>Skewed Binary Tree</li>
+</ul>
+
+<hr>
+
+<!-- ================= BINARY SEARCH TREE ================= -->
+
+<h3>Binary Search Tree (BST)</h3>
+
+<p>
+A Binary Search Tree follows the rule:
+</p>
+
+<pre>
+Left Subtree  → values less than root
+Right Subtree → values greater than root
+</pre>
+
+<h4>Insertion Example</h4>
+<pre>
+Insert: 50, 30, 70, 20, 40, 60, 80
+
+            50
+           /  \
+         30    70
+        / \    / \
+      20  40  60  80
+</pre>
+
+<h4>Searching in BST</h4>
+<ol>
+  <li>Compare key with root</li>
+  <li>If smaller → go left</li>
+  <li>If greater → go right</li>
+</ol>
+
+<h4>Time Complexity</h4>
+<pre>
+Best Case  → O(log n)
+Worst Case → O(n)
+</pre>
+
+<hr>
+
+<!-- ================= AVL TREE ================= -->
+
+<h3>AVL Tree</h3>
+
+<p>
+An AVL Tree is a <b>self-balancing BST</b>.
+</p>
+
+<p>
+Balance Factor = Height(Left) – Height(Right)
+</p>
+
+<pre>
+Balance Factor must be -1, 0, or +1
+</pre>
+
+<h4>Rotations</h4>
+<ul>
+  <li>LL Rotation</li>
+  <li>RR Rotation</li>
+  <li>LR Rotation</li>
+  <li>RL Rotation</li>
+</ul>
+
+<h4>Why AVL?</h4>
+<p>
+Prevents tree from becoming skewed.
+</p>
+
+<hr>
+
+<!-- ================= RED BLACK TREE ================= -->
+
+<h3>Red-Black Tree</h3>
+
+<p>
+A Red-Black Tree is a self-balancing BST using color properties.
+</p>
+
+<h4>Rules</h4>
+<ul>
+  <li>Each node is Red or Black</li>
+  <li>Root is always Black</li>
+  <li>No two red nodes can be adjacent</li>
+  <li>Same number of black nodes on all paths</li>
+</ul>
+
+<h4>Usage</h4>
+<ul>
+  <li>Java TreeMap</li>
+  <li>C++ map</li>
+</ul>
+
+<hr>
+
+<!-- ================= B TREE ================= -->
+
+<h3>B Tree</h3>
+
+<p>
+A B-Tree is a <b>multi-level balanced tree</b> used in databases.
+</p>
+
+<h4>Properties</h4>
+<ul>
+  <li>Multiple keys per node</li>
+  <li>All leaf nodes at same level</li>
+  <li>Balanced structure</li>
+</ul>
+
+<h4>Applications</h4>
+<ul>
+  <li>Database indexing</li>
+  <li>File systems</li>
+</ul>
+
+<hr>
+
+<!-- ================= B+ TREE ================= -->
+
+<h3>B+ Tree</h3>
+
+<p>
+B+ Tree is an extension of B Tree.
+</p>
+
+<h4>Key Features</h4>
+<ul>
+  <li>All data stored in leaf nodes</li>
+  <li>Internal nodes store only keys</li>
+  <li>Leaf nodes are linked</li>
+</ul>
+
+<h4>Advantages</h4>
+<ul>
+  <li>Fast range queries</li>
+  <li>Efficient disk access</li>
+</ul>
+
+<hr>
+
+<!-- ================= TREE TRAVERSALS ================= -->
+
+<h3>Tree Traversals</h3>
+
+<p>
+Traversal means visiting all nodes exactly once.
+</p>
+
+<h4>Inorder Traversal (LNR)</h4>
+<pre>
+Left → Root → Right
+</pre>
+
+<h4>Preorder Traversal (NLR)</h4>
+<pre>
+Root → Left → Right
+</pre>
+
+<h4>Postorder Traversal (LRN)</h4>
+<pre>
+Left → Right → Root
+</pre>
+
+<h4>Level Order Traversal</h4>
+<pre>
+Level by level traversal using Queue
+</pre>
+
+<h4>Traversal Example</h4>
+<pre>
+        10
+       /  \
+      5    15
+
+Inorder  → 5 10 15
+Preorder → 10 5 15
+Postorder→ 5 15 10
+</pre>
+
+<hr>
+
+<h3>Applications of Trees</h3>
+<ul>
+  <li>File systems</li>
+  <li>Databases</li>
+  <li>Compiler syntax trees</li>
+  <li>Searching and sorting</li>
+</ul>
+
+<hr>
+
+<h3>Advantages of Trees</h3>
+<ul>
+  <li>Hierarchical representation</li>
+  <li>Efficient searching</li>
+</ul>
+
+<h3>Disadvantages of Trees</h3>
+<ul>
+  <li>Complex implementation</li>
+  <li>Extra memory usage</li>
+</ul>
+
+</section>
+
+<br>
+
+<section id="heaps">
+
+<h2>Heaps</h2>
+
+<p>
+A Heap is a <b>complete binary tree</b> that satisfies the
+<b>Heap Property</b>.
+</p>
+
+<p>
+Heaps are mainly used to implement
+<b>Priority Queues</b>.
+</p>
+
+<hr>
+
+<h3>Heap Properties</h3>
+<ul>
+  <li>Complete Binary Tree</li>
+  <li>Heap Order Property</li>
+</ul>
+
+<h4>Complete Binary Tree</h4>
+<p>
+All levels are completely filled except possibly the last,
+which is filled from left to right.
+</p>
+
+<hr>
+
+<!-- ================= MIN HEAP ================= -->
+
+<h3>Min Heap</h3>
+
+<p>
+In a Min Heap, the value of each node is
+<b>less than or equal to its children</b>.
+</p>
+
+<h4>Example</h4>
+<pre>
+        10
+       /  \
+     20    30
+    /  \
+  40   50
+</pre>
+
+<p>
+Minimum element is always at the root.
+</p>
+
+<hr>
+
+<!-- ================= MAX HEAP ================= -->
+
+<h3>Max Heap</h3>
+
+<p>
+In a Max Heap, the value of each node is
+<b>greater than or equal to its children</b>.
+</p>
+
+<h4>Example</h4>
+<pre>
+        50
+       /  \
+     30    40
+    /  \
+  10   20
+</pre>
+
+<p>
+Maximum element is always at the root.
+</p>
+
+<hr>
+
+<!-- ================= HEAP REPRESENTATION ================= -->
+
+<h3>Heap Representation (Array)</h3>
+
+<p>
+Heaps are stored using arrays.
+</p>
+
+<h4>Index Relations</h4>
+<pre>
+Parent Index     = (i - 1) / 2
+Left Child Index = 2i + 1
+Right Child Index= 2i + 2
+</pre>
+
+<h4>Array Example (Min Heap)</h4>
+<pre>
+Index: 0  1  2  3  4
+Heap : 10 20 30 40 50
+</pre>
+
+<hr>
+
+<!-- ================= INSERT OPERATION ================= -->
+
+<h3>Heap Insert Operation</h3>
+
+<p>
+Insertion follows two steps:
+</p>
+
+<ol>
+  <li>Insert element at the end</li>
+  <li>Heapify Up (Bubble Up)</li>
+</ol>
+
+<h4>Insert Example (Min Heap)</h4>
+<pre>
+Initial Heap:
+[10, 20, 30, 40]
+
+Insert 15 at end:
+[10, 20, 30, 40, 15]
+
+Compare 15 with parent 20 → swap
+[10, 15, 30, 40, 20]
+
+Compare 15 with parent 10 → stop
+</pre>
+
+<hr>
+
+<!-- ================= DELETE OPERATION ================= -->
+
+<h3>Heap Delete Operation</h3>
+
+<p>
+Deletion always removes the root.
+</p>
+
+<ol>
+  <li>Replace root with last element</li>
+  <li>Remove last element</li>
+  <li>Heapify Down</li>
+</ol>
+
+<h4>Delete Example (Min Heap)</h4>
+<pre>
+Initial Heap:
+[10, 15, 30, 40, 20]
+
+Replace root with last element:
+[20, 15, 30, 40]
+
+Compare 20 with children → swap with 15
+[15, 20, 30, 40]
+</pre>
+
+<hr>
+
+<!-- ================= HEAPIFY ================= -->
+
+<h3>Heapify</h3>
+
+<p>
+Heapify ensures heap property is maintained.
+</p>
+
+<ul>
+  <li>Heapify Up → after insertion</li>
+  <li>Heapify Down → after deletion</li>
+</ul>
+
+<hr>
+
+<!-- ================= BUILD HEAP ================= -->
+
+<h3>Build Heap</h3>
+
+<p>
+Convert an array into a heap.
+</p>
+
+<pre>
+Start from last non-leaf node
+Apply heapify down
+</pre>
+
+<h4>Time Complexity</h4>
+<pre>
+Build Heap → O(n)
+</pre>
+
+<hr>
+
+<!-- ================= HEAP SORT ================= -->
+
+<h3>Heap Sort</h3>
+
+<p>
+Heap Sort uses Max Heap to sort elements.
+</p>
+
+<ol>
+  <li>Build Max Heap</li>
+  <li>Swap root with last element</li>
+  <li>Reduce heap size</li>
+  <li>Heapify root</li>
+</ol>
+
+<h4>Time Complexity</h4>
+<pre>
+Best  → O(n log n)
+Worst → O(n log n)
+</pre>
+
+<hr>
+
+<!-- ================= APPLICATIONS ================= -->
+
+<h3>Applications of Heap</h3>
+<ul>
+  <li>Priority Queue</li>
+  <li>Heap Sort</li>
+  <li>Dijkstra’s Algorithm</li>
+  <li>CPU Scheduling</li>
+</ul>
+
+<hr>
+
+<h3>Advantages of Heap</h3>
+<ul>
+  <li>Fast access to min/max</li>
+  <li>Efficient insertion and deletion</li>
+</ul>
+
+<h3>Disadvantages of Heap</h3>
+<ul>
+  <li>No fast searching</li>
+  <li>Complex implementation</li>
+</ul>
+
+<hr>
+
+<h3>Min Heap vs Max Heap</h3>
+<pre>
+Min Heap → Root is smallest
+Max Heap → Root is largest
+</pre>
+
+</section>
+
+<br>
+
+<section id="hashing">
+
+<h2>Hashing</h2>
+
+<p>
+Hashing is a technique used to convert a key into an index
+of an array using a <b>hash function</b>.
+</p>
+
+<p>
+It allows <b>fast insertion, deletion, and searching</b>.
+</p>
+
+<hr>
+
+<!-- ================= HASH TABLE ================= -->
+
+<h3>Hash Table</h3>
+
+<p>
+A Hash Table is a data structure that stores
+<b>key-value pairs</b>.
+</p>
+
+<p>
+Data is stored in an array where index is calculated using a hash function.
+</p>
+
+<h4>Example Structure</h4>
+<pre>
+Index: 0   1   2   3   4
+Table: _  (A)  _  (C) (B)
+</pre>
+
+<h4>Example Keys</h4>
+<pre>
+Key → Value
+10 → A
+15 → B
+20 → C
+</pre>
+
+<hr>
+
+<!-- ================= HASH FUNCTION ================= -->
+
+<h3>Hash Functions</h3>
+
+<p>
+A Hash Function converts a key into an array index.
+</p>
+
+<h4>Properties of Good Hash Function</h4>
+<ul>
+  <li>Fast computation</li>
+  <li>Uniform distribution</li>
+  <li>Minimizes collisions</li>
+</ul>
+
+<h4>Common Hash Functions</h4>
+
+<h5>1. Division Method</h5>
+<pre>
+h(key) = key % table_size
+</pre>
+
+<h5>Example</h5>
+<pre>
+table_size = 5
+
+h(10) = 10 % 5 = 0
+h(15) = 15 % 5 = 0  → Collision
+h(20) = 20 % 5 = 0  → Collision
+</pre>
+
+<h5>2. Multiplication Method</h5>
+<pre>
+h(key) = floor(table_size * (key * A % 1))
+</pre>
+
+<h5>3. Mid-Square Method</h5>
+<pre>
+Square the key and extract middle digits
+</pre>
+
+<hr>
+
+<!-- ================= COLLISION ================= -->
+
+<h3>Collision</h3>
+
+<p>
+A Collision occurs when two different keys produce
+the same hash index.
+</p>
+
+<pre>
+h(10) = 0
+h(15) = 0
+</pre>
+
+<hr>
+
+<!-- ================= COLLISION RESOLUTION ================= -->
+
+<h3>Collision Resolution Techniques</h3>
+
+<hr>
+
+<h4>1. Separate Chaining</h4>
+
+<p>
+Each table index stores a linked list of elements.
+</p>
+
+<h5>Example</h5>
+<pre>
+Index 0 → 10 → 15 → 20
+</pre>
+
+<h5>Steps</h5>
+<ol>
+  <li>Compute index</li>
+  <li>Insert key into linked list</li>
+</ol>
+
+<h5>Advantages</h5>
+<ul>
+  <li>Simple</li>
+  <li>No overflow</li>
+</ul>
+
+<h5>Disadvantages</h5>
+<ul>
+  <li>Extra memory for pointers</li>
+</ul>
+
+<hr>
+
+<h4>2. Linear Probing</h4>
+
+<p>
+If collision occurs, check the next empty slot.
+</p>
+
+<h5>Formula</h5>
+<pre>
+h(key, i) = (h(key) + i) % table_size
+</pre>
+
+<h5>Example</h5>
+<pre>
+Insert 10 → index 0
+Insert 15 → index 1
+Insert 20 → index 2
+</pre>
+
+<h5>Problem</h5>
+<p>
+Primary clustering occurs.
+</p>
+
+<hr>
+
+<h4>3. Quadratic Probing</h4>
+
+<p>
+Probing interval increases quadratically.
+</p>
+
+<h5>Formula</h5>
+<pre>
+h(key, i) = (h(key) + i²) % table_size
+</pre>
+
+<h5>Advantage</h5>
+<p>
+Reduces clustering.
+</p>
+
+<hr>
+
+<h4>4. Double Hashing</h4>
+
+<p>
+Uses two hash functions.
+</p>
+
+<h5>Formula</h5>
+<pre>
+h(key, i) = (h1(key) + i * h2(key)) % table_size
+</pre>
+
+<h5>Advantage</h5>
+<p>
+Best collision handling among probing techniques.
+</p>
+
+<hr>
+
+<!-- ================= LOAD FACTOR ================= -->
+
+<h3>Load Factor</h3>
+
+<p>
+Load Factor determines performance of hash table.
+</p>
+
+<pre>
+Load Factor = Number of elements / Table size
+</pre>
+
+<p>
+Higher load factor → more collisions.
+</p>
+
+<hr>
+
+<!-- ================= OPERATIONS ================= -->
+
+<h3>Hash Table Operations</h3>
+
+<h4>Insertion</h4>
+<ol>
+  <li>Apply hash function</li>
+  <li>Handle collision if any</li>
+  <li>Insert key</li>
+</ol>
+
+<h4>Searching</h4>
+<ol>
+  <li>Compute index</li>
+  <li>Search at index</li>
+  <li>Follow probing or chaining</li>
+</ol>
+
+<h4>Deletion</h4>
+<ol>
+  <li>Find key</li>
+  <li>Remove key</li>
+</ol>
+
+<hr>
+
+<!-- ================= TIME COMPLEXITY ================= -->
+
+<h3>Time Complexity</h3>
+<pre>
+Average Case → O(1)
+Worst Case   → O(n)
+</pre>
+
+<hr>
+
+<!-- ================= APPLICATIONS ================= -->
+
+<h3>Applications of Hashing</h3>
+<ul>
+  <li>Databases indexing</li>
+  <li>Password storage</li>
+  <li>Caches</li>
+  <li>Symbol tables</li>
+</ul>
+
+<hr>
+
+<h3>Advantages of Hashing</h3>
+<ul>
+  <li>Fast access</li>
+  <li>Efficient searching</li>
+</ul>
+
+<h3>Disadvantages of Hashing</h3>
+<ul>
+  <li>Collision handling complexity</li>
+  <li>No ordering of elements</li>
+</ul>
+
+</section>
+
+<br>
+
+<section id="graphs">
+
+<h2>Graphs</h2>
+
+<p>
+A Graph is a <b>non-linear data structure</b> consisting of
+<b>vertices (nodes)</b> and <b>edges</b>.
+</p>
+
+<p>
+Graphs are used to represent networks and relationships.
+</p>
+
+<hr>
+
+<h3>Basic Terminology</h3>
+<ul>
+  <li><b>Vertex (Node)</b> – Individual element</li>
+  <li><b>Edge</b> – Connection between two vertices</li>
+  <li><b>Degree</b> – Number of edges connected to a vertex</li>
+  <li><b>Path</b> – Sequence of vertices</li>
+  <li><b>Cycle</b> – Path starting and ending at same vertex</li>
+  <li><b>Connected Graph</b> – Path exists between every pair of vertices</li>
+</ul>
+
+<hr>
+
+<!-- ================= GRAPH REPRESENTATION ================= -->
+
+<h3>Graph Representation</h3>
+
+<p>
+Graphs can be represented in two main ways:
+</p>
+
+<h4>1. Adjacency Matrix</h4>
+
+<p>
+A 2D matrix where rows and columns represent vertices.
+</p>
+
+<h5>Example</h5>
+<pre>
+   A B C
+A  0 1 1
+B  1 0 0
+C  1 0 0
+</pre>
+
+<h5>Advantages</h5>
+<ul>
+  <li>Easy to check edge existence</li>
+</ul>
+
+<h5>Disadvantages</h5>
+<ul>
+  <li>High memory usage</li>
+</ul>
+
+<hr>
+
+<h4>2. Adjacency List</h4>
+
+<p>
+Each vertex stores a list of connected vertices.
+</p>
+
+<h5>Example</h5>
+<pre>
+A → B → C
+B → A
+C → A
+</pre>
+
+<h5>Advantages</h5>
+<ul>
+  <li>Memory efficient</li>
+</ul>
+
+<h5>Disadvantages</h5>
+<ul>
+  <li>Edge checking is slower</li>
+</ul>
+
+<hr>
+
+<!-- ================= DIRECTED GRAPH ================= -->
+
+<h3>Directed Graph</h3>
+
+<p>
+Edges have a <b>direction</b>.
+</p>
+
+<h4>Example</h4>
+<pre>
+A → B → C
+↑
+D
+</pre>
+
+<h4>Degree</h4>
+<ul>
+  <li>In-degree</li>
+  <li>Out-degree</li>
+</ul>
+
+<h4>Applications</h4>
+<ul>
+  <li>Web pages (links)</li>
+  <li>Task scheduling</li>
+</ul>
+
+<hr>
+
+<!-- ================= UNDIRECTED GRAPH ================= -->
+
+<h3>Undirected Graph</h3>
+
+<p>
+Edges have <b>no direction</b>.
+</p>
+
+<h4>Example</h4>
+<pre>
+A — B
+|   |
+C — D
+</pre>
+
+<h4>Degree</h4>
+<p>
+Number of connected edges.
+</p>
+
+<h4>Applications</h4>
+<ul>
+  <li>Social networks</li>
+  <li>Road maps</li>
+</ul>
+
+<hr>
+
+<!-- ================= WEIGHTED GRAPH ================= -->
+
+<h3>Weighted Graph</h3>
+
+<p>
+Each edge has a <b>weight</b> (cost, distance).
+</p>
+
+<h4>Example</h4>
+<pre>
+A --5-- B
+|       |
+3       2
+|       |
+C --4-- D
+</pre>
+
+<h4>Applications</h4>
+<ul>
+  <li>Shortest path problems</li>
+  <li>Network routing</li>
+</ul>
+
+<hr>
+
+<!-- ================= GRAPH TRAVERSALS ================= -->
+
+<h3>Graph Traversals</h3>
+
+<p>
+Traversal means visiting all vertices.
+</p>
+
+<hr>
+
+<h4>Breadth First Search (BFS)</h4>
+
+<p>
+BFS visits nodes level by level.
+</p>
+
+<h5>Data Structure Used</h5>
+<p>Queue</p>
+
+<h5>Steps</h5>
+<ol>
+  <li>Start from source node</li>
+  <li>Mark node as visited</li>
+  <li>Visit all neighbors</li>
+  <li>Repeat for unvisited nodes</li>
+</ol>
+
+<h5>Example</h5>
+<pre>
+Start → A
+Visit → A B C D
+</pre>
+
+<h5>Applications</h5>
+<ul>
+  <li>Shortest path in unweighted graph</li>
+  <li>Level order traversal</li>
+</ul>
+
+<hr>
+
+<h4>Depth First Search (DFS)</h4>
+
+<p>
+DFS explores as deep as possible.
+</p>
+
+<h5>Data Structure Used</h5>
+<ul>
+  <li>Stack</li>
+  <li>Recursion</li>
+</ul>
+
+<h5>Steps</h5>
+<ol>
+  <li>Start from source</li>
+  <li>Visit node</li>
+  <li>Go deeper</li>
+  <li>Backtrack</li>
+</ol>
+
+<h5>Example</h5>
+<pre>
+Start → A
+Visit → A B D C
+</pre>
+
+<h5>Applications</h5>
+<ul>
+  <li>Cycle detection</li>
+  <li>Topological sorting</li>
+</ul>
+
+<hr>
+
+<!-- ================= TIME COMPLEXITY ================= -->
+
+<h3>Time Complexity</h3>
+<pre>
+BFS → O(V + E)
+DFS → O(V + E)
+</pre>
+
+<hr>
+
+<h3>Advantages of Graphs</h3>
+<ul>
+  <li>Models complex relationships</li>
+  <li>Flexible structure</li>
+</ul>
+
+<h3>Disadvantages of Graphs</h3>
+<ul>
+  <li>Complex algorithms</li>
+  <li>High memory usage</li>
+</ul>
+
+</section>
+
+<br>
+
+<section id="advanced-data-structures">
+
+<h2>Advanced Data Structures</h2>
+
+<p>
+Advanced Data Structures are used to solve
+<b>complex problems efficiently</b> involving
+ranges, strings, connectivity, and large data.
+</p>
+
+<hr>
+
+<!-- ================= TRIE ================= -->
+
+<h3>Trie</h3>
+
+<p>
+A Trie is a <b>prefix tree</b> used to store strings.
+</p>
+
+<p>
+Each node represents a character.
+</p>
+
+<h4>Why Trie?</h4>
+<ul>
+  <li>Fast searching</li>
+  <li>Prefix matching</li>
+</ul>
+
+<h4>Example Words</h4>
+<pre>
+cat
+car
+cap
+</pre>
+
+<h4>Trie Structure</h4>
+<pre>
+(root)
+  |
+  c
+  |
+  a
+ /|\
+t r p
+</pre>
+
+<h4>Insert Operation (Step-by-Step)</h4>
+<ol>
+  <li>Start from root</li>
+  <li>Check character exists</li>
+  <li>Create node if missing</li>
+  <li>Move to next character</li>
+</ol>
+
+<h4>Search Operation</h4>
+<ol>
+  <li>Traverse characters</li>
+  <li>If missing → not found</li>
+  <li>If end marker → found</li>
+</ol>
+
+<h4>Applications</h4>
+<ul>
+  <li>Auto-complete</li>
+  <li>Spell checker</li>
+  <li>Dictionary</li>
+</ul>
+
+<hr>
+
+<!-- ================= SEGMENT TREE ================= -->
+
+<h3>Segment Tree</h3>
+
+<p>
+Segment Tree is used for
+<b>range queries</b> like sum, min, max.
+</p>
+
+<h4>Why Segment Tree?</h4>
+<p>
+Efficient updates and queries on ranges.
+</p>
+
+<h4>Example Array</h4>
+<pre>
+Index: 0 1 2 3
+Array: 2 1 5 3
+</pre>
+
+<h4>Segment Tree Construction</h4>
+<pre>
+          11
+         /  \
+        3    8
+       / \  / \
+      2  1 5  3
+</pre>
+
+<h4>Range Sum Query</h4>
+<pre>
+Query sum(1,3) → 1 + 5 + 3 = 9
+</pre>
+
+<h4>Update Operation</h4>
+<p>
+Update value and propagate change upwards.
+</p>
+
+<h4>Time Complexity</h4>
+<pre>
+Query → O(log n)
+Update → O(log n)
+</pre>
+
+<hr>
+
+<!-- ================= FENWICK TREE ================= -->
+
+<h3>Fenwick Tree (Binary Indexed Tree)</h3>
+
+<p>
+Fenwick Tree is used for
+<b>prefix sum queries</b>.
+</p>
+
+<h4>Why Fenwick Tree?</h4>
+<ul>
+  <li>Less memory than Segment Tree</li>
+  <li>Easy implementation</li>
+</ul>
+
+<h4>Index Logic</h4>
+<pre>
+i & (-i)
+</pre>
+
+<h4>Prefix Sum Example</h4>
+<pre>
+Array: [1,2,3,4]
+
+Sum(1..3) = 6
+</pre>
+
+<h4>Operations</h4>
+<ul>
+  <li>Update → O(log n)</li>
+  <li>Query → O(log n)</li>
+</ul>
+
+<hr>
+
+<!-- ================= DISJOINT SET ================= -->
+
+<h3>Disjoint Set (Union-Find)</h3>
+
+<p>
+Disjoint Set maintains a collection of
+<b>non-overlapping sets</b>.
+</p>
+
+<h4>Operations</h4>
+<ul>
+  <li>MakeSet</li>
+  <li>Find</li>
+  <li>Union</li>
+</ul>
+
+<h4>Find Operation</h4>
+<p>
+Finds representative (parent) of a set.
+</p>
+
+<h4>Union Operation</h4>
+<p>
+Merges two sets.
+</p>
+
+<h4>Path Compression</h4>
+<p>
+Flattens tree for faster operations.
+</p>
+
+<h4>Union by Rank</h4>
+<p>
+Attach smaller tree under larger tree.
+</p>
+
+<h4>Example</h4>
+<pre>
+Union(1,2)
+Union(2,3)
+
+Find(3) → 1
+</pre>
+
+<h4>Applications</h4>
+<ul>
+  <li>Cycle detection</li>
+  <li>Kruskal’s Algorithm</li>
+  <li>Network connectivity</li>
+</ul>
+
+<hr>
+
+<h3>Comparison Summary</h3>
+<pre>
+Trie         → String & prefix search
+Segment Tree → Range queries
+Fenwick Tree → Prefix sums
+Disjoint Set → Connectivity problems
+</pre>
+
+</section>
+
+</body>
+</html>
