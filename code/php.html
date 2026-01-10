@@ -1,0 +1,6365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhP</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+  table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+</style>
+</head>
+<body>
+
+<section>
+    <h2>PHP Basics</h2>
+    <p>PHP (Hypertext Preprocessor) is a server-side scripting language used to build dynamic web applications. PHP code runs on the server and outputs HTML to the browser.</p>
+
+    <hr>
+    <h3>1. What is PHP?</h3>
+    <p>PHP is a widely-used, open-source scripting language especially suited for web development. It can interact with databases, handle forms, manage sessions, and generate dynamic web pages.</p>
+
+    <ul>
+        <li>Server-side scripting language</li>
+        <li>Embedded inside HTML</li>
+        <li>Executes on the server, not in the browser</li>
+        <li>Supports databases like MySQL, PostgreSQL, SQLite</li>
+        <li>Easy to learn and widely used</li>
+    </ul>
+
+    <pre><code>&lt;!-- Example HTML with PHP --&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;?php
+    echo "Hello, PHP!";
+?&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+    <hr>
+    <h3>2. PHP Syntax</h3>
+    <p>PHP can be embedded inside HTML using <code>&lt;?php ?&gt;</code> tags.</p>
+
+    <pre><code>&lt;?php
+    // PHP code goes here
+    echo "Hello World!";
+?&gt;</code></pre>
+
+    <p>PHP statements end with a semicolon <code>;</code>.</p>
+
+    <h4>📌 Example</h4>
+    <pre><code>&lt;?php
+    echo "Welcome to PHP!";
+    echo "This is another line.";
+?&gt;</code></pre>
+
+    <hr>
+    <h3>3. Variables</h3>
+    <p>Variables in PHP start with a <code>$</code> sign. They do NOT need a data type because PHP is dynamically typed.</p>
+
+    <pre><code>&lt;?php
+    $name = "Aathi";
+    $age = 21;
+    $price = 99.5;
+
+    echo $name;
+?&gt;</code></pre>
+
+    <h4>Rules:</h4>
+    <ul>
+        <li>Must start with <code>$</code></li>
+        <li>Must start with a letter or underscore</li>
+        <li>Cannot start with a number</li>
+        <li>Case-sensitive</li>
+    </ul>
+
+    <hr>
+    <h3>4. Data Types</h3>
+    <p>PHP supports multiple data types:</p>
+
+    <ul>
+        <li><b>String</b> – "hello", "abc"</li>
+        <li><b>Integer</b> – 10, -5</li>
+        <li><b>Float</b> – 10.5, 3.14</li>
+        <li><b>Boolean</b> – true / false</li>
+        <li><b>Array</b> – collection of data</li>
+        <li><b>Object</b> – instances of classes</li>
+        <li><b>NULL</b> – empty variable</li>
+    </ul>
+
+    <pre><code>&lt;?php
+    $str = "Hello";
+    $num = 10;
+    $float = 3.14;
+    $isValid = true;
+    $arr = array(1, 2, 3);
+    $obj = new stdClass();
+    $nothing = null;
+?&gt;</code></pre>
+
+    <hr>
+    <h3>5. Echo / Print</h3>
+    <p><code>echo</code> and <code>print</code> are used to output content in PHP.</p>
+
+    <h4>📌 echo (can print multiple values)</h4>
+    <pre><code>&lt;?php
+    echo "Hello", " World!";
+?&gt;</code></pre>
+
+    <h4>📌 print (returns 1, prints only one value)</h4>
+    <pre><code>&lt;?php
+    print "Hello World!";
+?&gt;</code></pre>
+
+    <hr>
+    <h3>6. Comments</h3>
+    <p>Comments are ignored during execution and used for documentation.</p>
+
+    <h4>📌 Single-line comments</h4>
+    <pre><code>&lt;?php
+    // This is a comment
+    # This is also a comment
+?&gt;</code></pre>
+
+    <h4>📌 Multi-line comments</h4>
+    <pre><code>&lt;?php
+    /*
+        This is a
+        multi-line comment
+    */
+?&gt;</code></pre>
+</section>
+
+<hr>
+
+<section>
+    <h2>PHP Operators</h2>
+    <p>Operators in PHP are used to perform operations on variables and values. Below are all important operator types used in PHP.</p>
+
+    <hr>
+    <h3>1. Arithmetic Operators</h3>
+    <p>Used for mathematical calculations.</p>
+
+    <table border="1" cellpadding="6">
+        <tr><th>Operator</th><th>Description</th><th>Example</th></tr>
+        <tr><td>+</td><td>Addition</td><td>$a + $b</td></tr>
+        <tr><td>-</td><td>Subtraction</td><td>$a - $b</td></tr>
+        <tr><td>*</td><td>Multiplication</td><td>$a * $b</td></tr>
+        <tr><td>/</td><td>Division</td><td>$a / $b</td></tr>
+        <tr><td>%</td><td>Modulus</td><td>$a % $b</td></tr>
+        <tr><td>**</td><td>Exponentiation</td><td>$a ** $b</td></tr>
+    </table>
+
+    <pre><code>&lt;?php
+$a = 10;
+$b = 3;
+echo $a + $b; // 13
+echo $a ** $b; // 1000
+?&gt;</code></pre>
+
+    <hr>
+    <h3>2. Comparison Operators</h3>
+    <p>Used to compare values. Return TRUE or FALSE.</p>
+
+    <table border="1" cellpadding="6">
+        <tr><th>Operator</th><th>Description</th><th>Example</th></tr>
+        <tr><td>==</td><td>Equal (value)</td><td>$a == $b</td></tr>
+        <tr><td>===</td><td>Identical (value + type)</td><td>$a === $b</td></tr>
+        <tr><td>!=</td><td>Not equal</td><td>$a != $b</td></tr>
+        <tr><td>&lt;&gt;</td><td>Not equal</td><td>$a &lt;&gt; $b</td></tr>
+        <tr><td>!==</td><td>Not identical</td><td>$a !== $b</td></tr>
+        <tr><td>&gt;</td><td>Greater than</td><td>$a &gt; $b</td></tr>
+        <tr><td>&lt;</td><td>Less than</td><td>$a &lt; $b</td></tr>
+        <tr><td>&gt;=</td><td>Greater or equal</td><td>$a &gt;= $b</td></tr>
+        <tr><td>&lt;=</td><td>Less or equal</td><td>$a &lt;= $b</td></tr>
+        <tr><td>&lt;=&gt;</td><td>Spaceship (<i>three-way comparison</i>)</td><td>$a &lt;=&gt; $b</td></tr>
+    </table>
+
+    <pre><code>&lt;?php
+echo 5 &lt;=&gt; 5; // 0
+echo 5 &lt;=&gt; 3; // 1
+echo 3 &lt;=&gt; 5; // -1
+?&gt;</code></pre>
+
+    <hr>
+    <h3>3. Logical Operators</h3>
+    <p>Used to combine conditional statements.</p>
+
+    <table border="1" cellpadding="6">
+        <tr><th>Operator</th><th>Description</th><th>Example</th></tr>
+        <tr><td>&&</td><td>AND</td><td>$a && $b</td></tr>
+        <tr><td>||</td><td>OR</td><td>$a || $b</td></tr>
+        <tr><td>!</td><td>NOT</td><td>!$a</td></tr>
+        <tr><td>and</td><td>AND (low priority)</td><td>$a and $b</td></tr>
+        <tr><td>or</td><td>OR (low priority)</td><td>$a or $b</td></tr>
+        <tr><td>xor</td><td>Exclusive OR</td><td>$a xor $b</td></tr>
+    </table>
+
+    <hr>
+    <h3>4. Assignment Operators</h3>
+    <p>Used to assign values to variables.</p>
+
+    <table border="1" cellpadding="6">
+        <tr><th>Operator</th><th>Description</th></tr>
+        <tr><td>=</td><td>Assign value</td></tr>
+        <tr><td>+=</td><td>Add and assign</td></tr>
+        <tr><td>-=</td><td>Subtract and assign</td></tr>
+        <tr><td>*=</td><td>Multiply and assign</td></tr>
+        <tr><td>/=</td><td>Divide and assign</td></tr>
+        <tr><td>%=</td><td>Modulus and assign</td></tr>
+        <tr><td>.=</td><td>Concatenate and assign (string)</td></tr>
+    </table>
+
+    <pre><code>&lt;?php
+$name = "Hello";
+$name .= " World"; // Hello World
+?&gt;</code></pre>
+
+    <hr>
+    <h3>5. Increment / Decrement Operators</h3>
+    <p>Used to increase or decrease values by 1.</p>
+
+    <table border="1" cellpadding="6">
+        <tr><th>Operator</th><th>Description</th></tr>
+        <tr><td>++$a</td><td>Pre-increment</td></tr>
+        <tr><td>$a++</td><td>Post-increment</td></tr>
+        <tr><td>--$a</td><td>Pre-decrement</td></tr>
+        <tr><td>$a--</td><td>Post-decrement</td></tr>
+    </table>
+
+    <hr>
+    <h3>6. String Operator</h3>
+    <p>PHP provides the dot (.) operator to join strings.</p>
+
+    <pre><code>&lt;?php
+echo "Hello " . "World";
+?&gt;</code></pre>
+
+    <hr>
+    <h3>7. Array Operators</h3>
+    <p>Used to compare or merge arrays.</p>
+
+    <table border="1" cellpadding="6">
+        <tr><th>Operator</th><th>Description</th></tr>
+        <tr><td>+</td><td>Union of arrays</td></tr>
+        <tr><td>==</td><td>Equal (keys & values)</td></tr>
+        <tr><td>===</td><td>Identical (keys, values, types)</td></tr>
+        <tr><td>!=</td><td>Not equal</td></tr>
+        <tr><td>&lt;&gt;</td><td>Not equal</td></tr>
+        <tr><td>!==</td><td>Not identical</td></tr>
+    </table>
+
+    <hr>
+    <h3>8. Ternary Operator</h3>
+    <p>Shortcut for if-else.</p>
+
+    <pre><code>&lt;?php
+$result = ($age >= 18) ? "Adult" : "Minor";
+?&gt;</code></pre>
+
+    <hr>
+    <h3>9. Null Coalescing Operator (??)</h3>
+    <p>Returns the first non-null value.</p>
+
+    <pre><code>&lt;?php
+$name = $_GET['name'] ?? "Guest";
+?&gt;</code></pre>
+
+    <hr>
+    <h3>10. Execution Operator (`)</h3>
+    <p>Used to execute shell commands.</p>
+
+    <pre><code>&lt;?php
+$output = `ls -l`;
+echo $output;
+?&gt;</code></pre>
+
+    <hr>
+    <h3>11. Type Operator (instanceof)</h3>
+    <p>Checks if object belongs to a class.</p>
+
+    <pre><code>&lt;?php
+class A {}
+$obj = new A();
+
+var_dump($obj instanceof A); // true
+?&gt;</code></pre>
+
+</section>
+
+<hr>
+
+<h2>3. PHP Control Statements</h2>
+
+<h3>3.1 if Statement</h3>
+<p>The <b>if</b> statement executes a block of code only when the condition is TRUE.</p>
+
+<pre><code>&lt;?php
+$age = 20;
+
+if ($age >= 18) {
+    echo "You are an adult";
+}
+?&gt;</code></pre>
+
+<h3>3.2 if-else Statement</h3>
+<p>Used when you want one block to run if TRUE, and another block if FALSE.</p>
+
+<pre><code>&lt;?php
+$age = 16;
+
+if ($age >= 18) {
+    echo "Adult";
+} else {
+    echo "Minor";
+}
+?&gt;</code></pre>
+
+<h3>3.3 else-if (elseif)</h3>
+<p>Used to check multiple conditions.</p>
+
+<pre><code>&lt;?php
+$marks = 75;
+
+if ($marks >= 90) {
+    echo "Grade A";
+} elseif ($marks >= 70) {
+    echo "Grade B";
+} elseif ($marks >= 50) {
+    echo "Grade C";
+} else {
+    echo "Fail";
+}
+?&gt;</code></pre>
+
+<h3>3.4 switch Statement</h3>
+<p>Used when comparing a variable with multiple fixed values.</p>
+
+<pre><code>&lt;?php
+$day = 3;
+
+switch ($day) {
+    case 1: echo "Monday"; break;
+    case 2: echo "Tuesday"; break;
+    case 3: echo "Wednesday"; break;
+    default: echo "Invalid day";
+}
+?&gt;</code></pre>
+
+<h3>3.5 Loops</h3>
+
+<h4>a) for loop</h4>
+<p>Used when you know the exact number of iterations.</p>
+
+<pre><code>&lt;?php
+for ($i = 1; $i <= 5; $i++) {
+    echo $i . " ";
+}
+?&gt;</code></pre>
+
+<h4>b) while loop</h4>
+<p>Runs as long as the condition is TRUE.</p>
+
+<pre><code>&lt;?php
+$i = 1;
+while ($i <= 5) {
+    echo $i . " ";
+    $i++;
+}
+?&gt;</code></pre>
+
+<h4>c) do-while loop</h4>
+<p>Runs at least once even if the condition is FALSE.</p>
+
+<pre><code>&lt;?php
+$i = 1;
+do {
+    echo $i . " ";
+    $i++;
+} while ($i <= 5);
+?&gt;</code></pre>
+
+<h4>d) foreach loop</h4>
+<p>Used to iterate over arrays.</p>
+
+<pre><code>&lt;?php
+$colors = ["Red", "Green", "Blue"];
+
+foreach ($colors as $c) {
+    echo $c . " ";
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h2>4. PHP Functions</h2>
+
+<h3>4.1 Creating a Function</h3>
+<p>Functions help reuse code by grouping logic into a single block.</p>
+
+<pre><code>&lt;?php
+function greet() {
+    echo "Hello from PHP!";
+}
+
+greet();
+?&gt;</code></pre>
+
+<h3>4.2 Function with Return Statement</h3>
+<p>A function can return a value using <b>return</b>.</p>
+
+<pre><code>&lt;?php
+function add($a, $b) {
+    return $a + $b;
+}
+
+echo add(5, 3);  // Output: 8
+?&gt;</code></pre>
+
+<h3>4.3 Function Parameters</h3>
+<p>Values can be passed to functions through parameters.</p>
+
+<pre><code>&lt;?php
+function welcome($name) {
+    echo "Welcome, $name!";
+}
+
+welcome("Aathi");
+?&gt;</code></pre>
+
+<h3>4.4 Default Parameters</h3>
+<p>Assign a default value to a parameter.</p>
+
+<pre><code>&lt;?php
+function greetUser($name = "Guest") {
+    echo "Hello, $name!";
+}
+
+greetUser();          // Output: Hello, Guest!
+greetUser("Aathi");   // Output: Hello, Aathi!
+?&gt;</code></pre>
+
+<h3>4.5 Type Hints (Type Declarations)</h3>
+<p>Ensure parameter types (int, float, string, array, bool, object).</p>
+
+<pre><code>&lt;?php
+function multiply(int $a, int $b): int {
+    return $a * $b;
+}
+
+echo multiply(4, 5);  // Output: 20
+?&gt;</code></pre>
+
+<h3>4.6 Variable Functions</h3>
+<p>If a variable contains a function name, it can be called like a function.</p>
+
+<pre><code>&lt;?php
+function hello() {
+    echo "Hello!";
+}
+
+$func = "hello";
+$func();   // Calls hello()
+?&gt;</code></pre>
+
+<h3>4.7 Anonymous Functions (Closures)</h3>
+<p>Functions without a name, often assigned to variables.</p>
+
+<pre><code>&lt;?php
+$sum = function($a, $b) {
+    return $a + $b;
+};
+
+echo $sum(3, 7);  // Output: 10
+?&gt;</code></pre>
+
+<h3>4.8 Arrow Functions (PHP 7.4+)</h3>
+<p>Short syntax for simple one-line anonymous functions.</p>
+
+<pre><code>&lt;?php
+$add = fn($a, $b) => $a + $b;
+
+echo $add(10, 20);  // Output: 30
+?&gt;</code></pre>
+
+<h3>4.9 Passing Functions as Arguments</h3>
+<p>Functions can be passed as callback values.</p>
+
+<pre><code>&lt;?php
+function callMe($callback) {
+    echo $callback(5);
+}
+
+callMe(fn($x) => $x * 2);   // Output: 10
+?&gt;</code></pre>
+
+<hr>
+
+<h2>5. PHP Arrays</h2>
+
+<p>Arrays store multiple values in one variable. PHP has three main types of arrays.</p>
+
+<h3>5.1 Indexed Arrays</h3>
+<p>Arrays with numeric indexes (0,1,2...).</p>
+
+<pre><code>&lt;?php
+$fruits = ["Apple", "Banana", "Cherry"];
+
+echo $fruits[0]; // Output: Apple
+
+foreach ($fruits as $fruit) {
+    echo $fruit . " ";
+}
+?&gt;</code></pre>
+
+<h3>5.2 Associative Arrays</h3>
+<p>Arrays with named keys instead of numbers.</p>
+
+<pre><code>&lt;?php
+$person = [
+    "name" => "Aathi",
+    "age" => 21,
+    "city" => "Chennai"
+];
+
+echo $person["name"]; // Output: Aathi
+?&gt;</code></pre>
+
+<h3>5.3 Multidimensional Arrays</h3>
+<p>Arrays inside arrays.</p>
+
+<pre><code>&lt;?php
+$students = [
+    ["Aathi", 21, "Chennai"],
+    ["Rahul", 22, "Bangalore"],
+    ["Meena", 20, "Mumbai"]
+];
+
+echo $students[0][0]; // Output: Aathi
+?&gt;</code></pre>
+
+<h3>5.4 Associative Multidimensional Arrays</h3>
+
+<pre><code>&lt;?php
+$employees = [
+    "emp1" => ["name" => "Arun", "salary" => 30000],
+    "emp2" => ["name" => "Kavi", "salary" => 28000]
+];
+
+echo $employees["emp1"]["salary"]; // Output: 30000
+?&gt;</code></pre>
+
+<h3>5.5 Array Functions</h3>
+
+<h4>5.5.1 count()</h4>
+<p>Counts number of elements.</p>
+
+<pre><code>&lt;?php
+$arr = [1, 2, 3];
+echo count($arr); // Output: 3
+?&gt;</code></pre>
+
+<h4>5.5.2 array_push()</h4>
+<p>Add elements to the end.</p>
+
+<pre><code>&lt;?php
+$nums = [1, 2];
+array_push($nums, 3, 4);
+
+print_r($nums);
+// Output: [1,2,3,4]
+?&gt;</code></pre>
+
+<h4>5.5.3 array_pop()</h4>
+<p>Removes last element.</p>
+
+<pre><code>&lt;?php
+$nums = [1, 2, 3];
+array_pop($nums);
+
+print_r($nums);
+// Output: [1,2]
+?&gt;</code></pre>
+
+<h4>5.5.4 array_shift()</h4>
+<p>Removes the first element.</p>
+
+<pre><code>&lt;?php
+$arr = ["a", "b", "c"];
+array_shift($arr);
+
+print_r($arr);
+// Output: ["b","c"]
+?&gt;</code></pre>
+
+<h4>5.5.5 array_unshift()</h4>
+<p>Adds elements to the beginning.</p>
+
+<pre><code>&lt;?php
+$arr = ["b", "c"];
+array_unshift($arr, "a");
+
+print_r($arr);
+// Output: ["a","b","c"]
+?&gt;</code></pre>
+
+<h4>5.5.6 in_array()</h4>
+<p>Checks if a value exists.</p>
+
+<pre><code>&lt;?php
+$colors = ["red", "green", "blue"];
+
+echo in_array("green", $colors); // Output: 1 (true)
+?&gt;</code></pre>
+
+<h4>5.5.7 array_key_exists()</h4>
+<p>Checks if a key exists in associative array.</p>
+
+<pre><code>&lt;?php
+$user = ["name" => "Hari", "age" => 20];
+
+echo array_key_exists("age", $user); // Output: 1
+?&gt;</code></pre>
+
+<h4>5.5.8 array_merge()</h4>
+<p>Combines two or more arrays.</p>
+
+<pre><code>&lt;?php
+$a = [1, 2];
+$b = [3, 4];
+
+print_r(array_merge($a, $b));
+// Output: [1,2,3,4]
+?&gt;</code></pre>
+
+<h4>5.5.9 array_slice()</h4>
+<p>Extracts part of an array.</p>
+
+<pre><code>&lt;?php
+$arr = [10, 20, 30, 40];
+
+print_r(array_slice($arr, 1, 2));
+// Output: [20,30]
+?&gt;</code></pre>
+
+<h4>5.5.10 array_map()</h4>
+<p>Applies a function to all elements.</p>
+
+<pre><code>&lt;?php
+$nums = [1, 2, 3];
+
+$square = array_map(fn($n) => $n * $n, $nums);
+
+print_r($square);
+// Output: [1,4,9]
+?&gt;</code></pre>
+
+<h4>5.5.11 array_filter()</h4>
+<p>Filters an array based on condition.</p>
+
+<pre><code>&lt;?php
+$nums = [10, 15, 20, 25];
+
+$even = array_filter($nums, fn($n) => $n % 2 == 0);
+
+print_r($even);
+// Output: [10,20]
+?&gt;</code></pre>
+
+<hr>
+
+<h2>6. PHP Strings</h2>
+
+<p>Strings in PHP are sequences of characters. They can be enclosed in single quotes (' ') or double quotes (" ").</p>
+
+<h3>6.1 String Creation</h3>
+
+<pre><code>&lt;?php
+$str1 = "Hello World";
+$str2 = 'PHP is awesome';
+
+echo $str1;
+?&gt;</code></pre>
+
+<h3>6.2 String Interpolation</h3>
+<p>Interpolation works only with double quotes (" ").</p>
+
+<pre><code>&lt;?php
+$name = "Aathi";
+
+echo "Hello, $name";   // Output: Hello, Aathi
+echo 'Hello, $name';   // Output: Hello, $name (no interpolation)
+?&gt;</code></pre>
+
+<hr>
+
+<h3>6.3 explode() – Convert String to Array</h3>
+
+<pre><code>&lt;?php
+$text = "apple,banana,mango";
+$fruits = explode(",", $text);
+
+print_r($fruits);
+// Output: ["apple", "banana", "mango"]
+?&gt;</code></pre>
+
+<h3>6.4 implode() – Convert Array to String</h3>
+
+<pre><code>&lt;?php
+$words = ["PHP", "is", "great"];
+$str = implode(" ", $words);
+
+echo $str;
+// Output: PHP is great
+?&gt;</code></pre>
+
+<hr>
+
+<h2>6.5 Common String Functions</h2>
+
+<h3>6.5.1 strlen()</h3>
+<p>Returns length of string.</p>
+
+<pre><code>&lt;?php
+echo strlen("Hello");  
+// Output: 5
+?&gt;</code></pre>
+
+<h3>6.5.2 strpos()</h3>
+<p>Find position of substring (case sensitive).</p>
+
+<pre><code>&lt;?php
+echo strpos("Hello World", "World"); 
+// Output: 6
+?&gt;</code></pre>
+
+<h3>6.5.3 str_replace()</h3>
+<p>Replace words inside a string.</p>
+
+<pre><code>&lt;?php
+echo str_replace("World", "PHP", "Hello World");
+// Output: Hello PHP
+?&gt;</code></pre>
+
+<h3>6.5.4 strtolower() / strtoupper()</h3>
+<p>Convert to lower/upper case.</p>
+
+<pre><code>&lt;?php
+echo strtolower("HELLO"); // hello
+echo strtoupper("hello"); // HELLO
+?&gt;</code></pre>
+
+<h3>6.5.5 substr()</h3>
+<p>Extract a part of a string.</p>
+
+<pre><code>&lt;?php
+echo substr("Programming", 0, 6);  
+// Output: Progra
+?&gt;</code></pre>
+
+<h3>6.5.6 trim()</h3>
+<p>Removes spaces from beginning and end.</p>
+
+<pre><code>&lt;?php
+echo trim("  Hello  ");  
+// Output: Hello
+?&gt;</code></pre>
+
+<h3>6.5.7 strrev()</h3>
+<p>Reverse a string.</p>
+
+<pre><code>&lt;?php
+echo strrev("PHP");  
+// Output: PHP (same because palindrome)
+?&gt;</code></pre>
+
+<h3>6.5.8 ucfirst() / ucwords()</h3>
+<p>Capitalizes first letter.</p>
+
+<pre><code>&lt;?php
+echo ucfirst("hello world");   // Hello world
+echo ucwords("hello world");   // Hello World
+?&gt;</code></pre>
+
+<hr>
+
+<h2>6.6 HEREDOC</h2>
+<p>Used for multiline strings with interpolation.</p>
+
+<pre><code>&lt;?php
+$name = "Aathi";
+
+$doc = <<<TEXT
+Hello, my name is $name.
+PHP HEREDOC example.
+TEXT;
+
+echo $doc;
+?&gt;</code></pre>
+
+<h2>6.7 NOWDOC</h2>
+<p>Similar to HEREDOC, but no variable interpolation.</p>
+
+<pre><code>&lt;?php
+$name = "Aathi";
+
+$doc = <<<'TEXT'
+Hello, my name is $name.
+This is NOWDOC.
+TEXT;
+
+echo $doc;
+?&gt;</code></pre>
+
+<hr>
+
+<h2>7. PHP Forms</h2>
+
+<p>Forms in PHP are used to collect user input from web pages. Data can be sent using <b>GET</b> or <b>POST</b> methods.</p>
+
+<hr>
+
+<h3>7.1 GET Method</h3>
+<p>Data is sent via URL. Visible in browser. Suitable for non-sensitive data.</p>
+
+<pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;body&gt;
+
+&lt;form method="get" action="process.php"&gt;
+  Name: &lt;input type="text" name="username"&gt;&lt;br&gt;
+  &lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+<pre><code>&lt;?php
+// process.php
+if(isset($_GET['username'])) {
+    $name = $_GET['username'];
+    echo "Hello, $name!";
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h3>7.2 POST Method</h3>
+<p>Data is sent in HTTP request body. More secure. Suitable for passwords and sensitive data.</p>
+
+<pre>
+&lt;form method="post" action="process.php"&gt;
+  Password: &lt;input type="password" name="password"&gt;&lt;br&gt;
+  &lt;input type="submit" value="Submit"&gt;
+&lt;/form&gt;
+</pre>
+
+<pre><code>&lt;?php
+// process.php
+if(isset($_POST['password'])) {
+    $pass = $_POST['password'];
+    echo "Password received.";
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h3>7.3 Form Validation</h3>
+<p>Always validate user input before using it.</p>
+
+<pre><code>&lt;?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (empty($_POST["username"])) {
+        echo "Name is required";
+    } else {
+        $name = htmlspecialchars($_POST["username"]);
+        echo "Hello, $name!";
+    }
+}
+?&gt;</code></pre>
+
+<h3>7.4 $_REQUEST Superglobal</h3>
+<p>$_REQUEST contains data from GET, POST, and COOKIE. Can access any form data, but it's better to use $_GET or $_POST specifically.</p>
+
+<pre><code>&lt;?php
+// Using $_REQUEST
+$name = $_REQUEST['username'] ?? 'Guest';
+echo "Hello, $name";
+?&gt;</code></pre>
+
+<hr>
+
+<h3>7.5 Summary</h3>
+<ul>
+<li>Use <b>GET</b> for non-sensitive data, URL parameters.</li>
+<li>Use <b>POST</b> for sensitive data and larger data.</li>
+<li>Always validate form inputs using PHP.</li>
+<li>Use <b>$_GET</b>, <b>$_POST</b> over <b>$_REQUEST</b> for clarity and security.</li>
+</ul>
+
+<hr>
+
+<h2>8. PHP Superglobals</h2>
+
+<p>Superglobals are built-in variables in PHP that are always accessible, regardless of scope.</p>
+
+<hr>
+
+<h3>8.1 $_SERVER</h3>
+<p>Contains information about headers, paths, and script locations.</p>
+
+<pre><code>&lt;?php
+echo $_SERVER['PHP_SELF'];      // Current script
+echo $_SERVER['SERVER_NAME'];   // Server name
+echo $_SERVER['HTTP_USER_AGENT']; // Browser info
+echo $_SERVER['REQUEST_METHOD']; // GET or POST
+?&gt;</code></pre>
+
+<hr>
+
+<h3>8.2 $_SESSION</h3>
+<p>Used to store information (variables) to be used across multiple pages.</p>
+
+<pre><code>&lt;?php
+// Start session
+session_start();
+
+// Set session variable
+$_SESSION['username'] = "Aathi";
+
+// Access session variable
+echo $_SESSION['username'];
+
+// Destroy session
+// session_destroy();
+?&gt;</code></pre>
+
+<hr>
+
+<h3>8.3 $_COOKIE</h3>
+<p>Used to store data in the user's browser.</p>
+
+<pre><code>&lt;?php
+// Set cookie (expires in 1 hour)
+setcookie("user", "Aathi", time() + 3600);
+
+// Access cookie
+if(isset($_COOKIE['user'])) {
+    echo $_COOKIE['user'];
+}
+
+// Delete cookie
+// setcookie("user", "", time() - 3600);
+?&gt;</code></pre>
+
+<hr>
+
+<h3>8.4 $_FILES</h3>
+<p>Used to handle file uploads from forms.</p>
+
+<pre>
+&lt;form method="post" enctype="multipart/form-data"&gt;
+  Select file: &lt;input type="file" name="fileToUpload"&gt;&lt;br&gt;
+  &lt;input type="submit" value="Upload"&gt;
+&lt;/form&gt;
+</pre>
+
+<pre><code>&lt;?php
+if(isset($_FILES['fileToUpload'])) {
+    $fileName = $_FILES['fileToUpload']['name'];
+    $fileTmp = $_FILES['fileToUpload']['tmp_name'];
+
+    move_uploaded_file($fileTmp, "uploads/" . $fileName);
+    echo "File uploaded: " . $fileName;
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h3>8.5 Summary</h3>
+<ul>
+    <li>$_SERVER → server & execution environment info</li>
+    <li>$_SESSION → persistent data across pages for a user</li>
+    <li>$_COOKIE → small data stored in browser</li>
+    <li>$_FILES → uploaded files data</li>
+</ul>
+
+<hr>
+
+<h2>9. PHP File Handling</h2>
+
+<p>PHP provides functions to work with files: reading, writing, appending, and uploading files via forms.</p>
+
+<hr>
+
+<h3>9.1 Reading Files</h3>
+
+<p>Using <b>fopen()</b>, <b>fread()</b>, <b>fgets()</b>, and <b>file_get_contents()</b>.</p>
+
+<pre><code>&lt;?php
+// Using fopen() and fread()
+$file = fopen("example.txt", "r"); // Open in read mode
+$content = fread($file, filesize("example.txt"));
+fclose($file);
+echo $content;
+
+// Using file_get_contents()
+$content2 = file_get_contents("example.txt");
+echo $content2;
+?&gt;</code></pre>
+
+<h3>9.2 Writing Files</h3>
+
+<p>Using <b>fopen()</b> with write mode ("w") or <b>file_put_contents()</b>.</p>
+
+<pre><code>&lt;?php
+// Using fopen() and fwrite()
+$file = fopen("example.txt", "w"); // Write mode, overwrites
+fwrite($file, "Hello PHP File Handling!");
+fclose($file);
+
+// Using file_put_contents()
+file_put_contents("example.txt", "New content written!");
+?&gt;</code></pre>
+
+<h3>9.3 Appending to Files</h3>
+
+<p>Use <b>"a"</b> mode in fopen() or file_put_contents() with <b>FILE_APPEND</b>.</p>
+
+<pre><code>&lt;?php
+// Using fopen() in append mode
+$file = fopen("example.txt", "a");
+fwrite($file, "\nAppended line.");
+fclose($file);
+
+// Using file_put_contents() with FILE_APPEND
+file_put_contents("example.txt", "\nAnother appended line.", FILE_APPEND);
+?&gt;</code></pre>
+
+<h3>9.4 File Uploads</h3>
+
+<p>Using <b>$_FILES</b> superglobal and HTML form.</p>
+
+<pre>
+&lt;form method="post" enctype="multipart/form-data"&gt;
+  Select file: &lt;input type="file" name="fileToUpload"&gt;&lt;br&gt;
+  &lt;input type="submit" value="Upload"&gt;
+&lt;/form&gt;
+</pre>
+
+<pre><code>&lt;?php
+if(isset($_FILES['fileToUpload'])) {
+    $fileName = $_FILES['fileToUpload']['name'];
+    $fileTmp = $_FILES['fileToUpload']['tmp_name'];
+    $fileSize = $_FILES['fileToUpload']['size'];
+    $fileType = $_FILES['fileToUpload']['type'];
+
+    // Move file to uploads folder
+    move_uploaded_file($fileTmp, "uploads/" . $fileName);
+
+    echo "File uploaded: $fileName ($fileType, $fileSize bytes)";
+}
+?&gt;</code></pre>
+
+<h3>9.5 File Functions Summary</h3>
+<ul>
+    <li>fopen() – Open a file in read/write/append mode</li>
+    <li>fread() – Read file content</li>
+    <li>fwrite() – Write to a file</li>
+    <li>fclose() – Close a file</li>
+    <li>file_get_contents() – Read entire file content at once</li>
+    <li>file_put_contents() – Write or append to a file</li>
+    <li>move_uploaded_file() – Move uploaded file to a directory</li>
+</ul>
+
+<hr>
+
+<h2>10. PHP – Object-Oriented Programming (OOP)</h2>
+
+<p>OOP in PHP allows you to create classes, objects, and use concepts like inheritance, interfaces, and traits for better code structure and reusability.</p>
+
+<hr>
+
+<h3>10.1 Classes & Objects</h3>
+
+<pre><code>&lt;?php
+// Class definition
+class Person {
+    public $name;
+    public $age;
+
+    // Method
+    public function introduce() {
+        echo "Hello, my name is $this->name and I am $this->age years old.";
+    }
+}
+
+// Creating object
+$person1 = new Person();
+$person1->name = "Aathi";
+$person1->age = 21;
+$person1->introduce();
+?&gt;</code></pre>
+
+<hr>
+
+<h3>10.2 Constructor</h3>
+<p>A constructor is a special method called automatically when an object is created.</p>
+
+<pre><code>&lt;?php
+class Person {
+    public $name;
+    public $age;
+
+    // Constructor
+    public function __construct($name, $age) {
+        $this->name = $name;
+        $this->age = $age;
+    }
+
+    public function introduce() {
+        echo "Hello, I am $this->name, $this->age years old.";
+    }
+}
+
+$person2 = new Person("Rahul", 25);
+$person2->introduce();
+?&gt;</code></pre>
+
+<hr>
+
+<h3>10.3 Inheritance</h3>
+<p>A class can inherit properties and methods from another class using <b>extends</b>.</p>
+
+<pre><code>&lt;?php
+class Animal {
+    public function eat() {
+        echo "Eating...";
+    }
+}
+
+class Dog extends Animal {
+    public function bark() {
+        echo "Barking...";
+    }
+}
+
+$dog = new Dog();
+$dog->eat();   // Inherited from Animal
+$dog->bark();  // Own method
+?&gt;</code></pre>
+
+<hr>
+
+<h3>10.4 Interfaces</h3>
+<p>Interfaces define methods a class must implement. They enforce a contract.</p>
+
+<pre><code>&lt;?php
+interface Logger {
+    public function log($message);
+}
+
+class FileLogger implements Logger {
+    public function log($message) {
+        echo "Logging to file: $message";
+    }
+}
+
+$logger = new FileLogger();
+$logger->log("Hello World");
+?&gt;</code></pre>
+
+<hr>
+
+<h3>10.5 Traits</h3>
+<p>Traits are used to reuse methods across multiple classes.</p>
+
+<pre><code>&lt;?php
+trait Hello {
+    public function sayHello() {
+        echo "Hello from Trait!";
+    }
+}
+
+class User {
+    use Hello;
+}
+
+$user = new User();
+$user->sayHello();
+?&gt;</code></pre>
+
+<hr>
+
+<h3>10.6 Static Members</h3>
+<p>Static properties and methods belong to the class, not objects. Access using :: operator.</p>
+
+<pre><code>&lt;?php
+class Math {
+    public static $pi = 3.14;
+
+    public static function square($x) {
+        return $x * $x;
+    }
+}
+
+echo Math::$pi;           // Access static property
+echo Math::square(5);     // Access static method
+?&gt;</code></pre>
+
+<hr>
+
+<h3>10.7 Summary</h3>
+<ul>
+    <li>Classes define blueprint, objects are instances.</li>
+    <li>Constructor (__construct) initializes objects.</li>
+    <li>Inheritance (extends) allows code reuse.</li>
+    <li>Interfaces define method contracts.</li>
+    <li>Traits allow method reuse across classes.</li>
+    <li>Static members belong to the class itself, not objects.</li>
+</ul>
+
+<hr>
+
+<h2>11. PHP – Error Handling</h2>
+
+<p>PHP provides ways to handle runtime errors and create custom error messages for better control.</p>
+
+<hr>
+
+<h3>11.1 try / catch</h3>
+<p>Used to catch exceptions and handle them without breaking the application.</p>
+
+<pre><code>&lt;?php
+function divide($a, $b) {
+    if ($b == 0) {
+        throw new Exception("Division by zero.");
+    }
+    return $a / $b;
+}
+
+try {
+    echo divide(10, 2);  // Output: 5
+    echo divide(5, 0);   // Throws exception
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h3>11.2 finally</h3>
+<p>Optional block to execute code regardless of exception.</p>
+
+<pre><code>&lt;?php
+try {
+    echo divide(10, 0);
+} catch (Exception $e) {
+    echo "Caught: " . $e->getMessage();
+} finally {
+    echo " - Execution finished.";
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h3>11.3 Custom Error Handling</h3>
+<p>Create your own error handler using <b>set_error_handler()</b>.</p>
+
+<pre><code>&lt;?php
+// Custom error function
+function myErrorHandler($errno, $errstr, $errfile, $errline) {
+    echo "Custom Error [$errno]: $errstr in $errfile on line $errline";
+}
+
+// Set custom error handler
+set_error_handler("myErrorHandler");
+
+// Trigger an error
+echo $undefinedVar;  // Notice triggers custom handler
+?&gt;</code></pre>
+
+<hr>
+
+<h3>11.4 trigger_error()</h3>
+<p>Manually trigger user-level errors.</p>
+
+<pre><code>&lt;?php
+$value = -1;
+
+if($value < 0) {
+    trigger_error("Value must be positive", E_USER_WARNING);
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h3>11.5 Summary</h3>
+<ul>
+    <li>Use <b>try/catch</b> to catch exceptions safely.</li>
+    <li><b>throw</b> keyword is used to generate exceptions.</li>
+    <li><b>finally</b> block always executes.</li>
+    <li>Use <b>set_error_handler()</b> for custom error handling.</li>
+    <li><b>trigger_error()</b> allows manual error triggering.</li>
+</ul>
+
+<hr>
+
+<h2>12. PHP – PDO (PHP Data Objects)</h2>
+
+<p>PDO is a database access layer providing a uniform method to interact with databases like MySQL, PostgreSQL, etc. It supports prepared statements for secure queries.</p>
+
+<hr>
+
+<h3>12.1 Connecting to MySQL</h3>
+
+<pre><code>&lt;?php
+$host = 'localhost';
+$db   = 'testdb';
+$user = 'root';
+$pass = '';
+$charset = 'utf8mb4';
+
+$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+
+try {
+    $pdo = new PDO($dsn, $user, $pass);
+    // Set PDO error mode to exception
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully";
+} catch (PDOException $e) {
+    echo "Connection failed: " . $e->getMessage();
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h3>12.2 SELECT</h3>
+
+<pre><code>&lt;?php
+$sql = "SELECT * FROM users";
+$stmt = $pdo->query($sql);
+
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo $row['id'] . " - " . $row['name'] . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+
+<h3>12.3 INSERT</h3>
+
+<pre><code>&lt;?php
+$sql = "INSERT INTO users (name, email) VALUES ('Aathi', 'aathi@example.com')";
+$pdo->exec($sql);
+echo "New record inserted";
+?&gt;</code></pre>
+
+<h3>12.4 UPDATE</h3>
+
+<pre><code>&lt;?php
+$sql = "UPDATE users SET email='newemail@example.com' WHERE id=1";
+$pdo->exec($sql);
+echo "Record updated";
+?&gt;</code></pre>
+
+<h3>12.5 DELETE</h3>
+
+<pre><code>&lt;?php
+$sql = "DELETE FROM users WHERE id=1";
+$pdo->exec($sql);
+echo "Record deleted";
+?&gt;</code></pre>
+
+<hr>
+
+<h3>12.6 Prepared Statements</h3>
+
+<p>Prepared statements prevent SQL injection and allow parameterized queries.</p>
+
+<pre><code>&lt;?php
+// Prepare statement
+$stmt = $pdo->prepare("INSERT INTO users (name, email) VALUES (:name, :email)");
+
+// Bind parameters
+$stmt->bindParam(':name', $name);
+$stmt->bindParam(':email', $email);
+
+// Insert first user
+$name = "Rahul";
+$email = "rahul@example.com";
+$stmt->execute();
+
+// Insert second user
+$name = "Meena";
+$email = "meena@example.com";
+$stmt->execute();
+
+echo "Records inserted using prepared statement";
+?&gt;</code></pre>
+
+<hr>
+
+<h3>12.7 Summary</h3>
+<ul>
+    <li>PDO provides a consistent way to interact with multiple databases.</li>
+    <li>Always use <b>try/catch</b> to handle connection errors.</li>
+    <li>Use <b>prepared statements</b> to prevent SQL injection.</li>
+    <li>PDO supports fetching data as associative arrays, objects, or numeric arrays.</li>
+</ul>
+
+<hr>
+
+<h2>13. PHP Security</h2>
+
+<p>Security is essential to protect applications from attacks like SQL Injection, XSS, and insecure password storage.</p>
+
+<hr>
+
+<h3>13.1 SQL Injection</h3>
+
+<p>Occurs when user input is directly included in SQL queries.</p>
+
+<pre><code>&lt;?php
+// Unsafe (vulnerable)
+$user = $_GET['username'];
+$sql = "SELECT * FROM users WHERE username='$user'";
+$pdo->query($sql);
+
+// Safe using prepared statements
+$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username");
+$stmt->bindParam(':username', $user);
+$stmt->execute();
+?&gt;</code></pre>
+
+<h3>13.2 Cross-Site Scripting (XSS)</h3>
+
+<p>Occurs when user input is rendered directly in HTML.</p>
+
+<pre><code>&lt;?php
+// Unsafe
+echo $_GET['comment'];
+
+// Safe
+echo htmlspecialchars($_GET['comment']); // Converts special characters to HTML entities
+?&gt;</code></pre>
+
+<h3>13.3 Password Hashing</h3>
+
+<pre><code>&lt;?php
+$password = "mypassword";
+
+// Hash password
+$hash = password_hash($password, PASSWORD_DEFAULT);
+
+// Verify password
+if(password_verify("mypassword", $hash)) {
+    echo "Password matched";
+} else {
+    echo "Invalid password";
+}
+?&gt;</code></pre>
+
+<hr>
+
+<h3>13.4 Summary</h3>
+<ul>
+    <li>Always use prepared statements to prevent SQL Injection.</li>
+    <li>Use <b>htmlspecialchars()</b> to prevent XSS attacks.</li>
+    <li>Never store plain text passwords; always hash using <b>password_hash()</b>.</li>
+</ul>
+
+<hr>
+
+<h2>14. PHP & HTML Integration</h2>
+
+<p>PHP can be integrated with HTML using <b>include</b>, <b>require</b>, and templates for modular code.</p>
+
+<hr>
+
+<h3>14.1 include</h3>
+
+<p>Includes another PHP file. Gives a warning if file not found but continues execution.</p>
+
+<pre>
+&lt;?php
+include 'header.php';
+?&gt;
+
+&lt;h1&gt;Welcome&lt;/h1&gt;
+
+&lt;?php
+include 'footer.php';
+?&gt;
+</pre>
+
+<h3>14.2 require</h3>
+
+<p>Includes another PHP file. Throws a fatal error if file not found.</p>
+
+<pre>
+&lt;?php
+require 'config.php';
+?&gt;
+</pre>
+
+<h3>14.3 include_once / require_once</h3>
+
+<p>Ensures the file is included only once to prevent redeclaration errors.</p>
+
+<pre>
+&lt;?php
+include_once 'functions.php';
+require_once 'config.php';
+?&gt;
+</pre>
+
+<hr>
+
+<h3>14.4 Templates</h3>
+
+<p>Separates HTML layout from PHP logic for clean code.</p>
+
+<pre>
+&lt;!-- header.php --&gt;
+&lt;header&gt;
+  &lt;h1&gt;My Website&lt;/h1&gt;
+&lt;/header&gt;
+
+&lt;!-- index.php --&gt;
+&lt;?php include 'header.php'; ?&gt;
+&lt;main&gt;
+  &lt;p&gt;Welcome to my site!&lt;/p&gt;
+&lt;/main&gt;
+&lt;?php include 'footer.php'; ?&gt;
+
+&lt;!-- footer.php --&gt;
+&lt;footer&gt;
+  &lt;p&gt;Footer content&lt;/p&gt;
+&lt;/footer&gt;
+</pre>
+
+<hr>
+
+<h3>14.5 Summary</h3>
+<ul>
+    <li><b>include</b> and <b>require</b> allow modular code.</li>
+    <li><b>_once</b> prevents multiple inclusions.</li>
+    <li>Templates help separate logic from presentation.</li>
+</ul>
+
+<br>
+
+<section id="php-constants">
+  <h2>1. PHP Constants</h2>
+
+  <p>Constants are values that cannot be changed once defined.</p>
+
+  <pre><code>
+define("SITE", "MyWebsite");   // global constant
+const PI = 3.14;              // compile-time constant
+  </code></pre>
+
+  <p><b>Difference:</b></p>
+  <ul>
+    <li><code>define()</code> → runtime, can be inside condition</li>
+    <li><code>const</code> → compile time, cannot be inside condition</li>
+  </ul>
+</section>
+
+<br>
+
+<section id="php-cli-input">
+  <h2>2. Command Line Input (CLI)</h2>
+
+  <h3>readline()</h3>
+  <p>Used to read input from terminal.</p>
+
+  <pre><code>
+$name = readline("Enter name: ");
+echo $name;
+  </code></pre>
+
+  <h3>fgets(STDIN)</h3>
+  <p>Reads a line from standard input.</p>
+
+  <pre><code>
+$name = trim(fgets(STDIN));
+echo $name;
+  </code></pre>
+
+  <h3>fscanf()</h3>
+  <p>Reads formatted input.</p>
+
+  <pre><code>
+fscanf(STDIN, "%d", $age);
+echo $age;
+  </code></pre>
+
+  <p><b>Note:</b> CLI input works only in terminal, not in browser.</p>
+</section>
+
+<br>
+
+<section id="php-output">
+  <h2>3. Output Methods</h2>
+
+  <pre><code>
+echo "Hello";
+print "Hello";
+
+var_dump($var);      // type + value
+print_r($array);    // readable array output
+  </code></pre>
+
+  <p><b>echo vs print:</b> echo is faster, print returns 1.</p>
+</section>
+
+<br>
+<section id="php-array-sort">
+  <h2>4. Array Sorting Functions</h2>
+
+  <pre><code>
+sort($arr);    // ascending by value
+rsort($arr);   // descending by value
+
+asort($arr);   // ascending, keep keys
+arsort($arr);  // descending, keep keys
+
+ksort($arr);   // ascending by key
+krsort($arr);  // descending by key
+  </code></pre>
+</section>
+
+<br>
+<section id="php-date">
+  <h2>5. Date and Time</h2>
+
+  <pre><code>
+echo date("Y-m-d H:i:s");
+  </code></pre>
+
+  <p>Y → Year, m → Month, d → Day, H → Hour, i → Minute, s → Second</p>
+</section>
+
+<br>
+
+<section id="php-superglobals">
+  <h2>6. PHP Superglobals</h2>
+
+  <ul>
+    <li>$_GET</li>
+    <li>$_POST</li>
+    <li>$_REQUEST</li>
+    <li>$_SERVER</li>
+    <li>$_SESSION</li>
+    <li>$_COOKIE</li>
+    <li>$_FILES</li>
+    <li>$_ENV</li>
+    <li>$GLOBALS</li>
+  </ul>
+
+  <pre><code>
+echo $_SERVER['HTTP_HOST'];
+  </code></pre>
+</section>
+
+
+<br>
+
+<section id="php-file-upload">
+  <h2>7. File Upload</h2>
+
+  <pre><code>
+<form method="post" enctype="multipart/form-data">
+  <input type="file" name="file">
+  <button>Upload</button>
+</form>
+  </code></pre>
+
+  <pre><code>
+move_uploaded_file(
+  $_FILES['file']['tmp_name'],
+  "uploads/" . $_FILES['file']['name']
+);
+  </code></pre>
+</section>
+
+<br>
+
+<section id="php-prepared">
+  <h2>8. Prepared Statements</h2>
+
+  <pre><code>
+$stmt = $conn->prepare("INSERT INTO users(name,email) VALUES (?,?)");
+$stmt->bind_param("ss", $name, $email);
+$stmt->execute();
+  </code></pre>
+
+  <p>Prevents SQL Injection.</p>
+</section>
+
+
+<br>
+
+<section id="php-error-handling">
+  <h2>9. Error Handling</h2>
+
+  <pre><code>
+try {
+  throw new Exception("Error occurred");
+} catch (Exception $e) {
+  echo $e->getMessage();
+} finally {
+  echo "Done";
+}
+  </code></pre>
+</section>
+
+<br>
+<section id="php-variable-scope">
+  <h2>10. Variable Scope (VERY IMPORTANT)</h2>
+
+  <p><b>Variable Scope</b> defines where a variable can be accessed in a PHP program.</p>
+
+  <h3>1) Local Scope</h3>
+  <p>
+    A variable declared <b>inside a function</b> is LOCAL.
+    It <b>cannot be accessed outside</b> that function.
+  </p>
+
+  <pre><code>
+function test() {
+  $x = 10;     // local variable
+  echo $x;
+}
+test();
+echo $x;      // error
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+10
+Undefined variable $x
+  </code></pre>
+
+  <p>
+    ❌ <b>Reason:</b> $x exists only inside <code>test()</code>.
+  </p>
+
+  <hr>
+
+  <h3>2) Global Scope</h3>
+  <p>
+    Variables declared <b>outside functions</b> are GLOBAL.
+    They are NOT automatically available inside functions.
+  </p>
+
+  <pre><code>
+$x = 10;
+
+function test() {
+  global $x;
+  echo $x;
+}
+
+test();
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+10
+  </code></pre>
+
+  <p>
+    ✔ <b>global</b> keyword allows a function to use global variables.
+  </p>
+
+  <hr>
+
+  <h3>3) $GLOBALS Array</h3>
+  <p>
+    <code>$GLOBALS</code> is a superglobal array.
+    It can access global variables from anywhere.
+  </p>
+
+  <pre><code>
+$x = 20;
+
+function demo() {
+  echo $GLOBALS['x'];
+}
+
+demo();
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+20
+  </code></pre>
+
+  <p>
+    ✔ Best when you want to avoid using <code>global</code> keyword.
+  </p>
+
+  <hr>
+
+  <h3>4) Static Variable</h3>
+  <p>
+    Static variables <b>remember their value</b> even after function execution.
+  </p>
+
+  <pre><code>
+function countCall() {
+  static $count = 0;
+  $count++;
+  echo $count . " ";
+}
+
+countCall();
+countCall();
+countCall();
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+1 2 3
+  </code></pre>
+
+  <p>
+    ✔ Static variables do not reset on every function call.
+  </p>
+</section>
+
+<br>
+<section id="php-db-connect">
+  <h2>11. Database Connections in PHP</h2>
+
+  <h3>1) MySQLi (Procedural)</h3>
+
+  <pre><code>
+$conn = mysqli_connect("localhost", "root", "", "test");
+
+if (!$conn) {
+  die("Connection failed");
+}
+
+echo "Connected successfully";
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Connected successfully
+  </code></pre>
+
+  <hr>
+
+  <h3>2) MySQLi (Object-Oriented)</h3>
+
+  <pre><code>
+$conn = new mysqli("localhost", "root", "", "test");
+
+if ($conn->connect_error) {
+  die("Connection failed");
+}
+
+echo "Connected";
+  </code></pre>
+
+  <hr>
+
+  <h3>3) PDO (Recommended)</h3>
+  <p>
+    PDO supports <b>multiple databases</b> and prepared statements.
+  </p>
+
+  <pre><code>
+try {
+  $conn = new PDO(
+    "mysql:host=localhost;dbname=test",
+    "root",
+    ""
+  );
+  echo "Connected";
+} catch (PDOException $e) {
+  echo $e->getMessage();
+}
+  </code></pre>
+
+  <hr>
+
+  <h3>4) PDO with PostgreSQL</h3>
+
+  <pre><code>
+$conn = new PDO(
+  "pgsql:host=localhost;dbname=testdb",
+  "postgres",
+  "password"
+);
+  </code></pre>
+
+  <hr>
+
+  <h3>5) PDO with SQLite</h3>
+
+  <pre><code>
+$conn = new PDO("sqlite:database.db");
+  </code></pre>
+</section>
+
+<br>
+
+<section id="php-include-require">
+  <h2>12. include vs require</h2>
+
+  <h3>include</h3>
+  <p>
+    Includes a file.
+    If file is missing → warning only.
+    Script continues execution.
+  </p>
+
+  <pre><code>
+include "header.php";
+echo "Page Loaded";
+  </code></pre>
+
+  <p><b>Output if file missing:</b></p>
+  <pre><code>
+Warning: include(header.php)
+Page Loaded
+  </code></pre>
+
+  <hr>
+
+  <h3>require</h3>
+  <p>
+    Includes a file.
+    If file is missing → fatal error.
+    Script stops execution.
+  </p>
+
+  <pre><code>
+require "config.php";
+echo "Loaded";
+  </code></pre>
+
+  <p><b>Output if file missing:</b></p>
+  <pre><code>
+Fatal error: require(config.php)
+  </code></pre>
+</section>
+
+<br>
+
+<section id="php-important-functions">
+  <h2>13. Important PHP Built-in Functions</h2>
+
+  <h3>isset()</h3>
+  <pre><code>
+$a = 10;
+var_dump(isset($a));
+  </code></pre>
+  <pre><code>
+true
+  </code></pre>
+
+  <hr>
+
+  <h3>empty()</h3>
+  <pre><code>
+$b = "";
+var_dump(empty($b));
+  </code></pre>
+  <pre><code>
+true
+  </code></pre>
+
+  <hr>
+
+  <h3>trim()</h3>
+  <pre><code>
+$str = " hello ";
+echo trim($str);
+  </code></pre>
+  <pre><code>
+hello
+  </code></pre>
+
+  <hr>
+
+  <h3>strlen()</h3>
+  <pre><code>
+echo strlen("PHP");
+  </code></pre>
+  <pre><code>
+3
+  </code></pre>
+
+  <hr>
+
+  <h3>substr()</h3>
+  <pre><code>
+echo substr("Programming", 0, 4);
+  </code></pre>
+  <pre><code>
+Prog
+  </code></pre>
+
+  <hr>
+
+  <h3>count()</h3>
+  <pre><code>
+$arr = [1,2,3];
+echo count($arr);
+  </code></pre>
+  <pre><code>
+3
+  </code></pre>
+
+  <hr>
+
+  <h3>in_array()</h3>
+  <pre><code>
+var_dump(in_array(2, [1,2,3]));
+  </code></pre>
+  <pre><code>
+true
+  </code></pre>
+
+  <hr>
+
+  <h3>htmlspecialchars()</h3>
+  <pre><code>
+echo htmlspecialchars("<h1>Hello</h1>");
+  </code></pre>
+  <pre><code>
+&lt;h1&gt;Hello&lt;/h1&gt;
+  </code></pre>
+
+  <hr>
+
+  <h3>password_hash() & password_verify()</h3>
+  <pre><code>
+$hash = password_hash("1234", PASSWORD_DEFAULT);
+var_dump(password_verify("1234", $hash));
+  </code></pre>
+  <pre><code>
+true
+  </code></pre>
+
+  <hr>
+
+  <h3>die() / exit()</h3>
+  <pre><code>
+echo "Start";
+die("Stopped");
+echo "End";
+  </code></pre>
+  <pre><code>
+StartStopped
+  </code></pre>
+</section>
+<br>
+<section id="php-cli-vs-web">
+  <h2>PHP CLI vs Web Execution</h2>
+
+  <p>
+    PHP can run in <b>two environments</b>:
+    <b>CLI (Command Line Interface)</b> and <b>Web Browser</b>.
+  </p>
+
+  <hr>
+
+  <h3>1) PHP CLI (Command Line Interface)</h3>
+
+  <p>
+    PHP CLI runs in <b>terminal / command prompt</b>.
+    Used for scripts, automation, cron jobs.
+  </p>
+
+  <h4>readline()</h4>
+  <pre><code>
+$name = readline("Enter name: ");
+echo $name;
+  </code></pre>
+
+  <p><b>Input:</b></p>
+  <pre><code>
+Enter name: Aathi
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <h4>fgets(STDIN)</h4>
+  <pre><code>
+$name = trim(fgets(STDIN));
+echo $name;
+  </code></pre>
+
+  <p>
+    ✔ Used when reading raw input from terminal.
+  </p>
+
+  <hr>
+
+  <h3>2) PHP Web (Browser)</h3>
+
+  <p>
+    PHP Web runs on a <b>server</b> and interacts with <b>HTML forms</b>.
+  </p>
+
+  <h4>$_GET</h4>
+  <pre><code>
+$name = $_GET['name'];
+echo $name;
+  </code></pre>
+
+  <p><b>URL:</b></p>
+  <pre><code>
+page.php?name=Aathi
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <h4>$_POST</h4>
+  <pre><code>
+$name = $_POST['name'];
+echo $name;
+  </code></pre>
+
+  <p>
+    ✔ Used for secure form submission.
+  </p>
+
+  <hr>
+
+  <h3>CLI vs Web Summary</h3>
+  <ul>
+    <li>CLI → terminal based</li>
+    <li>Web → browser based</li>
+    <li>CLI → readline(), fgets()</li>
+    <li>Web → $_GET, $_POST</li>
+  </ul>
+</section>
+<br>
+<section id="php-arrays">
+  <h2>PHP Arrays</h2>
+
+  <h3>1) Indexed Array</h3>
+  <pre><code>
+$arr = [10, 20, 30];
+echo $arr[1];
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+20
+  </code></pre>
+
+  <hr>
+
+  <h3>2) Associative Array</h3>
+  <pre><code>
+$user = ["name" => "Aathi", "age" => 21];
+echo $user["name"];
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <hr>
+
+  <h3>3) Multidimensional Array</h3>
+  <pre><code>
+$data = [
+  ["Math", 90],
+  ["CS", 95]
+];
+echo $data[1][0];
+  </code></pre>
+
+  <pre><code>
+CS
+  </code></pre>
+
+  <hr>
+
+  <h3>Important Array Functions</h3>
+
+  <pre><code>
+$arr = [3,1,2];
+sort($arr);
+print_r($arr);
+  </code></pre>
+
+  <pre><code>
+Array ( [0] => 1 [1] => 2 [2] => 3 )
+  </code></pre>
+
+  <pre><code>
+echo count($arr);
+  </code></pre>
+
+  <pre><code>
+3
+  </code></pre>
+
+  <pre><code>
+var_dump(in_array(2, $arr));
+  </code></pre>
+
+  <pre><code>
+true
+  </code></pre>
+</section>
+<br>
+<section id="php-strings">
+  <h2>PHP String Functions</h2>
+
+  <h3>strlen()</h3>
+  <pre><code>
+echo strlen("Hello");
+  </code></pre>
+
+  <pre><code>
+5
+  </code></pre>
+
+  <hr>
+
+  <h3>strtoupper()</h3>
+  <pre><code>
+echo strtoupper("php");
+  </code></pre>
+
+  <pre><code>
+PHP
+  </code></pre>
+
+  <hr>
+
+  <h3>strtolower()</h3>
+  <pre><code>
+echo strtolower("HELLO");
+  </code></pre>
+
+  <pre><code>
+hello
+  </code></pre>
+
+  <hr>
+
+  <h3>substr()</h3>
+  <pre><code>
+echo substr("Programming", 3, 4);
+  </code></pre>
+
+  <pre><code>
+gram
+  </code></pre>
+
+  <hr>
+
+  <h3>str_replace()</h3>
+  <pre><code>
+echo str_replace("World", "PHP", "Hello World");
+  </code></pre>
+
+  <pre><code>
+Hello PHP
+  </code></pre>
+</section>
+<br>
+<section id="php-array-loops">
+  <h2>PHP Array Looping Methods (Complete Guide)</h2>
+
+  <p>
+    PHP provides multiple ways to loop through arrays.
+    The loop used depends on the <b>array type</b> and <b>use case</b>.
+  </p>
+
+  <hr>
+
+  <h3>1) Indexed Array using for Loop</h3>
+
+  <pre><code>
+$arr = [10, 20, 30];
+
+for ($i = 0; $i < count($arr); $i++) {
+  echo $arr[$i] . " ";
+}
+  </code></pre>
+
+  <p><b>Output:</b></p>
+  <pre><code>
+10 20 30
+  </code></pre>
+
+  <p>
+    ✔ Best when index is required.
+  </p>
+
+  <hr>
+
+  <h3>2) Indexed Array using foreach</h3>
+
+  <pre><code>
+$arr = [10, 20, 30];
+
+foreach ($arr as $value) {
+  echo $value . " ";
+}
+  </code></pre>
+
+  <pre><code>
+10 20 30
+  </code></pre>
+
+  <p>
+    ✔ Simplest and most used loop.
+  </p>
+
+  <hr>
+
+  <h3>3) Indexed Array using while Loop</h3>
+
+  <pre><code>
+$arr = [10, 20, 30];
+$i = 0;
+
+while ($i < count($arr)) {
+  echo $arr[$i] . " ";
+  $i++;
+}
+  </code></pre>
+
+  <pre><code>
+10 20 30
+  </code></pre>
+
+  <hr>
+
+  <h3>4) Indexed Array using do-while Loop</h3>
+
+  <pre><code>
+$arr = [10, 20, 30];
+$i = 0;
+
+do {
+  echo $arr[$i] . " ";
+  $i++;
+} while ($i < count($arr));
+  </code></pre>
+
+  <pre><code>
+10 20 30
+  </code></pre>
+
+  <p>
+    ✔ Executes at least once.
+  </p>
+
+  <hr>
+
+  <h3>5) Associative Array using foreach (Key + Value)</h3>
+
+  <pre><code>
+$user = [
+  "name" => "Aathi",
+  "age" => 21,
+  "role" => "Developer"
+];
+
+foreach ($user as $key => $value) {
+  echo $key . " : " . $value . "<br>";
+}
+  </code></pre>
+
+  <pre><code>
+name : Aathi
+age : 21
+role : Developer
+  </code></pre>
+
+  <p>
+    ✔ Best way to loop associative arrays.
+  </p>
+
+  <hr>
+
+  <h3>6) Associative Array using while + each() (Old Method)</h3>
+
+  <pre><code>
+$user = ["name" => "Aathi", "age" => 21];
+
+reset($user);
+while ($item = each($user)) {
+  echo $item['key'] . " : " . $item['value'] . "<br>";
+}
+  </code></pre>
+
+  <pre><code>
+name : Aathi
+age : 21
+  </code></pre>
+
+  <p>
+    ⚠ each() is deprecated (not recommended).
+  </p>
+
+  <hr>
+
+  <h3>7) Multidimensional Array using foreach</h3>
+
+  <pre><code>
+$students = [
+  ["name" => "Ram", "mark" => 90],
+  ["name" => "Sam", "mark" => 95]
+];
+
+foreach ($students as $student) {
+  echo $student["name"] . " - " . $student["mark"] . "<br>";
+}
+  </code></pre>
+
+  <pre><code>
+Ram - 90
+Sam - 95
+  </code></pre>
+
+  <hr>
+
+  <h3>8) Multidimensional Array using Nested foreach</h3>
+
+  <pre><code>
+$data = [
+  ["A", "B"],
+  ["C", "D"]
+];
+
+foreach ($data as $row) {
+  foreach ($row as $value) {
+    echo $value . " ";
+  }
+  echo "<br>";
+}
+  </code></pre>
+
+  <pre><code>
+A B
+C D
+  </code></pre>
+
+  <hr>
+
+  <h3>9) array_map()</h3>
+
+  <p>
+    Applies a function to each array element.
+  </p>
+
+  <pre><code>
+$arr = [1, 2, 3];
+
+$result = array_map(function($v) {
+  return $v * 2;
+}, $arr);
+
+print_r($result);
+  </code></pre>
+
+  <pre><code>
+Array ( [0] => 2 [1] => 4 [2] => 6 )
+  </code></pre>
+
+  <hr>
+
+  <h3>10) array_walk()</h3>
+
+  <pre><code>
+$arr = [10, 20, 30];
+
+array_walk($arr, function($value) {
+  echo $value . " ";
+});
+  </code></pre>
+
+  <pre><code>
+10 20 30
+  </code></pre>
+
+  <hr>
+
+  <h3>11) array_walk_recursive()</h3>
+
+  <pre><code>
+$data = [[1,2],[3,4]];
+
+array_walk_recursive($data, function($value) {
+  echo $value . " ";
+});
+  </code></pre>
+
+  <pre><code>
+1 2 3 4
+  </code></pre>
+
+  <hr>
+
+  <h3>12) for + Multidimensional Array</h3>
+
+  <pre><code>
+$arr = [[1,2],[3,4]];
+
+for ($i = 0; $i < count($arr); $i++) {
+  for ($j = 0; $j < count($arr[$i]); $j++) {
+    echo $arr[$i][$j] . " ";
+  }
+}
+  </code></pre>
+
+  <pre><code>
+1 2 3 4
+  </code></pre>
+
+  <hr>
+
+  <h3>13) foreach with Reference (Modify Array)</h3>
+
+  <pre><code>
+$arr = [1,2,3];
+
+foreach ($arr as &$v) {
+  $v *= 10;
+}
+
+print_r($arr);
+  </code></pre>
+
+  <pre><code>
+Array ( [0] => 10 [1] => 20 [2] => 30 )
+  </code></pre>
+
+  <p>
+    ✔ Used when modifying original array.
+  </p>
+
+  <hr>
+
+  <h3>Which Loop to Use?</h3>
+  <ul>
+    <li><b>for</b> → index required</li>
+    <li><b>foreach</b> → best & fastest</li>
+    <li><b>while / do-while</b> → conditional loops</li>
+    <li><b>array_map</b> → transformation</li>
+    <li><b>array_walk</b> → processing</li>
+  </ul>
+</section>
+<br>
+<section id="php-array-functions">
+  <h2>PHP Array Functions (Complete Reference)</h2>
+
+  <p>
+    PHP provides many built-in functions to create, modify, search,
+    sort, filter and loop arrays.
+  </p>
+
+  <hr>
+
+  <h3>1) count()</h3>
+  <p>Returns number of elements.</p>
+  <pre><code>
+$arr = [10, 20, 30];
+echo count($arr);
+  </code></pre>
+  <pre><code>
+3
+  </code></pre>
+
+  <hr>
+
+  <h3>2) array_push()</h3>
+  <p>Add elements at end.</p>
+  <pre><code>
+$arr = [1,2];
+array_push($arr, 3, 4);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 )
+  </code></pre>
+
+  <hr>
+
+  <h3>3) array_pop()</h3>
+  <p>Remove last element.</p>
+  <pre><code>
+$arr = [1,2,3];
+array_pop($arr);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [1] => 2 )
+  </code></pre>
+
+  <hr>
+
+  <h3>4) array_shift()</h3>
+  <p>Remove first element.</p>
+  <pre><code>
+$arr = [1,2,3];
+array_shift($arr);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( [0] => 2 [1] => 3 )
+  </code></pre>
+
+  <hr>
+
+  <h3>5) array_unshift()</h3>
+  <p>Add elements at beginning.</p>
+  <pre><code>
+$arr = [2,3];
+array_unshift($arr, 1);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [1] => 2 [2] => 3 )
+  </code></pre>
+
+  <hr>
+
+  <h3>6) in_array()</h3>
+  <p>Checks value exists.</p>
+  <pre><code>
+var_dump(in_array(2, [1,2,3]));
+  </code></pre>
+  <pre><code>
+true
+  </code></pre>
+
+  <hr>
+
+  <h3>7) array_search()</h3>
+  <p>Returns key of value.</p>
+  <pre><code>
+$arr = ["a"=>10,"b"=>20];
+echo array_search(20, $arr);
+  </code></pre>
+  <pre><code>
+b
+  </code></pre>
+
+  <hr>
+
+  <h3>8) array_key_exists()</h3>
+  <p>Checks key exists.</p>
+  <pre><code>
+var_dump(array_key_exists("a", ["a"=>1]));
+  </code></pre>
+  <pre><code>
+true
+  </code></pre>
+
+  <hr>
+
+  <h3>9) array_keys()</h3>
+  <pre><code>
+print_r(array_keys(["a"=>1,"b"=>2]));
+  </code></pre>
+  <pre><code>
+Array ( [0] => a [1] => b )
+  </code></pre>
+
+  <hr>
+
+  <h3>10) array_values()</h3>
+  <pre><code>
+print_r(array_values(["a"=>1,"b"=>2]));
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [1] => 2 )
+  </code></pre>
+
+  <hr>
+
+  <h3>11) array_merge()</h3>
+  <pre><code>
+print_r(array_merge([1,2],[3,4]));
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 )
+  </code></pre>
+
+  <hr>
+
+  <h3>12) array_combine()</h3>
+  <pre><code>
+print_r(array_combine(["a","b"], [1,2]));
+  </code></pre>
+  <pre><code>
+Array ( [a] => 1 [b] => 2 )
+  </code></pre>
+
+  <hr>
+
+  <h3>13) array_slice()</h3>
+  <pre><code>
+print_r(array_slice([1,2,3,4], 1, 2));
+  </code></pre>
+  <pre><code>
+Array ( [0] => 2 [1] => 3 )
+  </code></pre>
+
+  <hr>
+
+  <h3>14) array_splice()</h3>
+  <pre><code>
+$arr = [1,2,3,4];
+array_splice($arr, 1, 2);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [1] => 4 )
+  </code></pre>
+
+  <hr>
+
+  <h3>15) sort()</h3>
+  <pre><code>
+$arr = [3,1,2];
+sort($arr);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [1] => 2 [2] => 3 )
+  </code></pre>
+
+  <hr>
+
+  <h3>16) rsort()</h3>
+  <pre><code>
+rsort($arr);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( [0] => 3 [1] => 2 [2] => 1 )
+  </code></pre>
+
+  <hr>
+
+  <h3>17) asort()</h3>
+  <pre><code>
+$arr = ["a"=>3,"b"=>1];
+asort($arr);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( [b] => 1 [a] => 3 )
+  </code></pre>
+
+  <hr>
+
+  <h3>18) ksort()</h3>
+  <pre><code>
+ksort($arr);
+print_r($arr);
+  </code></pre>
+
+  <hr>
+
+  <h3>19) arsort()</h3>
+  <pre><code>
+arsort($arr);
+print_r($arr);
+  </code></pre>
+
+  <hr>
+
+  <h3>20) krsort()</h3>
+  <pre><code>
+krsort($arr);
+print_r($arr);
+  </code></pre>
+
+  <hr>
+
+  <h3>21) array_reverse()</h3>
+  <pre><code>
+print_r(array_reverse([1,2,3]));
+  </code></pre>
+  <pre><code>
+Array ( [0] => 3 [1] => 2 [2] => 1 )
+  </code></pre>
+
+  <hr>
+
+  <h3>22) array_unique()</h3>
+  <pre><code>
+print_r(array_unique([1,1,2,2]));
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [2] => 2 )
+  </code></pre>
+
+  <hr>
+
+  <h3>23) array_filter()</h3>
+  <pre><code>
+$arr = [1,2,3,4];
+print_r(array_filter($arr, fn($v)=>$v%2==0));
+  </code></pre>
+  <pre><code>
+Array ( [1] => 2 [3] => 4 )
+  </code></pre>
+
+  <hr>
+
+  <h3>24) array_map()</h3>
+  <pre><code>
+print_r(array_map(fn($v)=>$v*2, [1,2,3]));
+  </code></pre>
+  <pre><code>
+Array ( [0] => 2 [1] => 4 [2] => 6 )
+  </code></pre>
+
+  <hr>
+
+  <h3>25) array_reduce()</h3>
+  <pre><code>
+echo array_reduce([1,2,3], fn($c,$v)=>$c+$v);
+  </code></pre>
+  <pre><code>
+6
+  </code></pre>
+
+  <hr>
+
+  <h3>26) array_walk()</h3>
+  <pre><code>
+array_walk([1,2,3], fn($v)=>print($v." "));
+  </code></pre>
+  <pre><code>
+1 2 3
+  </code></pre>
+
+  <hr>
+
+  <h3>27) array_sum()</h3>
+  <pre><code>
+echo array_sum([1,2,3]);
+  </code></pre>
+  <pre><code>
+6
+  </code></pre>
+
+  <hr>
+
+  <h3>28) array_product()</h3>
+  <pre><code>
+echo array_product([2,3,4]);
+  </code></pre>
+  <pre><code>
+24
+  </code></pre>
+
+  <hr>
+
+  <h3>29) range()</h3>
+  <pre><code>
+print_r(range(1,5));
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [1] => 2 [2] => 3 [3] => 4 [4] => 5 )
+  </code></pre>
+
+  <hr>
+
+  <h3>30) compact()</h3>
+  <pre><code>
+$a=1; $b=2;
+print_r(compact("a","b"));
+  </code></pre>
+  <pre><code>
+Array ( [a] => 1 [b] => 2 )
+  </code></pre>
+
+  <hr>
+
+  <h3>31) extract()</h3>
+  <pre><code>
+$arr = ["x"=>10];
+extract($arr);
+echo $x;
+  </code></pre>
+  <pre><code>
+10
+  </code></pre>
+
+  <hr>
+
+  <h3>32) shuffle()</h3>
+  <pre><code>
+$arr = [1,2,3];
+shuffle($arr);
+print_r($arr);
+  </code></pre>
+
+  <hr>
+
+  <h3>33) array_chunk()</h3>
+  <pre><code>
+print_r(array_chunk([1,2,3,4],2));
+  </code></pre>
+  <pre><code>
+Array ( [0] => Array ( [0] => 1 [1] => 2 )
+        [1] => Array ( [0] => 3 [1] => 4 ) )
+  </code></pre>
+
+  <hr>
+
+  <h3>34) array_diff()</h3>
+  <pre><code>
+print_r(array_diff([1,2,3],[2]));
+  </code></pre>
+  <pre><code>
+Array ( [0] => 1 [2] => 3 )
+  </code></pre>
+
+  <hr>
+
+  <h3>35) array_intersect()</h3>
+  <pre><code>
+print_r(array_intersect([1,2,3],[2,3]));
+  </code></pre>
+  <pre><code>
+Array ( [1] => 2 [2] => 3 )
+  </code></pre>
+
+  <hr>
+
+  <h3>36) end(), current(), next(), prev(), reset()</h3>
+  <pre><code>
+$arr = [10,20,30];
+echo current($arr);
+next($arr);
+echo next($arr);
+  </code></pre>
+  <pre><code>
+1030
+  </code></pre>
+
+</section>
+<br>
+<section id="php-string-functions">
+  <h2>PHP String Functions (Complete Guide)</h2>
+
+  <p>
+    PHP provides many built-in string functions to
+    manipulate, search, format and secure strings.
+  </p>
+
+  <hr>
+
+  <h3>1) strlen()</h3>
+  <p>Returns length of string.</p>
+  <pre><code>
+echo strlen("Hello");
+  </code></pre>
+  <pre><code>
+5
+  </code></pre>
+
+  <hr>
+
+  <h3>2) str_word_count()</h3>
+  <p>Counts number of words.</p>
+  <pre><code>
+echo str_word_count("Hello PHP World");
+  </code></pre>
+  <pre><code>
+3
+  </code></pre>
+
+  <hr>
+
+  <h3>3) strrev()</h3>
+  <p>Reverses a string.</p>
+  <pre><code>
+echo strrev("PHP");
+  </code></pre>
+  <pre><code>
+PHP
+  </code></pre>
+
+  <hr>
+
+  <h3>4) strtoupper()</h3>
+  <p>Converts string to uppercase.</p>
+  <pre><code>
+echo strtoupper("php");
+  </code></pre>
+  <pre><code>
+PHP
+  </code></pre>
+
+  <hr>
+
+  <h3>5) strtolower()</h3>
+  <p>Converts string to lowercase.</p>
+  <pre><code>
+echo strtolower("HELLO");
+  </code></pre>
+  <pre><code>
+hello
+  </code></pre>
+
+  <hr>
+
+  <h3>6) ucfirst()</h3>
+  <p>Uppercase first character.</p>
+  <pre><code>
+echo ucfirst("php");
+  </code></pre>
+  <pre><code>
+Php
+  </code></pre>
+
+  <hr>
+
+  <h3>7) lcfirst()</h3>
+  <p>Lowercase first character.</p>
+  <pre><code>
+echo lcfirst("PHP");
+  </code></pre>
+  <pre><code>
+pHP
+  </code></pre>
+
+  <hr>
+
+  <h3>8) ucwords()</h3>
+  <p>Uppercase first character of each word.</p>
+  <pre><code>
+echo ucwords("hello php world");
+  </code></pre>
+  <pre><code>
+Hello Php World
+  </code></pre>
+
+  <hr>
+
+  <h3>9) substr()</h3>
+  <p>Returns part of a string.</p>
+  <pre><code>
+echo substr("Programming", 0, 4);
+  </code></pre>
+  <pre><code>
+Prog
+  </code></pre>
+
+  <hr>
+
+  <h3>10) strpos()</h3>
+  <p>Finds position of first occurrence.</p>
+  <pre><code>
+echo strpos("Hello World", "World");
+  </code></pre>
+  <pre><code>
+6
+  </code></pre>
+
+  <hr>
+
+  <h3>11) strrpos()</h3>
+  <p>Finds last occurrence position.</p>
+  <pre><code>
+echo strrpos("one two one", "one");
+  </code></pre>
+  <pre><code>
+8
+  </code></pre>
+
+  <hr>
+
+  <h3>12) strstr()</h3>
+  <p>Returns string from first match.</p>
+  <pre><code>
+echo strstr("Hello World", "World");
+  </code></pre>
+  <pre><code>
+World
+  </code></pre>
+
+  <hr>
+
+  <h3>13) str_replace()</h3>
+  <p>Replaces text.</p>
+  <pre><code>
+echo str_replace("World", "PHP", "Hello World");
+  </code></pre>
+  <pre><code>
+Hello PHP
+  </code></pre>
+
+  <hr>
+
+  <h3>14) str_ireplace()</h3>
+  <p>Case-insensitive replace.</p>
+  <pre><code>
+echo str_ireplace("php", "JAVA", "I love PHP");
+  </code></pre>
+  <pre><code>
+I love JAVA
+  </code></pre>
+
+  <hr>
+
+  <h3>15) trim()</h3>
+  <p>Removes whitespace from both sides.</p>
+  <pre><code>
+echo trim("  hello  ");
+  </code></pre>
+  <pre><code>
+hello
+  </code></pre>
+
+  <hr>
+
+  <h3>16) ltrim()</h3>
+  <pre><code>
+echo ltrim("  hello");
+  </code></pre>
+  <pre><code>
+hello
+  </code></pre>
+
+  <hr>
+
+  <h3>17) rtrim()</h3>
+  <pre><code>
+echo rtrim("hello  ");
+  </code></pre>
+  <pre><code>
+hello
+  </code></pre>
+
+  <hr>
+
+  <h3>18) explode()</h3>
+  <p>Splits string into array.</p>
+  <pre><code>
+print_r(explode(",", "a,b,c"));
+  </code></pre>
+  <pre><code>
+Array ( [0] => a [1] => b [2] => c )
+  </code></pre>
+
+  <hr>
+
+  <h3>19) implode()</h3>
+  <p>Joins array into string.</p>
+  <pre><code>
+echo implode("-", ["a","b","c"]);
+  </code></pre>
+  <pre><code>
+a-b-c
+  </code></pre>
+
+  <hr>
+
+  <h3>20) strcmp()</h3>
+  <p>Compares two strings.</p>
+  <pre><code>
+echo strcmp("abc", "abc");
+  </code></pre>
+  <pre><code>
+0
+  </code></pre>
+
+  <hr>
+
+  <h3>21) strcasecmp()</h3>
+  <p>Case-insensitive comparison.</p>
+  <pre><code>
+echo strcasecmp("PHP", "php");
+  </code></pre>
+  <pre><code>
+0
+  </code></pre>
+
+  <hr>
+
+  <h3>22) number_format()</h3>
+  <p>Formats number as string.</p>
+  <pre><code>
+echo number_format(1234567);
+  </code></pre>
+  <pre><code>
+1,234,567
+  </code></pre>
+
+  <hr>
+
+  <h3>23) htmlspecialchars()</h3>
+  <p>Converts HTML to safe entities.</p>
+  <pre><code>
+echo htmlspecialchars("<h1>Hello</h1>");
+  </code></pre>
+  <pre><code>
+&lt;h1&gt;Hello&lt;/h1&gt;
+  </code></pre>
+
+  <hr>
+
+  <h3>24) htmlentities()</h3>
+  <pre><code>
+echo htmlentities("<h1>Hello</h1>");
+  </code></pre>
+  <pre><code>
+&lt;h1&gt;Hello&lt;/h1&gt;
+  </code></pre>
+
+  <hr>
+
+  <h3>25) addslashes()</h3>
+  <p>Adds escape slashes.</p>
+  <pre><code>
+echo addslashes("I'm learning PHP");
+  </code></pre>
+  <pre><code>
+I\'m learning PHP
+  </code></pre>
+
+  <hr>
+
+  <h3>26) stripslashes()</h3>
+  <pre><code>
+echo stripslashes("I\\'m learning PHP");
+  </code></pre>
+  <pre><code>
+I'm learning PHP
+  </code></pre>
+
+  <hr>
+
+  <h3>27) md5()</h3>
+  <p>Creates hash (not secure).</p>
+  <pre><code>
+echo md5("1234");
+  </code></pre>
+  <pre><code>
+81dc9bdb52d04dc20036dbd8313ed055
+  </code></pre>
+
+  <hr>
+
+  <h3>28) sha1()</h3>
+  <pre><code>
+echo sha1("1234");
+  </code></pre>
+
+  <hr>
+
+  <h3>29) sprintf()</h3>
+  <p>Formatted string.</p>
+  <pre><code>
+echo sprintf("Age: %d", 21);
+  </code></pre>
+  <pre><code>
+Age: 21
+  </code></pre>
+
+  <hr>
+
+  <h3>30) str_repeat()</h3>
+  <pre><code>
+echo str_repeat("*", 5);
+  </code></pre>
+  <pre><code>
+*****
+  </code></pre>
+
+  <hr>
+
+  <h3>31) chunk_split()</h3>
+  <pre><code>
+echo chunk_split("HELLOWORLD", 3, "-");
+  </code></pre>
+  <pre><code>
+HEL-LOW-ORL-D
+  </code></pre>
+
+  <hr>
+
+  <h3>32) wordwrap()</h3>
+  <pre><code>
+echo wordwrap("This is a long sentence", 10);
+  </code></pre>
+
+  <hr>
+
+  <h3>33) nl2br()</h3>
+  <pre><code>
+echo nl2br("Hello\nWorld");
+  </code></pre>
+
+  <hr>
+
+  <h3>34) strip_tags()</h3>
+  <pre><code>
+echo strip_tags("<h1>Hello</h1>");
+  </code></pre>
+  <pre><code>
+Hello
+  </code></pre>
+
+  <hr>
+
+  <h3>35) strtok()</h3>
+  <pre><code>
+$str = "one,two,three";
+echo strtok($str, ",");
+  </code></pre>
+  <pre><code>
+one
+  </code></pre>
+
+</section>
+<br>
+<section id="php-array-complete-guide">
+  <h2>PHP Array Processing – Complete & Detailed Guide</h2>
+
+  <p>
+    Arrays are one of the most important data structures in PHP.
+    They are used to store multiple values in a single variable.
+    PHP supports Indexed, Associative, and Multidimensional arrays.
+  </p>
+
+  <hr>
+
+  <h3>1. Printing Arrays</h3>
+  <p>
+    Arrays cannot be printed using <code>echo</code>.
+    Use <code>print_r()</code> or <code>var_dump()</code>.
+  </p>
+  <pre><code>
+$arr = [10, 20, 30];
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array
+(
+  [0] => 10
+  [1] => 20
+  [2] => 30
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>2. Processing Arrays (foreach)</h3>
+  <p>
+    <code>foreach</code> is the most commonly used loop for arrays.
+  </p>
+  <pre><code>
+$arr = [10, 20, 30];
+foreach ($arr as $value) {
+  echo $value . " ";
+}
+  </code></pre>
+  <pre><code>
+10 20 30
+  </code></pre>
+
+  <hr>
+
+  <h3>3. Processing Nested / Multidimensional Arrays</h3>
+  <p>
+    Nested arrays require nested loops.
+  </p>
+  <pre><code>
+$students = [
+  ["name" => "Aathi", "age" => 22],
+  ["name" => "Kumar", "age" => 23]
+];
+
+foreach ($students as $student) {
+  echo $student["name"] . " - " . $student["age"] . "&lt;br&gt;";
+}
+  </code></pre>
+  <pre><code>
+Aathi - 22
+Kumar - 23
+  </code></pre>
+
+  <hr>
+
+  <h3>4. Counting the Number of Elements</h3>
+  <p>
+    <code>count()</code> returns the number of elements.
+  </p>
+  <pre><code>
+$arr = [1, 2, 3, 4];
+echo count($arr);
+  </code></pre>
+  <pre><code>
+4
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Converting Strings to Arrays</h3>
+  <p>
+    <code>explode()</code> splits a string into an array.
+  </p>
+  <pre><code>
+$str = "red,green,blue";
+$arr = explode(",", $str);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array
+(
+  [0] => red
+  [1] => green
+  [2] => blue
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Swapping Array Keys and Values</h3>
+  <p>
+    <code>array_flip()</code> swaps keys and values.
+  </p>
+  <pre><code>
+$arr = ["a" => 1, "b" => 2];
+print_r(array_flip($arr));
+  </code></pre>
+  <pre><code>
+Array
+(
+  [1] => a
+  [2] => b
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>7. Adding and Removing Array Elements</h3>
+  <p>
+    <code>array_push()</code>, <code>array_pop()</code>,
+    <code>array_shift()</code>, <code>array_unshift()</code>
+  </p>
+  <pre><code>
+$arr = [1, 2];
+
+array_push($arr, 3);   // add at end
+array_unshift($arr, 0); // add at start
+array_pop($arr);       // remove from end
+array_shift($arr);     // remove from start
+
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array
+(
+  [0] => 1
+  [1] => 2
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>8. Removing Duplicate Array Elements</h3>
+  <p>
+    <code>array_unique()</code> removes duplicate values.
+  </p>
+  <pre><code>
+$arr = [1, 1, 2, 3, 3];
+print_r(array_unique($arr));
+  </code></pre>
+  <pre><code>
+Array
+(
+  [0] => 1
+  [2] => 2
+  [3] => 3
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>9. Re-indexing Arrays</h3>
+  <p>
+    <code>array_values()</code> resets numeric keys.
+  </p>
+  <pre><code>
+$arr = [5 => "A", 10 => "B"];
+print_r(array_values($arr));
+  </code></pre>
+  <pre><code>
+Array
+(
+  [0] => A
+  [1] => B
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>10. Randomizing Arrays</h3>
+  <p>
+    <code>shuffle()</code> randomizes array order.
+  </p>
+  <pre><code>
+$arr = [1, 2, 3, 4];
+shuffle($arr);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array ( random order )
+  </code></pre>
+
+  <hr>
+
+  <h3>11. Reversing Arrays</h3>
+  <p>
+    <code>array_reverse()</code> reverses elements.
+  </p>
+  <pre><code>
+$arr = [1, 2, 3];
+print_r(array_reverse($arr));
+  </code></pre>
+  <pre><code>
+Array
+(
+  [0] => 3
+  [1] => 2
+  [2] => 1
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>12. Searching Arrays</h3>
+  <p>
+    <code>in_array()</code> checks value existence.
+  </p>
+  <pre><code>
+$arr = [10, 20, 30];
+var_dump(in_array(20, $arr));
+  </code></pre>
+  <pre><code>
+bool(true)
+  </code></pre>
+
+  <hr>
+
+  <h3>13. Searching Nested Arrays</h3>
+  <p>
+    Nested arrays require manual looping.
+  </p>
+  <pre><code>
+$data = [
+  ["id" => 1],
+  ["id" => 2]
+];
+
+foreach ($data as $row) {
+  if ($row["id"] == 2) {
+    echo "Found";
+  }
+}
+  </code></pre>
+  <pre><code>
+Found
+  </code></pre>
+
+  <hr>
+
+  <h3>14. Filtering Array Elements</h3>
+  <p>
+    <code>array_filter()</code> filters values based on condition.
+  </p>
+  <pre><code>
+$arr = [1, 2, 3, 4, 5];
+$result = array_filter($arr, function($v) {
+  return $v % 2 == 0;
+});
+print_r($result);
+  </code></pre>
+  <pre><code>
+Array
+(
+  [1] => 2
+  [3] => 4
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>15. Sorting Arrays</h3>
+  <p>
+    <code>sort()</code> sorts values ascending.
+  </p>
+  <pre><code>
+$arr = [3, 1, 2];
+sort($arr);
+print_r($arr);
+  </code></pre>
+  <pre><code>
+Array
+(
+  [0] => 1
+  [1] => 2
+  [2] => 3
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>16. Sorting Multidimensional Arrays</h3>
+  <pre><code>
+$users = [
+  ["name" => "B"],
+  ["name" => "A"]
+];
+
+array_multisort(array_column($users, "name"), SORT_ASC, $users);
+print_r($users);
+  </code></pre>
+  <pre><code>
+Array ( sorted by name )
+  </code></pre>
+
+  <hr>
+
+  <h3>17. Merging Arrays</h3>
+  <p>
+    <code>array_merge()</code> combines arrays.
+  </p>
+  <pre><code>
+$a = [1, 2];
+$b = [3, 4];
+print_r(array_merge($a, $b));
+  </code></pre>
+  <pre><code>
+Array
+(
+  [0] => 1
+  [1] => 2
+  [2] => 3
+  [3] => 4
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>18. Comparing Arrays</h3>
+  <p>
+    <code>array_diff_assoc()</code> compares keys and values.
+  </p>
+  <pre><code>
+$a = ["x" => 10, "y" => 20];
+$b = ["x" => 10, "y" => 30];
+print_r(array_diff_assoc($a, $b));
+  </code></pre>
+  <pre><code>
+Array
+(
+  [y] => 20
+)
+  </code></pre>
+
+</section>
+<br>
+<section id="php-functions-oop-complete">
+  <h2>PHP Functions, OOP, Variables & Real-World Array Usage (Detailed Study)</h2>
+
+  <hr>
+
+  <h3>1. Function Creation</h3>
+  <p>
+    A function is a reusable block of code that runs only when called.
+    It helps reduce repetition and improves readability.
+  </p>
+
+  <pre><code>
+function greet() {
+  echo "Hello PHP";
+}
+
+greet();
+  </code></pre>
+
+  <pre><code>
+Hello PHP
+  </code></pre>
+
+  <hr>
+
+  <h3>2. Object Creation</h3>
+  <p>
+    PHP supports Object-Oriented Programming (OOP).
+    Objects are created from classes using the <code>new</code> keyword.
+  </p>
+
+  <pre><code>
+class Car {
+  public $brand;
+
+  function setBrand($name) {
+    $this->brand = $name;
+  }
+}
+
+$car1 = new Car();
+$car1->setBrand("BMW");
+echo $car1->brand;
+  </code></pre>
+
+  <pre><code>
+BMW
+  </code></pre>
+
+  <hr>
+
+  <h3>3. Accessing External Variables from Within a Function</h3>
+  <p>
+    Functions cannot access variables outside them by default.
+    PHP provides two ways: <code>global</code> keyword and <code>$GLOBALS</code>.
+  </p>
+
+  <h4>Using global</h4>
+  <pre><code>
+$x = 10;
+
+function test() {
+  global $x;
+  echo $x;
+}
+
+test();
+  </code></pre>
+
+  <pre><code>
+10
+  </code></pre>
+
+  <h4>Using $GLOBALS</h4>
+  <pre><code>
+$y = 20;
+
+function demo() {
+  echo $GLOBALS['y'];
+}
+
+demo();
+  </code></pre>
+
+  <pre><code>
+20
+  </code></pre>
+
+  <hr>
+
+  <h3>4. Setting Default Values for Function Arguments</h3>
+  <p>
+    Default parameters are used when no value is passed.
+  </p>
+
+  <pre><code>
+function welcome($name = "Guest") {
+  echo "Welcome " . $name;
+}
+
+welcome();
+welcome("Aathi");
+  </code></pre>
+
+  <pre><code>
+Welcome Guest
+Welcome Aathi
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Processing Variable-Length Argument Lists</h3>
+  <p>
+    Sometimes we don't know how many arguments will be passed.
+    PHP provides <code>func_get_args()</code>.
+  </p>
+
+  <pre><code>
+function sum() {
+  $args = func_get_args();
+  $total = 0;
+
+  foreach ($args as $n) {
+    $total += $n;
+  }
+
+  echo $total;
+}
+
+sum(10, 20, 30);
+  </code></pre>
+
+  <pre><code>
+60
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Returning Multiple Values from a Function</h3>
+  <p>
+    PHP cannot return multiple values directly,
+    but we can return an array.
+  </p>
+
+  <pre><code>
+function getUser() {
+  return ["Aathi", 22, "India"];
+}
+
+$data = getUser();
+echo $data[0] . " - " . $data[1];
+  </code></pre>
+
+  <pre><code>
+Aathi - 22
+  </code></pre>
+
+  <hr>
+
+  <h3>7. Dynamically Function Calling</h3>
+  <p>
+    PHP allows calling a function using a variable.
+  </p>
+
+  <pre><code>
+function hello() {
+  echo "Hello World";
+}
+
+$fn = "hello";
+$fn();
+  </code></pre>
+
+  <pre><code>
+Hello World
+  </code></pre>
+
+  <hr>
+
+  <h3>8. Defining Custom Classes</h3>
+  <p>
+    Classes define properties and behaviors.
+    Objects are instances of classes.
+  </p>
+
+  <pre><code>
+class Student {
+  public $name;
+  public $age;
+
+  function __construct($n, $a) {
+    $this->name = $n;
+    $this->age = $a;
+  }
+
+  function show() {
+    echo $this->name . " - " . $this->age;
+  }
+}
+
+$s1 = new Student("Aathi", 22);
+$s1->show();
+  </code></pre>
+
+  <pre><code>
+Aathi - 22
+  </code></pre>
+
+  <hr>
+
+  <h3>9. Pre-defined PHP Variables (Superglobals)</h3>
+  <p>
+    Superglobals are built-in variables accessible anywhere.
+  </p>
+
+  <ul>
+    <li>$_GET</li>
+    <li>$_POST</li>
+    <li>$_REQUEST</li>
+    <li>$_SESSION</li>
+    <li>$_COOKIE</li>
+    <li>$_FILES</li>
+    <li>$_SERVER</li>
+    <li>$_ENV</li>
+    <li>$GLOBALS</li>
+  </ul>
+
+  <pre><code>
+echo $_SERVER['PHP_SELF'];
+  </code></pre>
+
+  <hr>
+
+  <h2>Real-World Array Usage</h2>
+
+  <h3>10. Array with HTML Forms</h3>
+  <p>
+    Form inputs are received as arrays using $_POST.
+  </p>
+
+  <pre><code>
+&lt;input type="text" name="skills[]" /&gt;
+&lt;input type="text" name="skills[]" /&gt;
+  </code></pre>
+
+  <pre><code>
+print_r($_POST['skills']);
+  </code></pre>
+
+  <hr>
+
+  <h3>11. Array with Database (MySQL)</h3>
+  <p>
+    Database rows are fetched as arrays.
+  </p>
+
+  <pre><code>
+$result = mysqli_query($conn, "SELECT * FROM users");
+
+while ($row = mysqli_fetch_assoc($result)) {
+  echo $row['name'];
+}
+  </code></pre>
+
+  <hr>
+
+  <h3>12. Array with JSON</h3>
+  <p>
+    JSON is converted to arrays using <code>json_decode()</code>.
+  </p>
+
+  <pre><code>
+$json = '{"name":"Aathi","age":22}';
+$arr = json_decode($json, true);
+echo $arr['name'];
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <hr>
+
+  <h3>13. Array with API Response</h3>
+  <p>
+    API responses are usually JSON converted into arrays.
+  </p>
+
+  <pre><code>
+$response = file_get_contents("https://api.example.com/data");
+$data = json_decode($response, true);
+
+foreach ($data as $item) {
+  echo $item['title'];
+}
+  </code></pre>
+
+</section>
+<br>
+<section id="php-sessions-cookies-files-oop-errors">
+  <h2>PHP Sessions, Cookies, File Uploads, Error Handling & OOP (Deep Study)</h2>
+
+  <hr>
+
+  <h3>1. Sessions in PHP (Deep Explanation)</h3>
+  <p>
+    A session is used to store user data across multiple pages.
+    Data is stored on the server.
+    Sessions are commonly used for login systems.
+  </p>
+
+  <h4>Starting a Session</h4>
+  <pre><code>
+session_start();
+  </code></pre>
+
+  <h4>Storing Session Data</h4>
+  <pre><code>
+session_start();
+$_SESSION['username'] = "Aathi";
+$_SESSION['role'] = "admin";
+  </code></pre>
+
+  <h4>Accessing Session Data</h4>
+  <pre><code>
+session_start();
+echo $_SESSION['username'];
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <h4>Destroying Session</h4>
+  <pre><code>
+session_start();
+session_unset();
+session_destroy();
+  </code></pre>
+
+  <p>
+    After destroying, session data will no longer be available.
+  </p>
+
+  <hr>
+
+  <h3>2. Cookies in PHP (Deep Explanation)</h3>
+  <p>
+    Cookies store small data on the user's browser.
+    Cookies have an expiration time.
+  </p>
+
+  <h4>Setting a Cookie</h4>
+  <pre><code>
+setcookie("user", "Aathi", time() + 3600);
+  </code></pre>
+
+  <h4>Accessing a Cookie</h4>
+  <pre><code>
+echo $_COOKIE['user'];
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <h4>Deleting a Cookie</h4>
+  <pre><code>
+setcookie("user", "", time() - 3600);
+  </code></pre>
+
+  <p>
+    Cookies are less secure than sessions because data is stored on client side.
+  </p>
+
+  <hr>
+
+  <h3>3. File Upload + Validation (Real Project Flow)</h3>
+  <p>
+    PHP uses <code>$_FILES</code> to handle file uploads.
+    Commonly used for profile pictures, documents, etc.
+  </p>
+
+  <h4>HTML Form</h4>
+  <pre><code>
+&lt;form method="post" enctype="multipart/form-data"&gt;
+  &lt;input type="file" name="photo"&gt;
+  &lt;button type="submit"&gt;Upload&lt;/button&gt;
+&lt;/form&gt;
+  </code></pre>
+
+  <h4>PHP File Upload Logic</h4>
+  <pre><code>
+if (isset($_FILES['photo'])) {
+
+  $fileName = $_FILES['photo']['name'];
+  $fileTmp  = $_FILES['photo']['tmp_name'];
+  $fileSize = $_FILES['photo']['size'];
+
+  $allowed = ["jpg", "png", "jpeg"];
+  $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+
+  if (!in_array($ext, $allowed)) {
+    echo "Invalid file type";
+    exit;
+  }
+
+  if ($fileSize > 2 * 1024 * 1024) {
+    echo "File too large";
+    exit;
+  }
+
+  move_uploaded_file($fileTmp, "uploads/" . $fileName);
+  echo "File uploaded successfully";
+}
+  </code></pre>
+
+  <pre><code>
+File uploaded successfully
+  </code></pre>
+
+  <hr>
+
+  <h3>4. Handling Errors in PHP Programs</h3>
+  <p>
+    Error handling helps detect and manage runtime problems.
+  </p>
+
+  <h4>Basic Error Display</h4>
+  <pre><code>
+error_reporting(E_ALL);
+ini_set("display_errors", 1);
+  </code></pre>
+
+  <h4>Custom Error Handling</h4>
+  <pre><code>
+function customError($errno, $errstr) {
+  echo "Error: $errstr";
+}
+
+set_error_handler("customError");
+echo $x;
+  </code></pre>
+
+  <pre><code>
+Error: Undefined variable $x
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Object Creation in PHP</h3>
+  <p>
+    Objects are created using the <code>new</code> keyword.
+  </p>
+
+  <pre><code>
+class User {
+  public $name;
+}
+
+$user1 = new User();
+$user1->name = "Aathi";
+echo $user1->name;
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Constructor in PHP</h3>
+  <p>
+    A constructor runs automatically when an object is created.
+    Used for initialization.
+  </p>
+
+  <pre><code>
+class Person {
+  public $name;
+
+  function __construct($n) {
+    $this->name = $n;
+  }
+}
+
+$p = new Person("Aathi");
+echo $p->name;
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <hr>
+
+  <h3>7. Importing Modules and Functions</h3>
+  <p>
+    PHP allows splitting code into files.
+    This improves maintainability.
+  </p>
+
+  <h4>include</h4>
+  <pre><code>
+include "config.php";
+  </code></pre>
+  <p>
+    If file is missing → warning, script continues.
+  </p>
+
+  <h4>require</h4>
+  <pre><code>
+require "db.php";
+  </code></pre>
+  <p>
+    If file is missing → fatal error, script stops.
+  </p>
+
+  <h4>include_once / require_once</h4>
+  <pre><code>
+require_once "functions.php";
+  </code></pre>
+
+  <p>
+    Prevents loading the same file multiple times.
+  </p>
+
+</section>
+<br>
+<section id="php-file-directory-handling">
+  <h2>PHP File & Directory Handling (Complete Study Guide)</h2>
+
+  <p>
+    PHP provides powerful built-in functions to work with files and directories.
+    These are used in logs, uploads, configuration files, backups, reports, etc.
+  </p>
+
+  <hr>
+
+  <h3>1. Testing Files and Directories</h3>
+  <p>
+    Before working with files, always check whether they exist and their type.
+  </p>
+
+  <pre><code>
+if (file_exists("data.txt")) {
+  echo "File exists";
+}
+
+if (is_file("data.txt")) {
+  echo "It is a file";
+}
+
+if (is_dir("uploads")) {
+  echo "It is a directory";
+}
+  </code></pre>
+
+  <pre><code>
+File exists
+It is a file
+  </code></pre>
+
+  <hr>
+
+  <h3>2. Retrieving File Information</h3>
+  <p>
+    PHP can retrieve size, type, permissions, and modification time of files.
+  </p>
+
+  <pre><code>
+echo filesize("data.txt");
+echo filetype("data.txt");
+echo filemtime("data.txt");
+  </code></pre>
+
+  <pre><code>
+1024
+file
+1700000000
+  </code></pre>
+
+  <hr>
+
+  <h3>3. Reading Files (Complete File)</h3>
+  <p>
+    <code>file_get_contents()</code> reads the entire file into a string.
+  </p>
+
+  <pre><code>
+$content = file_get_contents("data.txt");
+echo $content;
+  </code></pre>
+
+  <pre><code>
+This is file content
+  </code></pre>
+
+  <hr>
+
+  <h3>4. Reading Files Line by Line</h3>
+  <p>
+    Useful for large files to save memory.
+  </p>
+
+  <pre><code>
+$file = fopen("data.txt", "r");
+
+while (!feof($file)) {
+  echo fgets($file);
+}
+
+fclose($file);
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Reading Line Ranges from a File</h3>
+  <p>
+    Read specific line numbers manually using a counter.
+  </p>
+
+  <pre><code>
+$file = fopen("data.txt", "r");
+$lineNo = 1;
+
+while (!feof($file)) {
+  $line = fgets($file);
+  if ($lineNo >= 2 && $lineNo <= 4) {
+    echo $line;
+  }
+  $lineNo++;
+}
+
+fclose($file);
+  </code></pre>
+
+  <pre><code>
+(Line 2 to Line 4 printed)
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Reading Byte Ranges from a File</h3>
+  <p>
+    <code>fread()</code> reads specific number of bytes.
+  </p>
+
+  <pre><code>
+$file = fopen("data.txt", "r");
+echo fread($file, 10);
+fclose($file);
+  </code></pre>
+
+  <pre><code>
+First 10 bytes
+  </code></pre>
+
+  <hr>
+
+  <h3>7. Writing Files</h3>
+  <p>
+    PHP allows writing or appending to files.
+  </p>
+
+  <pre><code>
+file_put_contents("log.txt", "Hello PHP");
+  </code></pre>
+
+  <p>Appending data:</p>
+
+  <pre><code>
+file_put_contents("log.txt", "New Line", FILE_APPEND);
+  </code></pre>
+
+  <hr>
+
+  <h3>8. File Locking Mechanism</h3>
+  <p>
+    File locking prevents multiple processes from writing at the same time.
+  </p>
+
+  <pre><code>
+$file = fopen("data.txt", "w");
+
+if (flock($file, LOCK_EX)) {
+  fwrite($file, "Safe write");
+  flock($file, LOCK_UN);
+}
+
+fclose($file);
+  </code></pre>
+
+  <hr>
+
+  <h3>9. Searching for Files in a Directory</h3>
+  <p>
+    <code>glob()</code> searches files using patterns.
+  </p>
+
+  <pre><code>
+$files = glob("uploads/*.jpg");
+print_r($files);
+  </code></pre>
+
+  <pre><code>
+Array ( [0] => uploads/a.jpg [1] => uploads/b.jpg )
+  </code></pre>
+
+  <hr>
+
+  <h3>10. Searching and Replacing Patterns Within Files</h3>
+  <p>
+    Used to update content inside files.
+  </p>
+
+  <pre><code>
+$content = file_get_contents("data.txt");
+$content = str_replace("old", "new", $content);
+file_put_contents("data.txt", $content);
+  </code></pre>
+
+  <hr>
+
+  <h3>11. Altering File Extensions</h3>
+  <p>
+    Useful when renaming uploaded files.
+  </p>
+
+  <pre><code>
+$file = "image.jpeg";
+$newFile = pathinfo($file, PATHINFO_FILENAME) . ".png";
+echo $newFile;
+  </code></pre>
+
+  <pre><code>
+image.png
+  </code></pre>
+
+  <hr>
+
+  <h3>12. Creating Temporary Files</h3>
+  <p>
+    Temporary files are auto-deleted by the system.
+  </p>
+
+  <pre><code>
+$temp = tmpfile();
+fwrite($temp, "Temporary data");
+fclose($temp);
+  </code></pre>
+
+  <hr>
+
+  <h3>13. Converting Between Relative and Absolute File Paths</h3>
+  <p>
+    <code>realpath()</code> converts relative paths to absolute paths.
+  </p>
+
+  <pre><code>
+echo realpath("data.txt");
+  </code></pre>
+
+  <pre><code>
+/var/www/html/data.txt
+  </code></pre>
+
+  <hr>
+
+  <h3>14. Parsing File Paths</h3>
+  <p>
+    <code>pathinfo()</code> extracts directory, filename, and extension.
+  </p>
+
+  <pre><code>
+$info = pathinfo("/var/www/html/data.txt");
+print_r($info);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [dirname] => /var/www/html
+  [basename] => data.txt
+  [extension] => txt
+  [filename] => data
+)
+  </code></pre>
+
+</section>
+<br>
+<section id="php-database-advanced">
+  <h2>PHP Database Handling (Advanced Level – Deep Study)</h2>
+
+  <p>
+    Modern PHP applications interact with databases using PDO (PHP Data Objects).
+    PDO supports multiple databases (MySQL, PostgreSQL, SQLite, Oracle).
+  </p>
+
+  <hr>
+
+  <h3>1. Connecting to Database (PDO – Best Practice)</h3>
+  <p>
+    PDO uses a Data Source Name (DSN) and supports prepared statements,
+    transactions, and error handling.
+  </p>
+
+  <pre><code>
+try {
+  $pdo = new PDO(
+    "mysql:host=localhost;dbname=test_db;charset=utf8",
+    "root",
+    ""
+  );
+  $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  echo "Connected";
+} catch (PDOException $e) {
+  echo $e->getMessage();
+}
+  </code></pre>
+
+  <pre><code>
+Connected
+  </code></pre>
+
+  <hr>
+
+  <h3>2. INSERT Data (Prepared Statement)</h3>
+  <p>
+    Prepared statements protect against SQL Injection and improve performance.
+  </p>
+
+  <pre><code>
+$sql = "INSERT INTO users (name, email) VALUES (?, ?)";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(["Aathi", "aathi@mail.com"]);
+  </code></pre>
+
+  <p>
+    The query is compiled once and executed safely with values.
+  </p>
+
+  <hr>
+
+  <h3>3. SELECT Data (Fetching Methods)</h3>
+  <p>
+    PDO supports multiple fetch modes.
+  </p>
+
+  <pre><code>
+$stmt = $pdo->query("SELECT * FROM users");
+$data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+print_r($data);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => Array ( [id] => 1 [name] => Aathi [email] => aathi@mail.com )
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>4. UPDATE Records</h3>
+  <p>
+    Updating records using prepared statements.
+  </p>
+
+  <pre><code>
+$sql = "UPDATE users SET email = ? WHERE id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute(["new@mail.com", 1]);
+  </code></pre>
+
+  <hr>
+
+  <h3>5. DELETE Records</h3>
+  <p>
+    Always use WHERE clause to avoid deleting all rows.
+  </p>
+
+  <pre><code>
+$sql = "DELETE FROM users WHERE id = ?";
+$stmt = $pdo->prepare($sql);
+$stmt->execute([1]);
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Sequence Number (Auto Increment / Custom Sequence)</h3>
+  <p>
+    MySQL uses AUTO_INCREMENT.
+    PostgreSQL uses SEQUENCE objects.
+  </p>
+
+  <h4>MySQL Auto Increment</h4>
+  <pre><code>
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100)
+);
+  </code></pre>
+
+  <h4>Custom Sequence Logic (Manual)</h4>
+  <pre><code>
+SELECT MAX(order_no) + 1 AS next_seq FROM orders;
+  </code></pre>
+
+  <hr>
+
+  <h3>7. Retrieving the Last-Inserted Record ID</h3>
+  <p>
+    Used after INSERT for relationships (orders, users, invoices).
+  </p>
+
+  <pre><code>
+$pdo->prepare(
+  "INSERT INTO users (name) VALUES (?)"
+)->execute(["Kumar"]);
+
+$lastId = $pdo->lastInsertId();
+echo $lastId;
+  </code></pre>
+
+  <pre><code>
+5
+  </code></pre>
+
+  <hr>
+
+  <h3>8. Limiting Query Results (Pagination)</h3>
+  <p>
+    Used in dashboards, tables, APIs.
+  </p>
+
+  <pre><code>
+$limit = 5;
+$offset = 0;
+
+$sql = "SELECT * FROM users LIMIT :limit OFFSET :offset";
+$stmt = $pdo->prepare($sql);
+$stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+$stmt->bindValue(":offset", $offset, PDO::PARAM_INT);
+$stmt->execute();
+
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+print_r($result);
+  </code></pre>
+
+  <hr>
+
+  <h3>9. Executing Multiple SQL Commands at Once</h3>
+  <p>
+    Use transactions when multiple queries must succeed or fail together.
+  </p>
+
+  <pre><code>
+try {
+  $pdo->beginTransaction();
+
+  $pdo->exec("INSERT INTO accounts (name, balance) VALUES ('A', 1000)");
+  $pdo->exec("INSERT INTO accounts (name, balance) VALUES ('B', 2000)");
+
+  $pdo->commit();
+  echo "Transaction successful";
+
+} catch (Exception $e) {
+  $pdo->rollBack();
+  echo "Transaction failed";
+}
+  </code></pre>
+
+  <pre><code>
+Transaction successful
+  </code></pre>
+
+  <hr>
+
+  <h3>10. Executing Multiple Statements (Single Call – Not Recommended)</h3>
+  <p>
+    This works only if driver allows multi-statements.
+    It is risky and usually avoided.
+  </p>
+
+  <pre><code>
+$sql = "
+INSERT INTO log (msg) VALUES ('start');
+INSERT INTO log (msg) VALUES ('end');
+";
+
+$pdo->exec($sql);
+  </code></pre>
+
+  <p>
+    ❌ Avoid this in production  
+    ✅ Use transactions instead
+  </p>
+
+  <hr>
+
+  <h3>11. Row Count & Affected Rows</h3>
+  <pre><code>
+$stmt = $pdo->prepare("DELETE FROM users WHERE id = ?");
+$stmt->execute([10]);
+
+echo $stmt->rowCount();
+  </code></pre>
+
+  <pre><code>
+1
+  </code></pre>
+
+  <hr>
+
+  <h3>12. Best Practices (Important for Real Applications)</h3>
+  <ul>
+    <li>Always use prepared statements</li>
+    <li>Never trust user input</li>
+    <li>Use transactions for critical operations</li>
+    <li>Limit result sets</li>
+    <li>Handle errors gracefully</li>
+    <li>Close connections automatically (PDO does)</li>
+  </ul>
+
+</section>
+<br>
+<section id="php-date-time">
+  <h2>PHP Date & Time Handling (Deep Explanation)</h2>
+
+  <p>
+    In PHP, date and time are handled mainly using:
+    <b>date()</b>, <b>strtotime()</b>, <b>DateTime</b>, and <b>DateInterval</b>.
+    Internally, PHP works with timestamps (seconds since 1 Jan 1970).
+  </p>
+
+  <hr>
+
+  <h3>1. Formatting Timestamps</h3>
+
+  <p>
+    A timestamp is an integer representing seconds from
+    <b>1970-01-01 00:00:00 UTC</b>.
+    PHP formats timestamps using the <code>date()</code> function.
+  </p>
+
+  <pre><code>
+$timestamp = time();
+echo $timestamp;
+  </code></pre>
+
+  <pre><code>
+1704867000
+  </code></pre>
+
+  <h4>Formatting Timestamp</h4>
+
+  <pre><code>
+echo date("Y-m-d H:i:s", $timestamp);
+  </code></pre>
+
+  <pre><code>
+2026-01-10 13:10:00
+  </code></pre>
+
+  <p>
+    <b>Y</b> = Year (4 digit)  
+    <b>m</b> = Month  
+    <b>d</b> = Day  
+    <b>H</b> = Hour (24-hour)  
+    <b>i</b> = Minutes  
+    <b>s</b> = Seconds
+  </p>
+
+  <hr>
+
+  <h3>2. Converting Date String to Timestamp</h3>
+
+  <p>
+    <code>strtotime()</code> converts human-readable date strings into timestamps.
+  </p>
+
+  <pre><code>
+$ts = strtotime("2024-12-25 10:30:00");
+echo $ts;
+  </code></pre>
+
+  <pre><code>
+1735103400
+  </code></pre>
+
+  <h4>Relative Date Conversion</h4>
+
+  <pre><code>
+echo date("Y-m-d", strtotime("+5 days"));
+  </code></pre>
+
+  <pre><code>
+2026-01-15
+  </code></pre>
+
+  <p>
+    This is widely used for:
+    expiry dates, subscriptions, reminders.
+  </p>
+
+  <hr>
+
+  <h3>3. Comparing Dates</h3>
+
+  <p>
+    Dates are compared using timestamps.
+    Larger timestamp means later date.
+  </p>
+
+  <pre><code>
+$date1 = strtotime("2024-01-01");
+$date2 = strtotime("2024-06-01");
+
+if ($date1 < $date2) {
+  echo "Date1 is earlier";
+}
+  </code></pre>
+
+  <pre><code>
+Date1 is earlier
+  </code></pre>
+
+  <h4>Compare Using DateTime (Recommended)</h4>
+
+  <pre><code>
+$d1 = new DateTime("2024-01-01");
+$d2 = new DateTime("2024-06-01");
+
+if ($d1 < $d2) {
+  echo "Earlier";
+}
+  </code></pre>
+
+  <pre><code>
+Earlier
+  </code></pre>
+
+  <hr>
+
+  <h3>4. Extracting Date & Time from Timestamp</h3>
+
+  <p>
+    PHP allows extracting specific parts from a timestamp.
+  </p>
+
+  <pre><code>
+$ts = time();
+
+echo date("Y", $ts); // Year
+echo date("m", $ts); // Month
+echo date("d", $ts); // Day
+echo date("H", $ts); // Hour
+echo date("i", $ts); // Minute
+  </code></pre>
+
+  <pre><code>
+2026
+01
+10
+13
+10
+  </code></pre>
+
+  <h4>Extract Using DateTime Object</h4>
+
+  <pre><code>
+$dt = new DateTime();
+
+echo $dt->format("Y");
+echo $dt->format("H:i:s");
+  </code></pre>
+
+  <pre><code>
+2026
+13:10:00
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Converting Date & Time to Different Formats</h3>
+
+  <p>
+    PHP supports multiple date formats for different regions.
+  </p>
+
+  <pre><code>
+$date = "2024-08-15";
+
+echo date("d/m/Y", strtotime($date));
+  </code></pre>
+
+  <pre><code>
+15/08/2024
+  </code></pre>
+
+  <h4>Common Formats</h4>
+
+  <pre><code>
+echo date("d-m-Y"); // Indian format
+echo date("m/d/Y"); // US format
+echo date("l, d F Y"); // Full readable
+  </code></pre>
+
+  <pre><code>
+10-01-2026
+01/10/2026
+Saturday, 10 January 2026
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Calculating Difference Between Dates</h3>
+
+  <p>
+    Date difference is calculated using <code>DateInterval</code>.
+  </p>
+
+  <pre><code>
+$d1 = new DateTime("2024-01-01");
+$d2 = new DateTime("2024-01-10");
+
+$diff = $d1->diff($d2);
+echo $diff->days;
+  </code></pre>
+
+  <pre><code>
+9
+  </code></pre>
+
+  <hr>
+
+  <h3>7. Real-World Examples</h3>
+
+  <h4>Check Expiry Date</h4>
+
+  <pre><code>
+$expiry = strtotime("2024-12-31");
+
+if (time() > $expiry) {
+  echo "Expired";
+} else {
+  echo "Valid";
+}
+  </code></pre>
+
+  <pre><code>
+Valid
+  </code></pre>
+
+  <h4>Age Calculation</h4>
+
+  <pre><code>
+$dob = new DateTime("2000-05-10");
+$today = new DateTime();
+
+$age = $dob->diff($today)->y;
+echo $age;
+  </code></pre>
+
+  <pre><code>
+25
+  </code></pre>
+
+  <hr>
+
+  <h3>8. Best Practices</h3>
+  <ul>
+    <li>Use DateTime instead of strtotime for complex logic</li>
+    <li>Store dates in database as DATETIME or TIMESTAMP</li>
+    <li>Format dates only when displaying</li>
+    <li>Use UTC for backend systems</li>
+  </ul>
+
+</section>
+
+<br>
+
+<section id="php-xml-processing">
+  <h2>PHP XML Handling (Deep & Complete Guide)</h2>
+
+  <p>
+    XML (eXtensible Markup Language) is used to store and transport structured data.
+    PHP provides two main ways to work with XML:
+  </p>
+  <ul>
+    <li><b>SimpleXML</b> → Easy, read-oriented</li>
+    <li><b>DOM</b> → Powerful, edit-oriented</li>
+  </ul>
+
+  <hr>
+
+  <h3>1. Creating XML in PHP</h3>
+
+  <p>
+    XML can be created using <b>DOMDocument</b>.
+    This is preferred when you want full control.
+  </p>
+
+  <pre><code>
+$doc = new DOMDocument("1.0", "UTF-8");
+
+$root = $doc->createElement("students");
+$doc->appendChild($root);
+
+$student = $doc->createElement("student");
+$student->setAttribute("id", "101");
+
+$name = $doc->createElement("name", "Aathi");
+$age  = $doc->createElement("age", "22");
+
+$student->appendChild($name);
+$student->appendChild($age);
+$root->appendChild($student);
+
+echo $doc->saveXML();
+  </code></pre>
+
+  <pre><code>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;students&gt;
+  &lt;student id="101"&gt;
+    &lt;name&gt;Aathi&lt;/name&gt;
+    &lt;age&gt;22&lt;/age&gt;
+  &lt;/student&gt;
+&lt;/students&gt;
+  </code></pre>
+
+  <hr>
+
+  <h3>2. Processing XML (Reading XML)</h3>
+
+  <p>
+    SimpleXML is the easiest way to read XML.
+  </p>
+
+  <pre><code>
+$xml = simplexml_load_string(
+"&lt;user&gt;&lt;name&gt;Aathi&lt;/name&gt;&lt;city&gt;Chennai&lt;/city&gt;&lt;/user&gt;"
+);
+
+echo $xml->name;
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <hr>
+
+  <h3>3. Retrieving Node and Attribute Values</h3>
+
+  <pre><code>
+$xml = simplexml_load_string(
+"&lt;book id='B01'&gt;&lt;title&gt;PHP&lt;/title&gt;&lt;/book&gt;"
+);
+
+echo $xml->title;
+echo $xml['id'];
+  </code></pre>
+
+  <pre><code>
+PHP
+B01
+  </code></pre>
+
+  <p>
+    <b>$xml->node</b> → node value  
+    <b>$xml['attr']</b> → attribute value
+  </p>
+
+  <hr>
+
+  <h3>4. Modifying Node and Attribute Values</h3>
+
+  <pre><code>
+$xml = simplexml_load_string(
+"&lt;user age='20'&gt;&lt;name&gt;Aathi&lt;/name&gt;&lt;/user&gt;"
+);
+
+$xml->name = "Rahul";
+$xml['age'] = 25;
+
+echo $xml->asXML();
+  </code></pre>
+
+  <pre><code>
+&lt;user age="25"&gt;
+  &lt;name&gt;Rahul&lt;/name&gt;
+&lt;/user&gt;
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Validating XML</h3>
+
+  <p>
+    XML validation ensures the XML structure is correct.
+  </p>
+
+  <pre><code>
+libxml_use_internal_errors(true);
+
+$xml = simplexml_load_string("&lt;user&gt;&lt;name&gt;Aathi&lt;/user&gt;");
+
+if ($xml === false) {
+  echo "Invalid XML";
+}
+  </code></pre>
+
+  <pre><code>
+Invalid XML
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Adding XML Nodes</h3>
+
+  <pre><code>
+$xml = simplexml_load_string("&lt;users&gt;&lt;/users&gt;");
+
+$user = $xml->addChild("user");
+$user->addChild("name", "Aathi");
+$user->addChild("city", "Chennai");
+
+echo $xml->asXML();
+  </code></pre>
+
+  <pre><code>
+&lt;users&gt;
+  &lt;user&gt;
+    &lt;name&gt;Aathi&lt;/name&gt;
+    &lt;city&gt;Chennai&lt;/city&gt;
+  &lt;/user&gt;
+&lt;/users&gt;
+  </code></pre>
+
+  <hr>
+
+  <h3>7. Removing XML Nodes</h3>
+
+  <p>
+    SimpleXML cannot directly remove nodes.
+    DOM is required.
+  </p>
+
+  <pre><code>
+$doc = new DOMDocument();
+$doc->loadXML("&lt;users&gt;&lt;user&gt;Aathi&lt;/user&gt;&lt;/users&gt;");
+
+$user = $doc->getElementsByTagName("user")->item(0);
+$user->parentNode->removeChild($user);
+
+echo $doc->saveXML();
+  </code></pre>
+
+  <pre><code>
+&lt;?xml version="1.0"?&gt;
+&lt;users/&gt;
+  </code></pre>
+
+  <hr>
+
+  <h3>8. Collapsing Empty XML Elements</h3>
+
+  <p>
+    Self-closing tags appear when elements are empty.
+  </p>
+
+  <pre><code>
+$doc = new DOMDocument();
+$root = $doc->createElement("data");
+$doc->appendChild($root);
+
+echo $doc->saveXML();
+  </code></pre>
+
+  <pre><code>
+&lt;data/&gt;
+  </code></pre>
+
+  <hr>
+
+  <h3>9. Transforming XML to JSON</h3>
+
+  <p>
+    XML is often converted to JSON for APIs.
+  </p>
+
+  <pre><code>
+$xml = simplexml_load_string(
+"&lt;user&gt;&lt;name&gt;Aathi&lt;/name&gt;&lt;age&gt;22&lt;/age&gt;&lt;/user&gt;"
+);
+
+$json = json_encode($xml);
+echo $json;
+  </code></pre>
+
+  <pre><code>
+{"name":"Aathi","age":"22"}
+  </code></pre>
+
+  <h4>Convert XML → Array → JSON</h4>
+
+  <pre><code>
+$array = json_decode(json_encode($xml), true);
+print_r($array);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [name] => Aathi
+  [age] => 22
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>10. Real-World Use Cases</h3>
+  <ul>
+    <li>SOAP APIs</li>
+    <li>Configuration files</li>
+    <li>Legacy systems</li>
+    <li>Data exchange between systems</li>
+  </ul>
+
+  <h3>Best Practices</h3>
+  <ul>
+    <li>Use SimpleXML for reading</li>
+    <li>Use DOM for editing</li>
+    <li>Validate XML before processing</li>
+    <li>Convert to JSON for modern APIs</li>
+  </ul>
+
+</section>
+<br>
+<section id="php-json-handling">
+  <h2>PHP JSON Handling (Deep & Practical Guide)</h2>
+
+  <p>
+    JSON (JavaScript Object Notation) is the most common data format
+    used in APIs, AJAX calls, configuration files, and modern web applications.
+    PHP supports JSON natively using built-in functions.
+  </p>
+
+  <hr>
+
+  <h3>1. Parsing JSON from a File</h3>
+
+  <p>
+    JSON files are often used to store configuration or data.
+    The process is:
+    <b>read file → decode JSON → use data</b>
+  </p>
+
+  <pre><code>
+$jsonData = file_get_contents("data.json");
+
+$data = json_decode($jsonData, true);
+print_r($data);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [name] => Aathi
+  [age] => 22
+  [city] => Chennai
+)
+  </code></pre>
+
+  <p>
+    <b>true</b> converts JSON objects into PHP associative arrays.
+  </p>
+
+  <hr>
+
+  <h3>2. Parsing JSON from HTTP Request</h3>
+
+  <p>
+    APIs usually send JSON through the request body.
+  </p>
+
+  <pre><code>
+$json = file_get_contents("php://input");
+$data = json_decode($json, true);
+
+echo $data['name'];
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <p>
+    This is common in REST APIs and AJAX requests.
+  </p>
+
+  <hr>
+
+  <h3>3. Validating JSON Format</h3>
+
+  <p>
+    Invalid JSON can break applications.
+    Always validate JSON before processing.
+  </p>
+
+  <pre><code>
+$json = '{ "name": "Aathi", "age": }';
+
+$data = json_decode($json);
+
+if (json_last_error() !== JSON_ERROR_NONE) {
+  echo "Invalid JSON";
+}
+  </code></pre>
+
+  <pre><code>
+Invalid JSON
+  </code></pre>
+
+  <p>
+    <code>json_last_error()</code> returns the last JSON error.
+  </p>
+
+  <hr>
+
+  <h3>4. Encoding JSON (PHP → JSON)</h3>
+
+  <p>
+    Used when sending data to frontend or APIs.
+  </p>
+
+  <pre><code>
+$data = [
+  "name" => "Aathi",
+  "age" => 22,
+  "skills" => ["PHP", "MySQL"]
+];
+
+echo json_encode($data);
+  </code></pre>
+
+  <pre><code>
+{"name":"Aathi","age":22,"skills":["PHP","MySQL"]}
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Decoding JSON (JSON → PHP)</h3>
+
+  <p>
+    Converts JSON string into PHP variable.
+  </p>
+
+  <pre><code>
+$json = '{"name":"Aathi","age":22}';
+
+$obj = json_decode($json);
+echo $obj->name;
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <h4>Decode as Array</h4>
+
+  <pre><code>
+$arr = json_decode($json, true);
+echo $arr['name'];
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Accessing JSON Arrays</h3>
+
+  <p>
+    JSON arrays map to PHP arrays.
+  </p>
+
+  <pre><code>
+$json = '{
+  "user": {
+    "name": "Aathi",
+    "skills": ["PHP", "JS", "SQL"]
+  }
+}';
+
+$data = json_decode($json, true);
+
+echo $data['user']['skills'][1];
+  </code></pre>
+
+  <pre><code>
+JS
+  </code></pre>
+
+  <p>
+    Nested JSON is accessed using array indexes.
+  </p>
+
+  <hr>
+
+  <h3>7. Generating JSON Request (API Example)</h3>
+
+  <p>
+    APIs require JSON requests with proper headers.
+  </p>
+
+  <pre><code>
+$data = [
+  "email" => "test@example.com",
+  "password" => "123456"
+];
+
+$json = json_encode($data);
+
+$ch = curl_init("https://api.example.com/login");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+  "Content-Type: application/json",
+  "Content-Length: " . strlen($json)
+]);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo $response;
+  </code></pre>
+
+  <pre><code>
+{"status":"success","token":"abc123"}
+  </code></pre>
+
+  <hr>
+
+  <h3>8. JSON Pretty Print</h3>
+
+  <pre><code>
+echo json_encode($data, JSON_PRETTY_PRINT);
+  </code></pre>
+
+  <pre><code>
+{
+  "email": "test@example.com",
+  "password": "123456"
+}
+  </code></pre>
+
+  <hr>
+
+  <h3>9. Real-World Use Cases</h3>
+  <ul>
+    <li>REST APIs</li>
+    <li>AJAX communication</li>
+    <li>Configuration files</li>
+    <li>Microservices</li>
+  </ul>
+
+  <h3>Best Practices</h3>
+  <ul>
+    <li>Always validate JSON</li>
+    <li>Use associative arrays for flexibility</li>
+    <li>Set correct Content-Type headers</li>
+    <li>Pretty print only for debugging</li>
+  </ul>
+
+</section>
+<br>
+<section id="php-regular-expressions">
+  <h2>PHP Regular Expressions (Regex) – Deep & Complete Guide</h2>
+
+  <p>
+    Regular Expressions (Regex) are patterns used to match, search,
+    validate, extract, and replace text.
+    PHP uses <b>PCRE (Perl Compatible Regular Expressions)</b>.
+  </p>
+
+  <hr>
+
+  <h3>1. Anchors</h3>
+
+  <p>
+    Anchors match positions, not characters.
+  </p>
+
+  <table border="1">
+    <tr><th>Anchor</th><th>Description</th></tr>
+    <tr><td>^</td><td>Start of string</td></tr>
+    <tr><td>$</td><td>End of string</td></tr>
+  </table>
+
+  <pre><code>
+$pattern = "/^Hello/";
+$text = "Hello World";
+
+echo preg_match($pattern, $text);
+  </code></pre>
+
+  <pre><code>
+1
+  </code></pre>
+
+  <p>
+    Pattern matches because "Hello" is at the start.
+  </p>
+
+  <pre><code>
+$pattern = "/World$/";
+echo preg_match($pattern, $text);
+  </code></pre>
+
+  <pre><code>
+1
+  </code></pre>
+
+  <hr>
+
+  <h3>2. POSIX Character Classes</h3>
+
+  <p>
+    POSIX classes match predefined character sets.
+  </p>
+
+  <table border="1">
+    <tr><th>Class</th><th>Description</th></tr>
+    <tr><td>[:alpha:]</td><td>Letters</td></tr>
+    <tr><td>[:digit:]</td><td>Digits</td></tr>
+    <tr><td>[:alnum:]</td><td>Letters + digits</td></tr>
+    <tr><td>[:space:]</td><td>Whitespace</td></tr>
+  </table>
+
+  <pre><code>
+$pattern = "/[[:digit:]]+/";
+$text = "Order123";
+
+preg_match($pattern, $text, $matches);
+print_r($matches);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => 123
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>3. Quantifiers</h3>
+
+  <p>
+    Quantifiers define how many times a pattern should occur.
+  </p>
+
+  <table border="1">
+    <tr><th>Quantifier</th><th>Description</th></tr>
+    <tr><td>*</td><td>0 or more</td></tr>
+    <tr><td>+</td><td>1 or more</td></tr>
+    <tr><td>?</td><td>0 or 1</td></tr>
+    <tr><td>{n}</td><td>Exactly n times</td></tr>
+    <tr><td>{n,}</td><td>At least n times</td></tr>
+    <tr><td>{n,m}</td><td>Between n and m</td></tr>
+  </table>
+
+  <pre><code>
+$pattern = "/a{2,3}/";
+$text = "caaat";
+
+preg_match($pattern, $text, $matches);
+print_r($matches);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => aaa
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>4. Groups and Ranges</h3>
+
+  <h4>Groups</h4>
+
+  <pre><code>
+$pattern = "/(PHP|Python)/";
+$text = "I like PHP";
+
+preg_match($pattern, $text, $matches);
+print_r($matches);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => PHP
+  [1] => PHP
+)
+  </code></pre>
+
+  <h4>Ranges</h4>
+
+  <pre><code>
+$pattern = "/[a-zA-Z]/";
+echo preg_match($pattern, "9");
+  </code></pre>
+
+  <pre><code>
+0
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Escape Sequences</h3>
+
+  <p>
+    Escapes match special characters.
+  </p>
+
+  <table border="1">
+    <tr><th>Escape</th><th>Description</th></tr>
+    <tr><td>\d</td><td>Digit</td></tr>
+    <tr><td>\D</td><td>Non-digit</td></tr>
+    <tr><td>\w</td><td>Word character</td></tr>
+    <tr><td>\W</td><td>Non-word</td></tr>
+    <tr><td>\s</td><td>Whitespace</td></tr>
+    <tr><td>\S</td><td>Non-whitespace</td></tr>
+  </table>
+
+  <pre><code>
+$pattern = "/\d+/";
+preg_match($pattern, "Age: 22", $matches);
+print_r($matches);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => 22
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Common Metacharacters</h3>
+
+  <table border="1">
+    <tr><th>Character</th><th>Description</th></tr>
+    <tr><td>.</td><td>Any character</td></tr>
+    <tr><td>|</td><td>OR</td></tr>
+    <tr><td>[]</td><td>Character set</td></tr>
+    <tr><td>()</td><td>Group</td></tr>
+  </table>
+
+  <pre><code>
+$pattern = "/cat|dog/";
+echo preg_match($pattern, "I have a dog");
+  </code></pre>
+
+  <pre><code>
+1
+  </code></pre>
+
+  <hr>
+
+  <h3>7. PHP Regular Expression Functions</h3>
+
+  <h4>preg_match()</h4>
+
+  <pre><code>
+preg_match("/PHP/", "I love PHP", $matches);
+print_r($matches);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => PHP
+)
+  </code></pre>
+
+  <h4>preg_match_all()</h4>
+
+  <pre><code>
+preg_match_all("/\d+/", "A1 B22 C333", $matches);
+print_r($matches);
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => Array
+    (
+      [0] => 1
+      [1] => 22
+      [2] => 333
+    )
+)
+  </code></pre>
+
+  <h4>preg_replace()</h4>
+
+  <pre><code>
+echo preg_replace("/\d+/", "***", "Card123");
+  </code></pre>
+
+  <pre><code>
+Card***
+  </code></pre>
+
+  <h4>preg_split()</h4>
+
+  <pre><code>
+print_r(preg_split("/,/", "a,b,c"));
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => a
+  [1] => b
+  [2] => c
+)
+  </code></pre>
+
+  <h4>preg_grep()</h4>
+
+  <pre><code>
+$arr = ["apple", "banana", "cherry"];
+print_r(preg_grep("/^a/", $arr));
+  </code></pre>
+
+  <pre><code>
+Array
+(
+  [0] => apple
+)
+  </code></pre>
+
+  <hr>
+
+  <h3>8. Real-World Regex Examples</h3>
+
+  <h4>Email Validation</h4>
+
+  <pre><code>
+$pattern = "/^[\w.-]+@[\w.-]+\.\w+$/";
+echo preg_match($pattern, "test@mail.com");
+  </code></pre>
+
+  <pre><code>
+1
+  </code></pre>
+
+  <h4>Password Validation</h4>
+
+  <pre><code>
+$pattern = "/^(?=.*\d)(?=.*[A-Z]).{8,}$/";
+echo preg_match($pattern, "Test1234");
+  </code></pre>
+
+  <pre><code>
+1
+  </code></pre>
+
+  <hr>
+
+  <h3>Best Practices</h3>
+  <ul>
+    <li>Keep regex readable</li>
+    <li>Test patterns before production</li>
+    <li>Use anchors for validation</li>
+    <li>Escape special characters properly</li>
+  </ul>
+
+</section>
+<br>
+<section id="php-http-requests">
+  <h2>PHP HTTP Requests & Responses (Deep Study Guide)</h2>
+
+  <p>
+    PHP communicates with the browser and other servers using
+    the HTTP protocol.
+    User input, headers, API calls, and form data are all handled
+    through PHP superglobals and cURL.
+  </p>
+
+  <hr>
+
+  <h3>1. $_GET (Receiving URL Data)</h3>
+
+  <p>
+    <b>$_GET</b> receives data sent through the URL query string.
+    It is visible in the browser address bar.
+  </p>
+
+  <h4>URL</h4>
+  <pre><code>
+http://example.com/page.php?name=Aathi&age=22
+  </code></pre>
+
+  <h4>PHP Code</h4>
+  <pre><code>
+echo $_GET['name'];
+echo $_GET['age'];
+  </code></pre>
+
+  <pre><code>
+Aathi
+22
+  </code></pre>
+
+  <p>
+    ❗ Do not use GET for sensitive data (passwords).
+  </p>
+
+  <hr>
+
+  <h3>2. $_POST (Receiving Form Data)</h3>
+
+  <p>
+    <b>$_POST</b> is used for secure form submissions.
+    Data is sent in the request body (not visible in URL).
+  </p>
+
+  <h4>HTML Form</h4>
+  <pre><code>
+&lt;form method="post"&gt;
+  &lt;input name="email"&gt;
+  &lt;button&gt;Submit&lt;/button&gt;
+&lt;/form&gt;
+  </code></pre>
+
+  <h4>PHP Code</h4>
+  <pre><code>
+echo $_POST['email'];
+  </code></pre>
+
+  <pre><code>
+test@example.com
+  </code></pre>
+
+  <p>
+    POST is used for login, signup, uploads, payments.
+  </p>
+
+  <hr>
+
+  <h3>3. $_REQUEST (GET + POST + COOKIE)</h3>
+
+  <p>
+    <b>$_REQUEST</b> collects data from:
+    GET, POST, and COOKIE.
+  </p>
+
+  <pre><code>
+echo $_REQUEST['name'];
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <p>
+    ⚠ Avoid using $_REQUEST in secure applications
+    because source is ambiguous.
+  </p>
+
+  <hr>
+
+  <h3>4. Accessing Request Headers ($_SERVER)</h3>
+
+  <p>
+    PHP does not have $_HEADER.
+    Headers are accessed using <b>$_SERVER</b>.
+  </p>
+
+  <pre><code>
+echo $_SERVER['HTTP_USER_AGENT'];
+  </code></pre>
+
+  <pre><code>
+Mozilla/5.0 (Windows NT 10.0; Win64; x64)
+  </code></pre>
+
+  <h4>Common Headers</h4>
+  <pre><code>
+$_SERVER['REQUEST_METHOD'];
+$_SERVER['CONTENT_TYPE'];
+$_SERVER['HTTP_AUTHORIZATION'];
+  </code></pre>
+
+  <hr>
+
+  <h3>5. Request Parsing (Manual)</h3>
+
+  <p>
+    APIs send raw JSON data.
+    PHP reads it using <code>php://input</code>.
+  </p>
+
+  <pre><code>
+$json = file_get_contents("php://input");
+$data = json_decode($json, true);
+
+echo $data['username'];
+  </code></pre>
+
+  <pre><code>
+Aathi
+  </code></pre>
+
+  <hr>
+
+  <h3>6. Response Parsing</h3>
+
+  <p>
+    PHP sends responses using headers and body.
+  </p>
+
+  <pre><code>
+header("Content-Type: application/json");
+
+echo json_encode([
+  "status" => "success",
+  "message" => "Saved"
+]);
+  </code></pre>
+
+  <pre><code>
+{"status":"success","message":"Saved"}
+  </code></pre>
+
+  <hr>
+
+  <h3>7. Working with cURL in PHP</h3>
+
+  <p>
+    cURL allows PHP to send HTTP requests to other servers.
+    Used for APIs, microservices, payment gateways.
+  </p>
+
+  <hr>
+
+  <h3>8. Sending GET Request using cURL</h3>
+
+  <pre><code>
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, "https://api.example.com/users");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo $response;
+  </code></pre>
+
+  <pre><code>
+[{"id":1,"name":"Aathi"}]
+  </code></pre>
+
+  <hr>
+
+  <h3>9. Sending POST Request using cURL</h3>
+
+  <pre><code>
+$data = [
+  "email" => "test@example.com",
+  "password" => "123456"
+];
+
+$ch = curl_init("https://api.example.com/login");
+
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+  "Content-Type: application/json"
+]);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo $response;
+  </code></pre>
+
+  <pre><code>
+{"token":"abc123"}
+  </code></pre>
+
+  <hr>
+
+  <h3>10. Sending Headers with cURL</h3>
+
+  <pre><code>
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+  "Authorization: Bearer abc123",
+  "Accept: application/json"
+]);
+  </code></pre>
+
+  <hr>
+
+  <h3>11. GET vs POST (Quick Comparison)</h3>
+
+  <table border="1">
+    <tr><th>GET</th><th>POST</th></tr>
+    <tr><td>Visible in URL</td><td>Hidden</td></tr>
+    <tr><td>Less secure</td><td>More secure</td></tr>
+    <tr><td>Limited size</td><td>Large data allowed</td></tr>
+    <tr><td>Used for reading</td><td>Used for writing</td></tr>
+  </table>
+
+  <hr>
+
+  <h3>12. Real-World Usage</h3>
+  <ul>
+    <li>Login & Signup systems</li>
+    <li>REST APIs</li>
+    <li>Payment gateways</li>
+    <li>Mobile app backends</li>
+  </ul>
+
+  <h3>Best Practices</h3>
+  <ul>
+    <li>Validate input</li>
+    <li>Use POST for sensitive data</li>
+    <li>Use JSON for APIs</li>
+    <li>Always check request method</li>
+  </ul>
+
+</section>
+<br>
+<section id="php-encryption">
+  <h2>Data Encryption in PHP (AES & RSA – Deep Study)</h2>
+
+  <p>
+    Encryption is the process of converting readable data (plaintext)
+    into unreadable data (ciphertext) to protect it from unauthorized access.
+  </p>
+
+  <p>
+    PHP mainly supports two types of encryption:
+  </p>
+  <ul>
+    <li><b>Symmetric Encryption</b> → Same key for encrypt & decrypt (AES)</li>
+    <li><b>Asymmetric Encryption</b> → Public & private keys (RSA)</li>
+  </ul>
+
+  <hr>
+
+  <h3>1. AES Encryption (Symmetric Encryption)</h3>
+
+  <p>
+    AES (Advanced Encryption Standard) uses the <b>same secret key</b>
+    for both encryption and decryption.
+    It is fast and commonly used for:
+    passwords, tokens, session data, files.
+  </p>
+
+  <h4>Encryption Flow</h4>
+  <ul>
+    <li>Plain text</li>
+    <li>Secret key</li>
+    <li>Initialization Vector (IV)</li>
+    <li>Cipher method (AES-256-CBC)</li>
+  </ul>
+
+  <h4>AES Encryption Example</h4>
+
+  <pre><code>
+$data = "My Secret Message";
+$key = "my_secret_key_123456";
+$cipher = "AES-256-CBC";
+
+$ivLength = openssl_cipher_iv_length($cipher);
+$iv = openssl_random_pseudo_bytes($ivLength);
+
+$encrypted = openssl_encrypt(
+  $data,
+  $cipher,
+  $key,
+  0,
+  $iv
+);
+
+$encryptedData = base64_encode($iv . $encrypted);
+echo $encryptedData;
+  </code></pre>
+
+  <pre><code>
+QkZlVnZkOXh1Y3RzTzBqY0V...==
+  </code></pre>
+
+  <p>
+    The output is encrypted binary data encoded in Base64
+    so it can be safely stored or transmitted.
+  </p>
+
+  <h4>AES Decryption Example</h4>
+
+  <pre><code>
+$decoded = base64_decode($encryptedData);
+
+$iv = substr($decoded, 0, $ivLength);
+$encryptedText = substr($decoded, $ivLength);
+
+$decrypted = openssl_decrypt(
+  $encryptedText,
+  $cipher,
+  $key,
+  0,
+  $iv
+);
+
+echo $decrypted;
+  </code></pre>
+
+  <pre><code>
+My Secret Message
+  </code></pre>
+
+  <p>
+    ✅ AES is fast  
+    ❌ Key must be kept secret  
+  </p>
+
+  <hr>
+
+  <h3>2. RSA Encryption (Asymmetric Encryption)</h3>
+
+  <p>
+    RSA uses <b>two keys</b>:
+  </p>
+  <ul>
+    <li><b>Public Key</b> → Encrypt data</li>
+    <li><b>Private Key</b> → Decrypt data</li>
+  </ul>
+
+  <p>
+    RSA is commonly used for:
+    key exchange, digital signatures, secure communication.
+  </p>
+
+  <hr>
+
+  <h3>3. Generating RSA Keys</h3>
+
+  <pre><code>
+$config = [
+  "private_key_bits" => 2048,
+  "private_key_type" => OPENSSL_KEYTYPE_RSA
+];
+
+$res = openssl_pkey_new($config);
+
+openssl_pkey_export($res, $privateKey);
+$publicKey = openssl_pkey_get_details($res)['key'];
+
+echo $publicKey;
+  </code></pre>
+
+  <p>
+    Public key can be shared.
+    Private key must be stored securely.
+  </p>
+
+  <hr>
+
+  <h3>4. RSA Encryption Using Public Key</h3>
+
+  <pre><code>
+$data = "Top Secret Data";
+
+openssl_public_encrypt(
+  $data,
+  $encrypted,
+  $publicKey
+);
+
+echo base64_encode($encrypted);
+  </code></pre>
+
+  <pre><code>
+X0M0VWxwQnQ2b1ZzR2...==
+  </code></pre>
+
+  <hr>
+
+  <h3>5. RSA Decryption Using Private Key</h3>
+
+  <pre><code>
+openssl_private_decrypt(
+  base64_decode($encrypted),
+  $decrypted,
+  $privateKey
+);
+
+echo $decrypted;
+  </code></pre>
+
+  <pre><code>
+Top Secret Data
+  </code></pre>
+
+  <hr>
+
+  <h3>6. AES vs RSA (Comparison)</h3>
+
+  <table border="1">
+    <tr><th>AES</th><th>RSA</th></tr>
+    <tr><td>Symmetric</td><td>Asymmetric</td></tr>
+    <tr><td>Fast</td><td>Slow</td></tr>
+    <tr><td>Same key</td><td>Public + Private key</td></tr>
+    <tr><td>Large data</td><td>Small data</td></tr>
+  </table>
+
+  <hr>
+
+  <h3>7. Real-World Usage Pattern</h3>
+
+  <p>
+    In real applications:
+  </p>
+  <ul>
+    <li>RSA encrypts AES key</li>
+    <li>AES encrypts actual data</li>
+  </ul>
+
+  <p>
+    This gives both:
+    <b>security + performance</b>
+  </p>
+
+  <hr>
+
+  <h3>8. Best Practices</h3>
+  <ul>
+    <li>Never hardcode encryption keys</li>
+    <li>Use AES-256-CBC</li>
+    <li>Store keys outside web root</li>
+    <li>Use HTTPS always</li>
+    <li>Do not encrypt passwords → use password_hash()</li>
+  </ul>
+
+</section>
+
+</body>
+</html>
