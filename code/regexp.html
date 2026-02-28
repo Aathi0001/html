@@ -1,0 +1,4331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linux Commands Index</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+</style>
+</head>
+<body>
+<section>
+
+  <h2>First Name</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[A-Za-z]+$</code></pre>
+  <p><strong>Valid:</strong> John</p>
+  <p><strong>Invalid:</strong> John123</p>
+  <p><strong>How it works:</strong> Allows only alphabets from start (^) to end ($). At least one letter required.</p>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^[A-Z][a-z]{1,29}$</code></pre>
+  <p><strong>Valid:</strong> John</p>
+  <p><strong>Invalid:</strong> john, J</p>
+  <p><strong>How it works:</strong> Must start with uppercase letter followed by 1–29 lowercase letters. Minimum 2 characters, maximum 30.</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^[A-Z][a-z]{1,29}(?:[-'][A-Z][a-z]+)?$</code></pre>
+  <p><strong>Valid:</strong> Mary, O'Neil, Anne-Marie</p>
+  <p><strong>Invalid:</strong> mary</p>
+  <p><strong>How it works:</strong> Proper capitalization required. Optionally allows hyphen or apostrophe with correct format.</p>
+
+  <hr>
+
+  <h2>Middle Name</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[A-Za-z]*$</code></pre>
+  <p><strong>Valid:</strong> David</p>
+  <p><strong>Invalid:</strong> David123</p>
+  <p><strong>How it works:</strong> Allows letters only. Can be empty.</p>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^[A-Z][a-z]{1,29}$</code></pre>
+  <p><strong>Valid:</strong> Kumar</p>
+  <p><strong>Invalid:</strong> kumar</p>
+  <p><strong>How it works:</strong> Same rule as First Name but required if used.</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(?:[A-Z][a-z]{1,29})?$</code></pre>
+  <p><strong>Valid:</strong> Raj</p>
+  <p><strong>Valid:</strong> (empty)</p>
+  <p><strong>How it works:</strong> Optional field but strictly validated if present.</p>
+
+  <hr>
+
+  <h2>Last Name</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[A-Za-z]+$</code></pre>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^[A-Z][a-z]{1,29}$</code></pre>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^[A-Z][a-z]{1,29}(?:[-'][A-Z][a-z]+)?$</code></pre>
+
+  <hr>
+
+  <h2>Full Name</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[A-Za-z ]+$</code></pre>
+  <p><strong>Valid:</strong> John Doe</p>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^[A-Z][a-z]+(?: [A-Z][a-z]+)+$</code></pre>
+  <p><strong>Valid:</strong> John David</p>
+  <p><strong>Invalid:</strong> john david</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^[A-Z][a-z]+(?:[ '-][A-Z][a-z]+)+$</code></pre>
+  <p><strong>Valid:</strong> Mary Jane Watson</p>
+  <p><strong>Valid:</strong> Anne-Marie Clark</p>
+
+  <hr>
+
+  <h2>Nickname</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[A-Za-z0-9_]{3,20}$</code></pre>
+  <p><strong>Valid:</strong> Johnny_01</p>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^(?!.*__)[A-Za-z][A-Za-z0-9_]{2,19}$</code></pre>
+  <p><strong>Valid:</strong> Johnny_01</p>
+  <p><strong>Invalid:</strong> 1johnny, john__doe</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(?!.*__)(?!.*_$)[A-Za-z][A-Za-z0-9_]{2,19}$</code></pre>
+  <p><strong>Valid:</strong> Johnny_01</p>
+  <p><strong>Invalid:</strong> john_, __john</p>
+  <p><strong>How it works:</strong> Prevents consecutive underscores and trailing underscore. Must start with letter.</p>
+
+  <hr>
+
+  <h2>Initials</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[A-Z]{1,3}$</code></pre>
+  <p><strong>Valid:</strong> A, RK</p>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^[A-Z]\.[A-Z]\.$</code></pre>
+  <p><strong>Valid:</strong> R.K.</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(?:[A-Z]\.){1,3}$</code></pre>
+  <p><strong>Valid:</strong> R., R.K., R.K.S.</p>
+
+  <hr>
+
+  <h2>Gender</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^(Male|Female)$</code></pre>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^(Male|Female|Other)$</code></pre>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(Male|Female|Other|Prefer not to say)$</code></pre>
+
+  <hr>
+
+  <h2>Date of Birth (DD/MM/YYYY)</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^\d{2}/\d{2}/\d{4}$</code></pre>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\d{4}$</code></pre>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(19\d{2}|20\d{2})$</code></pre>
+
+  <hr>
+
+  <h2>Age</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^\d{1,3}$</code></pre>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^(?:1[89]|[2-9]\d)$</code></pre>
+  <p><strong>Valid:</strong> 18–99</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(?:1[89]|[2-9]\d|100)$</code></pre>
+
+  <hr>
+
+  <h2>Marital Status</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^(Single|Married)$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^(Single|Married|Divorced|Widowed)$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(Single|Married|Divorced|Widowed|Separated)$</code></pre>
+
+  <hr>
+
+  <h2>Nationality</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z ]+$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Z][a-z]+(?: [A-Z][a-z]+)*$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z][a-z]+(?:[- ][A-Z][a-z]+)*$</code></pre>
+
+  <hr>
+
+  <h2>Blood Group</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^(A|B|AB|O)[+-]$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^(A|B|AB|O)(\+|\-)$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(A|B|AB|O)(\+|\-)$</code></pre>
+  <p><strong>Valid:</strong> A+, O-, AB+</p>
+
+</section>
+
+<section>
+
+  <h2>Email Address</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$</code></pre>
+  <p><strong>Valid:</strong> test@gmail.com</p>
+  <p><strong>Invalid:</strong> test@.com</p>
+  <p><strong>How it works:</strong> Basic email structure with username, @, domain and extension.</p>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^(?!.*\.\.)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$</code></pre>
+  <p><strong>Prevents:</strong> consecutive dots.</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(?!.*\.\.)(?!\.)([a-zA-Z0-9._%+-]{1,64})@[A-Za-z0-9-]+(\.[A-Za-z]{2,})+$</code></pre>
+  <p><strong>Restricts:</strong> max 64 characters in local part, proper domain validation.</p>
+
+  <hr>
+
+  <h2>Mobile Number (India)</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^\d{10}$</code></pre>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^[6-9]\d{9}$</code></pre>
+  <p>Must start with 6–9.</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(\+91[\-\s]?)?[6-9]\d{9}$</code></pre>
+  <p>Supports optional +91 country code.</p>
+
+  <hr>
+
+  <h2>Landline Number</h2>
+
+  <h3>1. Basic</h3>
+  <pre><code>^\d{6,10}$</code></pre>
+
+  <h3>2. Business</h3>
+  <pre><code>^\d{3,5}-\d{6,8}$</code></pre>
+  <p>Example: 044-23456789</p>
+
+  <h3>3. Production</h3>
+  <pre><code>^(?:\+91[\-\s]?)?\d{2,5}[\-\s]?\d{6,8}$</code></pre>
+
+  <hr>
+
+  <h2>International Phone Number</h2>
+
+  <h3>1. Basic</h3>
+  <pre><code>^\+\d{1,3}\d{6,14}$</code></pre>
+
+  <h3>2. Business</h3>
+  <pre><code>^\+\d{1,3}[\s]?\d{6,14}$</code></pre>
+
+  <h3>3. Production</h3>
+  <pre><code>^\+(?:[0-9] ?){6,14}[0-9]$</code></pre>
+
+  <hr>
+
+  <h2>Fax Number</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{6,12}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^\+?\d{6,15}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^\+?[0-9\s\-]{6,15}$</code></pre>
+
+  <hr>
+
+  <h2>Website URL</h2>
+
+  <h3>1. Basic</h3>
+  <pre><code>^(https?:\/\/)?[a-zA-Z0-9.-]+\.[A-Za-z]{2,}$</code></pre>
+
+  <h3>2. Business</h3>
+  <pre><code>^(https?:\/\/)(www\.)?[a-zA-Z0-9-]+\.[A-Za-z]{2,}$</code></pre>
+
+  <h3>3. Production</h3>
+  <pre><code>^(https?:\/\/)(www\.)?[a-zA-Z0-9-]+\.[A-Za-z]{2,}(\.[A-Za-z]{2,})?(\/\S*)?$</code></pre>
+
+  <hr>
+
+  <h2>LinkedIn URL</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^https?:\/\/(www\.)?linkedin\.com\/.*$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^https?:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9_-]+\/?$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^https:\/\/(www\.)?linkedin\.com\/in\/[A-Za-z0-9-]{3,100}\/?$</code></pre>
+
+  <hr>
+
+  <h2>GitHub URL</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^https?:\/\/(www\.)?github\.com\/.*$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^https?:\/\/(www\.)?github\.com\/[A-Za-z0-9_-]+\/?$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^https:\/\/github\.com\/[A-Za-z0-9-]{1,39}\/?$</code></pre>
+
+  <hr>
+
+  <!-- ADDRESS DETAILS -->
+
+  <h2>Address Line 1</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z0-9\s,.-]{5,100}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Za-z0-9\s,./-]{5,100}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(?!.*\s{2})[A-Za-z0-9\s,./-]{5,120}$</code></pre>
+
+  <hr>
+
+  <h2>City / State / Country</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z ]+$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Z][a-z]+(?: [A-Z][a-z]+)*$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z][a-z]+(?:[- ][A-Z][a-z]+)*$</code></pre>
+
+  <hr>
+
+  <h2>Pincode (India)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{6}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[1-9]\d{5}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[1-9][0-9]{2}\s?[0-9]{3}$</code></pre>
+
+  <hr>
+
+  <h2>ZIP Code (US)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{5}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^\d{5}(-\d{4})?$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^\d{5}(?:-\d{4})?$</code></pre>
+
+  <hr>
+
+  <h2>Postal Code (International)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z0-9\s-]{3,10}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^(?=.*\d)[A-Za-z0-9\s-]{3,10}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(?=.*\d)(?=.*[A-Za-z])[A-Za-z0-9\s-]{3,10}$</code></pre>
+
+</section>
+
+<section>
+
+  <!-- ================= INDIA IDENTITY ================= -->
+
+  <h2>PAN Card</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[A-Z0-9]{10}$</code></pre>
+  <p><strong>Valid:</strong> ABCDE1234F</p>
+  <p><strong>Invalid:</strong> abcde1234f</p>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^[A-Z]{5}[0-9]{4}[A-Z]$</code></pre>
+  <p><strong>Valid:</strong> ABCDE1234F</p>
+  <p><strong>Invalid:</strong> AB123E456F</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^[A-Z]{5}[0-9]{4}[A-Z]$</code></pre>
+  <p>Checksum validation must be done separately in backend.</p>
+
+  <hr>
+
+  <h2>Aadhaar Number</h2>
+
+  <h3>1. Basic</h3>
+  <pre><code>^\d{12}$</code></pre>
+
+  <h3>2. Business</h3>
+  <pre><code>^[2-9]\d{11}$</code></pre>
+
+  <h3>3. Production</h3>
+  <pre><code>^[2-9]\d{3}\s?\d{4}\s?\d{4}$</code></pre>
+  <p><strong>Valid:</strong> 2345 6789 1234</p>
+  <p>Verhoeff checksum validation required server-side.</p>
+
+  <hr>
+
+  <h2>Voter ID</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{10}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Z]{3}[0-9]{7}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z]{3}[0-9]{7}$</code></pre>
+  <p><strong>Example:</strong> ABC1234567</p>
+
+  <hr>
+
+  <h2>Driving License (India)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{10,16}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Z]{2}[0-9]{2}\s?[0-9]{11}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z]{2}[0-9]{2}[0-9]{11}$</code></pre>
+  <p><strong>Example:</strong> TN0120210001234</p>
+
+  <hr>
+
+  <h2>Passport Number (India)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{8}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Z][0-9]{7}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z][0-9]{7}$</code></pre>
+  <p><strong>Example:</strong> K1234567</p>
+
+  <hr>
+
+  <h2>GST Number (GSTIN)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{15}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$</code></pre>
+  <p><strong>Example:</strong> 27ABCDE1234F1Z5</p>
+
+  <hr>
+
+  <h2>CIN Number</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{21}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[LU][0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[LU][0-9]{5}[A-Z]{2}[0-9]{4}[A-Z]{3}[0-9]{6}$</code></pre>
+  <p><strong>Example:</strong> U12345TN2020PLC123456</p>
+
+  <hr>
+
+  <h2>TAN Number</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{10}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Z]{4}[0-9]{5}[A-Z]$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z]{4}[0-9]{5}[A-Z]$</code></pre>
+  <p><strong>Example:</strong> ABCD12345E</p>
+
+  <hr>
+
+  <!-- ================= INTERNATIONAL ================= -->
+
+  <h2>SSN (USA)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{9}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^\d{3}-\d{2}-\d{4}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(?!000|666)[0-9]{3}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}$</code></pre>
+  <p><strong>Example:</strong> 123-45-6789</p>
+
+  <hr>
+
+  <h2>SIN (Canada)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{9}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^\d{3}\s?\d{3}\s?\d{3}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^\d{9}$</code></pre>
+
+  <hr>
+
+  <h2>National Insurance Number (UK)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{9}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-CEGHJ-PR-TW-Z]{2}\d{6}[A-D]$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-CEGHJ-PR-TW-Z]{2}\d{6}[A-D]$</code></pre>
+  <p><strong>Example:</strong> QQ123456C</p>
+
+  <hr>
+
+  <!-- ================= BANKING ================= -->
+
+  <h2>Account Number</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{9,18}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[0-9]{9,18}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^\d{9,18}$</code></pre>
+
+  <hr>
+
+  <h2>IFSC Code</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{11}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Z]{4}0[A-Z0-9]{6}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z]{4}0[A-Z0-9]{6}$</code></pre>
+  <p><strong>Example:</strong> SBIN0001234</p>
+
+  <hr>
+
+  <h2>Credit / Debit Card Number</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{16}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^(?:4[0-9]{12}(?:[0-9]{3})?)$</code></pre>
+  <p>Example: Visa starting with 4</p>
+
+  <h3>Production</h3>
+  <pre><code>^\d{13,19}$</code></pre>
+  <p>Luhn checksum required server-side.</p>
+
+  <hr>
+
+  <h2>CVV</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{3}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^\d{3,4}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^\d{3,4}$</code></pre>
+
+  <hr>
+
+  <h2>Expiry Date (MM/YY)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{2}/\d{2}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^(0[1-9]|1[0-2])\/\d{2}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(0[1-9]|1[0-2])\/\d{2}$</code></pre>
+  <p>Future date validation required in backend.</p>
+
+  <hr>
+
+  <h2>UPI ID</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z0-9.\-_]{2,256}@[A-Za-z]{2,64}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[a-zA-Z0-9.\-_]{2,50}@[a-zA-Z]{2,20}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[a-zA-Z0-9.\-_]{2,50}@[a-zA-Z]{2,20}$</code></pre>
+  <p><strong>Example:</strong> user@okaxis</p>
+
+  <hr>
+
+  <h2>SWIFT / BIC Code</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Z0-9]{8,11}$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z]{4}[A-Z]{2}[A-Z0-9]{2}([A-Z0-9]{3})?$</code></pre>
+  <p><strong>Example:</strong> SBININBBXXX</p>
+
+</section>
+
+<section>
+
+  <!-- ============================= -->
+  <!-- 7️⃣ Authentication & Security -->
+  <!-- ============================= -->
+
+  <h2>Username</h2>
+
+  <h3>1. Basic Regex</h3>
+  <pre><code>^[A-Za-z0-9_]{3,15}$</code></pre>
+  <p><strong>Valid:</strong> user_123</p>
+  <p><strong>Invalid:</strong> us</p>
+  <p><strong>How it works:</strong> Allows letters, numbers, underscore. 3–15 chars.</p>
+
+  <h3>2. Business Regex</h3>
+  <pre><code>^(?=.{5,20}$)[A-Za-z][A-Za-z0-9_]+$</code></pre>
+  <p>Must start with letter. 5–20 characters.</p>
+
+  <h3>3. Production Regex</h3>
+  <pre><code>^(?=.{6,30}$)(?!.*__)[A-Za-z][A-Za-z0-9_]*$</code></pre>
+  <p>No double underscores. Strict length control.</p>
+
+  <hr>
+
+  <h2>Password</h2>
+
+  <h3>1. Basic</h3>
+  <pre><code>^.{6,}$</code></pre>
+  <p>Minimum 6 characters.</p>
+
+  <h3>2. Business</h3>
+  <pre><code>^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$</code></pre>
+  <p>Requires uppercase, lowercase, number. Min 8 chars.</p>
+
+  <h3>3. Production</h3>
+  <pre><code>^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&]).{10,}$</code></pre>
+  <p>Requires uppercase, lowercase, digit, special character. Min 10 chars.</p>
+
+  <hr>
+
+  <h2>Confirm Password</h2>
+
+  <h3>Validation</h3>
+  <pre><code>Must match Password exactly</code></pre>
+  <p><strong>How it works:</strong> Compare both values server-side.</p>
+
+  <hr>
+
+  <h2>OTP (4 digit)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d{4}$</code></pre>
+  <p>Example: 4589</p>
+
+  <h3>Business</h3>
+  <pre><code>^[0-9]{4}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(?!0000)\d{4}$</code></pre>
+  <p>Prevents all zeros.</p>
+
+  <hr>
+
+  <h2>OTP (6 digit)</h2>
+
+  <pre><code>^\d{6}$</code></pre>
+
+  <hr>
+
+  <h2>Security Answer</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z0-9\s]{3,50}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(?!.*\s{2})[A-Za-z0-9\s]{3,100}$</code></pre>
+
+  <hr>
+
+  <h2>PIN (4 digit)</h2>
+
+  <pre><code>^\d{4}$</code></pre>
+
+  <hr>
+
+  <h2>MPIN</h2>
+
+  <pre><code>^\d{4,6}$</code></pre>
+
+  <hr>
+
+  <!-- ============================= -->
+  <!-- 8️⃣ Business & Company Info -->
+  <!-- ============================= -->
+
+  <h2>Company Name</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z0-9\s&.,-]{2,100}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^(?!.*\s{2})[A-Za-z0-9\s&.,-]{2,150}$</code></pre>
+
+  <hr>
+
+  <h2>Company Registration Number</h2>
+
+  <pre><code>^[A-Za-z0-9]{6,20}$</code></pre>
+
+  <hr>
+
+  <h2>GSTIN (India)</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$</code></pre>
+  <p><strong>Example:</strong> 29ABCDE1234F1Z5</p>
+
+  <h3>Production</h3>
+  <pre><code>^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z][1-9A-Z]Z[0-9A-Z]$</code></pre>
+  <p>Strict government-defined structure.</p>
+
+  <hr>
+
+  <h2>VAT Number</h2>
+
+  <pre><code>^[A-Za-z0-9]{8,15}$</code></pre>
+
+  <hr>
+
+  <h2>Tax ID</h2>
+
+  <pre><code>^[A-Za-z0-9-]{8,20}$</code></pre>
+
+  <hr>
+
+  <h2>Employee ID</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z0-9]{3,10}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^[A-Z]{2,5}\d{2,6}$</code></pre>
+  <p>Example: HR1023</p>
+
+  <hr>
+
+  <h2>Salary</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^\d+$</code></pre>
+
+  <h3>Business</h3>
+  <pre><code>^\d{1,9}(\.\d{1,2})?$</code></pre>
+  <p>Supports decimals.</p>
+
+  <hr>
+
+  <h2>Invoice Number</h2>
+
+  <h3>Basic</h3>
+  <pre><code>^[A-Za-z0-9-]{3,20}$</code></pre>
+
+  <h3>Production</h3>
+  <pre><code>^INV-\d{4}-\d{4}$</code></pre>
+  <p>Example: INV-2024-0001</p>
+
+  <hr>
+
+  <h2>Order ID</h2>
+
+  <pre><code>^[A-Za-z0-9]{6,20}$</code></pre>
+
+  <hr>
+
+  <h2>Product Code</h2>
+
+  <pre><code>^[A-Z0-9-]{3,20}$</code></pre>
+
+  <hr>
+
+  <h2>SKU</h2>
+
+  <pre><code>^[A-Z0-9]{4,15}$</code></pre>
+
+</section>
+
+<section>
+
+<!-- ============================= -->
+<!-- 9️⃣ E-Commerce Fields -->
+<!-- ============================= -->
+
+<h2>Coupon Code</h2>
+
+<h3>1. Basic</h3>
+<pre><code>^[A-Z0-9]{5,10}$</code></pre>
+<p><strong>Valid:</strong> SAVE10</p>
+<p><strong>Invalid:</strong> save@10</p>
+<p>Uppercase letters and numbers only.</p>
+
+<h3>2. Business</h3>
+<pre><code>^[A-Z]{3,5}\d{2,5}$</code></pre>
+<p>Example: SALE20</p>
+
+<h3>3. Production</h3>
+<pre><code>^(?!.*(.)\1{3})[A-Z0-9]{6,12}$</code></pre>
+<p>Prevents 4 repeated characters.</p>
+
+<hr>
+
+<h2>Tracking ID</h2>
+
+<h3>Basic</h3>
+<pre><code>^[A-Z0-9]{8,20}$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^[A-Z]{2,5}[0-9]{6,15}$</code></pre>
+<p>Example: TRK123456789</p>
+
+<hr>
+
+<h2>Cart Quantity</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d+$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^[1-9]\d{0,2}$</code></pre>
+<p>Allows 1–999 only.</p>
+
+<hr>
+
+<h2>Price</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d+(\.\d{1,2})?$</code></pre>
+<p>Example: 499.99</p>
+
+<h3>Production</h3>
+<pre><code>^(?!0\d)\d{1,9}(\.\d{1,2})?$</code></pre>
+<p>No leading zeros.</p>
+
+<hr>
+
+<h2>Currency Format</h2>
+
+<h3>Basic</h3>
+<pre><code>^\$?\d+(\.\d{2})?$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(USD|INR|EUR)\s?\d{1,9}(\.\d{2})?$</code></pre>
+<p>Example: INR 999.00</p>
+
+<hr>
+
+<!-- ============================= -->
+<!-- 🔟 Educational Details -->
+<!-- ============================= -->
+
+<h2>Roll Number</h2>
+
+<h3>Basic</h3>
+<pre><code>^[A-Za-z0-9]{5,15}$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^[A-Z]{2,5}\d{3,8}$</code></pre>
+<p>Example: CS20240123</p>
+
+<hr>
+
+<h2>Marks</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d{1,3}$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(100|[1-9]?\d)$</code></pre>
+<p>Valid range 0–100.</p>
+
+<hr>
+
+<h2>Percentage</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d{1,3}(\.\d{1,2})?$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(100(\.0{1,2})?|[1-9]?\d(\.\d{1,2})?)$</code></pre>
+<p>Range 0–100 with decimals.</p>
+
+<hr>
+
+<h2>CGPA</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d(\.\d{1,2})?$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(10(\.0{1,2})?|[0-9](\.\d{1,2})?)$</code></pre>
+<p>Valid range 0–10.</p>
+
+<hr>
+
+<!-- ============================= -->
+<!-- 1️⃣1️⃣ Vehicle Details -->
+<!-- ============================= -->
+
+<h2>Vehicle Number (India)</h2>
+
+<h3>Basic</h3>
+<pre><code>^[A-Z]{2}\d{2}[A-Z]{1,2}\d{4}$</code></pre>
+<p>Example: TN01AB1234</p>
+
+<h3>Production</h3>
+<pre><code>^[A-Z]{2}\d{1,2}[A-Z]{1,3}\d{4}$</code></pre>
+
+<hr>
+
+<h2>Engine Number</h2>
+
+<h3>Basic</h3>
+<pre><code>^[A-Z0-9]{5,20}$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(?=.*\d)[A-Z0-9]{8,25}$</code></pre>
+
+<hr>
+
+<h2>Chassis Number (VIN)</h2>
+
+<h3>Basic</h3>
+<pre><code>^[A-HJ-NPR-Z0-9]{17}$</code></pre>
+<p>17-character VIN format.</p>
+
+<hr>
+
+<h2>RC Number</h2>
+
+<pre><code>^[A-Z0-9]{10,15}$</code></pre>
+
+<hr>
+
+<!-- ============================= -->
+<!-- 1️⃣2️⃣ File & Media Validation -->
+<!-- ============================= -->
+
+<h2>Image File (jpg, png)</h2>
+
+<h3>Basic</h3>
+<pre><code>^.+\.(jpg|jpeg|png)$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^.+\.(?i)(jpg|jpeg|png)$</code></pre>
+<p>Case-insensitive validation.</p>
+
+<hr>
+
+<h2>PDF File</h2>
+
+<pre><code>^.+\.pdf$</code></pre>
+
+<hr>
+
+<h2>Document File</h2>
+
+<h3>Basic</h3>
+<pre><code>^.+\.(doc|docx|pdf)$</code></pre>
+
+<hr>
+
+<h2>File Size Limit (Example: max 5MB)</h2>
+
+<p>Regex cannot validate size directly.</p>
+<p>Validate in backend: file.size &lt;= 5 * 1024 * 1024</p>
+
+<hr>
+
+<h2>Base64 String</h2>
+
+<h3>Basic</h3>
+<pre><code>^[A-Za-z0-9+/=]+$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$</code></pre>
+<p>Proper Base64 padding validation.</p>
+
+</section>
+
+
+<section>
+
+<!-- ============================= -->
+<!-- 1️⃣3️⃣ Technical / Programming -->
+<!-- ============================= -->
+
+<h2>IPv4 Address</h2>
+
+<h3>1. Basic</h3>
+<pre><code>^(\d{1,3}\.){3}\d{1,3}$</code></pre>
+<p><strong>Valid:</strong> 192.168.1.1</p>
+<p><strong>Invalid:</strong> 999.168.1.1</p>
+
+<h3>2. Business</h3>
+<pre><code>^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}
+(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$</code></pre>
+<p>Validates range 0–255.</p>
+
+<h3>3. Production</h3>
+<pre><code>^(?!0\.0\.0\.0$)(?!255\.255\.255\.255$)
+((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}
+(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$</code></pre>
+<p>Prevents invalid reserved addresses.</p>
+
+<hr>
+
+<h2>IPv6 Address</h2>
+
+<h3>Basic</h3>
+<pre><code>^([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}$</code></pre>
+<p>Example: 2001:0db8:85a3:0000:0000:8a2e:0370:7334</p>
+
+<h3>Production</h3>
+<pre><code>^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::1)$</code></pre>
+<p>Allows loopback (::1).</p>
+
+<hr>
+
+<h2>MAC Address</h2>
+
+<h3>Basic</h3>
+<pre><code>^([0-9A-Fa-f]{2}:){5}[0-9A-Fa-f]{2}$</code></pre>
+<p>Example: 00:1A:2B:3C:4D:5E</p>
+
+<h3>Production</h3>
+<pre><code>^([0-9A-Fa-f]{2}([-:])){5}[0-9A-Fa-f]{2}$</code></pre>
+<p>Supports : or - separator.</p>
+
+<hr>
+
+<h2>Hexadecimal Code</h2>
+
+<h3>Basic</h3>
+<pre><code>^[0-9A-Fa-f]+$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$</code></pre>
+<p>Supports #FFFFFF or #FFF.</p>
+
+<hr>
+
+<h2>RGB Color</h2>
+
+<h3>Basic</h3>
+<pre><code>^rgb\(\d{1,3},\s?\d{1,3},\s?\d{1,3}\)$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^rgb\((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d),\s?
+(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d),\s?
+(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\)$</code></pre>
+<p>Ensures 0–255 range.</p>
+
+<hr>
+
+<h2>Strong Slug</h2>
+
+<h3>Basic</h3>
+<pre><code>^[a-z0-9-]+$</code></pre>
+<p>Example: my-product-123</p>
+
+<h3>Production</h3>
+<pre><code>^(?!-)[a-z0-9]+(-[a-z0-9]+)*(?&lt;!-)$</code></pre>
+<p>No leading/trailing hyphen.</p>
+
+<hr>
+
+<h2>JSON Format</h2>
+
+<p>Regex cannot fully validate JSON.</p>
+
+<h3>Basic</h3>
+<pre><code>^\{.*\}$</code></pre>
+
+<p><strong>Production:</strong> Use JSON.parse() or backend parser.</p>
+
+<hr>
+
+<h2>HTML Tag Validation</h2>
+
+<h3>Basic</h3>
+<pre><code>^&lt;[a-zA-Z]+&gt;.*&lt;\/[a-zA-Z]+&gt;$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^&lt;([a-zA-Z][a-zA-Z0-9]*)\b[^&gt;]*&gt;.*?&lt;\/\1&gt;$</code></pre>
+<p>Matches proper opening/closing tag.</p>
+
+<hr>
+
+<!-- ============================= -->
+<!-- 1️⃣4️⃣ Date & Time -->
+<!-- ============================= -->
+
+<h2>Date (DD/MM/YYYY)</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d{2}/\d{2}/\d{4}$</code></pre>
+<p>Example: 25/12/2025</p>
+
+<h3>Production</h3>
+<pre><code>^(0[1-9]|[12]\d|3[01])\/
+(0[1-9]|1[0-2])\/
+(19|20)\d{2}$</code></pre>
+<p>Valid day, month range.</p>
+
+<hr>
+
+<h2>Date (YYYY-MM-DD)</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d{4}-\d{2}-\d{2}$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(19|20)\d{2}-
+(0[1-9]|1[0-2])-
+(0[1-9]|[12]\d|3[01])$</code></pre>
+
+<hr>
+
+<h2>Time (24hr)</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d{2}:\d{2}$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^([01]\d|2[0-3]):[0-5]\d$</code></pre>
+<p>Valid range 00:00–23:59</p>
+
+<hr>
+
+<h2>Time (12hr)</h2>
+
+<h3>Production</h3>
+<pre><code>^(0?[1-9]|1[0-2]):[0-5]\d\s?(AM|PM)$</code></pre>
+<p>Example: 09:30 PM</p>
+
+<hr>
+
+<h2>DateTime</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$</code></pre>
+<p>ISO format: 2025-12-25T14:30:00</p>
+
+<hr>
+
+<h2>Timestamp (Unix)</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d{10}$</code></pre>
+<p>Example: 1700000000</p>
+
+<h3>Production</h3>
+<pre><code>^\d{10,13}$</code></pre>
+<p>Supports seconds & milliseconds.</p>
+
+</section>
+
+<section>
+
+<!-- ============================= -->
+<!-- 1️⃣5️⃣ Social Media Formats -->
+<!-- ============================= -->
+
+<h2>Twitter Username (X)</h2>
+
+<h3>1. Basic</h3>
+<pre><code>^@[A-Za-z0-9_]+$</code></pre>
+<p><strong>Valid:</strong> @john_doe</p>
+<p><strong>Invalid:</strong> @john-doe</p>
+
+<h3>2. Business</h3>
+<pre><code>^@[A-Za-z0-9_]{4,15}$</code></pre>
+<p>4–15 characters allowed.</p>
+
+<h3>3. Production</h3>
+<pre><code>^@[A-Za-z][A-Za-z0-9_]{3,14}$</code></pre>
+<p>Must start with letter, max 15 characters.</p>
+
+<hr>
+
+<h2>Instagram Username</h2>
+
+<h3>1. Basic</h3>
+<pre><code>^[A-Za-z0-9._]+$</code></pre>
+
+<h3>2. Business</h3>
+<pre><code>^[A-Za-z0-9._]{1,30}$</code></pre>
+
+<h3>3. Production</h3>
+<pre><code>^(?!.*\.\.)(?!.*\.$)[A-Za-z0-9._]{1,30}$</code></pre>
+<p>No consecutive dots, no ending dot.</p>
+
+<hr>
+
+<h2>Facebook Profile URL</h2>
+
+<h3>1. Basic</h3>
+<pre><code>^https?:\/\/(www\.)?facebook\.com\/.*$</code></pre>
+
+<h3>2. Business</h3>
+<pre><code>^https?:\/\/(www\.)?facebook\.com\/[A-Za-z0-9.]+\/?$</code></pre>
+
+<h3>3. Production</h3>
+<pre><code>^https:\/\/(www\.)?facebook\.com\/[A-Za-z0-9.]{5,50}\/?$</code></pre>
+
+<hr>
+
+<h2>YouTube Channel URL</h2>
+
+<h3>1. Basic</h3>
+<pre><code>^https?:\/\/(www\.)?youtube\.com\/.*$</code></pre>
+
+<h3>2. Business</h3>
+<pre><code>^https?:\/\/(www\.)?youtube\.com\/(c|channel|@)\/[A-Za-z0-9_-]+$</code></pre>
+
+<h3>3. Production</h3>
+<pre><code>^https:\/\/(www\.)?youtube\.com\/(c\/|channel\/|@)[A-Za-z0-9_-]{3,100}$</code></pre>
+
+<hr>
+
+<!-- ============================= -->
+<!-- 1️⃣6️⃣ Special Validations -->
+<!-- ============================= -->
+
+<h2>Alphabet Only</h2>
+
+<h3>Basic</h3>
+<pre><code>^[A-Za-z]+$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(?!.*\s{2})[A-Za-z\s]{1,100}$</code></pre>
+
+<hr>
+
+<h2>Numbers Only</h2>
+
+<pre><code>^\d+$</code></pre>
+
+<hr>
+
+<h2>Alphanumeric</h2>
+
+<pre><code>^[A-Za-z0-9]+$</code></pre>
+
+<hr>
+
+<h2>Decimal Numbers</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d+(\.\d+)?$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(?!0\d)\d+(\.\d{1,4})?$</code></pre>
+
+<hr>
+
+<h2>Positive Numbers</h2>
+
+<pre><code>^[1-9]\d*$</code></pre>
+
+<hr>
+
+<h2>Negative Numbers</h2>
+
+<pre><code>^-\d+$</code></pre>
+
+<hr>
+
+<h2>Float Numbers</h2>
+
+<h3>Basic</h3>
+<pre><code>^-?\d+(\.\d+)?$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^-?(0|[1-9]\d*)(\.\d+)?$</code></pre>
+
+<hr>
+
+<h2>Percentage</h2>
+
+<h3>Basic</h3>
+<pre><code>^\d+%$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^(100|[1-9]?\d)%$</code></pre>
+<p>Valid range 0–100%.</p>
+
+<hr>
+
+<h2>Currency with Symbol</h2>
+
+<h3>Basic</h3>
+<pre><code>^[₹$€]\d+(\.\d{2})?$</code></pre>
+<p>Example: ₹999.00</p>
+
+<h3>Production</h3>
+<pre><code>^[₹$€]\s?(?!0\d)\d{1,9}(\.\d{2})?$</code></pre>
+
+<hr>
+
+<h2>Roman Numbers</h2>
+
+<h3>Basic</h3>
+<pre><code>^[IVXLCDM]+$</code></pre>
+
+<h3>Production</h3>
+<pre><code>^M{0,4}(CM|CD|D?C{0,3})
+(XC|XL|L?X{0,3})
+(IX|IV|V?I{0,3})$</code></pre>
+<p>Validates correct Roman numeral structure.</p>
+
+</section>
+
+<section>
+
+<h2>Full Name (Supports Initials with Dot)</h2>
+
+<h3>1. Basic</h3>
+<pre><code>^[A-Za-z.\s]+$</code></pre>
+<p>Allows letters, spaces and dot.</p>
+
+<h3>2. Business</h3>
+<pre><code>^[A-Z][a-z]+(\s[A-Z]\.)*(\s[A-Z][a-z]+)+$</code></pre>
+<p><strong>Valid:</strong> R. K. Sharma</p>
+<p><strong>Valid:</strong> Rahul Kumar Sharma</p>
+<p><strong>Rules:</strong> 
+- Words must start with capital letter  
+- Initials must be single capital + dot  
+</p>
+
+<h3>3. Production (High Strict)</h3>
+<pre><code>^(?=.{3,100}$)([A-Z][a-z]+|[A-Z]\.)\s([A-Z]\.\s)*[A-Z][a-z]+(\s[A-Z][a-z]+)*$</code></pre>
+<p>
+✔ Allows multiple initials<br>
+✔ Prevents double spaces<br>
+✔ Enforces proper capitalization<br>
+✔ Length control (3–100 chars)
+</p>
+
+</section>
+
+<section>
+
+<h2>Date (DD/MM/YYYY) – Ultra Strict Production</h2>
+
+<h3>Production Level (Leap Year + Month Accurate)</h3>
+
+<pre><code>
+^(
+(31\/(0[13578]|1[02])\/(19|20)\d\d)|
+(30\/(0[13-9]|1[0-2])\/(19|20)\d\d)|
+(29\/02\/((19|20)(0[48]|[2468][048]|[13579][26])))|
+(0[1-9]|1\d|2[0-8])\/(0[1-9]|1[0-2])\/(19|20)\d\d
+)$
+</code></pre>
+
+<p><strong>Valid:</strong></p>
+<ul>
+<li>31/01/2024 ✔</li>
+<li>29/02/2024 ✔ (Leap year)</li>
+<li>28/02/2023 ✔</li>
+</ul>
+
+<p><strong>Invalid:</strong></p>
+<ul>
+<li>31/04/2024 ❌ (April has 30 days)</li>
+<li>29/02/2023 ❌ (Not leap year)</li>
+<li>32/01/2024 ❌</li>
+</ul>
+
+</section>
+<br>
+
+
+<br>
+
+
+<br>
+
+
+<section>
+  <h2>Basic Metacharacters</h2>
+
+  <h3>Definition</h3>
+  <p>Metacharacters are special symbols in Regular Expressions that have special meaning. They are not normal letters. They control how matching works.</p>
+
+  <h3>Why We Use It</h3>
+  <p>We use metacharacters to search, match, or validate text in a smart way instead of checking character by character.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>. ^ $ * + ? { } [ ] \ | ( )</code></pre>
+
+  <h3>Simple Explanation</h3>
+  <ul>
+    <li><code>.</code> → matches any single character</li>
+    <li><code>*</code> → 0 or more</li>
+    <li><code>+</code> → 1 or more</li>
+    <li><code>?</code> → 0 or 1</li>
+    <li><code>|</code> → OR</li>
+    <li><code>()</code> → group</li>
+  </ul>
+
+  <h3>Basic Example</h3>
+  <pre><code>/a./</code></pre>
+  <p>Matches: cat, hat, map</p>
+
+  <h3>Real-World Example</h3>
+  <pre><code>/colou?r/</code></pre>
+  <p>Matches both "color" and "colour"</p>
+
+  <h3>Valid Examples</h3>
+  <pre><code>/a+/ → "aaa"
+/a*/ → ""
+/cat|dog/ → "dog"</code></pre>
+  <p>These work correctly because they use metacharacters properly.</p>
+
+  <h3>Invalid Examples</h3>
+  <pre><code>/a++/
+/(cat/</code></pre>
+  <p>These fail because syntax is incorrect.</p>
+
+  <h3>Good Pattern</h3>
+  <pre><code>/^cat$/</code></pre>
+  <p>Matches exact word only.</p>
+
+  <h3>Bad Pattern</h3>
+  <pre><code>/cat/</code></pre>
+  <p>Matches "concatenate" also. Not strict.</p>
+
+  <h3>Output Explanation</h3>
+  <p>Metacharacters control matching behavior. If used wrongly, results become incorrect or too broad.</p>
+</section>
+
+
+<section>
+  <h2>Anchors</h2>
+
+  <h3>Definition</h3>
+  <p>Anchors match positions, not characters.</p>
+
+  <h3>Why We Use It</h3>
+  <p>To ensure text starts or ends exactly as expected.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>^  $</code></pre>
+
+  <h3>Simple Explanation</h3>
+  <ul>
+    <li><code>^</code> → Start of string</li>
+    <li><code>$</code> → End of string</li>
+  </ul>
+
+  <h3>Basic Example</h3>
+  <pre><code>/^cat/</code></pre>
+  <p>Matches only if word starts with "cat"</p>
+
+  <h3>Real-World Example</h3>
+  <pre><code>/^[0-9]{10}$/</code></pre>
+  <p>Validates 10-digit phone number</p>
+
+  <h3>Valid Examples</h3>
+  <pre><code>/^hello$/ → "hello"
+/^[A-Z]/ → "Apple"</code></pre>
+
+  <h3>Invalid Examples</h3>
+  <pre><code>/^hello/ → matches "hello123"
+/[0-9]{10}/ → matches inside long number</code></pre>
+
+  <h3>Good Pattern</h3>
+  <pre><code>/^[a-z]{5}$/</code></pre>
+
+  <h3>Bad Pattern</h3>
+  <pre><code>/[a-z]{5}/</code></pre>
+
+  <h3>Output Explanation</h3>
+  <p>Anchors make validation strict and accurate.</p>
+</section>
+
+
+<section>
+  <h2>Quantifiers</h2>
+
+  <h3>Definition</h3>
+  <p>Quantifiers tell how many times something should repeat.</p>
+
+  <h3>Why We Use It</h3>
+  <p>To control repetition in patterns.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>*  +  ?  {n}  {n,}  {n,m}</code></pre>
+
+  <h3>Simple Explanation</h3>
+  <ul>
+    <li>* → 0 or more</li>
+    <li>+ → 1 or more</li>
+    <li>? → optional</li>
+    <li>{n} → exact n times</li>
+  </ul>
+
+  <h3>Basic Example</h3>
+  <pre><code>/a{3}/</code></pre>
+
+  <h3>Real-World Example</h3>
+  <pre><code>/^\d{6}$/</code></pre>
+  <p>6-digit OTP validation</p>
+
+  <h3>Valid Examples</h3>
+  <pre><code>/a+/ → "aaaa"
+/\d{4}/ → "2026"</code></pre>
+
+  <h3>Invalid Examples</h3>
+  <pre><code>/a{,3}/
+/a{3,2}/</code></pre>
+
+  <h3>Good Pattern</h3>
+  <pre><code>/^\d{4}-\d{2}-\d{2}$/</code></pre>
+
+  <h3>Bad Pattern</h3>
+  <pre><code>/\d+-\d+-\d+/</code></pre>
+
+  <h3>Output Explanation</h3>
+  <p>Quantifiers define how much repetition is allowed.</p>
+</section>
+
+
+<section>
+  <h2>Character Classes</h2>
+
+  <h3>Definition</h3>
+  <p>Character classes match one character from a group.</p>
+
+  <h3>Why We Use It</h3>
+  <p>To allow multiple possible characters in one position.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>[abc]  [a-z]  [^abc]</code></pre>
+
+  <h3>Basic Example</h3>
+  <pre><code>/[aeiou]/</code></pre>
+
+  <h3>Real-World Example</h3>
+  <pre><code>/^[A-Za-z]+$/</code></pre>
+
+  <h3>Valid Examples</h3>
+  <pre><code>/[0-9]/ → "5"
+/[^a-z]/ → "9"</code></pre>
+
+  <h3>Invalid Examples</h3>
+  <pre><code>/[a-Z]/</code></pre>
+  <p>Wrong range</p>
+
+  <h3>Good Pattern</h3>
+  <pre><code>/^[A-Z][a-z]+$/</code></pre>
+
+  <h3>Bad Pattern</h3>
+  <pre><code>/[A-z]/</code></pre>
+
+  <h3>Output Explanation</h3>
+  <p>Character classes allow flexible matching.</p>
+</section>
+
+
+<section>
+  <h2>Groups</h2>
+
+  <h3>Definition</h3>
+  <p>Groups combine patterns and capture matched text.</p>
+
+  <h3>Why We Use It</h3>
+  <p>To reuse matched parts or apply quantifiers to a block.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>(pattern)</code></pre>
+
+  <h3>Basic Example</h3>
+  <pre><code>/(ab)+/</code></pre>
+
+  <h3>Real-World Example</h3>
+  <pre><code>/(\d{4})-(\d{2})-(\d{2})/</code></pre>
+
+  <h3>Valid Examples</h3>
+  <pre><code>/(cat|dog)/ → "cat"</code></pre>
+
+  <h3>Invalid Examples</h3>
+  <pre><code>/(cat|dog/</code></pre>
+
+  <h3>Good Pattern</h3>
+  <pre><code>/^(Mr|Ms)\. [A-Z][a-z]+$/</code></pre>
+
+  <h3>Bad Pattern</h3>
+  <pre><code>/Mr|Ms\. [A-Z][a-z]+/</code></pre>
+
+  <h3>Output Explanation</h3>
+  <p>Groups allow structured matching.</p>
+</section>
+
+
+<section>
+  <h2>Assertions</h2>
+  <p>Assertions check conditions but do not consume characters.</p>
+</section>
+
+<section>
+  <h2>Lookarounds</h2>
+  <p>Lookarounds check before or after text without including it in match.</p>
+</section>
+
+<section>
+  <h2>Flags / Modifiers</h2>
+  <p>Flags change matching behavior like case-insensitive or global.</p>
+</section>
+
+<section>
+  <h2>Escape Sequences</h2>
+  <p>Escape sequences allow matching special characters like dot or star.</p>
+</section>
+
+<section>
+  <h2>Unicode Classes</h2>
+  <p>Unicode classes match international characters.</p>
+</section>
+
+<section>
+  <h2>Advanced & Engine-Specific Tokens</h2>
+  <p>Advanced tokens differ by regex engine like JavaScript, Java, or PCRE.</p>
+</section>
+
+<section>
+  <h2>Basic Metacharacters</h2>
+
+  <h3>Definition</h3>
+  <p>Basic metacharacters are special symbols in Regular Expressions that have special meaning. They are not normal letters. They control how matching works.</p>
+
+  <h3>Why We Use It</h3>
+  <p>We use metacharacters to search, validate, and filter text in a powerful and flexible way. Instead of checking text manually, we use these symbols to define smart rules.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>.  \  |  ()  (?: )  []  [^ ]  -  {}  ^  $</code></pre>
+
+  <h3>Simple Explanation of Syntax</h3>
+  <ul>
+    <li><code>.</code> → Matches any single character except newline</li>
+    <li><code>\</code> → Escapes special characters</li>
+    <li><code>|</code> → OR operator</li>
+    <li><code>()</code> → Capturing group</li>
+    <li><code>(?: )</code> → Non-capturing group</li>
+    <li><code>[]</code> → Character class (match one character from list)</li>
+    <li><code>[^ ]</code> → Negated character class (match anything except)</li>
+    <li><code>-</code> → Range inside character class</li>
+    <li><code>{}</code> → Quantifier container</li>
+    <li><code>^</code> → Start of string (or negation inside [])</li>
+    <li><code>$</code> → End of string</li>
+  </ul>
+
+  <h3>Basic Example</h3>
+  <pre><code>/c.t/</code></pre>
+  <p>Matches: cat, cot, cut</p>
+  <p>Explanation: Dot (.) replaces exactly one character.</p>
+
+  <h3>Real-World Example</h3>
+  <pre><code>/^(Mr|Ms)\. [A-Z][a-z]+$/</code></pre>
+  <p>Matches: Mr. John, Ms. Priya</p>
+  <p>Explanation: Uses group, escape, range, start and end anchors.</p>
+
+  <h3>Valid Examples</h3>
+  <pre><code>/cat|dog/        → "dog"
+/[0-9]/          → "5"
+/[^a-z]/         → "9"
+/a{3}/           → "aaa"
+/^hello$/        → "hello"
+/(?:abc)+/       → "abcabc"</code></pre>
+
+  <p><strong>Explanation:</strong></p>
+  <ul>
+    <li><code>cat|dog</code> works because | allows either option.</li>
+    <li><code>[0-9]</code> works because it matches any digit.</li>
+    <li><code>[^a-z]</code> works because it matches anything not lowercase letter.</li>
+    <li><code>a{3}</code> works because {} defines exact repetition.</li>
+    <li><code>^hello$</code> works because it matches whole string exactly.</li>
+    <li><code>(?:abc)+</code> works because group repeats but is not captured.</li>
+  </ul>
+
+  <h3>Invalid Examples</h3>
+  <pre><code>/cat||dog/
+/[a-Z]/
+/(abc/
+/hello$/^/
+/a{3,2}/</code></pre>
+
+  <p><strong>Explanation:</strong></p>
+  <ul>
+    <li><code>cat||dog</code> is wrong because double OR is invalid.</li>
+    <li><code>[a-Z]</code> is wrong because range is incorrect (includes unwanted ASCII characters).</li>
+    <li><code>(abc</code> is wrong because group is not closed.</li>
+    <li><code>hello$/^</code> is wrong anchor placement.</li>
+    <li><code>a{3,2}</code> is wrong because minimum cannot be greater than maximum.</li>
+  </ul>
+
+  <h3>Good Pattern</h3>
+  <pre><code>/^[A-Za-z]{5}$/</code></pre>
+  <p>Matches exactly 5 letters only. Strict and clear.</p>
+
+  <h3>Bad Pattern</h3>
+  <pre><code>/[A-z]{5}/</code></pre>
+  <p>This matches unwanted characters like [ \ ] ^ _ ` because A-z range is incorrect.</p>
+
+  <h3>Output Explanation</h3>
+  <p>Basic metacharacters are the foundation of Regular Expressions. If used correctly, they make matching accurate and powerful. If used incorrectly, they cause unexpected matches or syntax errors. Understanding these symbols clearly is very important for interviews and real-world validation tasks.</p>
+</section>
+
+<section>
+  <h2>Basic Metacharacters</h2>
+
+  <h3>Definition</h3>
+  <p>Basic metacharacters are special symbols in Regular Expressions that control how text matching works. They are not normal characters. Each one has a special job.</p>
+
+  <h3>Why We Use It</h3>
+  <p>We use metacharacters to search, validate, filter, and control text patterns in a powerful way.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>.  \  |  ()  (?: )  []  [^ ]  -  {}  ^  $</code></pre>
+
+  <h3>Simple Explanation of Syntax</h3>
+  <p>Each symbol below has its own meaning and example.</p>
+
+  <hr>
+
+  <h3>1) Dot (.) → Any Character Except Newline</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/c.t/</code></pre>
+  <p>Matches: cat, cot, cut</p>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/file.\.txt/</code></pre>
+  <p>Matches: file1.txt, fileA.txt</p>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/a.b/ → "acb"
+/.../ → "dog"</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/c..t/ → does NOT match "cat"
+/./ → does NOT match empty string</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^c.t$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/c.t/</code></pre>
+  <p>Bad because it also matches "scatx"</p>
+
+  <h4>Output Explanation</h4>
+  <p>Dot replaces exactly one character.</p>
+
+  <hr>
+
+  <h3>2) Backslash (\) → Escape Character</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/\./</code></pre>
+  <p>Matches literal dot "."</p>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/^\d+$/</code></pre>
+  <p>Matches only digits</p>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/\$/ → "$"
+/\(/ → "("</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/./ → matches any character (not literal dot)</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/file\.txt/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/file.txt/</code></pre>
+  <p>Matches file1txt also</p>
+
+  <h4>Output Explanation</h4>
+  <p>Backslash removes special meaning.</p>
+
+  <hr>
+
+  <h3>3) Pipe (|) → OR Operator</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/cat|dog/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/visa|mastercard/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/red|blue/ → "red"</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/cat||dog/</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^(yes|no)$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/yes|no/</code></pre>
+  <p>Matches inside longer words</p>
+
+  <h4>Output Explanation</h4>
+  <p>Pipe gives alternative options.</p>
+
+  <hr>
+
+  <h3>4) Capturing Group ( )</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/(ab)+/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/(\d{4})-(\d{2})-(\d{2})/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/(cat)/ → captures "cat"</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/(cat/</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^(Mr|Ms)\. [A-Z][a-z]+$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/Mr|Ms\. [A-Z][a-z]+/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>Groups combine and capture patterns.</p>
+
+  <hr>
+
+  <h3>5) Non-Capturing Group (?: )</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/(?:ab)+/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/^(?:http|https):\/\//</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/(?:cat|dog)/</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/(?cat)/</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^(?:jpg|png|gif)$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/(jpg|png|gif)/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>Groups but does not store match.</p>
+
+  <hr>
+
+  <h3>6) Character Class [ ]</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/[abc]/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/^[A-Za-z]+$/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/[0-9]/ → "7"</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/[a-Z]/</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^[A-Z][a-z]+$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/[A-z]/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>Matches one character from set.</p>
+
+  <hr>
+
+  <h3>7) Negated Class [^ ]</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/[^0-9]/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/[^a-zA-Z0-9]/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/[^a]/ → "b"</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/[^]/</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^[^@]+@[^@]+$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/[^@]/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>Matches anything except given characters.</p>
+
+  <hr>
+
+  <h3>8) Range (-)</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/[a-z]/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/^[0-9]{6}$/</code></pre>
+
+  <h4>Invalid Example</h4>
+  <pre><code>/[z-a]/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>Defines range inside character class.</p>
+
+  <hr>
+
+  <h3>9) Quantifier Container { }</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/a{3}/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/^\d{10}$/</code></pre>
+
+  <h4>Invalid Example</h4>
+  <pre><code>/a{3,2}/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>Controls repetition count.</p>
+
+  <hr>
+
+  <h3>10) Start Anchor (^)</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/^cat/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>Matches only if text starts with pattern.</p>
+
+  <hr>
+
+  <h3>11) End Anchor ($)</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/cat$/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>Matches only if text ends with pattern.</p>
+
+</section>
+
+<section>
+  <h2>Anchors (Position Matchers)</h2>
+
+  <h3>Definition</h3>
+  <p>Anchors are special symbols that match positions in text, not characters. They tell where a match must start or end.</p>
+
+  <h3>Why We Use It</h3>
+  <p>We use anchors to make validation strict. They help us control whether text starts, ends, or appears at specific positions.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>^  $  \A  \Z  \z  \b  \B  \G</code></pre>
+
+  <h3>Simple Explanation of Syntax</h3>
+  <ul>
+    <li><code>^</code> → Start of string (or line in multiline mode)</li>
+    <li><code>$</code> → End of string (or line in multiline mode)</li>
+    <li><code>\A</code> → Absolute start of string</li>
+    <li><code>\Z</code> → End before final newline</li>
+    <li><code>\z</code> → Absolute end of string</li>
+    <li><code>\b</code> → Word boundary</li>
+    <li><code>\B</code> → Not a word boundary</li>
+    <li><code>\G</code> → End of previous match (used in some engines)</li>
+  </ul>
+
+  <hr>
+
+  <h3>1) ^ → Start of String</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/^cat/</code></pre>
+  <p>Matches: "catfish"</p>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/^[0-9]{10}$/</code></pre>
+  <p>Validates 10-digit phone number</p>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/^hello/ → "hello world"</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/^cat/ → does NOT match "my cat"</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^admin$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/admin/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>^ ensures the match starts from beginning.</p>
+
+  <hr>
+
+  <h3>2) $ → End of String</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/cat$/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/\.com$/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/end$/ → "weekend"</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/cat$/ → does NOT match "catfish"</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^[A-Za-z]+$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/[A-Za-z]+/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>$ ensures the match ends at final position.</p>
+
+  <hr>
+
+  <h3>3) \A → Absolute Start</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/\Acat/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/\Ahttps:\/\//</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>/\Ahello/ → matches only if at very beginning</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>/\Acat/ → does NOT match second line "cat"</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/\A[A-Z]/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/^[A-Z]/</code></pre>
+  <p>Bad in multiline mode because ^ works per line.</p>
+
+  <h4>Output Explanation</h4>
+  <p>\A matches only real start, unaffected by multiline mode.</p>
+
+  <hr>
+
+  <h3>4) \Z → End Before Final Newline</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/cat\Z/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/error\Z/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>"cat\n" matches /cat\Z/</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>"catX\n" does NOT match /cat\Z/</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/report\Z/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/report$/</code></pre>
+  <p>$ may behave differently in multiline mode.</p>
+
+  <h4>Output Explanation</h4>
+  <p>\Z allows match before final newline.</p>
+
+  <hr>
+
+  <h3>5) \z → Absolute End</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/cat\z/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/END\z/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>"cat" matches /cat\z/</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>"cat\n" does NOT match /cat\z/</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/\d+\z/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/\d+$/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>\z matches exact absolute end.</p>
+
+  <hr>
+
+  <h3>6) \b → Word Boundary</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/\bcat\b/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/\bJava\b/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>"cat" matches
+"the cat sleeps" matches</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>"concatenate" does NOT match</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/\badmin\b/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/admin/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>\b ensures full word match.</p>
+
+  <hr>
+
+  <h3>7) \B → Not Word Boundary</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/\Bcat\B/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/\Bend\B/</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>"concatenate" matches "cat"</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>"cat" does NOT match</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/\Bing\B/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/\bing\b/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>\B matches inside words only.</p>
+
+  <hr>
+
+  <h3>8) \G → End of Previous Match</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/\G\d{2}/</code></pre>
+
+  <h4>Real-World Example</h4>
+  <pre><code>Used in tokenizing comma-separated values sequentially</code></pre>
+
+  <h4>Valid Examples</h4>
+  <pre><code>Used in repeated matching from last position</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>Does NOT work alone without global matching</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/\G,\s*\w+/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/\Gword/</code></pre>
+
+  <h4>Output Explanation</h4>
+  <p>\G continues matching from where previous match ended. Used in advanced parsing.</p>
+
+</section>
+
+
+<section>
+  <h2>Quantifiers</h2>
+
+  <h3>Definition</h3>
+  <p>Quantifiers tell how many times a character or group should repeat. They control the quantity of matching.</p>
+
+  <h3>Why We Use It</h3>
+  <p>We use quantifiers to validate length, repetition, optional values, and flexible text patterns like phone numbers, OTPs, passwords, and tags.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>*  +  ?  {n}  {n,}  {n,m}  *?  +?  ??  {n,m}?  *+  ++  ?+  {n,m}+ </code></pre>
+
+  <h3>Simple Explanation of Syntax</h3>
+  <ul>
+    <li>* → 0 or more (greedy)</li>
+    <li>+ → 1 or more (greedy)</li>
+    <li>? → optional (0 or 1)</li>
+    <li>{n} → exactly n times</li>
+    <li>{n,} → at least n times</li>
+    <li>{n,m} → between n and m times</li>
+    <li>*? +? ?? {n,m}? → lazy (match minimum)</li>
+    <li>*+ ++ ?+ {n,m}+ → possessive (no backtracking)</li>
+  </ul>
+
+  <hr>
+
+  <h3>1) * → 0 or More</h3>
+  <pre><code>/ab*/</code></pre>
+  <p>Matches: a, ab, abb, abbb</p>
+
+  <h4>Valid</h4>
+  <pre><code>/a*/ → "" (empty), "aaa"</code></pre>
+
+  <h4>Invalid</h4>
+  <pre><code>/a*/ → does NOT force at least one "a"</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^ab*$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/ab*/</code></pre>
+
+  <p>Output: Greedy, matches as much as possible.</p>
+
+  <hr>
+
+  <h3>2) + → 1 or More</h3>
+  <pre><code>/ab+/</code></pre>
+  <p>Matches: ab, abb, abbb</p>
+
+  <h4>Valid</h4>
+  <pre><code>/a+/ → "aaa"</code></pre>
+
+  <h4>Invalid</h4>
+  <pre><code>/a+/ → does NOT match ""</code></pre>
+
+  <p>Output: Requires at least one occurrence.</p>
+
+  <hr>
+
+  <h3>3) ? → 0 or 1</h3>
+  <pre><code>/colou?r/</code></pre>
+  <p>Matches: color, colour</p>
+
+  <h4>Invalid</h4>
+  <pre><code>/a?/ → matches empty string too</code></pre>
+
+  <p>Output: Makes part optional.</p>
+
+  <hr>
+
+  <h3>4) {n} → Exactly n</h3>
+  <pre><code>/\d{4}/</code></pre>
+  <p>Matches: 2026</p>
+
+  <h4>Invalid</h4>
+  <pre><code>/\d{4}/ → does NOT match 123</code></pre>
+
+  <p>Output: Strict length control.</p>
+
+  <hr>
+
+  <h3>5) {n,} → n or More</h3>
+  <pre><code>/\d{3,}/</code></pre>
+  <p>Matches: 123, 1234</p>
+
+  <p>Output: Minimum repetition enforced.</p>
+
+  <hr>
+
+  <h3>6) {n,m} → Between n and m</h3>
+  <pre><code>/\d{2,4}/</code></pre>
+  <p>Matches: 12, 123, 1234</p>
+
+  <h4>Invalid</h4>
+  <pre><code>/\d{4,2}/</code></pre>
+
+  <p>Output: Controlled range repetition.</p>
+
+  <hr>
+
+  <h3>7) *? → Lazy 0+</h3>
+  <pre><code>/&lt;.*?&gt;/</code></pre>
+  <p>Matches smallest HTML tag.</p>
+
+  <p>Output: Matches minimum characters.</p>
+
+  <hr>
+
+  <h3>8) +? → Lazy 1+</h3>
+  <pre><code>/".+?"/</code></pre>
+  <p>Matches shortest quoted string.</p>
+
+  <p>Output: Stops at first valid closing match.</p>
+
+  <hr>
+
+  <h3>9) ?? → Lazy Optional</h3>
+  <pre><code>/colou??r/</code></pre>
+  <p>Matches minimal optional 'u'</p>
+
+  <p>Output: Matches shortest optional pattern.</p>
+
+  <hr>
+
+  <h3>10) {n,m}? → Lazy Range</h3>
+  <pre><code>/\d{2,4}?/</code></pre>
+  <p>Matches smallest allowed digits.</p>
+
+  <p>Output: Matches minimum within range.</p>
+
+  <hr>
+
+  <h3>11) *+ → Possessive 0+</h3>
+  <pre><code>/a*+b/</code></pre>
+  <p>No backtracking allowed (Java/PCRE).</p>
+
+  <p>Output: Faster, but may fail if backtracking needed.</p>
+
+  <hr>
+
+  <h3>12) ++ → Possessive 1+</h3>
+  <pre><code>/a++b/</code></pre>
+
+  <p>Output: Consumes all and does not give back.</p>
+
+  <hr>
+
+  <h3>13) ?+ → Possessive Optional</h3>
+  <pre><code>/a?+b/</code></pre>
+
+  <p>Output: Optional but no backtracking.</p>
+
+  <hr>
+
+  <h3>14) {n,m}+ → Possessive Range</h3>
+  <pre><code>/\d{2,4}+x/</code></pre>
+
+  <p>Output: Range match with no backtracking.</p>
+
+  <h3>Final Output Explanation</h3>
+  <p>Quantifiers control repetition. Greedy matches maximum, Lazy matches minimum, Possessive matches without backtracking. Understanding these is very important for performance and interview questions.</p>
+
+</section>
+
+<section>
+  <h2>Quantifiers</h2>
+
+  <h3>Definition</h3>
+  <p>Quantifiers control how many times a character or group should repeat in a pattern.</p>
+
+  <h3>Why We Use It</h3>
+  <p>We use quantifiers to control repetition like minimum length, maximum length, optional parts, greedy matching, lazy matching, and performance optimization.</p>
+
+  <h3>Syntax</h3>
+  <pre><code>*  +  ?  {n}  {n,}  {n,m}  *?  +?  ??  {n,m}?  *+  ++  ?+  {n,m}+ </code></pre>
+
+  <h3>Simple Explanation</h3>
+  <p>Each symbol below has its own behavior and example with output.</p>
+
+  <hr>
+
+  <h3>1) * → 0 or More (Greedy)</h3>
+  <pre><code>/ab*/</code></pre>
+  <p>Test String: "abbb"</p>
+  <p>Output: Matches "abbb"</p>
+  <p>Explanation: b repeats 0 or more times. Greedy means it takes as many as possible.</p>
+
+  <hr>
+
+  <h3>2) + → 1 or More (Greedy)</h3>
+  <pre><code>/ab+/</code></pre>
+  <p>Test String: "abbb"</p>
+  <p>Output: Matches "abbb"</p>
+  <p>Explanation: b must appear at least once.</p>
+
+  <hr>
+
+  <h3>3) ? → 0 or 1 (Optional)</h3>
+  <pre><code>/colou?r/</code></pre>
+  <p>Test Strings: "color", "colour"</p>
+  <p>Output: Matches both</p>
+  <p>Explanation: u is optional.</p>
+
+  <hr>
+
+  <h3>4) {n} → Exactly n Times</h3>
+  <pre><code>/\d{4}/</code></pre>
+  <p>Test String: "2026"</p>
+  <p>Output: Matches "2026"</p>
+  <p>Explanation: Exactly 4 digits required.</p>
+
+  <hr>
+
+  <h3>5) {n,} → n or More</h3>
+  <pre><code>/\d{3,}/</code></pre>
+  <p>Test String: "12345"</p>
+  <p>Output: Matches "12345"</p>
+  <p>Explanation: Minimum 3 digits required.</p>
+
+  <hr>
+
+  <h3>6) {n,m} → Between n and m</h3>
+  <pre><code>/\d{2,4}/</code></pre>
+  <p>Test String: "12345"</p>
+  <p>Output: Matches "1234"</p>
+  <p>Explanation: Takes maximum allowed within range.</p>
+
+  <hr>
+
+  <h3>7) *? → Lazy 0+</h3>
+  <pre><code>/&lt;.*?&gt;/</code></pre>
+  <p>Test String: "&lt;b&gt;bold&lt;/b&gt;"</p>
+  <p>Output: Matches "&lt;b&gt;"</p>
+  <p>Explanation: Lazy means match minimum characters.</p>
+
+  <hr>
+
+  <h3>8) +? → Lazy 1+</h3>
+  <pre><code>/".+?"/</code></pre>
+  <p>Test String: "\"one\" \"two\""</p>
+  <p>Output: Matches "\"one\""</p>
+  <p>Explanation: Stops at first closing quote.</p>
+
+  <hr>
+
+  <h3>9) ?? → Lazy Optional</h3>
+  <pre><code>/colou??r/</code></pre>
+  <p>Test String: "colour"</p>
+  <p>Output: Matches "color"</p>
+  <p>Explanation: Takes minimum optional match.</p>
+
+  <hr>
+
+  <h3>10) {n,m}? → Lazy Range</h3>
+  <pre><code>/\d{2,4}?/</code></pre>
+  <p>Test String: "12345"</p>
+  <p>Output: Matches "12"</p>
+  <p>Explanation: Takes smallest allowed (2 digits).</p>
+
+  <hr>
+
+  <h3>11) *+ → Possessive 0+ (Java, PCRE)</h3>
+  <pre><code>/a*+a/</code></pre>
+  <p>Test String: "aaaa"</p>
+  <p>Output: No match</p>
+  <p>Explanation: *+ consumes all a's and does not give back for second 'a'. No backtracking allowed.</p>
+
+  <hr>
+
+  <h3>12) ++ → Possessive 1+</h3>
+  <pre><code>/a++a/</code></pre>
+  <p>Test String: "aaaa"</p>
+  <p>Output: No match</p>
+  <p>Explanation: Consumes all a's and refuses backtracking.</p>
+
+  <hr>
+
+  <h3>13) ?+ → Possessive Optional</h3>
+  <pre><code>/a?+a/</code></pre>
+  <p>Test String: "aa"</p>
+  <p>Output: No match</p>
+  <p>Explanation: Optional match consumes first 'a' and does not give back.</p>
+
+  <hr>
+
+  <h3>14) {n,m}+ → Possessive Range</h3>
+  <pre><code>/\d{2,4}+5/</code></pre>
+  <p>Test String: "12345"</p>
+  <p>Output: No match</p>
+  <p>Explanation: Range consumes 1234 and refuses to backtrack to allow 5.</p>
+
+  <h3>Final Output Explanation</h3>
+  <p>Greedy quantifiers match maximum characters. Lazy quantifiers match minimum characters. Possessive quantifiers match maximum characters and do not allow backtracking. Understanding these differences is very important for interviews and performance optimization.</p>
+
+</section>
+
+<section>
+  <h2>Character Classes (Shorthand)</h2>
+
+  <h3>Definition</h3>
+  <p>Shorthand character classes are short symbols that represent common groups of characters like digits, letters, or spaces. They make regex shorter and easier to read.</p>
+
+  <h3>Why We Use It</h3>
+  <p>We use shorthand classes to write clean and readable patterns instead of writing long character ranges like [0-9] or [A-Za-z0-9_].</p>
+
+  <h3>Syntax</h3>
+  <pre><code>\d  \D  \w  \W  \s  \S  \h  \H  \v  \V  \R</code></pre>
+
+  <h3>Simple Explanation of Syntax</h3>
+  <ul>
+    <li>\d → Digit (0-9)</li>
+    <li>\D → Not a digit</li>
+    <li>\w → Word character (letter, digit, underscore)</li>
+    <li>\W → Not a word character</li>
+    <li>\s → Whitespace (space, tab, newline)</li>
+    <li>\S → Not whitespace</li>
+    <li>\h → Horizontal whitespace (space, tab)</li>
+    <li>\H → Not horizontal whitespace</li>
+    <li>\v → Vertical whitespace (newline, carriage return)</li>
+    <li>\V → Not vertical whitespace</li>
+    <li>\R → Any newline sequence (PCRE)</li>
+  </ul>
+
+  <hr>
+
+  <h3>1) \d → Digit</h3>
+
+  <h4>Basic Example</h4>
+  <pre><code>/\d/</code></pre>
+  <p>Matches: 5</p>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/^\d{6}$/</code></pre>
+  <p>Validates 6-digit OTP</p>
+
+  <h4>Valid Examples</h4>
+  <pre><code>"123" matches /\d+/</code></pre>
+
+  <h4>Invalid Examples</h4>
+  <pre><code>"abc" does NOT match /\d+/</code></pre>
+
+  <h4>Good Pattern</h4>
+  <pre><code>/^\d+$/</code></pre>
+
+  <h4>Bad Pattern</h4>
+  <pre><code>/[0-9]/</code></pre>
+  <p>Less readable compared to \d</p>
+
+  <h4>Output Explanation</h4>
+  <p>\d matches any single digit from 0 to 9.</p>
+
+  <hr>
+
+  <h3>2) \D → Not Digit</h3>
+
+  <pre><code>/\D/</code></pre>
+  <p>Matches: A, #</p>
+
+  <h4>Invalid</h4>
+  <pre><code>"5" does NOT match /\D/</code></pre>
+
+  <p>Output: Matches anything except digits.</p>
+
+  <hr>
+
+  <h3>3) \w → Word Character</h3>
+
+  <pre><code>/\w/</code></pre>
+  <p>Matches: a, Z, 5, _</p>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/^\w+$/</code></pre>
+  <p>Username validation</p>
+
+  <h4>Invalid</h4>
+  <pre><code>"@" does NOT match /\w/</code></pre>
+
+  <p>Output: Letters, digits, underscore only.</p>
+
+  <hr>
+
+  <h3>4) \W → Not Word Character</h3>
+
+  <pre><code>/\W/</code></pre>
+  <p>Matches: @, #, space</p>
+
+  <p>Output: Opposite of \w</p>
+
+  <hr>
+
+  <h3>5) \s → Whitespace</h3>
+
+  <pre><code>/\s/</code></pre>
+  <p>Matches: space, tab, newline</p>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/\s+/</code></pre>
+  <p>Removes extra spaces</p>
+
+  <p>Output: Matches blank characters.</p>
+
+  <hr>
+
+  <h3>6) \S → Not Whitespace</h3>
+
+  <pre><code>/\S/</code></pre>
+  <p>Matches: any visible character</p>
+
+  <p>Output: Opposite of \s</p>
+
+  <hr>
+
+  <h3>7) \h → Horizontal Whitespace</h3>
+
+  <pre><code>/\h/</code></pre>
+  <p>Matches: space or tab</p>
+
+  <p>Output: Horizontal spacing only.</p>
+
+  <hr>
+
+  <h3>8) \H → Not Horizontal Whitespace</h3>
+
+  <pre><code>/\H/</code></pre>
+  <p>Matches: letters, digits, newline</p>
+
+  <p>Output: Opposite of \h</p>
+
+  <hr>
+
+  <h3>9) \v → Vertical Whitespace</h3>
+
+  <pre><code>/\v/</code></pre>
+  <p>Matches: newline, carriage return</p>
+
+  <p>Output: Line break characters.</p>
+
+  <hr>
+
+  <h3>10) \V → Not Vertical Whitespace</h3>
+
+  <pre><code>/\V/</code></pre>
+  <p>Matches: letters, digits, spaces</p>
+
+  <p>Output: Opposite of \v</p>
+
+  <hr>
+
+  <h3>11) \R → Any Newline Sequence (PCRE)</h3>
+
+  <pre><code>/\R/</code></pre>
+  <p>Matches: \n, \r\n</p>
+
+  <h4>Real-World Example</h4>
+  <pre><code>/Line1\RLine2/</code></pre>
+
+  <p>Output: Matches any type of newline between lines.</p>
+
+  <h3>Final Output Explanation</h3>
+  <p>Shorthand character classes make regex simple and powerful. They improve readability and are commonly asked in interviews.</p>
+
+</section>
+
+<section>
+
+<h2>Escape Sequences</h2>
+
+<h3>Definition</h3>
+<p>Escape sequences are special codes that start with a backslash (\).  
+They represent invisible characters like new lines, tabs, or special character codes.</p>
+
+<h3>Why We Use It</h3>
+<p>We use escape sequences when we want to match special characters like a new line, a tab space, or a Unicode character inside text.</p>
+
+<h3>Syntax</h3>
+<pre><code>\n \r \t \f \a \e \0 \xhh \x{hhhh} \uhhhh \cX \ooo</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>Each escape sequence represents a special character. Below, every symbol has multiple examples with outputs.</p>
+
+<hr>
+
+<h3>1) \n → Line Feed (New Line)</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/Hello\nWorld/</code></pre>
+<p>Text:</p>
+<pre><code>Hello
+World</code></pre>
+<p>Output: Match</p>
+<p>Explanation: \n matches the line break between Hello and World.</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/\n/</code></pre>
+<p>Text: Multi-line log file</p>
+<p>Output: Finds line breaks</p>
+
+<p><strong>Valid Example</strong></p>
+<pre><code>/Line1\nLine2/</code></pre>
+<p>Matches if text has real newline.</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/Line1\nLine2/</code></pre>
+<p>Text: "Line1 Line2"</p>
+<p>Output: No match</p>
+<p>Explanation: No newline exists.</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/\r?\n/</code></pre>
+<p>Handles Windows and Unix line breaks.</p>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/\n\n\n/</code></pre>
+<p>Too strict; may fail often.</p>
+
+<hr>
+
+<h3>2) \r → Carriage Return</h3>
+
+<pre><code>/\r/</code></pre>
+<p>Matches carriage return (used in Windows CRLF).</p>
+<p>Output: Matches \r in "\r\n"</p>
+
+<hr>
+
+<h3>3) \t → Tab</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/\t/</code></pre>
+<p>Text: "Name\tAge"</p>
+<p>Output: Matches tab space</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/\t/</code></pre>
+<p>Text: "Name Age"</p>
+<p>Output: No match</p>
+
+<hr>
+
+<h3>4) \f → Form Feed</h3>
+
+<pre><code>/\f/</code></pre>
+<p>Matches form feed character (rarely used).</p>
+<p>Output: Matches page break in old printers.</p>
+
+<hr>
+
+<h3>5) \a → Bell (Some Engines)</h3>
+
+<pre><code>/\a/</code></pre>
+<p>Matches alert bell character.</p>
+<p>Output: Match if engine supports it.</p>
+
+<hr>
+
+<h3>6) \e → Escape Character</h3>
+
+<pre><code>/\e/</code></pre>
+<p>Matches ASCII escape (27).</p>
+<p>Used in terminal color codes.</p>
+
+<hr>
+
+<h3>7) \0 → Null Character</h3>
+
+<pre><code>/\0/</code></pre>
+<p>Matches null byte.</p>
+<p>Used in binary data validation.</p>
+
+<hr>
+
+<h3>8) \xhh → Hex Character</h3>
+
+<p><strong>Example</strong></p>
+<pre><code>/\x41/</code></pre>
+<p>Output: Matches "A"</p>
+<p>Explanation: 41 in hex = A in ASCII.</p>
+
+<p><strong>Valid</strong></p>
+<pre><code>/\x61/</code></pre>
+<p>Matches "a"</p>
+
+<p><strong>Invalid</strong></p>
+<pre><code>/\xZZ/</code></pre>
+<p>Invalid hex value.</p>
+
+<hr>
+
+<h3>9) \x{hhhh} → Unicode Hex</h3>
+
+<pre><code>/\x{1F600}/</code></pre>
+<p>Matches 😀 emoji</p>
+<p>Explanation: Unicode code point.</p>
+
+<hr>
+
+<h3>10) \uhhhh → Unicode (JS, Java)</h3>
+
+<pre><code>/\u0041/</code></pre>
+<p>Matches "A"</p>
+
+<p>Invalid Example</p>
+<pre><code>/\u00ZZ/</code></pre>
+<p>Invalid Unicode value.</p>
+
+<hr>
+
+<h3>11) \cX → Control Character</h3>
+
+<pre><code>/\cM/</code></pre>
+<p>Matches Control+M (carriage return).</p>
+
+<hr>
+
+<h3>12) \ooo → Octal Value</h3>
+
+<pre><code>/\101/</code></pre>
+<p>Output: Matches "A"</p>
+<p>Explanation: 101 (octal) = 65 decimal = A.</p>
+
+<p>Invalid Example</p>
+<pre><code>/\999/</code></pre>
+<p>Invalid octal number.</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>
+Escape sequences help match invisible or encoded characters.  
+They are important when working with files, logs, Unicode text, system data, and interviews often test knowledge of hex, Unicode, and newline handling.
+</p>
+
+</section>
+
+<section>
+
+<h2>Groups & Capturing</h2>
+
+<h3>Definition</h3>
+<p>Groups in Regular Expressions allow us to collect (capture) part of a match. 
+We can reuse that captured value later.</p>
+
+<h3>Why We Use It</h3>
+<p>We use groups when we want to:
+- Extract specific parts of text
+- Reuse matched text
+- Organize patterns
+- Improve readability
+- Validate repeated values</p>
+
+<h3>Syntax</h3>
+<pre><code>( )
+(?: )
+(?&lt;name&gt; )
+(?P&lt;name&gt; )
+\1
+\k&lt;name&gt;
+(?| )</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>Groups wrap parts of regex inside parentheses. 
+Some groups store values (capturing). 
+Some do not (non-capturing). 
+Some give names. 
+Some reuse captured text.</p>
+
+<hr>
+
+<h3>1) ( ) → Capturing Group</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/(cat)/</code></pre>
+<p>Text: "I love cats"</p>
+<p>Output: Match "cat"</p>
+<p>Captured Group 1: "cat"</p>
+<p>Explanation: The parentheses capture the word "cat".</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/(\d{4})-(\d{2})-(\d{2})/</code></pre>
+<p>Text: "2026-02-27"</p>
+<p>Output:
+Group 1: 2026  
+Group 2: 02  
+Group 3: 27</p>
+<p>Explanation: Used to extract year, month, day.</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/(cat)/</code></pre>
+<p>Text: "dog"</p>
+<p>Output: No match</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/(\w+)@(\w+)\.(\w+)/</code></pre>
+<p>Captures email parts.</p>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/(.+)/</code></pre>
+<p>Too broad, captures everything.</p>
+
+<hr>
+
+<h3>2) (?: ) → Non-Capturing Group</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/(?:cat|dog)/</code></pre>
+<p>Text: "cat"</p>
+<p>Output: Matches "cat"</p>
+<p>Explanation: Group used for logic, not captured.</p>
+
+<p><strong>Difference Example</strong></p>
+<pre><code>/(cat|dog)/</code></pre>
+<p>Captures value.</p>
+
+<pre><code>/(?:cat|dog)/</code></pre>
+<p>Does NOT capture value.</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/https?:\/\/(?:www\.)?\w+\.\w+/</code></pre>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/(www\.)?/</code></pre>
+<p>Unnecessary capture.</p>
+
+<hr>
+
+<h3>3) (?&lt;name&gt; ) → Named Capture (.NET, JS)</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/(?&lt;year&gt;\d{4})/</code></pre>
+<p>Text: "2026"</p>
+<p>Output: year = 2026</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/(?&lt;first&gt;\w+)\s(?&lt;last&gt;\w+)/</code></pre>
+<p>Text: "John Smith"</p>
+<p>Output:
+first = John  
+last = Smith</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/(?&lt;123&gt;\w+)/</code></pre>
+<p>Invalid name. Names must start with letters.</p>
+
+<hr>
+
+<h3>4) (?P&lt;name&gt; ) → Named Capture (Python)</h3>
+
+<p><strong>Example</strong></p>
+<pre><code>/(?P&lt;word&gt;\w+)/</code></pre>
+<p>Text: "Hello"</p>
+<p>Output: word = Hello</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/(?P&lt;&gt;\w+)/</code></pre>
+<p>No name provided → Error.</p>
+
+<hr>
+
+<h3>5) \1 → Backreference</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/(cat)\1/</code></pre>
+<p>Text: "catcat"</p>
+<p>Output: Match</p>
+<p>Explanation: \1 refers to first captured group.</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/(cat)\1/</code></pre>
+<p>Text: "catdog"</p>
+<p>Output: No match</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/(\w+)\s\1/</code></pre>
+<p>Text: "bye bye"</p>
+<p>Output: Matches repeated word.</p>
+
+<hr>
+
+<h3>6) \k&lt;name&gt; → Named Backreference</h3>
+
+<p><strong>Example</strong></p>
+<pre><code>/(?&lt;word&gt;\w+)\s\k&lt;word&gt;/</code></pre>
+<p>Text: "hello hello"</p>
+<p>Output: Match</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/(?&lt;word&gt;\w+)\s\k&lt;other&gt;/</code></pre>
+<p>No group named "other" → Error.</p>
+
+<hr>
+
+<h3>7) (?| ) → Branch Reset Group (PCRE)</h3>
+
+<p><strong>Definition</strong></p>
+<p>Branch reset allows group numbers to restart in each branch.</p>
+
+<p><strong>Example</strong></p>
+<pre><code>/(?|(cat)|(dog))/</code></pre>
+<p>Text: "dog"</p>
+<p>Output: Group 1 = dog</p>
+<p>Explanation: Both branches reset numbering to group 1.</p>
+
+<p><strong>Without Branch Reset</strong></p>
+<pre><code>/(cat)|(dog)/</code></pre>
+<p>Group 1 = empty  
+Group 2 = dog</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/(?|cat|dog)/</code></pre>
+<p>Must contain capturing groups inside.</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>
+Capturing groups store matched text.  
+Non-capturing groups group logic without storing.  
+Named groups improve readability.  
+Backreferences allow repeated matching.  
+Branch reset is advanced and used in PCRE engines.  
+
+These are very important in interviews, especially for extracting values and validating repeated patterns.
+</p>
+
+</section>
+
+<section>
+
+<h2>Lookarounds (Zero-Width Assertions)</h2>
+
+<h3>Definition</h3>
+<p>
+Lookarounds are special patterns that check something before or after a word 
+without including it in the final match.
+They are called "zero-width" because they do not consume characters.
+</p>
+
+<h3>Why We Use It</h3>
+<p>
+We use lookarounds when we want to:
+- Match something only if a condition is true
+- Exclude certain patterns
+- Validate format without capturing extra text
+</p>
+
+<h3>Syntax</h3>
+<pre><code>(?= )  (?! )  (?&lt;= )  (?&lt;! )</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>
+Lookahead checks to the right.  
+Lookbehind checks to the left.  
+They test a condition but do not include it in the match.
+</p>
+
+<hr>
+
+<h3>1) (?= ) → Positive Lookahead</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/\d(?=px)/</code></pre>
+<p>Text: "5px"</p>
+<p>Output: Matches "5"</p>
+<p>Explanation: Matches digit only if followed by "px".</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/\d(?=px)/</code></pre>
+<p>Text: "5em"</p>
+<p>Output: No match</p>
+<p>Explanation: Not followed by "px".</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/\w+(?=@gmail\.com)/</code></pre>
+<p>Text: "user@gmail.com"</p>
+<p>Output: Matches "user"</p>
+<p>Explanation: Extract username only if email is Gmail.</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/\d+(?=\sUSD)/</code></pre>
+<p>Extracts amount before currency.</p>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/\d+USD/</code></pre>
+<p>This includes "USD" in match unnecessarily.</p>
+
+<hr>
+
+<h3>2) (?! ) → Negative Lookahead</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/\d(?!px)/</code></pre>
+<p>Text: "5em"</p>
+<p>Output: Matches "5"</p>
+<p>Explanation: Matches digit only if NOT followed by "px".</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/\d(?!px)/</code></pre>
+<p>Text: "5px"</p>
+<p>Output: No match</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/^(?!.*admin).*/</code></pre>
+<p>Text: "user123"</p>
+<p>Output: Match</p>
+<p>Text: "adminUser"</p>
+<p>Output: No match</p>
+<p>Explanation: Blocks usernames containing "admin".</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/\b\w+\b(?!\.)/</code></pre>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/\b\w+\b[^.]/</code></pre>
+<p>Incorrect logic.</p>
+
+<hr>
+
+<h3>3) (?&lt;= ) → Positive Lookbehind</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/(?&lt;=\$)\d+/</code></pre>
+<p>Text: "$100"</p>
+<p>Output: Matches "100"</p>
+<p>Explanation: Matches digits only if preceded by "$".</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/(?&lt;=\$)\d+/</code></pre>
+<p>Text: "100"</p>
+<p>Output: No match</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/(?&lt;=ID:)\d+/</code></pre>
+<p>Text: "ID:3456"</p>
+<p>Output: Matches "3456"</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/(?&lt;=https:\/\/)\w+\.\w+/</code></pre>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/https:\/\/(\w+\.\w+)/</code></pre>
+<p>Captures extra text unnecessarily.</p>
+
+<hr>
+
+<h3>4) (?&lt;! ) → Negative Lookbehind</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/(?&lt;!\$)\d+/</code></pre>
+<p>Text: "100"</p>
+<p>Output: Matches "100"</p>
+
+<p>Text: "$100"</p>
+<p>Output: No match</p>
+<p>Explanation: Matches digits NOT preceded by "$".</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/(?&lt;!Mr\.)\s\w+/</code></pre>
+<p>Text: "Mr. Smith"</p>
+<p>Output: No match for space before Smith</p>
+<p>Explanation: Avoids matching names after "Mr."</p>
+
+<p><strong>Valid Example</strong></p>
+<pre><code>/(?&lt;!#)\b\w+/</code></pre>
+<p>Matches words not starting with #.</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/(?&lt;!\d+)\w+/</code></pre>
+<p>Some engines do not allow variable-length lookbehind.</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>
+Positive lookahead checks what comes next.  
+Negative lookahead blocks certain next patterns.  
+Positive lookbehind checks what comes before.  
+Negative lookbehind blocks certain previous patterns.  
+
+They do not consume characters.  
+They are very important in interviews for validation, filtering, and advanced pattern matching.
+</p>
+
+</section>
+
+<section>
+
+<h2>Inline Modifiers (Flags inside regex)</h2>
+
+<h3>Definition</h3>
+<p>Inline modifiers are special flags written inside the regex pattern. They change how the pattern behaves.</p>
+
+<h3>Why We Use It</h3>
+<p>We use them when we want to control behavior like case sensitivity or multiline matching without changing global settings.</p>
+
+<h3>Syntax</h3>
+<pre><code>(?i) (?m) (?s) (?x) (?U) (?-i) (?imxs)</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>They turn special modes ON or OFF inside the pattern itself.</p>
+
+<hr>
+
+<h3>1) (?i) → Case Insensitive</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/(?i)cat/</code></pre>
+<p>Text: "CAT"</p>
+<p>Output: Match</p>
+<p>Explanation: Ignores uppercase/lowercase.</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/cat/</code></pre>
+<p>Text: "CAT"</p>
+<p>Output: No match</p>
+
+<p><strong>Real-World Example</strong></p>
+<pre><code>/(?i)error/</code></pre>
+<p>Matches: "Error", "ERROR", "error"</p>
+
+<hr>
+
+<h3>2) (?m) → Multiline</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/(?m)^cat/</code></pre>
+<p>Text:</p>
+<pre><code>dog
+cat</code></pre>
+<p>Output: Matches "cat"</p>
+<p>Explanation: ^ works on each line.</p>
+
+<p><strong>Without Multiline</strong></p>
+<pre><code>/^cat/</code></pre>
+<p>Output: No match</p>
+
+<hr>
+
+<h3>3) (?s) → Dot Matches Newline</h3>
+
+<p><strong>Example</strong></p>
+<pre><code>/(?s)a.*b/</code></pre>
+<p>Text:</p>
+<pre><code>a
+b</code></pre>
+<p>Output: Match</p>
+<p>Explanation: Dot includes newline.</p>
+
+<p><strong>Without (?s)</strong></p>
+<pre><code>/a.*b/</code></pre>
+<p>Output: No match</p>
+
+<hr>
+
+<h3>4) (?x) → Ignore Whitespace</h3>
+
+<p><strong>Example</strong></p>
+<pre><code>/(?x)
+\d+   # digits
+\s
+\w+   # word
+/</code></pre>
+<p>Matches number and word with space.</p>
+<p>Explanation: Spaces and comments ignored.</p>
+
+<hr>
+
+<h3>5) (?U) → Ungreedy (PCRE)</h3>
+
+<p><strong>Example</strong></p>
+<pre><code>/(?U)&lt;.*&gt;/</code></pre>
+<p>Text: "&lt;b&gt;bold&lt;/b&gt;"</p>
+<p>Output: Matches "&lt;b&gt;"</p>
+<p>Explanation: Makes quantifiers lazy by default.</p>
+
+<hr>
+
+<h3>6) (?-i) → Turn Off Flag</h3>
+
+<p><strong>Example</strong></p>
+<pre><code>/(?i)cat(?-i)dog/</code></pre>
+<p>Text: "CATdog"</p>
+<p>Output: Match</p>
+<p>Text: "CATDOG"</p>
+<p>Output: No match</p>
+<p>Explanation: dog part is case-sensitive.</p>
+
+<hr>
+
+<h3>7) (?imxs) → Multiple Flags</h3>
+
+<pre><code>/(?im)^cat.*dog$/</code></pre>
+<p>Text:</p>
+<pre><code>CAT
+something dog</code></pre>
+<p>Output: Matches across lines.</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>Inline modifiers control behavior inside the pattern. They are powerful for fine-tuning matching rules.</p>
+
+</section>
+
+<section>
+
+<h2>Regex Flags (Outside Pattern)</h2>
+
+<h3>Definition</h3>
+<p>Flags placed outside the pattern change how the whole regex behaves.</p>
+
+<h3>Why We Use It</h3>
+<p>They help control global matching, case sensitivity, multiline behavior, and more.</p>
+
+<h3>Syntax</h3>
+<pre><code>/pattern/flags</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>Flags come after the closing slash and apply to entire regex.</p>
+
+<hr>
+
+<h3>1) g → Global</h3>
+
+<pre><code>/cat/g</code></pre>
+<p>Text: "cat cat"</p>
+<p>Output: Matches both "cat"</p>
+<p>Explanation: Finds all matches.</p>
+
+<hr>
+
+<h3>2) i → Case Insensitive</h3>
+
+<pre><code>/cat/i</code></pre>
+<p>Text: "CAT"</p>
+<p>Output: Match</p>
+
+<hr>
+
+<h3>3) m → Multiline</h3>
+
+<pre><code>/^cat/m</code></pre>
+<p>Matches "cat" at start of any line.</p>
+
+<hr>
+
+<h3>4) s → Dotall</h3>
+
+<pre><code>/a.*b/s</code></pre>
+<p>Dot includes newline.</p>
+
+<hr>
+
+<h3>5) u → Unicode</h3>
+
+<pre><code>/\u{1F600}/u</code></pre>
+<p>Matches 😀 emoji correctly.</p>
+
+<hr>
+
+<h3>6) y → Sticky (JavaScript)</h3>
+
+<pre><code>/cat/y</code></pre>
+<p>Matches only at current position.</p>
+<p>Useful in token parsing.</p>
+
+<hr>
+
+<h3>7) x → Extended</h3>
+
+<pre><code>/\d+ \w+/x</code></pre>
+<p>Whitespace ignored in some engines.</p>
+
+<hr>
+
+<h3>8) d → Indices (JavaScript ES2022)</h3>
+
+<pre><code>/cat/d</code></pre>
+<p>Returns match index positions.</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>
+Global flag finds all matches.  
+i ignores case.  
+m enables multiline anchors.  
+s allows dot to match newline.  
+u enables Unicode mode.  
+y forces sticky matching.  
+x ignores whitespace.  
+d returns match indices.  
+
+Understanding flags is very important for interview questions and real-world text processing.
+</p>
+
+</section>
+
+<section>
+
+<h2>Unicode & Property Classes</h2>
+
+<h3>Definition</h3>
+<p>
+Unicode property classes match characters based on their type like letter, number, symbol, or script.
+They work only in Unicode-aware engines (like JavaScript with <code>u</code> flag, PCRE, .NET).
+</p>
+
+<h3>Why We Use It</h3>
+<p>
+We use them when working with international text, emojis, different languages, or advanced validation.
+</p>
+
+<h3>Syntax</h3>
+<pre><code>\p{L} \p{N} \p{P} \p{S} \p{Z} \P{L} \p{Script=Latin} \p{Emoji}</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>
+\p means “match this Unicode category”.  
+\P means “NOT this category”.
+</p>
+
+<hr>
+
+<h3>1) \p{L} → Any Letter</h3>
+
+<pre><code>/\p{L}+/u</code></pre>
+<p>Text: "Hello नमस्ते 123"</p>
+<p>Output: Matches "Hello" and "नमस्ते"</p>
+<p>Explanation: Matches letters from any language.</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/\p{L}+/u</code></pre>
+<p>Text: "123"</p>
+<p>Output: No match</p>
+
+<hr>
+
+<h3>2) \p{N} → Any Number</h3>
+
+<pre><code>/\p{N}+/u</code></pre>
+<p>Text: "Year 2026"</p>
+<p>Output: Matches "2026"</p>
+
+<hr>
+
+<h3>3) \p{P} → Punctuation</h3>
+
+<pre><code>/\p{P}+/u</code></pre>
+<p>Text: "Hello, world!"</p>
+<p>Output: Matches "," and "!"</p>
+
+<hr>
+
+<h3>4) \p{S} → Symbol</h3>
+
+<pre><code>/\p{S}+/u</code></pre>
+<p>Text: "$100 + €50"</p>
+<p>Output: Matches "$", "+", "€"</p>
+
+<hr>
+
+<h3>5) \p{Z} → Separator</h3>
+
+<pre><code>/\p{Z}+/u</code></pre>
+<p>Text: "Hello World"</p>
+<p>Output: Matches space</p>
+
+<hr>
+
+<h3>6) \P{L} → Not Letter</h3>
+
+<pre><code>/\P{L}+/u</code></pre>
+<p>Text: "ABC123!"</p>
+<p>Output: Matches "123!"</p>
+
+<hr>
+
+<h3>7) \p{Script=Latin}</h3>
+
+<pre><code>/\p{Script=Latin}+/u</code></pre>
+<p>Text: "Hello नमस्ते"</p>
+<p>Output: Matches "Hello"</p>
+
+<hr>
+
+<h3>8) \p{Emoji}</h3>
+
+<pre><code>/\p{Emoji}+/u</code></pre>
+<p>Text: "Hello 😀🔥"</p>
+<p>Output: Matches "😀🔥"</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>
+Unicode property classes help handle global languages, emojis, and advanced text validation.
+Very important for international applications.
+</p>
+
+</section>
+
+<section>
+
+<h2>Conditional & Advanced Constructs</h2>
+
+<h3>Definition</h3>
+<p>
+Advanced constructs control regex behavior like condition checking, recursion, and backtracking control.
+Mostly available in PCRE, .NET, or advanced engines.
+</p>
+
+<h3>Why We Use It</h3>
+<p>
+Used in complex validation, parsing nested patterns, performance optimization, and interview-level problems.
+</p>
+
+<h3>Syntax</h3>
+<pre><code>(?(condition)yes|no)
+(?> )
+(*FAIL)
+(*SKIP)
+(*PRUNE)
+(*THEN)
+(?R)
+(?1)</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>
+These patterns give regex programming-like power.
+</p>
+
+<hr>
+
+<h3>1) (?(condition)yes|no) → Conditional</h3>
+
+<pre><code>/(a)?b(?(1)c|d)/</code></pre>
+<p>Text: "abc"</p>
+<p>Output: Match</p>
+
+<p>Text: "bd"</p>
+<p>Output: Match</p>
+
+<p>Text: "ab d"</p>
+<p>Output: No match</p>
+
+<p>Explanation: If group 1 exists, match "c", otherwise match "d".</p>
+
+<hr>
+
+<h3>2) (?> ) → Atomic Group</h3>
+
+<pre><code>/(?>a+)a/</code></pre>
+<p>Text: "aaaa"</p>
+<p>Output: No match</p>
+<p>Explanation: Atomic group prevents backtracking.</p>
+
+<hr>
+
+<h3>3) (*FAIL) → Force Fail</h3>
+
+<pre><code>/cat(*FAIL)|dog/</code></pre>
+<p>Text: "cat"</p>
+<p>Output: No match</p>
+
+<p>Text: "dog"</p>
+<p>Output: Match</p>
+
+<hr>
+
+<h3>4) (*SKIP) → Skip Match</h3>
+
+<pre><code>/ignore(*SKIP)(*FAIL)|\w+/</code></pre>
+<p>Text: "ignore this word"</p>
+<p>Output: Matches "this" and "word"</p>
+
+<hr>
+
+<h3>5) (*PRUNE) → Backtracking Control</h3>
+
+<pre><code>/a(*PRUNE)b|ac/</code></pre>
+<p>Text: "ac"</p>
+<p>Output: Match "ac"</p>
+
+<hr>
+
+<h3>6) (*THEN) → Control Flow</h3>
+
+<pre><code>/a(*THEN)b|ac/</code></pre>
+<p>Text: "ac"</p>
+<p>Output: Match "ac"</p>
+
+<hr>
+
+<h3>7) (?R) → Recursive Pattern</h3>
+
+<pre><code>/\((?:[^()]++|(?R))*\)/</code></pre>
+<p>Text: "(a(b)c)"</p>
+<p>Output: Full match</p>
+<p>Explanation: Recursively matches nested parentheses.</p>
+
+<hr>
+
+<h3>8) (?1) → Subroutine Call</h3>
+
+<pre><code>/(a(b))(?1)/</code></pre>
+<p>Text: "ab ab"</p>
+<p>Output: Matches repeated subpattern</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>
+Conditional patterns allow logic decisions.  
+Atomic groups improve performance.  
+FAIL, SKIP, PRUNE, THEN control backtracking.  
+Recursive and subroutine calls allow nested pattern matching.  
+
+These are advanced interview-level regex features.
+</p>
+
+</section>
+
+<section>
+
+<h2>Character Class Special Cases</h2>
+
+<h3>Definition</h3>
+<p>
+These are special symbols used inside square brackets <code>[ ]</code>.
+They change how character classes behave.
+</p>
+
+<h3>Why We Use It</h3>
+<p>
+We use them to match ranges, exclude characters, or combine character sets in advanced ways.
+</p>
+
+<h3>Syntax</h3>
+<pre><code>[^ ]   [a-z]   [a-z&&[def]]   [a-z~~[aeiou]]</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>
+Inside brackets:
+^ at first position means NOT.
+- defines range.
+&& means intersection (common part).
+~~ means symmetric difference (exclusive part).
+</p>
+
+<hr>
+
+<h3>1) ^ → Negation (only first position)</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/[^a]/</code></pre>
+<p>Text: "apple"</p>
+<p>Output: Matches "p", "p", "l", "e"</p>
+<p>Explanation: Matches anything except "a".</p>
+
+<p><strong>Valid Example</strong></p>
+<pre><code>/[^0-9]/</code></pre>
+<p>Text: "abc123"</p>
+<p>Output: Matches "a", "b", "c"</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/[a^]/</code></pre>
+<p>Text: "a^"</p>
+<p>Output: Matches "a" and "^"</p>
+<p>Explanation: ^ is not first position, so treated as normal character.</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/^[^0-9]+$/</code></pre>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/[^]/</code></pre>
+<p>Matches almost everything, too broad.</p>
+
+<hr>
+
+<h3>2) - → Range</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/[a-z]/</code></pre>
+<p>Text: "Hello"</p>
+<p>Output: Matches "e", "l", "l", "o"</p>
+<p>Explanation: Matches lowercase letters.</p>
+
+<p><strong>Valid Example</strong></p>
+<pre><code>/[0-9]/</code></pre>
+<p>Text: "A1B2"</p>
+<p>Output: Matches "1", "2"</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/[z-a]/</code></pre>
+<p>Output: Error (invalid range)</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/^[A-Z][a-z]+$/</code></pre>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/[A-z]/</code></pre>
+<p>Explanation: Also includes unwanted ASCII characters.</p>
+
+<hr>
+
+<h3>3) && → Intersection (Java)</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/[a-z&&[def]]/</code></pre>
+<p>Text: "abcdef"</p>
+<p>Output: Matches "d", "e", "f"</p>
+<p>Explanation: Matches letters that are both in a-z and in def.</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/[a-z&&[0-9]]/</code></pre>
+<p>Text: "abc123"</p>
+<p>Output: No match</p>
+<p>Explanation: No overlap between letters and digits.</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/[A-Za-z&&[^aeiouAEIOU]]/</code></pre>
+<p>Matches consonants only.</p>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/[a-z&&]/</code></pre>
+<p>Invalid syntax.</p>
+
+<hr>
+
+<h3>4) ~~ → Symmetric Difference (Some Engines)</h3>
+
+<p><strong>Basic Example</strong></p>
+<pre><code>/[a-z~~[aeiou]]/</code></pre>
+<p>Text: "abcdef"</p>
+<p>Output: Matches consonants only (b, c, d, f)</p>
+<p>Explanation: Removes vowels from a-z.</p>
+
+<p><strong>Invalid Example</strong></p>
+<pre><code>/[a-z~~]/</code></pre>
+<p>Output: Error</p>
+
+<p><strong>Good Pattern</strong></p>
+<pre><code>/[0-9~~[2468]]/</code></pre>
+<p>Matches odd numbers.</p>
+
+<p><strong>Bad Pattern</strong></p>
+<pre><code>/[~~]/</code></pre>
+<p>Invalid usage.</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>
+^ excludes characters.  
+- creates ranges.  
+&& finds common characters.  
+~~ removes overlapping characters.  
+These are important for precise character matching.
+</p>
+
+</section>
+
+<section>
+
+<h2>POSIX Character Classes</h2>
+
+<h3>Definition</h3>
+<p>
+POSIX classes are predefined character groups used inside square brackets.
+Example format: <code>[[:digit:]]</code>
+</p>
+
+<h3>Why We Use It</h3>
+<p>
+They make patterns more readable and portable in Unix/Linux systems.
+</p>
+
+<h3>Syntax</h3>
+<pre><code>[[:alnum:]] [[:alpha:]] [[:digit:]] [[:lower:]] [[:upper:]] 
+[[:space:]] [[:punct:]] [[:xdigit:]]</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>
+They match predefined character types.
+</p>
+
+<hr>
+
+<h3>1) [:alnum:] → Alphanumeric</h3>
+
+<pre><code>/[[:alnum:]]+/</code></pre>
+<p>Text: "abc123!"</p>
+<p>Output: Matches "abc123"</p>
+
+<hr>
+
+<h3>2) [:alpha:] → Letters</h3>
+
+<pre><code>/[[:alpha:]]+/</code></pre>
+<p>Text: "abc123"</p>
+<p>Output: Matches "abc"</p>
+
+<hr>
+
+<h3>3) [:digit:] → Digits</h3>
+
+<pre><code>/[[:digit:]]+/</code></pre>
+<p>Text: "A1B2"</p>
+<p>Output: Matches "1", "2"</p>
+
+<hr>
+
+<h3>4) [:lower:] → Lowercase</h3>
+
+<pre><code>/[[:lower:]]+/</code></pre>
+<p>Text: "Hello"</p>
+<p>Output: Matches "ello"</p>
+
+<hr>
+
+<h3>5) [:upper:] → Uppercase</h3>
+
+<pre><code>/[[:upper:]]+/</code></pre>
+<p>Text: "Hello"</p>
+<p>Output: Matches "H"</p>
+
+<hr>
+
+<h3>6) [:space:] → Whitespace</h3>
+
+<pre><code>/[[:space:]]+/</code></pre>
+<p>Text: "Hello World"</p>
+<p>Output: Matches space</p>
+
+<hr>
+
+<h3>7) [:punct:] → Punctuation</h3>
+
+<pre><code>/[[:punct:]]+/</code></pre>
+<p>Text: "Hello, world!"</p>
+<p>Output: Matches "," and "!"</p>
+
+<hr>
+
+<h3>8) [:xdigit:] → Hex Digits</h3>
+
+<pre><code>/[[:xdigit:]]+/</code></pre>
+<p>Text: "1A3F"</p>
+<p>Output: Matches entire string</p>
+
+<p>Invalid Example</p>
+<pre><code>/[[:xdigit:]]+/</code></pre>
+<p>Text: "1G3Z"</p>
+<p>Output: Matches "1" and "3"</p>
+
+<hr>
+
+<h3>Final Output Explanation</h3>
+<p>
+POSIX classes simplify character grouping.
+They are commonly used in Linux tools like grep and sed.
+Very useful in interview and system-level regex tasks.
+</p>
+
+</section>
+<section>
+
+<h2>Regex Engines Overview (PCRE, ECMAScript, Perl, Java, Python)</h2>
+
+<h3>Definition</h3>
+<p>
+A regex engine is the system inside a programming language that reads and executes
+regular expressions. Different languages use different engines, so features and syntax
+can slightly change.
+</p>
+
+<h3>Why We Use It</h3>
+<p>
+We use regex engines to:
+- Validate input
+- Search text
+- Replace text
+- Extract data
+- Parse logs
+- Perform advanced pattern matching
+</p>
+
+<h3>Syntax</h3>
+<pre><code>/pattern/flags
+"pattern"
+r"pattern"
+Pattern.compile("pattern")</code></pre>
+
+<h3>Simple Explanation</h3>
+<p>
+Each programming language provides built-in libraries or modules to use regex.
+Below is a detailed breakdown of all 5 engines, how they work, how to access them,
+important functions, flags, and usage.
+</p>
+
+</section>
+
+<section>
+
+<h2>1) PCRE (PHP)</h2>
+
+<h3>Engine</h3>
+<p>PHP uses PCRE (Perl Compatible Regular Expressions).</p>
+
+<h3>How It Works</h3>
+<p>
+PCRE is backtracking-based. It supports advanced features like:
+lookbehind, recursion, atomic groups, conditionals, named groups,
+Unicode properties, backtracking control verbs.
+</p>
+
+<h3>How To Access Regex in PHP</h3>
+
+<p><strong>Syntax Format</strong></p>
+<pre><code>preg_function('/pattern/flags', subject);</code></pre>
+
+<h3>Important Built-in Functions</h3>
+
+<pre><code>preg_match()
+preg_match_all()
+preg_replace()
+preg_replace_callback()
+preg_split()
+preg_grep()
+preg_filter()
+preg_quote()
+preg_last_error()
+preg_last_error_msg()</code></pre>
+
+<h3>Examples</h3>
+
+<p><strong>Match</strong></p>
+<pre><code>preg_match('/\d+/', "Age 25", $matches);</code></pre>
+<p>Output: 25</p>
+
+<p><strong>Replace</strong></p>
+<pre><code>preg_replace('/cat/', 'dog', 'cat animal');</code></pre>
+<p>Output: dog animal</p>
+
+<p><strong>Split</strong></p>
+<pre><code>preg_split('/,/', "a,b,c");</code></pre>
+<p>Output: ["a","b","c"]</p>
+
+<h3>Flags</h3>
+<pre><code>i m s x u A D U J</code></pre>
+
+<h3>Modules</h3>
+<p>Built into PHP core (PCRE2 in modern PHP versions).</p>
+
+</section>
+
+<section>
+
+<h2>2) ECMAScript (JavaScript)</h2>
+
+<h3>Engine</h3>
+<p>JavaScript follows ECMAScript regex specification.</p>
+
+<h3>How It Works</h3>
+<p>
+Backtracking engine. Supports lookahead, lookbehind (modern JS),
+Unicode, named groups, sticky mode.
+</p>
+
+<h3>How To Access Regex</h3>
+
+<p><strong>Literal Syntax</strong></p>
+<pre><code>/pattern/flags</code></pre>
+
+<p><strong>Constructor</strong></p>
+<pre><code>new RegExp("pattern", "flags")</code></pre>
+
+<h3>Important Methods</h3>
+
+<pre><code>test()
+exec()
+match()
+matchAll()
+replace()
+replaceAll()
+split()
+search()</code></pre>
+
+<h3>Examples</h3>
+
+<p><strong>Test</strong></p>
+<pre><code>/\d+/.test("Age 30")</code></pre>
+<p>Output: true</p>
+
+<p><strong>Match</strong></p>
+<pre><code>"Age 30".match(/\d+/)</code></pre>
+<p>Output: ["30"]</p>
+
+<p><strong>Replace</strong></p>
+<pre><code>"cat".replace(/cat/, "dog")</code></pre>
+<p>Output: dog</p>
+
+<h3>Flags</h3>
+<pre><code>g i m s u y d</code></pre>
+
+<h3>Modules</h3>
+<p>No extra module needed. Built into JavaScript engine.</p>
+
+</section>
+
+<section>
+
+<h2>3) Perl</h2>
+
+<h3>Engine</h3>
+<p>Perl has its own powerful regex engine (basis of PCRE).</p>
+
+<h3>How It Works</h3>
+<p>
+Very advanced backtracking engine.
+Supports recursion, conditionals, embedded code, backtracking verbs.
+</p>
+
+<h3>How To Access Regex</h3>
+
+<pre><code>m/pattern/
+s/pattern/replacement/
+qr/pattern/</code></pre>
+
+<h3>Operators</h3>
+
+<pre><code>=~   (match operator)
+!~   (not match)</code></pre>
+
+<h3>Examples</h3>
+
+<p><strong>Match</strong></p>
+<pre><code>"Age 40" =~ /\d+/;</code></pre>
+<p>Output: 40</p>
+
+<p><strong>Replace</strong></p>
+<pre><code>$text =~ s/cat/dog/;</code></pre>
+<p>Output: dog</p>
+
+<h3>Flags</h3>
+<pre><code>i m s x g o</code></pre>
+
+<h3>Modules</h3>
+<p>Core feature of Perl language.</p>
+
+</section>
+
+<section>
+
+<h2>4) Java</h2>
+
+<h3>Engine</h3>
+<p>Java uses java.util.regex package.</p>
+
+<h3>How It Works</h3>
+<p>
+Backtracking engine. Supports named groups, lookbehind,
+Unicode, atomic groups, possessive quantifiers.
+</p>
+
+<h3>Import Required</h3>
+<pre><code>import java.util.regex.*;</code></pre>
+
+<h3>Important Classes</h3>
+
+<pre><code>Pattern
+Matcher
+MatchResult</code></pre>
+
+<h3>Common Methods</h3>
+
+<pre><code>Pattern.compile()
+matcher()
+find()
+matches()
+group()
+replaceAll()
+replaceFirst()
+split()</code></pre>
+
+<h3>Example</h3>
+
+<pre><code>
+Pattern p = Pattern.compile("\\d+");
+Matcher m = p.matcher("Age 28");
+if(m.find()){
+  System.out.println(m.group());
+}
+</code></pre>
+
+<p>Output: 28</p>
+
+<h3>Flags</h3>
+<pre><code>CASE_INSENSITIVE
+MULTILINE
+DOTALL
+UNICODE_CASE
+COMMENTS</code></pre>
+
+</section>
+
+<section>
+
+<h2>5) Python</h2>
+
+<h3>Engine</h3>
+<p>Python uses re module (backtracking engine).</p>
+
+<h3>How It Works</h3>
+<p>
+Supports named groups, lookbehind, conditionals,
+Unicode, verbose mode.
+</p>
+
+<h3>Import Required</h3>
+<pre><code>import re</code></pre>
+
+<h3>Important Functions</h3>
+
+<pre><code>re.match()
+re.search()
+re.findall()
+re.finditer()
+re.sub()
+re.subn()
+re.split()
+re.compile()
+re.fullmatch()</code></pre>
+
+<h3>Example</h3>
+
+<pre><code>
+import re
+result = re.search(r"\d+", "Age 35")
+print(result.group())
+</code></pre>
+
+<p>Output: 35</p>
+
+<h3>Flags</h3>
+<pre><code>re.I
+re.M
+re.S
+re.X
+re.A
+re.U</code></pre>
+
+<h3>Advanced Module</h3>
+<p>Python also has external "regex" module (pip install regex) which supports recursion and more advanced features.</p>
+
+</section>
+
+<section>
+
+<h2>Final Comparison Summary</h2>
+
+<h3>Backtracking Engines</h3>
+<p>All five use backtracking engines.</p>
+
+<h3>Most Powerful</h3>
+<p>Perl and PCRE are most feature-rich.</p>
+
+<h3>Best for Web</h3>
+<p>JavaScript (ECMAScript).</p>
+
+<h3>Enterprise</h3>
+<p>Java.</p>
+
+<h3>Data Science</h3>
+<p>Python.</p>
+
+<h3>Final Output Explanation</h3>
+<p>
+Each language provides built-in regex support.
+PCRE and Perl are the most advanced.
+Java and Python are structured and powerful.
+JavaScript is simple and widely used.
+Understanding engine differences is important for interviews and real-world projects.
+</p>
+
+</section>
+</body>
+</html>
