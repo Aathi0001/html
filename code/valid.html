@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Banking Validation Regex Reference</title>
+<meta charset="UTF-8">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+</style>
+</head>
+
+<body>
+
+<h1>Banking System Validation Patterns</h1>
+
+<hr>
+
+<h2>1. Name Validation</h2>
+
+<p>Rules:</p>
+<ul>
+<li>Length: 3 – 50</li>
+<li>Alphabets</li>
+<li>Spaces allowed</li>
+<li>Maximum 6 dots</li>
+<li>No continuous dots</li>
+</ul>
+
+<pre>
+/^(?=.{3,50}$)(?=(?:[^.]*\.){0,6}[^.]*$)[A-Za-z]+(?:[ .][A-Za-z]+)*\.?$/
+</pre>
+
+<hr>
+
+<h2>2. Email Validation</h2>
+
+<p>Supports standard email symbols and prevents continuous dots.</p>
+
+<pre>
+^(?=.{5,254}$)[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[A-Za-z0-9!#$%&'*+/=?^_`{|}~-]+)*@
+[A-Za-z0-9-]+(?:\.[A-Za-z]{2,})+$
+</pre>
+
+<hr>
+
+<h2>3. Date Validation (DD-MM-YYYY)</h2>
+
+<p>Supports:</p>
+
+<ul>
+<li>Leap years</li>
+<li>Correct month days</li>
+<li>Year range 1900–2099</li>
+</ul>
+
+<pre>
+^(?:(?:31-(?:0?[13579]|1[02])-(?:19|20)\d\d)|
+(?:(?:29|30)-(?:0?[13-9]|1[0-2])-(?:19|20)\d\d)|
+(?:29-0?2-(?:(?:19|20)(?:0[48]|[13579][26]|[2468][048])|2000))|
+(?:(?:0?[1-9]|1[0-9]|2[0-8])-(?:0?[1-9]|1[0-2])-(?:19|20)\d\d))$
+</pre>
+
+<hr>
+
+<h2>4. Password</h2>
+
+<p>Rules:</p>
+
+<ul>
+<li>8 – 16 characters</li>
+<li>Uppercase required</li>
+<li>Lowercase required</li>
+<li>Number required</li>
+<li>Special character required</li>
+</ul>
+
+<pre>
+^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,16}$
+</pre>
+
+<hr>
+
+<h2>5. Amount</h2>
+
+<p>Supports decimal up to 2 places.</p>
+
+<pre>
+^-?(?:0|[1-9]\d{0,11})(?:\.\d{1,2})?$
+</pre>
+
+<hr>
+
+<h2>6. Account Number</h2>
+
+<p>Typical bank account number length.</p>
+
+<pre>
+^[0-9]{9,18}$
+</pre>
+
+<hr>
+
+<h2>7. IFSC Code</h2>
+
+<pre>
+^[A-Z]{4}0[A-Z0-9]{6}$
+</pre>
+
+Example:
+
+<pre>
+SBIN0001234
+</pre>
+
+<hr>
+
+<h2>8. Aadhaar Number</h2>
+
+<pre>
+^[2-9][0-9]{11}$
+</pre>
+
+<hr>
+
+<h2>9. PAN Number</h2>
+
+<pre>
+^[A-Z]{5}[0-9]{4}[A-Z]$
+</pre>
+
+Example:
+
+<pre>
+ABCDE1234F
+</pre>
+
+<hr>
+
+<h2>10. Mobile Number (India)</h2>
+
+<pre>
+^[6-9][0-9]{9}$
+</pre>
+
+<hr>
+
+<h2>11. Tenure Validation</h2>
+
+<h3>Months (1 – 360)</h3>
+
+<pre>
+^(?:[1-9]|[1-9][0-9]|[12][0-9]{2}|3[0-5][0-9]|360)$
+</pre>
+
+<h3>Years (1 – 30)</h3>
+
+<pre>
+^(?:[1-9]|[12][0-9]|30)$
+</pre>
+
+<hr>
+
+<h2>12. Card Number (Generic)</h2>
+
+<p>Supports most debit and credit cards.</p>
+
+<pre>
+^\d{13,19}$
+</pre>
+
+<hr>
+
+<h2>13. Visa Card</h2>
+
+<p>Starts with 4</p>
+
+<pre>
+^4(?:\d{12}|\d{15}|\d{18})$
+</pre>
+
+Example:
+
+<pre>
+4111111111111111
+4012888888881881
+</pre>
+
+<hr>
+
+<h2>14. MasterCard</h2>
+
+<p>Range: 51–55 and 2221–2720</p>
+
+<pre>
+^(5[1-5]\d{14}|2(22[1-9]\d{11}|2[3-9]\d{12}|[3-6]\d{13}|7[01]\d{12}|720\d{12}))$
+</pre>
+
+<hr>
+
+<h2>15. American Express</h2>
+
+<p>Starts with 34 or 37</p>
+
+<pre>
+^3[47]\d{13}$
+</pre>
+
+<hr>
+
+<h2>16. RuPay Card</h2>
+
+<p>Starts with:</p>
+
+<ul>
+<li>60</li>
+<li>65</li>
+<li>81</li>
+<li>82</li>
+<li>508</li>
+<li>353</li>
+<li>356</li>
+</ul>
+
+<pre>
+^(?:60\d{14}|65\d{14}|81\d{14}|82\d{14}|508\d{13}|353\d{13}|356\d{13})$
+</pre>
+
+<hr>
+
+<h2>17. Combined Card Validation</h2>
+
+<p>Supports:</p>
+
+<ul>
+<li>Visa</li>
+<li>MasterCard</li>
+<li>American Express</li>
+<li>Discover</li>
+<li>RuPay</li>
+</ul>
+
+<pre>
+^(?:4(?:\d{12}|\d{15}|\d{18})|
+5[1-5]\d{14}|
+2(?:22[1-9]\d{11}|2[3-9]\d{12}|[3-6]\d{13}|7[01]\d{12}|720\d{12})|
+3[47]\d{13}|
+6(?:011|5\d{2})\d{12}|
+(?:81\d{14}|82\d{14}|508\d{13}|353\d{13}|356\d{13}))$
+</pre>
+
+<hr>
+
+<h2>Supported Card Networks</h2>
+
+<table border="1">
+<tr>
+<th>Card</th>
+<th>Prefix</th>
+</tr>
+
+<tr>
+<td>Visa</td>
+<td>4</td>
+</tr>
+
+<tr>
+<td>MasterCard</td>
+<td>51–55, 2221–2720</td>
+</tr>
+
+<tr>
+<td>American Express</td>
+<td>34, 37</td>
+</tr>
+
+<tr>
+<td>Discover</td>
+<td>6011, 65</td>
+</tr>
+
+<tr>
+<td>RuPay</td>
+<td>60, 65, 81, 82, 508, 353, 356</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h3>Note</h3>
+
+<p>
+In real banking systems, card numbers are also validated using
+<strong>Luhn Algorithm</strong> and <strong>BIN range checks</strong>.
+Regex only validates the structure.
+</p>
+
+
+<section>
+
+<h1>Banking Error Codes & Validation Codes Reference</h1>
+
+<hr>
+
+<h2>1. General Validation Errors</h2>
+
+<table border="1">
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>VAL001</td>
+<td>Invalid Name Format</td>
+</tr>
+
+<tr>
+<td>VAL002</td>
+<td>Invalid Email Address</td>
+</tr>
+
+<tr>
+<td>VAL003</td>
+<td>Invalid Date Format</td>
+</tr>
+
+<tr>
+<td>VAL004</td>
+<td>Invalid Password</td>
+</tr>
+
+<tr>
+<td>VAL005</td>
+<td>Invalid Mobile Number</td>
+</tr>
+
+<tr>
+<td>VAL006</td>
+<td>Invalid Amount</td>
+</tr>
+
+<tr>
+<td>VAL007</td>
+<td>Invalid Tenure</td>
+</tr>
+
+<tr>
+<td>VAL008</td>
+<td>Invalid Account Number</td>
+</tr>
+
+<tr>
+<td>VAL009</td>
+<td>Invalid Card Number</td>
+</tr>
+
+<tr>
+<td>VAL010</td>
+<td>Invalid Expiry Date</td>
+</tr>
+
+<tr>
+<td>VAL011</td>
+<td>Invalid CVV</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>2. Banking Identity Errors</h2>
+
+<table border="1">
+
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>ID001</td>
+<td>Invalid PAN Number</td>
+</tr>
+
+<tr>
+<td>ID002</td>
+<td>Invalid Aadhaar Number</td>
+</tr>
+
+<tr>
+<td>ID003</td>
+<td>Invalid IFSC Code</td>
+</tr>
+
+<tr>
+<td>ID004</td>
+<td>Customer Not Found</td>
+</tr>
+
+<tr>
+<td>ID005</td>
+<td>KYC Verification Failed</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>3. Account Errors</h2>
+
+<table border="1">
+
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>ACC001</td>
+<td>Account Not Found</td>
+</tr>
+
+<tr>
+<td>ACC002</td>
+<td>Account Already Exists</td>
+</tr>
+
+<tr>
+<td>ACC003</td>
+<td>Account Closed</td>
+</tr>
+
+<tr>
+<td>ACC004</td>
+<td>Account Frozen</td>
+</tr>
+
+<tr>
+<td>ACC005</td>
+<td>Insufficient Balance</td>
+</tr>
+
+<tr>
+<td>ACC006</td>
+<td>Invalid Account Status</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>4. Transaction Errors</h2>
+
+<table border="1">
+
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>TXN001</td>
+<td>Transaction Failed</td>
+</tr>
+
+<tr>
+<td>TXN002</td>
+<td>Transaction Timeout</td>
+</tr>
+
+<tr>
+<td>TXN003</td>
+<td>Duplicate Transaction</td>
+</tr>
+
+<tr>
+<td>TXN004</td>
+<td>Transaction Limit Exceeded</td>
+</tr>
+
+<tr>
+<td>TXN005</td>
+<td>Invalid Transaction Amount</td>
+</tr>
+
+<tr>
+<td>TXN006</td>
+<td>Currency Not Supported</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>5. Card Errors</h2>
+
+<table border="1">
+
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>CARD001</td>
+<td>Invalid Card Number</td>
+</tr>
+
+<tr>
+<td>CARD002</td>
+<td>Card Expired</td>
+</tr>
+
+<tr>
+<td>CARD003</td>
+<td>Invalid CVV</td>
+</tr>
+
+<tr>
+<td>CARD004</td>
+<td>Card Blocked</td>
+</tr>
+
+<tr>
+<td>CARD005</td>
+<td>Card Limit Exceeded</td>
+</tr>
+
+<tr>
+<td>CARD006</td>
+<td>Unsupported Card Network</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>6. Security Errors</h2>
+
+<table border="1">
+
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>SEC001</td>
+<td>Authentication Failed</td>
+</tr>
+
+<tr>
+<td>SEC002</td>
+<td>Invalid OTP</td>
+</tr>
+
+<tr>
+<td>SEC003</td>
+<td>OTP Expired</td>
+</tr>
+
+<tr>
+<td>SEC004</td>
+<td>Too Many Login Attempts</td>
+</tr>
+
+<tr>
+<td>SEC005</td>
+<td>Session Expired</td>
+</tr>
+
+<tr>
+<td>SEC006</td>
+<td>Unauthorized Access</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>7. System Errors</h2>
+
+<table border="1">
+
+<tr>
+<th>Error Code</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>SYS001</td>
+<td>Database Connection Failed</td>
+</tr>
+
+<tr>
+<td>SYS002</td>
+<td>Service Unavailable</td>
+</tr>
+
+<tr>
+<td>SYS003</td>
+<td>Internal Server Error</td>
+</tr>
+
+<tr>
+<td>SYS004</td>
+<td>Configuration Error</td>
+</tr>
+
+<tr>
+<td>SYS005</td>
+<td>Unexpected System Failure</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h3>Note</h3>
+
+<p>
+These error codes help maintain consistent error handling across banking systems.
+Applications should return the error code along with a readable message and log the error internally.
+</p>
+
+</section>
+<section>
+
+<h1>API / Banking / UPI Error Codes Reference</h1>
+
+<hr>
+
+<h2>1. HTTP / API Error Codes</h2>
+
+<table border="1">
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+
+<tr>
+<td>400</td>
+<td>Bad Request — validation failed</td>
+</tr>
+
+<tr>
+<td>401</td>
+<td>Unauthorized — invalid token</td>
+</tr>
+
+<tr>
+<td>403</td>
+<td>Forbidden — no permission</td>
+</tr>
+
+<tr>
+<td>404</td>
+<td>Not Found</td>
+</tr>
+
+<tr>
+<td>408</td>
+<td>Request Timeout</td>
+</tr>
+
+<tr>
+<td>409</td>
+<td>Conflict — duplicate transaction</td>
+</tr>
+
+<tr>
+<td>422</td>
+<td>Unprocessable — business rule failed</td>
+</tr>
+
+<tr>
+<td>429</td>
+<td>Too Many Requests — rate limit exceeded</td>
+</tr>
+
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+</tr>
+
+<tr>
+<td>502</td>
+<td>Bad Gateway</td>
+</tr>
+
+<tr>
+<td>503</td>
+<td>Service Unavailable</td>
+</tr>
+
+<tr>
+<td>504</td>
+<td>Gateway Timeout</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>2. Banking Specific Error Codes</h2>
+
+<table border="1">
+
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+
+<tr>
+<td>INSUF_FUNDS</td>
+<td>Insufficient balance</td>
+</tr>
+
+<tr>
+<td>ACCT_BLOCKED</td>
+<td>Account is blocked</td>
+</tr>
+
+<tr>
+<td>ACCT_DORMANT</td>
+<td>Account is dormant</td>
+</tr>
+
+<tr>
+<td>INVALID_IFSC</td>
+<td>IFSC not found</td>
+</tr>
+
+<tr>
+<td>INVALID_UPI</td>
+<td>UPI ID not registered</td>
+</tr>
+
+<tr>
+<td>CARD_EXPIRED</td>
+<td>Card expiry passed</td>
+</tr>
+
+<tr>
+<td>CARD_BLOCKED</td>
+<td>Card is blocked</td>
+</tr>
+
+<tr>
+<td>WRONG_PIN</td>
+<td>Incorrect PIN entered</td>
+</tr>
+
+<tr>
+<td>PIN_ATTEMPTS_EXCEEDED</td>
+<td>Too many wrong PIN attempts</td>
+</tr>
+
+<tr>
+<td>LIMIT_EXCEEDED</td>
+<td>Transaction limit exceeded</td>
+</tr>
+
+<tr>
+<td>DUPLICATE_TXN</td>
+<td>Same transaction already processed</td>
+</tr>
+
+<tr>
+<td>TIMEOUT</td>
+<td>Bank did not respond in time</td>
+</tr>
+
+<tr>
+<td>TECHNICAL_DECLINE</td>
+<td>Bank side technical error</td>
+</tr>
+
+<tr>
+<td>INVALID_BENEF</td>
+<td>Beneficiary details mismatch</td>
+</tr>
+
+<tr>
+<td>KYC_PENDING</td>
+<td>KYC not completed</td>
+</tr>
+
+<tr>
+<td>FROZEN_ACCT</td>
+<td>Account frozen by bank or court order</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>3. NPCI / UPI Specific Error Codes</h2>
+
+<table border="1">
+
+<tr>
+<th>Code</th>
+<th>Meaning</th>
+</tr>
+
+<tr>
+<td>U16</td>
+<td>Risk threshold exceeded</td>
+</tr>
+
+<tr>
+<td>U28</td>
+<td>Request cancelled by customer</td>
+</tr>
+
+<tr>
+<td>U30</td>
+<td>Debit failed</td>
+</tr>
+
+<tr>
+<td>U43</td>
+<td>Transaction not permitted</td>
+</tr>
+
+<tr>
+<td>U69</td>
+<td>Remitter bank not available</td>
+</tr>
+
+<tr>
+<td>U78</td>
+<td>Beneficiary bank not available</td>
+</tr>
+
+<tr>
+<td>U66</td>
+<td>Daily limit exceeded</td>
+</tr>
+
+<tr>
+<td>U68</td>
+<td>Monthly limit exceeded</td>
+</tr>
+
+<tr>
+<td>BT</td>
+<td>Business transaction declined</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h3>Note</h3>
+
+<p>
+These error codes are commonly used in banking APIs, payment gateways,
+UPI systems, and fintech applications to standardize error handling
+and simplify debugging, logging, and client responses.
+</p>
+
+</section>
+
+</body>
+</html>
+

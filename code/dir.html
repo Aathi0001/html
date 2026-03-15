@@ -1,0 +1,2257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dir Structure</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+</style>
+</head>
+<body>
+<section>
+
+<h1>Professional Python Backend Directory Structure</h1>
+
+<p>
+This structure represents a clean and scalable Python backend architecture.
+It separates configuration, controllers, services, models, validation,
+regex patterns, utilities, API clients, and storage.
+</p>
+
+<hr>
+
+<h2>1. Project Directory Structure</h2>
+
+<pre>
+python-backend-system/
+
+app/
+
+├── main.py
+│
+├── config/
+│   ├── config.py
+│   ├── database.py
+│   └── secrets.py
+│
+├── controllers/
+│   ├── fd_controller.py
+│   └── user_controller.py
+│
+├── services/
+│   ├── fd_service.py
+│   └── user_service.py
+│
+├── models/
+│   ├── fd_account.py
+│   └── user.py
+│
+├── validators/
+│   └── validator.py
+│
+├── patterns/
+│   └── regex_patterns.py
+│
+├── utils/
+│   ├── logger.py
+│   ├── encryption.py
+│   └── date_util.py
+│
+├── api/
+│   └── api_client.py
+│
+├── routes/
+│   └── routes.py
+│
+├── storage/
+│   ├── logs/
+│   │   ├── system.log
+│   │   └── error.log
+│   │
+│   └── database/
+│       └── database.db
+│
+└── __init__.py
+
+.env
+requirements.txt
+</pre>
+
+<hr>
+
+<h2>2. Entry Point</h2>
+
+<p><b>File:</b> app/main.py</p>
+
+<pre>
+from controllers.fd_controller import create_fd
+
+data = {
+    "name": "Aathi",
+    "email": "aathi@mail.com",
+    "amount": 10000
+}
+
+create_fd(data)
+</pre>
+
+<hr>
+
+<h2>3. Configuration</h2>
+
+<p><b>File:</b> config/config.py</p>
+
+<pre>
+CONFIG = {
+    "API_URL": "https://api.bank.com",
+    "TIMEOUT": 30,
+    "LOG_FILE": "storage/logs/system.log"
+}
+
+def get(key):
+    return CONFIG.get(key)
+</pre>
+
+<hr>
+
+<h2>4. Database Configuration</h2>
+
+<p><b>File:</b> config/database.py</p>
+
+<pre>
+import sqlite3
+
+def get_connection():
+    db_path = "app/storage/database/database.db"
+    return sqlite3.connect(db_path)
+</pre>
+
+<hr>
+
+<h2>5. Controller Layer</h2>
+
+<p><b>File:</b> controllers/fd_controller.py</p>
+
+<pre>
+from validators.validator import validate_email
+from services.fd_service import create_account
+from utils.logger import log_error
+
+def create_fd(data):
+
+    if not validate_email(data["email"]):
+        log_error("Invalid email")
+        return
+
+    create_account(data)
+</pre>
+
+<hr>
+
+<h2>6. Service Layer</h2>
+
+<p><b>File:</b> services/fd_service.py</p>
+
+<pre>
+from models.fd_account import FDAccount
+from utils.logger import log_info
+
+def create_account(data):
+
+    fd = FDAccount(data)
+
+    fd.save()
+
+    log_info("FD account created")
+</pre>
+
+<hr>
+
+<h2>7. Model Layer</h2>
+
+<p><b>File:</b> models/fd_account.py</p>
+
+<pre>
+class FDAccount:
+
+    def __init__(self, data):
+
+        self.name = data["name"]
+        self.email = data["email"]
+        self.amount = data["amount"]
+
+    def save(self):
+
+        print("Saving FD account for", self.name)
+</pre>
+
+<hr>
+
+<h2>8. Validation Layer</h2>
+
+<p><b>File:</b> validators/validator.py</p>
+
+<pre>
+import re
+from patterns.regex_patterns import EMAIL_PATTERN
+
+def validate_email(email):
+
+    return re.match(EMAIL_PATTERN, email)
+</pre>
+
+<hr>
+
+<h2>9. Regex Patterns</h2>
+
+<p><b>File:</b> patterns/regex_patterns.py</p>
+
+<pre>
+NAME_PATTERN = r"^[A-Za-z ]+$"
+
+EMAIL_PATTERN = r"^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+</pre>
+
+<hr>
+
+<h2>10. Logger Utility</h2>
+
+<p><b>File:</b> utils/logger.py</p>
+
+<pre>
+def log_info(message):
+
+    with open("app/storage/logs/system.log", "a") as f:
+        f.write("[INFO] " + message + "\n")
+
+def log_error(message):
+
+    with open("app/storage/logs/error.log", "a") as f:
+        f.write("[ERROR] " + message + "\n")
+</pre>
+
+<hr>
+
+<h2>11. Encryption Utility</h2>
+
+<p><b>File:</b> utils/encryption.py</p>
+
+<pre>
+import hashlib
+
+def hash_password(password):
+
+    return hashlib.sha256(password.encode()).hexdigest()
+</pre>
+
+<hr>
+
+<h2>12. API Client</h2>
+
+<p><b>File:</b> api/api_client.py</p>
+
+<pre>
+import requests
+
+def get(url):
+
+    response = requests.get(url)
+
+    return response.json()
+</pre>
+
+<hr>
+
+<h2>13. Routes</h2>
+
+<p><b>File:</b> routes/routes.py</p>
+
+<pre>
+from controllers.fd_controller import create_fd
+
+def route_create_fd(data):
+
+    create_fd(data)
+</pre>
+
+<hr>
+
+<h2>14. Environment Variables</h2>
+
+<p><b>File:</b> .env</p>
+
+<pre>
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=secret
+API_KEY=xyz123
+</pre>
+
+<hr>
+
+<h2>15. Requirements</h2>
+
+<p><b>File:</b> requirements.txt</p>
+
+<pre>
+requests
+sqlite3
+</pre>
+
+<hr>
+
+<h2>16. Application Flow</h2>
+
+<pre>
+Client Request
+      ↓
+Routes
+      ↓
+Controller
+      ↓
+Validator
+      ↓
+Service
+      ↓
+Model
+      ↓
+Database
+      ↓
+Logger
+</pre>
+
+<hr>
+
+<h2>17. Advantages</h2>
+
+<ul>
+<li>Clear separation of layers</li>
+<li>Reusable modules</li>
+<li>Secure configuration handling</li>
+<li>Scalable backend architecture</li>
+<li>Easy debugging and maintenance</li>
+</ul>
+
+</section>
+
+<section>
+
+<h1>Professional PHP Backend Project Directory Structure</h1>
+
+<p>
+This directory structure represents a professional backend architecture
+commonly used in PHP applications such as banking systems, APIs,
+financial platforms, and enterprise applications. The structure separates
+controllers, services, models, utilities, configuration, and logging
+to maintain clean and scalable code.
+</p>
+
+<hr>
+
+<h2>1. Complete Project Structure</h2>
+
+<pre>
+php-backend-system/
+
+├── public/
+│   └── index.php
+│
+├── config/
+│   ├── config.php
+│   ├── database.php
+│   └── secrets.php
+│
+├── controllers/
+│   ├── FDController.php
+│   └── UserController.php
+│
+├── services/
+│   ├── FDService.php
+│   └── UserService.php
+│
+├── models/
+│   ├── FDAccount.php
+│   └── User.php
+│
+├── validators/
+│   └── Validator.php
+│
+├── patterns/
+│   └── RegexPatterns.php
+│
+├── utils/
+│   ├── Logger.php
+│   ├── Encryption.php
+│   └── DateUtil.php
+│
+├── routes/
+│   └── routes.php
+│
+├── storage/
+│   ├── logs/
+│   │   ├── system.log
+│   │   └── error.log
+│   │
+│   └── database/
+│       └── database.sqlite
+│
+├── api/
+│   └── ApiClient.php
+│
+└── .env
+</pre>
+
+<hr>
+
+<h2>2. Entry Point</h2>
+
+<p>
+All requests enter the application through the public directory.
+</p>
+
+<b>File:</b> <code>public/index.php</code>
+
+<pre>
+require_once "../routes/routes.php";
+
+use Controllers\FDController;
+
+$data = [
+    "name" => "Aathi",
+    "email" => "aathi@mail.com",
+    "amount" => 10000
+];
+
+FDController::createFD($data);
+</pre>
+
+<hr>
+
+<h2>3. Configuration Layer</h2>
+
+<p>
+Configuration files store application settings and environment variables.
+</p>
+
+<b>File:</b> <code>config/config.php</code>
+
+<pre>
+&lt;?php
+
+class Config {
+
+    private static $config = [
+        "api_url" => "https://api.bank.com",
+        "timeout" => 30,
+        "log_file" => "storage/logs/system.log"
+    ];
+
+    public static function get($key) {
+        return self::$config[$key] ?? null;
+    }
+
+}
+</pre>
+
+Usage:
+
+<pre>
+$url = Config::get("api_url");
+</pre>
+
+<hr>
+
+<h2>4. Database Configuration</h2>
+
+<b>File:</b> <code>config/database.php</code>
+
+<pre>
+&lt;?php
+
+class Database {
+
+    public static function connect() {
+
+        $host = $_ENV['DB_HOST'];
+        $user = $_ENV['DB_USER'];
+        $pass = $_ENV['DB_PASS'];
+
+        return new PDO(
+            "mysql:host=$host;dbname=bank",
+            $user,
+            $pass
+        );
+    }
+
+}
+</pre>
+
+<hr>
+
+<h2>5. Controller Layer</h2>
+
+<p>
+Controllers handle incoming requests and coordinate with services.
+</p>
+
+<b>File:</b> <code>controllers/FDController.php</code>
+
+<pre>
+&lt;?php
+
+require_once "../services/FDService.php";
+require_once "../validators/Validator.php";
+
+class FDController {
+
+    public static function createFD($data) {
+
+        if(!Validator::validateEmail($data['email'])) {
+            echo "Invalid Email";
+            return;
+        }
+
+        FDService::createAccount($data);
+    }
+
+}
+</pre>
+
+<hr>
+
+<h2>6. Service Layer</h2>
+
+<p>
+Services contain business logic such as calculations and workflows.
+</p>
+
+<b>File:</b> <code>services/FDService.php</code>
+
+<pre>
+&lt;?php
+
+require_once "../models/FDAccount.php";
+require_once "../utils/Logger.php";
+
+class FDService {
+
+    public static function createAccount($data) {
+
+        $fd = new FDAccount($data);
+
+        $fd->save();
+
+        Logger::info("FD account created");
+
+    }
+
+}
+</pre>
+
+<hr>
+
+<h2>7. Model Layer</h2>
+
+<p>
+Models represent application data and interact with the database.
+</p>
+
+<b>File:</b> <code>models/FDAccount.php</code>
+
+<pre>
+&lt;?php
+
+class FDAccount {
+
+    private $name;
+    private $email;
+    private $amount;
+
+    public function __construct($data) {
+
+        $this->name = $data['name'];
+        $this->email = $data['email'];
+        $this->amount = $data['amount'];
+
+    }
+
+    public function save() {
+
+        echo "Saving FD account for " . $this->name;
+
+    }
+
+}
+</pre>
+
+<hr>
+
+<h2>8. Validation Layer</h2>
+
+<b>File:</b> <code>validators/Validator.php</code>
+
+<pre>
+&lt;?php
+
+class Validator {
+
+    public static function validateEmail($email) {
+
+        return preg_match(
+            RegexPatterns::$EMAIL,
+            $email
+        );
+    }
+
+}
+</pre>
+
+<hr>
+
+<h2>9. Regex Pattern Module</h2>
+
+<b>File:</b> <code>patterns/RegexPatterns.php</code>
+
+<pre>
+&lt;?php
+
+class RegexPatterns {
+
+    public static $NAME =
+        "/^[A-Za-z ]+$/";
+
+    public static $EMAIL =
+        "/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/";
+
+}
+</pre>
+
+<hr>
+
+<h2>10. Logger Utility</h2>
+
+<b>File:</b> <code>utils/Logger.php</code>
+
+<pre>
+&lt;?php
+
+class Logger {
+
+    public static function info($message) {
+
+        file_put_contents(
+            "storage/logs/system.log",
+            "[INFO] " . $message . "\n",
+            FILE_APPEND
+        );
+    }
+
+}
+</pre>
+
+<hr>
+
+<h2>11. Encryption Utility</h2>
+
+<b>File:</b> <code>utils/Encryption.php</code>
+
+<pre>
+&lt;?php
+
+class Encryption {
+
+    public static function hashPassword($password) {
+
+        return password_hash(
+            $password,
+            PASSWORD_BCRYPT
+        );
+    }
+
+}
+</pre>
+
+<hr>
+
+<h2>12. API Client Module</h2>
+
+<b>File:</b> <code>api/ApiClient.php</code>
+
+<pre>
+&lt;?php
+
+class ApiClient {
+
+    public static function get($url) {
+
+        return file_get_contents($url);
+
+    }
+
+}
+</pre>
+
+<hr>
+
+<h2>13. Environment Variables</h2>
+
+<b>File:</b> <code>.env</code>
+
+<pre>
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=secret
+API_KEY=xyz123
+</pre>
+
+<hr>
+
+<h2>14. Application Flow</h2>
+
+<pre>
+Client Request
+      ↓
+Routes
+      ↓
+Controller
+      ↓
+Validator
+      ↓
+Service
+      ↓
+Model
+      ↓
+Database
+      ↓
+Logger
+</pre>
+
+<hr>
+
+<h2>15. Advantages</h2>
+
+<ul>
+<li>Layered architecture</li>
+<li>Separation of concerns</li>
+<li>Easy testing and debugging</li>
+<li>Secure configuration handling</li>
+<li>Scalable project design</li>
+</ul>
+
+</section>
+
+
+<section>
+
+<h1>Professional Perl Backend Project Directory Structure</h1>
+
+<p>
+This structure represents a production-style backend architecture used
+for scalable systems such as banking applications, financial systems,
+or API-based services. The architecture separates responsibilities into
+different layers to improve maintainability, security, and scalability.
+</p>
+
+<hr>
+
+<h2>1. Complete Project Structure</h2>
+
+<pre>
+perl-backend-system/
+
+├── bin/
+│   └── app.pl
+│
+├── config/
+│   ├── Config.pm
+│   ├── Database.pm
+│   └── Secrets.pm
+│
+├── lib/
+│   ├── Logger.pm
+│   ├── Encryption.pm
+│   ├── Validator.pm
+│   └── RegexPatterns.pm
+│
+├── controllers/
+│   ├── AccountController.pm
+│   └── FDController.pm
+│
+├── services/
+│   ├── AccountService.pm
+│   └── FDService.pm
+│
+├── models/
+│   ├── Account.pm
+│   └── FDAccount.pm
+│
+├── utils/
+│   ├── DateUtil.pm
+│   └── StringUtil.pm
+│
+├── routes/
+│   └── routes.pl
+│
+├── logs/
+│   ├── system.log
+│   ├── success.log
+│   └── error.log
+│
+├── data/
+│   └── database.db
+│
+└── .env
+</pre>
+
+<hr>
+
+<h2>2. Application Entry Point</h2>
+
+<p>
+The application starts from the main executable script.
+</p>
+
+<b>File:</b> <code>bin/app.pl</code>
+
+<pre>
+use lib '../lib';
+use lib '../controllers';
+use lib '../services';
+use lib '../models';
+use lib '../config';
+
+use FDController;
+
+FDController::create_fd({
+    name => "Aathi",
+    email => "aathi@mail.com",
+    amount => 10000
+});
+</pre>
+
+<hr>
+
+<h2>3. Configuration Layer</h2>
+
+<p>
+Configuration modules store system settings and provide access through
+controlled functions.
+</p>
+
+<b>File:</b> <code>config/Config.pm</code>
+
+<pre>
+package Config;
+
+my %CONFIG = (
+    api_url => "https://api.bank.com",
+    timeout => 30,
+    log_file => "logs/system.log"
+);
+
+sub get {
+    my ($key) = @_;
+    return $CONFIG{$key};
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>4. Database Configuration</h2>
+
+<b>File:</b> <code>config/Database.pm</code>
+
+<pre>
+package Database;
+
+sub host { return $ENV{'DB_HOST'} }
+sub user { return $ENV{'DB_USER'} }
+sub pass { return $ENV{'DB_PASS'} }
+
+1;
+</pre>
+
+<hr>
+
+<h2>5. Logger Library</h2>
+
+<b>File:</b> <code>lib/Logger.pm</code>
+
+<pre>
+package Logger;
+
+sub log_info {
+
+    my ($message) = @_;
+
+    open(my $fh, ">>", "logs/system.log");
+    print $fh "[INFO] $message\n";
+    close $fh;
+}
+
+sub log_error {
+
+    my ($message) = @_;
+
+    open(my $fh, ">>", "logs/error.log");
+    print $fh "[ERROR] $message\n";
+    close $fh;
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>6. Validation Library</h2>
+
+<b>File:</b> <code>lib/Validator.pm</code>
+
+<pre>
+package Validator;
+
+use RegexPatterns;
+
+sub validate_email {
+
+    my ($email) = @_;
+
+    return $email =~ $RegexPatterns::EMAIL;
+}
+
+sub validate_name {
+
+    my ($name) = @_;
+
+    return $name =~ $RegexPatterns::NAME;
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>7. Regex Pattern Module</h2>
+
+<b>File:</b> <code>lib/RegexPatterns.pm</code>
+
+<pre>
+package RegexPatterns;
+
+our $NAME  = qr/^[A-Za-z ]+$/;
+our $EMAIL = qr/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+
+1;
+</pre>
+
+<hr>
+
+<h2>8. Controller Layer</h2>
+
+<p>
+Controllers receive input requests and coordinate with services.
+</p>
+
+<b>File:</b> <code>controllers/FDController.pm</code>
+
+<pre>
+package FDController;
+
+use Validator;
+use FDService;
+use Logger;
+
+sub create_fd {
+
+    my ($data) = @_;
+
+    unless (Validator::validate_email($data->{email})) {
+
+        Logger::log_error("Invalid email");
+        return;
+    }
+
+    FDService::create_account($data);
+
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>9. Service Layer</h2>
+
+<p>
+The service layer contains business logic.
+</p>
+
+<b>File:</b> <code>services/FDService.pm</code>
+
+<pre>
+package FDService;
+
+use FDAccount;
+use Logger;
+
+sub create_account {
+
+    my ($data) = @_;
+
+    my $fd = FDAccount->new(%$data);
+
+    $fd->save();
+
+    Logger::log_info("FD account created");
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>10. Model Layer</h2>
+
+<p>
+Models represent application data and database interactions.
+</p>
+
+<b>File:</b> <code>models/FDAccount.pm</code>
+
+<pre>
+package FDAccount;
+
+sub new {
+
+    my ($class, %args) = @_;
+
+    my $self = \%args;
+
+    bless $self, $class;
+
+    return $self;
+}
+
+sub save {
+
+    my ($self) = @_;
+
+    print "Saving FD account for $self->{name}\n";
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>11. Environment Variables</h2>
+
+<p>
+Sensitive data is stored outside the code in the environment file.
+</p>
+
+<b>File:</b> <code>.env</code>
+
+<pre>
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=secret
+AES_KEY=xyz123
+</pre>
+
+<hr>
+
+<h2>12. System Execution Flow</h2>
+
+<pre>
+Client Request
+      ↓
+Routes
+      ↓
+Controller
+      ↓
+Validator
+      ↓
+Service
+      ↓
+Model
+      ↓
+Database
+      ↓
+Logger
+</pre>
+
+<hr>
+
+<h2>13. Advantages of This Architecture</h2>
+
+<ul>
+<li>Clear separation of layers</li>
+<li>Improved maintainability</li>
+<li>Reusable modules</li>
+<li>Secure configuration handling</li>
+<li>Scalable backend design</li>
+</ul>
+
+</section>
+
+<section>
+
+<h1>Perl Backend Project Directory Structure</h1>
+
+<p>
+A well-organized directory structure helps maintain clean architecture,
+separation of responsibilities, and easier maintenance in backend systems.
+The following structure is commonly used in Perl backend applications
+such as banking systems, fixed deposit management, or API services.
+</p>
+
+<hr>
+
+<h2>1. Root Project Structure</h2>
+
+<pre>
+project/
+
+├── bin/
+│   └── app.pl
+│
+├── config/
+│   ├── Config.pm
+│   ├── Database.pm
+│   └── Keys.pm
+│
+├── lib/
+│   ├── Logger.pm
+│   ├── Encryption.pm
+│   ├── Validator.pm
+│   └── RegexPatterns.pm
+│
+├── controllers/
+│   ├── FDController.pm
+│   └── UserController.pm
+│
+├── services/
+│   ├── FDService.pm
+│   └── UserService.pm
+│
+├── models/
+│   ├── FDAccount.pm
+│   └── User.pm
+│
+├── utils/
+│   ├── DateUtil.pm
+│   └── StringUtil.pm
+│
+├── data/
+│   └── database.db
+│
+├── logs/
+│   ├── system.log
+│   ├── success.log
+│   └── error.log
+│
+├── routes/
+│   └── routes.pl
+│
+└── .env
+</pre>
+
+<hr>
+
+<h2>2. Directory Purpose</h2>
+
+<h3>bin</h3>
+<p>
+Contains the main executable scripts used to start the application.
+</p>
+
+<pre>
+bin/
+   app.pl
+</pre>
+
+<hr>
+
+<h3>config</h3>
+
+<p>
+Stores configuration modules such as database settings,
+API endpoints, and environment configuration.
+Sensitive data is usually loaded from environment variables.
+</p>
+
+<pre>
+config/
+   Config.pm
+   Database.pm
+   Keys.pm
+</pre>
+
+<hr>
+
+<h3>lib</h3>
+
+<p>
+Contains reusable core modules used across the system.
+These modules provide common functionality.
+</p>
+
+<pre>
+lib/
+   Logger.pm
+   Encryption.pm
+   Validator.pm
+   RegexPatterns.pm
+</pre>
+
+Examples of functionality:
+
+<ul>
+<li>Logging</li>
+<li>Encryption</li>
+<li>Input validation</li>
+<li>Regular expression patterns</li>
+</ul>
+
+<hr>
+
+<h3>controllers</h3>
+
+<p>
+Controllers receive requests, validate input,
+and call the appropriate service logic.
+</p>
+
+<pre>
+controllers/
+   FDController.pm
+   UserController.pm
+</pre>
+
+Responsibilities:
+
+<ul>
+<li>Handle user requests</li>
+<li>Validate request data</li>
+<li>Call service layer</li>
+<li>Return response</li>
+</ul>
+
+<hr>
+
+<h3>services</h3>
+
+<p>
+Contains business logic and application rules.
+Services interact with models and perform system operations.
+</p>
+
+<pre>
+services/
+   FDService.pm
+   UserService.pm
+</pre>
+
+Examples:
+
+<ul>
+<li>Create FD account</li>
+<li>Calculate interest</li>
+<li>Process transactions</li>
+</ul>
+
+<hr>
+
+<h3>models</h3>
+
+<p>
+Models represent the application's data structures
+and interact with the database.
+</p>
+
+<pre>
+models/
+   FDAccount.pm
+   User.pm
+</pre>
+
+Responsibilities:
+
+<ul>
+<li>Represent database tables</li>
+<li>Handle data storage and retrieval</li>
+</ul>
+
+<hr>
+
+<h3>utils</h3>
+
+<p>
+Utility modules containing helper functions used across the system.
+</p>
+
+<pre>
+utils/
+   DateUtil.pm
+   StringUtil.pm
+</pre>
+
+Examples:
+
+<ul>
+<li>Date formatting</li>
+<li>String manipulation</li>
+<li>ID generation</li>
+</ul>
+
+<hr>
+
+<h3>data</h3>
+
+<p>
+Stores application data such as database files,
+JSON storage, or temporary files.
+</p>
+
+<pre>
+data/
+   database.db
+</pre>
+
+<hr>
+
+<h3>logs</h3>
+
+<p>
+Stores system logs used for monitoring and debugging.
+</p>
+
+<pre>
+logs/
+   system.log
+   success.log
+   error.log
+</pre>
+
+<hr>
+
+<h3>routes</h3>
+
+<p>
+Defines application endpoints and maps routes to controllers.
+</p>
+
+<pre>
+routes/
+   routes.pl
+</pre>
+
+<hr>
+
+<h3>.env</h3>
+
+<p>
+Stores environment variables such as database credentials,
+API keys, and encryption secrets.
+This file should not be committed to version control.
+</p>
+
+<pre>
+.env
+</pre>
+
+Example:
+
+<pre>
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=secret
+API_KEY=xyz123
+</pre>
+
+<hr>
+
+<h2>3. Application Flow</h2>
+
+<pre>
+Client Request
+      ↓
+Routes
+      ↓
+Controller
+      ↓
+Validator (lib)
+      ↓
+Service
+      ↓
+Model
+      ↓
+Database
+      ↓
+Logger
+</pre>
+
+<hr>
+
+<h2>4. Advantages of This Structure</h2>
+
+<ul>
+<li>Clear separation of responsibilities</li>
+<li>Easy maintenance</li>
+<li>Better scalability</li>
+<li>Improved security</li>
+<li>Organized codebase</li>
+</ul>
+
+</section>
+
+<section>
+
+<h1>Perl Backend Project Directory Structure</h1>
+
+<p>
+This structure is used to build a secure backend system such as
+Fixed Deposit Management, Banking System, or Financial Applications.
+It includes database handling, encryption, validation, regex patterns,
+logging, API integration, and configuration management.
+</p>
+
+<hr>
+
+<h2>1. Root Project Structure</h2>
+
+<pre>
+fd_system/
+
+├── bin/
+│   └── app.pl
+
+├── config/
+│   ├── config.pl
+│   ├── database.pl
+│   ├── api_config.pl
+│   └── keys.pl
+
+├── lib/
+│   ├── DB.pm
+│   ├── Logger.pm
+│   ├── Encryption.pm
+│   ├── Validator.pm
+│   └── Patterns.pm
+
+├── models/
+│   └── FDAccount.pm
+
+├── controllers/
+│   └── FDController.pm
+
+├── services/
+│   ├── FDService.pm
+│   └── APIService.pm
+
+├── routes/
+│   └── routes.pl
+
+├── middleware/
+│   └── AuthMiddleware.pm
+
+├── logs/
+│   ├── system.log
+│   ├── success.log
+│   └── error.log
+
+├── data/
+│   └── database.db
+
+├── scripts/
+│   └── create_fd.pl
+
+└── tests/
+    └── test_fd.pl
+</pre>
+
+<hr>
+
+<h2>2. Folder Explanation</h2>
+
+<h3>bin</h3>
+<p>Main executable program that starts the application.</p>
+
+<pre>
+app.pl
+</pre>
+
+<hr>
+
+<h3>config</h3>
+
+<p>
+Stores all configuration variables including database credentials,
+API URLs, encryption keys, and system settings.
+</p>
+
+<pre>
+config/
+    config.pl
+    database.pl
+    api_config.pl
+    keys.pl
+</pre>
+
+Example:
+
+<pre>
+package Config;
+
+our $APP_NAME = "FD System";
+our $VERSION  = "1.0";
+
+1;
+</pre>
+
+<hr>
+
+<h3>Database Configuration</h3>
+
+File:
+
+<pre>
+config/database.pl
+</pre>
+
+Example:
+
+<pre>
+package DatabaseConfig;
+
+our $DB_NAME = "fd_database";
+our $DB_USER = "root";
+our $DB_PASS = "password";
+our $DB_HOST = "localhost";
+
+1;
+</pre>
+
+<hr>
+
+<h3>Encryption Keys</h3>
+
+File:
+
+<pre>
+config/keys.pl
+</pre>
+
+Example:
+
+<pre>
+package Keys;
+
+our $AES_KEY = "1234567890123456";
+our $HASH_SALT = "random_salt_value";
+
+1;
+</pre>
+
+<hr>
+
+<h2>3. Library Modules</h2>
+
+These modules contain reusable logic used across the system.
+
+<pre>
+lib/
+    DB.pm
+    Logger.pm
+    Encryption.pm
+    Validator.pm
+    Patterns.pm
+</pre>
+
+<hr>
+
+<h3>Database Module</h3>
+
+File:
+
+<pre>
+lib/DB.pm
+</pre>
+
+Example:
+
+<pre>
+package DB;
+
+use DBI;
+
+sub connect_db {
+
+    my $dbh = DBI->connect(
+        "DBI:mysql:fd_database",
+        "root",
+        "password"
+    );
+
+    return $dbh;
+}
+
+1;
+</pre>
+
+<hr>
+
+<h3>Encryption Module</h3>
+
+File:
+
+<pre>
+lib/Encryption.pm
+</pre>
+
+Example:
+
+<pre>
+package Encryption;
+
+use Digest::SHA qw(sha256_hex);
+
+sub hash_password {
+
+    my ($password) = @_;
+
+    return sha256_hex($password);
+}
+
+1;
+</pre>
+
+<hr>
+
+<h3>Logger Module</h3>
+
+File:
+
+<pre>
+lib/Logger.pm
+</pre>
+
+Example:
+
+<pre>
+package Logger;
+
+sub log_success {
+
+    my ($message) = @_;
+
+    open(my $fh, ">>", "logs/success.log");
+    print $fh "$message\n";
+    close $fh;
+}
+
+sub log_error {
+
+    my ($message) = @_;
+
+    open(my $fh, ">>", "logs/error.log");
+    print $fh "$message\n";
+    close $fh;
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>4. Regex Pattern Module</h2>
+
+File:
+
+<pre>
+lib/Patterns.pm
+</pre>
+
+Example:
+
+<pre>
+package Patterns;
+
+our $NAME_PATTERN   = qr/^[A-Za-z ]+$/;
+our $EMAIL_PATTERN  = qr/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+our $PHONE_PATTERN  = qr/^[6-9]\d{9}$/;
+our $DATE_PATTERN   = qr/^\d{4}-\d{2}-\d{2}$/;
+
+1;
+</pre>
+
+<hr>
+
+<h2>5. Validation Module</h2>
+
+File:
+
+<pre>
+lib/Validator.pm
+</pre>
+
+Example:
+
+<pre>
+package Validator;
+
+use Patterns;
+
+sub validate_name {
+
+    my ($name) = @_;
+
+    return $name =~ $Patterns::NAME_PATTERN;
+}
+
+sub validate_email {
+
+    my ($email) = @_;
+
+    return $email =~ $Patterns::EMAIL_PATTERN;
+}
+
+sub validate_phone {
+
+    my ($phone) = @_;
+
+    return $phone =~ $Patterns::PHONE_PATTERN;
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>6. Models</h2>
+
+Models represent database entities.
+
+<pre>
+models/
+    FDAccount.pm
+</pre>
+
+Example:
+
+<pre>
+package FDAccount;
+
+sub new {
+
+    my ($class, %args) = @_;
+
+    my $self = \%args;
+
+    bless $self, $class;
+
+    return $self;
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>7. Controllers</h2>
+
+Controllers handle user requests.
+
+<pre>
+controllers/
+    FDController.pm
+</pre>
+
+Example:
+
+<pre>
+package FDController;
+
+use Validator;
+use Logger;
+
+sub create_fd {
+
+    my (%data) = @_;
+
+    unless (Validator::validate_email($data{email})) {
+
+        Logger::log_error("Invalid Email");
+
+        return;
+    }
+
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>8. Services Layer</h2>
+
+Contains business logic.
+
+<pre>
+services/
+    FDService.pm
+    APIService.pm
+</pre>
+
+Example:
+
+<pre>
+package FDService;
+
+sub calculate_interest {
+
+    my ($amount, $rate, $time) = @_;
+
+    return ($amount * $rate * $time) / 100;
+}
+
+1;
+</pre>
+
+<hr>
+
+<h2>9. REST API Routes</h2>
+
+File:
+
+<pre>
+routes/routes.pl
+</pre>
+
+Example:
+
+<pre>
+POST /fd/create
+GET  /fd/details
+DELETE /fd/delete
+</pre>
+
+<hr>
+
+<h2>10. Middleware</h2>
+
+Used for authentication and security checks.
+
+<pre>
+middleware/
+    AuthMiddleware.pm
+</pre>
+
+<hr>
+
+<h2>11. Logs</h2>
+
+Stores system logs.
+
+<pre>
+logs/
+
+system.log
+success.log
+error.log
+</pre>
+
+<hr>
+
+<h2>12. Data</h2>
+
+Stores local database files.
+
+<pre>
+data/
+    database.db
+</pre>
+
+<hr>
+
+<h2>13. Scripts</h2>
+
+Command line scripts.
+
+<pre>
+scripts/
+    create_fd.pl
+</pre>
+
+<hr>
+
+<h2>14. Tests</h2>
+
+Used for unit testing.
+
+<pre>
+tests/
+    test_fd.pl
+</pre>
+
+<hr>
+
+<h2>15. System Flow</h2>
+
+<pre>
+Client Request
+      ↓
+Routes
+      ↓
+Controller
+      ↓
+Validator
+      ↓
+Service Layer
+      ↓
+Database
+      ↓
+Logger
+</pre>
+
+</section>
+
+<section id="perl-structure">
+  <h2>Perl Directory Structure</h2>
+
+  <div class="directory-tree">
+    <ul>
+      <li>my_perl_app/
+        <ul>
+          <li>bin/
+            <ul>
+              <li>app.pl</li>
+            </ul>
+          </li>
+          <li>lib/
+            <ul>
+              <li>MyApp/
+                <ul>
+                  <li>Controller.pm</li>
+                  <li>Model.pm</li>
+                  <li>View.pm</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>t/
+            <ul>
+              <li>01_basic.t</li>
+              <li>02_model.t</li>
+            </ul>
+          </li>
+          <li>conf/
+            <ul>
+              <li>app.conf</li>
+            </ul>
+          </li>
+          <li>templates/
+            <ul>
+              <li>index.tt</li>
+              <li>header.tt</li>
+            </ul>
+          </li>
+          <li>public/
+            <ul>
+              <li>css/
+                <ul>
+                  <li>style.css</li>
+                </ul>
+              </li>
+              <li>js/
+                <ul>
+                  <li>main.js</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>logs/
+            <ul>
+              <li>app.log</li>
+            </ul>
+          </li>
+          <li>Makefile.PL</li>
+          <li>cpanfile</li>
+          <li>README.md</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Directory / File</th>
+        <th>Purpose</th>
+        <th>Example Content</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>bin/app.pl</td>
+        <td>Main entry point script run from command line</td>
+        <td>perl bin/app.pl</td>
+      </tr>
+      <tr>
+        <td>lib/MyApp/Controller.pm</td>
+        <td>Reusable Perl module handling request logic</td>
+        <td>package MyApp::Controller;</td>
+      </tr>
+      <tr>
+        <td>lib/MyApp/Model.pm</td>
+        <td>Database and data logic module</td>
+        <td>package MyApp::Model;</td>
+      </tr>
+      <tr>
+        <td>t/01_basic.t</td>
+        <td>Test file, run with: prove -l t/</td>
+        <td>use Test::More tests => 3;</td>
+      </tr>
+      <tr>
+        <td>conf/app.conf</td>
+        <td>Application configuration settings</td>
+        <td>db_host=localhost</td>
+      </tr>
+      <tr>
+        <td>templates/index.tt</td>
+        <td>HTML template using Template Toolkit</td>
+        <td>[% title %]</td>
+      </tr>
+      <tr>
+        <td>cpanfile</td>
+        <td>Lists all CPAN module dependencies</td>
+        <td>requires 'Mojolicious';</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+<section id="php-structure">
+  <h2>PHP Directory Structure</h2>
+
+  <div class="directory-tree">
+    <ul>
+      <li>my_php_app/
+        <ul>
+          <li>public/
+            <ul>
+              <li>index.php</li>
+              <li>css/
+                <ul>
+                  <li>style.css</li>
+                </ul>
+              </li>
+              <li>js/
+                <ul>
+                  <li>main.js</li>
+                </ul>
+              </li>
+              <li>images/
+                <ul>
+                  <li>logo.png</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>src/
+            <ul>
+              <li>Controllers/
+                <ul>
+                  <li>HomeController.php</li>
+                  <li>UserController.php</li>
+                </ul>
+              </li>
+              <li>Models/
+                <ul>
+                  <li>User.php</li>
+                  <li>Product.php</li>
+                </ul>
+              </li>
+              <li>Views/
+                <ul>
+                  <li>home.php</li>
+                  <li>user.php</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>config/
+            <ul>
+              <li>database.php</li>
+              <li>app.php</li>
+            </ul>
+          </li>
+          <li>vendor/</li>
+          <li>tests/
+            <ul>
+              <li>HomeTest.php</li>
+              <li>UserTest.php</li>
+            </ul>
+          </li>
+          <li>logs/
+            <ul>
+              <li>error.log</li>
+            </ul>
+          </li>
+          <li>composer.json</li>
+          <li>.env</li>
+          <li>README.md</li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Directory / File</th>
+        <th>Purpose</th>
+        <th>Example Content</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>public/index.php</td>
+        <td>Front controller — only file the web server points to</td>
+        <td>&lt;?php require '../src/Controllers/HomeController.php';</td>
+      </tr>
+      <tr>
+        <td>src/Controllers/HomeController.php</td>
+        <td>Handles incoming requests and loads views</td>
+        <td>class HomeController { public function index() {} }</td>
+      </tr>
+      <tr>
+        <td>src/Models/User.php</td>
+        <td>Represents database table and data logic</td>
+        <td>class User { public $name; public $email; }</td>
+      </tr>
+      <tr>
+        <td>src/Views/home.php</td>
+        <td>HTML template mixed with PHP output</td>
+        <td>&lt;h1&gt;&lt;?php echo $title; ?&gt;&lt;/h1&gt;</td>
+      </tr>
+      <tr>
+        <td>config/database.php</td>
+        <td>Database connection settings</td>
+        <td>define('DB_HOST', 'localhost');</td>
+      </tr>
+      <tr>
+        <td>vendor/</td>
+        <td>Auto-generated by Composer, never edit manually</td>
+        <td>composer install</td>
+      </tr>
+      <tr>
+        <td>composer.json</td>
+        <td>Lists all PHP dependencies</td>
+        <td>"require": { "monolog/monolog": "^2.0" }</td>
+      </tr>
+      <tr>
+        <td>.env</td>
+        <td>Secret keys and DB credentials, never commit to git</td>
+        <td>DB_PASS=secret123</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+</body>

@@ -1,0 +1,2316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dir Structure</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+</style>
+</head>
+<body>
+     <section>
+
+<h2>Reusable Input Validation Function</h2>
+
+<p>
+This function repeatedly asks the user for input until the input matches a given regular expression.
+It also supports:
+</p>
+
+<ul>
+<li>Custom prompt message</li>
+<li>Error message</li>
+<li>Maximum attempts limit</li>
+<li>Exit word to terminate input</li>
+</ul>
+
+<hr>
+
+<h3>1. Perl Implementation</h3>
+
+<pre><code>
+sub get_valid_input {
+    my ($regex, $prompt, $error, $max_attempts, $exit_word) = @_;
+
+    $exit_word //= "exit";
+    my $attempts = 0;
+
+    while (1) {
+
+        print "$prompt: ";
+        my $input = &lt;STDIN&gt;;
+        chomp $input;
+
+        if (lc($input) eq lc($exit_word)) {
+            return undef;
+        }
+
+        if ($input =~ $regex) {
+            return $input;
+        }
+
+        print "$error\n";
+
+        $attempts++;
+
+        if (defined $max_attempts && $attempts >= $max_attempts) {
+            return undef;
+        }
+    }
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+my $name = get_valid_input(qr/^[A-Za-z]{3,20}$/, "Enter name", "Invalid name", 3);
+
+if(defined $name){
+    print "Valid Name: $name\n";
+}else{
+    print "Input failed\n";
+}
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Enter name: 123
+Invalid name
+Enter name: John
+Valid Name: John
+</code></pre>
+
+<hr>
+
+<h3>2. Python Implementation</h3>
+
+<pre><code>
+import re
+
+def get_valid_input(regex, prompt, error, max_attempts=None, exit_word="exit"):
+    attempts = 0
+
+    while True:
+        user_input = input(prompt + ": ")
+
+        if user_input.lower() == exit_word.lower():
+            return None
+
+        if re.match(regex, user_input):
+            return user_input
+
+        print(error)
+
+        attempts += 1
+
+        if max_attempts is not None and attempts >= max_attempts:
+            return None
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+name = get_valid_input(r"^[A-Za-z]{3,20}$", "Enter name", "Invalid name", 3)
+
+if name:
+    print("Valid Name:", name)
+else:
+    print("Input failed")
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Enter name: 123
+Invalid name
+Enter name: Alex
+Valid Name: Alex
+</code></pre>
+
+<hr>
+
+<h3>3. Java Implementation</h3>
+
+<pre><code>
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
+public class InputValidator {
+
+    public static String getValidInput(String regex, String prompt, String error,
+                                       Integer maxAttempts, String exitWord) {
+
+        Scanner sc = new Scanner(System.in);
+        int attempts = 0;
+
+        if (exitWord == null)
+            exitWord = "exit";
+
+        while (true) {
+
+            System.out.print(prompt + ": ");
+            String input = sc.nextLine();
+
+            if (input.equalsIgnoreCase(exitWord))
+                return null;
+
+            if (Pattern.matches(regex, input))
+                return input;
+
+            System.out.println(error);
+
+            attempts++;
+
+            if (maxAttempts != null && attempts >= maxAttempts)
+                return null;
+        }
+    }
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+public class Main {
+
+    public static void main(String[] args) {
+
+        String name = InputValidator.getValidInput(
+                "^[A-Za-z]{3,20}$",
+                "Enter name",
+                "Invalid name",
+                3,
+                "exit"
+        );
+
+        if(name != null)
+            System.out.println("Valid Name: " + name);
+        else
+            System.out.println("Input failed");
+    }
+}
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Enter name: 123
+Invalid name
+Enter name: David
+Valid Name: David
+</code></pre>
+
+<hr>
+
+<h3>4. PHP Implementation</h3>
+
+<pre><code>
+function get_valid_input($regex, $prompt, $error, $max_attempts = null, $exit_word = "exit") {
+
+    $attempts = 0;
+
+    while(true){
+
+        echo $prompt . ": ";
+        $input = trim(fgets(STDIN));
+
+        if(strtolower($input) === strtolower($exit_word)){
+            return null;
+        }
+
+        if(preg_match($regex, $input)){
+            return $input;
+        }
+
+        echo $error . PHP_EOL;
+
+        $attempts++;
+
+        if($max_attempts !== null && $attempts >= $max_attempts){
+            return null;
+        }
+    }
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+$name = get_valid_input("/^[A-Za-z]{3,20}$/", "Enter name", "Invalid name", 3);
+
+if($name){
+    echo "Valid Name: $name\n";
+}else{
+    echo "Input failed\n";
+}
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Enter name: 123
+Invalid name
+Enter name: Robert
+Valid Name: Robert
+</code></pre>
+
+<hr>
+
+<h3>5. JavaScript (Node.js) Implementation</h3>
+
+<pre><code>
+const readline = require("readline");
+
+function getValidInput(regex, prompt, error, maxAttempts = null, exitWord = "exit") {
+
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    let attempts = 0;
+
+    function ask() {
+        rl.question(prompt + ": ", (input) => {
+
+            if (input.toLowerCase() === exitWord.toLowerCase()) {
+                rl.close();
+                return;
+            }
+
+            if (regex.test(input)) {
+                console.log("Valid Input:", input);
+                rl.close();
+                return;
+            }
+
+            console.log(error);
+
+            attempts++;
+
+            if (maxAttempts !== null && attempts >= maxAttempts) {
+                rl.close();
+                return;
+            }
+
+            ask();
+        });
+    }
+
+    ask();
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+getValidInput(/^[A-Za-z]{3,20}$/, "Enter name", "Invalid name", 3);
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Enter name: 123
+Invalid name
+Enter name: Mark
+Valid Input: Mark
+</code></pre>
+
+</section>
+
+<section>
+
+<h2>Date Validation Utilities</h2>
+
+<p>
+These functions help validate dates for common scenarios such as:
+</p>
+
+<ul>
+<li>Checking if a date is in the future</li>
+<li>Validating a start and end date range</li>
+<li>Checking if a date lies within a range</li>
+</ul>
+
+<p>Date format used in all examples: <b>DD-MM-YYYY</b></p>
+
+<hr>
+
+<h3>1. Check Future Date</h3>
+
+<p>Returns <b>true</b> if the given date is in the future.</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+use Time::Piece;
+
+sub is_future_date {
+    my ($date) = @_;
+
+    my $input_date = Time::Piece->strptime($date, "%d-%m-%Y");
+    my $today = localtime;
+
+    return $input_date > $today;
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+from datetime import datetime
+
+def is_future_date(date):
+    input_date = datetime.strptime(date, "%d-%m-%Y")
+    today = datetime.today()
+    return input_date > today
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public static boolean isFutureDate(String date) {
+
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    LocalDate inputDate = LocalDate.parse(date, fmt);
+    LocalDate today = LocalDate.now();
+
+    return inputDate.isAfter(today);
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function is_future_date($date){
+
+    $inputDate = DateTime::createFromFormat("d-m-Y", $date);
+    $today = new DateTime();
+
+    return $inputDate > $today;
+}
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function isFutureDate(date){
+
+    const [day,month,year] = date.split("-");
+
+    const inputDate = new Date(year, month-1, day);
+    const today = new Date();
+
+    return inputDate > today;
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+Input: 25-12-2030
+Output: true
+</code></pre>
+
+<hr>
+
+<h3>2. Validate Date Range (Start &lt; End)</h3>
+
+<p>Checks if the start date occurs before the end date.</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+use Time::Piece;
+
+sub valid_date_range {
+
+    my ($start, $end) = @_;
+
+    my $start_date = Time::Piece->strptime($start, "%d-%m-%Y");
+    my $end_date   = Time::Piece->strptime($end, "%d-%m-%Y");
+
+    return $start_date < $end_date;
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+from datetime import datetime
+
+def valid_date_range(start, end):
+
+    s = datetime.strptime(start,"%d-%m-%Y")
+    e = datetime.strptime(end,"%d-%m-%Y")
+
+    return s < e
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public static boolean validDateRange(String start,String end){
+
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    LocalDate s = LocalDate.parse(start,fmt);
+    LocalDate e = LocalDate.parse(end,fmt);
+
+    return s.isBefore(e);
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function valid_date_range($start,$end){
+
+    $s = DateTime::createFromFormat("d-m-Y",$start);
+    $e = DateTime::createFromFormat("d-m-Y",$end);
+
+    return $s < $e;
+}
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function validDateRange(start,end){
+
+    let [d1,m1,y1] = start.split("-");
+    let [d2,m2,y2] = end.split("-");
+
+    let s = new Date(y1,m1-1,d1);
+    let e = new Date(y2,m2-1,d2);
+
+    return s < e;
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+Start: 01-01-2024
+End:   01-01-2025
+
+Output: true
+</code></pre>
+
+<hr>
+
+<h3>3. Check Date Within Range</h3>
+
+<p>
+Checks if a given date lies between a start date and end date.
+</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+use Time::Piece;
+
+sub date_within_range {
+
+    my ($date,$start,$end) = @_;
+
+    my $d = Time::Piece->strptime($date,"%d-%m-%Y");
+    my $s = Time::Piece->strptime($start,"%d-%m-%Y");
+    my $e = Time::Piece->strptime($end,"%d-%m-%Y");
+
+    return ($d >= $s && $d <= $e);
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+from datetime import datetime
+
+def date_within_range(date,start,end):
+
+    d = datetime.strptime(date,"%d-%m-%Y")
+    s = datetime.strptime(start,"%d-%m-%Y")
+    e = datetime.strptime(end,"%d-%m-%Y")
+
+    return s <= d <= e
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public static boolean dateWithinRange(String date,String start,String end){
+
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    LocalDate d = LocalDate.parse(date,fmt);
+    LocalDate s = LocalDate.parse(start,fmt);
+    LocalDate e = LocalDate.parse(end,fmt);
+
+    return (!d.isBefore(s) && !d.isAfter(e));
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function date_within_range($date,$start,$end){
+
+    $d = DateTime::createFromFormat("d-m-Y",$date);
+    $s = DateTime::createFromFormat("d-m-Y",$start);
+    $e = DateTime::createFromFormat("d-m-Y",$end);
+
+    return ($d >= $s && $d <= $e);
+}
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function dateWithinRange(date,start,end){
+
+    let [d,m,y] = date.split("-");
+    let [sd,sm,sy] = start.split("-");
+    let [ed,em,ey] = end.split("-");
+
+    let D = new Date(y,m-1,d);
+    let S = new Date(sy,sm-1,sd);
+    let E = new Date(ey,em-1,ed);
+
+    return D >= S && D <= E;
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+Date : 15-06-2024
+Start: 01-01-2024
+End  : 31-12-2024
+
+Output: true
+</code></pre>
+
+</section>
+
+<section>
+
+<h2>Date & Time Validation Utilities</h2>
+
+<p>
+These functions help validate common scheduling logic used in booking systems,
+banking systems, appointment systems, and time-slot management.
+</p>
+
+<ul>
+<li>Date Overlap detection</li>
+<li>Future Time validation</li>
+<li>Time Within Range</li>
+<li>Valid Time Range</li>
+<li>Time Overlap detection</li>
+<li>Outside Allowed Window check</li>
+</ul>
+
+<hr>
+
+<h3>1. Date Overlap</h3>
+
+<p>Checks if two date ranges overlap.</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+use Time::Piece;
+
+sub date_overlap {
+
+    my ($s1,$e1,$s2,$e2) = @_;
+
+    my $start1 = Time::Piece->strptime($s1,"%d-%m-%Y");
+    my $end1   = Time::Piece->strptime($e1,"%d-%m-%Y");
+
+    my $start2 = Time::Piece->strptime($s2,"%d-%m-%Y");
+    my $end2   = Time::Piece->strptime($e2,"%d-%m-%Y");
+
+    return ($start1 <= $end2 && $start2 <= $end1);
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+from datetime import datetime
+
+def date_overlap(s1,e1,s2,e2):
+
+    fmt = "%d-%m-%Y"
+
+    start1 = datetime.strptime(s1,fmt)
+    end1   = datetime.strptime(e1,fmt)
+
+    start2 = datetime.strptime(s2,fmt)
+    end2   = datetime.strptime(e2,fmt)
+
+    return start1 <= end2 and start2 <= end1
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+public static boolean dateOverlap(String s1,String e1,String s2,String e2){
+
+    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    LocalDate start1 = LocalDate.parse(s1,fmt);
+    LocalDate end1   = LocalDate.parse(e1,fmt);
+
+    LocalDate start2 = LocalDate.parse(s2,fmt);
+    LocalDate end2   = LocalDate.parse(e2,fmt);
+
+    return !start1.isAfter(end2) && !start2.isAfter(end1);
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function date_overlap($s1,$e1,$s2,$e2){
+
+    $start1 = DateTime::createFromFormat("d-m-Y",$s1);
+    $end1   = DateTime::createFromFormat("d-m-Y",$e1);
+
+    $start2 = DateTime::createFromFormat("d-m-Y",$s2);
+    $end2   = DateTime::createFromFormat("d-m-Y",$e2);
+
+    return ($start1 <= $end2 && $start2 <= $end1);
+}
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function dateOverlap(s1,e1,s2,e2){
+
+    let [d1,m1,y1] = s1.split("-");
+    let [d2,m2,y2] = e1.split("-");
+    let [d3,m3,y3] = s2.split("-");
+    let [d4,m4,y4] = e2.split("-");
+
+    let start1 = new Date(y1,m1-1,d1);
+    let end1   = new Date(y2,m2-1,d2);
+
+    let start2 = new Date(y3,m3-1,d3);
+    let end2   = new Date(y4,m4-1,d4);
+
+    return start1 <= end2 && start2 <= end1;
+}
+</code></pre>
+
+<hr>
+
+<h3>2. Future Time Check</h3>
+
+<p>Returns true if the given time is in the future.</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub is_future_time {
+
+    my ($time) = @_;
+
+    my ($h,$m,$s) = split /:/,$time;
+
+    my ($ch,$cm,$cs) = (localtime)[2,1,0];
+
+    return ($h*3600 + $m*60 + $s) > ($ch*3600 + $cm*60 + $cs);
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+from datetime import datetime
+
+def is_future_time(time):
+
+    h,m,s = map(int,time.split(":"))
+
+    now = datetime.now()
+
+    current = now.hour*3600 + now.minute*60 + now.second
+    input_t = h*3600 + m*60 + s
+
+    return input_t > current
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+import java.time.LocalTime;
+
+public static boolean isFutureTime(String time){
+
+    LocalTime input = LocalTime.parse(time);
+    LocalTime now = LocalTime.now();
+
+    return input.isAfter(now);
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function is_future_time($time){
+
+    $input = strtotime($time);
+    $now = time();
+
+    return $input > $now;
+}
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function isFutureTime(time){
+
+    let [h,m,s] = time.split(":");
+
+    let now = new Date();
+
+    let input = h*3600 + m*60 + Number(s);
+    let current = now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds();
+
+    return input > current;
+}
+</code></pre>
+
+<hr>
+
+<h3>3. Time Within Range</h3>
+
+<p>Checks if a time lies between start and end.</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub time_within_range {
+
+    my ($time,$start,$end) = @_;
+
+    my $t = _sec($time);
+    my $s = _sec($start);
+    my $e = _sec($end);
+
+    return ($t >= $s && $t <= $e);
+}
+</code></pre>
+
+<hr>
+
+<h3>4. Valid Time Range (Start &lt; End)</h3>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub valid_time_range {
+
+    my ($start,$end) = @_;
+
+    return _sec($start) < _sec($end);
+}
+</code></pre>
+
+<hr>
+
+<h3>5. Time Overlap</h3>
+
+<p>Checks if two time ranges overlap.</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub time_overlap {
+
+    my ($s1,$e1,$s2,$e2) = @_;
+
+    return (_sec($s1) <= _sec($e2) && _sec($s2) <= _sec($e1));
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+Range1 : 09:00-11:00
+Range2 : 10:30-12:00
+
+Result : Overlap
+</code></pre>
+
+<hr>
+
+<h3>6. Outside Allowed Window</h3>
+
+<p>Example: bank hours 09:00–17:00</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub outside_allowed_window {
+
+    my ($time,$start,$end) = @_;
+
+    my $t = _sec($time);
+    my $s = _sec($start);
+    my $e = _sec($end);
+
+    return ($t < $s || $t > $e);
+}
+</code></pre>
+
+<hr>
+
+<h3>Helper Function (Convert Time → Seconds)</h3>
+
+<p>Used internally by time validation functions.</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub _sec {
+
+    my ($t) = @_;
+
+    my ($h,$m,$s) = split /:/,$t;
+
+    $s //= 0;
+
+    return $h*3600 + $m*60 + $s;
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+Input : 10:30:00
+
+Output:
+37800 seconds
+</code></pre>
+
+</section>
+
+<section>
+
+<h2>Age Validation</h2>
+
+<p>
+This function validates a user's date of birth and checks whether the age
+falls within a specified minimum and maximum range.
+</p>
+
+<ul>
+<li>Validates date format (DD-MM-YYYY)</li>
+<li>Checks invalid calendar ranges</li>
+<li>Prevents future date of birth</li>
+<li>Calculates current age</li>
+<li>Validates minimum age</li>
+<li>Validates maximum age</li>
+</ul>
+
+<hr>
+
+<h3>1. Perl Implementation</h3>
+
+<pre><code>
+sub validate_age {
+
+    my ($dob,$min_age,$max_age) = @_;
+
+    return "Invalid date of birth"
+        unless $dob =~ /^(\d{2})-(\d{2})-(\d{4})$/;
+
+    my ($day,$month,$year) = ($1,$2,$3);
+
+    return "Invalid date of birth"
+        if ($day < 1 || $day > 31 || $month < 1 || $month > 12);
+
+    my ($c_day,$c_month,$c_year) = (localtime)[3,4,5];
+
+    $c_year += 1900;
+    $c_month += 1;
+
+    if ($year > $c_year ||
+       ($year == $c_year && $month > $c_month) ||
+       ($year == $c_year && $month == $c_month && $day > $c_day))
+    {
+        return "Date of birth cannot be in the future";
+    }
+
+    my $age = $c_year - $year;
+
+    if ($c_month < $month || ($c_month == $month && $c_day < $day)) {
+        $age--;
+    }
+
+    return "Age below minimum" if $age < $min_age;
+    return "Age above maximum" if $age > $max_age;
+
+    return "Age valid";
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+print validate_age("10-05-2000",18,60);
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Age valid
+</code></pre>
+
+<hr>
+
+<h3>2. Python Implementation</h3>
+
+<pre><code>
+import re
+from datetime import datetime
+
+def validate_age(dob,min_age,max_age):
+
+    if not re.match(r"^\d{2}-\d{2}-\d{4}$",dob):
+        return "Invalid date of birth"
+
+    day,month,year = map(int,dob.split("-"))
+
+    if day < 1 or day > 31 or month < 1 or month > 12:
+        return "Invalid date of birth"
+
+    today = datetime.today()
+
+    if datetime(year,month,day) > today:
+        return "Date of birth cannot be in the future"
+
+    age = today.year - year
+
+    if (today.month,today.day) < (month,day):
+        age -= 1
+
+    if age < min_age:
+        return "Age below minimum"
+
+    if age > max_age:
+        return "Age above maximum"
+
+    return "Age valid"
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+print(validate_age("10-05-2000",18,60))
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Age valid
+</code></pre>
+
+<hr>
+
+<h3>3. Java Implementation</h3>
+
+<pre><code>
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+
+public static String validateAge(String dob,int minAge,int maxAge){
+
+    DateTimeFormatter fmt =
+        DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
+    LocalDate birthDate = LocalDate.parse(dob,fmt);
+    LocalDate today = LocalDate.now();
+
+    if(birthDate.isAfter(today))
+        return "Date of birth cannot be in the future";
+
+    int age = Period.between(birthDate,today).getYears();
+
+    if(age < minAge)
+        return "Age below minimum";
+
+    if(age > maxAge)
+        return "Age above maximum";
+
+    return "Age valid";
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+System.out.println(
+validateAge("10-05-2000",18,60)
+);
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Age valid
+</code></pre>
+
+<hr>
+
+<h3>4. PHP Implementation</h3>
+
+<pre><code>
+function validate_age($dob,$min_age,$max_age){
+
+    if(!preg_match("/^\d{2}-\d{2}-\d{4}$/",$dob))
+        return "Invalid date of birth";
+
+    list($day,$month,$year) = explode("-",$dob);
+
+    if($day < 1 || $day > 31 || $month < 1 || $month > 12)
+        return "Invalid date of birth";
+
+    $birthDate = DateTime::createFromFormat("d-m-Y",$dob);
+    $today = new DateTime();
+
+    if($birthDate > $today)
+        return "Date of birth cannot be in the future";
+
+    $age = $today->diff($birthDate)->y;
+
+    if($age < $min_age)
+        return "Age below minimum";
+
+    if($age > $max_age)
+        return "Age above maximum";
+
+    return "Age valid";
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+echo validate_age("10-05-2000",18,60);
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Age valid
+</code></pre>
+
+<hr>
+
+<h3>5. JavaScript Implementation</h3>
+
+<pre><code>
+function validateAge(dob,minAge,maxAge){
+
+    if(!/^\d{2}-\d{2}-\d{4}$/.test(dob))
+        return "Invalid date of birth";
+
+    let [day,month,year] = dob.split("-").map(Number);
+
+    if(day<1 || day>31 || month<1 || month>12)
+        return "Invalid date of birth";
+
+    let today = new Date();
+
+    let birthDate = new Date(year,month-1,day);
+
+    if(birthDate > today)
+        return "Date of birth cannot be in the future";
+
+    let age = today.getFullYear() - year;
+
+    if(today.getMonth()+1 < month ||
+      (today.getMonth()+1 === month && today.getDate() < day)){
+        age--;
+    }
+
+    if(age < minAge)
+        return "Age below minimum";
+
+    if(age > maxAge)
+        return "Age above maximum";
+
+    return "Age valid";
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+console.log(validateAge("10-05-2000",18,60));
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+Age valid
+</code></pre>
+
+</section>
+
+<section>
+
+<h2>Financial Validation Utilities</h2>
+
+<p>
+These functions validate monetary values and card numbers commonly used
+in banking systems, payment gateways, and financial applications.
+</p>
+
+<ul>
+<li>Amount validation</li>
+<li>Luhn algorithm validation (credit/debit cards)</li>
+</ul>
+
+<hr>
+
+<h3>1. Amount Validation</h3>
+
+<p>
+Validates a monetary amount with checks for:
+</p>
+
+<ul>
+<li>Correct numeric format</li>
+<li>No negative values</li>
+<li>No zero amount</li>
+<li>Decimal limit</li>
+<li>Minimum amount</li>
+<li>Maximum amount</li>
+</ul>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub validate_amount {
+
+    my ($amount,$min,$max,$decimal_limit) = @_;
+
+    return "Invalid amount format"
+        unless $amount =~ /^\d+(\.\d+)?$/;
+
+    return "Negative amount not allowed"
+        if $amount < 0;
+
+    return "Zero amount not allowed"
+        if $amount == 0;
+
+    if (defined $decimal_limit && $amount =~ /\.(\d+)/) {
+        return "Invalid decimal places"
+            if length($1) > $decimal_limit;
+    }
+
+    if (defined $min) {
+        return "Amount below minimum"
+            if $amount < $min;
+    }
+
+    if (defined $max) {
+        return "Amount exceeds maximum"
+            if $amount > $max;
+    }
+
+    return "Amount valid";
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+import re
+
+def validate_amount(amount,min=None,max=None,decimal_limit=None):
+
+    if not re.match(r"^\d+(\.\d+)?$",str(amount)):
+        return "Invalid amount format"
+
+    amount=float(amount)
+
+    if amount < 0:
+        return "Negative amount not allowed"
+
+    if amount == 0:
+        return "Zero amount not allowed"
+
+    if decimal_limit is not None and "." in str(amount):
+        decimals=len(str(amount).split(".")[1])
+        if decimals > decimal_limit:
+            return "Invalid decimal places"
+
+    if min is not None and amount < min:
+        return "Amount below minimum"
+
+    if max is not None and amount > max:
+        return "Amount exceeds maximum"
+
+    return "Amount valid"
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+public static String validateAmount(
+double amount,
+Double min,
+Double max,
+Integer decimalLimit){
+
+    String str=String.valueOf(amount);
+
+    if(!str.matches("^\\d+(\\.\\d+)?$"))
+        return "Invalid amount format";
+
+    if(amount < 0)
+        return "Negative amount not allowed";
+
+    if(amount == 0)
+        return "Zero amount not allowed";
+
+    if(decimalLimit!=null && str.contains(".")){
+
+        int decimals=str.split("\\.")[1].length();
+
+        if(decimals > decimalLimit)
+            return "Invalid decimal places";
+    }
+
+    if(min!=null && amount < min)
+        return "Amount below minimum";
+
+    if(max!=null && amount > max)
+        return "Amount exceeds maximum";
+
+    return "Amount valid";
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function validate_amount($amount,$min=null,$max=null,$decimal_limit=null){
+
+    if(!preg_match("/^\d+(\.\d+)?$/",$amount))
+        return "Invalid amount format";
+
+    if($amount < 0)
+        return "Negative amount not allowed";
+
+    if($amount == 0)
+        return "Zero amount not allowed";
+
+    if($decimal_limit !== null && strpos($amount,'.') !== false){
+
+        $decimals=strlen(explode('.',$amount)[1]);
+
+        if($decimals > $decimal_limit)
+            return "Invalid decimal places";
+    }
+
+    if($min !== null && $amount < $min)
+        return "Amount below minimum";
+
+    if($max !== null && $amount > $max)
+        return "Amount exceeds maximum";
+
+    return "Amount valid";
+}
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function validateAmount(amount,min=null,max=null,decimalLimit=null){
+
+    if(!/^\d+(\.\d+)?$/.test(amount))
+        return "Invalid amount format";
+
+    amount=Number(amount);
+
+    if(amount < 0)
+        return "Negative amount not allowed";
+
+    if(amount === 0)
+        return "Zero amount not allowed";
+
+    if(decimalLimit !== null && amount.toString().includes(".")){
+
+        let decimals=amount.toString().split(".")[1].length;
+
+        if(decimals > decimalLimit)
+            return "Invalid decimal places";
+    }
+
+    if(min !== null && amount < min)
+        return "Amount below minimum";
+
+    if(max !== null && amount > max)
+        return "Amount exceeds maximum";
+
+    return "Amount valid";
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+Input: 500.25
+Min: 100
+Max: 1000
+Decimal limit: 2
+
+Output:
+Amount valid
+</code></pre>
+
+<hr>
+
+<h3>2. Luhn Validation (Credit/Debit Card)</h3>
+
+<p>
+The Luhn algorithm validates card numbers used in
+credit cards, debit cards, and identification numbers.
+</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub validate_luhn {
+
+    my ($number) = @_;
+
+    my @digits = reverse split //,$number;
+    my $sum = 0;
+
+    for my $i (0..$#digits){
+
+        my $d = $digits[$i];
+
+        if($i % 2 == 1){
+
+            $d *= 2;
+
+            $d -= 9 if $d > 9;
+        }
+
+        $sum += $d;
+    }
+
+    return ($sum % 10 == 0)
+        ? "Valid card number"
+        : "Invalid card number";
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+def validate_luhn(number):
+
+    digits=list(map(int,str(number)[::-1]))
+
+    total=0
+
+    for i,d in enumerate(digits):
+
+        if i%2==1:
+            d*=2
+            if d>9:
+                d-=9
+
+        total+=d
+
+    return "Valid card number" if total%10==0 else "Invalid card number"
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+public static String validateLuhn(String number){
+
+    int sum=0;
+    boolean alternate=false;
+
+    for(int i=number.length()-1;i>=0;i--){
+
+        int n=number.charAt(i)-'0';
+
+        if(alternate){
+
+            n*=2;
+
+            if(n>9)
+                n-=9;
+        }
+
+        sum+=n;
+
+        alternate=!alternate;
+    }
+
+    return (sum%10==0)
+        ? "Valid card number"
+        : "Invalid card number";
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function validate_luhn($number){
+
+    $digits=array_reverse(str_split($number));
+    $sum=0;
+
+    foreach($digits as $i=>$d){
+
+        if($i%2==1){
+
+            $d*=2;
+
+            if($d>9)
+                $d-=9;
+        }
+
+        $sum+=$d;
+    }
+
+    return ($sum%10==0)
+        ? "Valid card number"
+        : "Invalid card number";
+}
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function validateLuhn(number){
+
+    let digits=number.split("").reverse();
+    let sum=0;
+
+    for(let i=0;i<digits.length;i++){
+
+        let d=parseInt(digits[i]);
+
+        if(i%2===1){
+
+            d*=2;
+
+            if(d>9)
+                d-=9;
+        }
+
+        sum+=d;
+    }
+
+    return sum%10===0
+        ? "Valid card number"
+        : "Invalid card number";
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+Input:
+4539578763621486
+
+Output:
+Valid card number
+</code></pre>
+
+</section>
+
+<section>
+
+<h2>File Validation & Logging Utilities</h2>
+
+<p>
+These utilities validate files and handle logging operations commonly used in
+backend systems such as banking applications, APIs, and data processing tools.
+</p>
+
+<ul>
+<li>File validation</li>
+<li>File encoding validation</li>
+<li>JSON corruption detection</li>
+<li>Event logging</li>
+<li>Simple log writing</li>
+</ul>
+
+<hr>
+
+<h3>1. File Validation</h3>
+
+<p>
+Validates a file by checking:
+</p>
+
+<ul>
+<li>File existence</li>
+<li>Read permission</li>
+<li>Write permission</li>
+<li>Empty file</li>
+<li>Maximum size</li>
+<li>Allowed file types</li>
+</ul>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub validate_file {
+
+    my ($file,$max_size,$allowed_types)=@_;
+
+    return "File not found"
+        unless -e $file;
+
+    return "File unreadable"
+        unless -r $file;
+
+    return "File not writable"
+        unless -w $file;
+
+    return "File empty"
+        if -z $file;
+
+    if(defined $max_size){
+        my $size=-s $file;
+
+        return "File size too large"
+            if $size > $max_size;
+    }
+
+    if(defined $allowed_types){
+
+        my ($ext)=$file =~ /\.([^.]+)$/;
+
+        return "Invalid file type"
+            unless grep {$_ eq $ext} @$allowed_types;
+    }
+
+    return "File valid";
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+import os
+
+def validate_file(file,max_size=None,allowed_types=None):
+
+    if not os.path.exists(file):
+        return "File not found"
+
+    if not os.access(file,os.R_OK):
+        return "File unreadable"
+
+    if not os.access(file,os.W_OK):
+        return "File not writable"
+
+    if os.path.getsize(file)==0:
+        return "File empty"
+
+    if max_size and os.path.getsize(file)>max_size:
+        return "File size too large"
+
+    if allowed_types:
+        ext=file.split(".")[-1]
+
+        if ext not in allowed_types:
+            return "Invalid file type"
+
+    return "File valid"
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+import java.io.File;
+
+public static String validateFile(
+String path,
+Long maxSize,
+String[] allowedTypes){
+
+    File file=new File(path);
+
+    if(!file.exists())
+        return "File not found";
+
+    if(!file.canRead())
+        return "File unreadable";
+
+    if(!file.canWrite())
+        return "File not writable";
+
+    if(file.length()==0)
+        return "File empty";
+
+    if(maxSize!=null && file.length()>maxSize)
+        return "File size too large";
+
+    if(allowedTypes!=null){
+
+        String ext=path.substring(
+            path.lastIndexOf(".")+1
+        );
+
+        boolean ok=false;
+
+        for(String t:allowedTypes)
+            if(t.equals(ext))
+                ok=true;
+
+        if(!ok)
+            return "Invalid file type";
+    }
+
+    return "File valid";
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function validate_file($file,$max_size=null,$allowed_types=null){
+
+    if(!file_exists($file))
+        return "File not found";
+
+    if(!is_readable($file))
+        return "File unreadable";
+
+    if(!is_writable($file))
+        return "File not writable";
+
+    if(filesize($file)==0)
+        return "File empty";
+
+    if($max_size && filesize($file)>$max_size)
+        return "File size too large";
+
+    if($allowed_types){
+
+        $ext=pathinfo($file,PATHINFO_EXTENSION);
+
+        if(!in_array($ext,$allowed_types))
+            return "Invalid file type";
+    }
+
+    return "File valid";
+}
+</code></pre>
+
+<h4>JavaScript (Node.js)</h4>
+
+<pre><code>
+const fs=require("fs");
+
+function validateFile(file,maxSize=null,allowedTypes=null){
+
+    if(!fs.existsSync(file))
+        return "File not found";
+
+    let stat=fs.statSync(file);
+
+    if(stat.size===0)
+        return "File empty";
+
+    if(maxSize && stat.size>maxSize)
+        return "File size too large";
+
+    if(allowedTypes){
+
+        let ext=file.split(".").pop();
+
+        if(!allowedTypes.includes(ext))
+            return "Invalid file type";
+    }
+
+    return "File valid";
+}
+</code></pre>
+
+<hr>
+
+<h3>2. Encoding Validation</h3>
+
+<p>
+Checks whether text encoding is valid UTF-8.
+</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+use Encode;
+
+sub validate_encoding {
+
+    my ($text)=@_;
+
+    return "Invalid file encoding"
+        unless Encode::is_utf8($text);
+
+    return "Encoding valid";
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+def validate_encoding(text):
+
+    try:
+        text.encode("utf-8")
+        return "Encoding valid"
+
+    except:
+        return "Invalid file encoding"
+</code></pre>
+
+<hr>
+
+<h3>3. JSON Corruption Check</h3>
+
+<p>
+Detects whether JSON data is valid or corrupted.
+</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+use JSON;
+
+sub check_json {
+
+    my ($data)=@_;
+
+    eval { decode_json($data) };
+
+    return $@ ? "Corrupted file" : "File valid";
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+import json
+
+def check_json(data):
+
+    try:
+        json.loads(data)
+        return "File valid"
+
+    except:
+        return "Corrupted file"
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function checkJSON(data){
+
+    try{
+        JSON.parse(data);
+        return "File valid";
+    }
+    catch{
+        return "Corrupted file";
+    }
+}
+</code></pre>
+
+<hr>
+
+<h3>4. Event Logging</h3>
+
+<p>
+Writes structured logs containing timestamp and severity level.
+</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub log_event {
+
+    my ($file,$level,$message)=@_;
+
+    open my $fh,">>",$file
+        or die "Cannot open log file";
+
+    my $time=localtime();
+
+    print $fh "[$time] [$level] $message\n";
+
+    close $fh;
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+from datetime import datetime
+
+def log_event(file,level,message):
+
+    with open(file,"a") as f:
+
+        time=datetime.now()
+
+        f.write(
+        f"[{time}] [{level}] {message}\n"
+        )
+</code></pre>
+
+<hr>
+
+<h3>5. Simple Log Writing</h3>
+
+<p>
+Writes basic log messages with timestamps.
+</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub write_log {
+
+    my ($file,$message)=@_;
+
+    open my $fh,">>",$file
+        or die "File not writable";
+
+    my $time=localtime();
+
+    print $fh "[$time] $message\n";
+
+    close $fh;
+}
+</code></pre>
+
+<h4>Example</h4>
+
+<pre><code>
+my @types=("txt","log");
+
+my $result=validate_file(
+"data.txt",
+1000000,
+\@types
+);
+
+print $result;
+</code></pre>
+
+<h4>Output</h4>
+
+<pre><code>
+File valid
+</code></pre>
+
+</section>
+<section>
+
+<h2>File Logging Utilities</h2>
+
+<p>
+Logging is used to record system events, errors, and activity.
+These logs help in debugging, auditing, and monitoring applications.
+</p>
+
+<ul>
+<li>General file logging</li>
+<li>Event logging with level</li>
+<li>Simple log writing</li>
+</ul>
+
+<hr>
+
+<h3>1. General File Log (gfile log)</h3>
+
+<p>
+Writes a message into a log file with timestamp.
+</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub gfile_log {
+
+    my ($file,$message)=@_;
+
+    open my $fh,">>",$file
+        or die "Cannot open file";
+
+    my $time=localtime();
+
+    print $fh "[$time] $message\n";
+
+    close $fh;
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function gfile_log($file,$message){
+
+    $time=date("Y-m-d H:i:s");
+
+    $line="[$time] $message\n";
+
+    file_put_contents($file,$line,FILE_APPEND);
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+from datetime import datetime
+
+def gfile_log(file,message):
+
+    time=datetime.now()
+
+    with open(file,"a") as f:
+        f.write(f"[{time}] {message}\n")
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+import java.io.FileWriter;
+import java.time.LocalDateTime;
+
+public static void gfileLog(
+String file,
+String message
+)throws Exception{
+
+    FileWriter fw=
+        new FileWriter(file,true);
+
+    String time=
+        LocalDateTime.now().toString();
+
+    fw.write("["+time+"] "+message+"\n");
+
+    fw.close();
+}
+</code></pre>
+
+<h4>JavaScript (Node.js)</h4>
+
+<pre><code>
+const fs=require("fs");
+
+function gfileLog(file,message){
+
+    let time=new Date().toISOString();
+
+    fs.appendFileSync(
+        file,
+        `[${time}] ${message}\n`
+    );
+}
+</code></pre>
+
+<hr>
+
+<h3>2. Event Logging (with Level)</h3>
+
+<p>
+Adds log severity levels such as INFO, WARNING, ERROR.
+</p>
+
+<h4>Perl</h4>
+
+<pre><code>
+sub log_event {
+
+    my ($file,$level,$message)=@_;
+
+    open my $fh,">>",$file
+        or die "Cannot open log file";
+
+    my $time=localtime();
+
+    print $fh "[$time] [$level] $message\n";
+
+    close $fh;
+}
+</code></pre>
+
+<h4>PHP</h4>
+
+<pre><code>
+function log_event($file,$level,$message){
+
+    $time=date("Y-m-d H:i:s");
+
+    $line="[$time] [$level] $message\n";
+
+    file_put_contents($file,$line,FILE_APPEND);
+}
+</code></pre>
+
+<h4>Python</h4>
+
+<pre><code>
+from datetime import datetime
+
+def log_event(file,level,message):
+
+    time=datetime.now()
+
+    with open(file,"a") as f:
+        f.write(
+        f"[{time}] [{level}] {message}\n"
+        )
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+import java.io.FileWriter;
+import java.time.LocalDateTime;
+
+public static void logEvent(
+String file,
+String level,
+String message
+)throws Exception{
+
+    FileWriter fw=
+        new FileWriter(file,true);
+
+    String time=
+        LocalDateTime.now().toString();
+
+    fw.write(
+    "["+time+"] ["+level+"] "
+    +message+"\n"
+    );
+
+    fw.close();
+}
+</code></pre>
+
+<h4>JavaScript (Node.js)</h4>
+
+<pre><code>
+const fs=require("fs");
+
+function logEvent(file,level,message){
+
+    let time=new Date().toISOString();
+
+    fs.appendFileSync(
+        file,
+        `[${time}] [${level}] ${message}\n`
+    );
+}
+</code></pre>
+
+<hr>
+
+<h3>3. Simple Write Log</h3>
+
+<p>
+Basic log writing with only message and timestamp.
+</p>
+
+<h4>PHP</h4>
+
+<pre><code>
+function write_log($file,$message){
+
+    $time=date("Y-m-d H:i:s");
+
+    file_put_contents(
+        $file,
+        "[$time] $message\n",
+        FILE_APPEND
+    );
+}
+</code></pre>
+
+<h4>Java</h4>
+
+<pre><code>
+public static void writeLog(
+String file,
+String message
+)throws Exception{
+
+    FileWriter fw=
+        new FileWriter(file,true);
+
+    fw.write(message+"\n");
+
+    fw.close();
+}
+</code></pre>
+
+<h4>JavaScript</h4>
+
+<pre><code>
+function writeLog(file,message){
+
+    const fs=require("fs");
+
+    fs.appendFileSync(
+        file,
+        message+"\n"
+    );
+}
+</code></pre>
+
+<hr>
+
+<h3>Example</h3>
+
+<pre><code>
+gfile_log("system.log","Server started");
+
+log_event("system.log","INFO","User login");
+
+write_log("system.log","Simple message");
+</code></pre>
+
+<h4>Log Output</h4>
+
+<pre><code>
+[2026-03-15 10:30:12] Server started
+[2026-03-15 10:31:01] [INFO] User login
+[2026-03-15 10:31:10] Simple message
+</code></pre>
+
+</section>
+</body>
