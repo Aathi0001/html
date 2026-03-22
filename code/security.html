@@ -1,0 +1,6687 @@
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Banking Validation Regex Reference</title>
+<meta charset="UTF-8">
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+</style>
+</head>
+
+<body>
+
+<section>
+
+<h1>🔐 PERL — ENCRYPTION (Complete Guide)</h1>
+
+<hr>
+
+<h2>📌 1. What is Encryption?</h2>
+
+<p>
+Encryption is the process of converting <b>plain text (readable data)</b> into 
+<b>cipher text (unreadable data)</b> using an algorithm and a key.
+</p>
+
+<pre>
+Plain Text  →  Encryption Algorithm + Key  →  Cipher Text
+</pre>
+
+<p>
+Used for:
+<ul>
+<li>Passwords (secure storage)</li>
+<li>API communication</li>
+<li>Database protection</li>
+<li>Confidential data (keys, tokens)</li>
+</ul>
+</p>
+
+<hr>
+
+<h2>📌 2. Types of Encryption</h2>
+
+<h3>🔹 2.1 Symmetric Encryption</h3>
+<p>Same key is used for encryption and decryption.</p>
+
+<pre>
+Encrypt → KEY → Decrypt
+</pre>
+
+<b>Examples:</b>
+
+<ul>
+<li>AES (Advanced Encryption Standard)</li>
+<li>DES</li>
+<li>3DES</li>
+</ul>
+
+<h3>🔹 2.2 Asymmetric Encryption</h3>
+<p>Uses two keys:</p>
+
+<ul>
+<li>Public Key → Encrypt</li>
+<li>Private Key → Decrypt</li>
+</ul>
+
+<b>Examples:</b>
+
+<ul>
+<li>RSA</li>
+<li>ECC</li>
+</ul>
+
+<hr>
+
+<h2>📌 3. Common Perl Encryption Modules</h2>
+
+<table border="1">
+<tr>
+<th>Module</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>Crypt::CBC</td>
+<td>Block cipher encryption</td>
+</tr>
+
+<tr>
+<td>Crypt::Cipher::AES</td>
+<td>AES encryption</td>
+</tr>
+
+<tr>
+<td>Crypt::Mode::CBC</td>
+<td>Modern AES CBC mode</td>
+</tr>
+
+<tr>
+<td>Crypt::OpenSSL::RSA</td>
+<td>RSA encryption</td>
+</tr>
+
+<tr>
+<td>Crypt::Eksblowfish::Bcrypt</td>
+<td>Password hashing</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>📌 4. AES Encryption (Modern Standard)</h2>
+
+<h3>🔹 Algorithm</h3>
+<ul>
+<li>AES-128</li>
+<li>AES-192</li>
+<li>AES-256 (recommended)</li>
+</ul>
+
+<h3>🔹 Key Size</h3>
+<ul>
+<li>16 bytes → AES-128</li>
+<li>24 bytes → AES-192</li>
+<li>32 bytes → AES-256</li>
+</ul>
+
+<h3>🔹 Block Size</h3>
+<p>Always 16 bytes</p>
+
+<hr>
+
+<h2>📌 5. AES Encryption Example (Perl)</h2>
+
+<pre><code>
+use Crypt::Cipher::AES;
+use MIME::Base64;
+
+my $key = "1234567890123456";  # 16 bytes key
+my $cipher = Crypt::Cipher::AES->new($key);
+
+my $plaintext = "HelloWorld12345";
+
+# Padding manually (16 bytes block)
+$plaintext .= chr(16 - length($plaintext) % 16) x (16 - length($plaintext) % 16);
+
+my $encrypted = $cipher->encrypt($plaintext);
+
+print encode_base64($encrypted);
+</code></pre>
+
+<hr>
+
+<h2>📌 6. Important Parameters</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Key</td>
+<td>Secret key (must match size)</td>
+</tr>
+
+<tr>
+<td>IV (Initialization Vector)</td>
+<td>Random value for security</td>
+</tr>
+
+<tr>
+<td>Mode</td>
+<td>CBC, ECB, CFB, OFB</td>
+</tr>
+
+<tr>
+<td>Padding</td>
+<td>PKCS5 / PKCS7</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. Encryption Modes</h2>
+
+<h3>🔹 ECB (Not Secure ❌)</h3>
+<ul>
+<li>No IV</li>
+<li>Same plaintext → same ciphertext</li>
+</ul>
+
+<h3>🔹 CBC (Recommended ✔)</h3>
+<ul>
+<li>Uses IV</li>
+<li>More secure</li>
+</ul>
+
+<h3>🔹 GCM (Modern ✔✔)</h3>
+<ul>
+<li>Provides authentication + encryption</li>
+</ul>
+
+<hr>
+
+<h2>📌 8. CBC Mode Example</h2>
+
+<pre><code>
+use Crypt::Mode::CBC;
+use MIME::Base64;
+
+my $key = "1234567890123456";
+my $iv  = "abcdefghijklmnop";
+
+my $cbc = Crypt::Mode::CBC->new('AES');
+
+my $cipher = $cbc->encrypt("SecretData", $key, $iv);
+
+print encode_base64($cipher);
+</code></pre>
+
+<hr>
+
+<h2>📌 9. RSA Encryption (Asymmetric)</h2>
+
+<pre><code>
+use Crypt::OpenSSL::RSA;
+
+my $public_key = "-----BEGIN PUBLIC KEY----- ...";
+
+my $rsa = Crypt::OpenSSL::RSA->new_public_key($public_key);
+
+my $encrypted = $rsa->encrypt("Hello");
+
+print $encrypted;
+</code></pre>
+
+<hr>
+
+<h2>📌 10. Best Practices</h2>
+
+<ul>
+<li>Never hardcode keys ❌</li>
+<li>Store keys in environment variables ✔</li>
+<li>Use AES-256 ✔</li>
+<li>Use random IV every time ✔</li>
+<li>Use Base64 for output ✔</li>
+<li>Do not use ECB mode ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 11. Real-Time Usage</h2>
+
+<ul>
+<li>Encrypt API request payload</li>
+<li>Encrypt DB sensitive fields</li>
+<li>Secure tokens</li>
+<li>Session encryption</li>
+</ul>
+
+<hr>
+
+<h2>📌 12. Common Mistakes</h2>
+
+<ul>
+<li>Using short keys ❌</li>
+<li>Reusing IV ❌</li>
+<li>Not padding data ❌</li>
+<li>Storing key in code ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 13. Summary</h2>
+
+<pre>
+Encryption = Data Protection
+AES = Standard
+CBC/GCM = Secure modes
+Key + IV = Mandatory
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PERL — ENCRYPTION & DECRYPTION (FULL PROFESSIONAL GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. Encryption vs Decryption</h2>
+
+<pre>
+Plain Text --(Encryption + Key)--> Cipher Text
+Cipher Text --(Decryption + Key)--> Plain Text
+</pre>
+
+<ul>
+<li><b>Encryption:</b> Protect data</li>
+<li><b>Decryption:</b> Restore original data</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. Core Concepts</h2>
+
+<table border="1">
+<tr><th>Concept</th><th>Description</th></tr>
+<tr><td>Algorithm</td><td>AES, RSA, DES</td></tr>
+<tr><td>Key</td><td>Secret value</td></tr>
+<tr><td>IV</td><td>Random initialization vector</td></tr>
+<tr><td>Mode</td><td>CBC, GCM, ECB</td></tr>
+<tr><td>Padding</td><td>Fix block size</td></tr>
+<tr><td>Encoding</td><td>Base64 for output</td></tr>
+</table>
+
+<hr>
+
+<h2>📌 3. AES (Advanced Encryption Standard)</h2>
+
+<ul>
+<li>Block Size: 16 bytes</li>
+<li>Key Sizes:
+  <ul>
+    <li>16 → AES-128</li>
+    <li>24 → AES-192</li>
+    <li>32 → AES-256 ✔</li>
+  </ul>
+</li>
+</ul>
+
+<hr>
+
+<h2>📌 4. AES — CBC MODE (FULL PROGRAM)</h2>
+
+<h3>🔹 Explanation</h3>
+<ul>
+<li>Uses IV</li>
+<li>Chained blocks</li>
+<li>Widely used</li>
+</ul>
+
+<h3>🔹 Code</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::Mode::CBC;
+use MIME::Base64;
+
+my $key = "1234567890123456";      # 16 bytes
+my $iv  = "abcdefghijklmnop";      # 16 bytes IV
+
+my $cbc = Crypt::Mode::CBC->new('AES');
+
+# -------------------------------
+# ENCRYPTION
+# -------------------------------
+my $plaintext = "SensitiveData123";
+
+my $cipher = $cbc->encrypt($plaintext, $key, $iv);
+
+my $encoded = encode_base64($cipher);
+print "Encrypted: $encoded\n";
+
+# -------------------------------
+# DECRYPTION
+# -------------------------------
+my $decoded = decode_base64($encoded);
+
+my $decrypted = $cbc->decrypt($decoded, $key, $iv);
+
+print "Decrypted: $decrypted\n";
+</code></pre>
+
+<hr>
+
+<h3>🔹 Parameters Explained</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Meaning</th></tr>
+
+<tr>
+<td>$key</td>
+<td>Secret key (must match size)</td>
+</tr>
+
+<tr>
+<td>$iv</td>
+<td>Random value (same length as block = 16)</td>
+</tr>
+
+<tr>
+<td>'AES'</td>
+<td>Algorithm used</td>
+</tr>
+
+<tr>
+<td>encrypt()</td>
+<td>Convert plain → cipher</td>
+</tr>
+
+<tr>
+<td>decrypt()</td>
+<td>Convert cipher → plain</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>📌 5. AES — ECB MODE (NOT RECOMMENDED)</h2>
+
+<h3>🔹 Why Bad?</h3>
+<ul>
+<li>No IV</li>
+<li>Same input → same output</li>
+<li>Pattern leakage</li>
+</ul>
+
+<h3>🔹 Code</h3>
+
+<pre><code>
+use Crypt::Mode::ECB;
+use MIME::Base64;
+
+my $key = "1234567890123456";
+
+my $ecb = Crypt::Mode::ECB->new('AES');
+
+my $cipher = $ecb->encrypt("HELLO1234567890", $key);
+print encode_base64($cipher);
+
+my $plain = $ecb->decrypt($cipher, $key);
+print $plain;
+</code></pre>
+
+<hr>
+
+<h2>📌 6. AES — GCM MODE (MODERN + SECURE)</h2>
+
+<h3>🔹 Features</h3>
+<ul>
+<li>Encryption + Authentication ✔</li>
+<li>Prevents tampering ✔</li>
+<li>Used in APIs, banking ✔</li>
+</ul>
+
+<h3>🔹 Code</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::AuthEnc::GCM;
+use MIME::Base64;
+
+my $key = "12345678901234567890123456789012"; # 32 bytes (AES-256)
+my $iv  = "unique_iv_12345";
+
+my $gcm = Crypt::AuthEnc::GCM->new('AES', $key);
+
+# -------------------------------
+# ENCRYPT
+# -------------------------------
+$gcm->set_iv($iv);
+
+my $cipher = $gcm->encrypt_add("TopSecretData");
+$cipher .= $gcm->encrypt_done;
+
+my $tag = $gcm->tag;
+
+print "Encrypted: " . encode_base64($cipher) . "\n";
+print "Tag: " . encode_base64($tag) . "\n";
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+my $gcm_dec = Crypt::AuthEnc::GCM->new('AES', $key);
+$gcm_dec->set_iv($iv);
+
+$gcm_dec->aad_add("");  # optional
+
+my $plain = $gcm_dec->decrypt_add($cipher);
+$plain .= $gcm_dec->decrypt_done($tag);
+
+print "Decrypted: $plain\n";
+</code></pre>
+
+<hr>
+
+<h3>🔹 Parameters Explained</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Description</th></tr>
+
+<tr>
+<td>$key</td>
+<td>32 bytes for AES-256</td>
+</tr>
+
+<tr>
+<td>$iv</td>
+<td>Unique IV (must NEVER repeat)</td>
+</tr>
+
+<tr>
+<td>tag</td>
+<td>Authentication tag (integrity check)</td>
+</tr>
+
+<tr>
+<td>aad</td>
+<td>Additional authenticated data</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. RSA (PUBLIC / PRIVATE KEY)</h2>
+
+<h3>🔹 Full Program</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::OpenSSL::RSA;
+use MIME::Base64;
+
+# Keys (example only)
+my $private_key = "-----BEGIN RSA PRIVATE KEY-----...";
+my $public_key  = "-----BEGIN PUBLIC KEY-----...";
+
+# -------------------------------
+# ENCRYPT (Public Key)
+# -------------------------------
+my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($public_key);
+
+my $cipher = $rsa_pub->encrypt("HelloWorld");
+
+my $encoded = encode_base64($cipher);
+print "Encrypted: $encoded\n";
+
+# -------------------------------
+# DECRYPT (Private Key)
+# -------------------------------
+my $rsa_priv = Crypt::OpenSSL::RSA->new_private_key($private_key);
+
+my $decoded = decode_base64($encoded);
+
+my $plain = $rsa_priv->decrypt($decoded);
+
+print "Decrypted: $plain\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 8. Padding Types</h2>
+
+<ul>
+<li>PKCS5</li>
+<li>PKCS7 ✔</li>
+<li>NoPadding (dangerous)</li>
+</ul>
+
+<hr>
+
+<h2>📌 9. Key Handling (VERY IMPORTANT)</h2>
+
+<h3>❌ Bad</h3>
+<pre>my $key = "123456";</pre>
+
+<h3>✔ Good</h3>
+<pre>
+my $key = $ENV{'SECRET_KEY'};
+</pre>
+
+<hr>
+
+<h2>📌 10. IV Rules</h2>
+
+<ul>
+<li>Must be random ✔</li>
+<li>Must be unique ✔</li>
+<li>Can be stored with ciphertext ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 11. Real Banking Flow</h2>
+
+<pre>
+Client → AES Encrypt Data → Server
+Server → Decrypt → Process → Encrypt Response → Client
+</pre>
+
+<hr>
+
+<h2>📌 12. Common Errors</h2>
+
+<ul>
+<li>Wrong key → decryption fails</li>
+<li>Wrong IV → garbage output</li>
+<li>Wrong tag (GCM) → authentication fail</li>
+<li>No padding → crash</li>
+</ul>
+
+<hr>
+
+<h2>📌 13. Best Practices</h2>
+
+<ul>
+<li>Use AES-256 ✔</li>
+<li>Use GCM ✔✔ (best)</li>
+<li>Use random IV ✔</li>
+<li>Use Base64 ✔</li>
+<li>Never reuse IV ❌</li>
+<li>Never expose key ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 14. Summary</h2>
+
+<pre>
+AES-CBC → Standard
+AES-GCM → Modern (Best)
+ECB → Avoid
+RSA → Key exchange
+Key + IV + Mode = Core
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PERL — COMPLETE ENCRYPTION SYSTEM (ALL PARAMETERS COVERED)</h1>
+
+<hr>
+
+<h2>📌 1. AES (CBC MODE) — FULL PARAMETER BREAKDOWN</h2>
+
+<h3>🔹 Function Signature</h3>
+
+<pre>
+encrypt( data, key, iv, [padding], [adata] )
+decrypt( data, key, iv, [padding], [adata] )
+</pre>
+
+<hr>
+
+<h3>🔹 Parameters Table</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Mandatory / Optional</th>
+<th>Description</th>
+<th>Allowed Values</th>
+</tr>
+
+<tr>
+<td>data</td>
+<td>✔ Mandatory</td>
+<td>Input text (plain for encrypt, cipher for decrypt)</td>
+<td>String / Binary</td>
+</tr>
+
+<tr>
+<td>key</td>
+<td>✔ Mandatory</td>
+<td>Secret key</td>
+<td>16 / 24 / 32 bytes (AES-128/192/256)</td>
+</tr>
+
+<tr>
+<td>iv</td>
+<td>✔ Mandatory (CBC)</td>
+<td>Initialization vector</td>
+<td>16 bytes</td>
+</tr>
+
+<tr>
+<td>padding</td>
+<td>⚠ Optional</td>
+<td>Padding scheme</td>
+<td>PKCS7 (default), NONE</td>
+</tr>
+
+<tr>
+<td>adata</td>
+<td>❌ Not used in CBC</td>
+<td>Only for GCM</td>
+<td>-</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 FULL PROGRAM (CBC)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::Mode::CBC;
+use MIME::Base64;
+
+# -------------------------------
+# PARAMETERS
+# -------------------------------
+my $data = "BankSensitiveData";
+my $key  = "1234567890123456";       # 16 bytes (Mandatory)
+my $iv   = "abcdefghijklmnop";       # 16 bytes (Mandatory)
+my $padding = "standard";            # Optional (default PKCS7)
+
+# -------------------------------
+# OBJECT
+# -------------------------------
+my $cbc = Crypt::Mode::CBC->new('AES');
+
+# -------------------------------
+# ENCRYPT
+# -------------------------------
+my $cipher = $cbc->encrypt($data, $key, $iv);
+
+# Encoding (Optional but recommended)
+my $encoded = encode_base64($cipher);
+
+print "Encrypted: $encoded\n";
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+my $decoded = decode_base64($encoded);
+
+my $plain = $cbc->decrypt($decoded, $key, $iv);
+
+print "Decrypted: $plain\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 2. AES (GCM MODE) — FULL PARAMETERS</h2>
+
+<h3>🔹 Function Flow</h3>
+
+<pre>
+new(algorithm, key)
+set_iv(iv)
+aad_add(data)        # optional
+encrypt_add(data)
+encrypt_done()
+tag()
+</pre>
+
+<hr>
+
+<h3>🔹 PARAMETERS TABLE</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Mandatory / Optional</th>
+<th>Description</th>
+<th>Rules</th>
+</tr>
+
+<tr>
+<td>algorithm</td>
+<td>✔ Mandatory</td>
+<td>Cipher type</td>
+<td>'AES'</td>
+</tr>
+
+<tr>
+<td>key</td>
+<td>✔ Mandatory</td>
+<td>Encryption key</td>
+<td>16 / 24 / 32 bytes</td>
+</tr>
+
+<tr>
+<td>iv</td>
+<td>✔ Mandatory</td>
+<td>Initialization vector</td>
+<td>Unique per encryption</td>
+</tr>
+
+<tr>
+<td>aad</td>
+<td>⚠ Optional</td>
+<td>Additional authenticated data</td>
+<td>Header/security metadata</td>
+</tr>
+
+<tr>
+<td>tag</td>
+<td>✔ Mandatory (for decrypt)</td>
+<td>Authentication tag</td>
+<td>Must match exactly</td>
+</tr>
+
+<tr>
+<td>data</td>
+<td>✔ Mandatory</td>
+<td>Plain or cipher data</td>
+<td>String</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 FULL PROGRAM (GCM)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::AuthEnc::GCM;
+use MIME::Base64;
+
+# -------------------------------
+# PARAMETERS
+# -------------------------------
+my $data = "PaymentDetails";
+my $key  = "12345678901234567890123456789012";  # 32 bytes
+my $iv   = "unique_iv_12345";                  # Mandatory
+my $aad  = "header-data";                     # Optional
+
+# -------------------------------
+# ENCRYPT
+# -------------------------------
+my $gcm = Crypt::AuthEnc::GCM->new('AES', $key);
+
+$gcm->set_iv($iv);
+$gcm->aad_add($aad);     # Optional
+
+my $cipher = $gcm->encrypt_add($data);
+$cipher   .= $gcm->encrypt_done;
+
+my $tag = $gcm->tag;
+
+print "Cipher: " . encode_base64($cipher) . "\n";
+print "Tag: " . encode_base64($tag) . "\n";
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+my $gcm_d = Crypt::AuthEnc::GCM->new('AES', $key);
+
+$gcm_d->set_iv($iv);
+$gcm_d->aad_add($aad);   # Must match if used
+
+my $plain = $gcm_d->decrypt_add($cipher);
+$plain   .= $gcm_d->decrypt_done($tag);
+
+print "Decrypted: $plain\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 3. AES (ECB MODE) — PARAMETERS</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr>
+<td>data</td>
+<td>✔ Mandatory</td>
+<td>Input data</td>
+</tr>
+
+<tr>
+<td>key</td>
+<td>✔ Mandatory</td>
+<td>Encryption key</td>
+</tr>
+
+<tr>
+<td>iv</td>
+<td>❌ Not used</td>
+<td>Not required</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 FULL PROGRAM (ECB)</h3>
+
+<pre><code>
+use Crypt::Mode::ECB;
+use MIME::Base64;
+
+my $data = "HELLO1234567890";
+my $key  = "1234567890123456";
+
+my $ecb = Crypt::Mode::ECB->new('AES');
+
+my $cipher = $ecb->encrypt($data, $key);
+print encode_base64($cipher);
+
+my $plain = $ecb->decrypt($cipher, $key);
+print $plain;
+</code></pre>
+
+<hr>
+
+<h2>📌 4. RSA — FULL PARAMETERS</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+new_public_key(key)
+new_private_key(key)
+
+encrypt(data)
+decrypt(data)
+</pre>
+
+<hr>
+
+<h3>🔹 PARAMETERS TABLE</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Mandatory / Optional</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>public_key</td>
+<td>✔ Mandatory (encrypt)</td>
+<td>Used for encryption</td>
+</tr>
+
+<tr>
+<td>private_key</td>
+<td>✔ Mandatory (decrypt)</td>
+<td>Used for decryption</td>
+</tr>
+
+<tr>
+<td>data</td>
+<td>✔ Mandatory</td>
+<td>Plain or cipher text</td>
+</tr>
+
+<tr>
+<td>padding</td>
+<td>⚠ Optional</td>
+<td>Security padding</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 FULL PROGRAM (RSA)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::OpenSSL::RSA;
+use MIME::Base64;
+
+my $public_key  = "-----BEGIN PUBLIC KEY-----...";
+my $private_key = "-----BEGIN RSA PRIVATE KEY-----...";
+
+# Encrypt
+my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($public_key);
+
+my $cipher = $rsa_pub->encrypt("SecureMsg");
+
+my $encoded = encode_base64($cipher);
+
+# Decrypt
+my $rsa_priv = Crypt::OpenSSL::RSA->new_private_key($private_key);
+
+my $decoded = decode_base64($encoded);
+
+my $plain = $rsa_priv->decrypt($decoded);
+
+print $plain;
+</code></pre>
+
+<hr>
+
+<h2>📌 5. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Used In</th>
+</tr>
+
+<tr><td>data</td><td>✔ Mandatory</td><td>All</td></tr>
+<tr><td>key</td><td>✔ Mandatory</td><td>AES</td></tr>
+<tr><td>iv</td><td>✔ Mandatory (CBC/GCM)</td><td>AES</td></tr>
+<tr><td>tag</td><td>✔ Mandatory (GCM decrypt)</td><td>GCM</td></tr>
+<tr><td>aad</td><td>⚠ Optional</td><td>GCM</td></tr>
+<tr><td>padding</td><td>⚠ Optional</td><td>CBC/ECB</td></tr>
+<tr><td>public_key</td><td>✔ Mandatory</td><td>RSA encrypt</td></tr>
+<tr><td>private_key</td><td>✔ Mandatory</td><td>RSA decrypt</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 6. DEFAULT VALUES</h2>
+
+<table border="1">
+<tr><th>Parameter</th><th>Default</th></tr>
+
+<tr><td>padding</td><td>PKCS7</td></tr>
+<tr><td>aad</td><td>None</td></tr>
+<tr><td>tag length</td><td>16 bytes</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. IMPORTANT RULES</h2>
+
+<ul>
+<li>IV must be unique (GCM) ✔</li>
+<li>Key must match size ✔</li>
+<li>Tag must match (GCM) ✔</li>
+<li>aad must match if used ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 8. FINAL PROFESSIONAL SUMMARY</h2>
+
+<pre>
+AES-CBC → Needs key + IV
+AES-GCM → Needs key + IV + TAG (+ optional AAD)
+ECB → Only key (not secure)
+RSA → Public + Private keys
+
+MANDATORY vs OPTIONAL must be handled correctly
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PERL — Crypt::CBC vs Modern CBC & GCM IV (DETAILED GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. Your Approach (Crypt::CBC)</h2>
+
+<pre><code>
+my $cipher = Crypt::CBC->new(
+    -key    => $key,
+    -cipher => "Crypt::Cipher::AES",
+);
+</code></pre>
+
+<hr>
+
+<h2>📌 2. Parameters Used in Crypt::CBC</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+<th>Default Behavior</th>
+</tr>
+
+<tr>
+<td>-key</td>
+<td>✔ Mandatory</td>
+<td>Encryption key</td>
+<td>Used internally</td>
+</tr>
+
+<tr>
+<td>-cipher</td>
+<td>✔ Mandatory</td>
+<td>Cipher algorithm</td>
+<td>AES / DES / Blowfish</td>
+</tr>
+
+<tr>
+<td>-iv</td>
+<td>⚠ Optional</td>
+<td>Initialization vector</td>
+<td>Auto-generated if not given ❌</td>
+</tr>
+
+<tr>
+<td>-header</td>
+<td>⚠ Optional</td>
+<td>Adds salt/header</td>
+<td>"Salted__" added ❌</td>
+</tr>
+
+<tr>
+<td>-padding</td>
+<td>⚠ Optional</td>
+<td>Padding type</td>
+<td>Standard (hidden)</td>
+</tr>
+
+<tr>
+<td>-literal_key</td>
+<td>⚠ Optional</td>
+<td>Use raw key</td>
+<td>Key derivation applied otherwise</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>📌 3. Hidden Problems in Crypt::CBC</h2>
+
+<ul>
+<li>IV is auto-generated → you don’t control it ❌</li>
+<li>Header ("Salted__") added → not pure ciphertext ❌</li>
+<li>Padding is implicit → not configurable ❌</li>
+<li>Output format is mixed → not suitable for APIs ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 4. Modern Approach (Crypt::Mode::CBC)</h2>
+
+<pre><code>
+use Crypt::Mode::CBC;
+
+my $cbc = Crypt::Mode::CBC->new('AES');
+
+my $cipher = $cbc->encrypt($data, $key, $iv);
+my $plain  = $cbc->decrypt($cipher, $key, $iv);
+</code></pre>
+
+<hr>
+
+<h2>📌 5. Parameters in Modern CBC</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>data</td>
+<td>✔ Mandatory</td>
+<td>Input data</td>
+</tr>
+
+<tr>
+<td>key</td>
+<td>✔ Mandatory</td>
+<td>16 / 24 / 32 bytes</td>
+</tr>
+
+<tr>
+<td>iv</td>
+<td>✔ Mandatory</td>
+<td>16 bytes</td>
+</tr>
+
+<tr>
+<td>padding</td>
+<td>⚠ Optional</td>
+<td>PKCS7 (default)</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>📌 6. Why Modern CBC is Better</h2>
+
+<table border="1">
+<tr>
+<th>Feature</th>
+<th>Crypt::CBC</th>
+<th>Modern CBC</th>
+</tr>
+
+<tr><td>IV Control</td><td>❌ Hidden</td><td>✔ Explicit</td></tr>
+<tr><td>Output Format</td><td>❌ Mixed</td><td>✔ Clean</td></tr>
+<tr><td>Security Control</td><td>❌ Low</td><td>✔ High</td></tr>
+<tr><td>Production Use</td><td>❌ Avoid</td><td>✔ Recommended</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. GCM Mode — IV Concept</h2>
+
+<p>
+GCM (Galois Counter Mode) uses IV to generate a unique encryption stream.
+</p>
+
+<pre>
+Ciphertext = Plaintext XOR Keystream
+Keystream  = AES(Key + IV + Counter)
+</pre>
+
+<hr>
+
+<h2>📌 8. Why IV MUST be UNIQUE (CRITICAL)</h2>
+
+<h3>🚨 Problem Scenario</h3>
+
+<pre>
+Same KEY + Same IV
+
+C1 = P1 ⊕ K
+C2 = P2 ⊕ K
+
+C1 ⊕ C2 = P1 ⊕ P2  ❌
+</pre>
+
+<ul>
+<li>Attacker can recover plaintext</li>
+<li>Authentication breaks</li>
+<li>Encryption becomes useless</li>
+</ul>
+
+<hr>
+
+<h2>📌 9. IV Rules (GCM)</h2>
+
+<table border="1">
+<tr><th>Rule</th><th>Status</th></tr>
+
+<tr><td>Must be unique per encryption</td><td>✔ Mandatory</td></tr>
+<tr><td>Can be public</td><td>✔ Yes</td></tr>
+<tr><td>Must be random or unique</td><td>✔ Mandatory</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 10. IV Size</h2>
+
+<table border="1">
+<tr><th>Size</th><th>Status</th></tr>
+
+<tr><td>12 bytes</td><td>✔ Recommended</td></tr>
+<tr><td>Other sizes</td><td>Allowed but slower</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 11. IV Generation (CORRECT METHODS)</h2>
+
+<h3>✔ Method 1 — Secure Random</h3>
+
+<pre><code>
+use Crypt::PRNG 'random_bytes';
+
+my $iv = random_bytes(12);
+</code></pre>
+
+<h3>✔ Method 2 — Time + Random</h3>
+
+<pre><code>
+use Crypt::PRNG 'random_bytes';
+
+my $iv = pack("Q>", time()) . random_bytes(4);
+</code></pre>
+
+<hr>
+
+<h2>📌 12. Full GCM Example</h2>
+
+<pre><code>
+use Crypt::AuthEnc::GCM;
+use Crypt::PRNG 'random_bytes';
+
+my $key = random_bytes(32);  # AES-256
+my $iv  = random_bytes(12);  # UNIQUE IV
+
+my $gcm = Crypt::AuthEnc::GCM->new('AES', $key);
+
+$gcm->set_iv($iv);
+
+my $cipher = $gcm->encrypt_add("SecretData");
+$cipher   .= $gcm->encrypt_done;
+
+my $tag = $gcm->tag;
+
+# Store IV + Cipher + Tag
+</code></pre>
+
+<hr>
+
+<h2>📌 13. Decryption Flow</h2>
+
+<pre><code>
+$gcm->set_iv($iv);
+
+my $plain = $gcm->decrypt_add($cipher);
+$plain   .= $gcm->decrypt_done($tag);
+</code></pre>
+
+<ul>
+<li>IV must be SAME during decryption ✔</li>
+<li>Tag must match ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 14. Real Storage Format</h2>
+
+<pre>
+Base64(
+    IV + CIPHERTEXT + TAG
+)
+</pre>
+
+<hr>
+
+<h2>📌 15. Final Rules</h2>
+
+<table border="1">
+<tr><th>Component</th><th>Rule</th></tr>
+
+<tr><td>Key</td><td>Secret, reusable</td></tr>
+<tr><td>IV</td><td>Unique per encryption</td></tr>
+<tr><td>Tag</td><td>Integrity check</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 16. Final Summary</h2>
+
+<pre>
+Crypt::CBC → Old, hidden behavior ❌
+Crypt::Mode::CBC → Modern ✔
+
+GCM:
+Key → same
+IV → must be unique
+Tag → must match
+
+Wrong IV reuse = Security broken
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PERL — FULL ENCRYPTION PROGRAMS (ALL OPTIONS INCLUDED)</h1>
+
+<hr>
+
+<h2>📌 1. AES — CBC MODE (ALL OPTIONS)</h2>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::Mode::CBC;
+use Crypt::PRNG 'random_bytes';
+use MIME::Base64;
+
+# -------------------------------
+# ALL PARAMETERS
+# -------------------------------
+my $data    = "SensitiveData";
+my $key     = random_bytes(32);        # Mandatory (16/24/32 bytes)
+my $iv      = random_bytes(16);        # Mandatory (16 bytes)
+my $padding = "standard";              # Optional (PKCS7 default)
+
+# -------------------------------
+# OBJECT CREATION
+# -------------------------------
+my $cbc = Crypt::Mode::CBC->new(
+    'AES',              # Algorithm (Mandatory)
+);
+
+# -------------------------------
+# ENCRYPTION
+# -------------------------------
+my $cipher = $cbc->encrypt(
+    $data,              # Mandatory
+    $key,               # Mandatory
+    $iv                 # Mandatory
+    # padding optional (auto PKCS7)
+);
+
+my $encoded = encode_base64($cipher);
+
+print "CBC Encrypted: $encoded\n";
+
+# -------------------------------
+# DECRYPTION
+# -------------------------------
+my $decoded = decode_base64($encoded);
+
+my $plain = $cbc->decrypt(
+    $decoded,
+    $key,
+    $iv
+);
+
+print "CBC Decrypted: $plain\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 2. AES — GCM MODE (ALL OPTIONS)</h2>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::AuthEnc::GCM;
+use Crypt::PRNG 'random_bytes';
+use MIME::Base64;
+
+# -------------------------------
+# ALL PARAMETERS
+# -------------------------------
+my $data = "PaymentInfo";
+my $key  = random_bytes(32);      # Mandatory
+my $iv   = random_bytes(12);      # Mandatory (UNIQUE)
+my $aad  = "header-metadata";     # Optional
+my $tag;
+
+# -------------------------------
+# OBJECT
+# -------------------------------
+my $gcm = Crypt::AuthEnc::GCM->new(
+    'AES',        # Mandatory algorithm
+    $key          # Mandatory key
+);
+
+# -------------------------------
+# SET PARAMETERS
+# -------------------------------
+$gcm->set_iv($iv);        # Mandatory
+$gcm->aad_add($aad);      # Optional
+
+# -------------------------------
+# ENCRYPTION
+# -------------------------------
+my $cipher = $gcm->encrypt_add($data);
+$cipher   .= $gcm->encrypt_done;
+
+$tag = $gcm->tag;         # Mandatory for decrypt
+
+print "GCM Cipher: " . encode_base64($cipher) . "\n";
+print "GCM Tag: " . encode_base64($tag) . "\n";
+
+# -------------------------------
+# DECRYPTION
+# -------------------------------
+my $gcm_d = Crypt::AuthEnc::GCM->new('AES', $key);
+
+$gcm_d->set_iv($iv);        # MUST match
+$gcm_d->aad_add($aad);      # MUST match if used
+
+my $plain = $gcm_d->decrypt_add($cipher);
+$plain   .= $gcm_d->decrypt_done($tag);
+
+print "GCM Decrypted: $plain\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 3. AES — ECB MODE (ALL OPTIONS)</h2>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::Mode::ECB;
+use MIME::Base64;
+
+# -------------------------------
+# PARAMETERS
+# -------------------------------
+my $data = "HELLO1234567890";
+my $key  = "1234567890123456";  # Mandatory
+
+# -------------------------------
+# OBJECT
+# -------------------------------
+my $ecb = Crypt::Mode::ECB->new(
+    'AES'     # Mandatory
+);
+
+# -------------------------------
+# ENCRYPT
+# -------------------------------
+my $cipher = $ecb->encrypt(
+    $data,
+    $key
+);
+
+print "ECB Enc: " . encode_base64($cipher) . "\n";
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+my $plain = $ecb->decrypt(
+    $cipher,
+    $key
+);
+
+print "ECB Dec: $plain\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 4. RSA (ALL OPTIONS)</h2>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::OpenSSL::RSA;
+use MIME::Base64;
+
+# -------------------------------
+# PARAMETERS
+# -------------------------------
+my $public_key  = "-----BEGIN PUBLIC KEY-----...";
+my $private_key = "-----BEGIN RSA PRIVATE KEY-----...";
+
+my $data = "SecureMessage";
+
+# -------------------------------
+# PUBLIC KEY OBJECT
+# -------------------------------
+my $rsa_pub = Crypt::OpenSSL::RSA->new_public_key($public_key);
+
+$rsa_pub->use_pkcs1_padding();     # Optional (default)
+# $rsa_pub->use_oaep_padding();   # More secure alternative
+
+# -------------------------------
+# ENCRYPT
+# -------------------------------
+my $cipher = $rsa_pub->encrypt($data);
+
+my $encoded = encode_base64($cipher);
+
+print "RSA Enc: $encoded\n";
+
+# -------------------------------
+# PRIVATE KEY OBJECT
+# -------------------------------
+my $rsa_priv = Crypt::OpenSSL::RSA->new_private_key($private_key);
+
+$rsa_priv->use_pkcs1_padding();    # Must match encryption
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+my $decoded = decode_base64($encoded);
+
+my $plain = $rsa_priv->decrypt($decoded);
+
+print "RSA Dec: $plain\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 5. ALL PARAMETERS MASTER LIST</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Mandatory</th>
+<th>Used In</th>
+<th>Description</th>
+</tr>
+
+<tr><td>data</td><td>✔</td><td>All</td><td>Input text</td></tr>
+<tr><td>key</td><td>✔</td><td>AES</td><td>Secret key</td></tr>
+<tr><td>iv</td><td>✔ (CBC/GCM)</td><td>AES</td><td>Initialization vector</td></tr>
+<tr><td>tag</td><td>✔ (GCM decrypt)</td><td>GCM</td><td>Integrity check</td></tr>
+<tr><td>aad</td><td>⚠ Optional</td><td>GCM</td><td>Extra authenticated data</td></tr>
+<tr><td>padding</td><td>⚠ Optional</td><td>CBC/RSA</td><td>Block alignment</td></tr>
+<tr><td>algorithm</td><td>✔</td><td>All</td><td>AES / RSA</td></tr>
+<tr><td>public_key</td><td>✔</td><td>RSA</td><td>Encryption key</td></tr>
+<tr><td>private_key</td><td>✔</td><td>RSA</td><td>Decryption key</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 6. IMPORTANT RULES</h2>
+
+<ul>
+<li>IV must be unique in GCM ✔</li>
+<li>IV must match in decrypt ✔</li>
+<li>Tag must match exactly ✔</li>
+<li>AAD must match if used ✔</li>
+<li>Key size must be correct ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 7. FINAL PROFESSIONAL SUMMARY</h2>
+
+<pre>
+CBC → Key + IV
+GCM → Key + IV + TAG (+ AAD optional)
+ECB → Key only (not secure)
+RSA → Public + Private key
+
+All parameters must be handled correctly
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PERL — HASHING (COMPLETE GUIDE WITH ALL PARAMETERS)</h1>
+
+<hr>
+
+<h2>📌 1. What is Hashing?</h2>
+
+<pre>
+Plain Text → Hash Function → Fixed Length Hash
+</pre>
+
+<ul>
+<li>One-way process (cannot decrypt)</li>
+<li>Used for password storage ✔</li>
+<li>Ensures data integrity ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. Encryption vs Hashing</h2>
+
+<table border="1">
+<tr><th>Feature</th><th>Encryption</th><th>Hashing</th></tr>
+<tr><td>Reversible</td><td>✔ Yes</td><td>❌ No</td></tr>
+<tr><td>Key used</td><td>✔ Yes</td><td>❌ No (except HMAC)</td></tr>
+<tr><td>Use case</td><td>Data protection</td><td>Password storage</td></tr>
+</table>
+
+<hr>
+
+<h2>📌 3. Types of Hashing</h2>
+
+<ul>
+<li>MD5 ❌ (broken)</li>
+<li>SHA1 ❌ (weak)</li>
+<li>SHA256 ✔</li>
+<li>SHA512 ✔</li>
+<li>BCRYPT ✔✔ (BEST for passwords)</li>
+<li>Argon2 ✔✔ (modern best)</li>
+</ul>
+
+<hr>
+
+<h2>📌 4. SHA-256 (ALL PARAMETERS)</h2>
+
+<h3>🔹 Module</h3>
+<pre><code>use Digest::SHA qw(sha256_hex sha256);</code></pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>data</td>
+<td>✔ Mandatory</td>
+<td>Input string</td>
+</tr>
+
+<tr>
+<td>output_format</td>
+<td>⚠ Optional</td>
+<td>hex / binary</td>
+</tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use Digest::SHA qw(sha256_hex);
+
+my $data = "password123";
+
+my $hash = sha256_hex($data);
+
+print "SHA256: $hash\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 5. SALT (VERY IMPORTANT)</h2>
+
+<h3>🔹 What is Salt?</h3>
+
+<ul>
+<li>Random value added to password</li>
+<li>Prevents rainbow table attack ✔</li>
+</ul>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use Digest::SHA qw(sha256_hex);
+use Crypt::PRNG 'random_bytes';
+
+my $password = "mypassword";
+my $salt = random_bytes(16);
+
+my $hash = sha256_hex($salt . $password);
+
+print "Salt: $salt\n";
+print "Hash: $hash\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 6. PEPPER</h2>
+
+<ul>
+<li>Secret value stored in server</li>
+<li>Not stored in DB</li>
+</ul>
+
+<pre><code>
+my $pepper = $ENV{'PEPPER_KEY'};
+
+my $hash = sha256_hex($salt . $password . $pepper);
+</code></pre>
+
+<hr>
+
+<h2>📌 7. BCRYPT (BEST FOR PASSWORDS)</h2>
+
+<h3>🔹 Module</h3>
+<pre><code>use Crypt::Eksblowfish::Bcrypt qw(bcrypt en_base64);</code></pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>password</td><td>✔</td><td>User password</td></tr>
+<tr><td>salt</td><td>✔</td><td>16 byte random</td></tr>
+<tr><td>cost</td><td>✔</td><td>Work factor (10–14)</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use Crypt::Eksblowfish::Bcrypt qw(bcrypt en_base64);
+use Crypt::PRNG 'random_bytes';
+
+my $password = "secure123";
+
+my $salt = random_bytes(16);
+
+my $settings = {
+    key_nul => 1,
+    cost    => 12,
+    salt    => $salt,
+};
+
+my $hash = bcrypt($password, $settings);
+
+print "Bcrypt Hash: " . en_base64($hash) . "\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 8. PASSWORD VERIFICATION</h2>
+
+<pre><code>
+# During login
+
+my $input_password = "secure123";
+
+my $new_hash = bcrypt($input_password, $settings);
+
+if ($new_hash eq $stored_hash) {
+    print "Login Success";
+} else {
+    print "Invalid Password";
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 9. HMAC (HASH WITH KEY)</h2>
+
+<h3>🔹 Used for APIs</h3>
+
+<pre><code>
+use Digest::SHA qw(hmac_sha256_hex);
+
+my $data = "message";
+my $key  = "secret_key";
+
+my $hmac = hmac_sha256_hex($data, $key);
+
+print "HMAC: $hmac\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 10. LOGIN SYSTEM (FULL FLOW)</h2>
+
+<h3>🔹 REGISTER</h3>
+
+<pre><code>
+my $password = "user123";
+
+my $salt = random_bytes(16);
+
+my $hash = sha256_hex($salt . $password);
+
+# store salt + hash in DB
+</code></pre>
+
+<h3>🔹 LOGIN</h3>
+
+<pre><code>
+my $input = "user123";
+
+my $stored_salt = ...;
+my $stored_hash = ...;
+
+my $check = sha256_hex($stored_salt . $input);
+
+if ($check eq $stored_hash) {
+    print "Login Success";
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 11. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>data</td><td>✔</td><td>Input</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random value</td></tr>
+<tr><td>pepper</td><td>⚠ Optional</td><td>Secret server key</td></tr>
+<tr><td>cost</td><td>✔ (bcrypt)</td><td>Security level</td></tr>
+<tr><td>key</td><td>✔ (HMAC)</td><td>Secret key</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 12. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using MD5 ❌</li>
+<li>No salt ❌</li>
+<li>Low bcrypt cost ❌</li>
+<li>Storing plain password ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 13. BEST PRACTICES</h2>
+
+<ul>
+<li>Use bcrypt ✔✔</li>
+<li>Use salt ✔</li>
+<li>Use pepper ✔</li>
+<li>Use high cost (12+) ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 14. FINAL SUMMARY</h2>
+
+<pre>
+Hashing = One-way
+Bcrypt = Best
+Salt = Mandatory
+Pepper = Extra security
+HMAC = API security
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PERL — ADVANCED HASHING METHODS (PBKDF2, SCRYPT, ARGON2, ALL OPTIONS)</h1>
+
+<hr>
+
+<h2>📌 1. PBKDF2 (Password-Based Key Derivation Function 2)</h2>
+
+<h3>🔹 Purpose</h3>
+<ul>
+<li>Derive strong key from password</li>
+<li>Uses iterations (slow → secure)</li>
+</ul>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+
+<tr><td>password</td><td>✔ Mandatory</td><td>User password</td><td>"pass123"</td></tr>
+<tr><td>salt</td><td>✔ Mandatory</td><td>Random value</td><td>16 bytes</td></tr>
+<tr><td>iterations</td><td>✔ Mandatory</td><td>Number of rounds</td><td>10000+</td></tr>
+<tr><td>hash_func</td><td>✔ Mandatory</td><td>SHA256 / SHA512</td><td>SHA256</td></tr>
+<tr><td>output_length</td><td>✔ Mandatory</td><td>Key length</td><td>32 bytes</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (PBKDF2)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::PBKDF2;
+use Crypt::PRNG 'random_bytes';
+
+my $password = "secure123";
+my $salt = random_bytes(16);
+
+my $pbkdf2 = Crypt::PBKDF2->new(
+    hash_class => 'HMACSHA2',
+    hash_args  => { sha_size => 256 },
+    iterations => 10000,
+    output_len => 32,
+    salt_len   => 16,
+);
+
+my $hash = $pbkdf2->generate($password);
+
+print "PBKDF2 Hash: $hash\n";
+
+# VERIFY
+if ($pbkdf2->validate($hash, $password)) {
+    print "Valid Password\n";
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 2. SCRYPT (Memory Hard Hash)</h2>
+
+<h3>🔹 Purpose</h3>
+<ul>
+<li>Prevents GPU attacks</li>
+<li>Uses memory + CPU</li>
+</ul>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>password</td><td>✔</td><td>Input password</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random value</td></tr>
+<tr><td>N</td><td>✔</td><td>CPU cost (2^14 etc)</td></tr>
+<tr><td>r</td><td>✔</td><td>Block size</td></tr>
+<tr><td>p</td><td>✔</td><td>Parallelization</td></tr>
+<tr><td>output_len</td><td>✔</td><td>Key length</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (SCRYPT)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::ScryptKDF;
+use Crypt::PRNG 'random_bytes';
+
+my $password = "secure123";
+my $salt = random_bytes(16);
+
+my $scrypt = Crypt::ScryptKDF->new(
+    N => 16384,
+    r => 8,
+    p => 1,
+    salt_len => 16,
+);
+
+my $hash = $scrypt->generate($password);
+
+print "Scrypt Hash: $hash\n";
+
+# VERIFY
+if ($scrypt->validate($hash, $password)) {
+    print "Valid Password\n";
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 3. ARGON2 (MODERN BEST)</h2>
+
+<h3>🔹 Purpose</h3>
+<ul>
+<li>Winner of Password Hashing Competition ✔</li>
+<li>Best security currently ✔</li>
+</ul>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>password</td><td>✔</td><td>Input</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random</td></tr>
+<tr><td>time_cost</td><td>✔</td><td>Iterations</td></tr>
+<tr><td>memory_cost</td><td>✔</td><td>Memory usage</td></tr>
+<tr><td>parallelism</td><td>✔</td><td>Threads</td></tr>
+<tr><td>hash_len</td><td>✔</td><td>Output size</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (ARGON2)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::Argon2 qw(argon2id_pass argon2id_verify);
+use Crypt::PRNG 'random_bytes';
+
+my $password = "secure123";
+my $salt = random_bytes(16);
+
+my $hash = argon2id_pass(
+    $password,
+    $salt,
+    3,        # time_cost
+    1 << 16,  # memory_cost
+    2,        # parallelism
+    32        # hash length
+);
+
+print "Argon2 Hash: $hash\n";
+
+# VERIFY
+if (argon2id_verify($hash, $password)) {
+    print "Valid Password\n";
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 4. SHA FAMILY (ALL TYPES)</h2>
+
+<pre><code>
+use Digest::SHA qw(
+    sha1_hex
+    sha224_hex
+    sha256_hex
+    sha384_hex
+    sha512_hex
+);
+
+print sha1_hex("data");
+print sha256_hex("data");
+print sha512_hex("data");
+</code></pre>
+
+<hr>
+
+<h2>📌 5. HMAC (HASH WITH KEY)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Message</td></tr>
+<tr><td>key</td><td>✔</td><td>Secret key</td></tr>
+<tr><td>algorithm</td><td>✔</td><td>SHA256 / SHA512</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use Digest::SHA qw(hmac_sha256_hex);
+
+my $data = "message";
+my $key  = "secret";
+
+my $hmac = hmac_sha256_hex($data, $key);
+
+print "HMAC: $hmac\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 6. MASTER COMPARISON</h2>
+
+<table border="1">
+<tr>
+<th>Method</th>
+<th>Security</th>
+<th>Speed</th>
+<th>Best Use</th>
+</tr>
+
+<tr><td>MD5</td><td>❌ Broken</td><td>Fast</td><td>Never use</td></tr>
+<tr><td>SHA256</td><td>✔ Medium</td><td>Fast</td><td>Integrity</td></tr>
+<tr><td>Bcrypt</td><td>✔✔ High</td><td>Slow</td><td>Password</td></tr>
+<tr><td>PBKDF2</td><td>✔✔ High</td><td>Slow</td><td>Password</td></tr>
+<tr><td>Scrypt</td><td>✔✔✔ Very High</td><td>Slower</td><td>Password</td></tr>
+<tr><td>Argon2</td><td>✔✔✔✔ Best</td><td>Configurable</td><td>Password</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. FINAL RULES</h2>
+
+<ul>
+<li>Always use salt ✔</li>
+<li>Never store plain password ❌</li>
+<li>Prefer Argon2 ✔✔</li>
+<li>Use PBKDF2 if Argon2 unavailable ✔</li>
+<li>Use HMAC for APIs ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 8. FINAL SUMMARY</h2>
+
+<pre>
+SHA → Fast hash
+PBKDF2 → Iterative secure
+Scrypt → Memory hard
+Argon2 → Best modern
+
+Password → Argon2 / Bcrypt
+API → HMAC
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PERL — ADVANCED HASHING METHODS (PBKDF2, SCRYPT, ARGON2, ALL OPTIONS)</h1>
+
+<hr>
+
+<h2>📌 1. PBKDF2 (Password-Based Key Derivation Function 2)</h2>
+
+<h3>🔹 Purpose</h3>
+<ul>
+<li>Derive strong key from password</li>
+<li>Uses iterations (slow → secure)</li>
+</ul>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+
+<tr><td>password</td><td>✔ Mandatory</td><td>User password</td><td>"pass123"</td></tr>
+<tr><td>salt</td><td>✔ Mandatory</td><td>Random value</td><td>16 bytes</td></tr>
+<tr><td>iterations</td><td>✔ Mandatory</td><td>Number of rounds</td><td>10000+</td></tr>
+<tr><td>hash_func</td><td>✔ Mandatory</td><td>SHA256 / SHA512</td><td>SHA256</td></tr>
+<tr><td>output_length</td><td>✔ Mandatory</td><td>Key length</td><td>32 bytes</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (PBKDF2)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::PBKDF2;
+use Crypt::PRNG 'random_bytes';
+
+my $password = "secure123";
+my $salt = random_bytes(16);
+
+my $pbkdf2 = Crypt::PBKDF2->new(
+    hash_class => 'HMACSHA2',
+    hash_args  => { sha_size => 256 },
+    iterations => 10000,
+    output_len => 32,
+    salt_len   => 16,
+);
+
+my $hash = $pbkdf2->generate($password);
+
+print "PBKDF2 Hash: $hash\n";
+
+# VERIFY
+if ($pbkdf2->validate($hash, $password)) {
+    print "Valid Password\n";
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 2. SCRYPT (Memory Hard Hash)</h2>
+
+<h3>🔹 Purpose</h3>
+<ul>
+<li>Prevents GPU attacks</li>
+<li>Uses memory + CPU</li>
+</ul>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>password</td><td>✔</td><td>Input password</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random value</td></tr>
+<tr><td>N</td><td>✔</td><td>CPU cost (2^14 etc)</td></tr>
+<tr><td>r</td><td>✔</td><td>Block size</td></tr>
+<tr><td>p</td><td>✔</td><td>Parallelization</td></tr>
+<tr><td>output_len</td><td>✔</td><td>Key length</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (SCRYPT)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::ScryptKDF;
+use Crypt::PRNG 'random_bytes';
+
+my $password = "secure123";
+my $salt = random_bytes(16);
+
+my $scrypt = Crypt::ScryptKDF->new(
+    N => 16384,
+    r => 8,
+    p => 1,
+    salt_len => 16,
+);
+
+my $hash = $scrypt->generate($password);
+
+print "Scrypt Hash: $hash\n";
+
+# VERIFY
+if ($scrypt->validate($hash, $password)) {
+    print "Valid Password\n";
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 3. ARGON2 (MODERN BEST)</h2>
+
+<h3>🔹 Purpose</h3>
+<ul>
+<li>Winner of Password Hashing Competition ✔</li>
+<li>Best security currently ✔</li>
+</ul>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>password</td><td>✔</td><td>Input</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random</td></tr>
+<tr><td>time_cost</td><td>✔</td><td>Iterations</td></tr>
+<tr><td>memory_cost</td><td>✔</td><td>Memory usage</td></tr>
+<tr><td>parallelism</td><td>✔</td><td>Threads</td></tr>
+<tr><td>hash_len</td><td>✔</td><td>Output size</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (ARGON2)</h3>
+
+<pre><code>
+use strict;
+use warnings;
+use Crypt::Argon2 qw(argon2id_pass argon2id_verify);
+use Crypt::PRNG 'random_bytes';
+
+my $password = "secure123";
+my $salt = random_bytes(16);
+
+my $hash = argon2id_pass(
+    $password,
+    $salt,
+    3,        # time_cost
+    1 << 16,  # memory_cost
+    2,        # parallelism
+    32        # hash length
+);
+
+print "Argon2 Hash: $hash\n";
+
+# VERIFY
+if (argon2id_verify($hash, $password)) {
+    print "Valid Password\n";
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 4. SHA FAMILY (ALL TYPES)</h2>
+
+<pre><code>
+use Digest::SHA qw(
+    sha1_hex
+    sha224_hex
+    sha256_hex
+    sha384_hex
+    sha512_hex
+);
+
+print sha1_hex("data");
+print sha256_hex("data");
+print sha512_hex("data");
+</code></pre>
+
+<hr>
+
+<h2>📌 5. HMAC (HASH WITH KEY)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Message</td></tr>
+<tr><td>key</td><td>✔</td><td>Secret key</td></tr>
+<tr><td>algorithm</td><td>✔</td><td>SHA256 / SHA512</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use Digest::SHA qw(hmac_sha256_hex);
+
+my $data = "message";
+my $key  = "secret";
+
+my $hmac = hmac_sha256_hex($data, $key);
+
+print "HMAC: $hmac\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 6. MASTER COMPARISON</h2>
+
+<table border="1">
+<tr>
+<th>Method</th>
+<th>Security</th>
+<th>Speed</th>
+<th>Best Use</th>
+</tr>
+
+<tr><td>MD5</td><td>❌ Broken</td><td>Fast</td><td>Never use</td></tr>
+<tr><td>SHA256</td><td>✔ Medium</td><td>Fast</td><td>Integrity</td></tr>
+<tr><td>Bcrypt</td><td>✔✔ High</td><td>Slow</td><td>Password</td></tr>
+<tr><td>PBKDF2</td><td>✔✔ High</td><td>Slow</td><td>Password</td></tr>
+<tr><td>Scrypt</td><td>✔✔✔ Very High</td><td>Slower</td><td>Password</td></tr>
+<tr><td>Argon2</td><td>✔✔✔✔ Best</td><td>Configurable</td><td>Password</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. FINAL RULES</h2>
+
+<ul>
+<li>Always use salt ✔</li>
+<li>Never store plain password ❌</li>
+<li>Prefer Argon2 ✔✔</li>
+<li>Use PBKDF2 if Argon2 unavailable ✔</li>
+<li>Use HMAC for APIs ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 8. FINAL SUMMARY</h2>
+
+<pre>
+SHA → Fast hash
+PBKDF2 → Iterative secure
+Scrypt → Memory hard
+Argon2 → Best modern
+
+Password → Argon2 / Bcrypt
+API → HMAC
+</pre>
+
+</section>
+<section>
+
+<h1>🔄 PERL — ENCODING & DECODING (COMPLETE GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. What is Encoding?</h2>
+
+<pre>
+Data → Encoding → Safe Transfer Format
+Encoded Data → Decoding → Original Data
+</pre>
+
+<ul>
+<li>Reversible ✔</li>
+<li>Used for data transport ✔</li>
+<li>NOT for security ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. Types of Encoding</h2>
+
+<ul>
+<li>Base64</li>
+<li>URL Encoding</li>
+<li>UTF-8 / Character Encoding</li>
+<li>Hex Encoding</li>
+<li>Binary Encoding</li>
+<li>JSON Encoding</li>
+</ul>
+
+<hr>
+
+<h2>📌 3. BASE64 (ALL PARAMETERS)</h2>
+
+<h3>🔹 Module</h3>
+<pre><code>use MIME::Base64;</code></pre>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+encode_base64(data, [eol])
+decode_base64(data)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>data</td><td>✔ Mandatory</td><td>Input data</td></tr>
+<tr><td>eol</td><td>⚠ Optional</td><td>Line separator</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use MIME::Base64;
+
+my $data = "Hello World";
+
+# Encode
+my $encoded = encode_base64($data, "");  # "" removes newline
+print "Encoded: $encoded\n";
+
+# Decode
+my $decoded = decode_base64($encoded);
+print "Decoded: $decoded\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 4. URL ENCODING</h2>
+
+<h3>🔹 Module</h3>
+<pre><code>use URI::Escape;</code></pre>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+uri_escape(data, [unsafe_chars])
+uri_unescape(data)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Input string</td></tr>
+<tr><td>unsafe_chars</td><td>⚠ Optional</td><td>Chars to encode</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use URI::Escape;
+
+my $url = "hello world@123";
+
+my $encoded = uri_escape($url);
+print "URL Encoded: $encoded\n";
+
+my $decoded = uri_unescape($encoded);
+print "URL Decoded: $decoded\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 5. UTF-8 / CHARACTER ENCODING</h2>
+
+<h3>🔹 Module</h3>
+<pre><code>use Encode;</code></pre>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+encode(encoding, data)
+decode(encoding, data)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>encoding</td><td>✔</td><td>UTF-8, ASCII</td></tr>
+<tr><td>data</td><td>✔</td><td>Input</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use Encode;
+
+my $text = "Hello";
+
+my $encoded = encode("UTF-8", $text);
+print "Encoded: $encoded\n";
+
+my $decoded = decode("UTF-8", $encoded);
+print "Decoded: $decoded\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 6. HEX ENCODING</h2>
+
+<h3>🔹 Module</h3>
+<pre><code>use unpack / pack;</code></pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+my $data = "Hello";
+
+# Encode to HEX
+my $hex = unpack("H*", $data);
+print "HEX: $hex\n";
+
+# Decode from HEX
+my $text = pack("H*", $hex);
+print "Text: $text\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 7. BINARY ENCODING</h2>
+
+<pre><code>
+my $data = "A";
+
+my $binary = unpack("B*", $data);
+print "Binary: $binary\n";
+
+my $text = pack("B*", $binary);
+print "Text: $text\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 8. JSON ENCODING</h2>
+
+<h3>🔹 Module</h3>
+<pre><code>use JSON;</code></pre>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+encode_json(data)
+decode_json(json_string)
+</pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+use JSON;
+
+my $data = { name => "Aathi", age => 22 };
+
+my $json = encode_json($data);
+print "JSON: $json\n";
+
+my $perl = decode_json($json);
+print "Name: $perl->{name}\n";
+</code></pre>
+
+<hr>
+
+<h2>📌 9. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Type</th>
+<th>Function</th>
+<th>Mandatory Params</th>
+<th>Optional Params</th>
+</tr>
+
+<tr><td>Base64</td><td>encode_base64</td><td>data</td><td>eol</td></tr>
+<tr><td>URL</td><td>uri_escape</td><td>data</td><td>unsafe_chars</td></tr>
+<tr><td>UTF-8</td><td>encode</td><td>encoding, data</td><td>-</td></tr>
+<tr><td>JSON</td><td>encode_json</td><td>data</td><td>-</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 10. REAL USE CASES</h2>
+
+<ul>
+<li>Base64 → API payload ✔</li>
+<li>URL → Query params ✔</li>
+<li>UTF-8 → File/database ✔</li>
+<li>JSON → API communication ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 11. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using Base64 as encryption ❌</li>
+<li>Wrong encoding type ❌</li>
+<li>Double encoding ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 12. FINAL SUMMARY</h2>
+
+<pre>
+Encoding = Reversible
+Base64 = Transport
+URL = Web safe
+UTF-8 = Character handling
+JSON = Data exchange
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PHP — ENCRYPTION & DECRYPTION (FULL PROFESSIONAL GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. Core Functions (OpenSSL)</h2>
+
+<pre>
+openssl_encrypt(data, cipher, key, options, iv, tag, aad, tag_length)
+openssl_decrypt(data, cipher, key, options, iv, tag, aad)
+</pre>
+
+<hr>
+
+<h2>📌 2. ALL PARAMETERS (VERY IMPORTANT)</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+<th>Used In</th>
+</tr>
+
+<tr><td>data</td><td>✔ Mandatory</td><td>Plain or cipher text</td><td>All</td></tr>
+<tr><td>cipher</td><td>✔ Mandatory</td><td>AES-128-CBC, AES-256-GCM</td><td>All</td></tr>
+<tr><td>key</td><td>✔ Mandatory</td><td>Secret key</td><td>All</td></tr>
+<tr><td>options</td><td>⚠ Optional</td><td>Flags (OPENSSL_RAW_DATA)</td><td>All</td></tr>
+<tr><td>iv</td><td>✔ Mandatory (CBC/GCM)</td><td>Initialization vector</td><td>AES</td></tr>
+<tr><td>tag</td><td>✔ Mandatory (GCM decrypt)</td><td>Authentication tag</td><td>GCM</td></tr>
+<tr><td>aad</td><td>⚠ Optional</td><td>Additional data</td><td>GCM</td></tr>
+<tr><td>tag_length</td><td>⚠ Optional</td><td>Tag size (default 16)</td><td>GCM</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 3. AES-256-CBC (FULL PROGRAM)</h2>
+
+<pre><code>
+&lt;?php
+
+$data = "SensitiveData";
+$key  = random_bytes(32);   // 32 bytes
+$iv   = random_bytes(16);   // 16 bytes
+
+$options = OPENSSL_RAW_DATA;  // Optional
+
+# -------------------------------
+# ENCRYPT
+# -------------------------------
+$cipher = openssl_encrypt(
+    $data,
+    "AES-256-CBC",
+    $key,
+    $options,
+    $iv
+);
+
+$encoded = base64_encode($cipher);
+
+echo "Encrypted: $encoded\n";
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+$decoded = base64_decode($encoded);
+
+$plain = openssl_decrypt(
+    $decoded,
+    "AES-256-CBC",
+    $key,
+    $options,
+    $iv
+);
+
+echo "Decrypted: $plain\n";
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 4. AES-256-GCM (MODERN BEST)</h2>
+
+<pre><code>
+&lt;?php
+
+$data = "PaymentInfo";
+$key  = random_bytes(32);
+$iv   = random_bytes(12);
+
+$options = OPENSSL_RAW_DATA;
+$tag = "";
+$aad = "header-data";
+$tag_length = 16;
+
+# -------------------------------
+# ENCRYPT
+# -------------------------------
+$cipher = openssl_encrypt(
+    $data,
+    "aes-256-gcm",
+    $key,
+    $options,
+    $iv,
+    $tag,
+    $aad,
+    $tag_length
+);
+
+echo "Cipher: " . base64_encode($cipher) . "\n";
+echo "Tag: " . base64_encode($tag) . "\n";
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+$plain = openssl_decrypt(
+    $cipher,
+    "aes-256-gcm",
+    $key,
+    $options,
+    $iv,
+    $tag,
+    $aad
+);
+
+echo "Decrypted: $plain\n";
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 5. AES-ECB (NOT RECOMMENDED)</h2>
+
+<pre><code>
+&lt;?php
+
+$data = "HELLO1234567890";
+$key  = "1234567890123456";
+
+$cipher = openssl_encrypt($data, "AES-128-ECB", $key);
+
+echo base64_encode($cipher);
+
+$plain = openssl_decrypt($cipher, "AES-128-ECB", $key);
+
+echo $plain;
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 6. RSA (PUBLIC / PRIVATE)</h2>
+
+<pre><code>
+&lt;?php
+
+$data = "SecureMessage";
+
+# Generate keys
+$res = openssl_pkey_new();
+
+openssl_pkey_export($res, $private_key);
+$public_key = openssl_pkey_get_details($res)["key"];
+
+# -------------------------------
+# ENCRYPT (PUBLIC)
+# -------------------------------
+openssl_public_encrypt($data, $cipher, $public_key);
+
+# -------------------------------
+# DECRYPT (PRIVATE)
+# -------------------------------
+openssl_private_decrypt($cipher, $plain, $private_key);
+
+echo "Decrypted: $plain\n";
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 7. OPTIONS PARAMETER</h2>
+
+<table border="1">
+<tr><th>Option</th><th>Description</th></tr>
+
+<tr><td>0</td><td>Default (Base64 output)</td></tr>
+<tr><td>OPENSSL_RAW_DATA</td><td>Raw binary output ✔</td></tr>
+<tr><td>OPENSSL_ZERO_PADDING</td><td>No padding</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 8. IV LENGTH CHECK</h2>
+
+<pre><code>
+$iv_length = openssl_cipher_iv_length("aes-256-cbc");
+</code></pre>
+
+<hr>
+
+<h2>📌 9. REAL STORAGE FORMAT</h2>
+
+<pre>
+Base64(
+   IV + CIPHERTEXT + TAG
+)
+</pre>
+
+<hr>
+
+<h2>📌 10. COMMON MISTAKES</h2>
+
+<ul>
+<li>Wrong IV size ❌</li>
+<li>Reusing IV ❌</li>
+<li>Not storing tag (GCM) ❌</li>
+<li>Using ECB ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 11. BEST PRACTICES</h2>
+
+<ul>
+<li>Use AES-256-GCM ✔✔</li>
+<li>Use random IV ✔</li>
+<li>Store IV + tag ✔</li>
+<li>Use base64 ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 12. FINAL SUMMARY</h2>
+
+<pre>
+AES-CBC → Standard
+AES-GCM → Best
+ECB → Avoid
+RSA → Key exchange
+
+Parameters:
+data, cipher, key → Mandatory
+iv → Mandatory (AES)
+tag → Mandatory (GCM decrypt)
+aad → Optional
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PHP — HASHING (COMPLETE PROFESSIONAL GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. Core Hashing Functions</h2>
+
+<pre>
+password_hash(password, algo, options)
+password_verify(password, hash)
+
+hash(algo, data)
+hash_hmac(algo, data, key)
+
+hash_pbkdf2(algo, password, salt, iterations, length, raw_output)
+</pre>
+
+<hr>
+
+<h2>📌 2. PASSWORD_HASH (BCRYPT / ARGON2)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>password</td><td>✔ Mandatory</td><td>User password</td></tr>
+<tr><td>algo</td><td>✔ Mandatory</td><td>PASSWORD_BCRYPT / ARGON2I / ARGON2ID</td></tr>
+<tr><td>options</td><td>⚠ Optional</td><td>cost / memory / time</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 BCRYPT PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$password = "secure123";
+
+$options = [
+    "cost" => 12   // Optional (default 10)
+];
+
+$hash = password_hash($password, PASSWORD_BCRYPT, $options);
+
+echo "Hash: $hash\n";
+
+# VERIFY
+if (password_verify($password, $hash)) {
+    echo "Valid Password\n";
+}
+?>
+</code></pre>
+
+<hr>
+
+<h3>🔹 ARGON2 PROGRAM (BEST)</h3>
+
+<pre><code>
+&lt;?php
+
+$password = "secure123";
+
+$options = [
+    "memory_cost" => 1 << 16,  // Mandatory tuning
+    "time_cost"   => 4,
+    "threads"     => 2
+];
+
+$hash = password_hash($password, PASSWORD_ARGON2ID, $options);
+
+echo "Argon2 Hash: $hash\n";
+
+if (password_verify($password, $hash)) {
+    echo "Valid Password\n";
+}
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 3. HASH() FUNCTION (SHA FAMILY)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>algo</td><td>✔</td><td>sha256, sha512</td></tr>
+<tr><td>data</td><td>✔</td><td>Input</td></tr>
+<tr><td>raw_output</td><td>⚠ Optional</td><td>binary output</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$data = "message";
+
+$hash = hash("sha256", $data);
+
+echo "SHA256: $hash\n";
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 4. HASH_HMAC (API SECURITY)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>algo</td><td>✔</td><td>sha256</td></tr>
+<tr><td>data</td><td>✔</td><td>Message</td></tr>
+<tr><td>key</td><td>✔</td><td>Secret key</td></tr>
+<tr><td>raw_output</td><td>⚠ Optional</td><td>Binary output</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$data = "message";
+$key  = "secret_key";
+
+$hmac = hash_hmac("sha256", $data, $key);
+
+echo "HMAC: $hmac\n";
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 5. PBKDF2 (ADVANCED HASH)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>algo</td><td>✔</td><td>sha256</td></tr>
+<tr><td>password</td><td>✔</td><td>Input password</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random</td></tr>
+<tr><td>iterations</td><td>✔</td><td>10000+</td></tr>
+<tr><td>length</td><td>✔</td><td>Output length</td></tr>
+<tr><td>raw_output</td><td>⚠ Optional</td><td>Binary</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$password = "secure123";
+$salt = random_bytes(16);
+
+$hash = hash_pbkdf2(
+    "sha256",
+    $password,
+    $salt,
+    10000,
+    32,
+    false
+);
+
+echo "PBKDF2: $hash\n";
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 6. PASSWORD NEEDS REHASH</h2>
+
+<pre><code>
+&lt;?php
+
+if (password_needs_rehash($hash, PASSWORD_BCRYPT, ["cost" => 12])) {
+    $hash = password_hash($password, PASSWORD_BCRYPT);
+}
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 7. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Function</th>
+<th>Mandatory</th>
+<th>Optional</th>
+</tr>
+
+<tr><td>password_hash</td><td>password, algo</td><td>options</td></tr>
+<tr><td>hash</td><td>algo, data</td><td>raw_output</td></tr>
+<tr><td>hash_hmac</td><td>algo, data, key</td><td>raw_output</td></tr>
+<tr><td>hash_pbkdf2</td><td>algo, password, salt, iterations, length</td><td>raw_output</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 8. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using md5() ❌</li>
+<li>No salt ❌</li>
+<li>Low cost ❌</li>
+<li>Manual password compare ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 9. BEST PRACTICES</h2>
+
+<ul>
+<li>Use password_hash() ✔✔</li>
+<li>Use Argon2 ✔✔✔</li>
+<li>Use password_verify() ✔</li>
+<li>Use HMAC for APIs ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 10. FINAL SUMMARY</h2>
+
+<pre>
+Password → password_hash (Argon2)
+API → HMAC
+Advanced → PBKDF2
+
+Never use md5/sha1
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔄 PHP — ENCODING & DECODING (COMPLETE GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. What is Encoding?</h2>
+
+<pre>
+Original Data → Encoding → Transfer Format
+Encoded Data → Decoding → Original Data
+</pre>
+
+<ul>
+<li>Reversible ✔</li>
+<li>Used for transport/storage ✔</li>
+<li>Not secure ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. TYPES OF ENCODING</h2>
+
+<ul>
+<li>Base64</li>
+<li>URL Encoding</li>
+<li>HTML Encoding</li>
+<li>JSON Encoding</li>
+<li>UTF-8 Encoding</li>
+<li>HEX Encoding</li>
+</ul>
+
+<hr>
+
+<h2>📌 3. BASE64 (ALL PARAMETERS)</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+base64_encode(data)
+base64_decode(data, strict)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔ Mandatory</td><td>Input data</td></tr>
+<tr><td>strict</td><td>⚠ Optional</td><td>Validate input</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$data = "Hello World";
+
+$encoded = base64_encode($data);
+echo "Encoded: $encoded\n";
+
+$decoded = base64_decode($encoded, true);
+echo "Decoded: $decoded\n";
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 4. URL ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+urlencode(data)
+urldecode(data)
+
+rawurlencode(data)
+rawurldecode(data)
+</pre>
+
+<h3>🔹 DIFFERENCE</h3>
+
+<table border="1">
+<tr><th>Function</th><th>Space Handling</th></tr>
+
+<tr><td>urlencode</td><td>+ (plus)</td></tr>
+<tr><td>rawurlencode</td><td>%20</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$data = "hello world@123";
+
+$enc1 = urlencode($data);
+$enc2 = rawurlencode($data);
+
+echo "URL Enc: $enc1\n";
+echo "Raw URL Enc: $enc2\n";
+
+echo urldecode($enc1);
+echo rawurldecode($enc2);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 5. HTML ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+htmlspecialchars(data, flags, encoding, double_encode)
+htmlentities(data, flags, encoding, double_encode)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Input</td></tr>
+<tr><td>flags</td><td>⚠</td><td>ENT_QUOTES, ENT_HTML5</td></tr>
+<tr><td>encoding</td><td>⚠</td><td>UTF-8</td></tr>
+<tr><td>double_encode</td><td>⚠</td><td>Prevent re-encoding</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$data = "&lt;script&gt;alert('XSS')&lt;/script&gt;";
+
+$safe = htmlspecialchars($data, ENT_QUOTES, "UTF-8", false);
+
+echo $safe;
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 6. JSON ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+json_encode(data, flags, depth)
+json_decode(json, assoc, depth, flags)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Array/Object</td></tr>
+<tr><td>flags</td><td>⚠</td><td>JSON_PRETTY_PRINT</td></tr>
+<tr><td>depth</td><td>⚠</td><td>Default 512</td></tr>
+<tr><td>assoc</td><td>⚠</td><td>Return array</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$data = ["name" => "Aathi", "age" => 22];
+
+$json = json_encode($data, JSON_PRETTY_PRINT);
+
+echo $json;
+
+$arr = json_decode($json, true);
+
+echo $arr["name"];
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 7. UTF-8 ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+mb_convert_encoding(data, to, from)
+utf8_encode(data)
+utf8_decode(data)
+</pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$data = "Hello";
+
+$utf = mb_convert_encoding($data, "UTF-8", "auto");
+
+echo $utf;
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 8. HEX ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+bin2hex(data)
+hex2bin(data)
+</pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+&lt;?php
+
+$data = "Hello";
+
+$hex = bin2hex($data);
+echo $hex;
+
+$text = hex2bin($hex);
+echo $text;
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 9. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Type</th>
+<th>Function</th>
+<th>Mandatory</th>
+<th>Optional</th>
+</tr>
+
+<tr><td>Base64</td><td>base64_encode</td><td>data</td><td>-</td></tr>
+<tr><td>URL</td><td>urlencode</td><td>data</td><td>-</td></tr>
+<tr><td>HTML</td><td>htmlspecialchars</td><td>data</td><td>flags, encoding</td></tr>
+<tr><td>JSON</td><td>json_encode</td><td>data</td><td>flags, depth</td></tr>
+<tr><td>HEX</td><td>bin2hex</td><td>data</td><td>-</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 10. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using Base64 as encryption ❌</li>
+<li>Not escaping HTML ❌ (XSS risk)</li>
+<li>Wrong JSON decode type ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 11. BEST PRACTICES</h2>
+
+<ul>
+<li>Use htmlspecialchars() for user input ✔</li>
+<li>Use JSON for APIs ✔</li>
+<li>Use Base64 for binary data ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 12. FINAL SUMMARY</h2>
+
+<pre>
+Base64 → Transport
+URL → Web safe
+HTML → XSS protection
+JSON → API
+UTF-8 → Encoding standard
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PYTHON — ENCRYPTION & DECRYPTION (COMPLETE GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. Library Used</h2>
+
+<pre><code>
+pip install cryptography
+</code></pre>
+
+<hr>
+
+<h2>📌 2. AES — CBC MODE (ALL PARAMETERS)</h2>
+
+<h3>🔹 MODULES</h3>
+
+<pre><code>
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.padding import PKCS7
+from cryptography.hazmat.backends import default_backend
+import os
+</code></pre>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>data</td><td>✔ Mandatory</td><td>Plain text (bytes)</td></tr>
+<tr><td>key</td><td>✔ Mandatory</td><td>16/24/32 bytes</td></tr>
+<tr><td>iv</td><td>✔ Mandatory</td><td>16 bytes</td></tr>
+<tr><td>backend</td><td>⚠ Optional</td><td>default_backend()</td></tr>
+<tr><td>padding</td><td>✔ Mandatory</td><td>PKCS7</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (CBC)</h3>
+
+<pre><code>
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.padding import PKCS7
+import os
+
+data = b"SensitiveData"
+
+key = os.urandom(32)   # 32 bytes
+iv  = os.urandom(16)   # 16 bytes
+
+# Padding
+padder = PKCS7(128).padder()
+padded_data = padder.update(data) + padder.finalize()
+
+cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
+encryptor = cipher.encryptor()
+
+ciphertext = encryptor.update(padded_data) + encryptor.finalize()
+
+print("Encrypted:", ciphertext)
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+decryptor = cipher.decryptor()
+decrypted_padded = decryptor.update(ciphertext) + decryptor.finalize()
+
+unpadder = PKCS7(128).unpadder()
+plain = unpadder.update(decrypted_padded) + unpadder.finalize()
+
+print("Decrypted:", plain)
+</code></pre>
+
+<hr>
+
+<h2>📌 3. AES — GCM MODE (MODERN BEST)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>key</td><td>✔</td><td>16/24/32 bytes</td></tr>
+<tr><td>nonce</td><td>✔</td><td>Unique IV (12 bytes)</td></tr>
+<tr><td>data</td><td>✔</td><td>Plaintext</td></tr>
+<tr><td>aad</td><td>⚠ Optional</td><td>Additional data</td></tr>
+<tr><td>tag</td><td>✔ (decrypt)</td><td>Authentication tag</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (GCM)</h3>
+
+<pre><code>
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+import os
+
+data = b"PaymentInfo"
+key = AESGCM.generate_key(bit_length=256)
+nonce = os.urandom(12)
+
+aad = b"header-data"
+
+aesgcm = AESGCM(key)
+
+# ENCRYPT
+ciphertext = aesgcm.encrypt(nonce, data, aad)
+
+print("Cipher:", ciphertext)
+
+# DECRYPT
+plain = aesgcm.decrypt(nonce, ciphertext, aad)
+
+print("Decrypted:", plain)
+</code></pre>
+
+<hr>
+
+<h2>📌 4. AES — ECB (NOT RECOMMENDED)</h2>
+
+<pre><code>
+cipher = Cipher(algorithms.AES(key), modes.ECB())
+</code></pre>
+
+<ul>
+<li>No IV ❌</li>
+<li>Pattern leakage ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 5. RSA (PUBLIC / PRIVATE)</h2>
+
+<h3>🔹 MODULES</h3>
+
+<pre><code>
+from cryptography.hazmat.primitives.asymmetric import rsa, padding
+from cryptography.hazmat.primitives import serialization, hashes
+</code></pre>
+
+<hr>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+# Generate keys
+private_key = rsa.generate_private_key(
+    public_exponent=65537,
+    key_size=2048
+)
+
+public_key = private_key.public_key()
+
+data = b"SecureMessage"
+
+# ENCRYPT
+cipher = public_key.encrypt(
+    data,
+    padding.OAEP(
+        mgf=padding.MGF1(algorithm=hashes.SHA256()),
+        algorithm=hashes.SHA256(),
+        label=None
+    )
+)
+
+# DECRYPT
+plain = private_key.decrypt(
+    cipher,
+    padding.OAEP(
+        mgf=padding.MGF1(algorithm=hashes.SHA256()),
+        algorithm=hashes.SHA256(),
+        label=None
+    )
+)
+
+print(plain)
+</code></pre>
+
+<hr>
+
+<h2>📌 6. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Used In</th>
+</tr>
+
+<tr><td>data</td><td>✔</td><td>All</td></tr>
+<tr><td>key</td><td>✔</td><td>AES/RSA</td></tr>
+<tr><td>iv / nonce</td><td>✔</td><td>CBC/GCM</td></tr>
+<tr><td>aad</td><td>⚠</td><td>GCM</td></tr>
+<tr><td>tag</td><td>✔</td><td>GCM decrypt</td></tr>
+<tr><td>padding</td><td>✔</td><td>CBC/RSA</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. COMMON MISTAKES</h2>
+
+<ul>
+<li>Not using padding in CBC ❌</li>
+<li>Reusing nonce in GCM ❌</li>
+<li>Using ECB ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 8. BEST PRACTICES</h2>
+
+<ul>
+<li>Use AES-GCM ✔✔</li>
+<li>Use random nonce ✔</li>
+<li>Use RSA-OAEP ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 9. FINAL SUMMARY</h2>
+
+<pre>
+CBC → needs padding
+GCM → best modern
+ECB → avoid
+RSA → key exchange
+
+Key + IV/Nonce + Mode = core
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 PYTHON — HASHING (COMPLETE GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. Core Libraries</h2>
+
+<pre><code>
+import hashlib
+import hmac
+import os
+</code></pre>
+
+<hr>
+
+<h2>📌 2. HASHLIB (SHA FAMILY)</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+hashlib.sha256(data)
+hashlib.sha512(data)
+hashlib.md5(data)  # ❌ avoid
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>data</td><td>✔ Mandatory</td><td>Bytes input</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import hashlib
+
+data = b"password123"
+
+hash_obj = hashlib.sha256(data)
+hash_hex = hash_obj.hexdigest()
+
+print("SHA256:", hash_hex)
+</code></pre>
+
+<hr>
+
+<h2>📌 3. SALT</h2>
+
+<pre><code>
+import os
+salt = os.urandom(16)
+
+hash_val = hashlib.sha256(salt + data).hexdigest()
+</code></pre>
+
+<hr>
+
+<h2>📌 4. PBKDF2</h2>
+
+<h3>🔹 FUNCTION</h3>
+
+<pre>
+hashlib.pbkdf2_hmac(hash_name, password, salt, iterations, dklen)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>hash_name</td><td>✔</td><td>sha256 / sha512</td></tr>
+<tr><td>password</td><td>✔</td><td>Bytes</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random</td></tr>
+<tr><td>iterations</td><td>✔</td><td>10000+</td></tr>
+<tr><td>dklen</td><td>✔</td><td>Key length</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import hashlib, os
+
+password = b"secure123"
+salt = os.urandom(16)
+
+hash_val = hashlib.pbkdf2_hmac(
+    "sha256",
+    password,
+    salt,
+    100000,
+    32
+)
+
+print(hash_val)
+</code></pre>
+
+<hr>
+
+<h2>📌 5. BCRYPT</h2>
+
+<h3>🔹 INSTALL</h3>
+
+<pre><code>pip install bcrypt</code></pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>password</td><td>✔</td><td>Bytes</td></tr>
+<tr><td>salt</td><td>✔</td><td>Generated internally</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import bcrypt
+
+password = b"secure123"
+
+hash_val = bcrypt.hashpw(password, bcrypt.gensalt(12))
+
+print(hash_val)
+
+# VERIFY
+if bcrypt.checkpw(password, hash_val):
+    print("Valid Password")
+</code></pre>
+
+<hr>
+
+<h2>📌 6. ARGON2 (BEST)</h2>
+
+<h3>🔹 INSTALL</h3>
+
+<pre><code>pip install argon2-cffi</code></pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>password</td><td>✔</td><td>String</td></tr>
+<tr><td>time_cost</td><td>✔</td><td>Iterations</td></tr>
+<tr><td>memory_cost</td><td>✔</td><td>Memory</td></tr>
+<tr><td>parallelism</td><td>✔</td><td>Threads</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+from argon2 import PasswordHasher
+
+ph = PasswordHasher(
+    time_cost=3,
+    memory_cost=65536,
+    parallelism=2
+)
+
+password = "secure123"
+
+hash_val = ph.hash(password)
+
+print(hash_val)
+
+# VERIFY
+ph.verify(hash_val, password)
+</code></pre>
+
+<hr>
+
+<h2>📌 7. HMAC</h2>
+
+<h3>🔹 FUNCTION</h3>
+
+<pre>
+hmac.new(key, data, hashlib.sha256)
+</pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import hmac, hashlib
+
+key = b"secret"
+data = b"message"
+
+h = hmac.new(key, data, hashlib.sha256)
+
+print(h.hexdigest())
+</code></pre>
+
+<hr>
+
+<h2>📌 8. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Method</th>
+<th>Mandatory</th>
+<th>Optional</th>
+</tr>
+
+<tr><td>sha256</td><td>data</td><td>-</td></tr>
+<tr><td>pbkdf2</td><td>password, salt, iterations</td><td>dklen</td></tr>
+<tr><td>bcrypt</td><td>password</td><td>cost</td></tr>
+<tr><td>argon2</td><td>password</td><td>memory, time</td></tr>
+<tr><td>hmac</td><td>key, data</td><td>algorithm</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 9. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using md5 ❌</li>
+<li>No salt ❌</li>
+<li>Low iteration ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 10. BEST PRACTICES</h2>
+
+<ul>
+<li>Use Argon2 ✔✔✔</li>
+<li>Use bcrypt ✔✔</li>
+<li>Use PBKDF2 if needed ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 11. FINAL SUMMARY</h2>
+
+<pre>
+SHA → Fast
+PBKDF2 → Secure
+Bcrypt → Strong
+Argon2 → Best
+
+Password → Argon2
+API → HMAC
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔄 PYTHON — ENCODING & DECODING (COMPLETE GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. What is Encoding?</h2>
+
+<pre>
+Data → Encoding → Transfer Format
+Encoded → Decoding → Original Data
+</pre>
+
+<ul>
+<li>Reversible ✔</li>
+<li>Used for APIs, files, DB ✔</li>
+<li>Not for security ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. TYPES OF ENCODING</h2>
+
+<ul>
+<li>Base64</li>
+<li>URL Encoding</li>
+<li>UTF-8 Encoding</li>
+<li>JSON Encoding</li>
+<li>HEX Encoding</li>
+<li>Binary Encoding</li>
+</ul>
+
+<hr>
+
+<h2>📌 3. BASE64 (ALL PARAMETERS)</h2>
+
+<h3>🔹 MODULE</h3>
+<pre><code>import base64</code></pre>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+base64.b64encode(data)
+base64.b64decode(data, validate=False)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔ Mandatory</td><td>Bytes input</td></tr>
+<tr><td>validate</td><td>⚠ Optional</td><td>Strict validation</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import base64
+
+data = b"Hello World"
+
+encoded = base64.b64encode(data)
+print("Encoded:", encoded)
+
+decoded = base64.b64decode(encoded, validate=True)
+print("Decoded:", decoded)
+</code></pre>
+
+<hr>
+
+<h2>📌 4. URL ENCODING</h2>
+
+<h3>🔹 MODULE</h3>
+<pre><code>import urllib.parse</code></pre>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+urllib.parse.quote(data, safe)
+urllib.parse.unquote(data)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Input string</td></tr>
+<tr><td>safe</td><td>⚠</td><td>Characters not encoded</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import urllib.parse
+
+data = "hello world@123"
+
+encoded = urllib.parse.quote(data)
+print(encoded)
+
+decoded = urllib.parse.unquote(encoded)
+print(decoded)
+</code></pre>
+
+<hr>
+
+<h2>📌 5. UTF-8 ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+str.encode(encoding)
+bytes.decode(encoding)
+</pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+text = "Hello"
+
+encoded = text.encode("utf-8")
+print(encoded)
+
+decoded = encoded.decode("utf-8")
+print(decoded)
+</code></pre>
+
+<hr>
+
+<h2>📌 6. JSON ENCODING</h2>
+
+<h3>🔹 MODULE</h3>
+<pre><code>import json</code></pre>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+json.dumps(data)
+json.loads(json_string)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Dict/List</td></tr>
+<tr><td>indent</td><td>⚠</td><td>Pretty print</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import json
+
+data = {"name": "Aathi", "age": 22}
+
+json_str = json.dumps(data, indent=2)
+print(json_str)
+
+obj = json.loads(json_str)
+print(obj["name"])
+</code></pre>
+
+<hr>
+
+<h2>📌 7. HEX ENCODING</h2>
+
+<pre><code>
+data = b"Hello"
+
+hex_val = data.hex()
+print(hex_val)
+
+text = bytes.fromhex(hex_val)
+print(text)
+</code></pre>
+
+<hr>
+
+<h2>📌 8. BINARY ENCODING</h2>
+
+<pre><code>
+data = "A"
+
+binary = format(ord(data), '08b')
+print(binary)
+
+text = chr(int(binary, 2))
+print(text)
+</code></pre>
+
+<hr>
+
+<h2>📌 9. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Type</th>
+<th>Function</th>
+<th>Mandatory</th>
+<th>Optional</th>
+</tr>
+
+<tr><td>Base64</td><td>b64encode</td><td>data</td><td>-</td></tr>
+<tr><td>URL</td><td>quote</td><td>data</td><td>safe</td></tr>
+<tr><td>JSON</td><td>dumps</td><td>data</td><td>indent</td></tr>
+<tr><td>UTF-8</td><td>encode</td><td>data</td><td>-</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 10. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using Base64 as encryption ❌</li>
+<li>Wrong encoding type ❌</li>
+<li>Double encoding ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 11. BEST PRACTICES</h2>
+
+<ul>
+<li>Use JSON for APIs ✔</li>
+<li>Use UTF-8 always ✔</li>
+<li>Use Base64 for binary ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 12. FINAL SUMMARY</h2>
+
+<pre>
+Base64 → Transport
+URL → Web safe
+JSON → API
+UTF-8 → Standard
+HEX → Debugging
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 JAVASCRIPT — ENCRYPTION & DECRYPTION (COMPLETE GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. ENVIRONMENTS</h2>
+
+<ul>
+<li>Browser → Web Crypto API (crypto.subtle)</li>
+<li>Node.js → crypto module</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. AES-GCM (MODERN BEST — BROWSER)</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+crypto.subtle.generateKey()
+crypto.subtle.encrypt()
+crypto.subtle.decrypt()
+</pre>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>algorithm</td><td>✔</td><td>{ name: "AES-GCM", iv }</td></tr>
+<tr><td>key</td><td>✔</td><td>CryptoKey</td></tr>
+<tr><td>data</td><td>✔</td><td>ArrayBuffer</td></tr>
+<tr><td>iv</td><td>✔</td><td>12-byte random</td></tr>
+<tr><td>tagLength</td><td>⚠</td><td>Default 128</td></tr>
+<tr><td>additionalData</td><td>⚠</td><td>AAD</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM (BROWSER)</h3>
+
+<pre><code>
+async function run() {
+
+  const data = new TextEncoder().encode("SensitiveData");
+
+  // Generate Key
+  const key = await crypto.subtle.generateKey(
+    { name: "AES-GCM", length: 256 },
+    true,
+    ["encrypt", "decrypt"]
+  );
+
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+
+  // ENCRYPT
+  const cipher = await crypto.subtle.encrypt(
+    {
+      name: "AES-GCM",
+      iv: iv,
+      tagLength: 128
+    },
+    key,
+    data
+  );
+
+  console.log("Encrypted:", new Uint8Array(cipher));
+
+  // DECRYPT
+  const plain = await crypto.subtle.decrypt(
+    {
+      name: "AES-GCM",
+      iv: iv,
+      tagLength: 128
+    },
+    key,
+    cipher
+  );
+
+  console.log("Decrypted:", new TextDecoder().decode(plain));
+}
+
+run();
+</code></pre>
+
+<hr>
+
+<h2>📌 3. AES-CBC (NODE.JS)</h2>
+
+<h3>🔹 MODULE</h3>
+<pre><code>const crypto = require("crypto");</code></pre>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>algorithm</td><td>✔</td><td>aes-256-cbc</td></tr>
+<tr><td>key</td><td>✔</td><td>32 bytes</td></tr>
+<tr><td>iv</td><td>✔</td><td>16 bytes</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+const crypto = require("crypto");
+
+const data = "SensitiveData";
+
+const key = crypto.randomBytes(32);
+const iv  = crypto.randomBytes(16);
+
+# -------------------------------
+# ENCRYPT
+# -------------------------------
+const cipher = crypto.createCipheriv(
+  "aes-256-cbc",
+  key,
+  iv
+);
+
+let encrypted = cipher.update(data, "utf8", "hex");
+encrypted += cipher.final("hex");
+
+console.log("Encrypted:", encrypted);
+
+# -------------------------------
+# DECRYPT
+# -------------------------------
+const decipher = crypto.createDecipheriv(
+  "aes-256-cbc",
+  key,
+  iv
+);
+
+let decrypted = decipher.update(encrypted, "hex", "utf8");
+decrypted += decipher.final("utf8");
+
+console.log("Decrypted:", decrypted);
+</code></pre>
+
+<hr>
+
+<h2>📌 4. AES-GCM (NODE.JS)</h2>
+
+<pre><code>
+const crypto = require("crypto");
+
+const key = crypto.randomBytes(32);
+const iv  = crypto.randomBytes(12);
+
+const cipher = crypto.createCipheriv("aes-256-gcm", key, iv);
+
+let encrypted = cipher.update("PaymentInfo", "utf8");
+encrypted = Buffer.concat([encrypted, cipher.final()]);
+
+const tag = cipher.getAuthTag();
+
+# DECRYPT
+const decipher = crypto.createDecipheriv("aes-256-gcm", key, iv);
+decipher.setAuthTag(tag);
+
+let decrypted = decipher.update(encrypted);
+decrypted = Buffer.concat([decrypted, decipher.final()]);
+
+console.log(decrypted.toString());
+</code></pre>
+
+<hr>
+
+<h2>📌 5. RSA (NODE.JS)</h2>
+
+<pre><code>
+const crypto = require("crypto");
+
+const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
+  modulusLength: 2048
+});
+
+const data = Buffer.from("SecureMessage");
+
+# ENCRYPT
+const cipher = crypto.publicEncrypt(publicKey, data);
+
+# DECRYPT
+const plain = crypto.privateDecrypt(privateKey, cipher);
+
+console.log(plain.toString());
+</code></pre>
+
+<hr>
+
+<h2>📌 6. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Used In</th>
+</tr>
+
+<tr><td>data</td><td>✔</td><td>All</td></tr>
+<tr><td>key</td><td>✔</td><td>AES/RSA</td></tr>
+<tr><td>iv</td><td>✔</td><td>CBC/GCM</td></tr>
+<tr><td>tag</td><td>✔</td><td>GCM</td></tr>
+<tr><td>aad</td><td>⚠</td><td>GCM</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. COMMON MISTAKES</h2>
+
+<ul>
+<li>Reusing IV in GCM ❌</li>
+<li>Not storing tag ❌</li>
+<li>Using ECB ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 8. BEST PRACTICES</h2>
+
+<ul>
+<li>Use AES-GCM ✔✔</li>
+<li>Use Web Crypto in browser ✔</li>
+<li>Use RSA-OAEP ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 9. FINAL SUMMARY</h2>
+
+<pre>
+Browser → crypto.subtle
+Node → crypto module
+
+AES-GCM → Best
+CBC → Needs padding
+RSA → Key exchange
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 JAVASCRIPT — HASHING (COMPLETE GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. ENVIRONMENTS</h2>
+
+<ul>
+<li>Browser → crypto.subtle</li>
+<li>Node.js → crypto module / bcrypt</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. SHA-256 (BROWSER)</h2>
+
+<h3>🔹 FUNCTION</h3>
+
+<pre>
+crypto.subtle.digest(algorithm, data)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>algorithm</td><td>✔</td><td>"SHA-256"</td></tr>
+<tr><td>data</td><td>✔</td><td>ArrayBuffer</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+async function hashData() {
+  const data = new TextEncoder().encode("password123");
+
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+
+  console.log("SHA256:", hashHex);
+}
+
+hashData();
+</code></pre>
+
+<hr>
+
+<h2>📌 3. PBKDF2 (BROWSER)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr>
+<th>Parameter</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+
+<tr><td>password</td><td>✔</td><td>Base key</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random</td></tr>
+<tr><td>iterations</td><td>✔</td><td>10000+</td></tr>
+<tr><td>hash</td><td>✔</td><td>SHA-256</td></tr>
+<tr><td>length</td><td>✔</td><td>Key length</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+async function pbkdf2() {
+
+  const password = new TextEncoder().encode("secure123");
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+
+  const keyMaterial = await crypto.subtle.importKey(
+    "raw",
+    password,
+    { name: "PBKDF2" },
+    false,
+    ["deriveBits"]
+  );
+
+  const derived = await crypto.subtle.deriveBits(
+    {
+      name: "PBKDF2",
+      salt: salt,
+      iterations: 100000,
+      hash: "SHA-256"
+    },
+    keyMaterial,
+    256
+  );
+
+  console.log(new Uint8Array(derived));
+}
+
+pbkdf2();
+</code></pre>
+
+<hr>
+
+<h2>📌 4. BCRYPT (NODE.JS)</h2>
+
+<h3>🔹 INSTALL</h3>
+
+<pre><code>npm install bcrypt</code></pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+const bcrypt = require("bcrypt");
+
+const password = "secure123";
+
+const saltRounds = 12;
+
+bcrypt.hash(password, saltRounds, (err, hash) => {
+  console.log("Hash:", hash);
+
+  bcrypt.compare(password, hash, (err, result) => {
+    console.log("Valid:", result);
+  });
+});
+</code></pre>
+
+<hr>
+
+<h2>📌 5. HMAC (NODE.JS)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>algorithm</td><td>✔</td><td>sha256</td></tr>
+<tr><td>key</td><td>✔</td><td>Secret</td></tr>
+<tr><td>data</td><td>✔</td><td>Message</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+const crypto = require("crypto");
+
+const hmac = crypto.createHmac("sha256", "secret_key")
+                   .update("message")
+                   .digest("hex");
+
+console.log(hmac);
+</code></pre>
+
+<hr>
+
+<h2>📌 6. SCRYPT (NODE.JS)</h2>
+
+<h3>🔹 FUNCTION</h3>
+
+<pre>
+crypto.scrypt(password, salt, keylen, options, callback)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>password</td><td>✔</td><td>Input</td></tr>
+<tr><td>salt</td><td>✔</td><td>Random</td></tr>
+<tr><td>keylen</td><td>✔</td><td>Output length</td></tr>
+<tr><td>options</td><td>⚠</td><td>N, r, p</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+const crypto = require("crypto");
+
+crypto.scrypt("password", "salt", 32, (err, key) => {
+  console.log(key.toString("hex"));
+});
+</code></pre>
+
+<hr>
+
+<h2>📌 7. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Method</th>
+<th>Mandatory</th>
+<th>Optional</th>
+</tr>
+
+<tr><td>SHA256</td><td>data</td><td>-</td></tr>
+<tr><td>PBKDF2</td><td>password, salt, iterations</td><td>length</td></tr>
+<tr><td>bcrypt</td><td>password</td><td>saltRounds</td></tr>
+<tr><td>HMAC</td><td>key, data</td><td>algorithm</td></tr>
+<tr><td>scrypt</td><td>password, salt</td><td>N, r, p</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 8. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using SHA256 for passwords ❌</li>
+<li>No salt ❌</li>
+<li>Low iterations ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 9. BEST PRACTICES</h2>
+
+<ul>
+<li>Use bcrypt ✔✔</li>
+<li>Use scrypt ✔✔</li>
+<li>Use PBKDF2 ✔</li>
+<li>Use HMAC for APIs ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 10. FINAL SUMMARY</h2>
+
+<pre>
+SHA → Fast
+PBKDF2 → Secure
+bcrypt → Strong
+scrypt → Memory hard
+
+Password → bcrypt / scrypt
+API → HMAC
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔄 JAVASCRIPT — ENCODING & DECODING (COMPLETE GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. What is Encoding?</h2>
+
+<pre>
+Data → Encoding → Transfer Format
+Encoded → Decoding → Original Data
+</pre>
+
+<ul>
+<li>Reversible ✔</li>
+<li>Used in APIs, browser, network ✔</li>
+<li>Not secure ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. TYPES OF ENCODING</h2>
+
+<ul>
+<li>Base64</li>
+<li>URL Encoding</li>
+<li>UTF-8 Encoding</li>
+<li>JSON Encoding</li>
+<li>HEX Encoding</li>
+<li>Binary Encoding</li>
+</ul>
+
+<hr>
+
+<h2>📌 3. BASE64 (BROWSER)</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+btoa(data)
+atob(data)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>String (ASCII only)</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+let data = "Hello";
+
+let encoded = btoa(data);
+console.log(encoded);
+
+let decoded = atob(encoded);
+console.log(decoded);
+</code></pre>
+
+<hr>
+
+<h2>📌 4. BASE64 (NODE.JS)</h2>
+
+<pre><code>
+let data = "Hello";
+
+let encoded = Buffer.from(data).toString("base64");
+console.log(encoded);
+
+let decoded = Buffer.from(encoded, "base64").toString("utf8");
+console.log(decoded);
+</code></pre>
+
+<hr>
+
+<h2>📌 5. URL ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+encodeURIComponent(data)
+decodeURIComponent(data)
+
+encodeURI(data)
+decodeURI(data)
+</pre>
+
+<h3>🔹 DIFFERENCE</h3>
+
+<table border="1">
+<tr><th>Function</th><th>Usage</th></tr>
+
+<tr><td>encodeURI</td><td>Full URL</td></tr>
+<tr><td>encodeURIComponent</td><td>Query param</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+let data = "hello world@123";
+
+let enc = encodeURIComponent(data);
+console.log(enc);
+
+let dec = decodeURIComponent(enc);
+console.log(dec);
+</code></pre>
+
+<hr>
+
+<h2>📌 6. UTF-8 ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+TextEncoder()
+TextDecoder()
+</pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+let text = "Hello";
+
+let encoder = new TextEncoder();
+let encoded = encoder.encode(text);
+
+console.log(encoded);
+
+let decoder = new TextDecoder();
+let decoded = decoder.decode(encoded);
+
+console.log(decoded);
+</code></pre>
+
+<hr>
+
+<h2>📌 7. JSON ENCODING</h2>
+
+<h3>🔹 FUNCTIONS</h3>
+
+<pre>
+JSON.stringify(data)
+JSON.parse(json)
+</pre>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Object</td></tr>
+<tr><td>replacer</td><td>⚠</td><td>Filter fields</td></tr>
+<tr><td>space</td><td>⚠</td><td>Formatting</td></tr>
+
+</table>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+let obj = { name: "Aathi", age: 22 };
+
+let json = JSON.stringify(obj, null, 2);
+console.log(json);
+
+let parsed = JSON.parse(json);
+console.log(parsed.name);
+</code></pre>
+
+<hr>
+
+<h2>📌 8. HEX ENCODING</h2>
+
+<pre><code>
+let data = "Hello";
+
+let hex = Buffer.from(data).toString("hex");
+console.log(hex);
+
+let text = Buffer.from(hex, "hex").toString("utf8");
+console.log(text);
+</code></pre>
+
+<hr>
+
+<h2>📌 9. BINARY ENCODING</h2>
+
+<pre><code>
+let char = "A";
+
+let binary = char.charCodeAt(0).toString(2).padStart(8, "0");
+console.log(binary);
+
+let text = String.fromCharCode(parseInt(binary, 2));
+console.log(text);
+</code></pre>
+
+<hr>
+
+<h2>📌 10. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Type</th>
+<th>Function</th>
+<th>Mandatory</th>
+<th>Optional</th>
+</tr>
+
+<tr><td>Base64</td><td>btoa</td><td>data</td><td>-</td></tr>
+<tr><td>URL</td><td>encodeURIComponent</td><td>data</td><td>-</td></tr>
+<tr><td>JSON</td><td>stringify</td><td>data</td><td>replacer, space</td></tr>
+<tr><td>UTF-8</td><td>TextEncoder</td><td>data</td><td>-</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 11. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using btoa for Unicode ❌</li>
+<li>Using Base64 as encryption ❌</li>
+<li>Double encoding ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 12. BEST PRACTICES</h2>
+
+<ul>
+<li>Use JSON for APIs ✔</li>
+<li>Use UTF-8 always ✔</li>
+<li>Use Base64 for binary ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 13. FINAL SUMMARY</h2>
+
+<pre>
+Base64 → Transport
+URL → Web safe
+JSON → API
+UTF-8 → Standard
+HEX → Debugging
+</pre>
+
+</section>
+
+<section>
+
+<h1>🔐 JAVA — ENCRYPTION + HASHING + ENCODING (MASTER GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. AES — CBC MODE (ALL PARAMETERS)</h2>
+
+<h3>🔹 IMPORTS</h3>
+
+<pre><code>
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.spec.PKCS8EncodedKeySpec;
+import java.util.Base64;
+import java.security.SecureRandom;
+</code></pre>
+
+<hr>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>data</td><td>✔</td><td>Plain text</td></tr>
+<tr><td>key</td><td>✔</td><td>16/24/32 bytes</td></tr>
+<tr><td>iv</td><td>✔</td><td>16 bytes</td></tr>
+<tr><td>algorithm</td><td>✔</td><td>AES/CBC/PKCS5Padding</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+String data = "SensitiveData";
+
+KeyGenerator kg = KeyGenerator.getInstance("AES");
+kg.init(256);
+SecretKey key = kg.generateKey();
+
+byte[] iv = new byte[16];
+new SecureRandom().nextBytes(iv);
+IvParameterSpec ivSpec = new IvParameterSpec(iv);
+
+// ENCRYPT
+Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+cipher.init(Cipher.ENCRYPT_MODE, key, ivSpec);
+
+byte[] encrypted = cipher.doFinal(data.getBytes());
+
+String enc = Base64.getEncoder().encodeToString(encrypted);
+System.out.println(enc);
+
+// DECRYPT
+cipher.init(Cipher.DECRYPT_MODE, key, ivSpec);
+byte[] decrypted = cipher.doFinal(Base64.getDecoder().decode(enc));
+
+System.out.println(new String(decrypted));
+</code></pre>
+
+<hr>
+
+<h2>📌 2. AES — GCM MODE (BEST)</h2>
+
+<h3>🔹 PARAMETERS</h3>
+
+<table border="1">
+<tr><th>Parameter</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>key</td><td>✔</td><td>Secret key</td></tr>
+<tr><td>iv</td><td>✔</td><td>12 bytes</td></tr>
+<tr><td>tagLength</td><td>✔</td><td>128 bits</td></tr>
+<tr><td>aad</td><td>⚠</td><td>Optional data</td></tr>
+
+</table>
+
+<hr>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import javax.crypto.spec.GCMParameterSpec;
+
+byte[] iv = new byte[12];
+new SecureRandom().nextBytes(iv);
+
+GCMParameterSpec spec = new GCMParameterSpec(128, iv);
+
+Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+
+// ENCRYPT
+cipher.init(Cipher.ENCRYPT_MODE, key, spec);
+byte[] encrypted = cipher.doFinal("PaymentInfo".getBytes());
+
+// DECRYPT
+cipher.init(Cipher.DECRYPT_MODE, key, spec);
+byte[] decrypted = cipher.doFinal(encrypted);
+
+System.out.println(new String(decrypted));
+</code></pre>
+
+<hr>
+
+<h2>📌 3. RSA (PUBLIC / PRIVATE)</h2>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+import java.security.*;
+import javax.crypto.Cipher;
+
+KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA");
+kpg.initialize(2048);
+
+KeyPair kp = kpg.generateKeyPair();
+
+PublicKey pub = kp.getPublic();
+PrivateKey priv = kp.getPrivate();
+
+Cipher cipher = Cipher.getInstance("RSA");
+
+// ENCRYPT
+cipher.init(Cipher.ENCRYPT_MODE, pub);
+byte[] enc = cipher.doFinal("SecureMessage".getBytes());
+
+// DECRYPT
+cipher.init(Cipher.DECRYPT_MODE, priv);
+byte[] dec = cipher.doFinal(enc);
+
+System.out.println(new String(dec));
+</code></pre>
+
+<hr>
+
+<h2>📌 4. HASHING (SHA, PBKDF2, BCRYPT)</h2>
+
+<h3>🔹 SHA-256</h3>
+
+<pre><code>
+import java.security.MessageDigest;
+
+MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+byte[] hash = md.digest("password123".getBytes());
+
+System.out.println(Base64.getEncoder().encodeToString(hash));
+</code></pre>
+
+<hr>
+
+<h3>🔹 PBKDF2</h3>
+
+<pre><code>
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+
+char[] password = "secure123".toCharArray();
+byte[] salt = new byte[16];
+new SecureRandom().nextBytes(salt);
+
+PBEKeySpec spec = new PBEKeySpec(password, salt, 10000, 256);
+
+SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
+
+byte[] hash = skf.generateSecret(spec).getEncoded();
+
+System.out.println(Base64.getEncoder().encodeToString(hash));
+</code></pre>
+
+<hr>
+
+<h3>🔹 BCRYPT (LIBRARY REQUIRED)</h3>
+
+<pre><code>
+import org.mindrot.jbcrypt.BCrypt;
+
+String hash = BCrypt.hashpw("password", BCrypt.gensalt(12));
+
+boolean valid = BCrypt.checkpw("password", hash);
+
+System.out.println(valid);
+</code></pre>
+
+<hr>
+
+<h2>📌 5. HMAC</h2>
+
+<pre><code>
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+String key = "secret";
+
+Mac mac = Mac.getInstance("HmacSHA256");
+
+SecretKeySpec sk = new SecretKeySpec(key.getBytes(), "HmacSHA256");
+
+mac.init(sk);
+
+byte[] hmac = mac.doFinal("message".getBytes());
+
+System.out.println(Base64.getEncoder().encodeToString(hmac));
+</code></pre>
+
+<hr>
+
+<h2>📌 6. ENCODING (BASE64, URL, JSON)</h2>
+
+<h3>🔹 BASE64</h3>
+
+<pre><code>
+String enc = Base64.getEncoder().encodeToString("Hello".getBytes());
+
+String dec = new String(Base64.getDecoder().decode(enc));
+</code></pre>
+
+<hr>
+
+<h3>🔹 URL</h3>
+
+<pre><code>
+import java.net.URLEncoder;
+import java.net.URLDecoder;
+
+String enc = URLEncoder.encode("hello world", "UTF-8");
+String dec = URLDecoder.decode(enc, "UTF-8");
+</code></pre>
+
+<hr>
+
+<h3>🔹 JSON (USING LIB)</h3>
+
+<pre><code>
+import com.google.gson.Gson;
+
+Gson g = new Gson();
+
+String json = g.toJson("Hello");
+
+String val = g.fromJson(json, String.class);
+</code></pre>
+
+<hr>
+
+<h2>📌 7. ALL PARAMETERS SUMMARY</h2>
+
+<table border="1">
+<tr>
+<th>Type</th>
+<th>Mandatory</th>
+<th>Optional</th>
+</tr>
+
+<tr><td>AES</td><td>key, iv, data</td><td>aad</td></tr>
+<tr><td>RSA</td><td>public/private key</td><td>-</td></tr>
+<tr><td>PBKDF2</td><td>password, salt, iterations</td><td>length</td></tr>
+<tr><td>HMAC</td><td>key, data</td><td>algorithm</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 8. COMMON MISTAKES</h2>
+
+<ul>
+<li>Using ECB ❌</li>
+<li>Reusing IV ❌</li>
+<li>No salt ❌</li>
+<li>Using SHA for passwords ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 9. BEST PRACTICES</h2>
+
+<ul>
+<li>Use AES-GCM ✔✔</li>
+<li>Use PBKDF2 / BCrypt ✔✔</li>
+<li>Use HMAC for APIs ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 10. FINAL MASTER SUMMARY</h2>
+
+<pre>
+ENCRYPTION:
+AES-GCM → Best
+AES-CBC → Standard
+RSA → Key exchange
+
+HASHING:
+Argon2 → Best
+Bcrypt → Strong
+PBKDF2 → Standard
+
+ENCODING:
+Base64 → Transport
+JSON → API
+URL → Web
+
+RULE:
+Encrypt → Secure data
+Hash → Store password
+Encode → Transfer data
+</pre>
+
+</section>
+
+<section>
+
+<h1>🚀 SECURE API DESIGN — COMPLETE PROFESSIONAL FLOW</h1>
+
+<hr>
+
+<h2>📌 1. COMPLETE FLOW OVERVIEW</h2>
+
+<pre>
+CLIENT → LOGIN → SERVER
+       → VERIFY PASSWORD (HASH)
+       → GENERATE TOKEN (JWT)
+
+CLIENT → SEND TOKEN → API
+       → VERIFY TOKEN
+       → PROCESS REQUEST
+</pre>
+
+<hr>
+
+<h2>📌 2. COMPONENTS USED</h2>
+
+<table border="1">
+<tr><th>Component</th><th>Purpose</th></tr>
+
+<tr><td>Hashing</td><td>Password storage</td></tr>
+<tr><td>JWT</td><td>Authentication</td></tr>
+<tr><td>HMAC</td><td>Integrity</td></tr>
+<tr><td>Encryption</td><td>Data protection</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 3. PASSWORD STORAGE (HASH)</h2>
+
+<pre>
+User Password → bcrypt/argon2 → Store in DB
+</pre>
+
+<pre><code>
+// Example (Node.js)
+const bcrypt = require("bcrypt");
+
+const hash = await bcrypt.hash("password123", 12);
+</code></pre>
+
+<hr>
+
+<h2>📌 4. LOGIN FLOW</h2>
+
+<pre>
+1. User sends username + password
+2. Fetch hash from DB
+3. Compare using bcrypt.compare()
+4. If valid → generate JWT
+</pre>
+
+<pre><code>
+const valid = await bcrypt.compare(password, storedHash);
+</code></pre>
+
+<hr>
+
+<h2>📌 5. JWT TOKEN (STRUCTURE)</h2>
+
+<pre>
+HEADER.PAYLOAD.SIGNATURE
+</pre>
+
+<h3>🔹 HEADER</h3>
+<pre>{ "alg": "HS256", "typ": "JWT" }</pre>
+
+<h3>🔹 PAYLOAD</h3>
+<pre>{ "userId": 101, "exp": time }</pre>
+
+<h3>🔹 SIGNATURE</h3>
+<pre>
+HMACSHA256(
+  base64(header) + "." + base64(payload),
+  secret
+)
+</pre>
+
+<hr>
+
+<h2>📌 6. JWT GENERATION</h2>
+
+<pre><code>
+const jwt = require("jsonwebtoken");
+
+const token = jwt.sign(
+  { userId: 101 },
+  "secret_key",
+  { expiresIn: "1h" }
+);
+</code></pre>
+
+<hr>
+
+<h2>📌 7. JWT VERIFICATION</h2>
+
+<pre><code>
+try {
+  const decoded = jwt.verify(token, "secret_key");
+  console.log(decoded.userId);
+} catch (err) {
+  console.log("Invalid Token");
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 8. HMAC FOR API SECURITY</h2>
+
+<h3>🔹 WHY?</h3>
+<ul>
+<li>Ensure request not modified ✔</li>
+</ul>
+
+<h3>🔹 FLOW</h3>
+
+<pre>
+Client:
+HMAC(data + timestamp, secret)
+
+Server:
+Recalculate → compare
+</pre>
+
+<h3>🔹 PROGRAM</h3>
+
+<pre><code>
+const crypto = require("crypto");
+
+const data = "amount=100";
+const secret = "key";
+
+const signature = crypto
+  .createHmac("sha256", secret)
+  .update(data)
+  .digest("hex");
+</code></pre>
+
+<hr>
+
+<h2>📌 9. ENCRYPTION (OPTIONAL LAYER)</h2>
+
+<pre>
+Sensitive Data → AES-GCM → Send → Decrypt
+</pre>
+
+<ul>
+<li>Used for banking / payments ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 10. COMPLETE REQUEST FLOW</h2>
+
+<pre>
+CLIENT:
+  Send Request:
+    Authorization: Bearer JWT
+    X-Signature: HMAC
+
+SERVER:
+  1. Verify JWT
+  2. Verify HMAC
+  3. Process request
+  4. Send response
+</pre>
+
+<hr>
+
+<h2>📌 11. ERROR CODES (LIKE YOU ASKED 🔥)</h2>
+
+<table border="1">
+<tr><th>Code</th><th>Meaning</th></tr>
+
+<tr><td>000</td><td>Success</td></tr>
+<tr><td>001</td><td>Invalid Mobile</td></tr>
+<tr><td>002</td><td>Invalid Password</td></tr>
+<tr><td>401</td><td>Unauthorized</td></tr>
+<tr><td>999</td><td>Failure</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 12. SECURITY BEST PRACTICES</h2>
+
+<ul>
+<li>Never store plain password ❌</li>
+<li>Use HTTPS ✔</li>
+<li>Rotate keys ✔</li>
+<li>Use expiry in JWT ✔</li>
+<li>Validate all input ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 13. COMMON MISTAKES</h2>
+
+<ul>
+<li>Storing JWT in localStorage ❌</li>
+<li>Using weak secret ❌</li>
+<li>No token expiry ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 14. FINAL ARCHITECTURE</h2>
+
+<pre>
+Frontend (JS)
+   ↓
+API Gateway
+   ↓
+Auth Service (JWT)
+   ↓
+Business Logic
+   ↓
+Database (hashed password)
+</pre>
+
+<hr>
+
+<h2>📌 15. FINAL SUMMARY</h2>
+
+<pre>
+Login → Hash verify
+Auth → JWT
+Integrity → HMAC
+Confidential → AES
+
+ALL COMBINED = SECURE API
+</pre>
+
+</section>
+
+<section>
+
+<h1>🚌 SECURE BUS BOOKING SYSTEM (FULL PROJECT)</h1>
+
+<hr>
+
+<h2>📌 1. FEATURES</h2>
+
+<ul>
+<li>User Registration & Login (bcrypt)</li>
+<li>JWT Authentication</li>
+<li>Search Buses</li>
+<li>Book Ticket</li>
+<li>Secure API (HMAC optional)</li>
+<li>Error Codes (your format)</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. TECH STACK</h2>
+
+<pre>
+Backend: Node.js (Express)
+Database: MySQL
+Security: bcrypt + JWT + AES
+</pre>
+
+<hr>
+
+<h2>📌 3. PROJECT STRUCTURE</h2>
+
+<pre>
+bus-booking/
+ ├── app.js
+ ├── config/
+ │     └── db.js
+ ├── routes/
+ │     ├── auth.js
+ │     ├── bus.js
+ │     └── booking.js
+ ├── middleware/
+ │     └── authMiddleware.js
+ ├── utils/
+ │     └── crypto.js
+ ├── .env
+</pre>
+
+<hr>
+
+<h2>📌 4. DATABASE DESIGN</h2>
+
+<h3>🔹 USERS</h3>
+
+<pre>
+id (PK)
+name
+email
+password (hashed)
+</pre>
+
+<h3>🔹 BUSES</h3>
+
+<pre>
+id
+from_city
+to_city
+seats
+</pre>
+
+<h3>🔹 BOOKINGS</h3>
+
+<pre>
+id
+user_id
+bus_id
+seats_booked
+</pre>
+
+<hr>
+
+<h2>📌 5. ENV FILE</h2>
+
+<pre>
+DB_HOST=localhost
+DB_USER=root
+DB_PASS=secret
+JWT_SECRET=mysecret
+</pre>
+
+<hr>
+
+<h2>📌 6. DB CONNECTION</h2>
+
+<pre><code>
+// config/db.js
+const mysql = require("mysql2");
+
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: "busdb"
+});
+
+module.exports = db;
+</code></pre>
+
+<hr>
+
+<h2>📌 7. AUTH ROUTE (REGISTER + LOGIN)</h2>
+
+<pre><code>
+// routes/auth.js
+const express = require("express");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const db = require("../config/db");
+
+const router = express.Router();
+
+// REGISTER
+router.post("/register", async (req, res) => {
+  const { name, email, password } = req.body;
+
+  const hash = await bcrypt.hash(password, 12);
+
+  db.query(
+    "INSERT INTO users (name, email, password) VALUES (?, ?, ?)",
+    [name, email, hash]
+  );
+
+  res.json({ code: "000", message: "Success" });
+});
+
+// LOGIN
+router.post("/login", (req, res) => {
+  const { email, password } = req.body;
+
+  db.query("SELECT * FROM users WHERE email=?", [email], async (err, result) => {
+
+    if (result.length === 0)
+      return res.json({ code: "001", message: "User not found" });
+
+    const user = result[0];
+
+    const valid = await bcrypt.compare(password, user.password);
+
+    if (!valid)
+      return res.json({ code: "002", message: "Invalid password" });
+
+    const token = jwt.sign(
+      { userId: user.id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+
+    res.json({ code: "000", token });
+  });
+});
+
+module.exports = router;
+</code></pre>
+
+<hr>
+
+<h2>📌 8. AUTH MIDDLEWARE</h2>
+
+<pre><code>
+// middleware/authMiddleware.js
+const jwt = require("jsonwebtoken");
+
+module.exports = (req, res, next) => {
+
+  const token = req.headers["authorization"];
+
+  if (!token)
+    return res.json({ code: "401", message: "No token" });
+
+  try {
+    const decoded = jwt.verify(token.split(" ")[1], process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch {
+    res.json({ code: "401", message: "Invalid token" });
+  }
+};
+</code></pre>
+
+<hr>
+
+<h2>📌 9. BUS SEARCH API</h2>
+
+<pre><code>
+// routes/bus.js
+const express = require("express");
+const db = require("../config/db");
+
+const router = express.Router();
+
+router.get("/search", (req, res) => {
+  const { from, to } = req.query;
+
+  db.query(
+    "SELECT * FROM buses WHERE from_city=? AND to_city=?",
+    [from, to],
+    (err, result) => {
+      res.json({ code: "000", data: result });
+    }
+  );
+});
+
+module.exports = router;
+</code></pre>
+
+<hr>
+
+<h2>📌 10. BOOKING API (SECURED)</h2>
+
+<pre><code>
+// routes/booking.js
+const express = require("express");
+const db = require("../config/db");
+const auth = require("../middleware/authMiddleware");
+
+const router = express.Router();
+
+router.post("/book", auth, (req, res) => {
+
+  const { bus_id, seats } = req.body;
+  const user_id = req.user.userId;
+
+  db.query(
+    "INSERT INTO bookings (user_id, bus_id, seats_booked) VALUES (?, ?, ?)",
+    [user_id, bus_id, seats]
+  );
+
+  res.json({ code: "000", message: "Booked" });
+});
+
+module.exports = router;
+</code></pre>
+
+<hr>
+
+<h2>📌 11. MAIN APP</h2>
+
+<pre><code>
+// app.js
+require("dotenv").config();
+
+const express = require("express");
+
+const app = express();
+app.use(express.json());
+
+app.use("/auth", require("./routes/auth"));
+app.use("/bus", require("./routes/bus"));
+app.use("/booking", require("./routes/booking"));
+
+app.listen(3000, () => console.log("Server running"));
+</code></pre>
+
+<hr>
+
+<h2>📌 12. ERROR CODES (YOUR STYLE)</h2>
+
+<table border="1">
+<tr><th>Code</th><th>Meaning</th></tr>
+
+<tr><td>000</td><td>Success</td></tr>
+<tr><td>001</td><td>User not found</td></tr>
+<tr><td>002</td><td>Invalid password</td></tr>
+<tr><td>401</td><td>Unauthorized</td></tr>
+<tr><td>999</td><td>Failure</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 13. SECURITY FEATURES USED</h2>
+
+<ul>
+<li>Password → bcrypt ✔</li>
+<li>Auth → JWT ✔</li>
+<li>Protected routes ✔</li>
+<li>.env secrets ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 14. NEXT IMPROVEMENTS</h2>
+
+<ul>
+<li>Seat availability check</li>
+<li>Payment encryption (AES)</li>
+<li>HMAC request validation</li>
+<li>Logging system</li>
+</ul>
+
+<hr>
+
+<h2>📌 15. FINAL SUMMARY</h2>
+
+<pre>
+Register → Hash password
+Login → JWT token
+API → Verify token
+Booking → Secure
+
+THIS = REAL INTERVIEW PROJECT
+</pre>
+
+</section>
+
+
+<section>
+
+<h1>🚀 PHP — API REQUEST & RESPONSE + AUTHENTICATION</h1>
+
+<hr>
+
+<h2>📌 1. WHAT IS API REQUEST & RESPONSE?</h2>
+
+<pre>
+CLIENT → sends REQUEST → SERVER
+SERVER → processes → sends RESPONSE
+</pre>
+
+<h3>🔹 EXAMPLE</h3>
+
+<pre>
+Request:
+POST /login
+{
+  "email": "aathi@test.com",
+  "password": "123"
+}
+
+Response:
+{
+  "code": "000",
+  "token": "jwt_token_here"
+}
+</pre>
+
+<hr>
+
+<h2>📌 2. BASIC PHP API (GET REQUEST)</h2>
+
+<h3>🔹 FILE: api.php</h3>
+
+<pre><code>
+&lt;?php
+
+header("Content-Type: application/json");
+
+$name = $_GET["name"] ?? "Guest";
+
+echo json_encode([
+    "code" => "000",
+    "message" => "Hello $name"
+]);
+?>
+</code></pre>
+
+<h3>🔹 CALL</h3>
+
+<pre>
+GET /api.php?name=Aathi
+</pre>
+
+<hr>
+
+<h2>📌 3. POST REQUEST (JSON INPUT)</h2>
+
+<h3>🔹 READ JSON BODY</h3>
+
+<pre><code>
+&lt;?php
+
+header("Content-Type: application/json");
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+$email = $data["email"] ?? "";
+
+echo json_encode([
+    "code" => "000",
+    "email" => $email
+]);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 4. LOGIN API (HASH + VERIFY)</h2>
+
+<pre><code>
+&lt;?php
+
+$data = json_decode(file_get_contents("php://input"), true);
+
+$email = $data["email"];
+$password = $data["password"];
+
+// Assume DB value
+$storedHash = password_hash("123", PASSWORD_BCRYPT);
+
+if (!password_verify($password, $storedHash)) {
+    echo json_encode(["code" => "002", "message" => "Invalid password"]);
+    exit;
+}
+
+echo json_encode(["code" => "000", "message" => "Login success"]);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 5. JWT AUTHENTICATION</h2>
+
+<h3>🔹 INSTALL (via composer)</h3>
+
+<pre>
+composer require firebase/php-jwt
+</pre>
+
+<hr>
+
+<h3>🔹 GENERATE TOKEN</h3>
+
+<pre><code>
+&lt;?php
+
+use Firebase\JWT\JWT;
+
+$key = "secret_key";
+
+$payload = [
+    "userId" => 101,
+    "exp" => time() + 3600
+];
+
+$jwt = JWT::encode($payload, $key, 'HS256');
+
+echo json_encode([
+    "code" => "000",
+    "token" => $jwt
+]);
+?>
+</code></pre>
+
+<hr>
+
+<h3>🔹 VERIFY TOKEN</h3>
+
+<pre><code>
+&lt;?php
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+$headers = getallheaders();
+
+$token = str_replace("Bearer ", "", $headers["Authorization"] ?? "");
+
+try {
+    $decoded = JWT::decode($token, new Key("secret_key", 'HS256'));
+
+    echo json_encode([
+        "code" => "000",
+        "userId" => $decoded->userId
+    ]);
+
+} catch (Exception $e) {
+    echo json_encode(["code" => "401", "message" => "Invalid token"]);
+}
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 6. PROTECTED API</h2>
+
+<pre><code>
+&lt;?php
+
+require "auth.php"; // token verify logic
+
+echo json_encode([
+    "code" => "000",
+    "data" => "Protected data"
+]);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 7. CURL REQUEST (CLIENT SIDE)</h2>
+
+<h3>🔹 POST REQUEST</h3>
+
+<pre><code>
+&lt;?php
+
+$url = "http://localhost/login.php";
+
+$data = [
+    "email" => "aathi@test.com",
+    "password" => "123"
+];
+
+$ch = curl_init($url);
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Content-Type: application/json"
+]);
+
+$response = curl_exec($ch);
+
+echo $response;
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 8. CURL WITH AUTH TOKEN</h2>
+
+<pre><code>
+&lt;?php
+
+$token = "your_jwt_here";
+
+$ch = curl_init("http://localhost/protected.php");
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    "Authorization: Bearer $token"
+]);
+
+echo curl_exec($ch);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 9. FULL FLOW</h2>
+
+<pre>
+1. Register → password_hash
+2. Login → password_verify
+3. Generate JWT
+4. Client stores token
+5. Send token in header
+6. Server verifies token
+7. Allow access
+</pre>
+
+<hr>
+
+<h2>📌 10. ERROR RESPONSE FORMAT</h2>
+
+<pre><code>
+echo json_encode([
+  "code" => "001",
+  "message" => "Invalid mobile"
+]);
+</code></pre>
+
+<hr>
+
+<h2>📌 11. BEST PRACTICES</h2>
+
+<ul>
+<li>Always use JSON ✔</li>
+<li>Use HTTP headers ✔</li>
+<li>Use JWT expiry ✔</li>
+<li>Validate input ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 12. COMMON MISTAKES</h2>
+
+<ul>
+<li>Reading $_POST for JSON ❌</li>
+<li>Not checking token ❌</li>
+<li>No error codes ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 13. FINAL SUMMARY</h2>
+
+<pre>
+Request → JSON input
+Response → JSON output
+
+Auth:
+Login → JWT
+API → Verify JWT
+
+Client → curl / frontend
+Server → PHP API
+</pre>
+
+</section>
+
+<section>
+
+<h1>🚀 PHP — REST API + cURL (FULL PROFESSIONAL GUIDE)</h1>
+
+<hr>
+
+<h2>📌 1. WHAT IS REST API?</h2>
+
+<pre>
+REST = Representational State Transfer
+
+Client ↔ Server using HTTP methods
+</pre>
+
+<h3>🔹 PRINCIPLES</h3>
+
+<ul>
+<li>Stateless ✔</li>
+<li>Client-Server ✔</li>
+<li>Resource-based ✔</li>
+<li>Uses HTTP methods ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 2. HTTP METHODS (FULL)</h2>
+
+<table border="1">
+<tr><th>Method</th><th>Usage</th><th>Example</th></tr>
+
+<tr><td>GET</td><td>Fetch data</td><td>/users</td></tr>
+<tr><td>POST</td><td>Create data</td><td>/users</td></tr>
+<tr><td>PUT</td><td>Update full</td><td>/users/1</td></tr>
+<tr><td>PATCH</td><td>Update partial</td><td>/users/1</td></tr>
+<tr><td>DELETE</td><td>Delete</td><td>/users/1</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 3. PHP — HANDLE ALL METHODS</h2>
+
+<pre><code>
+&lt;?php
+
+$method = $_SERVER['REQUEST_METHOD'];
+
+switch ($method) {
+
+  case 'GET':
+    echo "GET Request";
+    break;
+
+  case 'POST':
+    echo "POST Request";
+    break;
+
+  case 'PUT':
+    parse_str(file_get_contents("php://input"), $data);
+    print_r($data);
+    break;
+
+  case 'DELETE':
+    echo "DELETE Request";
+    break;
+}
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 4. REQUEST TYPES (IMPORTANT)</h2>
+
+<h3>🔹 QUERY PARAMS</h3>
+<pre>/users?id=1</pre>
+
+<h3>🔹 PATH PARAMS</h3>
+<pre>/users/1</pre>
+
+<h3>🔹 BODY (JSON)</h3>
+<pre>{ "name": "Aathi" }</pre>
+
+<h3>🔹 HEADERS</h3>
+<pre>Authorization: Bearer token</pre>
+
+<hr>
+
+<h2>📌 5. RESPONSE STRUCTURE (STANDARD)</h2>
+
+<pre><code>
+{
+  "code": "000",
+  "message": "Success",
+  "data": {}
+}
+</code></pre>
+
+<hr>
+
+<h2>📌 6. HTTP STATUS CODES</h2>
+
+<table border="1">
+<tr><th>Code</th><th>Meaning</th></tr>
+
+<tr><td>200</td><td>OK</td></tr>
+<tr><td>201</td><td>Created</td></tr>
+<tr><td>400</td><td>Bad request</td></tr>
+<tr><td>401</td><td>Unauthorized</td></tr>
+<tr><td>404</td><td>Not found</td></tr>
+<tr><td>500</td><td>Server error</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 7. cURL — INTRODUCTION</h2>
+
+<pre>
+cURL = Client URL library
+
+Used to:
+✔ Call APIs
+✔ Send HTTP requests
+✔ Test backend
+</pre>
+
+<hr>
+
+<h2>📌 8. BASIC cURL REQUEST</h2>
+
+<pre><code>
+&lt;?php
+
+$ch = curl_init("https://api.example.com");
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+
+curl_close($ch);
+
+echo $response;
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 9. ALL IMPORTANT cURL OPTIONS (FULL)</h2>
+
+<table border="1">
+<tr><th>Option</th><th>Status</th><th>Description</th></tr>
+
+<tr><td>CURLOPT_URL</td><td>✔</td><td>API URL</td></tr>
+<tr><td>CURLOPT_RETURNTRANSFER</td><td>✔</td><td>Return response</td></tr>
+<tr><td>CURLOPT_POST</td><td>⚠</td><td>Enable POST</td></tr>
+<tr><td>CURLOPT_POSTFIELDS</td><td>⚠</td><td>Request body</td></tr>
+<tr><td>CURLOPT_HTTPHEADER</td><td>⚠</td><td>Headers</td></tr>
+<tr><td>CURLOPT_CUSTOMREQUEST</td><td>⚠</td><td>PUT/PATCH/DELETE</td></tr>
+<tr><td>CURLOPT_TIMEOUT</td><td>⚠</td><td>Timeout</td></tr>
+<tr><td>CURLOPT_CONNECTTIMEOUT</td><td>⚠</td><td>Connection timeout</td></tr>
+<tr><td>CURLOPT_SSL_VERIFYPEER</td><td>⚠</td><td>SSL check</td></tr>
+<tr><td>CURLOPT_FOLLOWLOCATION</td><td>⚠</td><td>Redirects</td></tr>
+<tr><td>CURLOPT_HEADER</td><td>⚠</td><td>Include headers</td></tr>
+
+</table>
+
+<hr>
+
+<h2>📌 10. GET REQUEST (FULL)</h2>
+
+<pre><code>
+&lt;?php
+
+$url = "https://api.com/users?id=1";
+
+$ch = curl_init();
+
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+
+echo $response;
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 11. POST REQUEST (JSON)</h2>
+
+<pre><code>
+&lt;?php
+
+$data = ["name" => "Aathi"];
+
+$ch = curl_init("https://api.com/users");
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+  "Content-Type: application/json"
+]);
+
+echo curl_exec($ch);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 12. PUT REQUEST</h2>
+
+<pre><code>
+&lt;?php
+
+$data = ["name" => "Updated"];
+
+$ch = curl_init("https://api.com/users/1");
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+
+echo curl_exec($ch);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 13. DELETE REQUEST</h2>
+
+<pre><code>
+&lt;?php
+
+$ch = curl_init("https://api.com/users/1");
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+
+echo curl_exec($ch);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 14. AUTHENTICATION (TOKEN)</h2>
+
+<pre><code>
+&lt;?php
+
+$token = "jwt_token";
+
+$ch = curl_init("https://api.com/protected");
+
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+  "Authorization: Bearer $token"
+]);
+
+echo curl_exec($ch);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 15. ERROR HANDLING</h2>
+
+<pre><code>
+&lt;?php
+
+$response = curl_exec($ch);
+
+if (curl_errno($ch)) {
+  echo curl_error($ch);
+}
+
+$status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+echo "Status: $status";
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 16. TIMEOUT + SSL</h2>
+
+<pre><code>
+curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+</code></pre>
+
+<hr>
+
+<h2>📌 17. FILE UPLOAD</h2>
+
+<pre><code>
+&lt;?php
+
+$data = [
+  "file" => new CURLFile("test.jpg")
+];
+
+curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+?>
+</code></pre>
+
+<hr>
+
+<h2>📌 18. DEBUGGING</h2>
+
+<pre><code>
+curl_setopt($ch, CURLOPT_VERBOSE, true);
+</code></pre>
+
+<hr>
+
+<h2>📌 19. FULL FLOW (REAL)</h2>
+
+<pre>
+1. Client → cURL request
+2. Server → process API
+3. Server → JSON response
+4. Client → decode JSON
+</pre>
+
+<hr>
+
+<h2>📌 20. BEST PRACTICES</h2>
+
+<ul>
+<li>Always use JSON ✔</li>
+<li>Use headers ✔</li>
+<li>Handle errors ✔</li>
+<li>Use timeout ✔</li>
+</ul>
+
+<hr>
+
+<h2>📌 21. COMMON MISTAKES</h2>
+
+<ul>
+<li>No CURLOPT_RETURNTRANSFER ❌</li>
+<li>Wrong method ❌</li>
+<li>Missing headers ❌</li>
+</ul>
+
+<hr>
+
+<h2>📌 22. FINAL SUMMARY</h2>
+
+<pre>
+REST → HTTP methods
+cURL → API client
+
+GET → Fetch
+POST → Create
+PUT → Update
+DELETE → Remove
+
+cURL = Control everything
+</pre>
+
+</section>
+
+
+</body>
+</html>
