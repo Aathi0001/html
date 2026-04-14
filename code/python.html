@@ -1,0 +1,8902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Python Notes</title>
+     <style>
+          body {
+      background: #f9f9f9;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      padding: 20px;
+      color: #333;
+    max-width: 100%;
+    word-wrap: break-word;
+}
+
+pre, table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+
+
+    h1, h2, h3 {
+      margin-top: 30px;
+      border-left: 5px solid #ff6347;
+      padding-left: 12px;
+      color: #333;
+    }
+
+    h1 {
+      font-size: 32px;
+      color: #e91e63;
+    }
+
+    h2 {
+      font-size: 26px;
+      color: #3f51b5;
+    }
+
+    h3 {
+      font-size: 22px;
+      color: #009688;
+    }
+
+    pre {
+      background: #eee;
+      padding: 10px 15px;
+      border-left: 5px solid #607d8b;
+      white-space: pre-wrap;
+      font-family: 'Consolas', monospace;
+    }
+
+    ul {
+      padding-left: 20px;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .highlight {
+      background-color: #fff3cd;
+      padding: 10px;
+      border-left: 4px solid #ffc107;
+    }
+    code {
+  background-color: #f0f0f0;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Consolas', monospace;
+  font-size: 0.95em;
+  color: #c7254e;
+}
+a {
+  color: #007acc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 40px 0;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+     </style>
+</head>
+
+
+<body>
+
+<h2>Introduction</h2>
+
+<h3>What is Python</h3>
+<p>
+Python is a high-level, interpreted, and general-purpose programming language. It was created by Guido van Rossum and first released in 1991. Python is known for its simplicity, readability, and ease of learning. It supports multiple programming paradigms, including procedural, object-oriented, and functional programming.
+</p>
+<p>
+Python is widely used in web development, data science, machine learning, automation, scientific computing, and more.
+</p>
+
+<h3>Features of Python</h3>
+<ul>
+    <li><strong>Simple and Easy to Learn:</strong> Python has a clean and easy-to-read syntax which makes it beginner-friendly.</li>
+    <li><strong>Interpreted:</strong> Python code is executed line by line, which makes debugging easier.</li>
+    <li><strong>High-Level Language:</strong> Python abstracts complex details of the computer from the programmer.</li>
+    <li><strong>Portable:</strong> Python programs can run on any operating system without modification.</li>
+    <li><strong>Extensive Libraries:</strong> Python has a vast standard library and many third-party libraries for different tasks.</li>
+    <li><strong>Open Source:</strong> Python is free to use and distribute.</li>
+    <li><strong>Dynamic Typing:</strong> Variable types are determined at runtime, so you don’t need to declare them explicitly.</li>
+</ul>
+
+<h3>Installing Python & IDEs</h3>
+<p>
+To start programming in Python, you need to install it on your computer:
+</p>
+<ul>
+    <li>Download Python from the official website: <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a></li>
+    <li>Run the installer and make sure to check the option "Add Python to PATH".</li>
+    <li>Verify installation by opening the command prompt/terminal and typing <code>python --version</code>.</li>
+</ul>
+<p>
+You can write Python programs using any text editor, but popular IDEs include PyCharm, VS Code, Jupyter Notebook, and Thonny.
+</p>
+
+<h3>Running Python Programs</h3>
+<p>
+There are multiple ways to run Python programs:
+</p>
+<ul>
+    <li><strong>Interactive Mode:</strong> Open the Python shell by typing <code>python</code> in the terminal. You can execute Python commands line by line.</li>
+    <li><strong>Script Mode:</strong> Write your Python code in a file with <code>.py</code> extension and run it using <code>python filename.py</code> in the terminal.</li>
+    <li><strong>IDEs:</strong> Run Python programs directly in IDEs like PyCharm or VS Code using their built-in run options.</li>
+</ul>
+
+<h3>Python vs Other Languages</h3>
+<p>
+Python is often compared with languages like Java, C++, and JavaScript. Key differences include:
+</p>
+<ul>
+    <li><strong>Syntax:</strong> Python has a simpler and more readable syntax than Java and C++.</li>
+    <li><strong>Compilation:</strong> Python is interpreted, while Java and C++ are compiled.</li>
+    <li><strong>Memory Management:</strong> Python uses automatic garbage collection; C++ requires manual memory management.</li>
+    <li><strong>Use Cases:</strong> Python is popular in data science, AI, and automation. Java is widely used in enterprise apps. C++ is often used for system programming and game development.</li>
+</ul>
+
+
+
+<hr>
+
+
+
+<h2>Python Basics</h2>
+
+<h3>Python Syntax & Indentation</h3>
+<p>
+Python uses indentation (spaces or tabs) to define blocks of code instead of braces ({}) like in other languages. Proper indentation is mandatory in Python; otherwise, it will raise an <code>IndentationError</code>. Typically, 4 spaces are used for one indentation level.
+</p>
+<pre>
+# Example:
+if True:
+    print("This is indented correctly")
+</pre>
+
+<h3>Keywords & Identifiers</h3>
+<p>
+Keywords are reserved words in Python that have a special meaning and cannot be used as variable names. Examples include <code>if</code>, <code>else</code>, <code>for</code>, <code>while</code>, <code>def</code>, etc.  
+Identifiers are names given to variables, functions, classes, and other objects. They must start with a letter (a-z, A-Z) or underscore (_), followed by letters, digits, or underscores.
+</p>
+<pre>
+# Example of identifiers:
+my_var = 10
+_name = "Python"
+</pre>
+
+<h3>Comments</h3>
+<p>
+Comments are used to explain the code and are ignored by the Python interpreter.  
+Python supports:
+</p>
+<ul>
+    <li><strong>Single-line comments:</strong> Start with <code>#</code></li>
+    <li><strong>Multi-line comments:</strong> Use triple quotes <code>''' ... '''</code> or <code>""" ... """</code></li>
+</ul>
+<pre>
+# This is a single-line comment
+
+'''
+This is a 
+multi-line comment
+'''
+</pre>
+
+<h3>Variables & Data Types</h3>
+<p>
+Variables are used to store data. Python automatically detects the type of the variable (dynamic typing). Common data types include:
+</p>
+<ul>
+    <li><strong>int:</strong> Integer numbers (e.g., 10, -5)</li>
+    <li><strong>float:</strong> Decimal numbers (e.g., 3.14, -0.5)</li>
+    <li><strong>str:</strong> Strings (e.g., "Hello")</li>
+    <li><strong>bool:</strong> Boolean values (<code>True</code>, <code>False</code>)</li>
+    <li><strong>list, tuple, set, dict:</strong> Collection data types</li>
+</ul>
+<pre>
+# Example:
+x = 5          # int
+y = 3.14       # float
+name = "Python" # str
+is_active = True # bool
+</pre>
+<h2>Python Keywords</h2>
+<p>Keywords are reserved words in Python that have special meaning. They cannot be used as identifiers (variable names, function names, etc.).</p>
+
+<h3>List of Python Keywords (Python 3.x)</h3>
+<pre>
+False     await     else      import    pass
+None      break     except    in        raise
+True      class     finally   is        return
+and       continue  for       lambda    try
+as        def       from      nonlocal  while
+assert    del       global    not       with
+async     elif      if        or        yield
+</pre>
+
+<p><b>Note:</b> Keywords are <b>case-sensitive</b>. For example, <code>True</code> is a keyword, but <code>true</code> is not.</p>
+
+
+<h2>Identifiers in Python</h2>
+<p>Identifiers are names given to variables, functions, classes, etc. Identifiers must follow certain rules.</p>
+
+<h3>Rules for Identifiers:</h3>
+<ul>
+<li>Can contain letters (A-Z, a-z), digits (0-9), and underscore (_).</li>
+<li>Must begin with a letter or underscore, but <b>not</b> with a digit.</li>
+<li>Case-sensitive (<code>name</code> and <code>Name</code> are different).</li>
+<li>Cannot be a keyword.</li>
+<li>No special characters allowed (like @, $, %, etc.).</li>
+</ul>
+
+<h3>Valid Identifiers:</h3>
+<pre>
+myVar
+_age
+name1
+Total_Score
+</pre>
+
+<h3>Invalid Identifiers:</h3>
+<pre>
+1name      # cannot start with digit
+my-var     # hyphen not allowed
+class      # keyword
+total$sum  # special character not allowed
+</pre>
+
+<h3>Examples:</h3>
+<pre>
+<code>
+x = 10          # valid
+_name = "Aathi" # valid
+class = 5       # invalid (keyword)
+2value = 30     # invalid (starts with digit)
+</code>
+</pre>
+
+<h3>Input & Output</h3>
+<p>
+Python provides functions to get input from the user and display output:
+</p>
+<ul>
+    <li><strong>Output:</strong> <code>print()</code> function is used to display text or variables.</li>
+    <li><strong>Input:</strong> <code>input()</code> function is used to get user input as a string.</li>
+</ul>
+<pre>
+# Output example:
+print("Hello, Python!")
+
+# Input example:
+name = input("Enter your name: ")
+print("Hello, " + name)
+</pre>
+
+
+<h2>Printing Multiple Data with Format Specifiers</h2>
+<p>In Python, the old-style formatting uses the <code>%</code> operator (similar to C).</p>
+
+<pre>
+<code>
+name = "Aathi"
+age = 22
+marks = 85.75
+
+print("Name: %s, Age: %d, Marks: %f" % (name, age, marks))
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+Name: Aathi, Age: 22, Marks: 85.750000
+</pre>
+
+<ul>
+<li><code>%s</code> → string</li>
+<li><code>%d</code> → integer</li>
+<li><code>%f</code> → float</li>
+</ul>
+
+<p>You can also control decimal places:</p>
+<pre>
+<code>
+print("Marks: %.2f" % marks)
+</code>
+</pre>
+<p><b>Output:</b></p>
+<pre>
+Marks: 85.75
+</pre>
+
+
+<h2>Printing Multiple Data with format()</h2>
+<pre>
+<code>
+print("Name: {}, Age: {}, Marks: {:.2f}".format(name, age, marks))
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+Name: Aathi, Age: 22, Marks: 85.75
+</pre>
+
+
+<h2>Printing Multiple Data with f-strings (Python 3.6+)</h2>
+<pre>
+<code>
+print(f"Name: {name}, Age: {age}, Marks: {marks:.2f}")
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+Name: Aathi, Age: 22, Marks: 85.75
+</pre>
+
+
+<h2>Taking Multiple Inputs</h2>
+<p>You can read multiple inputs in one line using <code>split()</code>.</p>
+
+<pre>
+<code>
+# Input: 10 20 30
+a, b, c = map(int, input("Enter 3 numbers: ").split())
+print("Values:", a, b, c)
+</code>
+</pre>
+
+<p><b>Output (if input is 10 20 30):</b></p>
+<pre>
+Values: 10 20 30
+</pre>
+
+<p>For floats:</p>
+<pre>
+<code>
+x, y = map(float, input("Enter two floats: ").split())
+print("x=%.2f, y=%.2f" % (x, y))
+</code>
+</pre>
+
+<p><b>Output (if input is 12.5 45.8):</b></p>
+<pre>
+x=12.50, y=45.80
+</pre>
+
+<h2>Map Function</h2>
+<p>Python's <code>map()</code> function applies a given function to all items of an iterable (like list, tuple) and returns a map object (iterator).</p>
+
+<h3>Syntax:</h3>
+<pre>
+<code>map(function, iterable)</code>
+</pre>
+
+<h3>Example 1: Using int with input</h3>
+<pre>
+<code>
+# User input: 10 20 30
+numbers = map(int, input("Enter 3 numbers: ").split())
+
+# Convert map object to list
+numbers_list = list(numbers)
+print(numbers_list)
+</code>
+</pre>
+
+<p><b>Output (if input is 10 20 30):</b></p>
+<pre>
+[10, 20, 30]
+</pre>
+
+<h3>Example 2: Using map with a lambda function</h3>
+<pre>
+<code>
+nums = [1, 2, 3, 4, 5]
+
+# Square each number using lambda
+squared = map(lambda x: x**2, nums)
+
+print(list(squared))
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+[1, 4, 9, 16, 25]
+</pre>
+
+<h3>Example 3: Using map with a regular function</h3>
+<pre>
+<code>
+def double(x):
+    return x * 2
+
+nums = [2, 4, 6]
+doubled = map(double, nums)
+
+print(list(doubled))
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+[4, 8, 12]
+</pre>
+
+<h3>Key Points:</h3>
+<ul>
+<li><code>map()</code> applies a function to each element of an iterable.</li>
+<li>Returns a <code>map</code> object (iterator), so you often convert it to <code>list()</code> to view the results.</li>
+<li>You can pass <code>lambda</code> functions or regular functions.</li>
+<li>Multiple iterables are also allowed; the function must accept as many arguments as there are iterables.</li>
+</ul>
+
+<h3>Example 4: map with multiple iterables</h3>
+<pre>
+<code>
+nums1 = [1, 2, 3]
+nums2 = [4, 5, 6]
+
+summed = map(lambda x, y: x + y, nums1, nums2)
+print(list(summed))
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+[5, 7, 9]
+</pre>
+
+<h2>Formatting Collections and Complex Numbers</h2>
+<p>In old-style <code>%</code> formatting, <code>%s</code> works for any Python object including <code>list</code>, <code>tuple</code>, <code>set</code>, <code>dict</code>, and <code>complex</code> numbers.  
+Other specifiers like <code>%d</code> or <code>%f</code> are only for <code>int</code> or <code>float</code> values.</p>
+
+<h3>Using %s with Collections</h3>
+<pre>
+<code>
+my_list = [1, 2, 3]
+my_tuple = (4, 5, 6)
+my_set = {7, 8, 9}
+my_dict = {"a": 10, "b": 20}
+
+print("List: %s" % my_list)
+print("Tuple: %s" % my_tuple)
+print("Set: %s" % my_set)
+print("Dict: %s" % my_dict)
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+List: [1, 2, 3]
+Tuple: (4, 5, 6)
+Set: {8, 9, 7}
+Dict: {'a': 10, 'b': 20}
+</pre>
+
+<h3>Using %s with Complex Numbers</h3>
+<pre>
+<code>
+z = 2 + 3j
+print("Complex number: %s" % z)
+# print("Complex number: %f" % z)  # ❌ ERROR, can't use %f
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+Complex number: (2+3j)
+</pre>
+
+<h3>Summary</h3>
+<ul>
+<li><code>%s</code> → works for any object: list, tuple, set, dict, complex</li>
+<li><code>%d</code> → integers only</li>
+<li><code>%f</code> → floats only</li>
+</ul>
+
+<p><b>Tip:</b> Modern Python prefers <code>f-strings</code> or <code>.format()</code> as they handle all types easily.</p>
+<pre>
+<code>
+print(f"List: {my_list}, Complex: {z}")
+</code>
+</pre>
+<p><b>Output:</b></p>
+<pre>
+List: [1, 2, 3], Complex: (2+3j)
+</pre>
+
+<h2>Print Function Parameters: end and sep</h2>
+<p>Python's <code>print()</code> function has optional parameters <code>end</code> and <code>sep</code> to control output formatting.</p>
+
+<h3>Using end</h3>
+<p>By default, <code>print()</code> adds a newline at the end. The <code>end</code> parameter changes what is printed at the end.</p>
+
+<pre>
+<code>
+print("Hello", end=" ")   # adds a space instead of newline
+print("World")
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+Hello World
+</pre>
+
+<h3>Using sep</h3>
+<p>The <code>sep</code> parameter controls what is printed between multiple items.</p>
+
+<pre>
+<code>
+print("Aathi", "Siva", "Ganesh", sep="-")
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+Aathi-Siva-Ganesh
+</pre>
+
+<h3>Combining end and sep</h3>
+<pre>
+<code>
+print("Aathi", "Siva", "Ganesh", sep="_", end="!!!\n")
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+Aathi_Siva_Ganesh!!!
+</pre>
+
+<h3>Summary</h3>
+<ul>
+<li><code>sep</code> → string inserted between items (default is space)</li>
+<li><code>end</code> → string printed at the end (default is newline)</li>
+</ul>
+
+
+<!-- 1.3.1 Single value datatype -->
+<h2>Single Value Datatype</h2>
+<p>Python has single value datatypes like <code>int</code>, <code>float</code>, <code>complex</code>, <code>bool</code>, and <code>str</code>.</p>
+
+<pre>
+<code>
+a = 10       # int
+b = 3.14     # float
+c = 2 + 3j   # complex
+d = True     # bool
+e = "Hello"  # string
+
+print(a, type(a))
+print(b, type(b))
+print(c, type(c))
+print(d, type(d))
+print(e, type(e))
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+10 <class 'int'>
+3.14 <class 'float'>
+(2+3j) <class 'complex'>
+True <class 'bool'>
+Hello <class 'str'>
+</pre>
+
+
+<!-- 1.3.2 Collections -->
+<h2>Collections</h2>
+<p>Python has collection datatypes like <code>list</code>, <code>tuple</code>, <code>set</code>, and <code>dict</code>.</p>
+
+<pre>
+<code>
+my_list = [1, 2, 3, 4]
+my_tuple = (10, 20, 30)
+my_set = {100, 200, 300}
+my_dict = {"name": "Aathi", "age": 22}
+
+print(my_list, type(my_list))
+print(my_tuple, type(my_tuple))
+print(my_set, type(my_set))
+print(my_dict, type(my_dict))
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+[1, 2, 3, 4] <class 'list'>
+(10, 20, 30) <class 'tuple'>
+{200, 100, 300} <class 'set'>
+{'name': 'Aathi', 'age': 22} <class 'dict'>
+</pre>
+
+
+<!-- 1.3.3 Slicing -->
+<h2>Slicing</h2>
+<p>Slicing allows accessing parts of a sequence (string, list, tuple).</p>
+
+<pre>
+<code>
+text = "Python"
+print(text[0:4])   # first 4 characters
+print(text[:3])    # from start to 3rd char
+print(text[2:])    # from 3rd char to end
+print(text[::-1])  # reverse string
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+Pyth
+Pyt
+thon
+nohtyP
+</pre>
+
+
+<!-- 1.3.4 Typecasting -->
+<h2>Typecasting</h2>
+<p>Typecasting means converting one datatype into another using functions like <code>int()</code>, <code>float()</code>, <code>str()</code>, etc.</p>
+
+<pre>
+<code>
+a = "10"
+b = int(a)       # string to int
+c = float(b)     # int to float
+d = str(c)       # float to string
+
+print(a, type(a))
+print(b, type(b))
+print(c, type(c))
+print(d, type(d))
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+10 <class 'str'>
+10 <class 'int'>
+10.0 <class 'float'>
+10.0 <class 'str'>
+</pre>
+
+
+<!-- 1.3.5 Copy Operation -->
+<h2>Copy Operation</h2>
+<p>Copy operation creates a duplicate of an object. In Python, lists can be copied in different ways.</p>
+
+<pre>
+<code>
+# Assignment (reference copy)
+a = [1, 2, 3]
+b = a
+b.append(4)
+print("a =", a)
+print("b =", b)
+
+# Shallow copy
+c = a.copy()
+c.append(5)
+print("a =", a)
+print("c =", c)
+
+# Using list()
+d = list(a)
+d.append(6)
+print("a =", a)
+print("d =", d)
+</code>
+</pre>
+
+<p><b>Output:</b></p>
+<pre>
+a = [1, 2, 3, 4]
+b = [1, 2, 3, 4]
+a = [1, 2, 3, 4]
+c = [1, 2, 3, 4, 5]
+a = [1, 2, 3, 4]
+d = [1, 2, 3, 4, 6]
+</pre>
+
+
+<hr>
+
+
+
+<h2>Operators</h2>
+
+<h3>Arithmetic Operators</h3>
+<p>
+Arithmetic operators are used to perform mathematical operations:
+</p>
+<ul>
+    <li><strong>+</strong> : Addition</li>
+    <li><strong>-</strong> : Subtraction</li>
+    <li><strong>*</strong> : Multiplication</li>
+    <li><strong>/</strong> : Division (returns float)</li>
+    <li><strong>//</strong> : Floor division (returns integer)</li>
+    <li><strong>%</strong> : Modulus (remainder)</li>
+    <li><strong>**</strong> : Exponentiation</li>
+</ul>
+<pre>
+# Example:
+a = 10
+b = 3
+print(a + b)  # 13
+print(a - b)  # 7
+print(a * b)  # 30
+print(a / b)  # 3.3333
+print(a // b) # 3
+print(a % b)  # 1
+print(a ** b) # 1000
+</pre>
+
+<h3>Relational Operators</h3>
+<p>
+Relational (comparison) operators compare values and return <code>True</code> or <code>False</code>:
+</p>
+<ul>
+    <li><strong>==</strong> : Equal to</li>
+    <li><strong>!=</strong> : Not equal to</li>
+    <li><strong>&gt;</strong> : Greater than</li>
+    <li><strong>&lt;</strong> : Less than</li>
+    <li><strong>&gt;=</strong> : Greater than or equal to</li>
+    <li><strong>&lt;=</strong> : Less than or equal to</li>
+</ul>
+<pre>
+x = 5
+y = 10
+print(x == y)  # False
+print(x != y)  # True
+print(x &gt; y)   # False
+print(x &lt; y)   # True
+print(x &gt;= 5)  # True
+print(x &lt;= 3)  # False
+</pre>
+
+<h3>Logical Operators</h3>
+<p>
+Logical operators combine conditional statements and return <code>True</code> or <code>False</code>:
+</p>
+<ul>
+    <li><strong>and</strong> : Returns True if both conditions are True</li>
+    <li><strong>or</strong> : Returns True if at least one condition is True</li>
+    <li><strong>not</strong> : Returns the opposite boolean value</li>
+</ul>
+<pre>
+a = True
+b = False
+print(a and b)  # False
+print(a or b)   # True
+print(not a)    # False
+</pre>
+
+<h3>Assignment Operators</h3>
+<p>
+Assignment operators are used to assign values to variables. They can also combine assignment with arithmetic:
+</p>
+<ul>
+    <li><strong>=</strong> : Assign</li>
+    <li><strong>+=</strong> : Add and assign</li>
+    <li><strong>-=</strong> : Subtract and assign</li>
+    <li><strong>*=</strong> : Multiply and assign</li>
+    <li><strong>/=</strong> : Divide and assign</li>
+    <li><strong>%=</strong> : Modulus and assign</li>
+    <li><strong>//=</strong> : Floor divide and assign</li>
+    <li><strong>**=</strong> : Exponentiate and assign</li>
+</ul>
+<pre>
+x = 5
+x += 3  # x = 8
+x *= 2  # x = 16
+x %= 5  # x = 1
+</pre>
+
+<h3>Bitwise Operators</h3>
+<p>
+Bitwise operators work on binary representations of integers:
+</p>
+<ul>
+    <li><strong>&amp;</strong> : AND</li>
+    <li><strong>|</strong> : OR</li>
+    <li><strong>^</strong> : XOR</li>
+    <li><strong>~</strong> : NOT</li>
+    <li><strong>&lt;&lt;</strong> : Left shift</li>
+    <li><strong>&gt;&gt;</strong> : Right shift</li>
+</ul>
+<pre>
+a = 5  # 0101
+b = 3  # 0011
+print(a & b)  # 1 (0001)
+print(a | b)  # 7 (0111)
+print(a ^ b)  # 6 (0110)
+print(~a)     # -6
+print(a &lt;&lt; 1)  # 10
+print(a &gt;&gt; 1)  # 2
+</pre>
+
+
+
+<h2>Operators: Membership & Identity</h2>
+
+<h3>Membership Operators</h3>
+<p>
+Membership operators test whether a value is present in a sequence (like a list, tuple, string, or set).  
+Python provides two membership operators:
+</p>
+<ul>
+    <li><strong>in</strong> : Returns True if the value exists in the sequence.</li>
+    <li><strong>not in</strong> : Returns True if the value does not exist in the sequence.</li>
+</ul>
+<pre>
+# Example:
+fruits = ["apple", "banana", "cherry"]
+
+print("apple" in fruits)      # True
+print("mango" not in fruits)  # True
+
+# String example
+text = "Hello Python"
+print("Python" in text)       # True
+print("Java" not in text)     # True
+</pre>
+
+<h3>Identity Operators</h3>
+<p>
+Identity operators compare whether two objects refer to the same memory location.  
+Python provides two identity operators:
+</p>
+<ul>
+    <li><strong>is</strong> : Returns True if both variables point to the same object.</li>
+    <li><strong>is not</strong> : Returns True if variables point to different objects.</li>
+</ul>
+<pre>
+# Example:
+a = [1, 2, 3]
+b = a
+c = [1, 2, 3]
+
+print(a is b)      # True (same object)
+print(a is c)      # False (different objects with same values)
+print(a is not c)  # True
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Control Flow</h2>
+
+<h3>if, elif, else</h3>
+<p>
+Conditional statements allow your program to execute certain code based on a condition.
+</p>
+<ul>
+    <li><strong>if:</strong> Executes a block of code if the condition is True.</li>
+    <li><strong>elif:</strong> Stands for "else if"; checks another condition if previous conditions are False.</li>
+    <li><strong>else:</strong> Executes a block of code if all previous conditions are False.</li>
+</ul>
+<pre>
+# Example:
+x = 20
+if x &gt; 30:
+    print("x is greater than 30")
+elif x &gt; 10:
+    print("x is greater than 10 but less than or equal to 30")
+else:
+    print("x is 10 or less")
+</pre>
+
+<h3>for loop</h3>
+<p>
+The <code>for</code> loop is used to iterate over a sequence (list, tuple, string, range, etc.).
+</p>
+<pre>
+# Example:
+fruits = ["apple", "banana", "cherry"]
+for fruit in fruits:
+    print(fruit)
+
+# Using range:
+for i in range(5):
+    print(i)  # prints 0 1 2 3 4
+</pre>
+
+<h3>while loop</h3>
+<p>
+The <code>while</code> loop repeatedly executes a block of code as long as a condition is True.
+</p>
+<pre>
+# Example:
+i = 0
+while i &lt; 5:
+    print(i)
+    i += 1
+</pre>
+
+<h3>break, continue, pass</h3>
+<p>
+These special statements control loop execution:
+</p>
+<ul>
+    <li><strong>break:</strong> Exits the loop immediately.</li>
+    <li><strong>continue:</strong> Skips the rest of the current iteration and moves to the next iteration.</li>
+    <li><strong>pass:</strong> Does nothing; used as a placeholder for code.</li>
+</ul>
+<pre>
+# Example:
+for i in range(5):
+    if i == 2:
+        continue  # skip 2
+    if i == 4:
+        break     # exit loop
+    print(i)
+
+# pass example
+for i in range(3):
+    pass  # placeholder, does nothing
+</pre>
+
+<h3>Nested Loops</h3>
+<p>
+You can place one loop inside another loop. This is called a nested loop.
+</p>
+<pre>
+# Example:
+for i in range(1, 4):
+    for j in range(1, 4):
+        print(i, j)
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Functions</h2>
+
+<h3>Defining Functions</h3>
+<p>
+Functions are reusable blocks of code that perform a specific task. They are defined using the <code>def</code> keyword.
+</p>
+<pre>
+# Example:
+def greet():
+    print("Hello, Python!")
+
+greet()  # Calling the function
+</pre>
+
+<h3>Function Arguments (Positional, Keyword, Default, Variable-length)</h3>
+<p>
+Python functions can accept different types of arguments:
+</p>
+<ul>
+    <li><strong>Positional arguments:</strong> Values are passed in order.</li>
+    <li><strong>Keyword arguments:</strong> Values are passed using parameter names.</li>
+    <li><strong>Default arguments:</strong> Parameters have default values if not provided.</li>
+    <li><strong>Variable-length arguments:</strong> Accept arbitrary number of arguments using <code>*args</code> for tuples and <code>**kwargs</code> for dictionaries.</li>
+</ul>
+<pre>
+# Positional
+def add(a, b):
+    print(a + b)
+add(5, 3)  # 8
+
+# Keyword
+def info(name, age):
+    print(name, age)
+info(age=25, name="Alice")  # Alice 25
+
+# Default
+def greet(name="Guest"):
+    print("Hello", name)
+greet()       # Hello Guest
+greet("Bob")  # Hello Bob
+
+# Variable-length
+def sum_all(*numbers):
+    total = sum(numbers)
+    print(total)
+sum_all(1, 2, 3, 4)  # 10
+</pre>
+
+<h3>Return Statement</h3>
+<p>
+The <code>return</code> statement is used to send a value back from a function. Without it, functions return <code>None</code>.
+</p>
+<pre>
+def square(x):
+    return x * x
+
+result = square(5)
+print(result)  # 25
+</pre>
+
+<h3>Lambda Functions</h3>
+<p>
+Lambda functions are anonymous, single-line functions defined using the <code>lambda</code> keyword. They are commonly used for small, simple operations.
+</p>
+<pre>
+# Example:
+square = lambda x: x * x
+print(square(6))  # 36
+
+add = lambda a, b: a + b
+print(add(3, 4))  # 7
+</pre>
+
+<h3>Recursion</h3>
+<p>
+Recursion is when a function calls itself to solve a problem. Always include a base condition to avoid infinite recursion.
+</p>
+<pre>
+# Example: Factorial
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+print(factorial(5))  # 120
+</pre>
+
+
+
+<h2>Arguments & Return Values</h2>
+
+<h3>Default Arguments</h3>
+<p>
+Default arguments allow you to assign a default value to a function parameter. If the argument is not provided during the function call, the default value is used.
+</p>
+<pre>
+# Example:
+def greet(name="Guest"):
+    return f"Hello, {name}!"
+
+print(greet())        # Hello, Guest!
+print(greet("Alice")) # Hello, Alice!
+</pre>
+
+<h3>*args & **kwargs</h3>
+<p>
+- <strong>*args:</strong> Allows passing a variable number of positional arguments as a tuple.  
+- <strong>**kwargs:</strong> Allows passing a variable number of keyword arguments as a dictionary.
+</p>
+<pre>
+# *args example
+def add(*numbers):
+    return sum(numbers)
+
+print(add(1, 2, 3))  # 6
+
+# **kwargs example
+def info(**details):
+    for key, value in details.items():
+        print(f"{key}: {value}")
+
+info(name="Alice", age=25, city="London")
+# Output:
+# name: Alice
+# age: 25
+# city: London
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Data Structures</h2>
+
+<h3>Lists</h3>
+<p>
+Lists are ordered, mutable collections of items. They can contain elements of different data types.
+</p>
+<pre>
+# Example:
+fruits = ["apple", "banana", "cherry"]
+print(fruits[0])  # apple
+fruits.append("orange")  # Add element
+fruits.remove("banana")  # Remove element
+print(fruits)  # ['apple', 'cherry', 'orange']
+</pre>
+
+<h3>Tuples</h3>
+<p>
+Tuples are ordered, immutable collections of items. Once created, elements cannot be changed.
+</p>
+<pre>
+# Example:
+coordinates = (10, 20)
+print(coordinates[0])  # 10
+# coordinates[0] = 15  # Error: tuples are immutable
+</pre>
+
+<h3>Sets</h3>
+<p>
+Sets are unordered collections of unique elements. They are mutable and support operations like union, intersection, and difference.
+</p>
+<pre>
+# Example:
+numbers = {1, 2, 3, 4}
+numbers.add(5)
+numbers.remove(2)
+print(numbers)  # {1, 3, 4, 5}
+
+# Set operations
+a = {1, 2, 3}
+b = {2, 3, 4}
+print(a &amp; b)  # Intersection: {2, 3}
+print(a | b)  # Union: {1, 2, 3, 4}
+</pre>
+
+<h3>Dictionaries</h3>
+<p>
+Dictionaries are unordered collections of key-value pairs. Keys are unique and immutable; values can be of any type.
+</p>
+<pre>
+# Example:
+student = {"name": "Alice", "age": 25, "grade": "A"}
+print(student["name"])  # Alice
+student["age"] = 26  # Update value
+student["city"] = "London"  # Add new key-value pair
+print(student)
+</pre>
+
+<h3>Strings (Immutable, Methods)</h3>
+<p>
+Strings are immutable sequences of characters. Python provides many built-in methods for string manipulation.
+</p>
+<pre>
+# Example:
+text = "Python"
+print(text.upper())  # PYTHON
+print(text.lower())  # python
+print(text.replace("P", "J"))  # Jython
+print(text[0])  # P
+print(text[1:4])  # yth
+
+# Strings are immutable
+# text[0] = "J"  # Error
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Object-Oriented Programming</h2>
+
+<h3>Classes & Objects</h3>
+<p>
+A class is a blueprint for creating objects, and an object is an instance of a class. Classes can contain attributes (variables) and methods (functions).
+</p>
+<pre>
+# Example:
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def greet(self):
+        print("Hello, my name is", self.name)
+
+# Creating objects
+p1 = Person("Alice", 25)
+p2 = Person("Bob", 30)
+
+p1.greet()  # Hello, my name is Alice
+p2.greet()  # Hello, my name is Bob
+</pre>
+
+<h3>Constructors (__init__)</h3>
+<p>
+The <code>__init__</code> method is a special constructor method called automatically when an object is created. It is used to initialize object attributes.
+</p>
+<pre>
+# Example:
+class Car:
+    def __init__(self, brand, model):
+        self.brand = brand
+        self.model = model
+
+c = Car("Toyota", "Corolla")
+print(c.brand, c.model)  # Toyota Corolla
+</pre>
+
+<h3>Instance & Class Variables</h3>
+<p>
+- <strong>Instance variables:</strong> Unique to each object, defined using <code>self</code>.  
+- <strong>Class variables:</strong> Shared across all objects of the class.
+</p>
+<pre>
+class Dog:
+    species = "Canine"  # Class variable
+
+    def __init__(self, name):
+        self.name = name  # Instance variable
+
+d1 = Dog("Buddy")
+d2 = Dog("Charlie")
+
+print(d1.name, d1.species)  # Buddy Canine
+print(d2.name, d2.species)  # Charlie Canine
+</pre>
+
+
+<h3>Inheritance (Single, Multiple, Multilevel)</h3>
+<p>
+Inheritance allows a class to acquire attributes and methods of another class.
+</p>
+<pre>
+# Single Inheritance
+class Parent:
+    def greet(self):
+        print("Hello from Parent")
+
+class Child(Parent):
+    pass
+
+c = Child()
+c.greet()  # Hello from Parent
+
+# Multiple Inheritance
+class A:
+    def a_method(self):
+        print("A method")
+class B:
+    def b_method(self):
+        print("B method")
+class C(A, B):
+    pass
+
+obj = C()
+obj.a_method()  # A method
+obj.b_method()  # B method
+
+# Multilevel Inheritance
+class Grandparent:
+    pass
+class Parent(Grandparent):
+    pass
+class Child(Parent):
+    pass
+</pre>
+
+<h3>Polymorphism (Method Overloading & Overriding)</h3>
+<p>
+- <strong>Method Overloading:</strong> Python does not support traditional method overloading, but default arguments can achieve similar behavior.  
+- <strong>Method Overriding:</strong> A child class can provide its own implementation of a method inherited from the parent.
+</p>
+<pre>
+# Method Overriding
+class Parent:
+    def greet(self):
+        print("Hello from Parent")
+
+class Child(Parent):
+    def greet(self):
+        print("Hello from Child")
+
+c = Child()
+c.greet()  # Hello from Child
+</pre>
+
+<h3>Encapsulation & Abstraction</h3>
+<p>
+- <strong>Encapsulation:</strong> Restrict access to methods and variables using naming conventions (<code>_protected</code>, <code>__private</code>).  
+- <strong>Abstraction:</strong> Hiding implementation details; achieved using abstract classes (from <code>abc</code> module) or by designing interfaces.
+</p>
+<pre>
+# Encapsulation example
+class Example:
+    def __init__(self):
+        self.public = "Accessible"
+        self._protected = "Internal use"
+        self.__private = "Private"
+
+e = Example()
+print(e.public)      # Accessible
+print(e._protected)  # Internal use
+# print(e.__private) # Error
+
+# Abstraction example
+from abc import ABC, abstractmethod
+class Shape(ABC):
+    @abstractmethod
+    def area(self):
+        pass
+
+class Square(Shape):
+    def __init__(self, side):
+        self.side = side
+    def area(self):
+        return self.side * self.side
+
+s = Square(5)
+print(s.area())  # 25
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Modules & Packages</h2>
+
+<h3>Importing Modules</h3>
+<p>
+Modules are Python files containing functions, variables, and classes that can be reused. You can import modules using the <code>import</code> statement.
+</p>
+<pre>
+# Import entire module
+import math
+print(math.sqrt(16))  # 4.0
+
+# Import specific function
+from math import factorial
+print(factorial(5))  # 120
+
+# Import with alias
+import math as m
+print(m.pi)  # 3.141592653589793
+</pre>
+
+<h3>Standard Library</h3>
+<p>
+Python provides a large collection of built-in modules called the Standard Library. Examples include:
+</p>
+<ul>
+    <li><strong>os:</strong> Interact with the operating system</li>
+    <li><strong>sys:</strong> Access system-specific parameters and functions</li>
+    <li><strong>datetime:</strong> Work with dates and times</li>
+    <li><strong>random:</strong> Generate random numbers</li>
+    <li><strong>math:</strong> Mathematical operations</li>
+</ul>
+<pre>
+import datetime
+now = datetime.datetime.now()
+print(now)  # Current date and time
+</pre>
+
+<h3>Creating Packages</h3>
+<p>
+A package is a collection of Python modules organized in directories. It allows structuring large projects.  
+To create a package:
+</p>
+<ul>
+    <li>Create a folder with your package name</li>
+    <li>Add an empty <code>__init__.py</code> file to the folder</li>
+    <li>Add modules (Python files) inside the folder</li>
+</ul>
+<pre>
+# Folder structure:
+# mypackage/
+# ├── __init__.py
+# ├── module1.py
+# └── module2.py
+
+# Importing module from package
+from mypackage import module1
+module1.function()
+</pre>
+
+<h3>__name__ == "__main__"</h3>
+<p>
+This condition is used to check whether a Python file is being run directly or imported as a module. Code inside this block runs only if the file is executed directly.
+</p>
+<pre>
+# example.py
+def greet():
+    print("Hello")
+
+if __name__ == "__main__":
+    greet()  # Runs only when this file is executed directly
+</pre>
+
+
+<h2>Magic Methods (__init__, __str__, __repr__)</h2>
+
+<p>
+Magic methods (also called dunder methods) are special methods in Python with double underscores. They allow customizing object behavior.
+</p>
+<pre>
+# __init__ : Constructor to initialize objects
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+# __str__ : Returns a human-readable string
+    def __str__(self):
+        return f"{self.name}, {self.age} years old"
+
+# __repr__ : Returns a string representation used for debugging
+    def __repr__(self):
+        return f"Person(name={self.name!r}, age={self.age!r})"
+
+p = Person("Alice", 25)
+print(p)       # Alice, 25 years old
+print(repr(p)) # Person(name='Alice', age=25)
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>File Handling</h2>
+
+<h3>Reading Files</h3>
+<p>
+You can read data from files using the <code>open()</code> function. Always close the file after use or use the <code>with</code> statement for automatic closing.
+</p>
+<pre>
+# Using open() and read()
+file = open("example.txt", "r")
+content = file.read()
+print(content)
+file.close()
+
+# Using with statement
+with open("example.txt", "r") as file:
+    content = file.read()
+    print(content)
+</pre>
+
+<h3>Writing Files</h3>
+<p>
+You can write data to files using <code>write()</code> or <code>writelines()</code>.  
+Use file modes "w" (write), "a" (append), or "x" (create).
+</p>
+<pre>
+# Write to a file
+with open("output.txt", "w") as file:
+    file.write("Hello Python\n")
+    file.write("File handling example")
+
+# Append to a file
+with open("output.txt", "a") as file:
+    file.write("\nAppended line")
+</pre>
+
+<h3>File Modes</h3>
+<p>
+Common file modes in Python:
+</p>
+<ul>
+    <li><strong>"r"</strong> : Read (default)</li>
+    <li><strong>"w"</strong> : Write (creates or overwrites)</li>
+    <li><strong>"a"</strong> : Append</li>
+    <li><strong>"x"</strong> : Create (fails if file exists)</li>
+    <li><strong>"b"</strong> : Binary mode (e.g., "rb", "wb")</li>
+    <li><strong>"t"</strong> : Text mode (default, e.g., "rt", "wt")</li>
+</ul>
+
+<h3>Working with CSV & JSON</h3>
+<p>
+Python provides built-in modules to work with CSV and JSON files.
+</p>
+<pre>
+# CSV example
+import csv
+
+with open("data.csv", "r") as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+
+# JSON example
+import json
+
+# Writing JSON
+data = {"name": "Alice", "age": 25}
+with open("data.json", "w") as file:
+    json.dump(data, file)
+
+# Reading JSON
+with open("data.json", "r") as file:
+    loaded_data = json.load(file)
+    print(loaded_data)
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Exception Handling</h2>
+
+<h3>try, except</h3>
+<p>
+Exceptions are errors that occur during program execution. You can handle them using <code>try</code> and <code>except</code> blocks to prevent the program from crashing.
+</p>
+<pre>
+# Example:
+try:
+    x = 10 / 0
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+</pre>
+
+<h3>else & finally</h3>
+<p>
+- <strong>else:</strong> Runs if no exception occurs in the <code>try</code> block.  
+- <strong>finally:</strong> Runs always, whether an exception occurs or not. Useful for cleanup tasks.
+</p>
+<pre>
+try:
+    x = 10 / 2
+except ZeroDivisionError:
+    print("Cannot divide by zero")
+else:
+    print("Division successful")  # Executes if no exception
+finally:
+    print("Execution complete")    # Always executes
+</pre>
+
+<h3>Raising Exceptions</h3>
+<p>
+You can manually raise exceptions using the <code>raise</code> keyword.
+</p>
+<pre>
+# Example:
+age = -5
+if age &lt; 0:
+    raise ValueError("Age cannot be negative")
+</pre>
+
+<h3>Custom Exceptions</h3>
+<p>
+You can create your own exception classes by inheriting from the built-in <code>Exception</code> class.
+</p>
+<pre>
+# Example:
+class MyError(Exception):
+    pass
+
+def check_value(x):
+    if x &lt; 0:
+        raise MyError("Value cannot be negative")
+
+try:
+    check_value(-10)
+except MyError as e:
+    print(e)  # Value cannot be negative
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Advanced Topics</h2>
+
+<h3>Decorators</h3>
+<p>
+Decorators are functions that modify the behavior of another function without changing its code. They are often used for logging, access control, or timing functions.
+</p>
+<pre>
+# Example:
+def decorator(func):
+    def wrapper():
+        print("Before function call")
+        func()
+        print("After function call")
+    return wrapper
+
+@decorator
+def say_hello():
+    print("Hello!")
+
+say_hello()
+# Output:
+# Before function call
+# Hello!
+# After function call
+</pre>
+
+<h3>Generators & Iterators</h3>
+<p>
+Generators allow you to create iterators with <code>yield</code>, producing values on the fly without storing the entire sequence in memory.
+</p>
+<pre>
+# Generator example
+def generate_numbers(n):
+    for i in range(n):
+        yield i
+
+for num in generate_numbers(5):
+    print(num)  # 0 1 2 3 4
+
+# Iterator example
+my_list = [1, 2, 3]
+it = iter(my_list)
+print(next(it))  # 1
+print(next(it))  # 2
+</pre>
+
+<h3>List Comprehensions</h3>
+<p>
+List comprehensions provide a concise way to create lists.
+</p>
+<pre>
+# Example:
+squares = [x**2 for x in range(5)]
+print(squares)  # [0, 1, 4, 9, 16]
+
+# With condition
+even_squares = [x**2 for x in range(10) if x % 2 == 0]
+print(even_squares)  # [0, 4, 16, 36, 64]
+</pre>
+
+<h3>Dictionary & Set Comprehensions</h3>
+<p>
+Similar to list comprehensions, you can create dictionaries and sets concisely.
+</p>
+<pre>
+# Dictionary comprehension
+squares_dict = {x: x**2 for x in range(5)}
+print(squares_dict)  # {0:0, 1:1, 2:4, 3:9, 4:16}
+
+# Set comprehension
+squares_set = {x**2 for x in range(5)}
+print(squares_set)  # {0, 1, 4, 9, 16}
+</pre>
+
+<h3>Regular Expressions</h3>
+<p>
+Regular expressions (regex) are used for pattern matching in strings. Python provides the <code>re</code> module.
+</p>
+<pre>
+import re
+
+text = "My email is example@test.com"
+pattern = r"\w+@\w+\.\w+"
+match = re.search(pattern, text)
+if match:
+    print(match.group())  # example@test.com
+</pre>
+
+<h3>Context Managers (with statement)</h3>
+<p>
+Context managers simplify resource management (like files) and ensure proper cleanup using the <code>with</code> statement.
+</p>
+<pre>
+# Example:
+with open("example.txt", "r") as file:
+    content = file.read()
+    print(content)
+# File is automatically closed after the block
+</pre>
+
+
+
+
+<hr>
+
+
+
+<h2>Libraries & Frameworks</h2>
+
+<h3>NumPy</h3>
+<p>
+NumPy is a powerful library for numerical computing. It provides support for multi-dimensional arrays, matrices, and mathematical functions.
+</p>
+<pre>
+import numpy as np
+
+# Create array
+arr = np.array([1, 2, 3, 4])
+print(arr)  # [1 2 3 4]
+
+# Operations
+print(arr + 2)       # [3 4 5 6]
+print(arr.mean())    # 2.5
+print(arr.sum())     # 10
+
+# 2D array
+matrix = np.array([[1, 2], [3, 4]])
+print(matrix)
+</pre>
+
+<h3>Pandas</h3>
+<p>
+Pandas is used for data manipulation and analysis. It provides <code>DataFrame</code> and <code>Series</code> for handling tabular data.
+</p>
+<pre>
+import pandas as pd
+
+# Create DataFrame
+data = {"Name": ["Alice", "Bob"], "Age": [25, 30]}
+df = pd.DataFrame(data)
+print(df)
+
+# Access column
+print(df["Name"])
+
+# Basic statistics
+print(df.describe())
+</pre>
+
+<h3>Matplotlib</h3>
+<p>
+Matplotlib is a plotting library used to create charts, graphs, and visualizations.
+</p>
+<pre>
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [10, 20, 25, 30]
+
+plt.plot(x, y)
+plt.title("Line Chart")
+plt.xlabel("X-axis")
+plt.ylabel("Y-axis")
+plt.show()
+</pre>
+
+<h3>Requests & BeautifulSoup</h3>
+<p>
+These libraries are used for web scraping and HTTP requests:
+</p>
+<pre>
+import requests
+from bs4 import BeautifulSoup
+
+# Send HTTP request
+url = "https://example.com"
+response = requests.get(url)
+
+# Parse HTML
+soup = BeautifulSoup(response.text, "html.parser")
+print(soup.title.text)
+</pre>
+
+<h3>Flask / Django</h3>
+<p>
+Flask and Django are popular web frameworks for Python:
+</p>
+<ul>
+    <li><strong>Flask:</strong> Lightweight framework for building simple web applications. Easy to set up and extend.</li>
+    <li><strong>Django:</strong> Full-featured framework for large applications. Provides built-in ORM, admin interface, authentication, and more.</li>
+</ul>
+<pre>
+# Flask example
+from flask import Flask
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello, Flask!"
+
+if __name__ == "__main__":
+    app.run(debug=True)
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Miscellaneous</h2>
+
+<h3>Pythonic Idioms & Best Practices</h3>
+<p>
+"Pythonic" refers to writing code that follows Python's conventions, is readable, and uses built-in features efficiently. Some best practices:
+</p>
+<ul>
+    <li>Use list/dict/set comprehensions instead of loops where possible.</li>
+    <li>Prefer <code>enumerate()</code> over manual indexing.</li>
+    <li>Use <code>with</code> statement for file handling.</li>
+    <li>Follow PEP8 style guide: proper indentation, naming conventions.</li>
+    <li>Use meaningful variable names and avoid redundant code.</li>
+</ul>
+<pre>
+# Pythonic example
+numbers = [1, 2, 3, 4, 5]
+squares = [x**2 for x in numbers]  # instead of a loop
+print(squares)
+</pre>
+
+<h3>Virtual Environments</h3>
+<p>
+Virtual environments allow you to create isolated Python environments for different projects. This prevents package conflicts.
+</p>
+<pre>
+# Create virtual environment
+python -m venv myenv
+
+# Activate (Windows)
+myenv\Scripts\activate
+
+# Activate (Linux/Mac)
+source myenv/bin/activate
+
+# Install packages
+pip install numpy
+
+# Deactivate
+deactivate
+</pre>
+
+<h3>Type Hinting</h3>
+<p>
+Type hints allow you to indicate the expected data types for function arguments and return values. This improves code readability and helps with static analysis.
+</p>
+<pre>
+# Example:
+def greet(name: str, age: int) -> str:
+    return f"Hello {name}, you are {age} years old"
+
+message = greet("Alice", 25)
+print(message)
+</pre>
+
+
+
+<hr>
+
+
+
+<h2>Web Development: Templates, Static Files, CRUD & Database Integration</h2>
+
+<h3>Templates & Static Files</h3>
+<p>
+In web frameworks like Flask or Django, templates are used to generate dynamic HTML pages, and static files (CSS, JS, images) are used for styling and client-side scripts.
+</p>
+<pre>
+# Flask example
+from flask import Flask, render_template
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return render_template("index.html")  # Renders templates/index.html
+
+# Place CSS/JS/images in 'static' folder
+# Example: /static/style.css
+</pre>
+
+<h3>CRUD Operations</h3>
+<p>
+CRUD stands for Create, Read, Update, Delete — basic operations to manipulate data in a database.
+</p>
+<pre>
+# Flask example using SQLite
+from flask import Flask, request, render_template
+import sqlite3
+
+app = Flask(__name__)
+conn = sqlite3.connect("test.db", check_same_thread=False)
+cursor = conn.cursor()
+
+# Create table
+cursor.execute('''CREATE TABLE IF NOT EXISTS users(id INTEGER PRIMARY KEY, name TEXT)''')
+
+# Create
+@app.route("/add", methods=["POST"])
+def add_user():
+    name = request.form["name"]
+    cursor.execute("INSERT INTO users (name) VALUES (?)", (name,))
+    conn.commit()
+    return "User added"
+
+# Read
+@app.route("/users")
+def list_users():
+    cursor.execute("SELECT * FROM users")
+    users = cursor.fetchall()
+    return str(users)
+
+# Update
+@app.route("/update/<int:id>", methods=["POST"])
+def update_user(id):
+    name = request.form["name"]
+    cursor.execute("UPDATE users SET name=? WHERE id=?", (name, id))
+    conn.commit()
+    return "User updated"
+
+# Delete
+@app.route("/delete/<int:id>")
+def delete_user(id):
+    cursor.execute("DELETE FROM users WHERE id=?", (id,))
+    conn.commit()
+    return "User deleted"
+</pre>
+
+<h3>Database Integration (SQLite/MySQL)</h3>
+<p>
+Python can interact with databases using built-in or external libraries. SQLite is file-based; MySQL requires a server.
+</p>
+<pre>
+# SQLite
+import sqlite3
+conn = sqlite3.connect("mydb.db")
+cursor = conn.cursor()
+cursor.execute("CREATE TABLE IF NOT EXISTS students (id INTEGER, name TEXT)")
+conn.commit()
+conn.close()
+
+# MySQL (using mysql-connector)
+import mysql.connector
+conn = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="password",
+    database="testdb"
+)
+cursor = conn.cursor()
+cursor.execute("CREATE TABLE IF NOT EXISTS students (id INT, name VARCHAR(50))")
+conn.commit()
+conn.close()
+</pre>
+
+
+<h1>Python Advanced Core Notes</h1>
+
+<div class="box">
+<h2>1. Variables & Data Types (Advanced)</h2>
+
+<h3>Dynamic Typing</h3>
+<code>
+x = 10
+x = "Now String"
+</code>
+
+<h3>Type Checking</h3>
+<code>
+type(x)
+isinstance(x, int)
+</code>
+
+<h3>Memory Behavior</h3>
+<code>
+a = 10
+b = a   # reference copy (immutable safe)
+</code>
+
+<h3>Mutable vs Immutable</h3>
+<ul>
+<li>Immutable: int, float, str, tuple</li>
+<li>Mutable: list, dict, set</li>
+</ul>
+
+<code>
+a = [1,2]
+b = a
+b.append(3)  # affects a also
+</code>
+
+</div>
+
+<div class="box">
+<h2>2. Collections (Deep)</h2>
+
+<h3>List (Advanced)</h3>
+<code>
+lst = [1,2,3]
+lst.append(4)
+lst.insert(1, 99)
+lst.pop()
+lst.sort()
+lst.reverse()
+
+# List comprehension
+
+[x*x for x in range(5)] </code>
+
+<h3>Tuple (Immutable)</h3>
+<code>
+t = (1,2,3)
+# Faster than list, safe data
+</code>
+
+<h3>Set (Unique values)</h3>
+<code>
+s = {1,2,3}
+s.add(4)
+s.remove(2)
+
+# Operations
+
+a & b   # intersection
+a | b   # union </code>
+
+<h3>Dictionary (Core Backend Usage)</h3>
+<code>
+d = {"name": "Aathi", "age": 22}
+
+d.get("name")
+d.keys()
+d.values()
+d.items()
+
+# Loop
+
+for k, v in d.items():
+print(k, v) </code>
+
+</div>
+
+<div class="box">
+<h2>3. Operators (Advanced)</h2>
+
+<h3>Arithmetic</h3>
+<code>+, -, *, /, //, %, **</code>
+
+<h3>Comparison</h3>
+<code>==, !=, >, <, >=, <=</code>
+
+<h3>Logical</h3>
+<code>and, or, not</code>
+
+<h3>Identity</h3>
+<code>
+a is b
+a is not b
+</code>
+
+<h3>Membership</h3>
+<code>
+x in list
+x not in list
+</code>
+
+</div>
+
+<div class="box">
+<h2>4. Input / Output (Advanced + All Print Methods)</h2>
+
+<h3>Basic Input</h3>
+<code>
+name = input("Enter name: ")
+</code>
+
+<h3>Basic Print</h3>
+<code>
+print("Hello")
+</code>
+
+<h3>Multiple Values</h3>
+<code>
+print("A", "B", "C", sep="-")
+</code>
+
+<h3>End Parameter</h3>
+<code>
+print("Hello", end=" ")
+print("World")
+</code>
+
+<h3>Formatted Print (f-string - BEST)</h3>
+<code>
+name = "Aathi"
+age = 22
+print(f"Name: {name}, Age: {age}")
+</code>
+
+<h3>format() Method</h3>
+<code>
+print("Name: {}, Age: {}".format(name, age))
+</code>
+
+<h3>Percentage Formatting</h3>
+<code>
+print("Age: %d" % age)
+</code>
+
+<h3>Advanced Formatting</h3>
+<code>
+print(f"{age:.2f}")   # float precision
+print(f"{10:05}")     # padding
+</code>
+
+<h3>Print to File</h3>
+<code>
+with open("log.txt", "w") as f:
+    print("Hello File", file=f)
+</code>
+
+<h3>Debug Printing</h3>
+<code>
+x = 10
+print(f"{x=}")
+</code>
+
+</div>
+
+<div class="box">
+<h2>5. Control Flow (Advanced)</h2>
+
+<h3>If Conditions</h3>
+<code>
+if x > 10:
+    print("High")
+elif x == 10:
+    print("Equal")
+else:
+    print("Low")
+</code>
+
+<h3>Ternary Operator</h3>
+<code>
+result = "High" if x > 10 else "Low"
+</code>
+
+<h3>For Loop</h3>
+<code>
+for i in range(5):
+    print(i)
+</code>
+
+<h3>Enumerate</h3>
+<code>
+for i, val in enumerate(["a","b"]):
+    print(i, val)
+</code>
+
+<h3>While Loop</h3>
+<code>
+while x > 0:
+    x -= 1
+</code>
+
+<h3>Break / Continue</h3>
+<code>
+for i in range(10):
+    if i == 5:
+        break
+</code>
+
+<code>
+for i in range(10):
+    if i % 2 == 0:
+        continue
+</code>
+
+<h3>Pass</h3>
+<code>
+if True:
+    pass
+</code>
+
+</div>
+
+<div class="box">
+<h2>6. Advanced Tips (Important for Backend)</h2>
+
+<ul>
+<li>Always use <b>f-strings</b> for logging</li>
+<li>Use <b>dict</b> for API request/response</li>
+<li>Avoid modifying list while looping</li>
+<li>Use <b>enumerate()</b> instead of manual index</li>
+<li>Prefer <b>list comprehension</b> for performance</li>
+</ul>
+
+</div>
+
+<h2>3. Functions (Advanced – Developer Level)</h2>
+
+<h3>Basic Function</h3>
+<code>
+def add(a, b):
+    return a + b
+</code>
+
+<h3>Default Arguments</h3>
+<code>
+def greet(name="Guest"):
+    return f"Hello {name}"
+</code>
+
+<h3>Keyword Arguments</h3>
+<code>
+greet(name="Aathi")
+</code>
+
+<h3>Positional vs Keyword</h3>
+<code>
+def func(a, b, c):
+    pass
+
+func(1, c=3, b=2) </code>
+
+<h3>Variable Length Arguments</h3>
+<code>
+def func(*args):
+    return sum(args)
+
+def func(**kwargs):
+return kwargs </code>
+
+<h3>Combined</h3>
+<code>
+def func(a, *args, **kwargs):
+    pass
+</code>
+
+<h3>Unpacking</h3>
+<code>
+lst = [1,2]
+add(*lst)
+
+d = {"a":1, "b":2}
+func(**d) </code>
+
+<h3>Lambda Functions (Anonymous)</h3>
+<code>
+add = lambda a, b: a + b
+</code>
+
+<h3>Higher Order Functions</h3>
+<code>
+def apply(func, value):
+    return func(value)
+
+apply(lambda x: x*x, 5) </code>
+
+<h3>Built-in Functional Tools</h3>
+<code>
+map(lambda x: x*2, [1,2,3])
+filter(lambda x: x>2, [1,2,3])
+from functools import reduce
+reduce(lambda a,b: a+b, [1,2,3])
+</code>
+
+<h3>Closures</h3>
+<code>
+def outer(x):
+    def inner(y):
+        return x + y
+    return inner
+
+f = outer(10)
+f(5) </code>
+
+<h3>Decorators (VERY IMPORTANT)</h3>
+<code>
+def logger(func):
+    def wrapper(*args, **kwargs):
+        print("Calling function")
+        return func(*args, **kwargs)
+    return wrapper
+
+@logger
+def test():
+print("Hello") </code>
+
+<h3>Recursion</h3>
+<code>
+def fact(n):
+    if n == 1:
+        return 1
+    return n * fact(n-1)
+</code>
+
+<h3>Type Hints (Production Code)</h3>
+<code>
+def add(a: int, b: int) -> int:
+    return a + b
+</code>
+
+<h3>Docstrings</h3>
+<code>
+def func():
+    """This is documentation"""
+</code>
+
+<h3>Async Functions (Modern Backend)</h3>
+<code>
+import asyncio
+
+async def main():
+return "Hello"
+
+await main() </code>
+
+<h3>Generator Functions</h3>
+<code>
+def gen():
+    for i in range(5):
+        yield i
+</code>
+
+<h3>Partial Functions</h3>
+<code>
+from functools import partial
+add5 = partial(add, 5)
+</code>
+
+<h3>Function Attributes</h3>
+<code>
+func.__name__
+func.__doc__
+</code>
+
+
+
+<h2>4. Modules & Packages (Deep Developer Notes)</h2>
+
+<h3>Basic Import</h3>
+<code>
+import math
+</code>
+
+<h3>Selective Import</h3>
+<code>
+from math import sqrt
+</code>
+
+<h3>Alias</h3>
+<code>
+import numpy as np
+</code>
+
+<h3>Import All (Avoid in production)</h3>
+<code>
+from math import *
+</code>
+
+<h3>Dynamic Import</h3>
+<code>
+import importlib
+mod = importlib.import_module("math")
+</code>
+
+<h3>Reload Module</h3>
+<code>
+import importlib
+importlib.reload(math)
+</code>
+
+<h3>Module Search Path</h3>
+<code>
+import sys
+print(sys.path)
+</code>
+
+<h3>Custom Module</h3>
+<code>
+# mymodule.py
+def test():
+    return "Hello"
+
+# main.py
+
+import mymodule </code>
+
+<h3>Package Structure</h3>
+<code>
+project/
+    __init__.py
+    module1.py
+    module2.py
+</code>
+
+<h3>Relative Imports</h3>
+<code>
+from .module1 import func
+</code>
+
+<h3>Standard Library Important Modules</h3>
+
+<h4>System & OS</h4>
+<code>
+import os
+os.listdir()
+os.getenv("PATH")
+
+import sys
+sys.exit() </code>
+
+<h4>File & Path</h4>
+<code>
+from pathlib import Path
+Path("file.txt").exists()
+</code>
+
+<h4>Math & Random</h4>
+<code>
+import math
+math.sqrt(16)
+
+import random
+random.randint(1,10) </code>
+
+<h4>JSON</h4>
+<code>
+import json
+json.loads('{"a":1}')
+json.dumps({"a":1})
+</code>
+
+<h4>Datetime (CRITICAL)</h4>
+<code>
+from datetime import datetime, date, time, timedelta
+</code>
+
+
+
+<h3>Datetime Deep Dive</h3>
+
+<h4>Current Date & Time</h4>
+<code>
+now = datetime.now()
+utc = datetime.utcnow()
+</code>
+
+<h4>Date Only</h4>
+<code>
+date.today()
+</code>
+
+<h4>Create Date</h4>
+<code>
+datetime(2025, 1, 1, 10, 30)
+</code>
+
+<h4>Formatting</h4>
+<code>
+now.strftime("%Y-%m-%d %H:%M:%S")
+</code>
+
+<h4>Parsing</h4>
+<code>
+datetime.strptime("2025-01-01", "%Y-%m-%d")
+</code>
+
+<h4>Timedelta</h4>
+<code>
+now + timedelta(days=5)
+now - timedelta(hours=2)
+</code>
+
+<h4>Timestamp</h4>
+<code>
+now.timestamp()
+datetime.fromtimestamp(1710000000)
+</code>
+
+<h4>Timezone Handling</h4>
+<code>
+from datetime import timezone
+datetime.now(timezone.utc)
+</code>
+
+<h4>Third-party (IMPORTANT)</h4>
+<code>
+pip install pytz
+import pytz
+pytz.timezone("Asia/Kolkata")
+</code>
+
+
+
+<h3>Advanced Imports</h3>
+
+<h4>__name__ Usage</h4>
+<code>
+if __name__ == "__main__":
+    main()
+</code>
+
+<h4>Lazy Import</h4>
+<code>
+def func():
+    import math
+</code>
+
+<h4>Environment Variables</h4>
+<code>
+import os
+os.environ.get("DB_HOST")
+</code>
+
+
+
+<h3>Other Critical Modules (Backend)</h3>
+
+<h4>HTTP Requests</h4>
+<code>
+import requests
+requests.get("https://api.com")
+</code>
+
+<h4>Logging</h4>
+<code>
+import logging
+logging.info("message")
+</code>
+
+<h4>Threading</h4>
+<code>
+import threading
+</code>
+
+<h4>Multiprocessing</h4>
+<code>
+import multiprocessing
+</code>
+
+<h4>Async IO</h4>
+<code>
+import asyncio
+</code>
+
+<h4>Database</h4>
+<code>
+import sqlite3
+import psycopg2
+import mysql.connector
+</code>
+
+
+
+<h3>Best Practices (Real Developer)</h3>
+
+<ul>
+<li>Avoid wildcard imports</li>
+<li>Use virtual environments</li>
+<li>Group imports: standard → third-party → local</li>
+<li>Use requirements.txt</li>
+<li>Keep functions small and pure</li>
+<li>Use datetime in UTC in backend</li>
+</ul>
+
+<h2>1. File Handling (Advanced – System Level)</h2>
+
+<h3>Basic Read/Write</h3>
+<code>
+with open("file.txt", "r") as f:
+    data = f.read()
+</code>
+
+<h3>Modes</h3>
+<ul>
+<li>r → read</li>
+<li>w → write (overwrite)</li>
+<li>a → append</li>
+<li>x → create</li>
+<li>b → binary</li>
+<li>t → text (default)</li>
+<li>r+ → read/write</li>
+</ul>
+
+<h3>Read Variants</h3>
+<code>
+f.read()        # full file
+f.readline()    # single line
+f.readlines()   # list of lines
+</code>
+
+<h3>Iterating File (Memory Efficient)</h3>
+<code>
+with open("file.txt") as f:
+    for line in f:
+        print(line.strip())
+</code>
+
+<h3>Write Variants</h3>
+<code>
+f.write("Hello")
+f.writelines(["A\n", "B\n"])
+</code>
+
+<h3>Binary Files</h3>
+<code>
+with open("image.png", "rb") as f:
+    data = f.read()
+</code>
+
+<h3>File Pointer Control</h3>
+<code>
+f.seek(0)
+f.tell()
+</code>
+
+<h3>Encoding Handling</h3>
+<code>
+open("file.txt", "r", encoding="utf-8")
+</code>
+
+<h3>Large File Handling (Chunking)</h3>
+<code>
+with open("big.txt") as f:
+    while chunk := f.read(1024):
+        process(chunk)
+</code>
+
+<h3>Temporary Files</h3>
+<code>
+import tempfile
+
+with tempfile.NamedTemporaryFile() as f:
+f.write(b"data") </code>
+
+<h3>File & Directory Operations</h3>
+<code>
+import os
+
+os.rename("a.txt", "b.txt")
+os.remove("b.txt")
+os.mkdir("dir")
+os.listdir(".") </code>
+
+<h3>Pathlib (Modern Approach)</h3>
+<code>
+from pathlib import Path
+
+p = Path("file.txt")
+p.exists()
+p.read_text()
+p.write_text("Hello") </code>
+
+<h3>JSON File Handling</h3>
+<code>
+import json
+
+with open("data.json", "r") as f:
+data = json.load(f)
+
+with open("data.json", "w") as f:
+json.dump(data, f) </code>
+
+<h3>CSV Handling</h3>
+<code>
+import csv
+
+with open("file.csv") as f:
+reader = csv.reader(f)
+for row in reader:
+print(row) </code>
+
+<h3>Pickle (Serialization)</h3>
+<code>
+import pickle
+
+with open("data.pkl", "wb") as f:
+pickle.dump(obj, f)
+
+with open("data.pkl", "rb") as f:
+obj = pickle.load(f) </code>
+
+<h3>File Locking (Concurrency)</h3>
+<code>
+import threading
+lock = threading.Lock()
+</code>
+
+<h3>Advanced Patterns</h3>
+<ul>
+<li>Log files writing</li>
+<li>Streaming large data</li>
+<li>Reading configs</li>
+<li>File-based caching</li>
+</ul>
+
+
+
+<h2>2. Exception Handling (Advanced – Production Level)</h2>
+
+<h3>Basic Try/Except</h3>
+<code>
+try:
+    x = int("abc")
+except ValueError:
+    print("Error")
+</code>
+
+<h3>Multiple Exceptions</h3>
+<code>
+try:
+    pass
+except (ValueError, TypeError):
+    pass
+</code>
+
+<h3>Catch All (Avoid in production)</h3>
+<code>
+except Exception as e:
+    print(e)
+</code>
+
+<h3>Else Block</h3>
+<code>
+try:
+    x = 10
+except:
+    pass
+else:
+    print("No error")
+</code>
+
+<h3>Finally Block</h3>
+<code>
+try:
+    pass
+finally:
+    print("Always runs")
+</code>
+
+<h3>Raising Exceptions</h3>
+<code>
+raise ValueError("Invalid input")
+</code>
+
+<h3>Custom Exceptions (IMPORTANT)</h3>
+<code>
+class AppError(Exception):
+    pass
+
+raise AppError("Custom error") </code>
+
+<h3>Exception Chaining</h3>
+<code>
+try:
+    1/0
+except ZeroDivisionError as e:
+    raise ValueError("Wrapped") from e
+</code>
+
+<h3>Assertions</h3>
+<code>
+assert x > 0, "Must be positive"
+</code>
+
+<h3>Logging Exceptions</h3>
+<code>
+import logging
+
+try:
+1/0
+except Exception as e:
+logging.error(e) </code>
+
+<h3>Traceback</h3>
+<code>
+import traceback
+
+try:
+1/0
+except:
+traceback.print_exc() </code>
+
+<h3>Context Managers (Error Safe)</h3>
+<code>
+with open("file.txt") as f:
+    pass
+</code>
+
+<h3>Custom Context Manager</h3>
+<code>
+class MyContext:
+    def __enter__(self):
+        return self
+    def __exit__(self, exc_type, exc, tb):
+        print("Cleanup")
+</code>
+
+<h3>Retry Mechanism</h3>
+<code>
+for _ in range(3):
+    try:
+        break
+    except:
+        continue
+</code>
+
+<h3>Best Practices</h3>
+<ul>
+<li>Never use bare except</li>
+<li>Always log errors</li>
+<li>Use custom error codes (like your PHP project)</li>
+<li>Do not expose internal errors to API users</li>
+<li>Use finally for cleanup</li>
+</ul>
+
+<h3>Backend Pattern (IMPORTANT)</h3>
+<code>
+def process():
+    try:
+        data = read()
+        validate(data)
+        return success()
+    except ValidationError:
+        return error("INVALID")
+    except Exception:
+        return error("SERVER_ERROR")
+</code>
+
+
+<h2>OOP (Object-Oriented Programming – Advanced)</h2>
+
+<h3>1. Class & Object</h3>
+<code>
+class User:
+    def __init__(self, name):
+        self.name = name
+
+u = User("Aathi") </code>
+
+<h3>Instance vs Class Variables</h3>
+<code>
+class Test:
+    count = 0   # class variable
+
+```
+def __init__(self):
+    Test.count += 1
+```
+
+</code>
+
+
+
+<h3>2. Encapsulation (Data Hiding)</h3>
+
+<h4>Public</h4>
+<code>
+self.name
+</code>
+
+<h4>Protected (Convention)</h4>
+<code>
+self._name
+</code>
+
+<h4>Private (Name Mangling)</h4>
+<code>
+self.__name
+</code>
+
+
+
+<h3>3. Getter & Setter (Property)</h3>
+<code>
+class User:
+    def __init__(self):
+        self._age = 0
+
+```
+@property
+def age(self):
+    return self._age
+
+@age.setter
+def age(self, value):
+    if value < 0:
+        raise ValueError
+    self._age = value
+```
+
+</code>
+
+
+
+<h3>4. Inheritance</h3>
+<code>
+class Animal:
+    def speak(self):
+        pass
+
+class Dog(Animal):
+def speak(self):
+return "Bark" </code>
+
+<h3>Multiple Inheritance</h3>
+<code>
+class A: pass
+class B: pass
+class C(A, B): pass
+</code>
+
+
+
+<h3>5. Method Types</h3>
+
+<h4>Instance Method</h4>
+<code>
+def func(self):
+    pass
+</code>
+
+<h4>Class Method</h4>
+<code>
+@classmethod
+def func(cls):
+    pass
+</code>
+
+<h4>Static Method</h4>
+<code>
+@staticmethod
+def func():
+    pass
+</code>
+
+
+
+<h3>6. Polymorphism</h3>
+
+<h4>Method Overriding</h4>
+<code>
+class A:
+    def show(self):
+        return "A"
+
+class B(A):
+def show(self):
+return "B" </code>
+
+<h4>Duck Typing</h4>
+<code>
+def call(obj):
+    obj.run()
+</code>
+
+
+
+<h3>7. Abstraction</h3>
+<code>
+from abc import ABC, abstractmethod
+
+class Base(ABC):
+@abstractmethod
+def process(self):
+pass </code>
+
+
+
+<h3>8. Magic Methods (Dunder Methods)</h3>
+
+<code>
+__init__      # constructor
+__str__       # print
+__repr__      # debug
+__len__       # len()
+__getitem__   # obj[index]
+__setitem__   # obj[index] = value
+__call__      # obj()
+__eq__        # ==
+__lt__        # <
+</code>
+
+<h4>Example</h4>
+<code>
+class A:
+    def __str__(self):
+        return "Hello"
+</code>
+
+
+
+<h3>9. Composition (IMPORTANT for Backend)</h3>
+<code>
+class Engine:
+    pass
+
+class Car:
+def **init**(self):
+self.engine = Engine() </code>
+
+
+
+<h3>10. Dependency Injection</h3>
+<code>
+class Service:
+    def __init__(self, db):
+        self.db = db
+</code>
+
+
+
+<h3>11. Singleton Pattern</h3>
+<code>
+class Singleton:
+    _instance = None
+
+```
+def __new__(cls):
+    if not cls._instance:
+        cls._instance = super().__new__(cls)
+    return cls._instance
+```
+
+</code>
+
+
+
+<h3>12. Factory Pattern</h3>
+<code>
+class UserFactory:
+    def create(type):
+        if type == "admin":
+            return Admin()
+</code>
+
+
+
+<h3>13. Data Classes (Modern Python)</h3>
+<code>
+from dataclasses import dataclass
+
+@dataclass
+class User:
+name: str
+age: int </code>
+
+
+
+<h3>14. Slots (Memory Optimization)</h3>
+<code>
+class A:
+    __slots__ = ["name"]
+</code>
+
+
+
+<h3>15. Method Resolution Order (MRO)</h3>
+<code>
+ClassName.__mro__
+</code>
+
+
+
+<h3>16. Operator Overloading</h3>
+<code>
+class A:
+    def __add__(self, other):
+        return self.value + other.value
+</code>
+
+
+
+<h3>17. Copying Objects</h3>
+<code>
+import copy
+
+copy.copy(obj)
+copy.deepcopy(obj) </code>
+
+
+
+<h3>18. Object Lifecycle</h3>
+<code>
+__new__   # create object
+__init__  # initialize
+__del__   # destroy
+</code>
+
+
+
+<h3>19. Real Backend Structure Example</h3>
+<code>
+class DB:
+    def query(self):
+        pass
+
+class UserService:
+def **init**(self, db):
+self.db = db
+
+```
+def get_user(self, id):
+    return self.db.query()
+```
+
+</code>
+
+
+
+<h3>20. Best Practices (Industry)</h3>
+
+<ul>
+<li>Use composition over inheritance</li>
+<li>Keep classes small (Single Responsibility)</li>
+<li>Use dependency injection</li>
+<li>Avoid global state</li>
+<li>Use dataclasses for models</li>
+<li>Separate layers: Controller → Service → DB</li>
+</ul>
+
+
+<h2>Advanced OOP Concepts (Production Level)</h2>
+
+<h3>1. Instance vs Class vs Static (Core Understanding)</h3>
+
+<h4>Instance Variable (Object Level)</h4>
+<code>
+class User:
+    def __init__(self, name):
+        self.name = name
+
+u1 = User("A")
+u2 = User("B") </code>
+
+<ul>
+<li>Stored per object</li>
+<li>Access: obj.name</li>
+</ul>
+
+<h4>Class Variable (Shared)</h4>
+<code>
+class User:
+    count = 0
+
+```
+def __init__(self):
+    User.count += 1
+```
+
+</code>
+<ul>
+<li>Shared across all objects</li>
+<li>Access: User.count or obj.count</li>
+</ul>
+
+<h4>Static Variable (Python concept = Class variable)</h4>
+<ul>
+<li>Python does NOT have true static variables like Java</li>
+<li>Use class variables instead</li>
+</ul>
+
+
+
+<h3>2. Method Types (Deep)</h3>
+
+<h4>Instance Method</h4>
+<code>
+class A:
+    def show(self):
+        return self
+</code>
+<ul>
+<li>Access instance data</li>
+</ul>
+
+<h4>Class Method</h4>
+<code>
+class A:
+    @classmethod
+    def show(cls):
+        return cls
+</code>
+<ul>
+<li>Access class data</li>
+</ul>
+
+<h4>Static Method</h4>
+<code>
+class A:
+    @staticmethod
+    def show(x, y):
+        return x + y
+</code>
+<ul>
+<li>No access to class or instance</li>
+<li>Utility functions</li>
+</ul>
+
+
+
+<h3>3. Access Variables & Methods</h3>
+
+<h4>Inside Class</h4>
+<code>
+class A:
+    x = 10
+
+```
+def __init__(self):
+    self.y = 20
+
+def show(self):
+    print(self.y)      # instance
+    print(A.x)         # class
+```
+
+</code>
+
+<h4>Outside Class</h4>
+<code>
+a = A()
+print(a.y)
+print(A.x)
+</code>
+
+<h4>Access Class Method</h4>
+<code>
+A.method()
+a.method()
+</code>
+
+<h4>Access Static Method</h4>
+<code>
+A.static_func()
+</code>
+
+
+
+<h3>4. Object Behavior & Memory</h3>
+
+<h4>Reference Behavior</h4>
+<code>
+a = [1,2]
+b = a
+b.append(3)  # affects a
+</code>
+
+<h4>Object Identity</h4>
+<code>
+id(a)
+a is b
+</code>
+
+<h4>Garbage Collection</h4>
+<code>
+import gc
+gc.collect()
+</code>
+
+
+
+<h3>5. Encapsulation (Strict Control)</h3>
+<code>
+class A:
+    def __init__(self):
+        self.__x = 10
+
+```
+def get_x(self):
+    return self.__x
+```
+
+</code>
+
+
+
+<h3>6. Composition vs Inheritance</h3>
+
+<h4>Composition (Preferred)</h4>
+<code>
+class DB:
+    pass
+
+class Service:
+def **init**(self):
+self.db = DB() </code>
+
+<h4>Inheritance</h4>
+<code>
+class A:
+    pass
+
+class B(A):
+pass </code>
+
+
+
+<h3>7. Dependency Injection (VERY IMPORTANT)</h3>
+
+<h4>Basic</h4>
+<code>
+class DB:
+    def query(self):
+        return "data"
+
+class Service:
+def **init**(self, db):
+self.db = db
+
+db = DB()
+service = Service(db) </code>
+
+<ul>
+<li>Loose coupling</li>
+<li>Easy testing</li>
+</ul>
+
+
+
+<h3>8. Singleton Pattern</h3>
+
+<code>
+class DB:
+    _instance = None
+
+```
+def __new__(cls):
+    if not cls._instance:
+        cls._instance = super().__new__(cls)
+    return cls._instance
+```
+
+</code>
+
+<ul>
+<li>Only one instance</li>
+<li>Used for DB connections, config</li>
+</ul>
+
+
+
+<h3>9. Factory Pattern</h3>
+<code>
+class User: pass
+class Admin: pass
+
+class Factory:
+def create(role):
+if role == "user":
+return User()
+return Admin() </code>
+
+
+
+<h3>10. Strategy Pattern</h3>
+<code>
+class Payment:
+    def pay(self): pass
+
+class Card(Payment):
+def pay(self): return "card"
+
+class UPI(Payment):
+def pay(self): return "upi" </code>
+
+
+
+<h3>11. Method Overloading (Python Style)</h3>
+<code>
+def func(a, b=None):
+    if b:
+        return a+b
+    return a
+</code>
+
+
+
+<h3>12. Method Overriding</h3>
+<code>
+class A:
+    def show(self): return "A"
+
+class B(A):
+def show(self): return "B" </code>
+
+
+
+<h3>13. Abstract Classes</h3>
+<code>
+from abc import ABC, abstractmethod
+
+class Base(ABC):
+@abstractmethod
+def run(self):
+pass </code>
+
+
+
+<h3>14. Mixins</h3>
+<code>
+class LoggerMixin:
+    def log(self):
+        print("log")
+
+class Service(LoggerMixin):
+pass </code>
+
+
+
+<h3>15. Dataclass vs Normal Class</h3>
+<code>
+from dataclasses import dataclass
+
+@dataclass
+class User:
+name: str </code>
+
+
+
+<h3>16. Immutability</h3>
+<code>
+from dataclasses import dataclass
+
+@dataclass(frozen=True)
+class Config:
+key: str </code>
+
+
+
+<h3>17. Slots (Performance)</h3>
+<code>
+class A:
+    __slots__ = ['name']
+</code>
+
+
+
+<h3>18. Callable Objects</h3>
+<code>
+class A:
+    def __call__(self):
+        return "called"
+
+a = A()
+a() </code>
+
+
+
+<h3>19. Context Manager (Resource Control)</h3>
+<code>
+class File:
+    def __enter__(self):
+        return self
+
+```
+def __exit__(self, exc_type, exc, tb):
+    print("close")
+```
+
+</code>
+
+
+
+<h3>20. Real Backend Example (Full Flow)</h3>
+<code>
+class DB:
+    def query(self, sql):
+        return "data"
+
+class UserService:
+def **init**(self, db):
+self.db = db
+
+```
+def get_user(self, id):
+    return self.db.query("select")
+```
+
+class Controller:
+def **init**(self, service):
+self.service = service
+
+```
+def handle(self):
+    return self.service.get_user(1)
+```
+
+</code>
+
+
+
+<h3>21. Best Practices (Senior Developer)</h3>
+
+<ul>
+<li>Use Dependency Injection everywhere</li>
+<li>Avoid tight coupling</li>
+<li>Prefer composition over inheritance</li>
+<li>Use dataclass for models</li>
+<li>Separate layers (Controller → Service → DB)</li>
+<li>Never put DB logic in controller</li>
+<li>Use singleton for shared resources carefully</li>
+</ul>
+
+
+<h2>API Development (Core Backend – JSON Request/Response)</h2>
+
+<h3>1. What is JSON?</h3>
+<ul>
+<li>JSON = JavaScript Object Notation</li>
+<li>Used for client ↔ server communication</li>
+<li>Python uses <b>dict</b> to represent JSON</li>
+</ul>
+
+<code>
+{
+  "name": "Aathi",
+  "age": 22,
+  "active": true
+}
+</code>
+
+
+
+<h3>2. Python ↔ JSON Conversion</h3>
+
+<h4>Dict to JSON</h4>
+<code>
+import json
+
+data = {"name": "Aathi"}
+json_str = json.dumps(data) </code>
+
+<h4>JSON to Dict</h4>
+<code>
+data = json.loads(json_str)
+</code>
+
+
+
+<h3>3. API Request Flow (Important)</h3>
+
+<code>
+Client → HTTP Request → API → Validate → Service → DB → Response(JSON)
+</code>
+
+
+
+<h3>4. Basic API Example (FastAPI)</h3>
+
+<code>
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def home():
+return {"message": "Hello"} </code>
+
+
+
+<h3>5. Receiving JSON (POST Request)</h3>
+
+<code>
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.post("/user")
+def create_user(data: dict):
+return {"received": data} </code>
+
+
+
+<h3>6. Structured Input (Best Practice)</h3>
+
+<code>
+from pydantic import BaseModel
+
+class User(BaseModel):
+name: str
+age: int
+
+@app.post("/user")
+def create_user(user: User):
+return user </code>
+
+
+
+<h3>7. Response Structure (Industry Standard)</h3>
+
+<code>
+{
+  "status": "SUCCESS",
+  "code": "000",
+  "data": {},
+  "error": null
+}
+</code>
+
+<h4>Error Response</h4>
+<code>
+{
+  "status": "FAILURE",
+  "code": "001",
+  "data": null,
+  "error": "INVALID_INPUT"
+}
+</code>
+
+
+
+<h3>8. HTTP Methods</h3>
+
+<ul>
+<li>GET → fetch data</li>
+<li>POST → create</li>
+<li>PUT → update</li>
+<li>DELETE → remove</li>
+</ul>
+
+
+
+<h3>9. Query Parameters</h3>
+
+<code>
+@app.get("/users")
+def get_users(limit: int = 10):
+    return {"limit": limit}
+</code>
+
+
+
+<h3>10. Path Parameters</h3>
+
+<code>
+@app.get("/user/{id}")
+def get_user(id: int):
+    return {"id": id}
+</code>
+
+
+
+<h3>11. Headers</h3>
+
+<code>
+from fastapi import Header
+
+def get_token(token: str = Header()):
+return token </code>
+
+
+
+<h3>12. Validation Layer (VERY IMPORTANT)</h3>
+
+<code>
+class User(BaseModel):
+    name: str
+    age: int
+
+```
+@validator("age")
+def check_age(cls, v):
+    if v < 0:
+        raise ValueError("Invalid age")
+    return v
+```
+
+</code>
+
+
+
+<h3>13. Service Layer Pattern</h3>
+
+<code>
+class UserService:
+    def create_user(self, data):
+        return {"msg": "created"}
+</code>
+
+
+
+<h3>14. Controller Layer</h3>
+
+<code>
+@app.post("/user")
+def create(user: User):
+    return service.create_user(user)
+</code>
+
+
+
+<h3>15. JSON Serialization Issues</h3>
+
+<ul>
+<li>datetime not serializable</li>
+<li>custom objects not serializable</li>
+</ul>
+
+<code>
+json.dumps(data, default=str)
+</code>
+
+
+
+<h3>16. Middleware (Logging Request/Response)</h3>
+
+<code>
+@app.middleware("http")
+async def log(request, call_next):
+    response = await call_next(request)
+    return response
+</code>
+
+
+
+<h3>17. Error Handling (Production)</h3>
+
+<code>
+from fastapi import HTTPException
+
+raise HTTPException(status_code=400, detail="Invalid") </code>
+
+
+
+<h3>18. Status Codes</h3>
+
+<ul>
+<li>200 → success</li>
+<li>201 → created</li>
+<li>400 → bad request</li>
+<li>401 → unauthorized</li>
+<li>500 → server error</li>
+</ul>
+
+
+
+<h3>19. Logging API</h3>
+
+<code>
+import logging
+logging.info("request received")
+</code>
+
+
+
+<h3>20. Real Backend Flow Example</h3>
+
+<code>
+@app.post("/login")
+def login(data: dict):
+    try:
+        validate(data)
+        user = service.login(data)
+        return success(user)
+    except:
+        return error("LOGIN_FAILED")
+</code>
+
+
+
+<h3>21. Security Basics</h3>
+
+<ul>
+<li>Never trust client input</li>
+<li>Always validate JSON</li>
+<li>Use HTTPS</li>
+<li>Sanitize inputs</li>
+</ul>
+
+
+
+<h3>22. Best Practices</h3>
+
+<ul>
+<li>Always use structured response</li>
+<li>Separate Controller / Service / DB</li>
+<li>Use Pydantic for validation</li>
+<li>Log every request</li>
+<li>Return proper status codes</li>
+</ul>
+
+
+<h2>Frameworks (Advanced Backend Perspective)</h2>
+
+<h3>1. Flask (Lightweight – Micro Framework)</h3>
+
+<h4>Concept</h4>
+<ul>
+<li>Minimal core (routing + request/response)</li>
+<li>You build everything manually (DB, auth, validation)</li>
+<li>Very flexible but less structured</li>
+</ul>
+
+<h4>Internal Flow</h4>
+<code>
+Client → WSGI Server → Flask App → Route → Function → Response
+</code>
+
+<h4>Example</h4>
+<code>
+from flask import Flask, request, jsonify
+
+app = Flask(**name**)
+
+@app.route("/user", methods=["POST"])
+def create_user():
+data = request.json
+return jsonify(data) </code>
+
+<h4>Key Features</h4>
+<ul>
+<li>Werkzeug (WSGI toolkit)</li>
+<li>Jinja2 (templating)</li>
+<li>Manual extension-based system</li>
+</ul>
+
+<h4>Use Cases</h4>
+<ul>
+<li>Small APIs</li>
+<li>Prototypes</li>
+<li>Custom backend systems</li>
+</ul>
+
+<h4>Limitations</h4>
+<ul>
+<li>No built-in validation</li>
+<li>No strict structure</li>
+<li>Scaling requires manual design</li>
+</ul>
+
+
+
+<h3>2. FastAPI (Modern – High Performance)</h3>
+
+<h4>Concept</h4>
+<ul>
+<li>Async-first framework</li>
+<li>Built on ASGI (not WSGI)</li>
+<li>Automatic validation + documentation</li>
+</ul>
+
+<h4>Internal Flow</h4>
+<code>
+Client → ASGI Server (Uvicorn) → FastAPI → Pydantic Validation → Route → Response(JSON)
+</code>
+
+<h4>Example</h4>
+<code>
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+class User(BaseModel):
+name: str
+
+@app.post("/user")
+def create_user(user: User):
+return user </code>
+
+<h4>Key Features</h4>
+<ul>
+<li>Automatic validation (Pydantic)</li>
+<li>Swagger UI (auto docs)</li>
+<li>Async support</li>
+<li>High performance (Node.js level)</li>
+</ul>
+
+<h4>Use Cases</h4>
+<ul>
+<li>Production APIs</li>
+<li>Microservices</li>
+<li>High-performance systems</li>
+</ul>
+
+<h4>Strength</h4>
+<ul>
+<li>Best for modern backend</li>
+<li>Clean architecture support</li>
+<li>Less boilerplate</li>
+</ul>
+
+
+
+<h3>3. Django (Full Stack Framework)</h3>
+
+<h4>Concept</h4>
+<ul>
+<li>Batteries included framework</li>
+<li>Comes with ORM, auth, admin panel</li>
+<li>Follows MVC (MTV pattern)</li>
+</ul>
+
+<h4>Internal Flow</h4>
+<code>
+Client → WSGI → Django → URL Router → View → Model → Template/JSON Response
+</code>
+
+<h4>Example</h4>
+<code>
+from django.http import JsonResponse
+
+def home(request):
+return JsonResponse({"msg": "Hello"}) </code>
+
+<h4>Key Features</h4>
+<ul>
+<li>ORM (no raw SQL needed)</li>
+<li>Authentication system</li>
+<li>Admin dashboard</li>
+<li>Middleware system</li>
+</ul>
+
+<h4>Use Cases</h4>
+<ul>
+<li>Large applications</li>
+<li>Enterprise systems</li>
+<li>Admin-heavy apps</li>
+</ul>
+
+<h4>Limitations</h4>
+<ul>
+<li>Heavy</li>
+<li>Less flexible</li>
+<li>Learning curve</li>
+</ul>
+
+
+
+<h3>4. WSGI vs ASGI (CRITICAL)</h3>
+
+<h4>WSGI (Flask, Django default)</h4>
+<ul>
+<li>Synchronous</li>
+<li>One request per thread</li>
+</ul>
+
+<h4>ASGI (FastAPI)</h4>
+<ul>
+<li>Asynchronous</li>
+<li>Handles thousands of requests concurrently</li>
+</ul>
+
+
+
+<h3>5. Performance Comparison</h3>
+
+<ul>
+<li>FastAPI → Fastest (async)</li>
+<li>Flask → Medium</li>
+<li>Django → Slower (heavy)</li>
+</ul>
+
+
+
+<h3>6. Architecture Comparison</h3>
+
+<ul>
+<li>Flask → You design architecture</li>
+<li>FastAPI → Semi-structured</li>
+<li>Django → Predefined structure</li>
+</ul>
+
+
+
+<h3>7. When to Use What (Real Developer Thinking)</h3>
+
+<ul>
+<li>Use Flask → If you want full control</li>
+<li>Use FastAPI → Best for APIs (recommended for you)</li>
+<li>Use Django → If you need full system quickly</li>
+</ul>
+
+
+
+<h3>8. Production Setup</h3>
+
+<h4>Flask/Django</h4>
+<code>
+Gunicorn + Nginx
+</code>
+
+<h4>FastAPI</h4>
+<code>
+Uvicorn / Hypercorn
+</code>
+
+
+
+<h3>9. Important Ecosystem Tools</h3>
+
+<ul>
+<li>ORM → SQLAlchemy, Django ORM</li>
+<li>Validation → Pydantic</li>
+<li>Auth → JWT, OAuth</li>
+<li>Cache → Redis</li>
+<li>Queue → Celery</li>
+</ul>
+
+
+
+<h3>10. Final Recommendation</h3>
+
+<ul>
+<li>Learn Flask → understand basics</li>
+<li>Master FastAPI → for backend career</li>
+<li>Understand Django → for enterprise knowledge</li>
+</ul>
+
+
+<h2>FastAPI (Advanced – Production Level)</h2>
+
+<h3>1. Application Initialization</h3>
+<code>
+from fastapi import FastAPI
+
+app = FastAPI(title="My API", version="1.0") </code>
+
+
+
+<h3>2. Async vs Sync (CRITICAL)</h3>
+
+<h4>Sync</h4>
+<code>
+@app.get("/")
+def sync_func():
+    return {"msg": "sync"}
+</code>
+
+<h4>Async</h4>
+<code>
+@app.get("/")
+async def async_func():
+    return {"msg": "async"}
+</code>
+
+<ul>
+<li>Use <b>async</b> for IO operations (DB, API calls)</li>
+<li>Use <b>def</b> for CPU-bound tasks</li>
+</ul>
+
+
+
+<h3>3. Dependency Injection (Core Feature)</h3>
+
+<code>
+from fastapi import Depends
+
+def get_db():
+return "db_connection"
+
+@app.get("/")
+def home(db = Depends(get_db)):
+return {"db": db} </code>
+
+<ul>
+<li>Used for DB, auth, config</li>
+<li>Loose coupling</li>
+</ul>
+
+
+
+<h3>4. Request Validation (Pydantic Deep)</h3>
+
+<code>
+from pydantic import BaseModel, Field
+
+class User(BaseModel):
+name: str = Field(..., min_length=3)
+age: int = Field(..., gt=0) </code>
+
+<h4>Custom Validation</h4>
+<code>
+from pydantic import validator
+
+class User(BaseModel):
+age: int
+
+```
+@validator("age")
+def validate_age(cls, v):
+    if v < 18:
+        raise ValueError("Too young")
+    return v
+```
+
+</code>
+
+
+
+<h3>5. Response Model</h3>
+
+<code>
+@app.get("/user", response_model=User)
+def get_user():
+    return {"name": "Aathi", "age": 22}
+</code>
+
+<ul>
+<li>Auto validation of output</li>
+<li>Hides unwanted fields</li>
+</ul>
+
+
+
+<h3>6. Path, Query, Body (Advanced)</h3>
+
+<code>
+@app.get("/items/{id}")
+def get_item(id: int, limit: int = 10):
+    return {"id": id, "limit": limit}
+</code>
+
+
+
+<h3>7. Middleware (Request/Response Interceptor)</h3>
+
+<code>
+@app.middleware("http")
+async def log_request(request, call_next):
+    response = await call_next(request)
+    return response
+</code>
+
+
+
+<h3>8. Exception Handling (Custom)</h3>
+
+<code>
+from fastapi import HTTPException
+
+@app.get("/")
+def error():
+raise HTTPException(status_code=400, detail="Bad Request") </code>
+
+<h4>Global Exception</h4>
+<code>
+from fastapi import Request
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(Exception)
+async def global_handler(request: Request, exc: Exception):
+return JSONResponse(status_code=500, content={"error": str(exc)}) </code>
+
+
+
+<h3>9. Background Tasks</h3>
+
+<code>
+from fastapi import BackgroundTasks
+
+def log_task():
+print("log")
+
+@app.get("/")
+def home(bg: BackgroundTasks):
+bg.add_task(log_task)
+return {"msg": "done"} </code>
+
+
+
+<h3>10. File Upload</h3>
+
+<code>
+from fastapi import UploadFile, File
+
+@app.post("/upload")
+def upload(file: UploadFile = File(...)):
+return {"filename": file.filename} </code>
+
+
+
+<h3>11. Security (JWT Basic)</h3>
+
+<code>
+from fastapi.security import OAuth2PasswordBearer
+
+oauth2 = OAuth2PasswordBearer(tokenUrl="token")
+
+@app.get("/")
+def secure(token: str = Depends(oauth2)):
+return {"token": token} </code>
+
+
+
+<h3>12. CORS</h3>
+
+<code>
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+CORSMiddleware,
+allow_origins=["*"],
+allow_methods=["*"],
+allow_headers=["*"]
+) </code>
+
+
+
+<h3>13. Database Integration (Pattern)</h3>
+
+<code>
+def get_db():
+    db = connect()
+    try:
+        yield db
+    finally:
+        db.close()
+</code>
+
+
+
+<h3>14. Routers (Modular Structure)</h3>
+
+<code>
+from fastapi import APIRouter
+
+router = APIRouter()
+
+@router.get("/")
+def test():
+return {}
+
+app.include_router(router, prefix="/api") </code>
+
+
+
+<h3>15. Project Structure (Production)</h3>
+
+<code>
+app/
+ ├── main.py
+ ├── routes/
+ ├── models/
+ ├── services/
+ ├── db/
+ ├── core/
+ └── utils/
+</code>
+
+
+
+<h3>16. Logging</h3>
+
+<code>
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logging.info("API started") </code>
+
+
+
+<h3>17. Async DB (Important)</h3>
+
+<code>
+import asyncpg
+
+conn = await asyncpg.connect() </code>
+
+
+
+<h3>18. Caching (Redis)</h3>
+
+<code>
+import redis
+
+r = redis.Redis()
+r.set("key", "value") </code>
+
+
+
+<h3>19. Rate Limiting</h3>
+
+<ul>
+<li>Use middleware or external tools</li>
+<li>Prevent abuse</li>
+</ul>
+
+
+
+<h3>20. Testing</h3>
+
+<code>
+from fastapi.testclient import TestClient
+
+client = TestClient(app)
+
+def test_api():
+res = client.get("/") </code>
+
+
+
+<h3>21. Deployment</h3>
+
+<code>
+uvicorn main:app --reload
+</code>
+
+<ul>
+<li>Use Gunicorn + Uvicorn workers in production</li>
+</ul>
+
+
+
+<h3>22. Performance Tips</h3>
+
+<ul>
+<li>Use async everywhere possible</li>
+<li>Use connection pooling</li>
+<li>Cache frequently used data</li>
+<li>Avoid blocking code</li>
+</ul>
+
+
+
+<h3>23. Real Backend Flow (Final)</h3>
+
+<code>
+@app.post("/user")
+async def create(user: User, db=Depends(get_db)):
+    try:
+        validate(user)
+        result = service.create(user, db)
+        return success(result)
+    except:
+        return error()
+</code>
+
+
+<h2>Request Handling (Advanced – FastAPI)</h2>
+
+<h3>1. Overview</h3>
+<code>
+Client → URL / Headers / Body → FastAPI → Validation → Function
+</code>
+
+<ul>
+<li>Query Params → filtering, pagination</li>
+<li>Path Params → resource identification</li>
+<li>Body → actual data (JSON)</li>
+</ul>
+
+
+
+<h3>2. Path Parameters (Deep)</h3>
+
+<h4>Basic</h4>
+<code>
+@app.get("/user/{id}")
+def get_user(id: int):
+    return {"id": id}
+</code>
+
+<h4>Type Validation</h4>
+<ul>
+<li>int, str, float, UUID</li>
+<li>Auto validation by FastAPI</li>
+</ul>
+
+<code>
+from uuid import UUID
+
+@app.get("/item/{item_id}")
+def get_item(item_id: UUID):
+return item_id </code>
+
+<h4>Path Constraints</h4>
+<code>
+from fastapi import Path
+
+@app.get("/user/{id}")
+def get_user(id: int = Path(..., gt=0)):
+return id </code>
+
+<h4>Enum Path</h4>
+<code>
+from enum import Enum
+
+class Role(str, Enum):
+admin = "admin"
+user = "user"
+
+@app.get("/role/{role}")
+def get_role(role: Role):
+return role </code>
+
+
+
+<h3>3. Query Parameters (Advanced)</h3>
+
+<h4>Basic</h4>
+<code>
+@app.get("/users")
+def get_users(limit: int = 10):
+    return {"limit": limit}
+</code>
+
+<h4>Optional Params</h4>
+<code>
+from typing import Optional
+
+def get_users(search: Optional[str] = None):
+pass </code>
+
+<h4>Validation</h4>
+<code>
+from fastapi import Query
+
+def get_users(limit: int = Query(10, gt=0, lt=100)):
+return limit </code>
+
+<h4>Multiple Query Params</h4>
+<code>
+/users?limit=10&offset=20&sort=name
+</code>
+
+<h4>List Query Params</h4>
+<code>
+from typing import List
+
+@app.get("/items")
+def get_items(ids: List[int]):
+return ids </code>
+
+
+
+<h3>4. Request Body (JSON – Deep)</h3>
+
+<h4>Basic</h4>
+<code>
+@app.post("/user")
+def create_user(data: dict):
+    return data
+</code>
+
+<h4>Structured (Best Practice)</h4>
+<code>
+from pydantic import BaseModel
+
+class User(BaseModel):
+name: str
+age: int
+
+@app.post("/user")
+def create_user(user: User):
+return user </code>
+
+<h4>Nested JSON</h4>
+<code>
+class Address(BaseModel):
+    city: str
+
+class User(BaseModel):
+name: str
+address: Address </code>
+
+<h4>List in Body</h4>
+<code>
+from typing import List
+
+@app.post("/users")
+def create_users(users: List[User]):
+return users </code>
+
+<h4>Field Validation</h4>
+<code>
+from pydantic import Field
+
+class User(BaseModel):
+name: str = Field(..., min_length=3)
+age: int = Field(..., gt=0) </code>
+
+
+
+<h3>5. Combining Path + Query + Body</h3>
+
+<code>
+@app.put("/user/{id}")
+def update_user(
+    id: int,
+    active: bool = True,
+    user: User = None
+):
+    return {"id": id, "active": active, "user": user}
+</code>
+
+
+
+<h3>6. Headers Handling</h3>
+
+<code>
+from fastapi import Header
+
+@app.get("/")
+def get_header(token: str = Header()):
+return token </code>
+
+
+
+<h3>7. Cookies</h3>
+
+<code>
+from fastapi import Cookie
+
+def read_cookie(session: str = Cookie(None)):
+return session </code>
+
+
+
+<h3>8. Raw Request Access</h3>
+
+<code>
+from fastapi import Request
+
+@app.post("/")
+async def raw(request: Request):
+body = await request.json()
+return body </code>
+
+
+
+<h3>9. Form Data</h3>
+
+<code>
+from fastapi import Form
+
+@app.post("/login")
+def login(username: str = Form(...), password: str = Form(...)):
+return username </code>
+
+
+
+<h3>10. File Upload</h3>
+
+<code>
+from fastapi import UploadFile, File
+
+@app.post("/upload")
+def upload(file: UploadFile = File(...)):
+return file.filename </code>
+
+
+
+<h3>11. Validation Strategy (IMPORTANT)</h3>
+
+<ul>
+<li>Path → ID validation</li>
+<li>Query → filters/pagination</li>
+<li>Body → main business data</li>
+</ul>
+
+
+
+<h3>12. Common Backend Pattern</h3>
+
+<code>
+@app.post("/user/{id}")
+def process(id: int, user: User):
+    validate(user)
+    result = service.process(id, user)
+    return success(result)
+</code>
+
+
+
+<h3>13. Error Handling in Request</h3>
+
+<ul>
+<li>Invalid JSON → 422 error</li>
+<li>Wrong type → auto validation error</li>
+</ul>
+
+
+
+<h3>14. Security Considerations</h3>
+
+<ul>
+<li>Never trust request data</li>
+<li>Always validate JSON</li>
+<li>Limit query parameters</li>
+<li>Sanitize inputs</li>
+</ul>
+
+
+
+<h3>15. Real Use Cases</h3>
+
+<ul>
+<li>GET /users?limit=10 → pagination</li>
+<li>GET /user/1 → fetch by ID</li>
+<li>POST /user → create</li>
+<li>PUT /user/1 → update</li>
+<li>DELETE /user/1 → delete</li>
+</ul>
+
+
+
+<h3>16. Best Practices</h3>
+
+<ul>
+<li>Use Pydantic models always</li>
+<li>Separate validation from business logic</li>
+<li>Use proper HTTP methods</li>
+<li>Keep request small and structured</li>
+</ul>
+
+
+<h2>Response Design + Error Code System (Production Level)</h2>
+
+<h3>1. Why Standard Response?</h3>
+
+<ul>
+<li>Consistency across all APIs</li>
+<li>Easy frontend integration</li>
+<li>Centralized error handling</li>
+<li>Debugging & logging becomes easy</li>
+</ul>
+
+
+
+<h3>2. Standard Response Structure</h3>
+
+<code>
+{
+  "status": "SUCCESS",
+  "code": "000",
+  "data": {},
+  "error": null
+}
+</code>
+
+<h4>Error Response</h4>
+<code>
+{
+  "status": "FAILURE",
+  "code": "001",
+  "data": null,
+  "error": "INVALID_INPUT"
+}
+</code>
+
+
+
+<h3>3. Status Design</h3>
+
+<ul>
+<li>SUCCESS → Request processed</li>
+<li>FAILURE → Business or validation error</li>
+</ul>
+
+
+
+<h3>4. Error Code System (IMPORTANT)</h3>
+
+<h4>Example Codes</h4>
+<code>
+SUCCESS = "000"
+MISSING_FIELD = "001"
+INVALID_INPUT = "002"
+NOT_FOUND = "003"
+UNAUTHORIZED = "004"
+SERVER_ERROR = "999"
+</code>
+
+<ul>
+<li>Always use predefined constants</li>
+<li>Do not hardcode in API</li>
+</ul>
+
+
+
+<h3>5. Response Builder (Core Utility)</h3>
+
+<code>
+def success(data=None):
+    return {
+        "status": "SUCCESS",
+        "code": "000",
+        "data": data,
+        "error": None
+    }
+
+def error(code, message):
+return {
+"status": "FAILURE",
+"code": code,
+"data": None,
+"error": message
+} </code>
+
+
+
+<h3>6. Usage in API</h3>
+
+<code>
+@app.get("/user/{id}")
+def get_user(id: int):
+    user = service.get_user(id)
+
+```
+if not user:
+    return error("003", "NOT_FOUND")
+
+return success(user)
+```
+
+</code>
+
+
+
+<h3>7. Validation Error Handling</h3>
+
+<code>
+def validate(data):
+    if "name" not in data:
+        raise ValueError("MISSING_FIELD")
+</code>
+
+<code>
+try:
+    validate(data)
+except ValueError as e:
+    return error("001", str(e))
+</code>
+
+
+
+<h3>8. Centralized Error Handling</h3>
+
+<code>
+from fastapi import Request
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(Exception)
+async def global_exception(request: Request, exc: Exception):
+return JSONResponse(
+status_code=500,
+content=error("999", "SERVER_ERROR")
+) </code>
+
+
+
+<h3>9. HTTP Status vs Business Code</h3>
+
+<ul>
+<li>HTTP → transport level (200, 400, 500)</li>
+<li>Code → business logic (001, 002, etc.)</li>
+</ul>
+
+<code>
+HTTP 200 + code "001" → validation error
+HTTP 500 + code "999" → server crash
+</code>
+
+
+
+<h3>10. Logging with Response</h3>
+
+<code>
+import logging
+
+def log_response(res):
+logging.info(res) </code>
+
+
+
+<h3>11. Real Backend Flow</h3>
+
+<code>
+@app.post("/login")
+def login(data: dict):
+    try:
+        validate(data)
+        user = service.login(data)
+
+```
+    if not user:
+        return error("004", "UNAUTHORIZED")
+
+    return success(user)
+
+except ValueError as e:
+    return error("001", str(e))
+
+except Exception:
+    return error("999", "SERVER_ERROR")
+```
+
+</code>
+
+
+
+<h3>12. Extendable Response</h3>
+
+<code>
+{
+  "status": "SUCCESS",
+  "code": "000",
+  "data": {},
+  "error": null,
+  "meta": {
+      "timestamp": "2026-01-01",
+      "request_id": "abc123"
+  }
+}
+</code>
+
+
+
+<h3>13. Response Model (FastAPI)</h3>
+
+<code>
+from pydantic import BaseModel
+
+class ResponseModel(BaseModel):
+status: str
+code: str
+data: dict | None
+error: str | None </code>
+
+
+
+<h3>14. Best Practices</h3>
+
+<ul>
+<li>Always return same structure</li>
+<li>Never expose internal error details</li>
+<li>Use constants for error codes</li>
+<li>Log every failure</li>
+<li>Keep error messages simple</li>
+</ul>
+
+
+
+<h3>15. Professional Folder Structure</h3>
+
+<code>
+app/
+ ├── core/
+ │   ├── response.py
+ │   ├── error_codes.py
+ │
+ ├── services/
+ ├── routes/
+</code>
+
+
+
+<h3>16. Example error_codes.py</h3>
+
+<code>
+SUCCESS = "000"
+MISSING_FIELD = "001"
+INVALID = "002"
+NOT_FOUND = "003"
+UNAUTHORIZED = "004"
+SERVER_ERROR = "999"
+</code>
+
+
+
+<h3>17. Example response.py</h3>
+
+<code>
+from core.error_codes import *
+
+def success(data=None):
+return {
+"status": "SUCCESS",
+"code": SUCCESS,
+"data": data,
+"error": None
+}
+
+def error(code, message):
+return {
+"status": "FAILURE",
+"code": code,
+"data": None,
+"error": message
+} </code>
+
+
+<h2>Response Format + Validation (Pydantic – Production Level)</h2>
+
+<h3>1. Why Pydantic?</h3>
+<ul>
+<li>Automatic validation of request data</li>
+<li>Type enforcement</li>
+<li>Cleaner API code</li>
+<li>Prevents invalid data reaching business logic</li>
+</ul>
+
+
+
+<h3>2. Basic Model</h3>
+
+<code>
+from pydantic import BaseModel
+
+class User(BaseModel):
+name: str
+age: int </code>
+
+<ul>
+<li>Automatically validates incoming JSON</li>
+<li>Converts types if possible</li>
+</ul>
+
+
+
+<h3>3. Request + Response Flow</h3>
+
+<code>
+Client JSON → Pydantic Model → Validation → Service → Response Model → JSON
+</code>
+
+
+
+<h3>4. Advanced Field Validation</h3>
+
+<code>
+from pydantic import BaseModel, Field
+
+class User(BaseModel):
+name: str = Field(..., min_length=3, max_length=50)
+age: int = Field(..., gt=0, lt=100) </code>
+
+
+
+<h3>5. Optional Fields</h3>
+
+<code>
+from typing import Optional
+
+class User(BaseModel):
+name: str
+age: Optional[int] = None </code>
+
+
+
+<h3>6. Default Values</h3>
+
+<code>
+class User(BaseModel):
+    active: bool = True
+</code>
+
+
+
+<h3>7. Nested Models</h3>
+
+<code>
+class Address(BaseModel):
+    city: str
+    pincode: int
+
+class User(BaseModel):
+name: str
+address: Address </code>
+
+
+
+<h3>8. List of Objects</h3>
+
+<code>
+from typing import List
+
+class User(BaseModel):
+name: str
+
+class Users(BaseModel):
+users: List[User] </code>
+
+
+
+<h3>9. Custom Validation</h3>
+
+<code>
+from pydantic import validator
+
+class User(BaseModel):
+age: int
+
+```
+@validator("age")
+def check_age(cls, v):
+    if v < 18:
+        raise ValueError("Must be 18+")
+    return v
+```
+
+</code>
+
+
+
+<h3>10. Pre and Always Validation</h3>
+
+<code>
+@validator("name", pre=True, always=True)
+def clean_name(cls, v):
+    return v.strip()
+</code>
+
+
+
+<h3>11. Response Model Design</h3>
+
+<code>
+from typing import Any, Optional
+from pydantic import BaseModel
+
+class ResponseModel(BaseModel):
+status: str
+code: str
+data: Optional[Any]
+error: Optional[str] </code>
+
+
+
+<h3>12. Success & Error Builders</h3>
+
+<code>
+def success(data=None):
+    return {
+        "status": "SUCCESS",
+        "code": "000",
+        "data": data,
+        "error": None
+    }
+
+def error(code, message):
+return {
+"status": "FAILURE",
+"code": code,
+"data": None,
+"error": message
+} </code>
+
+
+
+<h3>13. Using Response Model in FastAPI</h3>
+
+<code>
+@app.get("/user", response_model=ResponseModel)
+def get_user():
+    return success({"name": "Aathi"})
+</code>
+
+
+
+<h3>14. Handling Validation Errors</h3>
+
+<ul>
+<li>Pydantic automatically returns 422</li>
+<li>You can override it</li>
+</ul>
+
+<code>
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception(request, exc):
+return JSONResponse(
+status_code=400,
+content=error("001", "INVALID_INPUT")
+) </code>
+
+
+
+<h3>15. Strict Types</h3>
+
+<code>
+from pydantic import StrictInt
+
+class User(BaseModel):
+age: StrictInt </code>
+
+<ul>
+<li>Prevents auto conversion</li>
+</ul>
+
+
+
+<h3>16. Enum Validation</h3>
+
+<code>
+from enum import Enum
+
+class Role(str, Enum):
+admin = "admin"
+user = "user"
+
+class User(BaseModel):
+role: Role </code>
+
+
+
+<h3>17. Model Config (Advanced)</h3>
+
+<code>
+class User(BaseModel):
+    name: str
+
+```
+class Config:
+    orm_mode = True
+```
+
+</code>
+
+
+
+<h3>18. Serialization</h3>
+
+<code>
+user.dict()
+user.json()
+</code>
+
+
+
+<h3>19. Exclude Fields</h3>
+
+<code>
+user.dict(exclude={"password"})
+</code>
+
+
+
+<h3>20. Real Backend Example</h3>
+
+<code>
+class User(BaseModel):
+    name: str
+    age: int
+
+@app.post("/user", response_model=ResponseModel)
+def create_user(user: User):
+try:
+result = service.create(user)
+return success(result)
+except:
+return error("999", "SERVER_ERROR") </code>
+
+
+
+<h3>21. Best Practices</h3>
+
+<ul>
+<li>Always use Pydantic models (never raw dict)</li>
+<li>Validate at API boundary</li>
+<li>Use response_model for consistency</li>
+<li>Keep validation separate from business logic</li>
+<li>Do not expose internal errors</li>
+</ul>
+
+
+<h2>Middleware & Logging (Advanced – Production Backend)</h2>
+
+<h3>1. What is Middleware?</h3>
+
+<ul>
+<li>Runs before and after every request</li>
+<li>Intercepts request and response</li>
+<li>Used for logging, auth, rate limiting, etc.</li>
+</ul>
+
+<code>
+Client → Middleware → API → Middleware → Response
+</code>
+
+
+
+<h3>2. Basic Middleware (FastAPI)</h3>
+
+<code>
+@app.middleware("http")
+async def middleware(request, call_next):
+    response = await call_next(request)
+    return response
+</code>
+
+
+
+<h3>3. Request Logging</h3>
+
+<code>
+import time
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+@app.middleware("http")
+async def log_request(request, call_next):
+start = time.time()
+
+```
+logging.info(f"Request: {request.method} {request.url}")
+
+response = await call_next(request)
+
+duration = time.time() - start
+logging.info(f"Response Status: {response.status_code} Time: {duration}")
+
+return response
+```
+
+</code>
+
+
+
+<h3>4. Logging Request Body (Advanced)</h3>
+
+<code>
+@app.middleware("http")
+async def log_body(request, call_next):
+    body = await request.body()
+    print(body)
+
+```
+response = await call_next(request)
+return response
+```
+
+</code>
+
+<ul>
+<li>Be careful: reading body consumes stream</li>
+</ul>
+
+
+
+<h3>5. Logging Response Body</h3>
+
+<code>
+response = await call_next(request)
+print(response.body)
+</code>
+
+<ul>
+<li>Not always directly accessible (depends on response type)</li>
+</ul>
+
+
+
+<h3>6. Error Handling Middleware</h3>
+
+<code>
+@app.middleware("http")
+async def error_handler(request, call_next):
+    try:
+        response = await call_next(request)
+        return response
+    except Exception as e:
+        logging.error(str(e))
+        return JSONResponse(
+            status_code=500,
+            content={
+                "status": "FAILURE",
+                "code": "999",
+                "data": None,
+                "error": "SERVER_ERROR"
+            }
+        )
+</code>
+
+
+
+<h3>7. Structured Logging</h3>
+
+<code>
+logging.info({
+    "event": "request",
+    "path": str(request.url),
+    "method": request.method
+})
+</code>
+
+<ul>
+<li>Use JSON-style logs for production</li>
+</ul>
+
+
+
+<h3>8. Log Levels</h3>
+
+<ul>
+<li>DEBUG → development</li>
+<li>INFO → normal flow</li>
+<li>WARNING → unexpected but safe</li>
+<li>ERROR → failure</li>
+<li>CRITICAL → system crash</li>
+</ul>
+
+<code>
+logging.debug("debug")
+logging.info("info")
+logging.warning("warn")
+logging.error("error")
+</code>
+
+
+
+<h3>9. Logging to File</h3>
+
+<code>
+logging.basicConfig(
+    filename="app.log",
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s"
+)
+</code>
+
+
+
+<h3>10. Rotating Logs (Production)</h3>
+
+<code>
+from logging.handlers import RotatingFileHandler
+
+handler = RotatingFileHandler("app.log", maxBytes=1000000, backupCount=3)
+logging.getLogger().addHandler(handler) </code>
+
+
+
+<h3>11. Correlation ID (Advanced)</h3>
+
+<code>
+import uuid
+
+@app.middleware("http")
+async def add_request_id(request, call_next):
+request_id = str(uuid.uuid4())
+request.state.request_id = request_id
+
+```
+response = await call_next(request)
+response.headers["X-Request-ID"] = request_id
+
+return response
+```
+
+</code>
+
+<ul>
+<li>Track request across logs</li>
+</ul>
+
+
+
+<h3>12. Timing Middleware</h3>
+
+<code>
+@app.middleware("http")
+async def timing(request, call_next):
+    import time
+    start = time.time()
+
+```
+response = await call_next(request)
+
+response.headers["X-Time"] = str(time.time() - start)
+return response
+```
+
+</code>
+
+
+
+<h3>13. Security Logging</h3>
+
+<ul>
+<li>Log failed login attempts</li>
+<li>Log unauthorized access</li>
+<li>Mask sensitive data</li>
+</ul>
+
+<code>
+logging.warning("Failed login attempt")
+</code>
+
+
+
+<h3>14. Integration with Response System</h3>
+
+<code>
+def log_response(res):
+    logging.info(res)
+    return res
+</code>
+
+
+
+<h3>15. Real Backend Logging Flow</h3>
+
+<code>
+@app.post("/login")
+def login(data: dict):
+    try:
+        logging.info("Login request received")
+
+```
+    validate(data)
+    user = service.login(data)
+
+    if not user:
+        logging.warning("Unauthorized access")
+        return error("004", "UNAUTHORIZED")
+
+    logging.info("Login success")
+    return success(user)
+
+except Exception as e:
+    logging.error(str(e))
+    return error("999", "SERVER_ERROR")
+```
+
+</code>
+
+
+
+<h3>16. Best Practices (Senior Level)</h3>
+
+<ul>
+<li>Never log passwords or sensitive data</li>
+<li>Use structured logs (JSON)</li>
+<li>Log every request & response (summary only)</li>
+<li>Use request_id for tracing</li>
+<li>Separate logs: access.log, error.log</li>
+<li>Use log rotation</li>
+</ul>
+
+
+
+<h3>17. Production Tools</h3>
+
+<ul>
+<li>ELK Stack (Elasticsearch, Logstash, Kibana)</li>
+<li>Prometheus + Grafana</li>
+<li>Cloud logging (AWS, GCP)</li>
+</ul>
+
+
+
+<h3>18. Folder Structure</h3>
+
+<code>
+app/
+ ├── core/
+ │   ├── logger.py
+ │   ├── middleware.py
+ ├── logs/
+ │   ├── app.log
+ │   ├── error.log
+</code>
+
+
+<h2>Socket Programming (Advanced – System Level)</h2>
+
+<h3>1. What is a Socket?</h3>
+
+<ul>
+<li>Endpoint for communication between two machines</li>
+<li>Works over network protocols (TCP / UDP)</li>
+<li>Low-level communication (below HTTP)</li>
+</ul>
+
+<code>
+Client ↔ Socket ↔ Network ↔ Socket ↔ Server
+</code>
+
+
+
+<h3>2. TCP vs UDP</h3>
+
+<h4>TCP (Reliable)</h4>
+<ul>
+<li>Connection-oriented</li>
+<li>Guaranteed delivery</li>
+<li>Ordered data</li>
+</ul>
+
+<h4>UDP (Fast)</h4>
+<ul>
+<li>No connection</li>
+<li>No guarantee</li>
+<li>Used in streaming, gaming</li>
+</ul>
+
+
+
+<h3>3. Socket Lifecycle</h3>
+
+<code>
+Server:
+socket() → bind() → listen() → accept() → recv/send → close()
+
+Client:
+socket() → connect() → send/recv → close() </code>
+
+
+
+<h3>4. TCP Server (Advanced Version)</h3>
+
+<code>
+import socket
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(("0.0.0.0", 5000))
+server.listen(5)
+
+while True:
+client, addr = server.accept()
+try:
+data = client.recv(1024)
+print("Received:", data.decode())
+
+```
+    client.send(b"OK")
+finally:
+    client.close()
+```
+
+</code>
+
+
+
+<h3>5. TCP Client (Advanced)</h3>
+
+<code>
+import socket
+
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(("127.0.0.1", 5000))
+
+client.send(b"Hello Server")
+response = client.recv(1024)
+
+print(response.decode())
+client.close() </code>
+
+
+
+<h3>6. Handling Multiple Clients (Threading)</h3>
+
+<code>
+import threading
+
+def handle_client(client):
+data = client.recv(1024)
+print(data)
+client.send(b"Done")
+client.close()
+
+while True:
+client, addr = server.accept()
+threading.Thread(target=handle_client, args=(client,)).start() </code>
+
+
+
+<h3>7. Async Socket (High Performance)</h3>
+
+<code>
+import asyncio
+
+async def handle(reader, writer):
+data = await reader.read(100)
+writer.write(b"OK")
+await writer.drain()
+writer.close()
+
+async def main():
+server = await asyncio.start_server(handle, "127.0.0.1", 5000)
+async with server:
+await server.serve_forever()
+
+asyncio.run(main()) </code>
+
+
+
+<h3>8. UDP Example</h3>
+
+<h4>Server</h4>
+<code>
+server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server.bind(("localhost", 5001))
+
+data, addr = server.recvfrom(1024)
+print(data) </code>
+
+<h4>Client</h4>
+<code>
+client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+client.sendto(b"Hello", ("localhost", 5001))
+</code>
+
+
+
+<h3>9. Important Socket Options</h3>
+
+<code>
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+</code>
+
+<ul>
+<li>Reuse port quickly</li>
+</ul>
+
+
+
+<h3>10. Timeout Handling</h3>
+
+<code>
+client.settimeout(5)
+</code>
+
+
+
+<h3>11. Data Framing (IMPORTANT)</h3>
+
+<ul>
+<li>TCP is stream-based (no message boundaries)</li>
+<li>You must define protocol</li>
+</ul>
+
+<code>
+[length][data]
+</code>
+
+
+
+<h3>12. JSON over Socket</h3>
+
+<code>
+import json
+
+data = {"msg": "hello"}
+client.send(json.dumps(data).encode())
+
+response = json.loads(client.recv(1024).decode()) </code>
+
+
+
+<h3>13. Error Handling</h3>
+
+<code>
+try:
+    client.connect(("host", 5000))
+except socket.error as e:
+    print(e)
+</code>
+
+
+
+<h3>14. WebSockets (Real-Time Apps)</h3>
+
+<ul>
+<li>Built on HTTP upgrade</li>
+<li>Full-duplex communication</li>
+</ul>
+
+<code>
+from fastapi import WebSocket
+
+@app.websocket("/ws")
+async def websocket(ws: WebSocket):
+await ws.accept()
+while True:
+data = await ws.receive_text()
+await ws.send_text(data) </code>
+
+
+
+<h3>15. Security Considerations</h3>
+
+<ul>
+<li>Validate incoming data</li>
+<li>Use SSL/TLS (secure sockets)</li>
+<li>Limit connections</li>
+<li>Prevent DoS attacks</li>
+</ul>
+
+
+
+<h3>16. Real Use Cases</h3>
+
+<ul>
+<li>Chat applications</li>
+<li>Game servers</li>
+<li>Trading systems</li>
+<li>Internal microservices</li>
+</ul>
+
+
+
+<h3>17. Performance Tips</h3>
+
+<ul>
+<li>Use async for high load</li>
+<li>Use connection pooling</li>
+<li>Avoid blocking calls</li>
+<li>Use binary protocols for speed</li>
+</ul>
+
+
+
+<h3>18. Production Architecture</h3>
+
+<code>
+Client → Load Balancer → Socket Server → Worker Threads → DB
+</code>
+
+
+
+<h3>19. Debugging</h3>
+
+<ul>
+<li>Use logging</li>
+<li>Use netstat / lsof</li>
+<li>Check open ports</li>
+</ul>
+
+
+
+<h3>20. Best Practices</h3>
+
+<ul>
+<li>Always close sockets</li>
+<li>Handle exceptions properly</li>
+<li>Use structured protocol (JSON / binary)</li>
+<li>Separate networking from business logic</li>
+</ul>
+
+
+<h2>Databases (Advanced – Production Backend)</h2>
+
+<h3>1. SQLite (Lightweight, File-Based)</h3>
+
+<h4>Connection</h4>
+<code>
+import sqlite3
+
+conn = sqlite3.connect("test.db")
+cursor = conn.cursor() </code>
+
+<h4>Create Table</h4>
+<code>
+cursor.execute("""
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    age INTEGER
+)
+""")
+conn.commit()
+</code>
+
+<h4>Insert Data</h4>
+<code>
+cursor.execute("INSERT INTO users (name, age) VALUES (?, ?)", ("Aathi", 22))
+conn.commit()
+</code>
+
+<h4>Fetch Data</h4>
+<code>
+cursor.execute("SELECT * FROM users")
+rows = cursor.fetchall()
+</code>
+
+<h4>Update</h4>
+<code>
+cursor.execute("UPDATE users SET age=? WHERE id=?", (23, 1))
+conn.commit()
+</code>
+
+<h4>Delete</h4>
+<code>
+cursor.execute("DELETE FROM users WHERE id=?", (1,))
+conn.commit()
+</code>
+
+
+
+<h3>2. MySQL (Production RDBMS)</h3>
+
+<h4>Install Driver</h4>
+<code>
+pip install mysql-connector-python
+</code>
+
+<h4>Connection</h4>
+<code>
+import mysql.connector
+
+conn = mysql.connector.connect(
+host="localhost",
+user="root",
+password="1234",
+database="test"
+)
+
+cursor = conn.cursor() </code>
+
+<h4>Insert</h4>
+<code>
+cursor.execute(
+    "INSERT INTO users (name, age) VALUES (%s, %s)",
+    ("Aathi", 22)
+)
+conn.commit()
+</code>
+
+<h4>Select</h4>
+<code>
+cursor.execute("SELECT * FROM users")
+for row in cursor:
+    print(row)
+</code>
+
+
+
+<h3>3. PostgreSQL (Recommended – Advanced)</h3>
+
+<h4>Install Driver</h4>
+<code>
+pip install psycopg2
+</code>
+
+<h4>Connection</h4>
+<code>
+import psycopg2
+
+conn = psycopg2.connect(
+dbname="test",
+user="postgres",
+password="1234",
+host="localhost"
+)
+
+cursor = conn.cursor() </code>
+
+<h4>Insert</h4>
+<code>
+cursor.execute(
+    "INSERT INTO users (name, age) VALUES (%s, %s)",
+    ("Aathi", 22)
+)
+conn.commit()
+</code>
+
+<h4>Fetch</h4>
+<code>
+cursor.execute("SELECT * FROM users")
+data = cursor.fetchall()
+</code>
+
+
+
+<h3>4. Connection Pooling (IMPORTANT)</h3>
+
+<code>
+from psycopg2 import pool
+
+db_pool = pool.SimpleConnectionPool(
+1, 10,
+dbname="test",
+user="postgres",
+password="1234"
+)
+
+conn = db_pool.getconn() </code>
+
+<ul>
+<li>Improves performance</li>
+<li>Reuse connections</li>
+</ul>
+
+
+
+<h3>5. Transactions</h3>
+
+<code>
+try:
+    cursor.execute("INSERT INTO users VALUES (1, 'A', 22)")
+    conn.commit()
+except:
+    conn.rollback()
+</code>
+
+
+
+<h3>6. Prepared Statements (SQL Injection Safe)</h3>
+
+<code>
+cursor.execute(
+    "SELECT * FROM users WHERE name=%s",
+    ("Aathi",)
+)
+</code>
+
+
+
+<h3>7. ORM – SQLAlchemy (IMPORTANT)</h3>
+
+<h4>Setup</h4>
+<code>
+pip install sqlalchemy
+</code>
+
+<h4>Engine</h4>
+<code>
+from sqlalchemy import create_engine
+
+engine = create_engine("sqlite:///test.db") </code>
+
+<h4>Model</h4>
+<code>
+from sqlalchemy.orm import declarative_base
+from sqlalchemy import Column, Integer, String
+
+Base = declarative_base()
+
+class User(Base):
+**tablename** = "users"
+id = Column(Integer, primary_key=True)
+name = Column(String) </code>
+
+<h4>Create Table</h4>
+<code>
+Base.metadata.create_all(engine)
+</code>
+
+<h4>Session</h4>
+<code>
+from sqlalchemy.orm import sessionmaker
+
+Session = sessionmaker(bind=engine)
+session = Session() </code>
+
+<h4>Insert</h4>
+<code>
+user = User(name="Aathi")
+session.add(user)
+session.commit()
+</code>
+
+<h4>Query</h4>
+<code>
+users = session.query(User).all()
+</code>
+
+
+
+<h3>8. Async ORM (Modern)</h3>
+
+<code>
+pip install sqlalchemy[asyncio]
+</code>
+
+<code>
+from sqlalchemy.ext.asyncio import create_async_engine
+
+engine = create_async_engine("postgresql+asyncpg://user:pass@localhost/db") </code>
+
+
+
+<h3>9. MongoDB (NoSQL)</h3>
+
+<h4>Install</h4>
+<code>
+pip install pymongo
+</code>
+
+<h4>Connection</h4>
+<code>
+from pymongo import MongoClient
+
+client = MongoClient("mongodb://localhost:27017/")
+db = client["test"]
+collection = db["users"] </code>
+
+<h4>Insert</h4>
+<code>
+collection.insert_one({"name": "Aathi", "age": 22})
+</code>
+
+<h4>Find</h4>
+<code>
+data = collection.find_one({"name": "Aathi"})
+</code>
+
+<h4>Update</h4>
+<code>
+collection.update_one(
+    {"name": "Aathi"},
+    {"$set": {"age": 23}}
+)
+</code>
+
+
+
+<h3>10. Relational vs NoSQL</h3>
+
+<ul>
+<li>SQL → structured, relations, transactions</li>
+<li>NoSQL → flexible, fast, scalable</li>
+</ul>
+
+
+
+<h3>11. DB Layer Pattern (IMPORTANT)</h3>
+
+<code>
+class DB:
+    def query(self, sql, params):
+        cursor.execute(sql, params)
+        return cursor.fetchall()
+</code>
+
+
+
+<h3>12. Service Layer Usage</h3>
+
+<code>
+class UserService:
+    def __init__(self, db):
+        self.db = db
+
+```
+def get_users(self):
+    return self.db.query("SELECT * FROM users", ())
+```
+
+</code>
+
+
+
+<h3>13. FastAPI Integration</h3>
+
+<code>
+def get_db():
+    conn = connect()
+    try:
+        yield conn
+    finally:
+        conn.close()
+</code>
+
+
+
+<h3>14. Best Practices</h3>
+
+<ul>
+<li>Use connection pooling</li>
+<li>Always close connections</li>
+<li>Use prepared statements</li>
+<li>Keep DB logic separate</li>
+<li>Use ORM for large systems</li>
+<li>Use PostgreSQL for production</li>
+</ul>
+
+
+<h2>API + Database Integration (Production Architecture)</h2>
+
+<h3>1. Core Flow</h3>
+
+<code>
+Client → API (Controller) → Validation → Service → DB Layer → Response
+</code>
+
+<ul>
+<li>Controller → handles request</li>
+<li>Service → business logic</li>
+<li>DB Layer → database queries</li>
+<li>Response → standard output</li>
+</ul>
+
+
+
+<h3>2. Folder Structure</h3>
+
+<code>
+app/
+ ├── main.py
+ ├── routes/
+ │   └── user.py
+ ├── services/
+ │   └── user_service.py
+ ├── db/
+ │   └── db.py
+ ├── models/
+ │   └── user_model.py
+ ├── core/
+ │   ├── response.py
+ │   ├── error_codes.py
+</code>
+
+
+
+<h3>3. DB Layer (db/db.py)</h3>
+
+<code>
+import sqlite3
+
+class DB:
+def **init**(self):
+self.conn = sqlite3.connect("test.db")
+self.cursor = self.conn.cursor()
+
+```
+def query(self, sql, params=()):
+    self.cursor.execute(sql, params)
+    return self.cursor.fetchall()
+
+def execute(self, sql, params=()):
+    self.cursor.execute(sql, params)
+    self.conn.commit()
+```
+
+</code>
+
+
+
+<h3>4. Service Layer (services/user_service.py)</h3>
+
+<code>
+class UserService:
+    def __init__(self, db):
+        self.db = db
+
+```
+def get_users(self):
+    return self.db.query("SELECT * FROM users")
+
+def create_user(self, name, age):
+    self.db.execute(
+        "INSERT INTO users (name, age) VALUES (?, ?)",
+        (name, age)
+    )
+    return {"name": name, "age": age}
+```
+
+</code>
+
+
+
+<h3>5. Model (models/user_model.py)</h3>
+
+<code>
+from pydantic import BaseModel
+
+class User(BaseModel):
+name: str
+age: int </code>
+
+
+
+<h3>6. Response System (core/response.py)</h3>
+
+<code>
+def success(data=None):
+    return {
+        "status": "SUCCESS",
+        "code": "000",
+        "data": data,
+        "error": None
+    }
+
+def error(code, message):
+return {
+"status": "FAILURE",
+"code": code,
+"data": None,
+"error": message
+} </code>
+
+
+
+<h3>7. API Layer (routes/user.py)</h3>
+
+<code>
+from fastapi import APIRouter
+from models.user_model import User
+from core.response import success, error
+from services.user_service import UserService
+from db.db import DB
+
+router = APIRouter()
+
+db = DB()
+service = UserService(db)
+
+@router.get("/users")
+def get_users():
+data = service.get_users()
+return success(data)
+
+@router.post("/user")
+def create_user(user: User):
+try:
+result = service.create_user(user.name, user.age)
+return success(result)
+except:
+return error("999", "SERVER_ERROR") </code>
+
+
+
+<h3>8. Main App (main.py)</h3>
+
+<code>
+from fastapi import FastAPI
+from routes.user import router
+
+app = FastAPI()
+app.include_router(router) </code>
+
+
+
+<h3>9. Dependency Injection (Improved Version)</h3>
+
+<code>
+from fastapi import Depends
+
+def get_db():
+return DB()
+
+def get_service(db = Depends(get_db)):
+return UserService(db)
+
+@app.get("/users")
+def get_users(service = Depends(get_service)):
+return success(service.get_users()) </code>
+
+
+
+<h3>10. Validation Flow</h3>
+
+<code>
+Request → Pydantic Model → Validation → Service
+</code>
+
+<ul>
+<li>Invalid input → rejected before service</li>
+</ul>
+
+
+
+<h3>11. Error Handling Flow</h3>
+
+<code>
+try:
+    service logic
+except ValidationError:
+    return error("001", "INVALID")
+except Exception:
+    return error("999", "SERVER_ERROR")
+</code>
+
+
+
+<h3>12. Logging Integration</h3>
+
+<code>
+import logging
+
+logging.info("Fetching users") </code>
+
+
+
+<h3>13. Real API Flow Example</h3>
+
+<code>
+@app.post("/login")
+def login(user: User):
+    try:
+        logging.info("Login request")
+
+```
+    result = service.login(user)
+
+    if not result:
+        return error("004", "UNAUTHORIZED")
+
+    return success(result)
+
+except Exception:
+    return error("999", "SERVER_ERROR")
+```
+
+</code>
+
+
+
+<h3>14. Clean Architecture Summary</h3>
+
+<ul>
+<li>Controller → request/response</li>
+<li>Service → logic</li>
+<li>DB → data</li>
+<li>Model → validation</li>
+</ul>
+
+
+
+<h3>15. Best Practices</h3>
+
+<ul>
+<li>Never mix DB code in API</li>
+<li>Use dependency injection</li>
+<li>Use standard response format</li>
+<li>Keep layers separate</li>
+<li>Write reusable services</li>
+</ul>
+
+
+<h2>Authentication (Advanced – Production Backend)</h2>
+
+<h3>1. What is Authentication?</h3>
+
+<ul>
+<li>Verifying who the user is</li>
+<li>Used before allowing access to APIs</li>
+</ul>
+
+<code>
+Client → Login → Verify → Token → Access Protected APIs
+</code>
+
+
+
+<h3>2. Types of Authentication</h3>
+
+<ul>
+<li>JWT (Token-based)</li>
+<li>OAuth (Third-party login)</li>
+<li>Session-based (traditional)</li>
+</ul>
+
+
+
+<h3>3. JWT (JSON Web Token – Most Used)</h3>
+
+<h4>Structure</h4>
+<code>
+HEADER.PAYLOAD.SIGNATURE
+</code>
+
+<ul>
+<li>Header → algorithm</li>
+<li>Payload → user data</li>
+<li>Signature → security</li>
+</ul>
+
+
+
+<h3>4. JWT Flow</h3>
+
+<code>
+Login → Verify Credentials → Generate Token → Send to Client
+
+Client → Send Token in Header → API verifies → Allow access </code>
+
+
+
+<h3>5. Install JWT Library</h3>
+
+<code>
+pip install python-jose
+</code>
+
+
+
+<h3>6. Create Token</h3>
+
+<code>
+from jose import jwt
+from datetime import datetime, timedelta
+
+SECRET_KEY = "secret"
+ALGORITHM = "HS256"
+
+def create_token(data):
+payload = data.copy()
+payload["exp"] = datetime.utcnow() + timedelta(hours=1)
+return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM) </code>
+
+
+
+<h3>7. Verify Token</h3>
+
+<code>
+def verify_token(token):
+    return jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+</code>
+
+
+
+<h3>8. Protect API (Dependency)</h3>
+
+<code>
+from fastapi import Depends, HTTPException
+from fastapi.security import OAuth2PasswordBearer
+
+oauth2 = OAuth2PasswordBearer(tokenUrl="login")
+
+def get_current_user(token: str = Depends(oauth2)):
+try:
+return verify_token(token)
+except:
+raise HTTPException(status_code=401, detail="Unauthorized") </code>
+
+
+
+<h3>9. Secure Endpoint</h3>
+
+<code>
+@app.get("/secure")
+def secure(user = Depends(get_current_user)):
+    return {"user": user}
+</code>
+
+
+
+<h3>10. Login API</h3>
+
+<code>
+@app.post("/login")
+def login(data: dict):
+    if data["username"] == "admin":
+        token = create_token({"user": "admin"})
+        return {"token": token}
+    return {"error": "Invalid"}
+</code>
+
+
+
+<h3>11. Password Hashing (IMPORTANT)</h3>
+
+<code>
+pip install passlib[bcrypt]
+</code>
+
+<code>
+from passlib.context import CryptContext
+
+pwd = CryptContext(schemes=["bcrypt"])
+
+hashed = pwd.hash("password")
+pwd.verify("password", hashed) </code>
+
+
+
+<h3>12. Refresh Token Strategy</h3>
+
+<ul>
+<li>Access Token → short life (15 min)</li>
+<li>Refresh Token → long life</li>
+</ul>
+
+
+
+<h3>13. OAuth (Third-Party Login)</h3>
+
+<ul>
+<li>Login via Google, GitHub</li>
+<li>Delegates authentication</li>
+</ul>
+
+<h4>Flow</h4>
+<code>
+Client → Google Login → Google returns token → Backend verifies → User logged in
+</code>
+
+
+
+<h3>14. OAuth Example (Concept)</h3>
+
+<code>
+from fastapi import FastAPI
+from authlib.integrations.starlette_client import OAuth
+
+oauth = OAuth() </code>
+
+
+
+<h3>15. Roles & Permissions</h3>
+
+<code>
+if user["role"] != "admin":
+    raise HTTPException(status_code=403)
+</code>
+
+
+
+<h3>16. Token in Header</h3>
+
+<code>
+Authorization: Bearer &lt;token&gt;
+</code>
+
+
+
+<h3>17. Security Best Practices</h3>
+
+<ul>
+<li>Never store plain passwords</li>
+<li>Use HTTPS only</li>
+<li>Expire tokens</li>
+<li>Validate every request</li>
+<li>Use strong secret keys</li>
+</ul>
+
+
+
+<h3>18. Common Mistakes</h3>
+
+<ul>
+<li>Storing sensitive data in JWT</li>
+<li>No expiration</li>
+<li>Weak secret key</li>
+</ul>
+
+
+
+<h3>19. Integration with DB</h3>
+
+<code>
+def login(data):
+    user = db.get_user(data["username"])
+
+```
+if not pwd.verify(data["password"], user["password"]):
+    return error("004", "UNAUTHORIZED")
+
+return create_token({"user": user["id"]})
+```
+
+</code>
+
+
+
+<h3>20. Real Backend Flow</h3>
+
+<code>
+Login → Validate → Hash Check → Generate JWT → Return Token
+
+Request → Header Token → Verify → Allow API </code>
+
+
+
+<h3>21. Folder Structure</h3>
+
+<code>
+app/
+ ├── auth/
+ │   ├── jwt_handler.py
+ │   ├── auth_service.py
+ │   ├── password.py
+</code>
+
+
+
+<h3>22. Final Best Practice</h3>
+
+<ul>
+<li>Use JWT for APIs</li>
+<li>Use OAuth for social login</li>
+<li>Separate auth logic</li>
+<li>Always log auth events</li>
+</ul>
+
+
+<h2>Advanced Backend Topics (Production Level)</h2>
+
+<h3>1. Async Programming (Concurrency Model)</h3>
+
+<h4>Concept</h4>
+<ul>
+<li>Non-blocking execution</li>
+<li>Handles multiple requests efficiently</li>
+<li>Used in FastAPI, high-scale APIs</li>
+</ul>
+
+<code>
+import asyncio
+
+async def task():
+await asyncio.sleep(1)
+print("Done")
+
+async def main():
+await asyncio.gather(task(), task())
+
+asyncio.run(main()) </code>
+
+<h4>Key Concepts</h4>
+<ul>
+<li>Event Loop</li>
+<li>Coroutines (async/await)</li>
+<li>Concurrency (not parallelism)</li>
+</ul>
+
+<h4>When to Use</h4>
+<ul>
+<li>DB calls</li>
+<li>External API calls</li>
+<li>File I/O</li>
+</ul>
+
+<h4>Common Mistake</h4>
+<ul>
+<li>Using blocking code inside async</li>
+</ul>
+
+
+
+<h3>2. Caching (Redis – Performance Boost)</h3>
+
+<h4>Why Cache?</h4>
+<ul>
+<li>Reduce DB load</li>
+<li>Faster response time</li>
+</ul>
+
+<h4>Basic Example</h4>
+<code>
+import redis
+
+r = redis.Redis()
+
+r.set("user:1", "Aathi")
+data = r.get("user:1") </code>
+
+<h4>Cache Pattern</h4>
+<code>
+def get_user(id):
+    cached = r.get(id)
+    if cached:
+        return cached
+
+```
+data = db.get_user(id)
+r.set(id, data)
+return data
+```
+
+</code>
+
+<h4>TTL (Expiration)</h4>
+<code>
+r.set("key", "value", ex=60)
+</code>
+
+
+
+<h3>3. Message Queue (Async Processing)</h3>
+
+<h4>Concept</h4>
+<ul>
+<li>Decouples services</li>
+<li>Handles background jobs</li>
+</ul>
+
+<code>
+Producer → Queue → Consumer
+</code>
+
+
+
+<h4>RabbitMQ Example (Concept)</h4>
+<code>
+# Producer
+send_to_queue("email_task")
+
+# Consumer
+
+def worker():
+task = receive()
+process(task) </code>
+
+
+
+<h4>Kafka Example (Streaming)</h4>
+<code>
+# Producer
+producer.send("topic", "message")
+
+# Consumer
+
+for msg in consumer:
+process(msg) </code>
+
+
+
+<h4>Use Cases</h4>
+<ul>
+<li>Email sending</li>
+<li>Logging</li>
+<li>Order processing</li>
+</ul>
+
+
+
+<h3>4. Rate Limiting (Security)</h3>
+
+<h4>Why?</h4>
+<ul>
+<li>Prevent API abuse</li>
+<li>Protect server</li>
+</ul>
+
+<h4>Basic Concept</h4>
+<code>
+Allow: 100 requests / minute / user
+</code>
+
+
+
+<h4>Simple Implementation</h4>
+<code>
+import time
+
+requests = {}
+
+def allow(ip):
+now = time.time()
+requests.setdefault(ip, []).append(now)
+
+```
+# keep last 60 seconds
+requests[ip] = [t for t in requests[ip] if now - t < 60]
+
+return len(requests[ip]) < 100
+```
+
+</code>
+
+
+
+<h4>Redis-Based Rate Limiting (Production)</h4>
+<code>
+key = f"user:{id}"
+count = r.incr(key)
+
+if count == 1:
+r.expire(key, 60)
+
+if count > 100:
+return "LIMIT EXCEEDED" </code>
+
+
+
+<h3>5. Combining All (Real System)</h3>
+
+<code>
+Client Request
+   ↓
+API (FastAPI)
+   ↓
+Rate Limit Check (Redis)
+   ↓
+Cache Check (Redis)
+   ↓
+Service Layer
+   ↓
+DB
+   ↓
+Queue (Kafka/RabbitMQ for async jobs)
+   ↓
+Response
+</code>
+
+
+
+<h3>6. Performance Architecture</h3>
+
+<code>
+Client → Load Balancer → API Servers
+                ↓
+           Redis Cache
+                ↓
+             Database
+                ↓
+         Message Queue
+</code>
+
+
+
+<h3>7. Best Practices</h3>
+
+<ul>
+<li>Use async for I/O-heavy tasks</li>
+<li>Cache frequently accessed data</li>
+<li>Use queues for background processing</li>
+<li>Apply rate limiting on public APIs</li>
+<li>Monitor everything</li>
+</ul>
+
+
+
+<h3>8. Tools Used in Industry</h3>
+
+<ul>
+<li>Async → FastAPI, asyncio</li>
+<li>Cache → Redis</li>
+<li>Queue → Kafka, RabbitMQ</li>
+<li>Rate Limit → Redis, API Gateway</li>
+</ul>
+
+
+<h2>Real Industry Concepts (Production Backend Engineering)</h2>
+
+<h3>1. API Design (REST Standards)</h3>
+
+<h4>REST Principles</h4>
+<ul>
+<li>Stateless</li>
+<li>Resource-based</li>
+<li>Uses HTTP methods correctly</li>
+</ul>
+
+<h4>Endpoint Design</h4>
+<code>
+GET    /users        → list users
+GET    /users/{id}   → get user
+POST   /users        → create
+PUT    /users/{id}   → update
+DELETE /users/{id}   → delete
+</code>
+
+<h4>Naming Rules</h4>
+<ul>
+<li>Use nouns (not verbs)</li>
+<li>Use plural resources</li>
+<li>Keep URLs clean</li>
+</ul>
+
+
+
+<h4>Status Codes (IMPORTANT)</h4>
+<ul>
+<li>200 → success</li>
+<li>201 → created</li>
+<li>400 → bad request</li>
+<li>401 → unauthorized</li>
+<li>403 → forbidden</li>
+<li>404 → not found</li>
+<li>500 → server error</li>
+</ul>
+
+
+
+<h3>2. Logging System (Production)</h3>
+
+<h4>Types of Logs</h4>
+<ul>
+<li>Access logs → request/response</li>
+<li>Error logs → failures</li>
+<li>Audit logs → user actions</li>
+</ul>
+
+<h4>Example</h4>
+<code>
+import logging
+
+logging.info("User created")
+logging.error("DB connection failed") </code>
+
+<h4>Structured Logging</h4>
+<code>
+logging.info({
+  "event": "login",
+  "user_id": 1
+})
+</code>
+
+
+
+<h3>3. Error Code System</h3>
+
+<h4>Standard Codes</h4>
+<code>
+SUCCESS = "000"
+MISSING_FIELD = "001"
+INVALID = "002"
+NOT_FOUND = "003"
+UNAUTHORIZED = "004"
+SERVER_ERROR = "999"
+</code>
+
+<h4>Usage</h4>
+<code>
+return {
+  "status": "FAILURE",
+  "code": "002",
+  "error": "INVALID_INPUT"
+}
+</code>
+
+
+
+<h3>4. Config Management</h3>
+
+<h4>Why?</h4>
+<ul>
+<li>Separate config from code</li>
+<li>Easy deployment</li>
+</ul>
+
+<h4>Example config.py</h4>
+<code>
+class Config:
+    DB_HOST = "localhost"
+    DB_PORT = 5432
+</code>
+
+
+
+<h3>5. Environment Variables</h3>
+
+<h4>Why?</h4>
+<ul>
+<li>Secure sensitive data</li>
+<li>Different config per environment</li>
+</ul>
+
+<h4>Example</h4>
+<code>
+import os
+
+DB_PASSWORD = os.getenv("DB_PASSWORD") </code>
+
+<h4>.env File</h4>
+<code>
+DB_PASSWORD=secret
+</code>
+
+<h4>Load .env</h4>
+<code>
+pip install python-dotenv
+</code>
+
+<code>
+from dotenv import load_dotenv
+load_dotenv()
+</code>
+
+
+
+<h3>6. Environment Types</h3>
+
+<ul>
+<li>Development</li>
+<li>Testing</li>
+<li>Production</li>
+</ul>
+
+
+
+<h3>7. Testing (CRITICAL)</h3>
+
+<h4>Types</h4>
+<ul>
+<li>Unit Testing → test functions</li>
+<li>Integration Testing → test API + DB</li>
+</ul>
+
+
+
+<h3>8. Pytest Setup</h3>
+
+<code>
+pip install pytest
+</code>
+
+
+
+<h3>9. Basic Test</h3>
+
+<code>
+def test_add():
+    assert 1 + 1 == 2
+</code>
+
+
+
+<h3>10. API Testing (FastAPI)</h3>
+
+<code>
+from fastapi.testclient import TestClient
+
+client = TestClient(app)
+
+def test_users():
+res = client.get("/users")
+assert res.status_code == 200 </code>
+
+
+
+<h3>11. Mocking DB</h3>
+
+<code>
+from unittest.mock import Mock
+
+db = Mock()
+db.get_user.return_value = {"name": "Aathi"} </code>
+
+
+
+<h3>12. Test Structure</h3>
+
+<code>
+tests/
+ ├── test_api.py
+ ├── test_service.py
+</code>
+
+
+
+<h3>13. Continuous Testing</h3>
+
+<ul>
+<li>Run tests before deployment</li>
+<li>Use CI/CD pipelines</li>
+</ul>
+
+
+
+<h3>14. Real Backend Flow (Final)</h3>
+
+<code>
+Client
+ ↓
+API (REST)
+ ↓
+Validation
+ ↓
+Service
+ ↓
+DB
+ ↓
+Response
+ ↓
+Logging
+ ↓
+Monitoring
+</code>
+
+
+
+<h3>15. Best Practices (Industry Level)</h3>
+
+<ul>
+<li>Follow REST standards strictly</li>
+<li>Use structured logging</li>
+<li>Use centralized error codes</li>
+<li>Never hardcode config</li>
+<li>Use environment variables</li>
+<li>Write tests for every module</li>
+</ul>
+
+
+
+
+<h2>Security (Advanced – Production Backend)</h2>
+
+<h3>1. Overview</h3>
+
+<ul>
+<li>Protect data</li>
+<li>Prevent attacks</li>
+<li>Ensure secure communication</li>
+</ul>
+
+<code>
+Client → Secure API → Validation → DB → Safe Response
+</code>
+
+
+
+<h3>2. SQL Injection Prevention</h3>
+
+<h4>What is SQL Injection?</h4>
+<ul>
+<li>Attacker injects malicious SQL into queries</li>
+</ul>
+
+<h4>❌ Wrong (Vulnerable)</h4>
+<code>
+query = "SELECT * FROM users WHERE name = '" + name + "'"
+cursor.execute(query)
+</code>
+
+<h4>✅ Correct (Parameterized Query)</h4>
+<code>
+cursor.execute(
+    "SELECT * FROM users WHERE name = %s",
+    (name,)
+)
+</code>
+
+<ul>
+<li>Always use placeholders</li>
+<li>Never build SQL using string concatenation</li>
+</ul>
+
+
+
+<h3>3. ORM Protection (Safe by Default)</h3>
+
+<code>
+user = session.query(User).filter(User.name == name).first()
+</code>
+
+<ul>
+<li>ORM handles escaping automatically</li>
+</ul>
+
+
+
+<h3>4. Input Validation (CRITICAL)</h3>
+
+<h4>Why?</h4>
+<ul>
+<li>Prevent invalid or malicious data</li>
+<li>Stop attacks early</li>
+</ul>
+
+<h4>Pydantic Validation</h4>
+<code>
+from pydantic import BaseModel, Field
+
+class User(BaseModel):
+name: str = Field(..., min_length=3)
+age: int = Field(..., gt=0) </code>
+
+<h4>Custom Validation</h4>
+<code>
+from pydantic import validator
+
+class User(BaseModel):
+name: str
+
+```
+@validator("name")
+def clean_name(cls, v):
+    return v.strip()
+```
+
+</code>
+
+
+
+<h3>5. Sanitization</h3>
+
+<ul>
+<li>Remove unwanted characters</li>
+<li>Escape special characters</li>
+</ul>
+
+<code>
+import html
+
+safe = html.escape(user_input) </code>
+
+
+
+<h3>6. HTTPS (Secure Communication)</h3>
+
+<h4>Why HTTPS?</h4>
+<ul>
+<li>Encrypts data in transit</li>
+<li>Prevents man-in-the-middle attacks</li>
+</ul>
+
+<code>
+http:// → insecure  
+https:// → secure
+</code>
+
+
+
+<h3>7. TLS/SSL Certificates</h3>
+
+<ul>
+<li>Used to enable HTTPS</li>
+<li>Installed on server (Nginx, etc.)</li>
+</ul>
+
+
+
+<h3>8. Password Security</h3>
+
+<h4>Never store plain passwords</h4>
+
+<code>
+from passlib.context import CryptContext
+
+pwd = CryptContext(schemes=["bcrypt"])
+
+hashed = pwd.hash("password")
+pwd.verify("password", hashed) </code>
+
+
+
+<h3>9. Authentication Security</h3>
+
+<ul>
+<li>Use JWT tokens</li>
+<li>Set expiration</li>
+<li>Use strong secret keys</li>
+</ul>
+
+
+
+<h3>10. Rate Limiting</h3>
+
+<ul>
+<li>Prevent brute force attacks</li>
+</ul>
+
+<code>
+if requests > 100:
+    block_user()
+</code>
+
+
+
+<h3>11. CORS Protection</h3>
+
+<code>
+from fastapi.middleware.cors import CORSMiddleware
+
+app.add_middleware(
+CORSMiddleware,
+allow_origins=["trusted.com"]
+) </code>
+
+
+
+<h3>12. Secure Headers</h3>
+
+<ul>
+<li>X-Frame-Options</li>
+<li>Content-Security-Policy</li>
+</ul>
+
+
+
+<h3>13. Logging Security Events</h3>
+
+<code>
+logging.warning("Unauthorized access attempt")
+</code>
+
+
+
+<h3>14. Common Attacks</h3>
+
+<ul>
+<li>SQL Injection</li>
+<li>XSS (Cross-Site Scripting)</li>
+<li>CSRF</li>
+<li>Brute force</li>
+</ul>
+
+
+
+<h3>15. Best Practices</h3>
+
+<ul>
+<li>Always validate input</li>
+<li>Use parameterized queries</li>
+<li>Use HTTPS everywhere</li>
+<li>Hash passwords</li>
+<li>Limit requests</li>
+<li>Log suspicious activity</li>
+</ul>
+
+
+
+<h3>16. Secure Backend Flow</h3>
+
+<code>
+Client → HTTPS → API
+        ↓
+   Validate Input
+        ↓
+   Auth Check (JWT)
+        ↓
+   Service
+        ↓
+   DB (Safe Query)
+        ↓
+   Response (No sensitive data)
+</code>
+
+
+
+
+<h2>Encryption, Encoding, Hashing (Advanced – Backend Security Core)</h2>
+
+<h3>1. Overview</h3>
+
+<ul>
+<li><b>Encoding</b> → format conversion (reversible)</li>
+<li><b>Encryption</b> → secure data (reversible with key)</li>
+<li><b>Hashing</b> → one-way transformation (NOT reversible)</li>
+</ul>
+
+
+
+<h3>2. Encoding & Decoding</h3>
+
+<h4>Concept</h4>
+<ul>
+<li>Used to safely transmit data</li>
+<li>Not secure (no secrecy)</li>
+</ul>
+
+
+
+<h4>Base64 Encoding</h4>
+<code>
+import base64
+
+data = "hello".encode()
+encoded = base64.b64encode(data)
+print(encoded)
+
+decoded = base64.b64decode(encoded)
+print(decoded.decode()) </code>
+
+
+
+<h4>How it Works</h4>
+<ul>
+<li>Converts binary → ASCII</li>
+<li>Used in APIs, tokens, file transfer</li>
+</ul>
+
+
+
+<h3>3. Hashing (One-Way Security)</h3>
+
+<h4>Concept</h4>
+<ul>
+<li>Cannot reverse back</li>
+<li>Used for passwords</li>
+</ul>
+
+
+
+<h4>SHA256 Example</h4>
+<code>
+import hashlib
+
+data = "password".encode()
+
+hash_value = hashlib.sha256(data).hexdigest()
+print(hash_value) </code>
+
+
+
+<h4>Verify Hash</h4>
+<code>
+def verify(input_password, stored_hash):
+    return hashlib.sha256(input_password.encode()).hexdigest() == stored_hash
+</code>
+
+
+
+<h4>Salted Hashing</h4>
+<code>
+salt = "abc123"
+hash_value = hashlib.sha256((salt + "password").encode()).hexdigest()
+</code>
+
+<ul>
+<li>Prevents rainbow table attacks</li>
+</ul>
+
+
+
+<h4>Password Hashing (Best Practice)</h4>
+<code>
+from passlib.context import CryptContext
+
+pwd = CryptContext(schemes=["bcrypt"])
+
+hashed = pwd.hash("password")
+pwd.verify("password", hashed) </code>
+
+
+
+<h3>4. Encryption & Decryption</h3>
+
+<h4>Concept</h4>
+<ul>
+<li>Reversible using key</li>
+<li>Used for sensitive data</li>
+</ul>
+
+
+
+<h4>Symmetric Encryption (Same Key)</h4>
+
+<code>
+from cryptography.fernet import Fernet
+
+key = Fernet.generate_key()
+cipher = Fernet(key)
+
+encrypted = cipher.encrypt(b"secret data")
+print(encrypted)
+
+decrypted = cipher.decrypt(encrypted)
+print(decrypted.decode()) </code>
+
+
+
+<h4>How it Works</h4>
+<ul>
+<li>Plaintext → Encrypt → Ciphertext</li>
+<li>Ciphertext → Decrypt → Plaintext</li>
+</ul>
+
+
+
+<h3>5. Asymmetric Encryption (Public/Private Key)</h3>
+
+<ul>
+<li>Public key → encrypt</li>
+<li>Private key → decrypt</li>
+</ul>
+
+
+
+<h4>Concept Flow</h4>
+<code>
+Client encrypts with Public Key → Server decrypts with Private Key
+</code>
+
+
+
+<h3>6. JWT Uses Encoding + Signing</h3>
+
+<code>
+HEADER.PAYLOAD.SIGNATURE
+</code>
+
+<ul>
+<li>Header + Payload → Base64 encoded</li>
+<li>Signature → hashed + secret</li>
+</ul>
+
+
+
+<h3>7. HMAC (Hash + Secret)</h3>
+
+<code>
+import hmac
+import hashlib
+
+key = b"secret"
+msg = b"data"
+
+signature = hmac.new(key, msg, hashlib.sha256).hexdigest() </code>
+
+<ul>
+<li>Used in APIs for integrity</li>
+</ul>
+
+
+
+<h3>8. Digital Signature</h3>
+
+<ul>
+<li>Ensures data integrity</li>
+<li>Used in secure communication</li>
+</ul>
+
+
+
+<h3>9. Common Use Cases</h3>
+
+<ul>
+<li>Passwords → Hashing (bcrypt)</li>
+<li>Tokens → Encoding + Signing</li>
+<li>Secrets → Encryption</li>
+<li>APIs → HMAC</li>
+</ul>
+
+
+
+<h3>10. Comparison Table</h3>
+
+<code>
+Encoding    → reversible, no security
+Hashing     → one-way, secure
+Encryption  → reversible with key
+</code>
+
+
+
+<h3>11. Security Mistakes</h3>
+
+<ul>
+<li>Using MD5 (weak)</li>
+<li>Storing plain passwords</li>
+<li>Using encoding instead of encryption</li>
+<li>Hardcoding keys</li>
+</ul>
+
+
+
+<h3>12. Best Practices</h3>
+
+<ul>
+<li>Use bcrypt for passwords</li>
+<li>Use HTTPS always</li>
+<li>Store keys in environment variables</li>
+<li>Rotate keys regularly</li>
+<li>Never expose secrets</li>
+</ul>
+
+
+
+<h3>13. Real Backend Flow</h3>
+
+<code>
+User Password → Hash → Store in DB
+
+Login → Verify Hash → Generate JWT
+
+Sensitive Data → Encrypt → Store
+
+API → Verify Signature → Process </code>
+
+
+<h2>🚀 Full Backend System (Banking + Auth + Socket)</h2>
+
+<h3>1. System Architecture</h3>
+
+<code>
+Client (Web/App)
+   ↓
+FastAPI (API Layer)
+   ↓
+Auth Layer (JWT)
+   ↓
+Service Layer
+   ↓
+Database (PostgreSQL)
+   ↓
+Cache (Redis)
+   ↓
+Socket Server (Real-time Chat)
+</code>
+
+
+
+<h3>2. Folder Structure</h3>
+
+<code>
+app/
+ ├── main.py
+ ├── routes/
+ │   ├── auth.py
+ │   ├── user.py
+ │   ├── transaction.py
+ │
+ ├── services/
+ │   ├── auth_service.py
+ │   ├── user_service.py
+ │   ├── transaction_service.py
+ │
+ ├── db/
+ │   ├── db.py
+ │
+ ├── models/
+ │   ├── user_model.py
+ │   ├── transaction_model.py
+ │
+ ├── auth/
+ │   ├── jwt_handler.py
+ │   ├── password.py
+ │
+ ├── socket/
+ │   ├── chat_server.py
+ │
+ ├── core/
+ │   ├── response.py
+ │   ├── error_codes.py
+ │   ├── config.py
+</code>
+
+
+
+<h3>3. Database Models</h3>
+
+<code>
+class User(BaseModel):
+    id: int
+    name: str
+    balance: float
+
+class Transaction(BaseModel):
+from_user: int
+to_user: int
+amount: float </code>
+
+
+
+<h3>4. Authentication (JWT)</h3>
+
+<code>
+# jwt_handler.py
+from jose import jwt
+
+SECRET = "secret"
+
+def create_token(data):
+return jwt.encode(data, SECRET, algorithm="HS256") </code>
+
+
+
+<h3>5. Password Hashing</h3>
+
+<code>
+from passlib.context import CryptContext
+
+pwd = CryptContext(schemes=["bcrypt"])
+
+def hash_password(p):
+return pwd.hash(p)
+
+def verify(p, h):
+return pwd.verify(p, h) </code>
+
+
+
+<h3>6. Auth API</h3>
+
+<code>
+@app.post("/login")
+def login(data: dict):
+    user = service.get_user(data["username"])
+
+```
+if not verify(data["password"], user["password"]):
+    return error("004", "UNAUTHORIZED")
+
+token = create_token({"user_id": user["id"]})
+return success({"token": token})
+```
+
+</code>
+
+
+
+<h3>7. Protected API</h3>
+
+<code>
+from fastapi import Depends
+
+def get_current_user(token: str = Depends(oauth2)):
+return verify_token(token)
+
+@app.get("/balance")
+def get_balance(user = Depends(get_current_user)):
+return success(service.get_balance(user["user_id"])) </code>
+
+
+
+<h3>8. Banking Transaction API</h3>
+
+<code>
+@app.post("/transfer")
+def transfer(tx: Transaction, user=Depends(get_current_user)):
+    try:
+        service.transfer(user["user_id"], tx.to_user, tx.amount)
+        return success("Transfer complete")
+    except:
+        return error("999", "FAILED")
+</code>
+
+
+
+<h3>9. Transaction Service (Core Logic)</h3>
+
+<code>
+def transfer(from_id, to_id, amount):
+    if amount <= 0:
+        raise Exception("Invalid")
+
+```
+db.execute("UPDATE users SET balance = balance - %s WHERE id=%s", (amount, from_id))
+db.execute("UPDATE users SET balance = balance + %s WHERE id=%s", (amount, to_id))
+```
+
+</code>
+
+
+
+<h3>10. Real-Time Chat (Socket)</h3>
+
+<code>
+# chat_server.py
+import socket
+
+server = socket.socket()
+server.bind(("0.0.0.0", 6000))
+server.listen(5)
+
+clients = []
+
+while True:
+client, addr = server.accept()
+clients.append(client)
+
+```
+data = client.recv(1024)
+
+for c in clients:
+    c.send(data)
+```
+
+</code>
+
+
+
+<h3>11. WebSocket (Better Approach)</h3>
+
+<code>
+from fastapi import WebSocket
+
+@app.websocket("/chat")
+async def chat(ws: WebSocket):
+await ws.accept()
+while True:
+msg = await ws.receive_text()
+await ws.send_text(msg) </code>
+
+
+
+<h3>12. Logging</h3>
+
+<code>
+import logging
+
+logging.info("Transaction started")
+logging.error("Transaction failed") </code>
+
+
+
+<h3>13. Redis Cache (Balance)</h3>
+
+<code>
+balance = redis.get(user_id)
+
+if not balance:
+balance = db.get_balance(user_id)
+redis.set(user_id, balance) </code>
+
+
+
+<h3>14. Error Codes</h3>
+
+<code>
+SUCCESS = "000"
+INVALID = "002"
+UNAUTHORIZED = "004"
+SERVER_ERROR = "999"
+</code>
+
+
+
+<h3>15. Secure Flow</h3>
+
+<code>
+Login → JWT → API → Validate → Service → DB → Response
+</code>
+
+
+
+<h3>16. Full Request Flow</h3>
+
+<code>
+Client
+ ↓
+API (FastAPI)
+ ↓
+Auth (JWT)
+ ↓
+Validation (Pydantic)
+ ↓
+Service
+ ↓
+DB (PostgreSQL)
+ ↓
+Cache (Redis)
+ ↓
+Response
+</code>
+
+
+
+<h3>17. Deployment</h3>
+
+<code>
+uvicorn main:app --reload
+</code>
+
+<ul>
+<li>Use Docker</li>
+<li>Use Nginx</li>
+<li>Use Gunicorn</li>
+</ul>
+
+
+
+<h3>18. Final Best Practices</h3>
+
+<ul>
+<li>Use async APIs</li>
+<li>Use PostgreSQL</li>
+<li>Use Redis caching</li>
+<li>Use JWT auth</li>
+<li>Log everything</li>
+<li>Handle errors properly</li>
+</ul>
+
+
+<h2>🚀 Production Setup (PostgreSQL + Redis + Docker)</h2>
+
+<h3>1. System Architecture</h3>
+
+<code>
+Client
+  ↓
+FastAPI (App Container)
+  ↓
+PostgreSQL (DB Container)
+  ↓
+Redis (Cache Container)
+</code>
+
+
+
+<h3>2. Dockerfile (FastAPI App)</h3>
+
+<code>
+FROM python:3.11
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"] </code>
+
+
+
+<h3>3. requirements.txt</h3>
+
+<code>
+fastapi
+uvicorn
+psycopg2-binary
+redis
+python-dotenv
+sqlalchemy
+passlib[bcrypt]
+python-jose
+</code>
+
+
+
+<h3>4. docker-compose.yml</h3>
+
+<code>
+version: "3.9"
+
+services:
+
+app:
+build: .
+ports:
+- "8000:8000"
+depends_on:
+- db
+- redis
+environment:
+- DB_HOST=db
+- DB_NAME=bank
+- DB_USER=postgres
+- DB_PASSWORD=secret
+- REDIS_HOST=redis
+
+db:
+image: postgres:15
+restart: always
+environment:
+POSTGRES_DB: bank
+POSTGRES_USER: postgres
+POSTGRES_PASSWORD: secret
+ports:
+- "5432:5432"
+
+redis:
+image: redis:7
+ports:
+- "6379:6379" </code>
+
+
+
+<h3>5. Database Connection (PostgreSQL)</h3>
+
+<code>
+import psycopg2
+import os
+
+def connect_db():
+return psycopg2.connect(
+host=os.getenv("DB_HOST"),
+database=os.getenv("DB_NAME"),
+user=os.getenv("DB_USER"),
+password=os.getenv("DB_PASSWORD")
+) </code>
+
+
+
+<h3>6. Redis Connection</h3>
+
+<code>
+import redis
+import os
+
+r = redis.Redis(
+host=os.getenv("REDIS_HOST"),
+port=6379,
+decode_responses=True
+) </code>
+
+
+
+<h3>7. Use Redis (Cache Example)</h3>
+
+<code>
+def get_balance(user_id):
+    cached = r.get(f"balance:{user_id}")
+
+```
+if cached:
+    return float(cached)
+
+balance = db.get_balance(user_id)
+r.set(f"balance:{user_id}", balance, ex=60)
+
+return balance
+```
+
+</code>
+
+
+
+<h3>8. PostgreSQL Table Setup</h3>
+
+<code>
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name TEXT,
+    password TEXT,
+    balance FLOAT
+);
+</code>
+
+
+
+<h3>9. Environment Variables (.env)</h3>
+
+<code>
+DB_HOST=db
+DB_NAME=bank
+DB_USER=postgres
+DB_PASSWORD=secret
+
+REDIS_HOST=redis </code>
+
+
+
+<h3>10. Run the System</h3>
+
+<code>
+docker-compose up --build
+</code>
+
+<ul>
+<li>App → http://localhost:8000</li>
+<li>Postgres → port 5432</li>
+<li>Redis → port 6379</li>
+</ul>
+
+
+
+<h3>11. Health Check Endpoint</h3>
+
+<code>
+@app.get("/health")
+def health():
+    return {"status": "OK"}
+</code>
+
+
+
+<h3>12. Production Improvements</h3>
+
+<ul>
+<li>Add Nginx (reverse proxy)</li>
+<li>Use Gunicorn + Uvicorn workers</li>
+<li>Use connection pooling</li>
+<li>Secure secrets (Vault / env)</li>
+</ul>
+
+
+
+<h3>13. Docker Volumes (Persist DB)</h3>
+
+<code>
+db:
+  image: postgres:15
+  volumes:
+    - pgdata:/var/lib/postgresql/data
+
+volumes:
+pgdata: </code>
+
+
+
+<h3>14. Scaling Architecture</h3>
+
+<code>
+Load Balancer
+   ↓
+Multiple FastAPI Containers
+   ↓
+Redis (shared cache)
+   ↓
+PostgreSQL (primary DB)
+</code>
+
+
+
+<h3>15. Final Production Flow</h3>
+
+<code>
+Client
+ ↓
+API (Docker Container)
+ ↓
+Auth + Validation
+ ↓
+Service
+ ↓
+Redis Cache
+ ↓
+PostgreSQL DB
+ ↓
+Response
+</code>
+
+
+
+<h3>16. Best Practices</h3>
+
+<ul>
+<li>Never hardcode credentials</li>
+<li>Use environment variables</li>
+<li>Use Docker for consistency</li>
+<li>Use Redis for performance</li>
+<li>Use PostgreSQL for reliability</li>
+</ul>
+
+<h2>🚀 CI/CD + Kubernetes Setup (Production Level)</h2>
+
+<h3>1. What is CI/CD?</h3>
+
+<ul>
+<li><b>CI (Continuous Integration)</b> → Automatically test code on every commit</li>
+<li><b>CD (Continuous Deployment)</b> → Automatically deploy to server</li>
+</ul>
+
+<code>
+Developer → Git Push → CI (Test) → Build → Deploy → Live
+</code>
+
+
+
+<h3>2. CI/CD with GitHub Actions</h3>
+
+<h4>Folder Structure</h4>
+<code>
+.github/
+ └── workflows/
+      └── deploy.yml
+</code>
+
+
+
+<h3>3. GitHub Actions Workflow</h3>
+
+<code>
+name: CI/CD Pipeline
+
+on:
+push:
+branches: [ "main" ]
+
+jobs:
+build:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - uses: actions/checkout@v3
+
+  - name: Setup Python
+    uses: actions/setup-python@v4
+    with:
+      python-version: 3.11
+
+  - name: Install dependencies
+    run: pip install -r requirements.txt
+
+  - name: Run tests
+    run: pytest
+
+  - name: Build Docker image
+    run: docker build -t banking-app .
+
+  - name: Login to DockerHub
+    run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
+  - name: Push image
+    run: |
+      docker tag banking-app ${{ secrets.DOCKER_USER }}/banking-app
+      docker push ${{ secrets.DOCKER_USER }}/banking-app
+```
+
+</code>
+
+
+
+<h3>4. Kubernetes Overview</h3>
+
+<ul>
+<li>Container orchestration platform</li>
+<li>Manages scaling, deployment, networking</li>
+</ul>
+
+<code>
+Docker → Kubernetes → Cluster → Pods → Containers
+</code>
+
+
+
+<h3>5. Kubernetes Deployment (App)</h3>
+
+<code>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banking-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: banking
+  template:
+    metadata:
+      labels:
+        app: banking
+    spec:
+      containers:
+      - name: app
+        image: yourdockerhub/banking-app
+        ports:
+        - containerPort: 8000
+</code>
+
+
+
+<h3>6. Service (Expose App)</h3>
+
+<code>
+apiVersion: v1
+kind: Service
+metadata:
+  name: banking-service
+spec:
+  type: NodePort
+  selector:
+    app: banking
+  ports:
+    - port: 80
+      targetPort: 8000
+</code>
+
+
+
+<h3>7. PostgreSQL Deployment</h3>
+
+<code>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:15
+</code>
+
+
+
+<h3>8. Redis Deployment</h3>
+
+<code>
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: redis
+        image: redis:7
+</code>
+
+
+
+<h3>9. ConfigMap (Environment Variables)</h3>
+
+<code>
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  DB_HOST: postgres
+  REDIS_HOST: redis
+</code>
+
+
+
+<h3>10. Secret (Sensitive Data)</h3>
+
+<code>
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secret
+type: Opaque
+data:
+  DB_PASSWORD: c2VjcmV0
+</code>
+
+
+
+<h3>11. Apply to Cluster</h3>
+
+<code>
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+</code>
+
+
+
+<h3>12. Scaling</h3>
+
+<code>
+kubectl scale deployment banking-app --replicas=5
+</code>
+
+
+
+<h3>13. Auto Scaling (HPA)</h3>
+
+<code>
+kubectl autoscale deployment banking-app --cpu-percent=50 --min=2 --max=10
+</code>
+
+
+
+<h3>14. Logs & Debugging</h3>
+
+<code>
+kubectl logs pod-name
+kubectl get pods
+</code>
+
+
+
+<h3>15. Full Production Flow</h3>
+
+<code>
+Developer
+ ↓
+GitHub Push
+ ↓
+CI/CD Pipeline
+ ↓
+Docker Image (DockerHub)
+ ↓
+Kubernetes Deployment
+ ↓
+Pods (Running App)
+ ↓
+Service (Expose API)
+ ↓
+Client Access
+</code>
+
+
+
+<h3>16. Best Practices</h3>
+
+<ul>
+<li>Always run tests in CI</li>
+<li>Use Docker images for consistency</li>
+<li>Use ConfigMap for config</li>
+<li>Use Secrets for passwords</li>
+<li>Scale using Kubernetes</li>
+</ul>
+
+<h2>🚀 Monitoring + Microservices Architecture (Enterprise Level)</h2>
+
+<h3>1. Monolith vs Microservices</h3>
+
+<h4>Monolith</h4>
+<ul>
+<li>Single codebase</li>
+<li>Hard to scale</li>
+</ul>
+
+<h4>Microservices</h4>
+<ul>
+<li>Multiple independent services</li>
+<li>Each service handles one domain</li>
+<li>Scalable and maintainable</li>
+</ul>
+
+
+
+<h3>2. Microservices Architecture</h3>
+
+<code>
+Client
+ ↓
+API Gateway
+ ↓
+--
+| Auth Service                 |
+| User Service                 |
+| Transaction Service          |
+| Chat Service (Socket)        |
+--
+ ↓
+DB (each service can have its own DB)
+ ↓
+Redis / Message Queue
+</code>
+
+
+
+<h3>3. Service Breakdown</h3>
+
+<ul>
+<li><b>Auth Service</b> → login, JWT</li>
+<li><b>User Service</b> → user data</li>
+<li><b>Transaction Service</b> → banking logic</li>
+<li><b>Chat Service</b> → real-time communication</li>
+</ul>
+
+
+
+<h3>4. Communication Between Services</h3>
+
+<h4>1. HTTP (Sync)</h4>
+<code>
+Auth → User Service (REST API)
+</code>
+
+<h4>2. Message Queue (Async)</h4>
+<code>
+Transaction → Kafka → Notification Service
+</code>
+
+
+
+<h3>5. API Gateway</h3>
+
+<ul>
+<li>Single entry point</li>
+<li>Handles routing, auth, rate limiting</li>
+</ul>
+
+<code>
+Client → Gateway → Microservices
+</code>
+
+
+
+<h3>6. Monitoring Overview</h3>
+
+<ul>
+<li>Track system health</li>
+<li>Detect failures</li>
+<li>Measure performance</li>
+</ul>
+
+
+
+<h3>7. Prometheus (Metrics Collection)</h3>
+
+<ul>
+<li>Collects metrics from services</li>
+</ul>
+
+<code>
+pip install prometheus-client
+</code>
+
+
+
+<h4>Example Metrics</h4>
+<code>
+from prometheus_client import Counter
+
+REQUEST_COUNT = Counter("requests_total", "Total Requests")
+
+@app.get("/users")
+def users():
+REQUEST_COUNT.inc()
+return {"data": []} </code>
+
+
+
+<h3>8. Grafana (Visualization)</h3>
+
+<ul>
+<li>Dashboard for metrics</li>
+<li>Visual charts</li>
+</ul>
+
+
+
+<h3>9. Monitoring Stack</h3>
+
+<code>
+App → Prometheus → Grafana Dashboard
+</code>
+
+
+
+<h3>10. Docker Compose (Monitoring)</h3>
+
+<code>
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+
+grafana:
+image: grafana/grafana
+ports:
+- "3000:3000" </code>
+
+
+
+<h3>11. Logging + Monitoring Integration</h3>
+
+<ul>
+<li>Logs → ELK Stack</li>
+<li>Metrics → Prometheus</li>
+</ul>
+
+
+
+<h3>12. Distributed Tracing (Advanced)</h3>
+
+<ul>
+<li>Track request across services</li>
+</ul>
+
+<code>
+Service A → Service B → Service C
+(trace ID follows request)
+</code>
+
+
+
+<h3>13. Jaeger (Tracing Tool)</h3>
+
+<ul>
+<li>Visualize request flow</li>
+</ul>
+
+
+
+<h3>14. Health Checks</h3>
+
+<code>
+@app.get("/health")
+def health():
+    return {"status": "OK"}
+</code>
+
+
+
+<h3>15. Alerts</h3>
+
+<ul>
+<li>High CPU</li>
+<li>High error rate</li>
+<li>Slow response</li>
+</ul>
+
+
+
+<h3>16. Scaling Microservices</h3>
+
+<code>
+kubectl scale deployment auth-service --replicas=3
+</code>
+
+
+
+<h3>17. Service Discovery</h3>
+
+<ul>
+<li>Kubernetes handles service discovery</li>
+</ul>
+
+
+
+<h3>18. Circuit Breaker (Advanced)</h3>
+
+<ul>
+<li>Stops cascading failures</li>
+</ul>
+
+
+
+<h3>19. Full Production Flow</h3>
+
+<code>
+Client
+ ↓
+API Gateway
+ ↓
+Auth Service
+ ↓
+User Service
+ ↓
+Transaction Service
+ ↓
+Database
+ ↓
+Prometheus (metrics)
+ ↓
+Grafana (dashboard)
+</code>
+
+
+
+<h3>20. Best Practices</h3>
+
+<ul>
+<li>Keep services independent</li>
+<li>Use async communication where possible</li>
+<li>Monitor everything</li>
+<li>Use centralized logging</li>
+<li>Design for failure</li>
+</ul>
+
+
+<h2>🚀 Monitoring + Microservices Architecture (Enterprise Level)</h2>
+
+<h3>1. Monolith vs Microservices</h3>
+
+<h4>Monolith</h4>
+<ul>
+<li>Single codebase</li>
+<li>Hard to scale</li>
+</ul>
+
+<h4>Microservices</h4>
+<ul>
+<li>Multiple independent services</li>
+<li>Each service handles one domain</li>
+<li>Scalable and maintainable</li>
+</ul>
+
+
+
+<h3>2. Microservices Architecture</h3>
+
+<code>
+Client
+ ↓
+API Gateway
+ ↓
+--
+| Auth Service                 |
+| User Service                 |
+| Transaction Service          |
+| Chat Service (Socket)        |
+--
+ ↓
+DB (each service can have its own DB)
+ ↓
+Redis / Message Queue
+</code>
+
+
+
+<h3>3. Service Breakdown</h3>
+
+<ul>
+<li><b>Auth Service</b> → login, JWT</li>
+<li><b>User Service</b> → user data</li>
+<li><b>Transaction Service</b> → banking logic</li>
+<li><b>Chat Service</b> → real-time communication</li>
+</ul>
+
+
+
+<h3>4. Communication Between Services</h3>
+
+<h4>1. HTTP (Sync)</h4>
+<code>
+Auth → User Service (REST API)
+</code>
+
+<h4>2. Message Queue (Async)</h4>
+<code>
+Transaction → Kafka → Notification Service
+</code>
+
+
+
+<h3>5. API Gateway</h3>
+
+<ul>
+<li>Single entry point</li>
+<li>Handles routing, auth, rate limiting</li>
+</ul>
+
+<code>
+Client → Gateway → Microservices
+</code>
+
+
+
+<h3>6. Monitoring Overview</h3>
+
+<ul>
+<li>Track system health</li>
+<li>Detect failures</li>
+<li>Measure performance</li>
+</ul>
+
+
+
+<h3>7. Prometheus (Metrics Collection)</h3>
+
+<ul>
+<li>Collects metrics from services</li>
+</ul>
+
+<code>
+pip install prometheus-client
+</code>
+
+
+
+<h4>Example Metrics</h4>
+<code>
+from prometheus_client import Counter
+
+REQUEST_COUNT = Counter("requests_total", "Total Requests")
+
+@app.get("/users")
+def users():
+REQUEST_COUNT.inc()
+return {"data": []} </code>
+
+
+
+<h3>8. Grafana (Visualization)</h3>
+
+<ul>
+<li>Dashboard for metrics</li>
+<li>Visual charts</li>
+</ul>
+
+
+
+<h3>9. Monitoring Stack</h3>
+
+<code>
+App → Prometheus → Grafana Dashboard
+</code>
+
+
+
+<h3>10. Docker Compose (Monitoring)</h3>
+
+<code>
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+
+grafana:
+image: grafana/grafana
+ports:
+- "3000:3000" </code>
+
+
+
+<h3>11. Logging + Monitoring Integration</h3>
+
+<ul>
+<li>Logs → ELK Stack</li>
+<li>Metrics → Prometheus</li>
+</ul>
+
+
+
+<h3>12. Distributed Tracing (Advanced)</h3>
+
+<ul>
+<li>Track request across services</li>
+</ul>
+
+<code>
+Service A → Service B → Service C
+(trace ID follows request)
+</code>
+
+
+
+<h3>13. Jaeger (Tracing Tool)</h3>
+
+<ul>
+<li>Visualize request flow</li>
+</ul>
+
+
+
+<h3>14. Health Checks</h3>
+
+<code>
+@app.get("/health")
+def health():
+    return {"status": "OK"}
+</code>
+
+
+
+<h3>15. Alerts</h3>
+
+<ul>
+<li>High CPU</li>
+<li>High error rate</li>
+<li>Slow response</li>
+</ul>
+
+
+
+<h3>16. Scaling Microservices</h3>
+
+<code>
+kubectl scale deployment auth-service --replicas=3
+</code>
+
+
+
+<h3>17. Service Discovery</h3>
+
+<ul>
+<li>Kubernetes handles service discovery</li>
+</ul>
+
+
+
+<h3>18. Circuit Breaker (Advanced)</h3>
+
+<ul>
+<li>Stops cascading failures</li>
+</ul>
+
+
+
+<h3>19. Full Production Flow</h3>
+
+<code>
+Client
+ ↓
+API Gateway
+ ↓
+Auth Service
+ ↓
+User Service
+ ↓
+Transaction Service
+ ↓
+Database
+ ↓
+Prometheus (metrics)
+ ↓
+Grafana (dashboard)
+</code>
+
+
+
+<h3>20. Best Practices</h3>
+
+<ul>
+<li>Keep services independent</li>
+<li>Use async communication where possible</li>
+<li>Monitor everything</li>
+<li>Use centralized logging</li>
+<li>Design for failure</li>
+</ul>
+
+
+</body>
+</html>
