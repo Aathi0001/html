@@ -1,0 +1,13321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Backend Foundation</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+  table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #34495e;
+    color: white;
+}
+</style>
+</head>
+<body>
+<section>
+    <h2>HTTP (HyperText Transfer Protocol)</h2>
+
+    <p>
+        HTTP is a communication protocol used by clients and servers to exchange data over the internet.
+    </p>
+
+    <p>
+        Whenever a browser, mobile application, desktop application, or API communicates with a server,
+        it usually uses HTTP or HTTPS.
+    </p>
+
+    <pre><code>
+Client
+   ↓ HTTP Request
+Server
+   ↓ HTTP Response
+Client
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why HTTP Exists</h2>
+
+    <p>
+        Computers need a standard way to communicate.
+    </p>
+
+    <p>
+        HTTP defines:
+    </p>
+
+    <ul>
+        <li>How requests are sent.</li>
+        <li>How responses are returned.</li>
+        <li>How data is formatted.</li>
+        <li>How errors are reported.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>HTTP Communication Flow</h2>
+
+    <pre><code>
+Browser
+   ↓
+HTTP Request
+   ↓
+Web Server
+   ↓
+Application
+   ↓
+Database
+
+Database
+   ↓
+Application
+   ↓
+HTTP Response
+   ↓
+Browser
+    </code></pre>
+
+    <p>
+        The client always starts the communication by sending a request.
+    </p>
+</section>
+
+<section>
+    <h2>Client and Server</h2>
+
+    <h3>Client</h3>
+
+    <p>
+        A client is any application that sends requests.
+    </p>
+
+    <ul>
+        <li>Web Browser</li>
+        <li>Mobile App</li>
+        <li>Desktop Application</li>
+        <li>Postman</li>
+        <li>Another Backend Service</li>
+    </ul>
+
+    <h3>Server</h3>
+
+    <p>
+        A server receives requests and sends responses.
+    </p>
+
+    <ul>
+        <li>Apache</li>
+        <li>Nginx</li>
+        <li>Flask</li>
+        <li>Django</li>
+        <li>Spring Boot</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Structure of a URL</h2>
+
+    <pre><code>
+https://example.com:443/accounts?id=101
+    </code></pre>
+
+    <table>
+        <tr>
+            <th>Part</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>https</td>
+            <td>Protocol</td>
+        </tr>
+        <tr>
+            <td>example.com</td>
+            <td>Domain Name</td>
+        </tr>
+        <tr>
+            <td>443</td>
+            <td>Port Number</td>
+        </tr>
+        <tr>
+            <td>/accounts</td>
+            <td>Path</td>
+        </tr>
+        <tr>
+            <td>?id=101</td>
+            <td>Query Parameter</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>HTTP Request</h2>
+
+    <p>
+        A request is sent by the client to the server.
+    </p>
+
+    <pre><code>
+GET /users HTTP/1.1
+Host: example.com
+User-Agent: Chrome
+
+    </code></pre>
+
+    <p>
+        Every request contains:
+    </p>
+
+    <ul>
+        <li>Method</li>
+        <li>URL</li>
+        <li>Headers</li>
+        <li>Body (optional)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>HTTP Response</h2>
+
+    <p>
+        A response is returned by the server.
+    </p>
+
+    <pre><code>
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{
+    "message":"Success"
+}
+    </code></pre>
+
+    <p>
+        Every response contains:
+    </p>
+
+    <ul>
+        <li>Status Code</li>
+        <li>Headers</li>
+        <li>Response Body</li>
+    </ul>
+</section>
+
+<section>
+    <h2>HTTP Methods</h2>
+
+    <p>
+        Methods tell the server what action should be performed.
+    </p>
+
+    <table>
+        <tr>
+            <th>Method</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>GET</td>
+            <td>Read Data</td>
+        </tr>
+        <tr>
+            <td>POST</td>
+            <td>Create Data</td>
+        </tr>
+        <tr>
+            <td>PUT</td>
+            <td>Update Entire Record</td>
+        </tr>
+        <tr>
+            <td>PATCH</td>
+            <td>Update Partial Record</td>
+        </tr>
+        <tr>
+            <td>DELETE</td>
+            <td>Delete Data</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>GET Method</h2>
+
+    <p>
+        Used to retrieve data from the server.
+    </p>
+
+    <pre><code>
+GET /customers/101 HTTP/1.1
+Host: example.com
+    </code></pre>
+
+    <p>
+        Example:
+    </p>
+
+    <pre><code>
+GET /accounts
+    </code></pre>
+
+    <p>
+        Fetches account information.
+    </p>
+</section>
+
+<section>
+    <h2>POST Method</h2>
+
+    <p>
+        Used to create new records.
+    </p>
+
+    <pre><code>
+POST /customers HTTP/1.1
+Content-Type: application/json
+
+{
+    "name":"Aathi",
+    "city":"Chennai"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>PUT Method</h2>
+
+    <p>
+        Used to replace or update an entire record.
+    </p>
+
+    <pre><code>
+PUT /customers/101
+
+{
+    "name":"Aathi",
+    "city":"Madurai"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>PATCH Method</h2>
+
+    <p>
+        Used to update specific fields only.
+    </p>
+
+    <pre><code>
+PATCH /customers/101
+
+{
+    "city":"Madurai"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>DELETE Method</h2>
+
+    <p>
+        Used to remove records.
+    </p>
+
+    <pre><code>
+DELETE /customers/101
+    </code></pre>
+</section>
+
+<section>
+    <h2>HTTP Headers</h2>
+
+    <p>
+        Headers provide additional information about the request or response.
+    </p>
+
+    <h3>Common Request Headers</h3>
+
+    <table>
+        <tr>
+            <th>Header</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>Host</td>
+            <td>Target Website</td>
+        </tr>
+        <tr>
+            <td>User-Agent</td>
+            <td>Client Information</td>
+        </tr>
+        <tr>
+            <td>Authorization</td>
+            <td>Authentication Token</td>
+        </tr>
+        <tr>
+            <td>Content-Type</td>
+            <td>Body Format</td>
+        </tr>
+        <tr>
+            <td>Accept</td>
+            <td>Expected Response Format</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Request Body</h2>
+
+    <p>
+        The request body contains data sent to the server.
+    </p>
+
+    <pre><code>
+POST /login
+
+{
+    "username":"admin",
+    "password":"secret"
+}
+    </code></pre>
+
+    <p>
+        GET requests usually do not contain a body.
+    </p>
+</section>
+
+<section>
+    <h2>Response Body</h2>
+
+    <p>
+        The response body contains data returned by the server.
+    </p>
+
+    <pre><code>
+{
+    "customer_id":101,
+    "name":"Aathi",
+    "status":"ACTIVE"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>HTTP Status Codes</h2>
+
+    <p>
+        Status codes indicate the result of a request.
+    </p>
+
+    <table>
+        <tr>
+            <th>Code</th>
+            <th>Meaning</th>
+        </tr>
+        <tr>
+            <td>200</td>
+            <td>Success</td>
+        </tr>
+        <tr>
+            <td>201</td>
+            <td>Created</td>
+        </tr>
+        <tr>
+            <td>204</td>
+            <td>No Content</td>
+        </tr>
+        <tr>
+            <td>400</td>
+            <td>Bad Request</td>
+        </tr>
+        <tr>
+            <td>401</td>
+            <td>Unauthorized</td>
+        </tr>
+        <tr>
+            <td>403</td>
+            <td>Forbidden</td>
+        </tr>
+        <tr>
+            <td>404</td>
+            <td>Not Found</td>
+        </tr>
+        <tr>
+            <td>500</td>
+            <td>Internal Server Error</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>JSON (JavaScript Object Notation)</h2>
+
+    <p>
+        JSON is the most common format used for data exchange in APIs.
+    </p>
+
+    <pre><code>
+{
+    "customer_id":101,
+    "name":"Aathi",
+    "accounts":[
+        "ACC001",
+        "ACC002"
+    ]
+}
+    </code></pre>
+
+    <p>
+        JSON consists of key-value pairs.
+    </p>
+</section>
+
+<section>
+    <h2>Content Types</h2>
+
+    <p>
+        Content-Type tells the server how data is formatted.
+    </p>
+
+    <table>
+        <tr>
+            <th>Content Type</th>
+            <th>Usage</th>
+        </tr>
+        <tr>
+            <td>application/json</td>
+            <td>JSON Data</td>
+        </tr>
+        <tr>
+            <td>text/html</td>
+            <td>HTML Pages</td>
+        </tr>
+        <tr>
+            <td>text/plain</td>
+            <td>Plain Text</td>
+        </tr>
+        <tr>
+            <td>multipart/form-data</td>
+            <td>File Uploads</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>HTTP is Stateless</h2>
+
+    <p>
+        HTTP does not remember previous requests.
+    </p>
+
+    <pre><code>
+Request 1
+    ↓
+Server Processes
+    ↓
+Response
+
+Request 2
+    ↓
+Server Does Not Automatically Remember Request 1
+    </code></pre>
+
+    <p>
+        Sessions, Cookies and JWT tokens are used to maintain user state.
+    </p>
+</section>
+
+<section>
+    <h2>HTTPS</h2>
+
+    <p>
+        HTTPS is the secure version of HTTP.
+    </p>
+
+    <pre><code>
+HTTP
+    ↓
+Plain Text
+
+HTTPS
+    ↓
+Encrypted Communication
+    </code></pre>
+
+    <p>
+        HTTPS protects data from being read by attackers during transmission.
+    </p>
+</section>
+
+<section>
+    <h2>SSL and TLS</h2>
+
+    <p>
+        TLS (Transport Layer Security) is the modern security protocol used by HTTPS.
+    </p>
+
+    <p>
+        SSL is the older term that is still commonly used.
+    </p>
+
+    <pre><code>
+Browser
+    ↓
+TLS Encryption
+    ↓
+Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>HTTP vs HTTPS</h2>
+
+    <table>
+        <tr>
+            <th>HTTP</th>
+            <th>HTTPS</th>
+        </tr>
+        <tr>
+            <td>Port 80</td>
+            <td>Port 443</td>
+        </tr>
+        <tr>
+            <td>Not Encrypted</td>
+            <td>Encrypted</td>
+        </tr>
+        <tr>
+            <td>Less Secure</td>
+            <td>More Secure</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Complete Request Lifecycle</h2>
+
+    <pre><code>
+Browser
+    ↓
+HTTP Request
+    ↓
+Nginx
+    ↓
+Flask Application
+    ↓
+Database
+
+Database
+    ↓
+Flask Application
+    ↓
+Nginx
+    ↓
+HTTP Response
+    ↓
+Browser
+    </code></pre>
+</section>
+
+<section>
+    <h2>Key Points to Remember</h2>
+
+    <ul>
+        <li>HTTP is the communication protocol used by web applications.</li>
+        <li>Clients send requests and servers send responses.</li>
+        <li>Methods define actions such as GET, POST, PUT and DELETE.</li>
+        <li>Headers contain metadata about requests and responses.</li>
+        <li>JSON is the most common API data format.</li>
+        <li>Status codes indicate request results.</li>
+        <li>HTTP is stateless.</li>
+        <li>HTTPS uses TLS encryption for secure communication.</li>
+    </ul>
+</section>
+<section>
+    <h2>HTTP Security and HTTPS Security</h2>
+
+    <p>
+        HTTP and HTTPS are communication protocols used between clients and servers.
+    </p>
+
+    <p>
+        HTTPS secures communication using encryption, while HTTP sends data as plain text.
+    </p>
+</section>
+
+<section>
+    <h2>Real World Example - HTTP</h2>
+
+    <p>
+        Suppose a user logs into a banking application using HTTP.
+    </p>
+
+    <pre><code>
+Browser
+    ↓
+username=aathi
+password=secret123
+    ↓
+Internet
+    ↓
+Server
+    </code></pre>
+
+    <p>
+        The data travels as plain text.
+    </p>
+
+    <p>
+        Anyone who can intercept the network traffic may be able to read the username and password.
+    </p>
+</section>
+
+<section>
+    <h2>Real World Example - HTTPS</h2>
+
+    <p>
+        The same login request using HTTPS.
+    </p>
+
+    <pre><code>
+Browser
+    ↓
+Encrypted Data
+    ↓
+Internet
+    ↓
+Server
+    </code></pre>
+
+    <p>
+        An attacker capturing packets sees encrypted information instead of readable data.
+    </p>
+</section>
+
+<section>
+    <h2>HTTP vs HTTPS</h2>
+
+    <table>
+        <tr>
+            <th>HTTP</th>
+            <th>HTTPS</th>
+        </tr>
+        <tr>
+            <td>Plain Text</td>
+            <td>Encrypted</td>
+        </tr>
+        <tr>
+            <td>Port 80</td>
+            <td>Port 443</td>
+        </tr>
+        <tr>
+            <td>Less Secure</td>
+            <td>More Secure</td>
+        </tr>
+        <tr>
+            <td>Data Can Be Read</td>
+            <td>Data Is Encrypted</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>What HTTPS Protects</h2>
+
+    <ul>
+        <li>Username and Password.</li>
+        <li>API Requests.</li>
+        <li>Session Cookies.</li>
+        <li>Banking Transactions.</li>
+        <li>Personal Information.</li>
+    </ul>
+
+    <pre><code>
+Client
+    ↓ Encrypted
+Internet
+    ↓ Encrypted
+Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>What HTTPS Does NOT Protect</h2>
+
+    <ul>
+        <li>Weak Passwords.</li>
+        <li>SQL Injection.</li>
+        <li>XSS Attacks.</li>
+        <li>Bad Authorization Logic.</li>
+        <li>Server Vulnerabilities.</li>
+        <li>Application Bugs.</li>
+    </ul>
+
+    <p>
+        HTTPS secures the transport channel but does not automatically secure the application.
+    </p>
+</section>
+
+<section>
+    <h2>How Attackers Can Access Data Even With HTTPS</h2>
+
+    <p>
+        HTTPS protects network traffic, but attackers may use other attack methods.
+    </p>
+</section>
+
+<section>
+    <h2>Attack 1 - SQL Injection</h2>
+
+    <p>
+        If user input is directly placed into SQL queries, attackers may manipulate the query.
+    </p>
+
+    <pre><code>
+Input:
+
+admin' OR '1'='1
+    </code></pre>
+
+    <p>
+        Protection:
+    </p>
+
+    <ul>
+        <li>Parameterized Queries.</li>
+        <li>Prepared Statements.</li>
+        <li>Input Validation.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Attack 2 - Cross Site Scripting (XSS)</h2>
+
+    <p>
+        Attackers inject JavaScript into web pages.
+    </p>
+
+    <pre><code>
+&lt;script&gt;
+alert('XSS');
+&lt;/script&gt;
+    </code></pre>
+
+    <p>
+        Protection:
+    </p>
+
+    <ul>
+        <li>Output Encoding.</li>
+        <li>Input Validation.</li>
+        <li>Content Security Policy.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Attack 3 - Session Hijacking</h2>
+
+    <p>
+        An attacker steals a user's session token and impersonates that user.
+    </p>
+
+    <pre><code>
+User Login
+    ↓
+Session Cookie
+    ↓
+Attacker Obtains Cookie
+    ↓
+Uses Cookie
+    </code></pre>
+
+    <p>
+        Protection:
+    </p>
+
+    <ul>
+        <li>HTTPS.</li>
+        <li>Secure Cookies.</li>
+        <li>HttpOnly Cookies.</li>
+        <li>Session Expiration.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Attack 4 - Brute Force Attack</h2>
+
+    <p>
+        Attackers try thousands of passwords until one works.
+    </p>
+
+    <p>
+        Protection:
+    </p>
+
+    <ul>
+        <li>Rate Limiting.</li>
+        <li>Account Locking.</li>
+        <li>MFA.</li>
+        <li>Strong Password Policies.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Attack 5 - Stolen Database</h2>
+
+    <p>
+        Attackers may compromise the server and steal the database.
+    </p>
+
+    <p>
+        HTTPS cannot protect against this because the attack occurs after data reaches the server.
+    </p>
+
+    <p>
+        Protection:
+    </p>
+
+    <ul>
+        <li>Password Hashing.</li>
+        <li>Encryption at Rest.</li>
+        <li>Access Controls.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Attack 6 - Malware on User Device</h2>
+
+    <p>
+        If the user's computer is infected, malware may steal information before HTTPS encryption occurs.
+    </p>
+
+    <pre><code>
+Keyboard
+    ↓
+Malware Reads Input
+    ↓
+HTTPS Encryption Happens Later
+    </code></pre>
+
+    <p>
+        HTTPS cannot prevent malware installed on the user's device.
+    </p>
+</section>
+
+<section>
+    <h2>How HTTPS Works</h2>
+
+    <pre><code>
+Browser
+    ↓
+Requests Certificate
+    ↓
+Server Sends Certificate
+    ↓
+TLS Handshake
+    ↓
+Encryption Keys Created
+    ↓
+Secure Communication Begins
+    </code></pre>
+</section>
+
+<section>
+    <h2>SSL Certificate</h2>
+
+    <p>
+        SSL/TLS certificates prove the identity of a website and enable encrypted communication.
+    </p>
+
+    <pre><code>
+https://bank.com
+        🔒
+Valid Certificate
+    </code></pre>
+</section>
+
+<section>
+    <h2>Converting HTTP to HTTPS</h2>
+
+    <h3>Step 1 - Purchase or Obtain a Domain</h3>
+
+    <pre><code>
+example.com
+    </code></pre>
+
+    <h3>Step 2 - Install Nginx or Apache</h3>
+
+    <pre><code>
+sudo apt install nginx
+    </code></pre>
+
+    <h3>Step 3 - Install Certbot</h3>
+
+    <pre><code>
+sudo apt install certbot
+    </code></pre>
+
+    <h3>Step 4 - Generate SSL Certificate</h3>
+
+    <pre><code>
+sudo certbot --nginx
+    </code></pre>
+
+    <p>
+        Or for Apache:
+    </p>
+
+    <pre><code>
+sudo certbot --apache
+    </code></pre>
+
+    <h3>Step 5 - Automatic HTTPS Configuration</h3>
+
+    <pre><code>
+HTTP (80)
+    ↓
+Redirect
+    ↓
+HTTPS (443)
+    </code></pre>
+</section>
+
+<section>
+    <h2>Security Layers of a Modern Application</h2>
+
+    <pre><code>
+User
+    ↓
+HTTPS
+    ↓
+Firewall
+    ↓
+Nginx
+    ↓
+Authentication
+    ↓
+Authorization
+    ↓
+Application
+    ↓
+Database
+    </code></pre>
+
+    <p>
+        Security is not a single feature. It is multiple layers working together.
+    </p>
+</section>
+
+<section>
+    <h2>Important Security Principles</h2>
+
+    <ul>
+        <li>Always use HTTPS.</li>
+        <li>Never store plain-text passwords.</li>
+        <li>Use password hashing.</li>
+        <li>Validate all user input.</li>
+        <li>Use parameterized SQL queries.</li>
+        <li>Implement authentication and authorization.</li>
+        <li>Keep software updated.</li>
+        <li>Apply least-privilege access.</li>
+        <li>Enable logging and monitoring.</li>
+        <li>Use rate limiting for public APIs.</li>
+    </ul>
+</section>
+<section>
+    <h2>Firewall</h2>
+
+    <p>
+        A firewall controls incoming and outgoing network traffic based on predefined rules.
+    </p>
+
+    <pre><code>
+Internet
+    ↓
+Firewall
+    ↓
+Server
+    </code></pre>
+
+    <p>
+        Example:
+    </p>
+
+    <ul>
+        <li>Allow Port 80 (HTTP)</li>
+        <li>Allow Port 443 (HTTPS)</li>
+        <li>Block Port 22 from public access</li>
+    </ul>
+
+    <p>
+        Firewalls act as the first line of defense.
+    </p>
+</section>
+
+<section>
+    <h2>Web Application Firewall (WAF)</h2>
+
+    <p>
+        A WAF protects web applications from common attacks.
+    </p>
+
+    <pre><code>
+User
+    ↓
+WAF
+    ↓
+Nginx
+    ↓
+Application
+    </code></pre>
+
+    <p>
+        Common protections:
+    </p>
+
+    <ul>
+        <li>SQL Injection Detection</li>
+        <li>XSS Detection</li>
+        <li>Rate Limiting</li>
+        <li>Bot Protection</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Virtual Private Network (VPN)</h2>
+
+    <p>
+        A VPN creates an encrypted tunnel between two endpoints.
+    </p>
+
+    <pre><code>
+Laptop
+    ↓ Encrypted Tunnel
+VPN Server
+    ↓
+Internet
+    </code></pre>
+
+    <p>
+        A VPN protects traffic from local network monitoring.
+    </p>
+</section>
+
+<section>
+    <h2>VPN Real World Example</h2>
+
+    <p>
+        Without VPN:
+    </p>
+
+    <pre><code>
+Laptop
+    ↓
+Public WiFi
+    ↓
+Internet
+    </code></pre>
+
+    <p>
+        With VPN:
+    </p>
+
+    <pre><code>
+Laptop
+    ↓ Encrypted
+VPN Tunnel
+    ↓ Encrypted
+VPN Server
+    ↓
+Internet
+    </code></pre>
+
+    <p>
+        The WiFi operator cannot easily inspect the traffic contents.
+    </p>
+</section>
+
+<section>
+    <h2>Tunneling</h2>
+
+    <p>
+        Tunneling is the process of sending one protocol through another protocol.
+    </p>
+
+    <pre><code>
+Original Data
+    ↓
+Encapsulation
+    ↓
+Tunnel
+    ↓
+Decapsulation
+    ↓
+Destination
+    </code></pre>
+
+    <p>
+        VPNs use tunneling technology.
+    </p>
+</section>
+
+<section>
+    <h2>SSH Tunnel</h2>
+
+    <p>
+        SSH can create secure tunnels between systems.
+    </p>
+
+    <pre><code>
+Local Machine
+    ↓ SSH Tunnel
+Remote Server
+    </code></pre>
+
+    <p>
+        Often used for secure database access.
+    </p>
+</section>
+
+<section>
+    <h2>API Security</h2>
+
+    <p>
+        APIs should never trust client requests.
+    </p>
+
+    <ul>
+        <li>Validate Input</li>
+        <li>Authenticate Users</li>
+        <li>Authorize Actions</li>
+        <li>Log Requests</li>
+        <li>Apply Rate Limits</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Authentication</h2>
+
+    <p>
+        Authentication answers:
+    </p>
+
+    <pre><code>
+Who are you?
+    </code></pre>
+
+    <p>
+        Examples:
+    </p>
+
+    <ul>
+        <li>Username and Password</li>
+        <li>OTP</li>
+        <li>JWT</li>
+        <li>OAuth</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Authorization</h2>
+
+    <p>
+        Authorization answers:
+    </p>
+
+    <pre><code>
+What are you allowed to do?
+    </code></pre>
+
+    <pre><code>
+Customer
+    ↓
+View Own Account
+
+Admin
+    ↓
+View All Accounts
+    </code></pre>
+</section>
+
+<section>
+    <h2>Cookies</h2>
+
+    <p>
+        Cookies are small pieces of data stored in the browser.
+    </p>
+
+    <pre><code>
+Server
+    ↓
+Set-Cookie
+    ↓
+Browser Stores Cookie
+    </code></pre>
+
+    <p>
+        Cookies are commonly used for login sessions.
+    </p>
+</section>
+
+<section>
+    <h2>Sessions</h2>
+
+    <p>
+        Sessions allow servers to remember users across requests.
+    </p>
+
+    <pre><code>
+User Login
+    ↓
+Session Created
+    ↓
+Session ID Stored In Cookie
+    ↓
+Future Requests Use Session ID
+    </code></pre>
+</section>
+
+<section>
+    <h2>JWT (JSON Web Token)</h2>
+
+    <p>
+        JWT is a token-based authentication mechanism.
+    </p>
+
+    <pre><code>
+User Login
+    ↓
+JWT Generated
+    ↓
+Client Stores JWT
+    ↓
+Client Sends JWT On Requests
+    </code></pre>
+
+    <p>
+        Commonly used in APIs and mobile applications.
+    </p>
+</section>
+
+<section>
+    <h2>Rate Limiting</h2>
+
+    <p>
+        Limits the number of requests a client can make.
+    </p>
+
+    <pre><code>
+Client
+    ↓
+100 Requests/Minute
+    ↓
+Allowed
+
+101st Request
+    ↓
+Blocked
+    </code></pre>
+
+    <p>
+        Helps prevent brute-force attacks and abuse.
+    </p>
+</section>
+
+<section>
+    <h2>Password Storage</h2>
+
+    <p>
+        Passwords should never be stored as plain text.
+    </p>
+
+    <pre><code>
+Password
+    ↓
+Hash Function
+    ↓
+Stored Hash
+    </code></pre>
+
+    <p>
+        Common algorithms:
+    </p>
+
+    <ul>
+        <li>bcrypt</li>
+        <li>Argon2</li>
+        <li>scrypt</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Encryption At Rest</h2>
+
+    <p>
+        Data stored in databases or files should be encrypted.
+    </p>
+
+    <pre><code>
+Database
+    ↓
+Encrypted Storage
+    </code></pre>
+
+    <p>
+        Protects against stolen disks or database backups.
+    </p>
+</section>
+
+<section>
+    <h2>Defense In Depth</h2>
+
+    <p>
+        Modern systems use multiple security layers.
+    </p>
+
+    <pre><code>
+User
+    ↓
+HTTPS
+    ↓
+Firewall
+    ↓
+WAF
+    ↓
+Nginx
+    ↓
+Authentication
+    ↓
+Authorization
+    ↓
+Application
+    ↓
+Database Encryption
+    </code></pre>
+
+    <p>
+        If one layer fails, another layer still provides protection.
+    </p>
+</section>
+
+<section>
+    <h2>OWASP Top 10</h2>
+
+    <p>
+        OWASP Top 10 is a list of the most important web application security risks.
+    </p>
+
+    <ul>
+        <li>Broken Access Control</li>
+        <li>Cryptographic Failures</li>
+        <li>Injection</li>
+        <li>Insecure Design</li>
+        <li>Security Misconfiguration</li>
+        <li>Vulnerable Components</li>
+        <li>Authentication Failures</li>
+        <li>Software Integrity Failures</li>
+        <li>Logging Failures</li>
+        <li>Server Side Request Forgery (SSRF)</li>
+    </ul>
+</section>
+<section>
+    <h2>State Management in HTTP</h2>
+
+    <p>
+        HTTP is a stateless protocol.
+    </p>
+
+    <p>
+        The server does not automatically remember previous requests.
+    </p>
+
+    <pre><code>
+Request 1
+    ↓
+Response
+
+Request 2
+    ↓
+Server Does Not Automatically Remember Request 1
+    </code></pre>
+
+    <p>
+        Cookies, Sessions, and JWT are used to maintain user identity across requests.
+    </p>
+</section>
+
+<section>
+    <h2>Authentication vs Authorization</h2>
+
+    <h3>Authentication</h3>
+
+    <p>
+        Authentication answers:
+    </p>
+
+    <pre><code>
+Who are you?
+    </code></pre>
+
+    <p>
+        Example:
+    </p>
+
+    <pre><code>
+Username : aathi
+Password : ********
+    </code></pre>
+
+    <h3>Authorization</h3>
+
+    <p>
+        Authorization answers:
+    </p>
+
+    <pre><code>
+What are you allowed to do?
+    </code></pre>
+
+    <pre><code>
+Customer
+    ↓
+View Own Account
+
+Admin
+    ↓
+View All Accounts
+    </code></pre>
+</section>
+
+<section>
+    <h2>What Is a Cookie?</h2>
+
+    <p>
+        A cookie is a small piece of data stored in the user's browser.
+    </p>
+
+    <pre><code>
+Server
+    ↓
+Set-Cookie
+    ↓
+Browser Stores Cookie
+    </code></pre>
+
+    <p>
+        On future requests the browser automatically sends the cookie back to the server.
+    </p>
+</section>
+
+<section>
+    <h2>Cookie Example</h2>
+
+    <pre><code>
+HTTP Response
+
+Set-Cookie:
+sessionid=ABC123
+    </code></pre>
+
+    <p>
+        Browser stores:
+    </p>
+
+    <pre><code>
+sessionid=ABC123
+    </code></pre>
+
+    <p>
+        Future requests:
+    </p>
+
+    <pre><code>
+Cookie:
+sessionid=ABC123
+    </code></pre>
+</section>
+
+<section>
+    <h2>How Login Works Using Cookies</h2>
+
+    <pre><code>
+User Login
+    ↓
+Server Validates Credentials
+    ↓
+Session Created
+    ↓
+Session ID Stored In Cookie
+    ↓
+Browser Saves Cookie
+    ↓
+Future Requests Send Cookie
+    </code></pre>
+
+    <p>
+        The cookie acts as an identifier for the logged-in user.
+    </p>
+</section>
+
+<section>
+    <h2>Cookie Attributes</h2>
+
+    <table>
+        <tr>
+            <th>Attribute</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>Secure</td>
+            <td>Send Only Over HTTPS</td>
+        </tr>
+        <tr>
+            <td>HttpOnly</td>
+            <td>Prevent JavaScript Access</td>
+        </tr>
+        <tr>
+            <td>SameSite</td>
+            <td>Protect Against CSRF</td>
+        </tr>
+        <tr>
+            <td>Expires</td>
+            <td>Cookie Expiration Date</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>What Is a Session?</h2>
+
+    <p>
+        A session is server-side storage used to remember users.
+    </p>
+
+    <pre><code>
+User
+    ↓
+Cookie Contains Session ID
+    ↓
+Server Session Store
+    ↓
+User Information
+    </code></pre>
+</section>
+
+<section>
+    <h2>Session Example</h2>
+
+    <pre><code>
+Session ID:
+ABC123
+
+Server Session Store
+
+ABC123
+    ↓
+User ID : 101
+Role : Customer
+Login Time : 10:00 AM
+    </code></pre>
+
+    <p>
+        The browser stores only the Session ID.
+    </p>
+
+    <p>
+        Actual user information remains on the server.
+    </p>
+</section>
+
+<section>
+    <h2>Session Login Flow</h2>
+
+    <pre><code>
+Login Request
+    ↓
+Validate Username And Password
+    ↓
+Create Session
+    ↓
+Generate Session ID
+    ↓
+Store Session In Server
+    ↓
+Return Session ID Cookie
+    ↓
+Browser Stores Cookie
+    </code></pre>
+</section>
+
+<section>
+    <h2>Session Logout Flow</h2>
+
+    <pre><code>
+Logout Request
+    ↓
+Delete Session
+    ↓
+Remove Cookie
+    ↓
+User Logged Out
+    </code></pre>
+</section>
+
+<section>
+    <h2>Advantages of Sessions</h2>
+
+    <ul>
+        <li>User data remains on server.</li>
+        <li>Easy logout.</li>
+        <li>Easy session invalidation.</li>
+        <li>Widely used in banking systems.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Disadvantages of Sessions</h2>
+
+    <ul>
+        <li>Consumes server memory.</li>
+        <li>Difficult to scale across many servers.</li>
+        <li>Requires shared session storage in clustered environments.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>What Is JWT?</h2>
+
+    <p>
+        JWT stands for JSON Web Token.
+    </p>
+
+    <p>
+        JWT is a self-contained authentication token.
+    </p>
+</section>
+
+<section>
+    <h2>JWT Structure</h2>
+
+    <pre><code>
+Header.Payload.Signature
+    </code></pre>
+
+    <pre><code>
+eyJhbGciOi...
+
+eyJ1c2VySWQiOjEwMS...
+
+SflKxwRJSMe...
+    </code></pre>
+</section>
+
+<section>
+    <h2>JWT Login Flow</h2>
+
+    <pre><code>
+Login Request
+    ↓
+Validate Credentials
+    ↓
+Generate JWT
+    ↓
+Return JWT
+    ↓
+Client Stores JWT
+    ↓
+Future Requests Send JWT
+    </code></pre>
+</section>
+
+<section>
+    <h2>JWT Example</h2>
+
+    <pre><code>
+{
+    "user_id":101,
+    "role":"customer",
+    "exp":1750000000
+}
+    </code></pre>
+
+    <p>
+        Payload information is digitally signed by the server.
+    </p>
+</section>
+
+<section>
+    <h2>JWT Authorization Header</h2>
+
+    <pre><code>
+Authorization:
+Bearer eyJhbGciOi...
+    </code></pre>
+
+    <p>
+        APIs commonly use the Authorization header to send JWT tokens.
+    </p>
+</section>
+
+<section>
+    <h2>Session vs JWT</h2>
+
+    <table>
+        <tr>
+            <th>Session</th>
+            <th>JWT</th>
+        </tr>
+        <tr>
+            <td>Data Stored On Server</td>
+            <td>Data Stored In Token</td>
+        </tr>
+        <tr>
+            <td>Requires Session Store</td>
+            <td>Stateless</td>
+        </tr>
+        <tr>
+            <td>Easy Logout</td>
+            <td>More Difficult Logout</td>
+        </tr>
+        <tr>
+            <td>Traditional Web Apps</td>
+            <td>Modern APIs</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Multi-Factor Authentication (MFA)</h2>
+
+    <p>
+        MFA requires more than one authentication factor.
+    </p>
+
+    <pre><code>
+Password
+    +
+OTP
+
+OR
+
+Password
+    +
+Authenticator App
+    </code></pre>
+
+    <p>
+        Even if a password is stolen, the attacker still needs the second factor.
+    </p>
+</section>
+
+<section>
+    <h2>Role Based Access Control (RBAC)</h2>
+
+    <pre><code>
+Admin
+    ↓
+Create User
+Delete User
+View Reports
+
+Customer
+    ↓
+View Own Account
+
+Operator
+    ↓
+Update Customer Data
+    </code></pre>
+
+    <p>
+        Permissions are assigned based on user roles.
+    </p>
+</section>
+
+<section>
+    <h2>Authentication Security Best Practices</h2>
+
+    <ul>
+        <li>Always use HTTPS.</li>
+        <li>Use Secure and HttpOnly cookies.</li>
+        <li>Store passwords using bcrypt or Argon2.</li>
+        <li>Enable MFA.</li>
+        <li>Implement account lockout policies.</li>
+        <li>Use short session expiration times.</li>
+        <li>Rotate JWT secrets regularly.</li>
+        <li>Apply role-based authorization.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Complete Login Architecture</h2>
+
+    <pre><code>
+User
+    ↓
+HTTPS Request
+    ↓
+Nginx
+    ↓
+Application
+    ↓
+Authentication
+    ↓
+Session / JWT
+    ↓
+Database
+    </code></pre>
+
+    <p>
+        Authentication verifies identity, authorization verifies permissions, and sessions or JWT maintain user state.
+    </p>
+</section>
+<section>
+    <h2>REST API (Representational State Transfer)</h2>
+
+    <p>
+        REST API is a set of rules that allows applications to communicate over HTTP.
+    </p>
+
+    <p>
+        REST APIs are used by:
+    </p>
+
+    <ul>
+        <li>Web Applications</li>
+        <li>Mobile Applications</li>
+        <li>Banking Systems</li>
+        <li>Microservices</li>
+        <li>Third-Party Integrations</li>
+    </ul>
+
+    <pre><code>
+Mobile App
+    ↓
+REST API
+    ↓
+Backend Application
+    ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why REST API Exists</h2>
+
+    <p>
+        Different applications need a standard way to exchange data.
+    </p>
+
+    <pre><code>
+Android App
+    ↓
+REST API
+    ↓
+Banking Server
+
+Website
+    ↓
+REST API
+    ↓
+Banking Server
+    </code></pre>
+
+    <p>
+        Both applications can use the same backend service.
+    </p>
+</section>
+
+<section>
+    <h2>REST Architecture</h2>
+
+    <pre><code>
+Client
+    ↓
+HTTP Request
+    ↓
+REST API
+    ↓
+Business Logic
+    ↓
+Database
+
+Database
+    ↓
+Business Logic
+    ↓
+REST API
+    ↓
+HTTP Response
+    ↓
+Client
+    </code></pre>
+</section>
+
+<section>
+    <h2>What Is a Resource?</h2>
+
+    <p>
+        A resource is an object managed by the API.
+    </p>
+
+    <p>
+        Examples:
+    </p>
+
+    <ul>
+        <li>Customer</li>
+        <li>Account</li>
+        <li>Card</li>
+        <li>Transaction</li>
+        <li>User</li>
+    </ul>
+
+    <pre><code>
+Customer
+Account
+Card
+Transaction
+    </code></pre>
+</section>
+
+<section>
+    <h2>Resource Naming Rules</h2>
+
+    <p>
+        Resources should use nouns, not verbs.
+    </p>
+
+    <table>
+        <tr>
+            <th>Bad</th>
+            <th>Good</th>
+        </tr>
+        <tr>
+            <td>/getCustomer</td>
+            <td>/customers</td>
+        </tr>
+        <tr>
+            <td>/createAccount</td>
+            <td>/accounts</td>
+        </tr>
+        <tr>
+            <td>/deleteCard</td>
+            <td>/cards</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>GET Request</h2>
+
+    <p>
+        GET retrieves data.
+    </p>
+
+    <pre><code>
+GET /customers
+    </code></pre>
+
+    <p>
+        Fetch all customers.
+    </p>
+
+    <pre><code>
+GET /customers/101
+    </code></pre>
+
+    <p>
+        Fetch customer 101.
+    </p>
+</section>
+
+<section>
+    <h2>POST Request</h2>
+
+    <p>
+        POST creates new data.
+    </p>
+
+    <pre><code>
+POST /customers
+    </code></pre>
+
+    <pre><code>
+{
+    "name":"Aathi",
+    "city":"Chennai"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>PUT Request</h2>
+
+    <p>
+        PUT replaces the complete resource.
+    </p>
+
+    <pre><code>
+PUT /customers/101
+    </code></pre>
+
+    <pre><code>
+{
+    "name":"Aathi",
+    "city":"Madurai"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>PATCH Request</h2>
+
+    <p>
+        PATCH updates only specific fields.
+    </p>
+
+    <pre><code>
+PATCH /customers/101
+    </code></pre>
+
+    <pre><code>
+{
+    "city":"Madurai"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>DELETE Request</h2>
+
+    <p>
+        DELETE removes a resource.
+    </p>
+
+    <pre><code>
+DELETE /customers/101
+    </code></pre>
+</section>
+
+<section>
+    <h2>CRUD Operations</h2>
+
+    <table>
+        <tr>
+            <th>Operation</th>
+            <th>HTTP Method</th>
+        </tr>
+        <tr>
+            <td>Create</td>
+            <td>POST</td>
+        </tr>
+        <tr>
+            <td>Read</td>
+            <td>GET</td>
+        </tr>
+        <tr>
+            <td>Update</td>
+            <td>PUT/PATCH</td>
+        </tr>
+        <tr>
+            <td>Delete</td>
+            <td>DELETE</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Example Banking API</h2>
+
+    <table>
+        <tr>
+            <th>Action</th>
+            <th>Endpoint</th>
+        </tr>
+        <tr>
+            <td>Get Accounts</td>
+            <td>/accounts</td>
+        </tr>
+        <tr>
+            <td>Get Account</td>
+            <td>/accounts/1001</td>
+        </tr>
+        <tr>
+            <td>Create Account</td>
+            <td>/accounts</td>
+        </tr>
+        <tr>
+            <td>Update Account</td>
+            <td>/accounts/1001</td>
+        </tr>
+        <tr>
+            <td>Delete Account</td>
+            <td>/accounts/1001</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Path Parameters</h2>
+
+    <p>
+        Path parameters identify specific resources.
+    </p>
+
+    <pre><code>
+GET /customers/101
+GET /accounts/5001
+GET /cards/9001
+    </code></pre>
+</section>
+
+<section>
+    <h2>Query Parameters</h2>
+
+    <p>
+        Query parameters filter or customize results.
+    </p>
+
+    <pre><code>
+GET /customers?city=Chennai
+
+GET /accounts?status=ACTIVE
+
+GET /transactions?date=2026-06-04
+    </code></pre>
+</section>
+
+<section>
+    <h2>Pagination</h2>
+
+    <p>
+        Pagination prevents huge result sets.
+    </p>
+
+    <pre><code>
+GET /customers?page=1&limit=50
+    </code></pre>
+
+    <p>
+        Returns only 50 records per request.
+    </p>
+</section>
+
+<section>
+    <h2>Sorting</h2>
+
+    <pre><code>
+GET /customers?sort=name
+
+GET /accounts?sort=created_date
+    </code></pre>
+</section>
+
+<section>
+    <h2>Filtering</h2>
+
+    <pre><code>
+GET /accounts?status=ACTIVE
+
+GET /cards?card_status=BLOCKED
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST API Response Example</h2>
+
+    <pre><code>
+{
+    "customer_id":101,
+    "name":"Aathi",
+    "city":"Chennai"
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>REST API Error Response</h2>
+
+    <pre><code>
+{
+    "error":"Customer Not Found"
+}
+    </code></pre>
+
+    <p>
+        Usually returned with HTTP 404 status.
+    </p>
+</section>
+
+<section>
+    <h2>REST API Best Practices</h2>
+
+    <ul>
+        <li>Use nouns instead of verbs.</li>
+        <li>Use proper HTTP methods.</li>
+        <li>Use meaningful status codes.</li>
+        <li>Return JSON responses.</li>
+        <li>Validate all inputs.</li>
+        <li>Use HTTPS.</li>
+        <li>Version APIs.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>API Versioning</h2>
+
+    <pre><code>
+/api/v1/customers
+
+/api/v2/customers
+    </code></pre>
+
+    <p>
+        Allows changes without breaking older applications.
+    </p>
+</section>
+
+<section>
+    <h2>Complete REST API Flow</h2>
+
+    <pre><code>
+Mobile App
+    ↓
+HTTPS Request
+    ↓
+Nginx
+    ↓
+Application
+    ↓
+Database
+
+Database
+    ↓
+Application
+    ↓
+JSON Response
+    ↓
+Mobile App
+    </code></pre>
+</section>
+<section>
+    <h2>API Authentication</h2>
+
+    <p>
+        Authentication verifies the identity of the caller before allowing access to the API.
+    </p>
+
+    <pre><code>
+Client
+    ↓
+Authentication
+    ↓
+API
+    </code></pre>
+
+    <p>
+        Common authentication methods:
+    </p>
+
+    <ul>
+        <li>API Key</li>
+        <li>JWT Token</li>
+        <li>OAuth 2.0</li>
+        <li>Session Based Authentication</li>
+    </ul>
+</section>
+
+<section>
+    <h2>API Key Authentication</h2>
+
+    <p>
+        A unique key is assigned to each client.
+    </p>
+
+    <pre><code>
+GET /accounts
+
+x-api-key: ABC123XYZ
+    </code></pre>
+
+    <p>
+        Commonly used for:
+    </p>
+
+    <ul>
+        <li>Internal APIs</li>
+        <li>Third Party Integrations</li>
+        <li>Developer Platforms</li>
+    </ul>
+</section>
+
+<section>
+    <h2>JWT Authentication</h2>
+
+    <pre><code>
+User Login
+    ↓
+JWT Generated
+    ↓
+Client Stores JWT
+    ↓
+Future Requests Include JWT
+    </code></pre>
+
+    <pre><code>
+Authorization:
+Bearer eyJhbGciOi...
+    </code></pre>
+
+    <p>
+        JWT is widely used in modern APIs and mobile applications.
+    </p>
+</section>
+
+<section>
+    <h2>OAuth 2.0</h2>
+
+    <p>
+        OAuth allows users to grant limited access to applications without sharing passwords.
+    </p>
+
+    <pre><code>
+User
+    ↓
+Google Login
+    ↓
+Authorization Granted
+    ↓
+Application Receives Token
+    </code></pre>
+
+    <p>
+        Examples:
+    </p>
+
+    <ul>
+        <li>Login With Google</li>
+        <li>Login With GitHub</li>
+        <li>Login With Microsoft</li>
+    </ul>
+</section>
+
+<section>
+    <h2>API Authorization</h2>
+
+    <p>
+        Authorization determines what actions a user can perform.
+    </p>
+
+    <pre><code>
+Customer
+    ↓
+View Own Accounts
+
+Admin
+    ↓
+View All Accounts
+
+Operator
+    ↓
+Update Customer Information
+    </code></pre>
+</section>
+
+<section>
+    <h2>Rate Limiting</h2>
+
+    <p>
+        Limits how many requests a client can send.
+    </p>
+
+    <pre><code>
+100 Requests Per Minute
+    ↓
+Allowed
+
+101st Request
+    ↓
+Rejected
+    </code></pre>
+
+    <p>
+        Prevents:
+    </p>
+
+    <ul>
+        <li>Brute Force Attacks</li>
+        <li>API Abuse</li>
+        <li>Server Overload</li>
+    </ul>
+</section>
+
+<section>
+    <h2>API Versioning Strategies</h2>
+
+    <h3>URL Versioning</h3>
+
+    <pre><code>
+/api/v1/customers
+
+/api/v2/customers
+    </code></pre>
+
+    <h3>Header Versioning</h3>
+
+    <pre><code>
+API-Version: 2
+    </code></pre>
+
+    <p>
+        Versioning prevents breaking existing applications.
+    </p>
+</section>
+
+<section>
+    <h2>Idempotency</h2>
+
+    <p>
+        An idempotent operation produces the same result even if repeated multiple times.
+    </p>
+
+    <pre><code>
+GET /customers/101
+GET /customers/101
+GET /customers/101
+    </code></pre>
+
+    <p>
+        Same response each time.
+    </p>
+
+    <p>
+        Important in payment and banking systems.
+    </p>
+</section>
+
+<section>
+    <h2>Idempotency Key</h2>
+
+    <p>
+        Prevents duplicate processing of transactions.
+    </p>
+
+    <pre><code>
+POST /fund-transfer
+
+Idempotency-Key:
+TXN-123456
+    </code></pre>
+
+    <p>
+        If the request is retried, the same transaction is not processed twice.
+    </p>
+</section>
+
+<section>
+    <h2>Request Validation</h2>
+
+    <p>
+        Every request should be validated before processing.
+    </p>
+
+    <pre><code>
+{
+    "account_no":"12345",
+    "amount":1000
+}
+    </code></pre>
+
+    <p>
+        Checks:
+    </p>
+
+    <ul>
+        <li>Required Fields</li>
+        <li>Data Types</li>
+        <li>Length Validation</li>
+        <li>Business Rules</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Response Standardization</h2>
+
+    <p>
+        APIs should return consistent response structures.
+    </p>
+
+    <pre><code>
+{
+    "status":"SUCCESS",
+    "message":"Account Created",
+    "data":{
+        "account_no":"123456"
+    }
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Error Response Standardization</h2>
+
+    <pre><code>
+{
+    "status":"FAILED",
+    "error_code":"ACC001",
+    "message":"Account Not Found"
+}
+    </code></pre>
+
+    <p>
+        Consistent error formats simplify client development.
+    </p>
+</section>
+
+<section>
+    <h2>API Documentation</h2>
+
+    <p>
+        Documentation describes how to use an API.
+    </p>
+
+    <p>
+        Common tools:
+    </p>
+
+    <ul>
+        <li>Swagger</li>
+        <li>OpenAPI</li>
+        <li>Postman Collections</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Swagger/OpenAPI</h2>
+
+    <p>
+        Swagger generates interactive API documentation.
+    </p>
+
+    <pre><code>
+GET /customers
+
+POST /customers
+
+DELETE /customers/101
+    </code></pre>
+
+    <p>
+        Developers can test APIs directly from the documentation.
+    </p>
+</section>
+
+<section>
+    <h2>Webhooks</h2>
+
+    <p>
+        A webhook allows one system to notify another system automatically.
+    </p>
+
+    <pre><code>
+Payment Success
+    ↓
+Webhook Triggered
+    ↓
+Merchant System Updated
+    </code></pre>
+
+    <p>
+        Unlike APIs, webhooks push information automatically.
+    </p>
+</section>
+
+<section>
+    <h2>API Gateway</h2>
+
+    <p>
+        An API Gateway acts as a central entry point for multiple services.
+    </p>
+
+    <pre><code>
+Client
+    ↓
+API Gateway
+    ↓
+Customer Service
+
+    ↓
+Account Service
+
+    ↓
+Card Service
+    </code></pre>
+
+    <p>
+        Common responsibilities:
+    </p>
+
+    <ul>
+        <li>Authentication</li>
+        <li>Rate Limiting</li>
+        <li>Logging</li>
+        <li>Routing</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Microservices Communication</h2>
+
+    <pre><code>
+Customer Service
+    ↓
+Account Service
+    ↓
+Card Service
+    </code></pre>
+
+    <p>
+        Services communicate using APIs.
+    </p>
+</section>
+
+<section>
+    <h2>Synchronous Communication</h2>
+
+    <pre><code>
+Service A
+    ↓ Request
+Service B
+    ↓ Response
+Service A
+    </code></pre>
+
+    <p>
+        Service A waits for the response.
+    </p>
+</section>
+
+<section>
+    <h2>Asynchronous Communication</h2>
+
+    <pre><code>
+Service A
+    ↓
+Message Queue
+    ↓
+Service B
+    </code></pre>
+
+    <p>
+        Service A does not wait immediately for the response.
+    </p>
+</section>
+
+<section>
+    <h2>Logging</h2>
+
+    <p>
+        APIs should log important events.
+    </p>
+
+    <pre><code>
+Request Received
+
+User Authenticated
+
+Account Created
+
+Transaction Completed
+    </code></pre>
+</section>
+
+<section>
+    <h2>Audit Logging</h2>
+
+    <p>
+        Banking systems require audit trails.
+    </p>
+
+    <pre><code>
+User : admin
+
+Action :
+Account Blocked
+
+Time :
+2026-06-04 10:00:00
+    </code></pre>
+
+    <p>
+        Audit logs help with compliance and investigations.
+    </p>
+</section>
+
+<section>
+    <h2>Banking API Example</h2>
+
+    <pre><code>
+Mobile App
+    ↓
+HTTPS
+    ↓
+API Gateway
+    ↓
+Authentication
+    ↓
+Account Service
+    ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Enterprise API Best Practices</h2>
+
+    <ul>
+        <li>Use HTTPS Everywhere.</li>
+        <li>Validate Every Request.</li>
+        <li>Use Authentication and Authorization.</li>
+        <li>Implement Rate Limiting.</li>
+        <li>Version APIs.</li>
+        <li>Use Consistent Responses.</li>
+        <li>Log Important Events.</li>
+        <li>Implement Audit Logging.</li>
+        <li>Prevent Duplicate Transactions.</li>
+        <li>Document APIs Properly.</li>
+    </ul>
+</section>
+<section>
+    <h2>Database Architecture</h2>
+
+    <p>
+        A database stores and manages application data.
+    </p>
+
+    <pre><code>
+Application
+    ↓
+Database
+    ↓
+Tables
+    ↓
+Rows
+    ↓
+Columns
+    </code></pre>
+
+    <p>
+        Examples:
+    </p>
+
+    <ul>
+        <li>PostgreSQL</li>
+        <li>MySQL</li>
+        <li>Oracle Database</li>
+        <li>SQL Server</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Database Server Architecture</h2>
+
+    <pre><code>
+Users
+    ↓
+Application
+    ↓
+Connection Pool
+    ↓
+PostgreSQL
+    ↓
+Disk Storage
+    </code></pre>
+
+    <p>
+        Most production systems use a connection pool between applications and databases.
+    </p>
+</section>
+
+<section>
+    <h2>Primary Key</h2>
+
+    <p>
+        A Primary Key uniquely identifies a row.
+    </p>
+
+    <pre><code>
+customer_id
+-----------
+101
+102
+103
+    </code></pre>
+
+    <p>
+        No duplicate values are allowed.
+    </p>
+</section>
+
+<section>
+    <h2>Foreign Key</h2>
+
+    <p>
+        A Foreign Key creates relationships between tables.
+    </p>
+
+    <pre><code>
+CUSTOMERS
+
+customer_id
+-----------
+101
+
+ACCOUNTS
+
+account_no
+customer_id
+-----------
+5001     101
+5002     101
+    </code></pre>
+
+    <p>
+        One customer can own multiple accounts.
+    </p>
+</section>
+
+<section>
+    <h2>Database Normalization</h2>
+
+    <p>
+        Normalization reduces duplicate data.
+    </p>
+
+    <p>
+        Instead of:
+    </p>
+
+    <pre><code>
+Account
+Customer Name
+Customer Address
+    </code></pre>
+
+    <p>
+        Store customer information separately.
+    </p>
+
+    <pre><code>
+CUSTOMERS
+    ↓
+ACCOUNTS
+    </code></pre>
+</section>
+
+<section>
+    <h2>Denormalization</h2>
+
+    <p>
+        Sometimes duplicate data is intentionally stored to improve performance.
+    </p>
+
+    <p>
+        Trade-off:
+    </p>
+
+    <ul>
+        <li>More Storage</li>
+        <li>Faster Queries</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Index</h2>
+
+    <p>
+        An index speeds up data retrieval.
+    </p>
+
+    <pre><code>
+CREATE INDEX idx_account_no
+ON accounts(account_no);
+    </code></pre>
+
+    <p>
+        Similar to a book index.
+    </p>
+</section>
+
+<section>
+    <h2>Without Index</h2>
+
+    <pre><code>
+1
+2
+3
+4
+...
+1000000
+    </code></pre>
+
+    <p>
+        Database scans every row.
+    </p>
+
+    <p>
+        This is called a Full Table Scan.
+    </p>
+</section>
+
+<section>
+    <h2>With Index</h2>
+
+    <pre><code>
+Index
+ ↓
+Direct Location
+ ↓
+Row Found
+    </code></pre>
+
+    <p>
+        Much faster than scanning all rows.
+    </p>
+</section>
+
+<section>
+    <h2>When Not To Create Indexes</h2>
+
+    <ul>
+        <li>Very Small Tables</li>
+        <li>Columns Rarely Queried</li>
+        <li>Frequently Updated Columns</li>
+    </ul>
+
+    <p>
+        Too many indexes can slow inserts and updates.
+    </p>
+</section>
+
+<section>
+    <h2>Query Optimization</h2>
+
+    <p>
+        Writing efficient SQL improves performance.
+    </p>
+
+    <p>
+        Avoid:
+    </p>
+
+    <pre><code>
+SELECT *
+FROM customers;
+    </code></pre>
+
+    <p>
+        Prefer:
+    </p>
+
+    <pre><code>
+SELECT customer_id,
+       customer_name
+FROM customers;
+    </code></pre>
+</section>
+
+<section>
+    <h2>Execution Plan</h2>
+
+    <p>
+        PostgreSQL can show how it executes a query.
+    </p>
+
+    <pre><code>
+EXPLAIN ANALYZE
+
+SELECT *
+FROM accounts
+WHERE account_no='5001';
+    </code></pre>
+
+    <p>
+        Used to identify performance problems.
+    </p>
+</section>
+
+<section>
+    <h2>Transaction</h2>
+
+    <p>
+        A transaction is a group of operations executed as a single unit.
+    </p>
+
+    <pre><code>
+BEGIN;
+
+UPDATE accounts
+SET balance=balance-100;
+
+UPDATE accounts
+SET balance=balance+100;
+
+COMMIT;
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Transactions Matter</h2>
+
+    <p>
+        Banking systems cannot allow partial updates.
+    </p>
+
+    <pre><code>
+Debit Account A
+Credit Account B
+    </code></pre>
+
+    <p>
+        Either both succeed or both fail.
+    </p>
+</section>
+
+<section>
+    <h2>ACID Properties</h2>
+
+    <table>
+        <tr>
+            <th>Property</th>
+            <th>Meaning</th>
+        </tr>
+        <tr>
+            <td>Atomicity</td>
+            <td>All or Nothing</td>
+        </tr>
+        <tr>
+            <td>Consistency</td>
+            <td>Valid State Maintained</td>
+        </tr>
+        <tr>
+            <td>Isolation</td>
+            <td>Transactions Don't Interfere</td>
+        </tr>
+        <tr>
+            <td>Durability</td>
+            <td>Committed Data Survives Failures</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Locking</h2>
+
+    <p>
+        Locks prevent multiple transactions from modifying the same data simultaneously.
+    </p>
+
+    <pre><code>
+Transaction A
+    ↓
+Lock Row
+
+Transaction B
+    ↓
+Wait
+    </code></pre>
+</section>
+
+<section>
+    <h2>Deadlock</h2>
+
+    <pre><code>
+Transaction A
+Waiting For B
+
+Transaction B
+Waiting For A
+    </code></pre>
+
+    <p>
+        PostgreSQL detects deadlocks and cancels one transaction.
+    </p>
+</section>
+
+<section>
+    <h2>Isolation Levels</h2>
+
+    <table>
+        <tr>
+            <th>Level</th>
+            <th>Protection</th>
+        </tr>
+        <tr>
+            <td>Read Uncommitted</td>
+            <td>Lowest</td>
+        </tr>
+        <tr>
+            <td>Read Committed</td>
+            <td>Default PostgreSQL</td>
+        </tr>
+        <tr>
+            <td>Repeatable Read</td>
+            <td>More Consistent</td>
+        </tr>
+        <tr>
+            <td>Serializable</td>
+            <td>Highest Safety</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Connection Pooling</h2>
+
+    <p>
+        Opening database connections is expensive.
+    </p>
+
+    <pre><code>
+Application
+    ↓
+Connection Pool
+    ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Existing connections are reused.
+    </p>
+</section>
+
+<section>
+    <h2>PgBouncer</h2>
+
+    <p>
+        PgBouncer is a PostgreSQL connection pool manager.
+    </p>
+
+    <pre><code>
+Application
+    ↓
+PgBouncer
+    ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Similar to how Nginx manages HTTP traffic.
+    </p>
+</section>
+
+<section>
+    <h2>Replication</h2>
+
+    <p>
+        Replication copies data from one database server to another.
+    </p>
+
+    <pre><code>
+Primary Database
+    ↓
+Replica Database
+    </code></pre>
+
+    <p>
+        Used for:
+    </p>
+
+    <ul>
+        <li>High Availability</li>
+        <li>Backup</li>
+        <li>Read Scaling</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Partitioning</h2>
+
+    <p>
+        Large tables can be split into smaller pieces.
+    </p>
+
+    <pre><code>
+Transactions
+
+2024 Partition
+2025 Partition
+2026 Partition
+    </code></pre>
+
+    <p>
+        Improves performance for huge datasets.
+    </p>
+</section>
+
+<section>
+    <h2>Sharding</h2>
+
+    <p>
+        Data is distributed across multiple database servers.
+    </p>
+
+    <pre><code>
+Server 1
+Customers 1-100000
+
+Server 2
+Customers 100001-200000
+    </code></pre>
+
+    <p>
+        Used when a single database server becomes insufficient.
+    </p>
+</section>
+
+<section>
+    <h2>Database Backup Strategy</h2>
+
+    <pre><code>
+Production Database
+    ↓
+Daily Backup
+    ↓
+Backup Storage
+    </code></pre>
+
+    <p>
+        Backups are critical for disaster recovery.
+    </p>
+</section>
+
+<section>
+    <h2>Typical Banking Architecture</h2>
+
+    <pre><code>
+Mobile App
+    ↓
+API
+    ↓
+Application
+    ↓
+PgBouncer
+    ↓
+Primary PostgreSQL
+    ↓
+Replica PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Key Concepts To Remember</h2>
+
+    <ul>
+        <li>Indexes improve read performance.</li>
+        <li>Transactions ensure data integrity.</li>
+        <li>ACID is the foundation of relational databases.</li>
+        <li>Locks prevent concurrent modification issues.</li>
+        <li>PgBouncer manages database connections.</li>
+        <li>Replication improves availability.</li>
+        <li>Partitioning improves performance.</li>
+        <li>Sharding improves scalability.</li>
+    </ul>
+</section>
+<section>
+    <h2>Linux Administration</h2>
+
+    <p>
+        Linux Administration is the process of managing Linux servers,
+        applications, users, files, security and services.
+    </p>
+
+    <pre><code>
+Application
+    ↓
+Linux Operating System
+    ↓
+CPU
+RAM
+Disk
+Network
+    </code></pre>
+
+    <p>
+        Linux manages the hardware resources and applications running on the server.
+    </p>
+</section>
+
+<section>
+    <h2>Linux Directory Structure</h2>
+
+    <pre><code>
+/
+
+├── bin
+├── boot
+├── dev
+├── etc
+├── home
+├── lib
+├── opt
+├── proc
+├── root
+├── run
+├── srv
+├── tmp
+├── usr
+└── var
+    </code></pre>
+
+    <p>
+        Everything in Linux starts from the root directory (/).
+    </p>
+</section>
+
+<section>
+    <h2>Important Directories</h2>
+
+    <table>
+        <tr>
+            <th>Directory</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>/etc</td>
+            <td>Configuration Files</td>
+        </tr>
+        <tr>
+            <td>/home</td>
+            <td>User Home Directories</td>
+        </tr>
+        <tr>
+            <td>/var/log</td>
+            <td>Application Logs</td>
+        </tr>
+        <tr>
+            <td>/tmp</td>
+            <td>Temporary Files</td>
+        </tr>
+        <tr>
+            <td>/opt</td>
+            <td>Optional Software</td>
+        </tr>
+        <tr>
+            <td>/usr</td>
+            <td>Installed Programs</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Current Directory Commands</h2>
+
+    <pre><code>
+pwd
+    </code></pre>
+
+    <p>
+        Displays the current working directory.
+    </p>
+
+    <pre><code>
+/home/aathi
+    </code></pre>
+</section>
+
+<section>
+    <h2>Listing Files</h2>
+
+    <pre><code>
+ls
+    </code></pre>
+
+    <p>
+        List files and directories.
+    </p>
+
+    <pre><code>
+ls -l
+    </code></pre>
+
+    <p>
+        Detailed file information.
+    </p>
+
+    <pre><code>
+ls -la
+    </code></pre>
+
+    <p>
+        Includes hidden files.
+    </p>
+</section>
+
+<section>
+    <h2>Changing Directories</h2>
+
+    <pre><code>
+cd /var/log
+    </code></pre>
+
+    <pre><code>
+cd ..
+    </code></pre>
+
+    <p>
+        Move one directory up.
+    </p>
+
+    <pre><code>
+cd ~
+    </code></pre>
+
+    <p>
+        Go to home directory.
+    </p>
+</section>
+
+<section>
+    <h2>Creating Files and Directories</h2>
+
+    <pre><code>
+mkdir project
+    </code></pre>
+
+    <p>
+        Create directory.
+    </p>
+
+    <pre><code>
+touch app.log
+    </code></pre>
+
+    <p>
+        Create file.
+    </p>
+</section>
+
+<section>
+    <h2>Copying Files</h2>
+
+    <pre><code>
+cp file1.txt file2.txt
+    </code></pre>
+
+    <pre><code>
+cp -r source target
+    </code></pre>
+
+    <p>
+        Copy directories recursively.
+    </p>
+</section>
+
+<section>
+    <h2>Moving Files</h2>
+
+    <pre><code>
+mv file.txt backup.txt
+    </code></pre>
+
+    <p>
+        Rename file.
+    </p>
+
+    <pre><code>
+mv file.txt /tmp
+    </code></pre>
+
+    <p>
+        Move file.
+    </p>
+</section>
+
+<section>
+    <h2>Deleting Files</h2>
+
+    <pre><code>
+rm file.txt
+    </code></pre>
+
+    <pre><code>
+rm -r folder
+    </code></pre>
+
+    <p>
+        Delete directory recursively.
+    </p>
+</section>
+
+<section>
+    <h2>Viewing File Contents</h2>
+
+    <pre><code>
+cat app.log
+    </code></pre>
+
+    <pre><code>
+less app.log
+    </code></pre>
+
+    <pre><code>
+tail -f app.log
+    </code></pre>
+
+    <p>
+        Continuously monitor logs.
+    </p>
+</section>
+
+<section>
+    <h2>Searching Files</h2>
+
+    <pre><code>
+find /home -name "*.txt"
+    </code></pre>
+
+    <pre><code>
+find / -name nginx.conf
+    </code></pre>
+</section>
+
+<section>
+    <h2>Searching Text</h2>
+
+    <pre><code>
+grep ERROR app.log
+    </code></pre>
+
+    <pre><code>
+grep -i failed app.log
+    </code></pre>
+
+    <p>
+        Case-insensitive search.
+    </p>
+</section>
+
+<section>
+    <h2>Processes</h2>
+
+    <p>
+        Every running application is a process.
+    </p>
+
+    <pre><code>
+Flask
+PostgreSQL
+Nginx
+Apache
+    </code></pre>
+</section>
+
+<section>
+    <h2>Viewing Processes</h2>
+
+    <pre><code>
+ps -ef
+    </code></pre>
+
+    <pre><code>
+top
+    </code></pre>
+
+    <pre><code>
+htop
+    </code></pre>
+
+    <p>
+        Real-time process monitoring.
+    </p>
+</section>
+
+<section>
+    <h2>Killing Processes</h2>
+
+    <pre><code>
+kill 1234
+    </code></pre>
+
+    <pre><code>
+kill -9 1234
+    </code></pre>
+
+    <p>
+        Force terminate process.
+    </p>
+</section>
+
+<section>
+    <h2>Services</h2>
+
+    <p>
+        Services are background applications.
+    </p>
+
+    <pre><code>
+Nginx
+PostgreSQL
+Apache
+Redis
+    </code></pre>
+</section>
+
+<section>
+    <h2>Managing Services</h2>
+
+    <pre><code>
+systemctl start nginx
+    </code></pre>
+
+    <pre><code>
+systemctl stop nginx
+    </code></pre>
+
+    <pre><code>
+systemctl restart nginx
+    </code></pre>
+
+    <pre><code>
+systemctl status nginx
+    </code></pre>
+</section>
+
+<section>
+    <h2>System Logs</h2>
+
+    <pre><code>
+journalctl
+    </code></pre>
+
+    <pre><code>
+journalctl -u nginx
+    </code></pre>
+
+    <p>
+        View Nginx logs.
+    </p>
+</section>
+
+<section>
+    <h2>Disk Usage</h2>
+
+    <pre><code>
+df -h
+    </code></pre>
+
+    <p>
+        View disk space.
+    </p>
+
+    <pre><code>
+du -sh *
+    </code></pre>
+
+    <p>
+        View folder size.
+    </p>
+</section>
+
+<section>
+    <h2>Memory Usage</h2>
+
+    <pre><code>
+free -h
+    </code></pre>
+
+    <p>
+        View RAM usage.
+    </p>
+</section>
+
+<section>
+    <h2>Network Commands</h2>
+
+    <pre><code>
+ip addr
+    </code></pre>
+
+    <p>
+        View IP addresses.
+    </p>
+
+    <pre><code>
+ping google.com
+    </code></pre>
+
+    <pre><code>
+netstat -tulpn
+    </code></pre>
+
+    <p>
+        View listening ports.
+    </p>
+</section>
+
+<section>
+    <h2>File Permissions</h2>
+
+    <pre><code>
+-rwxr-xr-x
+    </code></pre>
+
+    <table>
+        <tr>
+            <th>Permission</th>
+            <th>Meaning</th>
+        </tr>
+        <tr>
+            <td>r</td>
+            <td>Read</td>
+        </tr>
+        <tr>
+            <td>w</td>
+            <td>Write</td>
+        </tr>
+        <tr>
+            <td>x</td>
+            <td>Execute</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Changing Permissions</h2>
+
+    <pre><code>
+chmod 755 script.sh
+    </code></pre>
+
+    <pre><code>
+chmod 644 file.txt
+    </code></pre>
+</section>
+
+<section>
+    <h2>Changing Ownership</h2>
+
+    <pre><code>
+chown user:user file.txt
+    </code></pre>
+
+    <pre><code>
+chown -R nginx:nginx /var/www
+    </code></pre>
+</section>
+
+<section>
+    <h2>SSH (Secure Shell)</h2>
+
+    <p>
+        SSH allows remote server access.
+    </p>
+
+    <pre><code>
+ssh user@192.168.1.10
+    </code></pre>
+
+    <pre><code>
+ssh ubuntu@server-ip
+    </code></pre>
+</section>
+
+<section>
+    <h2>Crontab</h2>
+
+    <p>
+        Used to schedule jobs.
+    </p>
+
+    <pre><code>
+crontab -e
+    </code></pre>
+
+    <pre><code>
+0 2 * * * backup.sh
+    </code></pre>
+
+    <p>
+        Runs backup.sh every day at 2 AM.
+    </p>
+</section>
+
+<section>
+    <h2>Typical Production Server</h2>
+
+    <pre><code>
+Linux
+    ↓
+Nginx
+    ↓
+Gunicorn
+    ↓
+Flask
+    ↓
+PgBouncer
+    ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Important Linux Concepts</h2>
+
+    <ul>
+        <li>Everything is a file.</li>
+        <li>Processes run applications.</li>
+        <li>Services run in the background.</li>
+        <li>Logs help diagnose issues.</li>
+        <li>Permissions control access.</li>
+        <li>SSH enables remote administration.</li>
+        <li>Cron automates repetitive tasks.</li>
+    </ul>
+</section>
+<section>
+    <h2>Docker</h2>
+
+    <p>
+        Docker is a containerization platform used to package applications
+        along with their dependencies into portable containers.
+    </p>
+
+    <pre><code>
+Application
++
+Libraries
++
+Dependencies
++
+Configuration
+=
+Docker Container
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Docker Exists</h2>
+
+    <pre><code>
+Developer Laptop
+    ↓
+Works Perfectly
+
+Production Server
+    ↓
+Fails
+    </code></pre>
+
+    <p>
+        Docker ensures the same environment runs everywhere.
+    </p>
+
+    <pre><code>
+Laptop
+    ↓
+Docker Image
+    ↓
+Server
+    ↓
+Same Result
+    </code></pre>
+</section>
+
+<section>
+    <h2>Traditional Deployment</h2>
+
+    <pre><code>
+Linux
+    ↓
+Install Python
+    ↓
+Install Libraries
+    ↓
+Configure Environment
+    ↓
+Run Application
+    </code></pre>
+
+    <p>
+        Every server must be configured manually.
+    </p>
+</section>
+
+<section>
+    <h2>Docker Deployment</h2>
+
+    <pre><code>
+Docker Image
+    ↓
+Docker Container
+    ↓
+Application Runs
+    </code></pre>
+
+    <p>
+        No need to manually install dependencies repeatedly.
+    </p>
+</section>
+
+<section>
+    <h2>What Is A Container?</h2>
+
+    <p>
+        A container is a lightweight isolated environment.
+    </p>
+
+    <pre><code>
+Container
+ ├── Application
+ ├── Libraries
+ ├── Runtime
+ └── Configuration
+    </code></pre>
+
+    <p>
+        Multiple containers can run on the same server.
+    </p>
+</section>
+
+<section>
+    <h2>Virtual Machine vs Container</h2>
+
+    <pre><code>
+Virtual Machine
+
+Hardware
+    ↓
+Hypervisor
+    ↓
+Guest OS
+    ↓
+Application
+    </code></pre>
+
+    <pre><code>
+Container
+
+Hardware
+    ↓
+Linux
+    ↓
+Docker
+    ↓
+Container
+    ↓
+Application
+    </code></pre>
+
+    <p>
+        Containers are lighter and start faster.
+    </p>
+</section>
+
+<section>
+    <h2>Docker Components</h2>
+
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>Docker Engine</td>
+            <td>Runs Containers</td>
+        </tr>
+        <tr>
+            <td>Docker Image</td>
+            <td>Application Template</td>
+        </tr>
+        <tr>
+            <td>Docker Container</td>
+            <td>Running Instance</td>
+        </tr>
+        <tr>
+            <td>Docker Hub</td>
+            <td>Image Repository</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Docker Image</h2>
+
+    <p>
+        An image is a blueprint used to create containers.
+    </p>
+
+    <pre><code>
+Python Image
+    ↓
+Create Container
+    </code></pre>
+
+    <p>
+        Similar to a class creating objects.
+    </p>
+</section>
+
+<section>
+    <h2>Docker Container</h2>
+
+    <p>
+        A running instance of an image.
+    </p>
+
+    <pre><code>
+Docker Image
+    ↓
+Container 1
+
+Docker Image
+    ↓
+Container 2
+    </code></pre>
+</section>
+
+<section>
+    <h2>Install Docker</h2>
+
+    <pre><code>
+sudo apt update
+
+sudo apt install docker.io
+    </code></pre>
+
+    <pre><code>
+docker --version
+    </code></pre>
+</section>
+
+<section>
+    <h2>Check Docker Status</h2>
+
+    <pre><code>
+sudo systemctl status docker
+    </code></pre>
+</section>
+
+<section>
+    <h2>Start Docker</h2>
+
+    <pre><code>
+sudo systemctl start docker
+    </code></pre>
+</section>
+
+<section>
+    <h2>List Running Containers</h2>
+
+    <pre><code>
+docker ps
+    </code></pre>
+</section>
+
+<section>
+    <h2>List All Containers</h2>
+
+    <pre><code>
+docker ps -a
+    </code></pre>
+</section>
+
+<section>
+    <h2>Download Image</h2>
+
+    <pre><code>
+docker pull nginx
+    </code></pre>
+
+    <p>
+        Downloads image from Docker Hub.
+    </p>
+</section>
+
+<section>
+    <h2>View Images</h2>
+
+    <pre><code>
+docker images
+    </code></pre>
+</section>
+
+<section>
+    <h2>Run Container</h2>
+
+    <pre><code>
+docker run nginx
+    </code></pre>
+
+    <p>
+        Creates and starts a container.
+    </p>
+</section>
+
+<section>
+    <h2>Run Container In Background</h2>
+
+    <pre><code>
+docker run -d nginx
+    </code></pre>
+
+    <p>
+        -d means detached mode.
+    </p>
+</section>
+
+<section>
+    <h2>Port Mapping</h2>
+
+    <pre><code>
+docker run -d -p 8080:80 nginx
+    </code></pre>
+
+    <pre><code>
+Browser
+    ↓
+localhost:8080
+    ↓
+Container Port 80
+    </code></pre>
+</section>
+
+<section>
+    <h2>Container Logs</h2>
+
+    <pre><code>
+docker logs container_id
+    </code></pre>
+</section>
+
+<section>
+    <h2>Enter Container</h2>
+
+    <pre><code>
+docker exec -it container_id bash
+    </code></pre>
+
+    <p>
+        Opens a shell inside the container.
+    </p>
+</section>
+
+<section>
+    <h2>Stop Container</h2>
+
+    <pre><code>
+docker stop container_id
+    </code></pre>
+</section>
+
+<section>
+    <h2>Remove Container</h2>
+
+    <pre><code>
+docker rm container_id
+    </code></pre>
+</section>
+
+<section>
+    <h2>Remove Image</h2>
+
+    <pre><code>
+docker rmi image_id
+    </code></pre>
+</section>
+
+<section>
+    <h2>Dockerfile</h2>
+
+    <p>
+        Dockerfile defines how an image is built.
+    </p>
+
+    <pre><code>
+FROM python:3.12
+
+WORKDIR /app
+
+COPY . .
+
+RUN pip install -r requirements.txt
+
+CMD ["python","app.py"]
+    </code></pre>
+</section>
+
+<section>
+    <h2>Build Docker Image</h2>
+
+    <pre><code>
+docker build -t myapp .
+    </code></pre>
+</section>
+
+<section>
+    <h2>Run Custom Image</h2>
+
+    <pre><code>
+docker run -d -p 5000:5000 myapp
+    </code></pre>
+</section>
+
+<section>
+    <h2>Docker Volumes</h2>
+
+    <p>
+        Containers are temporary.
+    </p>
+
+    <p>
+        Volumes persist data.
+    </p>
+
+    <pre><code>
+docker volume create pgdata
+    </code></pre>
+</section>
+
+<section>
+    <h2>Volume Example</h2>
+
+    <pre><code>
+PostgreSQL Container
+    ↓
+Volume
+    ↓
+Data Saved
+    </code></pre>
+
+    <p>
+        Data remains even if container is removed.
+    </p>
+</section>
+
+<section>
+    <h2>Docker Network</h2>
+
+    <pre><code>
+Flask Container
+    ↓
+Docker Network
+    ↓
+PostgreSQL Container
+    </code></pre>
+
+    <p>
+        Containers communicate through Docker networks.
+    </p>
+</section>
+
+<section>
+    <h2>Typical Banking Development Setup</h2>
+
+    <pre><code>
+Nginx Container
+    ↓
+Flask Container
+    ↓
+PgBouncer Container
+    ↓
+PostgreSQL Container
+    </code></pre>
+</section>
+
+<section>
+    <h2>Advantages Of Docker</h2>
+
+    <ul>
+        <li>Portable</li>
+        <li>Fast Deployment</li>
+        <li>Consistent Environment</li>
+        <li>Easy Scaling</li>
+        <li>Isolation</li>
+        <li>Simplified Deployment</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Important Docker Concepts</h2>
+
+    <ul>
+        <li>Image = Blueprint</li>
+        <li>Container = Running Instance</li>
+        <li>Dockerfile = Build Instructions</li>
+        <li>Volume = Persistent Storage</li>
+        <li>Network = Container Communication</li>
+        <li>Docker Hub = Image Repository</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Docker Mental Model</h2>
+
+    <pre><code>
+Application
+    ↓
+Docker Image
+    ↓
+Docker Container
+    ↓
+Runs Anywhere
+    </code></pre>
+</section>
+<section>
+    <h2>Docker Compose</h2>
+
+    <p>
+        Docker Compose is a tool used to define and manage multiple containers
+        using a single configuration file.
+    </p>
+
+    <pre><code>
+docker-compose.yml
+
+    ↓
+
+Nginx
+Flask
+Redis
+PostgreSQL
+
+    ↓
+
+Start Together
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Docker Compose Exists</h2>
+
+    <p>
+        Real applications usually require multiple services.
+    </p>
+
+    <pre><code>
+Application
+    ↓
+Database
+    ↓
+Cache
+    ↓
+Web Server
+    </code></pre>
+
+    <p>
+        Managing each container separately becomes difficult.
+    </p>
+</section>
+
+<section>
+    <h2>Without Docker Compose</h2>
+
+    <pre><code>
+docker run postgres
+
+docker run redis
+
+docker run flask
+
+docker run nginx
+    </code></pre>
+
+    <p>
+        Every container must be started manually.
+    </p>
+</section>
+
+<section>
+    <h2>With Docker Compose</h2>
+
+    <pre><code>
+docker compose up
+    </code></pre>
+
+    <p>
+        All containers start automatically.
+    </p>
+</section>
+
+<section>
+    <h2>Compose Architecture</h2>
+
+    <pre><code>
+Nginx
+   ↓
+Flask
+   ↓
+Redis
+   ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Docker Compose manages the complete application stack.
+    </p>
+</section>
+
+<section>
+    <h2>Compose File</h2>
+
+    <p>
+        Docker Compose uses:
+    </p>
+
+    <pre><code>
+docker-compose.yml
+    </code></pre>
+
+    <p>
+        This file describes services, networks and volumes.
+    </p>
+</section>
+
+<section>
+    <h2>Simple Compose Example</h2>
+
+    <pre><code>
+version: '3'
+
+services:
+
+  web:
+    image: nginx
+
+  db:
+    image: postgres
+    </code></pre>
+
+    <p>
+        Starts Nginx and PostgreSQL together.
+    </p>
+</section>
+
+<section>
+    <h2>Compose Services</h2>
+
+    <p>
+        Each container is called a service.
+    </p>
+
+    <pre><code>
+services:
+
+  nginx:
+  flask:
+  redis:
+  postgres:
+    </code></pre>
+</section>
+
+<section>
+    <h2>Starting Compose</h2>
+
+    <pre><code>
+docker compose up
+    </code></pre>
+
+    <p>
+        Creates and starts all services.
+    </p>
+</section>
+
+<section>
+    <h2>Detached Mode</h2>
+
+    <pre><code>
+docker compose up -d
+    </code></pre>
+
+    <p>
+        Runs containers in background.
+    </p>
+</section>
+
+<section>
+    <h2>Stopping Compose</h2>
+
+    <pre><code>
+docker compose down
+    </code></pre>
+
+    <p>
+        Stops and removes containers.
+    </p>
+</section>
+
+<section>
+    <h2>Viewing Services</h2>
+
+    <pre><code>
+docker compose ps
+    </code></pre>
+</section>
+
+<section>
+    <h2>Viewing Logs</h2>
+
+    <pre><code>
+docker compose logs
+    </code></pre>
+</section>
+
+<section>
+    <h2>Viewing Service Logs</h2>
+
+    <pre><code>
+docker compose logs flask
+    </code></pre>
+</section>
+
+<section>
+    <h2>Restart Services</h2>
+
+    <pre><code>
+docker compose restart
+    </code></pre>
+</section>
+
+<section>
+    <h2>Container Networking</h2>
+
+    <p>
+        Docker Compose automatically creates a network.
+    </p>
+
+    <pre><code>
+Flask
+   ↓
+postgres
+    </code></pre>
+
+    <p>
+        Services communicate using service names.
+    </p>
+</section>
+
+<section>
+    <h2>Database Connection Example</h2>
+
+    <pre><code>
+DB_HOST=postgres
+DB_PORT=5432
+    </code></pre>
+
+    <p>
+        "postgres" is the service name.
+    </p>
+</section>
+
+<section>
+    <h2>Port Mapping</h2>
+
+    <pre><code>
+ports:
+
+  - "8080:80"
+    </code></pre>
+
+    <pre><code>
+Host Port 8080
+      ↓
+Container Port 80
+    </code></pre>
+</section>
+
+<section>
+    <h2>Environment Variables</h2>
+
+    <pre><code>
+environment:
+
+  DB_NAME=bank
+  DB_USER=admin
+  DB_PASSWORD=secret
+    </code></pre>
+</section>
+
+<section>
+    <h2>Volumes</h2>
+
+    <p>
+        Used to persist data.
+    </p>
+
+    <pre><code>
+volumes:
+
+  pgdata:
+    </code></pre>
+</section>
+
+<section>
+    <h2>Volume Example</h2>
+
+    <pre><code>
+PostgreSQL
+     ↓
+Volume
+     ↓
+Disk
+    </code></pre>
+
+    <p>
+        Data survives container restarts.
+    </p>
+</section>
+
+<section>
+    <h2>Flask + PostgreSQL Example</h2>
+
+    <pre><code>
+services:
+
+  flask:
+    build: .
+
+  postgres:
+    image: postgres
+    </code></pre>
+
+    <pre><code>
+Flask
+   ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Nginx + Flask Example</h2>
+
+    <pre><code>
+Internet
+   ↓
+Nginx
+   ↓
+Flask
+    </code></pre>
+
+    <p>
+        Nginx acts as reverse proxy.
+    </p>
+</section>
+
+<section>
+    <h2>Full Backend Example</h2>
+
+    <pre><code>
+Internet
+   ↓
+Nginx
+   ↓
+Flask
+   ↓
+Redis
+   ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Typical enterprise architecture.
+    </p>
+</section>
+
+<section>
+    <h2>Build Service</h2>
+
+    <pre><code>
+services:
+
+  flask:
+    build: .
+    </code></pre>
+
+    <p>
+        Uses Dockerfile in current directory.
+    </p>
+</section>
+
+<section>
+    <h2>Scaling Services</h2>
+
+    <pre><code>
+docker compose up --scale flask=3
+    </code></pre>
+
+    <p>
+        Starts three Flask containers.
+    </p>
+</section>
+
+<section>
+    <h2>Container Dependencies</h2>
+
+    <pre><code>
+depends_on:
+
+  - postgres
+    </code></pre>
+
+    <p>
+        Starts PostgreSQL before Flask.
+    </p>
+</section>
+
+<section>
+    <h2>Typical Development Environment</h2>
+
+    <pre><code>
+Laptop
+   ↓
+Docker Compose
+   ↓
+
+Nginx
+Flask
+Redis
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Entire backend stack runs locally.
+    </p>
+</section>
+
+<section>
+    <h2>Advantages Of Docker Compose</h2>
+
+    <ul>
+        <li>Single Configuration File</li>
+        <li>Easy Local Development</li>
+        <li>Automatic Networking</li>
+        <li>Automatic Volume Management</li>
+        <li>Easy Startup</li>
+        <li>Easy Shutdown</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Important Concepts</h2>
+
+    <ul>
+        <li>Service = Container</li>
+        <li>docker-compose.yml = Configuration</li>
+        <li>Volume = Persistent Storage</li>
+        <li>Network = Communication Layer</li>
+        <li>Environment Variables = Configuration Values</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Docker Compose Mental Model</h2>
+
+    <pre><code>
+Single Container
+    ↓
+Docker
+
+Multiple Containers
+    ↓
+Docker Compose
+    </code></pre>
+</section>
+<section>
+    <h2>Redis</h2>
+
+    <p>
+        Redis (Remote Dictionary Server) is an in-memory data store used for
+        caching, sessions, queues and fast data retrieval.
+    </p>
+
+    <pre><code>
+Application
+    ↓
+Redis
+    ↓
+RAM
+    </code></pre>
+
+    <p>
+        Redis stores data in memory (RAM), making it extremely fast.
+    </p>
+</section>
+
+<section>
+    <h2>Why Redis Exists</h2>
+
+    <p>
+        Databases are slower because they read and write data from disk.
+    </p>
+
+    <pre><code>
+Application
+    ↓
+PostgreSQL
+    ↓
+Disk
+    </code></pre>
+
+    <p>
+        Redis stores data in RAM.
+    </p>
+
+    <pre><code>
+Application
+    ↓
+Redis
+    ↓
+RAM
+    </code></pre>
+
+    <p>
+        RAM is much faster than disk.
+    </p>
+</section>
+
+<section>
+    <h2>Redis Architecture</h2>
+
+    <pre><code>
+User
+   ↓
+Application
+   ↓
+Redis
+   ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Redis sits between the application and database.
+    </p>
+</section>
+
+<section>
+    <h2>What Is Caching?</h2>
+
+    <p>
+        Caching stores frequently accessed data in a faster location.
+    </p>
+
+    <pre><code>
+Customer Data
+    ↓
+Redis Cache
+    ↓
+Quick Access
+    </code></pre>
+</section>
+
+<section>
+    <h2>Without Cache</h2>
+
+    <pre><code>
+Request
+   ↓
+PostgreSQL Query
+   ↓
+Response
+    </code></pre>
+
+    <p>
+        Database queried every time.
+    </p>
+</section>
+
+<section>
+    <h2>With Cache</h2>
+
+    <pre><code>
+Request
+   ↓
+Redis
+   ↓
+Found
+   ↓
+Response
+    </code></pre>
+
+    <p>
+        Database not accessed.
+    </p>
+</section>
+
+<section>
+    <h2>Cache Hit</h2>
+
+    <pre><code>
+Request
+   ↓
+Redis
+   ↓
+Data Found
+   ↓
+Return Data
+    </code></pre>
+
+    <p>
+        This is called a Cache Hit.
+    </p>
+</section>
+
+<section>
+    <h2>Cache Miss</h2>
+
+    <pre><code>
+Request
+   ↓
+Redis
+   ↓
+Data Not Found
+   ↓
+PostgreSQL
+   ↓
+Store In Redis
+   ↓
+Return Data
+    </code></pre>
+
+    <p>
+        This is called a Cache Miss.
+    </p>
+</section>
+
+<section>
+    <h2>Common Redis Uses</h2>
+
+    <ul>
+        <li>Caching</li>
+        <li>Session Storage</li>
+        <li>Rate Limiting</li>
+        <li>Queues</li>
+        <li>Temporary Data</li>
+        <li>Leaderboards</li>
+        <li>OTP Storage</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Installing Redis</h2>
+
+    <pre><code>
+sudo apt update
+
+sudo apt install redis-server
+    </code></pre>
+</section>
+
+<section>
+    <h2>Check Redis Status</h2>
+
+    <pre><code>
+systemctl status redis
+    </code></pre>
+</section>
+
+<section>
+    <h2>Start Redis</h2>
+
+    <pre><code>
+systemctl start redis
+    </code></pre>
+</section>
+
+<section>
+    <h2>Redis CLI</h2>
+
+    <pre><code>
+redis-cli
+    </code></pre>
+
+    <p>
+        Opens Redis command line.
+    </p>
+</section>
+
+<section>
+    <h2>Set Data</h2>
+
+    <pre><code>
+SET customer_name "Aathi"
+    </code></pre>
+</section>
+
+<section>
+    <h2>Get Data</h2>
+
+    <pre><code>
+GET customer_name
+    </code></pre>
+</section>
+
+<section>
+    <h2>Delete Data</h2>
+
+    <pre><code>
+DEL customer_name
+    </code></pre>
+</section>
+
+<section>
+    <h2>Expiration Time</h2>
+
+    <pre><code>
+SET otp 123456 EX 300
+    </code></pre>
+
+    <p>
+        OTP expires after 300 seconds.
+    </p>
+</section>
+
+<section>
+    <h2>Check Remaining Time</h2>
+
+    <pre><code>
+TTL otp
+    </code></pre>
+</section>
+
+<section>
+    <h2>Redis Data Types</h2>
+
+    <ul>
+        <li>String</li>
+        <li>Hash</li>
+        <li>List</li>
+        <li>Set</li>
+        <li>Sorted Set</li>
+    </ul>
+</section>
+
+<section>
+    <h2>String Example</h2>
+
+    <pre><code>
+SET city "Chennai"
+
+GET city
+    </code></pre>
+</section>
+
+<section>
+    <h2>Hash Example</h2>
+
+    <pre><code>
+HSET customer:101
+
+name "Aathi"
+city "Chennai"
+    </code></pre>
+
+    <pre><code>
+HGETALL customer:101
+    </code></pre>
+</section>
+
+<section>
+    <h2>List Example</h2>
+
+    <pre><code>
+LPUSH queue task1
+
+LPUSH queue task2
+    </code></pre>
+
+    <pre><code>
+LRANGE queue 0 -1
+    </code></pre>
+</section>
+
+<section>
+    <h2>Set Example</h2>
+
+    <pre><code>
+SADD users user1
+
+SADD users user2
+    </code></pre>
+
+    <p>
+        Duplicate values are not allowed.
+    </p>
+</section>
+
+<section>
+    <h2>Sorted Set Example</h2>
+
+    <pre><code>
+ZADD leaderboard
+
+100 user1
+
+200 user2
+    </code></pre>
+
+    <p>
+        Frequently used in rankings.
+    </p>
+</section>
+
+<section>
+    <h2>Session Storage</h2>
+
+    <pre><code>
+User Login
+   ↓
+Session Created
+   ↓
+Stored In Redis
+    </code></pre>
+
+    <p>
+        Redis is commonly used to store sessions.
+    </p>
+</section>
+
+<section>
+    <h2>OTP Storage Example</h2>
+
+    <pre><code>
+Mobile Number
+      ↓
+OTP
+      ↓
+Redis
+      ↓
+5 Minute Expiry
+    </code></pre>
+</section>
+
+<section>
+    <h2>Rate Limiting</h2>
+
+    <pre><code>
+User
+   ↓
+100 Requests
+   ↓
+Allowed
+
+101st Request
+   ↓
+Blocked
+    </code></pre>
+
+    <p>
+        Redis is frequently used for rate limiting.
+    </p>
+</section>
+
+<section>
+    <h2>Banking Example</h2>
+
+    <pre><code>
+Customer Balance
+      ↓
+Frequently Requested
+      ↓
+Redis Cache
+      ↓
+Fast Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>Cache Invalidation</h2>
+
+    <p>
+        When data changes, cache must be updated.
+    </p>
+
+    <pre><code>
+Update Customer
+      ↓
+Update PostgreSQL
+      ↓
+Clear Redis Cache
+    </code></pre>
+</section>
+
+<section>
+    <h2>Redis Persistence</h2>
+
+    <p>
+        Redis primarily stores data in memory.
+    </p>
+
+    <p>
+        Optional persistence saves data to disk.
+    </p>
+
+    <ul>
+        <li>RDB Snapshots</li>
+        <li>AOF Logs</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Redis Replication</h2>
+
+    <pre><code>
+Primary Redis
+      ↓
+Replica Redis
+    </code></pre>
+
+    <p>
+        Used for high availability.
+    </p>
+</section>
+
+<section>
+    <h2>Typical Enterprise Architecture</h2>
+
+    <pre><code>
+User
+  ↓
+Nginx
+  ↓
+Application
+  ↓
+Redis
+  ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>When To Use Redis</h2>
+
+    <ul>
+        <li>Frequently Read Data</li>
+        <li>Session Storage</li>
+        <li>OTP Storage</li>
+        <li>Rate Limiting</li>
+        <li>Temporary Data</li>
+        <li>Queues</li>
+    </ul>
+</section>
+
+<section>
+    <h2>When NOT To Use Redis</h2>
+
+    <ul>
+        <li>Permanent Critical Data Only</li>
+        <li>Very Large Historical Data</li>
+        <li>Long-Term Archival Storage</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Redis Mental Model</h2>
+
+    <pre><code>
+PostgreSQL
+     ↓
+Reliable Storage
+
+Redis
+     ↓
+Fast Temporary Storage
+    </code></pre>
+</section>
+
+<section>
+    <h2>Message Queue</h2>
+
+    <p>
+        A Message Queue allows applications to communicate asynchronously.
+    </p>
+
+    <pre><code>
+Service A
+    ↓
+Queue
+    ↓
+Service B
+    </code></pre>
+
+    <p>
+        Service A does not wait for Service B.
+    </p>
+</section>
+
+<section>
+    <h2>Why Message Queues Exist</h2>
+
+    <p>
+        Direct service-to-service communication creates dependencies.
+    </p>
+
+    <pre><code>
+Payment Service
+      ↓
+SMS Service
+      ↓
+Email Service
+      ↓
+Audit Service
+    </code></pre>
+
+    <p>
+        If one service fails, the entire flow may fail.
+    </p>
+</section>
+
+<section>
+    <h2>Queue Based Architecture</h2>
+
+    <pre><code>
+Payment Service
+      ↓
+Message Queue
+      ↓
+SMS Service
+
+      ↓
+Email Service
+
+      ↓
+Audit Service
+    </code></pre>
+
+    <p>
+        Services become independent.
+    </p>
+</section>
+
+<section>
+    <h2>Synchronous Communication</h2>
+
+    <pre><code>
+Client
+    ↓
+API
+    ↓
+Database
+    ↓
+Response
+    </code></pre>
+
+    <p>
+        Caller waits for completion.
+    </p>
+</section>
+
+<section>
+    <h2>Asynchronous Communication</h2>
+
+    <pre><code>
+Client
+    ↓
+API
+    ↓
+Queue Message
+    ↓
+Immediate Response
+
+Worker Processes Later
+    </code></pre>
+
+    <p>
+        Caller does not wait.
+    </p>
+</section>
+
+<section>
+    <h2>Producer</h2>
+
+    <p>
+        A Producer sends messages.
+    </p>
+
+    <pre><code>
+Payment Service
+      ↓
+Produces Message
+      ↓
+Queue
+    </code></pre>
+</section>
+
+<section>
+    <h2>Consumer</h2>
+
+    <p>
+        A Consumer receives messages.
+    </p>
+
+    <pre><code>
+Queue
+   ↓
+SMS Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Message Flow</h2>
+
+    <pre><code>
+Producer
+   ↓
+Queue
+   ↓
+Consumer
+    </code></pre>
+</section>
+
+<section>
+    <h2>RabbitMQ</h2>
+
+    <p>
+        RabbitMQ is a traditional message broker.
+    </p>
+
+    <pre><code>
+Producer
+   ↓
+RabbitMQ
+   ↓
+Consumer
+    </code></pre>
+
+    <p>
+        Excellent for reliable task processing.
+    </p>
+</section>
+
+<section>
+    <h2>Kafka</h2>
+
+    <p>
+        Kafka is a distributed event streaming platform.
+    </p>
+
+    <pre><code>
+Producer
+   ↓
+Kafka
+   ↓
+Consumers
+    </code></pre>
+
+    <p>
+        Designed for very high throughput.
+    </p>
+</section>
+
+<section>
+    <h2>RabbitMQ vs Kafka</h2>
+
+    <table>
+        <tr>
+            <th>Feature</th>
+            <th>RabbitMQ</th>
+            <th>Kafka</th>
+        </tr>
+        <tr>
+            <td>Purpose</td>
+            <td>Message Queue</td>
+            <td>Event Streaming</td>
+        </tr>
+        <tr>
+            <td>Speed</td>
+            <td>High</td>
+            <td>Very High</td>
+        </tr>
+        <tr>
+            <td>Replay Events</td>
+            <td>No</td>
+            <td>Yes</td>
+        </tr>
+        <tr>
+            <td>Complexity</td>
+            <td>Simple</td>
+            <td>Higher</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>RabbitMQ Example</h2>
+
+    <pre><code>
+Account Created
+      ↓
+RabbitMQ
+      ↓
+Send Email
+
+      ↓
+Generate Card
+
+      ↓
+Create Audit Log
+    </code></pre>
+</section>
+
+<section>
+    <h2>Kafka Example</h2>
+
+    <pre><code>
+Card Swipe
+     ↓
+Kafka Topic
+     ↓
+Fraud Service
+
+     ↓
+Analytics Service
+
+     ↓
+Reporting Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>What Is A Topic?</h2>
+
+    <p>
+        Kafka stores messages inside topics.
+    </p>
+
+    <pre><code>
+transactions
+
+customers
+
+cards
+
+accounts
+    </code></pre>
+</section>
+
+<section>
+    <h2>What Is A Partition?</h2>
+
+    <p>
+        Kafka divides topics into partitions.
+    </p>
+
+    <pre><code>
+Transactions Topic
+
+Partition 1
+
+Partition 2
+
+Partition 3
+    </code></pre>
+
+    <p>
+        Allows parallel processing.
+    </p>
+</section>
+
+<section>
+    <h2>What Is An Offset?</h2>
+
+    <p>
+        Every Kafka message has a position number.
+    </p>
+
+    <pre><code>
+Offset 1
+
+Offset 2
+
+Offset 3
+
+Offset 4
+    </code></pre>
+
+    <p>
+        Consumers track processing progress.
+    </p>
+</section>
+
+<section>
+    <h2>Event Driven Architecture</h2>
+
+    <pre><code>
+Customer Created
+      ↓
+Event Published
+      ↓
+Interested Services React
+    </code></pre>
+
+    <p>
+        Services communicate through events.
+    </p>
+</section>
+
+<section>
+    <h2>Banking Example</h2>
+
+    <pre><code>
+Fund Transfer
+      ↓
+Event Published
+      ↓
+Notification Service
+
+      ↓
+Audit Service
+
+      ↓
+Fraud Detection Service
+
+      ↓
+Reporting Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Retry Mechanism</h2>
+
+    <pre><code>
+Consumer Failed
+      ↓
+Retry
+      ↓
+Success
+    </code></pre>
+
+    <p>
+        Queues provide fault tolerance.
+    </p>
+</section>
+
+<section>
+    <h2>Dead Letter Queue (DLQ)</h2>
+
+    <pre><code>
+Message Failed
+      ↓
+Retry Failed
+      ↓
+Dead Letter Queue
+    </code></pre>
+
+    <p>
+        Stores problematic messages for investigation.
+    </p>
+</section>
+
+<section>
+    <h2>Message Durability</h2>
+
+    <p>
+        Messages can be stored on disk.
+    </p>
+
+    <pre><code>
+Message
+    ↓
+Disk
+    ↓
+Recover After Restart
+    </code></pre>
+</section>
+
+<section>
+    <h2>Typical Microservice Architecture</h2>
+
+    <pre><code>
+User
+ ↓
+API Gateway
+ ↓
+Account Service
+ ↓
+Kafka
+
+ ↓
+Notification Service
+
+ ↓
+Audit Service
+
+ ↓
+Fraud Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>When To Use RabbitMQ</h2>
+
+    <ul>
+        <li>Task Queues</li>
+        <li>Email Processing</li>
+        <li>SMS Processing</li>
+        <li>Background Jobs</li>
+        <li>Simple Microservices</li>
+    </ul>
+</section>
+
+<section>
+    <h2>When To Use Kafka</h2>
+
+    <ul>
+        <li>Event Streaming</li>
+        <li>Fraud Detection</li>
+        <li>Real-Time Analytics</li>
+        <li>Transaction Streams</li>
+        <li>Large Enterprise Systems</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Important Concepts</h2>
+
+    <ul>
+        <li>Producer sends messages.</li>
+        <li>Consumer receives messages.</li>
+        <li>Queue stores messages.</li>
+        <li>RabbitMQ focuses on task processing.</li>
+        <li>Kafka focuses on event streaming.</li>
+        <li>Asynchronous systems improve scalability.</li>
+        <li>DLQ stores failed messages.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Mental Model</h2>
+
+    <pre><code>
+REST API
+    ↓
+Immediate Communication
+
+RabbitMQ/Kafka
+    ↓
+Delayed Communication
+    </code></pre>
+</section>
+
+<section>
+    <h2>System Design</h2>
+
+    <p>
+        System Design is the process of designing scalable, reliable,
+        maintainable and secure software systems.
+    </p>
+
+    <pre><code>
+Requirements
+      ↓
+Architecture
+      ↓
+Implementation
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why System Design Exists</h2>
+
+    <p>
+        Writing code is only one part of software engineering.
+    </p>
+
+    <pre><code>
+100 Users
+    ↓
+Simple Application
+
+10 Million Users
+    ↓
+System Design Required
+    </code></pre>
+</section>
+
+<section>
+    <h2>Basic Architecture</h2>
+
+    <pre><code>
+User
+  ↓
+Web Server
+  ↓
+Application
+  ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Real Production Architecture</h2>
+
+    <pre><code>
+Users
+   ↓
+Load Balancer
+   ↓
+Nginx
+   ↓
+Application Servers
+   ↓
+Redis
+   ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>System Design Goals</h2>
+
+    <ul>
+        <li>Scalability</li>
+        <li>Reliability</li>
+        <li>Availability</li>
+        <li>Performance</li>
+        <li>Security</li>
+        <li>Maintainability</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Scalability</h2>
+
+    <p>
+        Ability to handle increasing traffic.
+    </p>
+
+    <pre><code>
+100 Users
+   ↓
+10000 Users
+   ↓
+1000000 Users
+    </code></pre>
+</section>
+
+<section>
+    <h2>Vertical Scaling</h2>
+
+    <pre><code>
+Old Server
+
+CPU 4 Core
+RAM 8 GB
+
+      ↓
+
+New Server
+
+CPU 32 Core
+RAM 128 GB
+    </code></pre>
+
+    <p>
+        Increase hardware resources.
+    </p>
+</section>
+
+<section>
+    <h2>Horizontal Scaling</h2>
+
+    <pre><code>
+Server 1
+
+Server 2
+
+Server 3
+
+Server 4
+    </code></pre>
+
+    <p>
+        Add more servers.
+    </p>
+</section>
+
+<section>
+    <h2>Load Balancer</h2>
+
+    <pre><code>
+Users
+   ↓
+Load Balancer
+
+ ↙ ↓ ↘
+
+App1 App2 App3
+    </code></pre>
+
+    <p>
+        Distributes traffic across servers.
+    </p>
+</section>
+
+<section>
+    <h2>Single Point Of Failure</h2>
+
+    <pre><code>
+Users
+  ↓
+One Server
+  ↓
+Database
+    </code></pre>
+
+    <p>
+        If the server fails, the application becomes unavailable.
+    </p>
+</section>
+
+<section>
+    <h2>High Availability</h2>
+
+    <pre><code>
+Users
+   ↓
+Load Balancer
+
+ ↙     ↘
+
+Server1 Server2
+    </code></pre>
+
+    <p>
+        One server can fail while the other continues serving users.
+    </p>
+</section>
+
+<section>
+    <h2>Caching</h2>
+
+    <pre><code>
+Application
+   ↓
+Redis
+   ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Reduces database load.
+    </p>
+</section>
+
+<section>
+    <h2>Cache Hit</h2>
+
+    <pre><code>
+Request
+   ↓
+Redis
+   ↓
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>Cache Miss</h2>
+
+    <pre><code>
+Request
+   ↓
+Redis
+   ↓
+Database
+   ↓
+Redis
+   ↓
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>Database Bottleneck</h2>
+
+    <pre><code>
+10000 Requests
+      ↓
+One Database
+    </code></pre>
+
+    <p>
+        Database may become overloaded.
+    </p>
+</section>
+
+<section>
+    <h2>Database Replication</h2>
+
+    <pre><code>
+Primary Database
+      ↓
+Replica Database
+    </code></pre>
+
+    <p>
+        Read traffic can be distributed.
+    </p>
+</section>
+
+<section>
+    <h2>Read Replica Architecture</h2>
+
+    <pre><code>
+Write
+ ↓
+Primary DB
+
+Read
+ ↓
+Replica DB
+    </code></pre>
+</section>
+
+<section>
+    <h2>Database Sharding</h2>
+
+    <pre><code>
+Customer 1-100000
+      ↓
+DB1
+
+Customer 100001-200000
+      ↓
+DB2
+    </code></pre>
+
+    <p>
+        Data is split across multiple databases.
+    </p>
+</section>
+
+<section>
+    <h2>Message Queue Architecture</h2>
+
+    <pre><code>
+Application
+    ↓
+Kafka
+
+ ↓
+Email
+
+ ↓
+SMS
+
+ ↓
+Audit
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Queues Improve Systems</h2>
+
+    <pre><code>
+Fund Transfer
+     ↓
+Immediate Response
+
+Notification Later
+    </code></pre>
+
+    <p>
+        User does not wait for background tasks.
+    </p>
+</section>
+
+<section>
+    <h2>CDN</h2>
+
+    <p>
+        Content Delivery Network stores static files near users.
+    </p>
+
+    <pre><code>
+Images
+CSS
+JS
+Videos
+    </code></pre>
+</section>
+
+<section>
+    <h2>CDN Architecture</h2>
+
+    <pre><code>
+User
+ ↓
+CDN
+ ↓
+Origin Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>Rate Limiting</h2>
+
+    <pre><code>
+User
+ ↓
+100 Requests
+ ↓
+Allowed
+
+101st Request
+ ↓
+Blocked
+    </code></pre>
+</section>
+
+<section>
+    <h2>API Gateway</h2>
+
+    <pre><code>
+Client
+ ↓
+API Gateway
+
+ ↓
+Account Service
+
+ ↓
+Card Service
+
+ ↓
+Customer Service
+    </code></pre>
+
+    <p>
+        Single entry point for APIs.
+    </p>
+</section>
+
+<section>
+    <h2>Monolithic Architecture</h2>
+
+    <pre><code>
+One Application
+
+Accounts
+Cards
+Loans
+Customers
+    </code></pre>
+</section>
+
+<section>
+    <h2>Microservices Architecture</h2>
+
+    <pre><code>
+Account Service
+
+Card Service
+
+Loan Service
+
+Customer Service
+    </code></pre>
+
+    <p>
+        Each module runs independently.
+    </p>
+</section>
+
+<section>
+    <h2>Monolith Advantages</h2>
+
+    <ul>
+        <li>Simple Development</li>
+        <li>Easy Deployment</li>
+        <li>Easy Debugging</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Microservices Advantages</h2>
+
+    <ul>
+        <li>Independent Deployment</li>
+        <li>Independent Scaling</li>
+        <li>Fault Isolation</li>
+    </ul>
+</section>
+
+<section>
+    <h2>CAP Theorem</h2>
+
+    <p>
+        Distributed systems can only fully optimize two of the following:
+    </p>
+
+    <ul>
+        <li>Consistency</li>
+        <li>Availability</li>
+        <li>Partition Tolerance</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Consistency</h2>
+
+    <p>
+        All users see the same data.
+    </p>
+</section>
+
+<section>
+    <h2>Availability</h2>
+
+    <p>
+        System continues responding.
+    </p>
+</section>
+
+<section>
+    <h2>Partition Tolerance</h2>
+
+    <p>
+        System survives network failures.
+    </p>
+</section>
+
+<section>
+    <h2>Banking System Example</h2>
+
+    <pre><code>
+Users
+ ↓
+Load Balancer
+ ↓
+API Gateway
+ ↓
+
+Account Service
+Card Service
+Loan Service
+
+ ↓
+Kafka
+
+ ↓
+Notification Service
+
+ ↓
+Audit Service
+
+ ↓
+Redis
+
+ ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Monitoring</h2>
+
+    <p>
+        Every production system needs monitoring.
+    </p>
+
+    <pre><code>
+CPU
+RAM
+Errors
+Requests
+Database
+Network
+    </code></pre>
+</section>
+
+<section>
+    <h2>Logging</h2>
+
+    <pre><code>
+INFO
+
+WARN
+
+ERROR
+
+DEBUG
+    </code></pre>
+
+    <p>
+        Helps troubleshoot issues.
+    </p>
+</section>
+
+<section>
+    <h2>Disaster Recovery</h2>
+
+    <pre><code>
+System Failure
+      ↓
+Backup
+      ↓
+Restore
+    </code></pre>
+</section>
+
+<section>
+    <h2>Important System Design Questions</h2>
+
+    <ul>
+        <li>How many users?</li>
+        <li>Expected traffic?</li>
+        <li>Read-heavy or write-heavy?</li>
+        <li>Data size?</li>
+        <li>Availability requirements?</li>
+        <li>Security requirements?</li>
+        <li>Recovery requirements?</li>
+    </ul>
+</section>
+
+<section>
+    <h2>System Design Mental Model</h2>
+
+    <pre><code>
+Users
+ ↓
+Load Balancer
+ ↓
+Application
+ ↓
+Cache
+ ↓
+Database
+
+Background Tasks
+ ↓
+Queue
+ ↓
+Workers
+    </code></pre>
+</section>
+
+<section>
+    <h2>AWS (Amazon Web Services)</h2>
+
+    <p>
+        AWS is a cloud computing platform that provides servers,
+        storage, databases, networking and other services on demand.
+    </p>
+
+    <pre><code>
+Your Application
+       ↓
+AWS Cloud
+       ↓
+Accessible Worldwide
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Cloud Exists</h2>
+
+    <p>
+        Before cloud computing, companies purchased and maintained
+        their own servers.
+    </p>
+
+    <pre><code>
+Buy Hardware
+     ↓
+Install Linux
+     ↓
+Setup Network
+     ↓
+Manage Power
+     ↓
+Manage Cooling
+     ↓
+Manage Security
+    </code></pre>
+
+    <p>
+        Cloud providers handle most infrastructure management.
+    </p>
+</section>
+
+<section>
+    <h2>Cloud Providers</h2>
+
+    <ul>
+        <li>AWS</li>
+        <li>Microsoft Azure</li>
+        <li>Google Cloud Platform (GCP)</li>
+        <li>Oracle Cloud Infrastructure (OCI)</li>
+    </ul>
+</section>
+
+<section>
+    <h2>What AWS Provides</h2>
+
+    <ul>
+        <li>Virtual Servers</li>
+        <li>Databases</li>
+        <li>Storage</li>
+        <li>Networking</li>
+        <li>Load Balancers</li>
+        <li>Monitoring</li>
+        <li>Security Services</li>
+    </ul>
+</section>
+
+<section>
+    <h2>AWS Global Infrastructure</h2>
+
+    <pre><code>
+Region
+   ↓
+Availability Zone
+   ↓
+Data Center
+    </code></pre>
+</section>
+
+<section>
+    <h2>Region</h2>
+
+    <p>
+        A geographical location where AWS operates.
+    </p>
+
+    <pre><code>
+Mumbai
+Singapore
+London
+Tokyo
+Virginia
+    </code></pre>
+</section>
+
+<section>
+    <h2>Availability Zone (AZ)</h2>
+
+    <p>
+        An isolated data center within a region.
+    </p>
+
+    <pre><code>
+Mumbai Region
+
+AZ-1
+
+AZ-2
+
+AZ-3
+    </code></pre>
+</section>
+
+<section>
+    <h2>EC2 (Elastic Compute Cloud)</h2>
+
+    <p>
+        EC2 is a virtual server running in AWS.
+    </p>
+
+    <pre><code>
+Your Laptop
+      ↓
+AWS EC2 Server
+      ↓
+Linux
+      ↓
+Application
+    </code></pre>
+</section>
+
+<section>
+    <h2>Launching EC2</h2>
+
+    <pre><code>
+AWS Console
+    ↓
+Create EC2
+    ↓
+Choose Linux
+    ↓
+Choose CPU/RAM
+    ↓
+Launch
+    </code></pre>
+</section>
+
+<section>
+    <h2>SSH To EC2</h2>
+
+    <pre><code>
+ssh ubuntu@public-ip
+    </code></pre>
+
+    <p>
+        Connect to the server remotely.
+    </p>
+</section>
+
+<section>
+    <h2>S3 (Simple Storage Service)</h2>
+
+    <p>
+        Object storage service.
+    </p>
+
+    <pre><code>
+Images
+Documents
+Backups
+Videos
+Logs
+    </code></pre>
+</section>
+
+<section>
+    <h2>S3 Example</h2>
+
+    <pre><code>
+Application
+      ↓
+Upload File
+      ↓
+S3 Bucket
+    </code></pre>
+</section>
+
+<section>
+    <h2>RDS (Relational Database Service)</h2>
+
+    <p>
+        Managed database service.
+    </p>
+
+    <pre><code>
+PostgreSQL
+MySQL
+MariaDB
+Oracle
+SQL Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>RDS Architecture</h2>
+
+    <pre><code>
+Application
+     ↓
+RDS PostgreSQL
+    </code></pre>
+
+    <p>
+        AWS manages backups and maintenance.
+    </p>
+</section>
+
+<section>
+    <h2>VPC (Virtual Private Cloud)</h2>
+
+    <p>
+        Private network inside AWS.
+    </p>
+
+    <pre><code>
+Internet
+    ↓
+VPC
+    ↓
+Servers
+Databases
+Applications
+    </code></pre>
+</section>
+
+<section>
+    <h2>Subnet</h2>
+
+    <p>
+        A subnet is a smaller network inside a VPC.
+    </p>
+
+    <pre><code>
+VPC
+
+├── Public Subnet
+└── Private Subnet
+    </code></pre>
+</section>
+
+<section>
+    <h2>Public Subnet</h2>
+
+    <pre><code>
+Internet
+   ↓
+Load Balancer
+   ↓
+Web Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>Private Subnet</h2>
+
+    <pre><code>
+Database
+
+Redis
+
+Kafka
+    </code></pre>
+
+    <p>
+        Not directly accessible from the internet.
+    </p>
+</section>
+
+<section>
+    <h2>Security Group</h2>
+
+    <p>
+        AWS virtual firewall.
+    </p>
+
+    <pre><code>
+Port 22 → SSH
+
+Port 80 → HTTP
+
+Port 443 → HTTPS
+    </code></pre>
+</section>
+
+<section>
+    <h2>Elastic Load Balancer (ELB)</h2>
+
+    <pre><code>
+Users
+   ↓
+Load Balancer
+
+ ↙ ↓ ↘
+
+EC2-1 EC2-2 EC2-3
+    </code></pre>
+
+    <p>
+        Distributes traffic across servers.
+    </p>
+</section>
+
+<section>
+    <h2>Auto Scaling</h2>
+
+    <pre><code>
+100 Users
+    ↓
+1 Server
+
+10000 Users
+    ↓
+10 Servers
+    </code></pre>
+
+    <p>
+        AWS automatically creates additional servers.
+    </p>
+</section>
+
+<section>
+    <h2>CloudFront</h2>
+
+    <p>
+        AWS Content Delivery Network.
+    </p>
+
+    <pre><code>
+Images
+CSS
+JavaScript
+Videos
+    </code></pre>
+</section>
+
+<section>
+    <h2>IAM (Identity and Access Management)</h2>
+
+    <p>
+        Controls permissions.
+    </p>
+
+    <pre><code>
+User
+   ↓
+Permissions
+   ↓
+AWS Resources
+    </code></pre>
+</section>
+
+<section>
+    <h2>CloudWatch</h2>
+
+    <p>
+        AWS monitoring service.
+    </p>
+
+    <pre><code>
+CPU
+
+RAM
+
+Logs
+
+Errors
+
+Requests
+    </code></pre>
+</section>
+
+<section>
+    <h2>Route 53</h2>
+
+    <p>
+        AWS DNS service.
+    </p>
+
+    <pre><code>
+example.com
+      ↓
+AWS Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>Simple Deployment Architecture</h2>
+
+    <pre><code>
+User
+ ↓
+Route53
+ ↓
+Load Balancer
+ ↓
+EC2
+ ↓
+Nginx
+ ↓
+Flask
+ ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Modern Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+CloudFront
+ ↓
+Load Balancer
+ ↓
+EC2 Containers
+ ↓
+Redis
+ ↓
+RDS PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Typical Banking Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+Route53
+ ↓
+Load Balancer
+ ↓
+API Gateway
+ ↓
+
+Account Service
+Card Service
+Loan Service
+
+ ↓
+Kafka
+
+ ↓
+Redis
+
+ ↓
+RDS PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>AWS Cost Model</h2>
+
+    <p>
+        Pay only for resources used.
+    </p>
+
+    <pre><code>
+CPU
+RAM
+Storage
+Bandwidth
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Most Important AWS Services</h2>
+
+    <table>
+        <tr>
+            <th>Service</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>EC2</td>
+            <td>Virtual Server</td>
+        </tr>
+        <tr>
+            <td>S3</td>
+            <td>Storage</td>
+        </tr>
+        <tr>
+            <td>RDS</td>
+            <td>Managed Database</td>
+        </tr>
+        <tr>
+            <td>VPC</td>
+            <td>Private Network</td>
+        </tr>
+        <tr>
+            <td>ELB</td>
+            <td>Load Balancer</td>
+        </tr>
+        <tr>
+            <td>IAM</td>
+            <td>Permissions</td>
+        </tr>
+        <tr>
+            <td>CloudWatch</td>
+            <td>Monitoring</td>
+        </tr>
+        <tr>
+            <td>Route53</td>
+            <td>DNS</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>AWS Mental Model</h2>
+
+    <pre><code>
+AWS
+
+EC2 = Server
+
+S3 = Storage
+
+RDS = Database
+
+ELB = Load Balancer
+
+IAM = Security
+
+CloudWatch = Monitoring
+
+Route53 = DNS
+    </code></pre>
+</section>
+<section>
+    <h2>Kubernetes (K8s)</h2>
+
+    <p>
+        Kubernetes is a container orchestration platform used to deploy,
+        manage, scale and monitor containers across multiple servers.
+    </p>
+
+    <pre><code>
+Docker
+   ↓
+Creates Containers
+
+Kubernetes
+   ↓
+Manages Containers
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Kubernetes Exists</h2>
+
+    <p>
+        Docker can run containers.
+    </p>
+
+    <pre><code>
+Server
+  ↓
+Docker
+  ↓
+Flask Container
+    </code></pre>
+
+    <p>
+        But real systems have hundreds of containers.
+    </p>
+
+    <pre><code>
+100 Containers
+
+10 Servers
+
+Thousands Of Users
+    </code></pre>
+
+    <p>
+        Managing everything manually becomes impossible.
+    </p>
+</section>
+
+<section>
+    <h2>Docker vs Kubernetes</h2>
+
+    <table>
+        <tr>
+            <th>Docker</th>
+            <th>Kubernetes</th>
+        </tr>
+        <tr>
+            <td>Runs Containers</td>
+            <td>Manages Containers</td>
+        </tr>
+        <tr>
+            <td>Single Server</td>
+            <td>Multiple Servers</td>
+        </tr>
+        <tr>
+            <td>Manual Scaling</td>
+            <td>Automatic Scaling</td>
+        </tr>
+        <tr>
+            <td>Manual Recovery</td>
+            <td>Self Healing</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Traditional Deployment</h2>
+
+    <pre><code>
+Server 1
+   ↓
+Flask
+
+Server 2
+   ↓
+Flask
+
+Server 3
+   ↓
+Flask
+    </code></pre>
+
+    <p>
+        Administrator manages everything.
+    </p>
+</section>
+
+<section>
+    <h2>Kubernetes Deployment</h2>
+
+    <pre><code>
+Kubernetes Cluster
+
+ ↓
+Schedules Containers
+
+ ↓
+Monitors Health
+
+ ↓
+Restarts Failed Containers
+    </code></pre>
+</section>
+
+<section>
+    <h2>Cluster</h2>
+
+    <p>
+        A cluster is a group of servers working together.
+    </p>
+
+    <pre><code>
+Cluster
+
+ ├── Server 1
+ ├── Server 2
+ ├── Server 3
+ └── Server 4
+    </code></pre>
+</section>
+
+<section>
+    <h2>Master Node (Control Plane)</h2>
+
+    <p>
+        Controls the cluster.
+    </p>
+
+    <pre><code>
+Control Plane
+
+Schedules Containers
+
+Monitors Cluster
+
+Manages Configuration
+    </code></pre>
+</section>
+
+<section>
+    <h2>Worker Node</h2>
+
+    <p>
+        Runs application containers.
+    </p>
+
+    <pre><code>
+Worker Node
+
+ ├── Container A
+ ├── Container B
+ └── Container C
+    </code></pre>
+</section>
+
+<section>
+    <h2>Pod</h2>
+
+    <p>
+        Smallest deployable unit in Kubernetes.
+    </p>
+
+    <pre><code>
+Pod
+
+ └── Container
+    </code></pre>
+
+    <p>
+        Usually contains one application container.
+    </p>
+</section>
+
+<section>
+    <h2>Pod Example</h2>
+
+    <pre><code>
+Pod
+
+ └── Flask Container
+    </code></pre>
+</section>
+
+<section>
+    <h2>Deployment</h2>
+
+    <p>
+        Defines how pods should run.
+    </p>
+
+    <pre><code>
+Deployment
+
+Desired Pods = 3
+    </code></pre>
+</section>
+
+<section>
+    <h2>Self Healing</h2>
+
+    <pre><code>
+Desired Pods = 3
+
+Pod Crashes
+
+Kubernetes Detects Failure
+
+Creates New Pod
+    </code></pre>
+
+    <p>
+        Automatic recovery.
+    </p>
+</section>
+
+<section>
+    <h2>Scaling</h2>
+
+    <pre><code>
+Users Increase
+
+3 Pods
+ ↓
+10 Pods
+ ↓
+20 Pods
+    </code></pre>
+</section>
+
+<section>
+    <h2>Service</h2>
+
+    <p>
+        Provides a stable network endpoint for pods.
+    </p>
+
+    <pre><code>
+Users
+ ↓
+Service
+ ↓
+Pods
+    </code></pre>
+</section>
+
+<section>
+    <h2>Load Balancing</h2>
+
+    <pre><code>
+Service
+
+ ↙ ↓ ↘
+
+Pod1 Pod2 Pod3
+    </code></pre>
+
+    <p>
+        Traffic distributed automatically.
+    </p>
+</section>
+
+<section>
+    <h2>Ingress</h2>
+
+    <p>
+        Handles external HTTP/HTTPS traffic.
+    </p>
+
+    <pre><code>
+Internet
+   ↓
+Ingress
+   ↓
+Services
+   ↓
+Pods
+    </code></pre>
+</section>
+
+<section>
+    <h2>ConfigMap</h2>
+
+    <p>
+        Stores configuration values.
+    </p>
+
+    <pre><code>
+Database Host
+
+API URL
+
+Application Settings
+    </code></pre>
+</section>
+
+<section>
+    <h2>Secret</h2>
+
+    <p>
+        Stores sensitive information.
+    </p>
+
+    <pre><code>
+Passwords
+
+API Keys
+
+JWT Secrets
+    </code></pre>
+</section>
+
+<section>
+    <h2>Volume</h2>
+
+    <p>
+        Persistent storage for containers.
+    </p>
+
+    <pre><code>
+Pod
+ ↓
+Volume
+ ↓
+Disk
+    </code></pre>
+</section>
+
+<section>
+    <h2>Namespace</h2>
+
+    <p>
+        Logical separation inside a cluster.
+    </p>
+
+    <pre><code>
+Production
+
+Testing
+
+Development
+    </code></pre>
+</section>
+
+<section>
+    <h2>Rolling Update</h2>
+
+    <pre><code>
+Version 1
+
+ ↓
+
+Version 2
+
+No Downtime
+    </code></pre>
+
+    <p>
+        Updates applications gradually.
+    </p>
+</section>
+
+<section>
+    <h2>Horizontal Pod Autoscaler (HPA)</h2>
+
+    <pre><code>
+CPU Usage High
+
+ ↓
+
+Automatically Add Pods
+    </code></pre>
+</section>
+
+<section>
+    <h2>Kubernetes Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+Ingress
+ ↓
+Service
+ ↓
+
+Pod
+Pod
+Pod
+
+ ↓
+
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>AWS Kubernetes</h2>
+
+    <p>
+        AWS provides managed Kubernetes.
+    </p>
+
+    <pre><code>
+Amazon EKS
+    </code></pre>
+
+    <p>
+        AWS manages the control plane.
+    </p>
+</section>
+
+<section>
+    <h2>Banking Example</h2>
+
+    <pre><code>
+Ingress
+ ↓
+
+Account Service Pods
+
+Card Service Pods
+
+Loan Service Pods
+
+ ↓
+
+Kafka
+
+ ↓
+
+Redis
+
+ ↓
+
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Advantages Of Kubernetes</h2>
+
+    <ul>
+        <li>Automatic Scaling</li>
+        <li>Self Healing</li>
+        <li>Load Balancing</li>
+        <li>Rolling Updates</li>
+        <li>High Availability</li>
+        <li>Cloud Native</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Disadvantages Of Kubernetes</h2>
+
+    <ul>
+        <li>Complex Learning Curve</li>
+        <li>Large Configuration Files</li>
+        <li>Requires Infrastructure Knowledge</li>
+        <li>Overkill For Small Applications</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Most Important Kubernetes Objects</h2>
+
+    <table>
+        <tr>
+            <th>Object</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>Pod</td>
+            <td>Runs Container</td>
+        </tr>
+        <tr>
+            <td>Deployment</td>
+            <td>Manages Pods</td>
+        </tr>
+        <tr>
+            <td>Service</td>
+            <td>Networking</td>
+        </tr>
+        <tr>
+            <td>Ingress</td>
+            <td>External Traffic</td>
+        </tr>
+        <tr>
+            <td>ConfigMap</td>
+            <td>Configuration</td>
+        </tr>
+        <tr>
+            <td>Secret</td>
+            <td>Sensitive Data</td>
+        </tr>
+        <tr>
+            <td>Volume</td>
+            <td>Persistent Storage</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Kubernetes Mental Model</h2>
+
+    <pre><code>
+Docker
+ ↓
+Container
+
+Kubernetes
+ ↓
+Thousands Of Containers
+ ↓
+Across Multiple Servers
+ ↓
+Automatically Managed
+    </code></pre>
+</section>
+<section>
+    <h2>CI/CD</h2>
+
+    <p>
+        CI/CD is a process that automates building, testing and deploying applications.
+    </p>
+
+    <pre><code>
+Write Code
+    ↓
+Build
+    ↓
+Test
+    ↓
+Deploy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why CI/CD Exists</h2>
+
+    <p>
+        Manual deployment is slow and error-prone.
+    </p>
+
+    <pre><code>
+Developer
+    ↓
+Copy Files
+    ↓
+Login Server
+    ↓
+Restart Application
+    ↓
+Production
+    </code></pre>
+
+    <p>
+        This becomes difficult for large teams.
+    </p>
+</section>
+
+<section>
+    <h2>What Is CI?</h2>
+
+    <p>
+        Continuous Integration automatically validates code changes.
+    </p>
+
+    <pre><code>
+Developer Pushes Code
+         ↓
+Automatic Build
+         ↓
+Automatic Tests
+    </code></pre>
+</section>
+
+<section>
+    <h2>What Is CD?</h2>
+
+    <p>
+        Continuous Deployment or Continuous Delivery automatically releases software.
+    </p>
+
+    <pre><code>
+Build Success
+      ↓
+Deploy To Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>Typical CI/CD Pipeline</h2>
+
+    <pre><code>
+Developer
+   ↓
+Git Repository
+   ↓
+CI/CD Pipeline
+   ↓
+Build
+   ↓
+Test
+   ↓
+Deploy
+   ↓
+Production
+    </code></pre>
+</section>
+
+<section>
+    <h2>Source Control</h2>
+
+    <p>
+        CI/CD starts with source code repositories.
+    </p>
+
+    <pre><code>
+GitHub
+
+GitLab
+
+Bitbucket
+    </code></pre>
+</section>
+
+<section>
+    <h2>Git Workflow</h2>
+
+    <pre><code>
+Developer
+   ↓
+git commit
+   ↓
+git push
+   ↓
+Repository
+    </code></pre>
+</section>
+
+<section>
+    <h2>Pipeline Trigger</h2>
+
+    <pre><code>
+Code Push
+    ↓
+Pipeline Starts
+    </code></pre>
+
+    <p>
+        Most pipelines begin automatically after a code push.
+    </p>
+</section>
+
+<section>
+    <h2>Build Stage</h2>
+
+    <pre><code>
+Source Code
+     ↓
+Compile
+     ↓
+Build Artifact
+    </code></pre>
+
+    <p>
+        Converts source code into deployable output.
+    </p>
+</section>
+
+<section>
+    <h2>Testing Stage</h2>
+
+    <pre><code>
+Unit Tests
+Integration Tests
+Security Tests
+    </code></pre>
+
+    <p>
+        Ensures application quality.
+    </p>
+</section>
+
+<section>
+    <h2>Docker Build Stage</h2>
+
+    <pre><code>
+Application
+    ↓
+Dockerfile
+    ↓
+Docker Image
+    </code></pre>
+</section>
+
+<section>
+    <h2>Docker Registry</h2>
+
+    <p>
+        Stores Docker images.
+    </p>
+
+    <pre><code>
+Docker Hub
+
+AWS ECR
+
+GitHub Container Registry
+    </code></pre>
+</section>
+
+<section>
+    <h2>Deployment Stage</h2>
+
+    <pre><code>
+Docker Image
+      ↓
+Server
+      ↓
+Application Running
+    </code></pre>
+</section>
+
+<section>
+    <h2>Development Environment</h2>
+
+    <pre><code>
+Developer Laptop
+    </code></pre>
+</section>
+
+<section>
+    <h2>Testing Environment</h2>
+
+    <pre><code>
+QA Environment
+    </code></pre>
+
+    <p>
+        Used by testers.
+    </p>
+</section>
+
+<section>
+    <h2>UAT Environment</h2>
+
+    <pre><code>
+User Acceptance Testing
+    </code></pre>
+
+    <p>
+        Business users validate functionality.
+    </p>
+</section>
+
+<section>
+    <h2>Production Environment</h2>
+
+    <pre><code>
+Real Customers
+    </code></pre>
+</section>
+
+<section>
+    <h2>Typical Environment Flow</h2>
+
+    <pre><code>
+Development
+      ↓
+Testing
+      ↓
+UAT
+      ↓
+Production
+    </code></pre>
+</section>
+
+<section>
+    <h2>Jenkins</h2>
+
+    <p>
+        Popular CI/CD automation server.
+    </p>
+
+    <pre><code>
+Git
+ ↓
+Jenkins
+ ↓
+Build
+ ↓
+Deploy
+    </code></pre>
+</section>
+
+<section>
+    <h2>GitHub Actions</h2>
+
+    <p>
+        CI/CD platform integrated with GitHub.
+    </p>
+
+    <pre><code>
+GitHub
+    ↓
+Workflow
+    ↓
+Build
+    ↓
+Deploy
+    </code></pre>
+</section>
+
+<section>
+    <h2>GitLab CI/CD</h2>
+
+    <p>
+        CI/CD integrated into GitLab.
+    </p>
+</section>
+
+<section>
+    <h2>Pipeline Example</h2>
+
+    <pre><code>
+Push Code
+    ↓
+Run Tests
+    ↓
+Build Docker Image
+    ↓
+Push Image
+    ↓
+Deploy Kubernetes
+    </code></pre>
+</section>
+
+<section>
+    <h2>Rollback</h2>
+
+    <p>
+        Return to previous stable version.
+    </p>
+
+    <pre><code>
+Version 2 Failed
+      ↓
+Rollback
+      ↓
+Version 1
+    </code></pre>
+</section>
+
+<section>
+    <h2>Blue-Green Deployment</h2>
+
+    <pre><code>
+Blue Environment
+      ↓
+Current Production
+
+Green Environment
+      ↓
+New Version
+    </code></pre>
+
+    <p>
+        Switch traffic after validation.
+    </p>
+</section>
+
+<section>
+    <h2>Canary Deployment</h2>
+
+    <pre><code>
+5% Users
+      ↓
+New Version
+
+95% Users
+      ↓
+Old Version
+    </code></pre>
+
+    <p>
+        Gradual rollout.
+    </p>
+</section>
+
+<section>
+    <h2>Secrets Management</h2>
+
+    <pre><code>
+Database Password
+
+API Keys
+
+JWT Secret
+    </code></pre>
+
+    <p>
+        Never store secrets directly in source code.
+    </p>
+</section>
+
+<section>
+    <h2>Infrastructure As Code (IaC)</h2>
+
+    <p>
+        Infrastructure managed through code.
+    </p>
+
+    <pre><code>
+Terraform
+
+CloudFormation
+    </code></pre>
+</section>
+
+<section>
+    <h2>Monitoring After Deployment</h2>
+
+    <pre><code>
+CPU Usage
+
+Memory
+
+Errors
+
+Response Time
+    </code></pre>
+</section>
+
+<section>
+    <h2>Banking Deployment Example</h2>
+
+    <pre><code>
+Developer
+ ↓
+GitHub
+ ↓
+GitHub Actions
+ ↓
+Run Tests
+ ↓
+Build Docker Image
+ ↓
+Push Image
+ ↓
+Deploy Kubernetes
+ ↓
+Production
+    </code></pre>
+</section>
+
+<section>
+    <h2>Common CI/CD Tools</h2>
+
+    <table>
+        <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>GitHub Actions</td>
+            <td>CI/CD</td>
+        </tr>
+        <tr>
+            <td>Jenkins</td>
+            <td>CI/CD</td>
+        </tr>
+        <tr>
+            <td>GitLab CI</td>
+            <td>CI/CD</td>
+        </tr>
+        <tr>
+            <td>Docker</td>
+            <td>Container Build</td>
+        </tr>
+        <tr>
+            <td>Kubernetes</td>
+            <td>Deployment Target</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>CI/CD Mental Model</h2>
+
+    <pre><code>
+Developer
+   ↓
+Git Push
+   ↓
+Automatic Build
+   ↓
+Automatic Test
+   ↓
+Automatic Deploy
+   ↓
+Production
+    </code></pre>
+</section>
+<section>
+    <h2>Monitoring & Observability</h2>
+
+    <p>
+        Monitoring is the process of collecting and analyzing system metrics,
+        logs and events to understand system health.
+    </p>
+
+    <pre><code>
+Application
+      ↓
+Metrics
+      ↓
+Monitoring System
+      ↓
+Dashboard / Alerts
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Monitoring Exists</h2>
+
+    <pre><code>
+Application Running
+       ↓
+Unexpected Problem
+       ↓
+Need Visibility
+    </code></pre>
+
+    <p>
+        Monitoring helps detect issues before customers are affected.
+    </p>
+</section>
+
+<section>
+    <h2>Three Pillars Of Observability</h2>
+
+    <ul>
+        <li>Metrics</li>
+        <li>Logs</li>
+        <li>Traces</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Metrics</h2>
+
+    <p>
+        Numeric measurements collected over time.
+    </p>
+
+    <pre><code>
+CPU Usage
+
+Memory Usage
+
+Disk Usage
+
+Request Count
+
+Response Time
+    </code></pre>
+</section>
+
+<section>
+    <h2>Logs</h2>
+
+    <p>
+        Records of events occurring in applications.
+    </p>
+
+    <pre><code>
+INFO
+
+WARNING
+
+ERROR
+
+DEBUG
+    </code></pre>
+</section>
+
+<section>
+    <h2>Trace</h2>
+
+    <p>
+        Tracks a request across multiple services.
+    </p>
+
+    <pre><code>
+User Request
+     ↓
+API Gateway
+     ↓
+Account Service
+     ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>What Should Be Monitored?</h2>
+
+    <ul>
+        <li>CPU Usage</li>
+        <li>Memory Usage</li>
+        <li>Disk Usage</li>
+        <li>Network Usage</li>
+        <li>Database Performance</li>
+        <li>Application Errors</li>
+        <li>API Response Time</li>
+    </ul>
+</section>
+
+<section>
+    <h2>CPU Monitoring</h2>
+
+    <pre><code>
+CPU > 80%
+      ↓
+Alert
+    </code></pre>
+</section>
+
+<section>
+    <h2>Memory Monitoring</h2>
+
+    <pre><code>
+RAM > 90%
+      ↓
+Alert
+    </code></pre>
+</section>
+
+<section>
+    <h2>Disk Monitoring</h2>
+
+    <pre><code>
+Disk > 85%
+      ↓
+Alert
+    </code></pre>
+</section>
+
+<section>
+    <h2>Response Time Monitoring</h2>
+
+    <pre><code>
+Normal
+
+100 ms
+
+Slow
+
+3000 ms
+    </code></pre>
+</section>
+
+<section>
+    <h2>Error Rate Monitoring</h2>
+
+    <pre><code>
+Requests
+    ↓
+Errors
+    ↓
+Percentage
+    </code></pre>
+
+    <p>
+        Measures application stability.
+    </p>
+</section>
+
+<section>
+    <h2>Prometheus</h2>
+
+    <p>
+        Open-source metrics collection system.
+    </p>
+
+    <pre><code>
+Application
+      ↓
+Prometheus
+      ↓
+Metrics Storage
+    </code></pre>
+</section>
+
+<section>
+    <h2>How Prometheus Works</h2>
+
+    <pre><code>
+Application
+      ↓
+/metrics Endpoint
+      ↓
+Prometheus Scrapes Data
+    </code></pre>
+</section>
+
+<section>
+    <h2>Example Metrics</h2>
+
+    <pre><code>
+cpu_usage
+
+memory_usage
+
+request_count
+
+response_time
+    </code></pre>
+</section>
+
+<section>
+    <h2>Grafana</h2>
+
+    <p>
+        Dashboard and visualization platform.
+    </p>
+
+    <pre><code>
+Prometheus
+      ↓
+Grafana
+      ↓
+Dashboard
+    </code></pre>
+</section>
+
+<section>
+    <h2>Grafana Dashboard</h2>
+
+    <pre><code>
+CPU Usage Graph
+
+Memory Usage Graph
+
+Request Graph
+
+Error Graph
+    </code></pre>
+</section>
+
+<section>
+    <h2>Prometheus + Grafana</h2>
+
+    <pre><code>
+Application
+      ↓
+Prometheus
+      ↓
+Grafana
+      ↓
+Dashboard
+    </code></pre>
+</section>
+
+<section>
+    <h2>Alerting</h2>
+
+    <p>
+        Automatically notify engineers about issues.
+    </p>
+
+    <pre><code>
+High CPU
+    ↓
+Alert
+    ↓
+Email / Slack
+    </code></pre>
+</section>
+
+<section>
+    <h2>Application Logging</h2>
+
+    <pre><code>
+INFO User Login
+
+ERROR Database Failed
+
+WARNING Slow Query
+    </code></pre>
+</section>
+
+<section>
+    <h2>Centralized Logging</h2>
+
+    <pre><code>
+Server 1 Logs
+Server 2 Logs
+Server 3 Logs
+      ↓
+Central Log System
+    </code></pre>
+</section>
+
+<section>
+    <h2>ELK Stack</h2>
+
+    <pre><code>
+Elasticsearch
+
+Logstash
+
+Kibana
+    </code></pre>
+
+    <p>
+        Popular logging platform.
+    </p>
+</section>
+
+<section>
+    <h2>ELK Architecture</h2>
+
+    <pre><code>
+Application Logs
+       ↓
+Logstash
+       ↓
+Elasticsearch
+       ↓
+Kibana
+    </code></pre>
+</section>
+
+<section>
+    <h2>Distributed Tracing</h2>
+
+    <pre><code>
+User Request
+      ↓
+Service A
+      ↓
+Service B
+      ↓
+Database
+    </code></pre>
+
+    <p>
+        Helps find slow services.
+    </p>
+</section>
+
+<section>
+    <h2>OpenTelemetry</h2>
+
+    <p>
+        Standard framework for metrics, logs and traces.
+    </p>
+</section>
+
+<section>
+    <h2>SLI</h2>
+
+    <p>
+        Service Level Indicator.
+    </p>
+
+    <pre><code>
+Availability
+
+Response Time
+
+Error Rate
+    </code></pre>
+</section>
+
+<section>
+    <h2>SLO</h2>
+
+    <p>
+        Service Level Objective.
+    </p>
+
+    <pre><code>
+99.9% Availability
+    </code></pre>
+</section>
+
+<section>
+    <h2>SLA</h2>
+
+    <p>
+        Service Level Agreement.
+    </p>
+
+    <pre><code>
+Contractual Guarantee
+    </code></pre>
+</section>
+
+<section>
+    <h2>Example Production Monitoring</h2>
+
+    <pre><code>
+Users
+ ↓
+Nginx
+ ↓
+Application
+ ↓
+Redis
+ ↓
+PostgreSQL
+
+All Components Monitored
+    </code></pre>
+</section>
+
+<section>
+    <h2>Banking Example</h2>
+
+    <pre><code>
+API Response Time
+
+Transaction Errors
+
+Database Health
+
+Kafka Lag
+
+Redis Health
+
+CPU Usage
+    </code></pre>
+</section>
+
+<section>
+    <h2>Incident Management</h2>
+
+    <pre><code>
+Alert
+ ↓
+Investigation
+ ↓
+Root Cause
+ ↓
+Fix
+ ↓
+Postmortem
+    </code></pre>
+</section>
+
+<section>
+    <h2>Root Cause Analysis (RCA)</h2>
+
+    <p>
+        Finding the actual reason for failure.
+    </p>
+
+    <pre><code>
+API Slow
+ ↓
+Database Slow
+ ↓
+Missing Index
+ ↓
+Root Cause
+    </code></pre>
+</section>
+
+<section>
+    <h2>Common Monitoring Tools</h2>
+
+    <table>
+        <tr>
+            <th>Tool</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>Prometheus</td>
+            <td>Metrics Collection</td>
+        </tr>
+        <tr>
+            <td>Grafana</td>
+            <td>Dashboards</td>
+        </tr>
+        <tr>
+            <td>ELK Stack</td>
+            <td>Logging</td>
+        </tr>
+        <tr>
+            <td>OpenTelemetry</td>
+            <td>Tracing</td>
+        </tr>
+        <tr>
+            <td>CloudWatch</td>
+            <td>AWS Monitoring</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Mental Model</h2>
+
+    <pre><code>
+Metrics
+ ↓
+Prometheus
+
+Logs
+ ↓
+ELK
+
+Dashboards
+ ↓
+Grafana
+
+Tracing
+ ↓
+OpenTelemetry
+    </code></pre>
+</section>
+<section>
+    <h2>Authentication & Authorization</h2>
+
+    <p>
+        Authentication verifies who the user is.
+        Authorization determines what the user can access.
+    </p>
+
+    <pre><code>
+Authentication
+      ↓
+Who Are You?
+
+Authorization
+      ↓
+What Can You Access?
+    </code></pre>
+</section>
+
+<section>
+    <h2>Authentication Example</h2>
+
+    <pre><code>
+Username
+Password
+     ↓
+Verify User
+     ↓
+Login Success
+    </code></pre>
+</section>
+
+<section>
+    <h2>Authorization Example</h2>
+
+    <pre><code>
+Admin User
+     ↓
+Can Create Users
+
+Normal User
+     ↓
+Cannot Create Users
+    </code></pre>
+</section>
+
+<section>
+    <h2>Authentication vs Authorization</h2>
+
+    <table>
+        <tr>
+            <th>Authentication</th>
+            <th>Authorization</th>
+        </tr>
+        <tr>
+            <td>Identity Verification</td>
+            <td>Permission Verification</td>
+        </tr>
+        <tr>
+            <td>Who Are You?</td>
+            <td>What Can You Do?</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Traditional Login Flow</h2>
+
+    <pre><code>
+User
+ ↓
+Login Page
+ ↓
+Server
+ ↓
+Database
+ ↓
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>Password Storage</h2>
+
+    <p>
+        Passwords should never be stored in plain text.
+    </p>
+
+    <pre><code>
+Wrong
+
+password123
+
+Correct
+
+Hashed Password
+    </code></pre>
+</section>
+
+<section>
+    <h2>Hashing</h2>
+
+    <p>
+        Hashing converts data into a fixed-length value.
+    </p>
+
+    <pre><code>
+Password
+   ↓
+Hash Function
+   ↓
+Hash Value
+    </code></pre>
+</section>
+
+<section>
+    <h2>Popular Password Hash Algorithms</h2>
+
+    <ul>
+        <li>bcrypt</li>
+        <li>Argon2</li>
+        <li>scrypt</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Password Verification</h2>
+
+    <pre><code>
+Entered Password
+       ↓
+Hash
+       ↓
+Compare Stored Hash
+       ↓
+Login Result
+    </code></pre>
+</section>
+
+<section>
+    <h2>Session Based Authentication</h2>
+
+    <pre><code>
+User Login
+      ↓
+Server Creates Session
+      ↓
+Session ID
+      ↓
+Browser Cookie
+    </code></pre>
+</section>
+
+<section>
+    <h2>Session Storage</h2>
+
+    <pre><code>
+Session ID
+      ↓
+Redis
+
+or
+
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Session Flow</h2>
+
+    <pre><code>
+Login
+ ↓
+Session Created
+ ↓
+Cookie Sent
+ ↓
+Subsequent Requests
+ ↓
+Session Validation
+    </code></pre>
+</section>
+
+<section>
+    <h2>JWT (JSON Web Token)</h2>
+
+    <p>
+        JWT is a self-contained authentication token.
+    </p>
+
+    <pre><code>
+User Login
+      ↓
+JWT Issued
+      ↓
+API Requests
+    </code></pre>
+</section>
+
+<section>
+    <h2>JWT Structure</h2>
+
+    <pre><code>
+Header
+
+Payload
+
+Signature
+    </code></pre>
+</section>
+
+<section>
+    <h2>JWT Flow</h2>
+
+    <pre><code>
+User Login
+      ↓
+Server
+      ↓
+JWT Token
+      ↓
+Client Stores Token
+      ↓
+API Requests
+    </code></pre>
+</section>
+
+<section>
+    <h2>JWT Validation</h2>
+
+    <pre><code>
+Request
+ ↓
+JWT
+ ↓
+Verify Signature
+ ↓
+Allow Access
+    </code></pre>
+</section>
+
+<section>
+    <h2>JWT Payload Example</h2>
+
+    <pre><code>
+User ID
+
+Role
+
+Expiry Time
+    </code></pre>
+</section>
+
+<section>
+    <h2>Access Token</h2>
+
+    <p>
+        Short-lived token used for API access.
+    </p>
+
+    <pre><code>
+Login
+ ↓
+Access Token
+ ↓
+API Calls
+    </code></pre>
+</section>
+
+<section>
+    <h2>Refresh Token</h2>
+
+    <p>
+        Used to obtain a new access token.
+    </p>
+
+    <pre><code>
+Expired Access Token
+        ↓
+Refresh Token
+        ↓
+New Access Token
+    </code></pre>
+</section>
+
+<section>
+    <h2>OAuth 2.0</h2>
+
+    <p>
+        Authorization framework for third-party access.
+    </p>
+
+    <pre><code>
+User
+ ↓
+Google Login
+ ↓
+Application
+    </code></pre>
+</section>
+
+<section>
+    <h2>OAuth Example</h2>
+
+    <pre><code>
+Login With Google
+
+Login With GitHub
+
+Login With Microsoft
+    </code></pre>
+</section>
+
+<section>
+    <h2>OAuth Participants</h2>
+
+    <pre><code>
+User
+
+Application
+
+Authorization Server
+
+Resource Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>OAuth Flow</h2>
+
+    <pre><code>
+User
+ ↓
+Google Login
+ ↓
+Consent Screen
+ ↓
+Authorization Code
+ ↓
+Access Token
+    </code></pre>
+</section>
+
+<section>
+    <h2>Single Sign-On (SSO)</h2>
+
+    <p>
+        One login for multiple applications.
+    </p>
+
+    <pre><code>
+User
+ ↓
+Login Once
+ ↓
+
+Application A
+
+Application B
+
+Application C
+    </code></pre>
+</section>
+
+<section>
+    <h2>SSO Example</h2>
+
+    <pre><code>
+Corporate Login
+
+ ↓
+
+Email
+
+HR System
+
+Banking Portal
+    </code></pre>
+</section>
+
+<section>
+    <h2>Role Based Access Control (RBAC)</h2>
+
+    <pre><code>
+Admin
+
+Manager
+
+User
+
+Auditor
+    </code></pre>
+</section>
+
+<section>
+    <h2>RBAC Flow</h2>
+
+    <pre><code>
+Login
+ ↓
+Role Check
+ ↓
+Permission Check
+ ↓
+Access Decision
+    </code></pre>
+</section>
+
+<section>
+    <h2>Multi-Factor Authentication (MFA)</h2>
+
+    <pre><code>
+Password
+   +
+OTP
+
+or
+
+Password
+   +
+Authenticator App
+    </code></pre>
+</section>
+
+<section>
+    <h2>MFA Benefits</h2>
+
+    <p>
+        Protects accounts even if passwords are compromised.
+    </p>
+</section>
+
+<section>
+    <h2>API Key Authentication</h2>
+
+    <pre><code>
+Client
+ ↓
+API Key
+ ↓
+Server Validation
+    </code></pre>
+</section>
+
+<section>
+    <h2>Common Authentication Attacks</h2>
+
+    <ul>
+        <li>Password Brute Force</li>
+        <li>Credential Stuffing</li>
+        <li>Session Hijacking</li>
+        <li>Token Theft</li>
+        <li>Phishing</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Security Best Practices</h2>
+
+    <ul>
+        <li>Use HTTPS</li>
+        <li>Hash Passwords</li>
+        <li>Enable MFA</li>
+        <li>Short Access Token Lifetime</li>
+        <li>Rotate Secrets</li>
+        <li>Implement Rate Limiting</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Banking Login Example</h2>
+
+    <pre><code>
+Username
+ ↓
+Password
+ ↓
+OTP
+ ↓
+JWT Token
+ ↓
+Access Banking APIs
+    </code></pre>
+</section>
+
+<section>
+    <h2>Modern API Authentication</h2>
+
+    <pre><code>
+Mobile App
+ ↓
+OAuth Login
+ ↓
+JWT Access Token
+ ↓
+API Gateway
+ ↓
+Microservices
+    </code></pre>
+</section>
+
+<section>
+    <h2>Authentication Mental Model</h2>
+
+    <pre><code>
+Authentication
+ ↓
+Who Are You?
+
+Authorization
+ ↓
+What Can You Do?
+
+Session/JWT
+ ↓
+Maintain Access
+    </code></pre>
+</section>
+
+<section>
+    <h2>Microservices Architecture</h2>
+
+    <p>
+        Microservices is an architectural style where an application is
+        divided into small independent services.
+    </p>
+
+    <pre><code>
+One Large Application
+        ↓
+Many Small Services
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Microservices Exist</h2>
+
+    <p>
+        Large applications become difficult to maintain.
+    </p>
+
+    <pre><code>
+Accounts
+Cards
+Loans
+Customers
+Payments
+Notifications
+
+All Inside One Application
+    </code></pre>
+</section>
+
+<section>
+    <h2>Monolithic Architecture</h2>
+
+    <pre><code>
+Application
+
+├── Accounts
+├── Cards
+├── Loans
+├── Customers
+├── Payments
+└── Notifications
+    </code></pre>
+
+    <p>
+        Everything runs inside one application.
+    </p>
+</section>
+
+<section>
+    <h2>Problems With Monolith</h2>
+
+    <ul>
+        <li>Large Codebase</li>
+        <li>Difficult Scaling</li>
+        <li>Slow Deployment</li>
+        <li>Single Point Of Failure</li>
+        <li>Technology Limitations</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Microservices Architecture</h2>
+
+    <pre><code>
+Account Service
+
+Card Service
+
+Loan Service
+
+Customer Service
+
+Notification Service
+    </code></pre>
+
+    <p>
+        Each service runs independently.
+    </p>
+</section>
+
+<section>
+    <h2>Real Banking Example</h2>
+
+    <pre><code>
+Customer Service
+
+Account Service
+
+Card Service
+
+Loan Service
+
+Transaction Service
+
+Notification Service
+
+Fraud Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Microservice Characteristics</h2>
+
+    <ul>
+        <li>Independent Deployment</li>
+        <li>Independent Scaling</li>
+        <li>Independent Databases</li>
+        <li>Loose Coupling</li>
+        <li>High Availability</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Typical Microservice Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+Load Balancer
+ ↓
+API Gateway
+ ↓
+
+Account Service
+
+Card Service
+
+Loan Service
+
+Customer Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>API Gateway</h2>
+
+    <p>
+        Single entry point for all requests.
+    </p>
+
+    <pre><code>
+Client
+ ↓
+API Gateway
+ ↓
+Microservices
+    </code></pre>
+</section>
+
+<section>
+    <h2>Responsibilities Of API Gateway</h2>
+
+    <ul>
+        <li>Routing</li>
+        <li>Authentication</li>
+        <li>Authorization</li>
+        <li>Rate Limiting</li>
+        <li>Logging</li>
+        <li>Monitoring</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Service Discovery</h2>
+
+    <p>
+        Services must find each other dynamically.
+    </p>
+
+    <pre><code>
+Account Service
+      ↓
+Find Card Service
+      ↓
+Communication
+    </code></pre>
+</section>
+
+<section>
+    <h2>Synchronous Communication</h2>
+
+    <pre><code>
+Account Service
+       ↓ HTTP
+Card Service
+    </code></pre>
+
+    <p>
+        Caller waits for response.
+    </p>
+</section>
+
+<section>
+    <h2>Asynchronous Communication</h2>
+
+    <pre><code>
+Account Service
+      ↓
+Kafka
+      ↓
+Notification Service
+    </code></pre>
+
+    <p>
+        Services communicate through events.
+    </p>
+</section>
+
+<section>
+    <h2>Event Driven Architecture</h2>
+
+    <pre><code>
+Account Created
+      ↓
+Event Published
+      ↓
+Interested Services React
+    </code></pre>
+</section>
+
+<section>
+    <h2>Example Event Flow</h2>
+
+    <pre><code>
+Create Account
+      ↓
+Kafka
+
+      ↓
+Notification Service
+
+      ↓
+Audit Service
+
+      ↓
+Analytics Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Database Per Service</h2>
+
+    <pre><code>
+Account Service
+      ↓
+Account DB
+
+Card Service
+      ↓
+Card DB
+
+Loan Service
+      ↓
+Loan DB
+    </code></pre>
+
+    <p>
+        Preferred microservice pattern.
+    </p>
+</section>
+
+<section>
+    <h2>Why Separate Databases?</h2>
+
+    <ul>
+        <li>Service Independence</li>
+        <li>Independent Scaling</li>
+        <li>Fault Isolation</li>
+        <li>Security Isolation</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Shared Database Problem</h2>
+
+    <pre><code>
+Account Service
+      ↓
+
+Card Service
+      ↓
+
+Loan Service
+      ↓
+
+One Database
+    </code></pre>
+
+    <p>
+        Creates tight coupling.
+    </p>
+</section>
+
+<section>
+    <h2>Distributed Transactions Problem</h2>
+
+    <pre><code>
+Transfer Money
+       ↓
+Account Service
+
+Card Service
+
+Audit Service
+    </code></pre>
+
+    <p>
+        Multiple services must remain consistent.
+    </p>
+</section>
+
+<section>
+    <h2>Saga Pattern</h2>
+
+    <p>
+        Handles distributed transactions across services.
+    </p>
+
+    <pre><code>
+Step 1 Success
+Step 2 Success
+Step 3 Failed
+
+Compensating Actions
+    </code></pre>
+</section>
+
+<section>
+    <h2>Circuit Breaker Pattern</h2>
+
+    <pre><code>
+Service Down
+     ↓
+Circuit Open
+     ↓
+Stop Sending Requests
+    </code></pre>
+
+    <p>
+        Prevents cascading failures.
+    </p>
+</section>
+
+<section>
+    <h2>Retry Pattern</h2>
+
+    <pre><code>
+Request Failed
+      ↓
+Retry
+      ↓
+Success
+    </code></pre>
+</section>
+
+<section>
+    <h2>Bulkhead Pattern</h2>
+
+    <pre><code>
+Failure In One Service
+        ↓
+Other Services Continue
+    </code></pre>
+</section>
+
+<section>
+    <h2>Caching In Microservices</h2>
+
+    <pre><code>
+Service
+  ↓
+Redis
+  ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Containerized Microservices</h2>
+
+    <pre><code>
+Account Service Container
+
+Card Service Container
+
+Loan Service Container
+    </code></pre>
+</section>
+
+<section>
+    <h2>Kubernetes Deployment</h2>
+
+    <pre><code>
+Kubernetes
+
+ ↓
+
+Account Pods
+
+Card Pods
+
+Loan Pods
+    </code></pre>
+</section>
+
+<section>
+    <h2>Monitoring Microservices</h2>
+
+    <pre><code>
+Prometheus
+     ↓
+Metrics
+
+Grafana
+     ↓
+Dashboard
+    </code></pre>
+</section>
+
+<section>
+    <h2>Logging Microservices</h2>
+
+    <pre><code>
+Service Logs
+      ↓
+ELK Stack
+      ↓
+Centralized Logs
+    </code></pre>
+</section>
+
+<section>
+    <h2>Security In Microservices</h2>
+
+    <pre><code>
+User
+ ↓
+JWT
+ ↓
+API Gateway
+ ↓
+Microservices
+    </code></pre>
+</section>
+
+<section>
+    <h2>Real Banking Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+Load Balancer
+ ↓
+API Gateway
+ ↓
+
+Auth Service
+
+Customer Service
+
+Account Service
+
+Card Service
+
+Loan Service
+
+Transaction Service
+
+Notification Service
+
+Fraud Service
+
+ ↓
+
+Kafka
+
+ ↓
+
+Redis
+
+ ↓
+
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Advantages Of Microservices</h2>
+
+    <ul>
+        <li>Independent Deployment</li>
+        <li>Independent Scaling</li>
+        <li>Technology Flexibility</li>
+        <li>Fault Isolation</li>
+        <li>High Availability</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Disadvantages Of Microservices</h2>
+
+    <ul>
+        <li>Complex Architecture</li>
+        <li>Network Overhead</li>
+        <li>Distributed Transactions</li>
+        <li>Complex Monitoring</li>
+        <li>Complex Debugging</li>
+    </ul>
+</section>
+
+<section>
+    <h2>When Not To Use Microservices</h2>
+
+    <ul>
+        <li>Small Projects</li>
+        <li>Small Teams</li>
+        <li>Simple Applications</li>
+        <li>Startup MVPs</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Mental Model</h2>
+
+    <pre><code>
+Monolith
+
+One Big Application
+
+----------------
+
+Microservices
+
+Many Small Applications
+Working Together
+    </code></pre>
+</section>
+
+<section>
+    <h2>Enterprise Banking Architecture</h2>
+
+    <p>
+        Enterprise banking systems are large distributed systems that
+        manage customers, accounts, cards, loans, transactions and
+        regulatory requirements.
+    </p>
+
+    <pre><code>
+Customers
+Accounts
+Cards
+Loans
+Transactions
+Notifications
+Reports
+    </code></pre>
+</section>
+
+<section>
+    <h2>Main Banking Modules</h2>
+
+    <pre><code>
+Customer Management
+
+Account Management
+
+Card Management
+
+Loan Management
+
+Transaction Processing
+
+Fraud Detection
+
+Notification System
+
+Reporting System
+    </code></pre>
+</section>
+
+<section>
+    <h2>High Level Banking Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+Load Balancer
+ ↓
+API Gateway
+ ↓
+
+Authentication Service
+
+Customer Service
+
+Account Service
+
+Card Service
+
+Loan Service
+
+Transaction Service
+
+Notification Service
+
+Fraud Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Authentication Service</h2>
+
+    <p>
+        Handles login and security.
+    </p>
+
+    <pre><code>
+Username
+Password
+OTP
+JWT
+    </code></pre>
+</section>
+
+<section>
+    <h2>Customer Service</h2>
+
+    <p>
+        Stores customer information.
+    </p>
+
+    <pre><code>
+Customer ID
+
+Name
+
+Address
+
+Email
+
+Mobile Number
+    </code></pre>
+</section>
+
+<section>
+    <h2>Account Service</h2>
+
+    <p>
+        Handles account lifecycle.
+    </p>
+
+    <pre><code>
+Create Account
+
+Update Account
+
+Close Account
+
+Block Account
+    </code></pre>
+</section>
+
+<section>
+    <h2>Card Service</h2>
+
+    <p>
+        Manages debit and credit cards.
+    </p>
+
+    <pre><code>
+Issue Card
+
+Replace Card
+
+Block Card
+
+Activate Card
+    </code></pre>
+</section>
+
+<section>
+    <h2>Loan Service</h2>
+
+    <pre><code>
+Loan Application
+
+Loan Approval
+
+EMI Calculation
+
+Loan Closure
+    </code></pre>
+</section>
+
+<section>
+    <h2>Transaction Service</h2>
+
+    <p>
+        Core banking transaction engine.
+    </p>
+
+    <pre><code>
+Credit
+
+Debit
+
+Transfer
+
+Balance Inquiry
+    </code></pre>
+</section>
+
+<section>
+    <h2>Notification Service</h2>
+
+    <pre><code>
+SMS
+
+Email
+
+Push Notification
+    </code></pre>
+</section>
+
+<section>
+    <h2>Fraud Service</h2>
+
+    <pre><code>
+Transaction Monitoring
+
+Risk Scoring
+
+Suspicious Activity Detection
+    </code></pre>
+</section>
+
+<section>
+    <h2>Typical Customer Onboarding Flow</h2>
+
+    <pre><code>
+Customer Registers
+        ↓
+KYC Verification
+        ↓
+Customer Created
+        ↓
+Account Created
+        ↓
+Card Issued
+        ↓
+Notification Sent
+    </code></pre>
+</section>
+
+<section>
+    <h2>Account Creation Flow</h2>
+
+    <pre><code>
+Request
+   ↓
+Customer Validation
+   ↓
+Account Number Generation
+   ↓
+Database Save
+   ↓
+Kafka Event
+   ↓
+Notification
+    </code></pre>
+</section>
+
+<section>
+    <h2>Card Issuance Flow</h2>
+
+    <pre><code>
+Account Created
+      ↓
+Card Request
+      ↓
+Generate Card Number
+      ↓
+Assign BIN
+      ↓
+Save Card
+      ↓
+Send Notification
+    </code></pre>
+</section>
+
+<section>
+    <h2>Fund Transfer Flow</h2>
+
+    <pre><code>
+Debit Account
+      ↓
+Credit Account
+      ↓
+Create Transaction Record
+      ↓
+Audit Record
+      ↓
+Notification
+    </code></pre>
+</section>
+
+<section>
+    <h2>Audit Logging</h2>
+
+    <p>
+        Every important action must be recorded.
+    </p>
+
+    <pre><code>
+Who?
+
+When?
+
+What Changed?
+
+Old Value?
+
+New Value?
+    </code></pre>
+</section>
+
+<section>
+    <h2>Core Banking Database Tables</h2>
+
+    <pre><code>
+customers
+
+accounts
+
+cards
+
+transactions
+
+loans
+
+audit_logs
+    </code></pre>
+</section>
+
+<section>
+    <h2>Database Example</h2>
+
+    <pre><code>
+Customer
+   ↓
+Multiple Accounts
+
+Account
+   ↓
+Multiple Cards
+
+Account
+   ↓
+Multiple Transactions
+    </code></pre>
+</section>
+
+<section>
+    <h2>Caching Layer</h2>
+
+    <pre><code>
+API
+ ↓
+Redis
+ ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Frequently used data is cached.
+    </p>
+</section>
+
+<section>
+    <h2>Event Driven Banking</h2>
+
+    <pre><code>
+Account Created
+       ↓
+Kafka Event
+       ↓
+Notification Service
+
+       ↓
+Audit Service
+
+       ↓
+Analytics Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Kafka Is Useful</h2>
+
+    <pre><code>
+Transaction Completed
+        ↓
+Many Systems Need To Know
+        ↓
+Kafka Distributes Event
+    </code></pre>
+</section>
+
+<section>
+    <h2>API Gateway</h2>
+
+    <pre><code>
+Mobile App
+      ↓
+API Gateway
+      ↓
+Microservices
+    </code></pre>
+</section>
+
+<section>
+    <h2>Security Layers</h2>
+
+    <pre><code>
+HTTPS
+
+JWT
+
+MFA
+
+Rate Limiting
+
+Encryption
+
+Audit Logging
+    </code></pre>
+</section>
+
+<section>
+    <h2>Data Encryption</h2>
+
+    <pre><code>
+Card Number
+
+PIN
+
+Personal Data
+
+Sensitive Information
+    </code></pre>
+
+    <p>
+        Must be encrypted at rest and in transit.
+    </p>
+</section>
+
+<section>
+    <h2>PCI DSS Concepts</h2>
+
+    <p>
+        Security standards for payment card systems.
+    </p>
+
+    <pre><code>
+Card Security
+
+Access Control
+
+Monitoring
+
+Encryption
+    </code></pre>
+</section>
+
+<section>
+    <h2>High Availability Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+Load Balancer
+
+ ↙      ↘
+
+Server1  Server2
+
+ ↓          ↓
+
+Database Replicas
+    </code></pre>
+</section>
+
+<section>
+    <h2>Database Replication</h2>
+
+    <pre><code>
+Primary Database
+      ↓
+Replica Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Disaster Recovery</h2>
+
+    <pre><code>
+Primary Region
+      ↓
+Backup Region
+      ↓
+Restore Capability
+    </code></pre>
+</section>
+
+<section>
+    <h2>Monitoring Banking Systems</h2>
+
+    <pre><code>
+Transaction Failures
+
+API Latency
+
+Database Health
+
+Kafka Health
+
+CPU Usage
+
+Memory Usage
+    </code></pre>
+</section>
+
+<section>
+    <h2>CI/CD In Banking</h2>
+
+    <pre><code>
+Code
+ ↓
+Build
+ ↓
+Test
+ ↓
+Security Scan
+ ↓
+Approval
+ ↓
+Production
+    </code></pre>
+</section>
+
+<section>
+    <h2>Typical Mobile Banking Flow</h2>
+
+    <pre><code>
+Mobile App
+ ↓
+HTTPS
+ ↓
+Load Balancer
+ ↓
+API Gateway
+ ↓
+Authentication Service
+ ↓
+Account Service
+ ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Banking Production Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+DNS
+ ↓
+Load Balancer
+ ↓
+API Gateway
+ ↓
+
+Auth Service
+
+Customer Service
+
+Account Service
+
+Card Service
+
+Loan Service
+
+Transaction Service
+
+Notification Service
+
+Fraud Service
+
+ ↓
+
+Kafka
+
+ ↓
+
+Redis
+
+ ↓
+
+PostgreSQL Cluster
+    </code></pre>
+</section>
+
+<section>
+    <h2>Important Banking Principles</h2>
+
+    <ul>
+        <li>Security First</li>
+        <li>Audit Everything</li>
+        <li>High Availability</li>
+        <li>Data Integrity</li>
+        <li>Encryption Everywhere</li>
+        <li>Disaster Recovery</li>
+        <li>Regulatory Compliance</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Mental Model</h2>
+
+    <pre><code>
+Customer
+    ↓
+Authentication
+    ↓
+API Gateway
+    ↓
+Banking Services
+    ↓
+Database
+
+Events
+    ↓
+Kafka
+
+Cache
+    ↓
+Redis
+    </code></pre>
+</section>
+<section>
+    <h2>Design Patterns</h2>
+
+    <p>
+        Design patterns are proven solutions to recurring software design problems.
+    </p>
+
+    <pre><code>
+Problem
+   ↓
+Pattern
+   ↓
+Reusable Solution
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Design Patterns Exist</h2>
+
+    <p>
+        Without patterns, every developer solves the same problem differently.
+    </p>
+
+    <pre><code>
+Developer A
+   ↓
+One Solution
+
+Developer B
+   ↓
+Different Solution
+
+Developer C
+   ↓
+Another Solution
+    </code></pre>
+
+    <p>
+        Design patterns provide standard approaches.
+    </p>
+</section>
+
+<section>
+    <h2>Main Categories</h2>
+
+    <pre><code>
+Creational Patterns
+
+Structural Patterns
+
+Behavioral Patterns
+    </code></pre>
+</section>
+
+<section>
+    <h2>Creational Patterns</h2>
+
+    <p>
+        Focus on object creation.
+    </p>
+
+    <pre><code>
+Factory
+
+Singleton
+
+Builder
+    </code></pre>
+</section>
+
+<section>
+    <h2>Structural Patterns</h2>
+
+    <p>
+        Focus on object relationships.
+    </p>
+
+    <pre><code>
+Adapter
+
+Facade
+
+Decorator
+    </code></pre>
+</section>
+
+<section>
+    <h2>Behavioral Patterns</h2>
+
+    <p>
+        Focus on communication and behavior.
+    </p>
+
+    <pre><code>
+Strategy
+
+Observer
+
+Command
+    </code></pre>
+</section>
+
+<section>
+    <h2>Singleton Pattern</h2>
+
+    <p>
+        Ensures only one instance exists.
+    </p>
+
+    <pre><code>
+Application
+      ↓
+One Object
+      ↓
+Shared Everywhere
+    </code></pre>
+</section>
+
+<section>
+    <h2>Singleton Example</h2>
+
+    <pre><code>
+Database Connection Manager
+
+Configuration Manager
+
+Logger
+    </code></pre>
+</section>
+
+<section>
+    <h2>Factory Pattern</h2>
+
+    <p>
+        Creates objects without exposing creation logic.
+    </p>
+
+    <pre><code>
+Application
+      ↓
+Factory
+      ↓
+Required Object
+    </code></pre>
+</section>
+
+<section>
+    <h2>Factory Example</h2>
+
+    <pre><code>
+Card Factory
+
+Debit Card
+
+Credit Card
+
+Prepaid Card
+    </code></pre>
+</section>
+
+<section>
+    <h2>Builder Pattern</h2>
+
+    <p>
+        Creates complex objects step by step.
+    </p>
+
+    <pre><code>
+Customer Builder
+      ↓
+Name
+Address
+Email
+Mobile
+      ↓
+Customer Object
+    </code></pre>
+</section>
+
+<section>
+    <h2>Adapter Pattern</h2>
+
+    <p>
+        Converts one interface into another.
+    </p>
+
+    <pre><code>
+Old System
+      ↓
+Adapter
+      ↓
+New System
+    </code></pre>
+</section>
+
+<section>
+    <h2>Banking Adapter Example</h2>
+
+    <pre><code>
+Legacy Core Banking
+         ↓
+Adapter
+         ↓
+Modern REST API
+    </code></pre>
+</section>
+
+<section>
+    <h2>Facade Pattern</h2>
+
+    <p>
+        Provides a simplified interface to complex systems.
+    </p>
+
+    <pre><code>
+Client
+  ↓
+Facade
+  ↓
+Multiple Services
+    </code></pre>
+</section>
+
+<section>
+    <h2>Facade Example</h2>
+
+    <pre><code>
+Open Account
+
+ ↓
+
+Customer Service
+
+Account Service
+
+Card Service
+
+Notification Service
+    </code></pre>
+
+    <p>
+        Client calls one method instead of many.
+    </p>
+</section>
+
+<section>
+    <h2>Decorator Pattern</h2>
+
+    <p>
+        Adds functionality without modifying existing code.
+    </p>
+
+    <pre><code>
+Original Object
+       ↓
+Decorator
+       ↓
+Enhanced Object
+    </code></pre>
+</section>
+
+<section>
+    <h2>Decorator Example</h2>
+
+    <pre><code>
+Transaction Service
+
+ ↓
+
+Logging
+
+ ↓
+
+Encryption
+
+ ↓
+
+Auditing
+    </code></pre>
+</section>
+
+<section>
+    <h2>Strategy Pattern</h2>
+
+    <p>
+        Allows selecting an algorithm at runtime.
+    </p>
+
+    <pre><code>
+Operation
+    ↓
+Choose Strategy
+    ↓
+Execute
+    </code></pre>
+</section>
+
+<section>
+    <h2>Strategy Example</h2>
+
+    <pre><code>
+Payment
+
+ ↓
+
+UPI Strategy
+
+Card Strategy
+
+Net Banking Strategy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Observer Pattern</h2>
+
+    <p>
+        One object notifies many objects about changes.
+    </p>
+
+    <pre><code>
+Event
+  ↓
+Observers Notified
+    </code></pre>
+</section>
+
+<section>
+    <h2>Observer Example</h2>
+
+    <pre><code>
+Account Created
+      ↓
+
+Notification Service
+
+Audit Service
+
+Analytics Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Observer vs Kafka</h2>
+
+    <pre><code>
+Observer
+   ↓
+Same Application
+
+Kafka
+   ↓
+Different Services
+    </code></pre>
+</section>
+
+<section>
+    <h2>Command Pattern</h2>
+
+    <p>
+        Encapsulates requests as objects.
+    </p>
+
+    <pre><code>
+Transfer Money Command
+
+Block Card Command
+
+Create Account Command
+    </code></pre>
+</section>
+
+<section>
+    <h2>Repository Pattern</h2>
+
+    <p>
+        Separates database access from business logic.
+    </p>
+
+    <pre><code>
+Service Layer
+      ↓
+Repository
+      ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Repository Example</h2>
+
+    <pre><code>
+Account Service
+      ↓
+Account Repository
+      ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Dependency Injection (DI)</h2>
+
+    <p>
+        Objects receive dependencies instead of creating them.
+    </p>
+
+    <pre><code>
+Application
+      ↓
+Inject Dependency
+      ↓
+Use Dependency
+    </code></pre>
+</section>
+
+<section>
+    <h2>Dependency Injection Example</h2>
+
+    <pre><code>
+Account Service
+
+Receives
+
+Database Connection
+
+Logger
+
+Cache
+    </code></pre>
+</section>
+
+<section>
+    <h2>Benefits Of Dependency Injection</h2>
+
+    <ul>
+        <li>Loose Coupling</li>
+        <li>Easier Testing</li>
+        <li>Reusable Components</li>
+        <li>Better Maintainability</li>
+    </ul>
+</section>
+
+<section>
+    <h2>MVC Pattern</h2>
+
+    <pre><code>
+Model
+
+View
+
+Controller
+    </code></pre>
+</section>
+
+<section>
+    <h2>MVC Flow</h2>
+
+    <pre><code>
+User
+ ↓
+Controller
+ ↓
+Model
+ ↓
+Database
+ ↓
+View
+ ↓
+User
+    </code></pre>
+</section>
+
+<section>
+    <h2>Layered Architecture</h2>
+
+    <pre><code>
+Controller Layer
+
+Service Layer
+
+Repository Layer
+
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Real Banking Example</h2>
+
+    <pre><code>
+API Request
+     ↓
+Controller
+     ↓
+Account Service
+     ↓
+Account Repository
+     ↓
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Most Common Enterprise Patterns</h2>
+
+    <table>
+        <tr>
+            <th>Pattern</th>
+            <th>Typical Usage</th>
+        </tr>
+        <tr>
+            <td>Singleton</td>
+            <td>Configuration, Logger</td>
+        </tr>
+        <tr>
+            <td>Factory</td>
+            <td>Object Creation</td>
+        </tr>
+        <tr>
+            <td>Builder</td>
+            <td>Complex Objects</td>
+        </tr>
+        <tr>
+            <td>Strategy</td>
+            <td>Payment Methods</td>
+        </tr>
+        <tr>
+            <td>Observer</td>
+            <td>Event Handling</td>
+        </tr>
+        <tr>
+            <td>Repository</td>
+            <td>Database Access</td>
+        </tr>
+        <tr>
+            <td>Adapter</td>
+            <td>Legacy Integration</td>
+        </tr>
+        <tr>
+            <td>Facade</td>
+            <td>Simplified Interface</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Mental Model</h2>
+
+    <pre><code>
+Factory
+  ↓
+Create Objects
+
+Singleton
+  ↓
+One Shared Object
+
+Strategy
+  ↓
+Choose Algorithm
+
+Observer
+  ↓
+Notify Others
+
+Repository
+  ↓
+Database Access
+
+DI
+  ↓
+Inject Dependencies
+    </code></pre>
+</section>
+<section>
+    <h2>High Availability (HA)</h2>
+
+    <p>
+        High Availability means keeping the system available even when
+        hardware, software or network failures occur.
+    </p>
+
+    <pre><code>
+Goal:
+
+Minimize Downtime
+
+Target:
+
+99.9%
+99.99%
+99.999%
+Availability
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why HA Exists</h2>
+
+    <pre><code>
+Single Server
+
+      ↓
+
+Server Crash
+
+      ↓
+
+Application Down
+    </code></pre>
+</section>
+
+<section>
+    <h2>HA Architecture</h2>
+
+    <pre><code>
+Users
+  ↓
+
+Load Balancer
+
+ ↙      ↘
+
+Server1  Server2
+
+ ↘      ↙
+
+Database
+    </code></pre>
+
+    <p>
+        If one server fails, traffic goes to another server.
+    </p>
+</section>
+
+<section>
+    <h2>Redundancy</h2>
+
+    <p>
+        Critical components should have backups.
+    </p>
+
+    <pre><code>
+Web Server
+     ↓
+Backup Web Server
+
+Database
+     ↓
+Replica Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Failover</h2>
+
+    <pre><code>
+Primary Server
+      ↓ Crash
+
+Backup Server
+      ↓
+
+Takes Over
+    </code></pre>
+</section>
+
+<section>
+    <h2>Active-Active Architecture</h2>
+
+    <pre><code>
+Load Balancer
+
+ ↙      ↘
+
+Server1  Server2
+
+Both Active
+    </code></pre>
+</section>
+
+<section>
+    <h2>Active-Passive Architecture</h2>
+
+    <pre><code>
+Primary Server
+
+Backup Server
+
+Backup Waits
+
+Until Failure
+    </code></pre>
+</section>
+
+<section>
+    <h2>Database Replication</h2>
+
+    <pre><code>
+Primary Database
+      ↓
+Replica Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>HA Mental Model</h2>
+
+    <pre><code>
+One Component Fails
+
+System Continues Running
+    </code></pre>
+</section>
+
+<section>
+    <h2>Disaster Recovery (DR)</h2>
+
+    <p>
+        Disaster Recovery means restoring services after major failures.
+    </p>
+</section>
+
+<section>
+    <h2>Examples Of Disasters</h2>
+
+    <ul>
+        <li>Data Center Failure</li>
+        <li>Fire</li>
+        <li>Flood</li>
+        <li>Cyber Attack</li>
+        <li>Database Corruption</li>
+        <li>Region Failure</li>
+    </ul>
+</section>
+
+<section>
+    <h2>DR Architecture</h2>
+
+    <pre><code>
+Primary Region
+      ↓
+Replication
+      ↓
+Secondary Region
+    </code></pre>
+</section>
+
+<section>
+    <h2>RTO</h2>
+
+    <p>
+        Recovery Time Objective
+    </p>
+
+    <pre><code>
+How Fast
+Must System Recover?
+    </code></pre>
+</section>
+
+<section>
+    <h2>RPO</h2>
+
+    <p>
+        Recovery Point Objective
+    </p>
+
+    <pre><code>
+How Much Data Loss
+Is Acceptable?
+    </code></pre>
+</section>
+
+<section>
+    <h2>Example</h2>
+
+    <pre><code>
+RTO = 30 Minutes
+
+RPO = 5 Minutes
+    </code></pre>
+
+    <p>
+        Recover within 30 minutes and lose at most 5 minutes of data.
+    </p>
+</section>
+
+<section>
+    <h2>Backup Types</h2>
+
+    <pre><code>
+Full Backup
+
+Incremental Backup
+
+Differential Backup
+    </code></pre>
+</section>
+
+<section>
+    <h2>Cold Site</h2>
+
+    <pre><code>
+Backup Infrastructure
+
+Not Running
+    </code></pre>
+</section>
+
+<section>
+    <h2>Warm Site</h2>
+
+    <pre><code>
+Partially Ready
+
+Requires Activation
+    </code></pre>
+</section>
+
+<section>
+    <h2>Hot Site</h2>
+
+    <pre><code>
+Fully Running
+
+Ready Immediately
+    </code></pre>
+</section>
+
+<section>
+    <h2>DR Mental Model</h2>
+
+    <pre><code>
+Entire Region Fails
+
+System Recovers
+Elsewhere
+    </code></pre>
+</section>
+
+<section>
+    <h2>Performance Tuning</h2>
+
+    <p>
+        Improving speed, throughput and resource usage.
+    </p>
+</section>
+
+<section>
+    <h2>Performance Bottlenecks</h2>
+
+    <pre><code>
+CPU
+
+Memory
+
+Disk
+
+Network
+
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Application Performance Flow</h2>
+
+    <pre><code>
+Request
+  ↓
+Application
+  ↓
+Database
+  ↓
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>Common Optimization Areas</h2>
+
+    <ul>
+        <li>Database Queries</li>
+        <li>Caching</li>
+        <li>Indexes</li>
+        <li>Code Optimization</li>
+        <li>Connection Pooling</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Database Indexing</h2>
+
+    <pre><code>
+Without Index
+
+Full Table Scan
+
+With Index
+
+Fast Lookup
+    </code></pre>
+</section>
+
+<section>
+    <h2>Redis Caching</h2>
+
+    <pre><code>
+Request
+ ↓
+
+Redis
+
+ ↓
+
+Database
+    </code></pre>
+
+    <p>
+        Frequently accessed data should be cached.
+    </p>
+</section>
+
+<section>
+    <h2>Connection Pooling</h2>
+
+    <pre><code>
+Application
+ ↓
+
+Connection Pool
+
+ ↓
+
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>PgBouncer Example</h2>
+
+    <pre><code>
+PostgreSQL
+
+ ↓
+
+PgBouncer
+
+ ↓
+
+Applications
+    </code></pre>
+</section>
+
+<section>
+    <h2>Load Testing</h2>
+
+    <pre><code>
+100 Users
+
+1000 Users
+
+10000 Users
+    </code></pre>
+</section>
+
+<section>
+    <h2>Performance Metrics</h2>
+
+    <pre><code>
+Response Time
+
+Latency
+
+Throughput
+
+Requests Per Second
+
+CPU Usage
+
+Memory Usage
+    </code></pre>
+</section>
+
+<section>
+    <h2>Performance Mental Model</h2>
+
+    <pre><code>
+Find Bottleneck
+
+Optimize Bottleneck
+
+Measure Again
+    </code></pre>
+</section>
+
+<section>
+    <h2>DevSecOps</h2>
+
+    <p>
+        DevSecOps means integrating security into DevOps and CI/CD.
+    </p>
+
+    <pre><code>
+Development
+      ↓
+
+Security
+      ↓
+
+Operations
+    </code></pre>
+</section>
+
+<section>
+    <h2>Traditional Model</h2>
+
+    <pre><code>
+Develop
+  ↓
+Deploy
+  ↓
+Security Check Later
+    </code></pre>
+</section>
+
+<section>
+    <h2>DevSecOps Model</h2>
+
+    <pre><code>
+Develop
+  ↓
+Security Check
+  ↓
+Build
+  ↓
+Deploy
+    </code></pre>
+</section>
+
+<section>
+    <h2>CI/CD Security Pipeline</h2>
+
+    <pre><code>
+Code
+ ↓
+Static Analysis
+ ↓
+Dependency Scan
+ ↓
+Build
+ ↓
+Container Scan
+ ↓
+Deploy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Static Application Security Testing (SAST)</h2>
+
+    <pre><code>
+Source Code
+      ↓
+Security Scanner
+      ↓
+Vulnerability Report
+    </code></pre>
+</section>
+
+<section>
+    <h2>Dynamic Application Security Testing (DAST)</h2>
+
+    <pre><code>
+Running Application
+        ↓
+Security Testing
+        ↓
+Report
+    </code></pre>
+</section>
+
+<section>
+    <h2>Dependency Scanning</h2>
+
+    <pre><code>
+Libraries
+
+Frameworks
+
+Packages
+
+Check For CVEs
+    </code></pre>
+</section>
+
+<section>
+    <h2>Secrets Management</h2>
+
+    <pre><code>
+Database Password
+
+API Keys
+
+JWT Secrets
+
+Encryption Keys
+    </code></pre>
+</section>
+
+<section>
+    <h2>Never Store Secrets Here</h2>
+
+    <pre><code>
+Git Repository
+
+Source Code
+
+Public Files
+    </code></pre>
+</section>
+
+<section>
+    <h2>Container Security</h2>
+
+    <pre><code>
+Docker Image
+      ↓
+Scan For Vulnerabilities
+    </code></pre>
+</section>
+
+<section>
+    <h2>Infrastructure Security</h2>
+
+    <pre><code>
+Firewall
+
+IAM
+
+Network Rules
+
+Monitoring
+    </code></pre>
+</section>
+
+<section>
+    <h2>Zero Trust Principle</h2>
+
+    <pre><code>
+Trust Nothing
+
+Verify Everything
+    </code></pre>
+</section>
+
+<section>
+    <h2>Banking DevSecOps Example</h2>
+
+    <pre><code>
+Developer
+ ↓
+Git Push
+ ↓
+SAST
+ ↓
+Dependency Scan
+ ↓
+Docker Scan
+ ↓
+Approval
+ ↓
+Production
+    </code></pre>
+</section>
+
+<section>
+    <h2>Final Mental Model</h2>
+
+    <pre><code>
+HA
+ ↓
+Survive Server Failure
+
+DR
+ ↓
+Survive Disaster
+
+Performance
+ ↓
+Run Faster
+
+DevSecOps
+ ↓
+Stay Secure
+    </code></pre>
+</section>
+<section>
+    <h2>Network Engineering</h2>
+
+    <p>
+        Network engineering is the foundation of all internet communication.
+    </p>
+
+    <pre><code>
+Client
+  ↓
+Network
+  ↓
+Server
+  ↓
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>OSI Model</h2>
+
+    <pre><code>
+7 Application
+6 Presentation
+5 Session
+4 Transport
+3 Network
+2 Data Link
+1 Physical
+    </code></pre>
+</section>
+
+<section>
+    <h2>TCP/IP Model</h2>
+
+    <pre><code>
+Application
+Transport
+Internet
+Network Access
+    </code></pre>
+</section>
+
+<section>
+    <h2>IP Address</h2>
+
+    <p>
+        Unique address used to identify devices.
+    </p>
+
+    <pre><code>
+192.168.1.10
+
+10.0.0.5
+
+172.16.1.20
+    </code></pre>
+</section>
+
+<section>
+    <h2>Private vs Public IP</h2>
+
+    <pre><code>
+Private IP
+   ↓
+Inside Local Network
+
+Public IP
+   ↓
+Internet Accessible
+    </code></pre>
+</section>
+
+<section>
+    <h2>NAT</h2>
+
+    <pre><code>
+Private IP
+      ↓
+Router
+      ↓
+Public IP
+    </code></pre>
+
+    <p>
+        Converts private addresses to public addresses.
+    </p>
+</section>
+
+<section>
+    <h2>DNS</h2>
+
+    <pre><code>
+google.com
+      ↓
+IP Address
+      ↓
+Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>Port Numbers</h2>
+
+    <pre><code>
+80   HTTP
+
+443  HTTPS
+
+22   SSH
+
+5432 PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>TCP</h2>
+
+    <pre><code>
+Reliable
+
+Ordered
+
+Connection Based
+    </code></pre>
+</section>
+
+<section>
+    <h2>UDP</h2>
+
+    <pre><code>
+Fast
+
+No Guarantee
+
+Connectionless
+    </code></pre>
+</section>
+
+<section>
+    <h2>Firewall</h2>
+
+    <pre><code>
+Allow
+
+Block
+
+Monitor
+    </code></pre>
+</section>
+
+<section>
+    <h2>VPN</h2>
+
+    <pre><code>
+Encrypted Tunnel
+
+Client
+ ↓
+VPN
+ ↓
+Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>Load Balancer</h2>
+
+    <pre><code>
+Users
+  ↓
+Load Balancer
+  ↓
+
+Server1
+
+Server2
+
+Server3
+    </code></pre>
+</section>
+
+<section>
+    <h2>Network Mental Model</h2>
+
+    <pre><code>
+DNS
+ ↓
+IP
+ ↓
+Port
+ ↓
+Server
+ ↓
+Application
+    </code></pre>
+</section>
+<section>
+    <h2>Domain Driven Design (DDD)</h2>
+
+    <p>
+        DDD focuses on modeling software around business concepts.
+    </p>
+</section>
+
+<section>
+    <h2>What Is Domain?</h2>
+
+    <pre><code>
+Banking
+
+Insurance
+
+E-Commerce
+
+Healthcare
+    </code></pre>
+</section>
+
+<section>
+    <h2>Traditional Thinking</h2>
+
+    <pre><code>
+Database First
+      ↓
+Application
+    </code></pre>
+</section>
+
+<section>
+    <h2>DDD Thinking</h2>
+
+    <pre><code>
+Business First
+      ↓
+Software Model
+      ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Banking Domain Example</h2>
+
+    <pre><code>
+Customer
+
+Account
+
+Card
+
+Loan
+
+Transaction
+    </code></pre>
+</section>
+
+<section>
+    <h2>Bounded Context</h2>
+
+    <p>
+        Each business area owns its own model.
+    </p>
+
+    <pre><code>
+Customer Context
+
+Account Context
+
+Card Context
+    </code></pre>
+</section>
+
+<section>
+    <h2>Entity</h2>
+
+    <pre><code>
+Customer
+
+Account
+
+Card
+    </code></pre>
+
+    <p>
+        Objects with unique identity.
+    </p>
+</section>
+
+<section>
+    <h2>Value Object</h2>
+
+    <pre><code>
+Address
+
+Email
+
+Mobile Number
+    </code></pre>
+
+    <p>
+        Defined by values, not identity.
+    </p>
+</section>
+
+<section>
+    <h2>Aggregate</h2>
+
+    <pre><code>
+Customer
+
+ ├─ Accounts
+
+ ├─ Cards
+    </code></pre>
+</section>
+
+<section>
+    <h2>DDD Mental Model</h2>
+
+    <pre><code>
+Business Rules
+       ↓
+Domain Model
+       ↓
+Code
+    </code></pre>
+</section>
+
+<section>
+    <h2>CQRS</h2>
+
+    <p>
+        Command Query Responsibility Segregation.
+    </p>
+
+    <pre><code>
+Write Operations
+
+Read Operations
+
+Separated
+    </code></pre>
+</section>
+
+<section>
+    <h2>Traditional System</h2>
+
+    <pre><code>
+Application
+      ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>CQRS Architecture</h2>
+
+    <pre><code>
+Write Side
+   ↓
+Command
+
+Read Side
+   ↓
+Query
+    </code></pre>
+</section>
+
+<section>
+    <h2>Banking Example</h2>
+
+    <pre><code>
+Transfer Money
+      ↓
+Command
+
+Balance Inquiry
+      ↓
+Query
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why CQRS?</h2>
+
+    <ul>
+        <li>Independent Scaling</li>
+        <li>Fast Reads</li>
+        <li>Complex Domains</li>
+        <li>High Throughput</li>
+    </ul>
+</section>
+
+<section>
+    <h2>CQRS Flow</h2>
+
+    <pre><code>
+Command API
+      ↓
+Write Database
+
+Query API
+      ↓
+Read Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Event Sourcing</h2>
+
+    <p>
+        Store events instead of current state.
+    </p>
+</section>
+
+<section>
+    <h2>Traditional Database</h2>
+
+    <pre><code>
+Account Balance
+
+10000
+    </code></pre>
+</section>
+
+<section>
+    <h2>Event Sourcing Database</h2>
+
+    <pre><code>
+Account Created
+
++10000 Deposit
+
+-2000 Withdrawal
+
++500 Deposit
+    </code></pre>
+</section>
+
+<section>
+    <h2>Current Balance</h2>
+
+    <pre><code>
+Replay Events
+
+10000
+
+-2000
+
++500
+
+= 8500
+    </code></pre>
+</section>
+
+<section>
+    <h2>Advantages</h2>
+
+    <ul>
+        <li>Full Audit Trail</li>
+        <li>History Preservation</li>
+        <li>Replay Capability</li>
+        <li>Regulatory Compliance</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Banking Example</h2>
+
+    <pre><code>
+Transaction Events
+
+Account Events
+
+Card Events
+
+Loan Events
+    </code></pre>
+</section>
+
+<section>
+    <h2>Event Store</h2>
+
+    <pre><code>
+Event1
+
+Event2
+
+Event3
+
+Event4
+    </code></pre>
+</section>
+
+<section>
+    <h2>Distributed Systems</h2>
+
+    <p>
+        Multiple computers working together as one system.
+    </p>
+
+    <pre><code>
+Server1
+
+Server2
+
+Server3
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Distributed Systems?</h2>
+
+    <pre><code>
+More Users
+
+More Data
+
+More Reliability
+    </code></pre>
+</section>
+
+<section>
+    <h2>Challenges</h2>
+
+    <ul>
+        <li>Network Failures</li>
+        <li>Data Consistency</li>
+        <li>Latency</li>
+        <li>Partial Failures</li>
+        <li>Replication</li>
+    </ul>
+</section>
+
+<section>
+    <h2>CAP Theorem</h2>
+
+    <pre><code>
+Consistency
+
+Availability
+
+Partition Tolerance
+    </code></pre>
+</section>
+
+<section>
+    <h2>CAP Rule</h2>
+
+    <p>
+        During a network partition, a system can fully guarantee only two of the three properties.
+    </p>
+</section>
+
+<section>
+    <h2>Consistency</h2>
+
+    <pre><code>
+All Nodes
+
+Same Data
+    </code></pre>
+</section>
+
+<section>
+    <h2>Availability</h2>
+
+    <pre><code>
+System Always Responds
+    </code></pre>
+</section>
+
+<section>
+    <h2>Partition Tolerance</h2>
+
+    <pre><code>
+Network Failure
+
+System Continues
+    </code></pre>
+</section>
+
+<section>
+    <h2>Replication</h2>
+
+    <pre><code>
+Primary
+  ↓
+Replica1
+
+Replica2
+    </code></pre>
+</section>
+
+<section>
+    <h2>Sharding</h2>
+
+    <pre><code>
+Customer 1-10000
+     ↓
+Database A
+
+Customer 10001-20000
+     ↓
+Database B
+    </code></pre>
+</section>
+
+<section>
+    <h2>Consensus</h2>
+
+    <p>
+        Multiple servers agree on a value.
+    </p>
+
+    <pre><code>
+Raft
+
+Paxos
+    </code></pre>
+</section>
+
+<section>
+    <h2>Distributed Banking Example</h2>
+
+    <pre><code>
+Users
+ ↓
+API Gateway
+ ↓
+
+Account Service
+
+Card Service
+
+Loan Service
+
+ ↓
+
+Kafka
+
+ ↓
+
+Redis
+
+ ↓
+
+PostgreSQL Cluster
+    </code></pre>
+</section>
+
+<section>
+    <h2>Distributed Systems Mental Model</h2>
+
+    <pre><code>
+One Server
+   ↓
+Monolith
+
+Many Servers
+   ↓
+Distributed System
+    </code></pre>
+</section>
+
+<section>
+    <h2>Service Mesh (Istio)</h2>
+
+    <p>
+        Service Mesh manages communication between microservices.
+    </p>
+
+    <pre><code>
+Service A
+     ↓
+Service Mesh
+     ↓
+Service B
+    </code></pre>
+</section>
+
+<section>
+    <h2>Problem Before Service Mesh</h2>
+
+    <pre><code>
+Account Service
+      ↓
+Card Service
+
+Need:
+
+Security
+Retry
+Logging
+Monitoring
+Load Balancing
+    </code></pre>
+
+    <p>
+        Every service must implement these features.
+    </p>
+</section>
+
+<section>
+    <h2>Service Mesh Solution</h2>
+
+    <pre><code>
+Account Service
+      ↓
+Envoy Proxy
+      ↓
+Envoy Proxy
+      ↓
+Card Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>What Istio Provides</h2>
+
+    <ul>
+        <li>Service Discovery</li>
+        <li>Traffic Management</li>
+        <li>Retry Logic</li>
+        <li>Load Balancing</li>
+        <li>mTLS Encryption</li>
+        <li>Monitoring</li>
+        <li>Tracing</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Sidecar Pattern</h2>
+
+    <pre><code>
+Account Service
+      +
+Envoy Proxy
+
+Card Service
+      +
+Envoy Proxy
+    </code></pre>
+</section>
+
+<section>
+    <h2>Istio Mental Model</h2>
+
+    <pre><code>
+Apache
+ ↓
+Manages User Traffic
+
+Istio
+ ↓
+Manages Service Traffic
+    </code></pre>
+</section>
+
+<section>
+    <h2>API Gateway Deep Dive</h2>
+
+    <p>
+        API Gateway is the front door of all APIs.
+    </p>
+
+    <pre><code>
+Users
+  ↓
+API Gateway
+  ↓
+Microservices
+    </code></pre>
+</section>
+
+<section>
+    <h2>API Gateway Responsibilities</h2>
+
+    <ul>
+        <li>Authentication</li>
+        <li>Authorization</li>
+        <li>Routing</li>
+        <li>Rate Limiting</li>
+        <li>Logging</li>
+        <li>Caching</li>
+        <li>Monitoring</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Authentication Flow</h2>
+
+    <pre><code>
+Client
+  ↓
+JWT Token
+  ↓
+API Gateway
+  ↓
+Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Rate Limiting Example</h2>
+
+    <pre><code>
+User
+
+100 Requests Per Minute
+
+Exceeded
+     ↓
+429 Too Many Requests
+    </code></pre>
+</section>
+
+<section>
+    <h2>API Gateway Examples</h2>
+
+    <pre><code>
+Kong
+
+NGINX
+
+AWS API Gateway
+
+Apigee
+    </code></pre>
+</section>
+
+<section>
+    <h2>Enterprise Security Architecture</h2>
+
+    <p>
+        Security is applied in multiple layers.
+    </p>
+</section>
+
+<section>
+    <h2>Defense In Depth</h2>
+
+    <pre><code>
+Firewall
+
+Load Balancer
+
+API Gateway
+
+Application
+
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Security Layers</h2>
+
+    <pre><code>
+HTTPS
+
+JWT
+
+MFA
+
+Encryption
+
+Audit Logs
+
+Monitoring
+    </code></pre>
+</section>
+
+<section>
+    <h2>Identity And Access Management</h2>
+
+    <pre><code>
+Users
+
+Roles
+
+Permissions
+    </code></pre>
+</section>
+
+<section>
+    <h2>Zero Trust Architecture</h2>
+
+    <pre><code>
+Never Trust
+
+Always Verify
+    </code></pre>
+</section>
+
+<section>
+    <h2>Secrets Management</h2>
+
+    <pre><code>
+API Keys
+
+JWT Secrets
+
+Database Passwords
+
+Certificates
+    </code></pre>
+</section>
+
+<section>
+    <h2>Banking Switches</h2>
+
+    <p>
+        Banking switch routes financial transactions.
+    </p>
+
+    <pre><code>
+ATM
+
+POS
+
+Mobile App
+
+Internet Banking
+      ↓
+Switch
+      ↓
+Core Banking
+    </code></pre>
+</section>
+
+<section>
+    <h2>What Banking Switch Does</h2>
+
+    <ul>
+        <li>Transaction Routing</li>
+        <li>Authorization</li>
+        <li>Settlement</li>
+        <li>Network Connectivity</li>
+    </ul>
+</section>
+
+<section>
+    <h2>ATM Withdrawal Flow</h2>
+
+    <pre><code>
+ATM
+ ↓
+Bank Switch
+ ↓
+Core Banking
+ ↓
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>Payment Networks</h2>
+
+    <pre><code>
+Visa
+
+Mastercard
+
+RuPay
+
+American Express
+    </code></pre>
+</section>
+
+<section>
+    <h2>Card Transaction Flow</h2>
+
+    <pre><code>
+Customer
+ ↓
+Merchant
+ ↓
+POS Machine
+ ↓
+Acquiring Bank
+ ↓
+Visa / Mastercard / RuPay
+ ↓
+Issuing Bank
+ ↓
+Approval
+    </code></pre>
+</section>
+
+<section>
+    <h2>Issuing Bank</h2>
+
+    <p>
+        Bank that issued the card.
+    </p>
+</section>
+
+<section>
+    <h2>Acquiring Bank</h2>
+
+    <p>
+        Bank that owns merchant relationship.
+    </p>
+</section>
+
+<section>
+    <h2>Authorization Process</h2>
+
+    <pre><code>
+Card Swipe
+     ↓
+Authorization Request
+     ↓
+Issuing Bank
+     ↓
+Approve / Decline
+    </code></pre>
+</section>
+
+<section>
+    <h2>Settlement Process</h2>
+
+    <pre><code>
+Authorization
+      ↓
+Clearing
+      ↓
+Settlement
+      ↓
+Funds Transfer
+    </code></pre>
+</section>
+
+<section>
+    <h2>Card Management System</h2>
+
+    <pre><code>
+Card Issuance
+
+PIN Management
+
+Activation
+
+Replacement
+
+Blocking
+    </code></pre>
+</section>
+
+<section>
+    <h2>BIN</h2>
+
+    <p>
+        Bank Identification Number.
+    </p>
+
+    <pre><code>
+543210XXXXXX1234
+
+543210 = BIN
+    </code></pre>
+</section>
+
+<section>
+    <h2>Core Banking System (CBS)</h2>
+
+    <p>
+        Central banking application managing customer accounts.
+    </p>
+</section>
+
+<section>
+    <h2>CBS Responsibilities</h2>
+
+    <pre><code>
+Accounts
+
+Customers
+
+Transactions
+
+Loans
+
+Deposits
+    </code></pre>
+</section>
+
+<section>
+    <h2>Core Banking Architecture</h2>
+
+    <pre><code>
+ATM
+
+Internet Banking
+
+Mobile Banking
+
+Branch Banking
+
+      ↓
+
+Core Banking System
+    </code></pre>
+</section>
+
+<section>
+    <h2>Core Banking Example Flow</h2>
+
+    <pre><code>
+Transfer Request
+      ↓
+CBS
+      ↓
+Debit Account
+      ↓
+Credit Account
+      ↓
+Transaction Record
+    </code></pre>
+</section>
+
+<section>
+    <h2>Enterprise Integration Patterns (EIP)</h2>
+
+    <p>
+        Standard messaging and integration patterns.
+    </p>
+</section>
+
+<section>
+    <h2>Message Channel</h2>
+
+    <pre><code>
+Application A
+      ↓
+Channel
+      ↓
+Application B
+    </code></pre>
+</section>
+
+<section>
+    <h2>Message Queue</h2>
+
+    <pre><code>
+Producer
+   ↓
+Queue
+   ↓
+Consumer
+    </code></pre>
+</section>
+
+<section>
+    <h2>Publish Subscribe Pattern</h2>
+
+    <pre><code>
+Publisher
+    ↓
+
+Topic
+
+ ↙   ↓   ↘
+
+A    B    C
+    </code></pre>
+</section>
+
+<section>
+    <h2>Request Reply Pattern</h2>
+
+    <pre><code>
+Request
+   ↓
+Service
+   ↓
+Reply
+    </code></pre>
+</section>
+
+<section>
+    <h2>Content Based Router</h2>
+
+    <pre><code>
+Message
+   ↓
+
+Rule Engine
+
+ ↙      ↘
+
+System A  System B
+    </code></pre>
+</section>
+
+<section>
+    <h2>Aggregator Pattern</h2>
+
+    <pre><code>
+Service A
+
+Service B
+
+Service C
+
+    ↓
+
+Aggregator
+
+    ↓
+
+Single Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>Enterprise Banking Architecture Summary</h2>
+
+    <pre><code>
+Customer
+ ↓
+Mobile App
+ ↓
+API Gateway
+ ↓
+Microservices
+ ↓
+Kafka
+ ↓
+Core Banking
+ ↓
+Database
+ ↓
+Payment Networks
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mental Model</h2>
+
+    <pre><code>
+API Gateway
+      ↓
+Controls User Traffic
+
+Istio
+      ↓
+Controls Service Traffic
+
+CBS
+      ↓
+Manages Banking Data
+
+Switch
+      ↓
+Routes Transactions
+
+Visa/Mastercard/RuPay
+      ↓
+Connect Banks
+
+EIP
+      ↓
+Connect Systems
+    </code></pre>
+</section>
+<section>
+    <h2>Customer Onboarding System</h2>
+
+    <p>
+        Customer onboarding is the process of registering a new customer
+        in the banking system.
+    </p>
+
+    <pre><code>
+Customer
+   ↓
+Registration
+   ↓
+KYC Verification
+   ↓
+Customer Creation
+   ↓
+Account Creation
+   ↓
+Card Issuance
+    </code></pre>
+</section>
+
+<section>
+    <h2>Customer Registration Flow</h2>
+
+    <pre><code>
+Customer Details
+
+Name
+
+Address
+
+Email
+
+Mobile
+
+PAN
+
+Aadhaar
+    </code></pre>
+</section>
+
+<section>
+    <h2>KYC Verification</h2>
+
+    <pre><code>
+Customer
+     ↓
+
+Identity Verification
+
+Address Verification
+
+Document Verification
+    </code></pre>
+</section>
+
+<section>
+    <h2>Customer Creation</h2>
+
+    <pre><code>
+Generate Customer ID
+
+Store Customer Data
+
+Create Audit Record
+    </code></pre>
+</section>
+
+<section>
+    <h2>Account Opening Workflow</h2>
+
+    <pre><code>
+Customer Exists
+       ↓
+Create Account Request
+       ↓
+Generate Account Number
+       ↓
+Assign Branch
+       ↓
+Store Account
+       ↓
+Send Notification
+    </code></pre>
+</section>
+
+<section>
+    <h2>Account Number Generation</h2>
+
+    <pre><code>
+Branch Code
+
+Product Code
+
+Sequence Number
+
+Account Number
+    </code></pre>
+</section>
+
+<section>
+    <h2>Account Types</h2>
+
+    <pre><code>
+Savings
+
+Current
+
+Salary
+
+Fixed Deposit
+    </code></pre>
+</section>
+
+<section>
+    <h2>Card Issuance Workflow</h2>
+
+    <pre><code>
+Account Created
+      ↓
+Card Request
+      ↓
+BIN Selection
+      ↓
+Card Number Generation
+      ↓
+PIN Generation
+      ↓
+Card Status Created
+      ↓
+Notification
+    </code></pre>
+</section>
+
+<section>
+    <h2>Card Lifecycle</h2>
+
+    <pre><code>
+Created
+
+Issued
+
+Activated
+
+Blocked
+
+Expired
+
+Replaced
+    </code></pre>
+</section>
+
+<section>
+    <h2>Transaction Processing Engine</h2>
+
+    <p>
+        Heart of the banking system.
+    </p>
+
+    <pre><code>
+Credit
+
+Debit
+
+Transfer
+
+Reversal
+    </code></pre>
+</section>
+
+<section>
+    <h2>Transaction Flow</h2>
+
+    <pre><code>
+Request
+   ↓
+Validation
+   ↓
+Balance Check
+   ↓
+Debit
+   ↓
+Credit
+   ↓
+Transaction Log
+   ↓
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>Transaction Validation</h2>
+
+    <pre><code>
+Account Active?
+
+Card Active?
+
+Sufficient Balance?
+
+Limits Available?
+    </code></pre>
+</section>
+
+<section>
+    <h2>Double Entry Principle</h2>
+
+    <pre><code>
+Debit One Account
+
+Credit Another Account
+    </code></pre>
+
+    <p>
+        Money should never disappear or appear unexpectedly.
+    </p>
+</section>
+
+<section>
+    <h2>ATM Transaction Flow</h2>
+
+    <pre><code>
+Card Inserted
+      ↓
+PIN Verification
+      ↓
+ATM Switch
+      ↓
+Core Banking
+      ↓
+Authorization
+      ↓
+Cash Dispensed
+    </code></pre>
+</section>
+
+<section>
+    <h2>ATM Withdrawal Example</h2>
+
+    <pre><code>
+Customer Withdraws
+
+5000
+
+      ↓
+
+Balance Validation
+
+      ↓
+
+Debit Account
+
+      ↓
+
+Success Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>POS Transaction Flow</h2>
+
+    <pre><code>
+Card Swipe
+     ↓
+POS Terminal
+     ↓
+Acquiring Bank
+     ↓
+Card Network
+     ↓
+Issuing Bank
+     ↓
+Authorization
+    </code></pre>
+</section>
+
+<section>
+    <h2>POS Approval Flow</h2>
+
+    <pre><code>
+Merchant
+    ↓
+POS
+    ↓
+Visa / Mastercard / RuPay
+    ↓
+Bank
+    ↓
+Approve / Decline
+    </code></pre>
+</section>
+
+<section>
+    <h2>UPI Transaction Flow</h2>
+
+    <pre><code>
+Customer
+    ↓
+UPI App
+    ↓
+NPCI Switch
+    ↓
+Sender Bank
+    ↓
+Receiver Bank
+    ↓
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>UPI Example</h2>
+
+    <pre><code>
+A Sends ₹1000 To B
+
+Debit A
+
+Credit B
+
+Notify Both Users
+    </code></pre>
+</section>
+
+<section>
+    <h2>Payment Gateway Flow</h2>
+
+    <pre><code>
+Customer
+ ↓
+Merchant Website
+ ↓
+Payment Gateway
+ ↓
+Card Network
+ ↓
+Issuing Bank
+ ↓
+Authorization
+    </code></pre>
+</section>
+
+<section>
+    <h2>Payment Gateway Responsibilities</h2>
+
+    <ul>
+        <li>Secure Payment Processing</li>
+        <li>Fraud Checks</li>
+        <li>Authorization</li>
+        <li>Settlement</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Fraud Detection System</h2>
+
+    <p>
+        Identifies suspicious transactions.
+    </p>
+</section>
+
+<section>
+    <h2>Fraud Detection Checks</h2>
+
+    <pre><code>
+Location Check
+
+Velocity Check
+
+Amount Check
+
+Device Check
+
+Behavior Check
+    </code></pre>
+</section>
+
+<section>
+    <h2>Location Check Example</h2>
+
+    <pre><code>
+Transaction
+
+Chennai
+
+2 Minutes Later
+
+London
+
+Possible Fraud
+    </code></pre>
+</section>
+
+<section>
+    <h2>Velocity Check Example</h2>
+
+    <pre><code>
+20 Transactions
+
+Within 1 Minute
+
+Possible Fraud
+    </code></pre>
+</section>
+
+<section>
+    <h2>Fraud Response</h2>
+
+    <pre><code>
+Flag Transaction
+
+Decline Transaction
+
+Block Card
+
+Alert Customer
+    </code></pre>
+</section>
+
+<section>
+    <h2>Audit Logging</h2>
+
+    <pre><code>
+Customer Created
+
+Account Created
+
+Card Issued
+
+Transaction Completed
+
+Card Blocked
+    </code></pre>
+</section>
+
+<section>
+    <h2>Notification System</h2>
+
+    <pre><code>
+SMS
+
+Email
+
+Push Notification
+    </code></pre>
+</section>
+
+<section>
+    <h2>Event Driven Banking Example</h2>
+
+    <pre><code>
+Transaction Success
+      ↓
+Kafka Event
+      ↓
+Notification Service
+
+Audit Service
+
+Analytics Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>End-To-End Banking Architecture</h2>
+
+    <pre><code>
+Customer
+   ↓
+
+Mobile App / ATM / POS
+
+   ↓
+
+Load Balancer
+
+   ↓
+
+API Gateway
+
+   ↓
+
+Authentication Service
+
+Customer Service
+
+Account Service
+
+Card Service
+
+Transaction Service
+
+Fraud Service
+
+Notification Service
+
+   ↓
+
+Kafka
+
+   ↓
+
+Redis
+
+   ↓
+
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>Database Design Example</h2>
+
+    <pre><code>
+customers
+
+accounts
+
+cards
+
+transactions
+
+audit_logs
+
+notifications
+    </code></pre>
+</section>
+
+<section>
+    <h2>Typical Banking Request Flow</h2>
+
+    <pre><code>
+User Login
+     ↓
+JWT Generated
+     ↓
+Account Inquiry
+     ↓
+Database Lookup
+     ↓
+Response Returned
+    </code></pre>
+</section>
+
+<section>
+    <h2>Production Banking Architecture</h2>
+
+    <pre><code>
+Users
+ ↓
+
+DNS
+ ↓
+
+Load Balancer
+ ↓
+
+API Gateway
+ ↓
+
+Microservices
+ ↓
+
+Kafka
+ ↓
+
+Redis
+ ↓
+
+PostgreSQL Cluster
+ ↓
+
+Backup Site
+    </code></pre>
+</section>
+
+<section>
+    <h2>Mental Model</h2>
+
+    <pre><code>
+Customer
+   ↓
+Onboarding
+   ↓
+Account
+   ↓
+Card
+   ↓
+Transaction
+   ↓
+Fraud Check
+   ↓
+Notification
+   ↓
+Audit
+    </code></pre>
+</section>
+</body>
+</html>

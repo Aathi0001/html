@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Servers</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+  table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+</style>
+</head>
+<body>
+<section>
+    <h2>Web Servers, Hosting and Cloud Fundamentals</h2>
+
+    <p>
+        A web server is a software program that listens for HTTP/HTTPS requests from clients
+        and sends responses back. It acts as an intermediary between users and applications.
+    </p>
+
+    <h3>What is a Server?</h3>
+
+    <p>
+        The term "server" can refer to both a physical machine and a software program.
+    </p>
+
+    <ul>
+        <li><strong>Hardware Server</strong> - Physical computer with CPU, RAM, Storage and Network.</li>
+        <li><strong>Software Server</strong> - Program that serves requests such as Apache, Nginx or Flask server.</li>
+    </ul>
+
+    <pre><code>
+Hardware Server
+      ↓
+Linux Operating System
+      ↓
+Web Server (Apache/Nginx)
+      ↓
+Application (Flask/Django/Node.js)
+      ↓
+Database
+    </code></pre>
+
+    <h3>What is Apache and Nginx?</h3>
+
+    <p>
+        Apache and Nginx are web servers used to manage HTTP and HTTPS traffic between users
+        and applications.
+    </p>
+
+    <ul>
+        <li>Accept incoming requests.</li>
+        <li>Forward requests to applications.</li>
+        <li>Handle HTTPS encryption.</li>
+        <li>Serve static files.</li>
+        <li>Perform load balancing.</li>
+        <li>Manage concurrent connections.</li>
+        <li>Act as reverse proxies.</li>
+    </ul>
+
+    <h3>Simple Definition</h3>
+
+    <p>
+        Apache/Nginx are traffic managers for web applications.
+    </p>
+
+    <pre><code>
+Users
+  ↓
+Apache / Nginx
+  ↓
+Application
+  ↓
+Database
+    </code></pre>
+
+    <h3>Who Manages What?</h3>
+
+    <table>
+        <tr>
+            <th>Component</th>
+            <th>Responsibility</th>
+        </tr>
+        <tr>
+            <td>Linux OS</td>
+            <td>CPU, RAM, Processes, Files, Networking</td>
+        </tr>
+        <tr>
+            <td>Apache / Nginx</td>
+            <td>Web Traffic Management</td>
+        </tr>
+        <tr>
+            <td>Application</td>
+            <td>Business Logic</td>
+        </tr>
+        <tr>
+            <td>Database</td>
+            <td>Data Storage</td>
+        </tr>
+    </table>
+
+    <h3>Why Apache/Nginx Exist?</h3>
+
+    <p>
+        Applications can serve users directly, but as traffic increases specialized traffic
+        management software becomes useful.
+    </p>
+
+    <ul>
+        <li>Handle many users efficiently.</li>
+        <li>Manage HTTP and HTTPS requests.</li>
+        <li>Provide load balancing.</li>
+        <li>Serve static files faster.</li>
+        <li>Improve reliability.</li>
+        <li>Support reverse proxy architecture.</li>
+    </ul>
+
+    <h3>Can Applications Run Without Apache/Nginx?</h3>
+
+    <p>
+        Yes. Small applications can directly serve users.
+    </p>
+
+    <pre><code>
+Users
+  ↓
+Flask Application
+    </code></pre>
+
+    <p>
+        This approach is common for learning, testing and low traffic applications.
+    </p>
+
+    <h3>Production Architecture</h3>
+
+    <pre><code>
+Users
+  ↓
+Nginx
+  ↓
+Gunicorn
+  ↓
+Flask Application
+  ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Nginx manages traffic while Flask focuses on business logic.
+    </p>
+
+    <h3>Load Balancing</h3>
+
+    <p>
+        Load balancing distributes requests across multiple application servers.
+    </p>
+
+    <pre><code>
+              Nginx
+           ↙    ↓    ↘
+       App1   App2   App3
+    </code></pre>
+
+    <p>
+        If one server can handle 5000 users and traffic grows beyond that, requests can be
+        distributed to additional servers.
+    </p>
+
+    <h3>PgBouncer Comparison</h3>
+
+    <ul>
+        <li>PgBouncer manages database traffic.</li>
+        <li>Nginx/Apache manage HTTP traffic.</li>
+    </ul>
+
+    <pre><code>
+Users
+  ↓
+Nginx
+  ↓
+Application
+  ↓
+PgBouncer
+  ↓
+PostgreSQL
+    </code></pre>
+
+    <h3>What is a Reverse Proxy?</h3>
+
+    <p>
+        A reverse proxy receives requests from users and forwards them to backend applications.
+    </p>
+
+    <pre><code>
+Users
+  ↓
+Nginx
+  ↓
+Backend Application
+    </code></pre>
+
+    <p>
+        Users communicate with Nginx instead of directly communicating with the application.
+    </p>
+
+    <h3>What is Cloud Computing?</h3>
+
+    <p>
+        Cloud providers offer infrastructure and services over the internet.
+    </p>
+
+    <ul>
+        <li>AWS</li>
+        <li>Google Cloud</li>
+        <li>Microsoft Azure</li>
+    </ul>
+
+    <h3>Cloud vs Apache/Nginx</h3>
+
+    <table>
+        <tr>
+            <th>Cloud</th>
+            <th>Apache/Nginx</th>
+        </tr>
+        <tr>
+            <td>Provides Infrastructure</td>
+            <td>Manages Web Traffic</td>
+        </tr>
+        <tr>
+            <td>Virtual Machines</td>
+            <td>Load Balancing</td>
+        </tr>
+        <tr>
+            <td>Storage</td>
+            <td>Reverse Proxy</td>
+        </tr>
+        <tr>
+            <td>Networking</td>
+            <td>HTTPS Handling</td>
+        </tr>
+        <tr>
+            <td>Availability</td>
+            <td>Request Routing</td>
+        </tr>
+    </table>
+
+    <h3>Can I Host Without Cloud?</h3>
+
+    <p>
+        Yes. If you have a computer with internet access and a public IP, you can host
+        applications yourself.
+    </p>
+
+    <pre><code>
+Own Server
+    ↓
+Linux
+    ↓
+Nginx
+    ↓
+Application
+    </code></pre>
+
+    <p>
+        This approach is called self-hosting.
+    </p>
+
+    <h3>Private IP vs Public IP</h3>
+
+    <table>
+        <tr>
+            <th>Private IP</th>
+            <th>Public IP</th>
+        </tr>
+        <tr>
+            <td>Used inside local network</td>
+            <td>Visible on internet</td>
+        </tr>
+        <tr>
+            <td>192.168.x.x</td>
+            <td>Assigned by ISP</td>
+        </tr>
+        <tr>
+            <td>Cannot be accessed from internet directly</td>
+            <td>Can be accessed from internet</td>
+        </tr>
+    </table>
+
+    <h3>Network Address Translation (NAT)</h3>
+
+    <p>
+        Routers use NAT to translate traffic between private and public networks.
+    </p>
+
+    <pre><code>
+Laptop (192.168.1.5)
+         ↓
+Router NAT
+         ↓
+Public IP (49.xx.xx.xx)
+         ↓
+Internet
+    </code></pre>
+
+    <p>
+        The private IP never becomes a public IP. The router temporarily rewrites network
+        packets before sending them to the internet.
+    </p>
+
+    <h3>Ports</h3>
+
+    <p>
+        An IP identifies a machine while a port identifies a service running on that machine.
+    </p>
+
+    <table>
+        <tr>
+            <th>Port</th>
+            <th>Usage</th>
+        </tr>
+        <tr>
+            <td>80</td>
+            <td>HTTP</td>
+        </tr>
+        <tr>
+            <td>443</td>
+            <td>HTTPS</td>
+        </tr>
+        <tr>
+            <td>5000</td>
+            <td>Flask Default</td>
+        </tr>
+        <tr>
+            <td>8000</td>
+            <td>Development Servers</td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td>SSH</td>
+        </tr>
+    </table>
+
+    <pre><code>
+IP Address = Which Machine
+Port Number = Which Service
+    </code></pre>
+
+    <h3>Hosting a Flask Application</h3>
+
+    <pre><code>
+from flask import Flask
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Hello World"
+
+app.run(host="0.0.0.0", port=5000)
+    </code></pre>
+
+    <p>
+        Using host="0.0.0.0" allows devices outside the local machine to access the application.
+    </p>
+
+    <h3>Final Architecture Summary</h3>
+
+    <pre><code>
+Client
+  ↓
+Internet
+  ↓
+Public IP
+  ↓
+Router
+  ↓
+Nginx / Apache
+  ↓
+Application
+  ↓
+Database
+    </code></pre>
+
+    <p>
+        Linux manages the machine, Apache/Nginx manage web traffic, applications implement
+        business logic, and databases store data.
+    </p>
+</section>
+
+<section>
+    <h2>Apache HTTP Server</h2>
+
+    <p>
+        Apache HTTP Server is a web server that receives HTTP requests from clients
+        and sends responses back. It acts as a traffic manager between users and applications.
+    </p>
+
+    <ul>
+        <li>Handles HTTP/HTTPS requests.</li>
+        <li>Serves static files.</li>
+        <li>Supports reverse proxy.</li>
+        <li>Supports load balancing.</li>
+        <li>Manages concurrent connections.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Web Server</h2>
+
+    <p>
+        A web server is a software program that listens for HTTP requests and returns responses.
+    </p>
+
+    <h3>Examples</h3>
+
+    <ul>
+        <li>Apache HTTP Server</li>
+        <li>Nginx</li>
+        <li>Flask Development Server</li>
+        <li>Node.js HTTP Server</li>
+        <li>Django Development Server</li>
+    </ul>
+
+    <pre><code>
+Browser
+    ↓
+Web Server
+    ↓
+Application
+    ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Application vs Web Server</h2>
+
+    <h3>Application Responsibilities</h3>
+
+    <ul>
+        <li>Business logic</li>
+        <li>Authentication</li>
+        <li>Database operations</li>
+        <li>Validation</li>
+        <li>Encryption</li>
+    </ul>
+
+    <h3>Web Server Responsibilities</h3>
+
+    <ul>
+        <li>HTTP/HTTPS traffic</li>
+        <li>Connection management</li>
+        <li>Load balancing</li>
+        <li>Reverse proxy</li>
+        <li>Static file serving</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Reverse Proxy</h2>
+
+    <p>
+        A reverse proxy receives requests from users and forwards them to backend applications.
+    </p>
+
+    <pre><code>
+Internet
+    ↓
+Nginx
+    ↓
+Backend Application
+    </code></pre>
+
+    <p>
+        Benefits:
+    </p>
+
+    <ul>
+        <li>Backend stays hidden.</li>
+        <li>Better security.</li>
+        <li>Easier scaling.</li>
+        <li>Centralized traffic management.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Load Balancing</h2>
+
+    <p>
+        Load balancing distributes incoming requests across multiple servers.
+    </p>
+
+    <pre><code>
+              Nginx
+           ↙    ↓    ↘
+       App1   App2   App3
+    </code></pre>
+
+    <ul>
+        <li>Improves scalability.</li>
+        <li>Prevents server overload.</li>
+        <li>Provides fault tolerance.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Production Python Architecture</h2>
+
+    <pre><code>
+Internet
+    ↓
+Nginx
+    ↓
+Gunicorn
+    ↓
+Flask Application
+    ↓
+PostgreSQL
+    </code></pre>
+
+    <p>
+        Nginx handles traffic while Gunicorn executes Python application code.
+    </p>
+</section>
+
+<section>
+    <h2>Gunicorn and uWSGI</h2>
+
+    <p>
+        Gunicorn and uWSGI are production-grade Python application servers.
+    </p>
+
+    <ul>
+        <li>Run Python applications efficiently.</li>
+        <li>Handle multiple worker processes.</li>
+        <li>Usually placed behind Nginx.</li>
+    </ul>
+</section>
+
+<section>
+    <h2>XAMPP</h2>
+
+    <p>
+        XAMPP is a local development package that includes:
+    </p>
+
+    <ul>
+        <li>Apache</li>
+        <li>PHP</li>
+        <li>MySQL/MariaDB</li>
+    </ul>
+
+    <p>
+        Apache receives requests and PHP executes application code.
+    </p>
+</section>
+
+<section>
+    <h2>Cloud vs Nginx</h2>
+
+    <table>
+        <tr>
+            <th>Cloud</th>
+            <th>Nginx / Apache</th>
+        </tr>
+        <tr>
+            <td>Infrastructure</td>
+            <td>Traffic Management</td>
+        </tr>
+        <tr>
+            <td>Virtual Machines</td>
+            <td>Load Balancing</td>
+        </tr>
+        <tr>
+            <td>Networking</td>
+            <td>Reverse Proxy</td>
+        </tr>
+        <tr>
+            <td>Storage</td>
+            <td>HTTPS Handling</td>
+        </tr>
+        <tr>
+            <td>Availability</td>
+            <td>Request Routing</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Self Hosting</h2>
+
+    <p>
+        Applications can be hosted on your own machine without cloud providers.
+    </p>
+
+    <pre><code>
+Own Server
+    ↓
+Linux
+    ↓
+Nginx
+    ↓
+Application
+    </code></pre>
+
+    <p>
+        Requirements:
+    </p>
+
+    <ul>
+        <li>Public IP Address</li>
+        <li>Internet Connection</li>
+        <li>Port Forwarding</li>
+        <li>Linux Server</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Private IP vs Public IP</h2>
+
+    <table>
+        <tr>
+            <th>Private IP</th>
+            <th>Public IP</th>
+        </tr>
+        <tr>
+            <td>192.168.x.x</td>
+            <td>Assigned by ISP</td>
+        </tr>
+        <tr>
+            <td>Local Network Only</td>
+            <td>Internet Accessible</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Network Address Translation (NAT)</h2>
+
+    <p>
+        NAT allows devices with private IP addresses to communicate with the internet using a router's public IP address.
+    </p>
+
+    <pre><code>
+Laptop (192.168.1.5)
+        ↓
+Router NAT
+        ↓
+Public IP
+        ↓
+Internet
+    </code></pre>
+</section>
+
+<section>
+    <h2>Ports</h2>
+
+    <p>
+        An IP identifies a machine while a port identifies a service running on that machine.
+    </p>
+
+    <table>
+        <tr>
+            <th>Port</th>
+            <th>Usage</th>
+        </tr>
+        <tr>
+            <td>80</td>
+            <td>HTTP</td>
+        </tr>
+        <tr>
+            <td>443</td>
+            <td>HTTPS</td>
+        </tr>
+        <tr>
+            <td>5000</td>
+            <td>Flask</td>
+        </tr>
+        <tr>
+            <td>22</td>
+            <td>SSH</td>
+        </tr>
+    </table>
+</section>
+<section>
+    <h2>Working with Apache and Nginx</h2>
+
+    <p>
+        Apache and Nginx are usually installed on Linux servers and configured to
+        receive HTTP/HTTPS requests from users and forward them to applications.
+    </p>
+
+    <pre><code>
+Internet
+    ↓
+Apache / Nginx
+    ↓
+Application
+    ↓
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>Apache Installation</h2>
+
+    <h3>Ubuntu/Debian</h3>
+
+    <pre><code>
+sudo apt update
+sudo apt install apache2
+    </code></pre>
+
+    <h3>Check Status</h3>
+
+    <pre><code>
+sudo systemctl status apache2
+    </code></pre>
+
+    <h3>Start Apache</h3>
+
+    <pre><code>
+sudo systemctl start apache2
+    </code></pre>
+
+    <h3>Stop Apache</h3>
+
+    <pre><code>
+sudo systemctl stop apache2
+    </code></pre>
+
+    <h3>Restart Apache</h3>
+
+    <pre><code>
+sudo systemctl restart apache2
+    </code></pre>
+
+    <h3>Enable Auto Start During Boot</h3>
+
+    <pre><code>
+sudo systemctl enable apache2
+    </code></pre>
+</section>
+
+<section>
+    <h2>Apache Important Directories</h2>
+
+    <table>
+        <tr>
+            <th>Path</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>/etc/apache2</td>
+            <td>Main configuration directory</td>
+        </tr>
+        <tr>
+            <td>/var/www/html</td>
+            <td>Default website root</td>
+        </tr>
+        <tr>
+            <td>/etc/apache2/apache2.conf</td>
+            <td>Main configuration file</td>
+        </tr>
+        <tr>
+            <td>/etc/apache2/sites-available</td>
+            <td>Virtual host configurations</td>
+        </tr>
+        <tr>
+            <td>/var/log/apache2</td>
+            <td>Apache logs</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Apache Virtual Host Configuration</h2>
+
+    <p>
+        Virtual Hosts allow multiple websites to run on the same server.
+    </p>
+
+    <pre><code>
+sudo nano /etc/apache2/sites-available/myapp.conf
+    </code></pre>
+
+    <pre><code>
+&lt;VirtualHost *:80&gt;
+    ServerName example.com
+    DocumentRoot /var/www/myapp
+&lt;/VirtualHost&gt;
+    </code></pre>
+
+    <h3>Enable Site</h3>
+
+    <pre><code>
+sudo a2ensite myapp.conf
+sudo systemctl reload apache2
+    </code></pre>
+</section>
+
+<section>
+    <h2>Nginx Installation</h2>
+
+    <pre><code>
+sudo apt update
+sudo apt install nginx
+    </code></pre>
+
+    <h3>Check Status</h3>
+
+    <pre><code>
+sudo systemctl status nginx
+    </code></pre>
+
+    <h3>Start Nginx</h3>
+
+    <pre><code>
+sudo systemctl start nginx
+    </code></pre>
+
+    <h3>Stop Nginx</h3>
+
+    <pre><code>
+sudo systemctl stop nginx
+    </code></pre>
+
+    <h3>Restart Nginx</h3>
+
+    <pre><code>
+sudo systemctl restart nginx
+    </code></pre>
+
+    <h3>Enable Auto Start</h3>
+
+    <pre><code>
+sudo systemctl enable nginx
+    </code></pre>
+</section>
+
+<section>
+    <h2>Nginx Important Directories</h2>
+
+    <table>
+        <tr>
+            <th>Path</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>/etc/nginx</td>
+            <td>Main configuration directory</td>
+        </tr>
+        <tr>
+            <td>/etc/nginx/nginx.conf</td>
+            <td>Main configuration file</td>
+        </tr>
+        <tr>
+            <td>/etc/nginx/sites-available</td>
+            <td>Site configurations</td>
+        </tr>
+        <tr>
+            <td>/etc/nginx/sites-enabled</td>
+            <td>Enabled sites</td>
+        </tr>
+        <tr>
+            <td>/var/log/nginx</td>
+            <td>Nginx logs</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Nginx Reverse Proxy Configuration</h2>
+
+    <p>
+        Most modern applications run behind Nginx using reverse proxy.
+    </p>
+
+    <pre><code>
+sudo nano /etc/nginx/sites-available/myapp
+    </code></pre>
+
+    <pre><code>
+server {
+    listen 80;
+
+    server_name example.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:5000;
+    }
+}
+    </code></pre>
+
+    <h3>Enable Site</h3>
+
+    <pre><code>
+sudo ln -s /etc/nginx/sites-available/myapp \
+/etc/nginx/sites-enabled/
+    </code></pre>
+
+    <h3>Test Configuration</h3>
+
+    <pre><code>
+sudo nginx -t
+    </code></pre>
+
+    <h3>Reload Nginx</h3>
+
+    <pre><code>
+sudo systemctl reload nginx
+    </code></pre>
+</section>
+
+<section>
+    <h2>Deploying Flask with Nginx and Gunicorn</h2>
+
+    <pre><code>
+Internet
+    ↓
+Nginx
+    ↓
+Gunicorn
+    ↓
+Flask
+    </code></pre>
+
+    <h3>Install Gunicorn</h3>
+
+    <pre><code>
+pip install gunicorn
+    </code></pre>
+
+    <h3>Run Flask Application</h3>
+
+    <pre><code>
+gunicorn -w 4 app:app
+    </code></pre>
+
+    <p>
+        Nginx forwards requests to Gunicorn and Gunicorn runs Flask workers.
+    </p>
+</section>
+
+<section>
+    <h2>Viewing Logs</h2>
+
+    <h3>Apache Logs</h3>
+
+    <pre><code>
+sudo tail -f /var/log/apache2/access.log
+
+sudo tail -f /var/log/apache2/error.log
+    </code></pre>
+
+    <h3>Nginx Logs</h3>
+
+    <pre><code>
+sudo tail -f /var/log/nginx/access.log
+
+sudo tail -f /var/log/nginx/error.log
+    </code></pre>
+</section>
+
+<section>
+    <h2>Changing Server Port</h2>
+
+    <h3>Apache</h3>
+
+    <pre><code>
+sudo nano /etc/apache2/ports.conf
+    </code></pre>
+
+    <pre><code>
+Listen 8080
+    </code></pre>
+
+    <h3>Nginx</h3>
+
+    <pre><code>
+server {
+    listen 8080;
+}
+    </code></pre>
+
+    <p>
+        After changing ports, restart the service.
+    </p>
+</section>
+
+<section>
+    <h2>HTTPS Configuration</h2>
+
+    <p>
+        HTTPS encrypts communication between users and servers.
+    </p>
+
+    <h3>Install SSL Tool</h3>
+
+    <pre><code>
+sudo apt install certbot
+    </code></pre>
+
+    <h3>Nginx SSL</h3>
+
+    <pre><code>
+sudo certbot --nginx
+    </code></pre>
+
+    <h3>Apache SSL</h3>
+
+    <pre><code>
+sudo certbot --apache
+    </code></pre>
+
+    <p>
+        Certbot automatically generates SSL certificates and configures HTTPS.
+    </p>
+</section>
+
+<section>
+    <h2>Load Balancing in Nginx</h2>
+
+    <pre><code>
+upstream backend {
+
+    server 127.0.0.1:5000;
+    server 127.0.0.1:5001;
+    server 127.0.0.1:5002;
+
+}
+
+server {
+
+    location / {
+        proxy_pass http://backend;
+    }
+
+}
+    </code></pre>
+
+    <p>
+        Nginx distributes requests across multiple backend servers.
+    </p>
+</section>
+
+<section>
+    <h2>Firewall Configuration</h2>
+
+    <h3>Allow HTTP</h3>
+
+    <pre><code>
+sudo ufw allow 80
+    </code></pre>
+
+    <h3>Allow HTTPS</h3>
+
+    <pre><code>
+sudo ufw allow 443
+    </code></pre>
+
+    <h3>Allow Custom Port</h3>
+
+    <pre><code>
+sudo ufw allow 5000
+    </code></pre>
+
+    <h3>Check Firewall Rules</h3>
+
+    <pre><code>
+sudo ufw status
+    </code></pre>
+</section>
+
+<section>
+    <h2>Important Production Servers</h2>
+
+    <table>
+        <tr>
+            <th>Server</th>
+            <th>Purpose</th>
+        </tr>
+        <tr>
+            <td>Apache</td>
+            <td>Web Server</td>
+        </tr>
+        <tr>
+            <td>Nginx</td>
+            <td>Web Server / Reverse Proxy</td>
+        </tr>
+        <tr>
+            <td>Gunicorn</td>
+            <td>Python Application Server</td>
+        </tr>
+        <tr>
+            <td>uWSGI</td>
+            <td>Python Application Server</td>
+        </tr>
+        <tr>
+            <td>Tomcat</td>
+            <td>Java Application Server</td>
+        </tr>
+        <tr>
+            <td>HAProxy</td>
+            <td>Load Balancer</td>
+        </tr>
+        <tr>
+            <td>Envoy</td>
+            <td>Service Proxy</td>
+        </tr>
+        <tr>
+            <td>PgBouncer</td>
+            <td>PostgreSQL Connection Pooling</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Quick Troubleshooting Commands</h2>
+
+    <pre><code>
+ps aux | grep nginx
+
+ps aux | grep apache2
+
+netstat -tulpn
+
+ss -tulpn
+
+curl http://localhost
+
+curl http://127.0.0.1:5000
+    </code></pre>
+
+    <p>
+        These commands help verify whether servers are running and listening on the expected ports.
+    </p>
+</section>
+
+<section>
+    <h2>Final Deployment Flow</h2>
+
+    <pre><code>
+User
+  ↓
+Internet
+  ↓
+Nginx / Apache
+  ↓
+Gunicorn / Tomcat
+  ↓
+Application
+  ↓
+Database
+    </code></pre>
+
+    <p>
+        Web servers manage traffic, application servers execute code, and databases store data.
+    </p>
+</section>
+</body>
+</html>

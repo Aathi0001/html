@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PSQL</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+  table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+</style>
+</head>
+<body>
+
+<section>
+    <h2>Operating System Scheduling Algorithms</h2>
+
+    <p>
+        Scheduling determines which process gets CPU time.
+    </p>
+
+    <pre><code>
+Ready Queue
+      ↓
+Scheduler
+      ↓
+CPU
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why Scheduling Is Needed</h2>
+
+    <pre><code>
+Process A
+
+Process B
+
+Process C
+
+Only One CPU
+    </code></pre>
+
+    <p>
+        OS decides who runs first.
+    </p>
+</section>
+
+<section>
+    <h2>FCFS (First Come First Serve)</h2>
+
+    <pre><code>
+P1 → P2 → P3
+    </code></pre>
+
+    <p>
+        First process arrives first.
+    </p>
+</section>
+
+<section>
+    <h2>FCFS Advantages</h2>
+
+    <ul>
+        <li>Simple</li>
+        <li>Easy To Implement</li>
+    </ul>
+</section>
+
+<section>
+    <h2>FCFS Disadvantages</h2>
+
+    <ul>
+        <li>Long Wait Time</li>
+        <li>Convoy Effect</li>
+    </ul>
+</section>
+
+<section>
+    <h2>SJF (Shortest Job First)</h2>
+
+    <pre><code>
+P1 = 10ms
+
+P2 = 2ms
+
+P3 = 5ms
+
+Execution
+
+P2 → P3 → P1
+    </code></pre>
+</section>
+
+<section>
+    <h2>SJF Advantage</h2>
+
+    <p>
+        Minimum average waiting time.
+    </p>
+</section>
+
+<section>
+    <h2>SJF Disadvantage</h2>
+
+    <p>
+        Long jobs may starve.
+    </p>
+</section>
+
+<section>
+    <h2>Priority Scheduling</h2>
+
+    <pre><code>
+Priority 1
+
+Priority 2
+
+Priority 3
+    </code></pre>
+
+    <p>
+        Higher priority executes first.
+    </p>
+</section>
+
+<section>
+    <h2>Round Robin</h2>
+
+    <pre><code>
+Quantum = 2ms
+
+P1
+ ↓
+P2
+ ↓
+P3
+ ↓
+P1
+ ↓
+P2
+    </code></pre>
+</section>
+
+<section>
+    <h2>Round Robin Advantages</h2>
+
+    <ul>
+        <li>Fair Scheduling</li>
+        <li>No Starvation</li>
+        <li>Interactive Systems</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Round Robin Disadvantages</h2>
+
+    <ul>
+        <li>Context Switching Overhead</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Multilevel Queue</h2>
+
+    <pre><code>
+System Processes
+
+Interactive Processes
+
+Batch Processes
+    </code></pre>
+</section>
+
+<section>
+    <h2>Multilevel Feedback Queue</h2>
+
+    <p>
+        Processes can move between queues.
+    </p>
+
+    <pre><code>
+High Priority Queue
+       ↓
+Medium Queue
+       ↓
+Low Queue
+    </code></pre>
+</section>
+
+<section>
+    <h2>Modern Systems</h2>
+
+    <p>
+        Linux uses advanced scheduling based on priorities and fairness.
+    </p>
+</section>
+
+<section>
+    <h2>DNS (Domain Name System)</h2>
+
+    <p>
+        DNS converts domain names into IP addresses.
+    </p>
+
+    <pre><code>
+google.com
+      ↓
+142.x.x.x
+      ↓
+Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>Why DNS Exists</h2>
+
+    <p>
+        Humans remember names easier than IP addresses.
+    </p>
+
+    <pre><code>
+Instead Of
+
+142.250.183.206
+
+We Use
+
+google.com
+    </code></pre>
+</section>
+
+<section>
+    <h2>DNS Lookup Process</h2>
+
+    <pre><code>
+Browser
+   ↓
+DNS Resolver
+   ↓
+DNS Server
+   ↓
+IP Address
+   ↓
+Website
+    </code></pre>
+</section>
+
+<section>
+    <h2>Who Creates DNS?</h2>
+
+    <p>
+        Domain owner creates DNS records.
+    </p>
+</section>
+
+<section>
+    <h2>Example</h2>
+
+    <pre><code>
+Buy Domain
+
+mybank.com
+
+Create DNS Record
+
+mybank.com
+ ↓
+10.20.30.40
+    </code></pre>
+</section>
+
+<section>
+    <h2>Common DNS Records</h2>
+
+    <pre><code>
+A
+
+AAAA
+
+CNAME
+
+MX
+
+TXT
+
+NS
+    </code></pre>
+</section>
+
+<section>
+    <h2>A Record</h2>
+
+    <pre><code>
+bank.com
+
+↓
+
+10.20.30.40
+    </code></pre>
+</section>
+
+<section>
+    <h2>CNAME Record</h2>
+
+    <pre><code>
+www.bank.com
+
+↓
+
+bank.com
+    </code></pre>
+</section>
+
+<section>
+    <h2>MX Record</h2>
+
+    <pre><code>
+Email Server
+    </code></pre>
+</section>
+
+<section>
+    <h2>DNS Providers</h2>
+
+    <pre><code>
+Cloudflare
+
+AWS Route53
+
+GoDaddy
+
+Namecheap
+    </code></pre>
+</section>
+
+<section>
+    <h2>Load Balancer</h2>
+
+    <p>
+        Distributes traffic across multiple servers.
+    </p>
+</section>
+
+<section>
+    <h2>Without Load Balancer</h2>
+
+    <pre><code>
+Users
+  ↓
+Server1
+    </code></pre>
+</section>
+
+<section>
+    <h2>With Load Balancer</h2>
+
+    <pre><code>
+Users
+  ↓
+
+Load Balancer
+
+ ↙  ↓  ↘
+
+S1 S2 S3
+    </code></pre>
+</section>
+
+<section>
+    <h2>Load Balancing Algorithms</h2>
+
+    <pre><code>
+Round Robin
+
+Weighted Round Robin
+
+Least Connections
+
+IP Hash
+
+Random
+    </code></pre>
+</section>
+
+<section>
+    <h2>Round Robin Load Balancing</h2>
+
+    <pre><code>
+User1 → S1
+
+User2 → S2
+
+User3 → S3
+
+User4 → S1
+    </code></pre>
+</section>
+
+<section>
+    <h2>Least Connections</h2>
+
+    <pre><code>
+Server With Fewest Users
+Gets Next Request
+    </code></pre>
+</section>
+
+<section>
+    <h2>DNS Load Balancing</h2>
+
+    <pre><code>
+bank.com
+
+↓
+
+10.1.1.1
+
+10.1.1.2
+
+10.1.1.3
+    </code></pre>
+
+    <p>
+        DNS can return different IPs.
+    </p>
+</section>
+
+<section>
+    <h2>Multiplexing</h2>
+
+    <p>
+        Multiple signals share one communication channel.
+    </p>
+
+    <pre><code>
+Client1
+
+Client2
+
+Client3
+
+   ↓
+
+Single Connection
+    </code></pre>
+</section>
+
+<section>
+    <h2>Examples</h2>
+
+    <pre><code>
+HTTP/2
+
+TCP
+
+Network Channels
+    </code></pre>
+</section>
+
+<section>
+    <h2>Single Processing</h2>
+
+    <pre><code>
+One Process
+
+One Task
+    </code></pre>
+</section>
+
+<section>
+    <h2>Multiprocessing</h2>
+
+    <pre><code>
+CPU Core1 → Task1
+
+CPU Core2 → Task2
+
+CPU Core3 → Task3
+    </code></pre>
+</section>
+
+<section>
+    <h2>Python Multiprocessing</h2>
+
+    <pre><code>
+from multiprocessing import Process
+    </code></pre>
+</section>
+
+<section>
+    <h2>Synchronous Processing</h2>
+
+    <pre><code>
+Task1
+
+Wait
+
+Task2
+
+Wait
+
+Task3
+    </code></pre>
+</section>
+
+<section>
+    <h2>Example</h2>
+
+    <pre><code>
+Login
+
+Fetch Account
+
+Fetch Card
+
+Sequential
+    </code></pre>
+</section>
+
+<section>
+    <h2>Asynchronous Processing</h2>
+
+    <pre><code>
+Task1
+
+Task2
+
+Task3
+
+Run Concurrently
+    </code></pre>
+</section>
+
+<section>
+    <h2>Example</h2>
+
+    <pre><code>
+Fetch Accounts
+
+Fetch Cards
+
+Fetch Loans
+
+Same Time
+    </code></pre>
+</section>
+
+<section>
+    <h2>Distributed Computing</h2>
+
+    <p>
+        Multiple machines solve a problem together.
+    </p>
+
+    <pre><code>
+Server1
+
+Server2
+
+Server3
+
+Server4
+    </code></pre>
+</section>
+
+<section>
+    <h2>Distributed Banking Example</h2>
+
+    <pre><code>
+Customer Service
+
+Account Service
+
+Card Service
+
+Transaction Service
+    </code></pre>
+</section>
+
+<section>
+    <h2>Difference Table</h2>
+
+    <table>
+        <tr>
+            <th>Concept</th>
+            <th>Meaning</th>
+        </tr>
+
+        <tr>
+            <td>Multiplexing</td>
+            <td>Many Connections One Channel</td>
+        </tr>
+
+        <tr>
+            <td>Multiprocessing</td>
+            <td>Many CPU Processes</td>
+        </tr>
+
+        <tr>
+            <td>Synchronous</td>
+            <td>Wait And Execute</td>
+        </tr>
+
+        <tr>
+            <td>Asynchronous</td>
+            <td>Don't Wait</td>
+        </tr>
+
+        <tr>
+            <td>Distributed</td>
+            <td>Many Machines Working Together</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>Big Picture</h2>
+
+    <pre><code>
+DNS
+ ↓
+Find Server
+
+Load Balancer
+ ↓
+Select Server
+
+OS Scheduler
+ ↓
+Select Process
+
+CPU
+ ↓
+Execute Task
+
+Distributed System
+ ↓
+Scale Across Machines
+    </code></pre>
+</section>
+</body>
+</html>
