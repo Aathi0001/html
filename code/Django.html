@@ -1,0 +1,3388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Django</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #0d1117;
+    color: #e6edf3;
+    line-height: 1.6;
+    padding: 20px;
+    max-width: 100%;
+  }
+  /* Existing styles remain unchanged */
+  pre{background: #21262d;color:#aaffaa;padding:12px;border-radius:8px;overflow:auto}
+  h1, h2, h3, h4, h5, h6 {
+      margin-top: 30px;
+      border-left: 5px solid #ff4747;
+      padding-left: 12px;
+      color: #333;
+    }
+
+  h1 {
+    color: #f0f6fc;
+    font-size: 2em;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border-bottom: 3px solid #30363d;
+    padding-bottom: 8px;
+  }
+
+  h3 {
+    color: #79c0ff;
+    font-size: 1.4em;
+    margin-top: 25px;
+    border-left: 4px solid #30363d;
+    padding-left: 10px;
+  }
+
+  h4 {
+    color: #4bffe7;
+    font-size: 1.2em;
+    margin-top: 20px;
+  }
+
+  h5 {
+    color: #a5d6ff;
+    font-size: 1.1em;
+    margin-top: 15px;
+    font-weight: normal;
+  }
+
+  h6 {
+    color: #8b949e;
+    font-size: 1em;
+    margin-top: 10px;
+    font-weight: normal;
+    font-style: italic;
+  }
+  h2 {
+    color: #58a6ff;
+    border-bottom: 2px solid #30363d;
+    padding-bottom: 4px;
+  }
+  a {
+    color: #79c0ff;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #fff;
+    text-decoration: underline;
+  }
+  .index {
+    background-color: #161b22;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  .index ul {
+    columns: 2;
+    list-style-type: none;
+    padding-left: 0;
+  }
+  .index li {
+    margin: 6px 0;
+  }
+  section {
+    margin-bottom: 50px;
+  }
+  code {
+    background-color: #21262d;
+    padding: 4px 8px;
+    border-radius: 6px;
+    color: #ffa657;
+  }
+  table {
+    max-width: 100%;
+    overflow-x: auto;
+    display: block;
+    word-wrap: break-word;
+}
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin: 15px 0; 
+}
+
+th, td { 
+    border: 1px solid #ccc; 
+    padding: 8px; 
+    text-align: left; 
+}
+
+th { 
+    background: #34495e; 
+    color: white; 
+}
+</style>
+</head>
+<body>
+
+<section>
+    <h1>Django Learning Notes - Part 1</h1>
+    <h2>Project Structure, Apps, Views, URLs, Templates</h2>
+</section>
+
+<section>
+    <h2>1. What is Django?</h2>
+
+    <p>Django is a Python web framework used to build web applications.</p>
+
+    <h3>Request Flow</h3>
+
+    <pre><code>
+Browser
+   ↓
+URL
+   ↓
+View
+   ↓
+Model (Database)
+   ↓
+Template
+   ↓
+Response
+    </code></pre>
+
+    <h3>Example</h3>
+
+    <pre><code>
+User opens:
+
+http://localhost:8000/customer/create
+
+        ↓
+
+urls.py
+
+        ↓
+
+views.py
+
+        ↓
+
+HTML Template
+
+        ↓
+
+Browser
+    </code></pre>
+</section>
+
+<section>
+    <h2>2. Create Project</h2>
+
+    <pre><code>
+django-admin startproject Bank_Portal
+    </code></pre>
+
+    <h3>Structure</h3>
+
+    <pre><code>
+Bank_Portal/
+│
+├── manage.py
+├── Bank_Portal/
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   └── asgi.py
+    </code></pre>
+</section>
+
+<section>
+    <h2>3. Create App</h2>
+
+    <pre><code>
+python manage.py startapp Customer
+python manage.py startapp Account
+python manage.py startapp Card
+python manage.py startapp Transaction
+python manage.py startapp Authentication
+    </code></pre>
+</section>
+
+<section>
+    <h2>4. Register App</h2>
+
+    <h3>settings.py</h3>
+
+    <pre><code>
+INSTALLED_APPS = [
+
+    'Customer',
+    'Account',
+    'Card',
+    'Transaction',
+    'Authentication',
+
+]
+    </code></pre>
+</section>
+
+<section>
+    <h2>5. Banking Project Structure</h2>
+
+    <pre><code>
+Bank_Portal/
+│
+├── common/
+│   ├── patterns.py
+│   ├── validators.py
+│   ├── constants.py
+│   └── utils.py
+│
+├── Authentication/
+├── Customer/
+├── Account/
+├── Card/
+├── Transaction/
+    </code></pre>
+</section>
+
+<section>
+    <h2>6. Views</h2>
+
+    <pre><code>
+from django.shortcuts import render
+
+def Home(request):
+
+    return render(
+        request,
+        'home.html'
+    )
+    </code></pre>
+
+    <p>Purpose: Handle requests and return responses.</p>
+</section>
+
+<section>
+    <h2>7. URLs</h2>
+
+    <h3>Customer/urls.py</h3>
+
+    <pre><code>
+from django.urls import path
+from .views import *
+
+urlpatterns = [
+
+    path(
+        'Create/',
+        Create_Customer,
+        name='create_customer'
+    ),
+
+]
+    </code></pre>
+
+    <h3>Project urls.py</h3>
+
+    <pre><code>
+from django.urls import path, include
+
+urlpatterns = [
+
+    path(
+        'Customer/',
+        include('Customer.urls')
+    ),
+
+]
+    </code></pre>
+</section>
+
+<section>
+    <h2>8. Templates</h2>
+
+    <h3>Directory Structure</h3>
+
+    <pre><code>
+Customer/
+│
+├── templates/
+│   └── Customer/
+│       └── Create_Customer.html
+    </code></pre>
+
+    <h3>Render Template</h3>
+
+    <pre><code>
+return render(
+    request,
+    'Customer/Create_Customer.html'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>9. Request Methods</h2>
+
+    <h3>GET</h3>
+
+    <pre><code>
+if request.method == 'GET':
+    pass
+    </code></pre>
+
+    <h3>POST</h3>
+
+    <pre><code>
+if request.method == 'POST':
+    pass
+    </code></pre>
+</section>
+
+<section>
+    <h2>10. Reading Form Values</h2>
+
+    <h3>HTML</h3>
+
+    <pre><code>
+&lt;input
+    type="text"
+    name="mobile"
+/&gt;
+    </code></pre>
+
+    <h3>Python</h3>
+
+    <pre><code>
+mobile = request.POST.get(
+    'mobile'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>11. Dictionary Access</h2>
+
+    <h3>Dictionary</h3>
+
+    <pre><code>
+details = {
+    "mobile": "9876543210"
+}
+    </code></pre>
+
+    <h3>Using []</h3>
+
+    <pre><code>
+mobile = details["mobile"]
+    </code></pre>
+
+    <p>Raises KeyError if key does not exist.</p>
+
+    <h3>Using get()</h3>
+
+    <pre><code>
+mobile = details.get("mobile")
+    </code></pre>
+
+    <p>Returns None if key does not exist.</p>
+</section>
+
+<section>
+    <h2>12. Messages Framework</h2>
+
+    <h3>Success Message</h3>
+
+    <pre><code>
+from django.contrib import messages
+
+messages.success(
+    request,
+    "Customer Created Successfully"
+)
+    </code></pre>
+
+    <h3>Error Message</h3>
+
+    <pre><code>
+messages.error(
+    request,
+    "Invalid Mobile"
+)
+    </code></pre>
+
+    <h3>Template Display</h3>
+
+    <pre><code>
+{% if messages %}
+
+    {% for message in messages %}
+
+        {{ message }}
+
+    {% endfor %}
+
+{% endif %}
+    </code></pre>
+</section>
+
+<section>
+    <h2>13. Redirect</h2>
+
+    <h3>Bad</h3>
+
+    <pre><code>
+return render(
+    request,
+    'Create_Customer.html'
+)
+    </code></pre>
+
+    <h3>Good</h3>
+
+    <pre><code>
+from django.shortcuts import redirect
+
+return redirect(
+    'create_customer'
+)
+    </code></pre>
+
+    <h3>Flow</h3>
+
+    <pre><code>
+POST
+ ↓
+Insert
+ ↓
+Redirect
+ ↓
+GET
+    </code></pre>
+
+    <p>Prevents duplicate insert on page refresh.</p>
+</section>
+
+<section>
+    <h2>14. Common Folder</h2>
+
+    <h3>patterns.py</h3>
+
+    <pre><code>
+MOBILE_PATTERN
+EMAIL_PATTERN
+AADHAR_PATTERN
+ACCOUNT_PATTERN
+CARD_PATTERN
+    </code></pre>
+
+    <h3>validators.py</h3>
+
+    <pre><code>
+validate_mobile()
+
+validate_email()
+
+validate_aadhar()
+    </code></pre>
+
+    <h3>constants.py</h3>
+
+    <pre><code>
+ACCOUNT_ACTIVE
+ACCOUNT_BLOCKED
+
+CARD_ACTIVE
+CARD_BLOCKED
+    </code></pre>
+
+    <h3>utils.py</h3>
+
+    <pre><code>
+Generate_Customer_Id()
+
+Generate_Account_No()
+
+Generate_Card_No()
+    </code></pre>
+</section>
+
+<section>
+    <h2>15. Walrus Operator (:=)</h2>
+
+    <h3>Normal</h3>
+
+    <pre><code>
+mobile = details.get("mobile")
+
+if mobile:
+    pass
+    </code></pre>
+
+    <h3>Walrus</h3>
+
+    <pre><code>
+if mobile := details.get("mobile"):
+    pass
+    </code></pre>
+
+    <p>Assigns and checks in one line.</p>
+</section>
+
+<section>
+    <h2>16. Keyword Arguments (**kwargs)</h2>
+
+    <h3>Function</h3>
+
+    <pre><code>
+def Test(**Details):
+
+    print(Details)
+    </code></pre>
+
+    <h3>Call</h3>
+
+    <pre><code>
+Test(
+    mobile="9876543210",
+    email="abc@gmail.com"
+)
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+{
+    'mobile': '9876543210',
+    'email': 'abc@gmail.com'
+}
+    </code></pre>
+
+    <h3>Using Dictionary</h3>
+
+    <pre><code>
+Details = {
+
+    "mobile":"9876543210",
+    "email":"abc@gmail.com"
+
+}
+
+Test(**Details)
+    </code></pre>
+</section>
+
+<section>
+    <h2>17. pass</h2>
+
+    <p>Do nothing. Used as a placeholder.</p>
+
+    <pre><code>
+if True:
+    pass
+    </code></pre>
+</section>
+
+<section>
+    <h2>18. continue</h2>
+
+    <p>Skip current loop iteration.</p>
+
+    <pre><code>
+for i in range(5):
+
+    if i == 2:
+        continue
+
+    print(i)
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+0
+1
+3
+4
+    </code></pre>
+</section>
+
+<section>
+    <h2>19. break</h2>
+
+    <p>Exit loop immediately.</p>
+
+    <pre><code>
+for i in range(5):
+
+    if i == 2:
+        break
+
+    print(i)
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+0
+1
+    </code></pre>
+</section>
+
+<section>
+    <h2>Summary</h2>
+
+    <ul>
+        <li>Django Project Structure</li>
+        <li>Django Apps</li>
+        <li>Views</li>
+        <li>URLs</li>
+        <li>Templates</li>
+        <li>GET & POST</li>
+        <li>Reading Form Data</li>
+        <li>Dictionary Access</li>
+        <li>Messages</li>
+        <li>Redirect</li>
+        <li>Common Folder</li>
+        <li>Walrus Operator</li>
+        <li>Keyword Arguments</li>
+        <li>pass</li>
+        <li>continue</li>
+        <li>break</li>
+    </ul>
+</section>
+<section>
+    <h1>Django Learning Notes - Part 2</h1>
+    <h2>Models, ORM, Relationships, Authentication and Database Design</h2>
+</section>
+
+<section>
+    <h2>20. What is a Model?</h2>
+
+    <p>
+        A Model is a Python class that represents a database table.
+    </p>
+
+    <h3>Database Table</h3>
+
+    <pre><code>
+customers
+
+customer_id
+customer_name
+mobile
+email
+    </code></pre>
+
+    <h3>Django Model</h3>
+
+    <pre><code>
+from django.db import models
+
+class customers(models.Model):
+
+    customer_id = models.CharField(
+        max_length=8,
+        unique=True
+    )
+
+    customer_name = models.CharField(
+        max_length=100
+    )
+
+    mobile = models.CharField(
+        max_length=10
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>21. Django Built-in Fields</h2>
+
+    <table>
+        <tr>
+            <th>Field</th>
+            <th>Purpose</th>
+        </tr>
+
+        <tr>
+            <td>CharField</td>
+            <td>Short Text</td>
+        </tr>
+
+        <tr>
+            <td>TextField</td>
+            <td>Large Text</td>
+        </tr>
+
+        <tr>
+            <td>EmailField</td>
+            <td>Email</td>
+        </tr>
+
+        <tr>
+            <td>IntegerField</td>
+            <td>Integer</td>
+        </tr>
+
+        <tr>
+            <td>DecimalField</td>
+            <td>Money</td>
+        </tr>
+
+        <tr>
+            <td>DateField</td>
+            <td>Date</td>
+        </tr>
+
+        <tr>
+            <td>DateTimeField</td>
+            <td>Date Time</td>
+        </tr>
+
+        <tr>
+            <td>BooleanField</td>
+            <td>True/False</td>
+        </tr>
+    </table>
+</section>
+
+<section>
+    <h2>22. Auto Generated Primary Key</h2>
+
+    <p>
+        If you don't define a primary key,
+        Django automatically creates:
+    </p>
+
+    <pre><code>
+id = models.BigAutoField(
+    primary_key=True
+)
+    </code></pre>
+
+    <h3>Table</h3>
+
+    <pre><code>
+id
+customer_id
+customer_name
+mobile
+    </code></pre>
+</section>
+
+<section>
+    <h2>23. Primary Key</h2>
+
+    <pre><code>
+customer_id = models.CharField(
+    max_length=8,
+    primary_key=True
+)
+    </code></pre>
+
+    <p>
+        Only one primary key per table.
+    </p>
+</section>
+
+<section>
+    <h2>24. unique=True</h2>
+
+    <pre><code>
+mobile = models.CharField(
+    max_length=10,
+    unique=True
+)
+    </code></pre>
+
+    <p>
+        Prevents duplicate values.
+    </p>
+
+    <h3>Allowed</h3>
+
+    <pre><code>
+9876543210
+9999999999
+    </code></pre>
+
+    <h3>Not Allowed</h3>
+
+    <pre><code>
+9876543210
+9876543210
+    </code></pre>
+</section>
+
+<section>
+    <h2>25. null=True vs blank=True</h2>
+
+    <h3>null=True</h3>
+
+    <pre><code>
+email = models.EmailField(
+    null=True
+)
+    </code></pre>
+
+    <p>
+        Database can store NULL.
+    </p>
+
+    <h3>blank=True</h3>
+
+    <pre><code>
+email = models.EmailField(
+    blank=True
+)
+    </code></pre>
+
+    <p>
+        Form can submit empty value.
+    </p>
+</section>
+
+<section>
+    <h2>26. __str__ Method</h2>
+
+    <pre><code>
+def __str__(self):
+
+    return self.customer_name
+    </code></pre>
+
+    <h3>Without __str__</h3>
+
+    <pre><code>
+&lt;customers object (1)&gt;
+    </code></pre>
+
+    <h3>With __str__</h3>
+
+    <pre><code>
+Aathi
+    </code></pre>
+
+    <p>
+        Automatically called when object is printed.
+    </p>
+</section>
+
+<section>
+    <h2>27. One-To-One Relationship</h2>
+
+    <pre><code>
+from django.contrib.auth.models import User
+
+class customers(models.Model):
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE
+    )
+    </code></pre>
+
+    <h3>Meaning</h3>
+
+    <pre><code>
+1 User
+    ↓
+1 Customer
+    </code></pre>
+
+    <h3>Example</h3>
+
+    <pre><code>
+user_id = 1
+
+customer_id = C000001
+    </code></pre>
+</section>
+
+<section>
+    <h2>28. ForeignKey (One-To-Many)</h2>
+
+    <pre><code>
+class accounts(models.Model):
+
+    customer = models.ForeignKey(
+        customers,
+        on_delete=models.CASCADE
+    )
+    </code></pre>
+
+    <h3>Meaning</h3>
+
+    <pre><code>
+1 Customer
+     ↓
+Many Accounts
+    </code></pre>
+
+    <h3>Example</h3>
+
+    <pre><code>
+Customer
+
+C000001
+
+Accounts
+
+ACC000001
+ACC000002
+ACC000003
+    </code></pre>
+</section>
+
+<section>
+    <h2>29. Many-To-Many</h2>
+
+    <pre><code>
+class Student(models.Model):
+
+    courses = models.ManyToManyField(
+        Course
+    )
+    </code></pre>
+
+    <h3>Meaning</h3>
+
+    <pre><code>
+Many Students
+      ↔
+Many Courses
+    </code></pre>
+</section>
+
+<section>
+    <h2>30. on_delete Options</h2>
+
+    <h3>CASCADE</h3>
+
+    <pre><code>
+on_delete=models.CASCADE
+    </code></pre>
+
+    <p>
+        Delete child rows automatically.
+    </p>
+
+    <pre><code>
+Customer Deleted
+
+↓
+
+Accounts Deleted
+Cards Deleted
+    </code></pre>
+
+    <h3>PROTECT</h3>
+
+    <pre><code>
+on_delete=models.PROTECT
+    </code></pre>
+
+    <p>
+        Prevent deletion.
+    </p>
+</section>
+
+<section>
+    <h2>31. to_field</h2>
+
+    <pre><code>
+customer = models.ForeignKey(
+
+    customers,
+
+    to_field='customer_id',
+
+    on_delete=models.CASCADE
+
+)
+    </code></pre>
+
+    <p>
+        Which column in parent table should be referenced.
+    </p>
+
+    <pre><code>
+accounts.customer_id
+
+↓
+
+customers.customer_id
+    </code></pre>
+</section>
+
+<section>
+    <h2>32. db_column</h2>
+
+    <pre><code>
+customer = models.ForeignKey(
+
+    customers,
+
+    db_column='customer_id',
+
+    on_delete=models.CASCADE
+
+)
+    </code></pre>
+
+    <p>
+        Actual database column name.
+    </p>
+</section>
+
+<section>
+    <h2>33. managed = False</h2>
+
+    <pre><code>
+class Meta:
+
+    managed = False
+    </code></pre>
+
+    <p>
+        Django will not create,
+        modify or delete the table.
+    </p>
+
+    <h3>Useful When</h3>
+
+    <pre><code>
+Database already exists
+    </code></pre>
+</section>
+
+<section>
+    <h2>34. Authentication Model</h2>
+
+    <pre><code>
+from django.contrib.auth.models import User
+    </code></pre>
+
+    <p>
+        Django already provides:
+    </p>
+
+    <pre><code>
+username
+password
+email
+last_login
+is_active
+is_staff
+is_superuser
+    </code></pre>
+
+    <p>
+        Usually no need to create your own
+        authentication table.
+    </p>
+</section>
+
+<section>
+    <h2>35. Create User</h2>
+
+    <pre><code>
+from django.contrib.auth.models import User
+
+User.objects.create_user(
+
+    username='admin',
+
+    password='admin123'
+
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>36. Authenticate User</h2>
+
+    <pre><code>
+from django.contrib.auth import authenticate
+
+user = authenticate(
+
+    username=username,
+
+    password=password
+
+)
+    </code></pre>
+
+    <h3>Success</h3>
+
+    <pre><code>
+returns User object
+    </code></pre>
+
+    <h3>Failure</h3>
+
+    <pre><code>
+returns None
+    </code></pre>
+</section>
+
+<section>
+    <h2>37. Login User</h2>
+
+    <pre><code>
+from django.contrib.auth import login
+
+login(
+    request,
+    user
+)
+    </code></pre>
+
+    <p>
+        Creates session.
+    </p>
+</section>
+
+<section>
+    <h2>38. Logout User</h2>
+
+    <pre><code>
+from django.contrib.auth import logout
+
+logout(request)
+    </code></pre>
+
+    <p>
+        Removes session.
+    </p>
+</section>
+
+<section>
+    <h2>39. Check Logged-In User</h2>
+
+    <pre><code>
+request.user
+    </code></pre>
+
+    <h3>Example</h3>
+
+    <pre><code>
+print(
+    request.user.username
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>40. Check Authentication</h2>
+
+    <pre><code>
+if request.user.is_authenticated:
+
+    print("Logged In")
+    </code></pre>
+</section>
+
+<section>
+    <h2>41. Create Record (ORM)</h2>
+
+    <pre><code>
+customers.objects.create(
+
+    customer_id='C000001',
+
+    customer_name='Aathi'
+
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>42. Get Single Record</h2>
+
+    <pre><code>
+customer = customers.objects.get(
+    customer_id='C000001'
+)
+    </code></pre>
+
+    <p>
+        Returns single object.
+    </p>
+</section>
+
+<section>
+    <h2>43. Filter Records</h2>
+
+    <pre><code>
+customers.objects.filter(
+    mobile='9876543210'
+)
+    </code></pre>
+
+    <p>
+        Returns QuerySet.
+    </p>
+</section>
+
+<section>
+    <h2>44. Check Exists</h2>
+
+    <pre><code>
+customers.objects.filter(
+    mobile=mobile
+).exists()
+    </code></pre>
+
+    <p>
+        Returns True or False.
+    </p>
+</section>
+
+<section>
+    <h2>45. Update Record</h2>
+
+    <pre><code>
+customers.objects.filter(
+    customer_id='C000001'
+).update(
+    mobile='9999999999'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>46. Delete Record</h2>
+
+    <pre><code>
+count, _ = customers.objects.filter(
+    customer_id='C000001'
+).delete()
+    </code></pre>
+
+    <p>
+        count = deleted rows
+    </p>
+</section>
+
+<section>
+    <h2>47. Summary</h2>
+
+    <ul>
+        <li>Models</li>
+        <li>Fields</li>
+        <li>Primary Keys</li>
+        <li>Unique Constraints</li>
+        <li>ForeignKey</li>
+        <li>OneToOneField</li>
+        <li>ManyToManyField</li>
+        <li>to_field</li>
+        <li>db_column</li>
+        <li>managed=False</li>
+        <li>Django Authentication</li>
+        <li>Login</li>
+        <li>Logout</li>
+        <li>ORM CRUD Operations</li>
+    </ul>
+</section>
+<section>
+    <h1>Django Learning Notes - Part 3</h1>
+    <h2>Advanced ORM, QuerySets, Raw SQL, Transactions</h2>
+</section>
+
+<section>
+    <h2>48. QuerySet</h2>
+
+    <p>
+        A QuerySet is a collection of database records returned by Django ORM.
+    </p>
+
+    <pre><code>
+customers.objects.all()
+    </code></pre>
+
+    <h3>Returns</h3>
+
+    <pre><code>
+[
+    Customer1,
+    Customer2,
+    Customer3
+]
+    </code></pre>
+</section>
+
+<section>
+    <h2>49. all()</h2>
+
+    <pre><code>
+customers.objects.all()
+    </code></pre>
+
+    <p>
+        Fetch all records.
+    </p>
+
+    <pre><code>
+for customer in customers.objects.all():
+
+    print(
+        customer.customer_name
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>50. first()</h2>
+
+    <pre><code>
+customer = customers.objects.first()
+    </code></pre>
+
+    <p>
+        Returns first record.
+    </p>
+</section>
+
+<section>
+    <h2>51. last()</h2>
+
+    <pre><code>
+customer = customers.objects.last()
+    </code></pre>
+
+    <p>
+        Returns last record.
+    </p>
+</section>
+
+<section>
+    <h2>52. values()</h2>
+
+    <pre><code>
+customers.objects.values()
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+[
+    {
+        'customer_id':'C000001',
+        'customer_name':'Aathi'
+    }
+]
+    </code></pre>
+</section>
+
+<section>
+    <h2>53. values_list()</h2>
+
+    <pre><code>
+customers.objects.values_list(
+    'customer_name'
+)
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+[
+    ('Aathi',),
+    ('Kumar',)
+]
+    </code></pre>
+</section>
+
+<section>
+    <h2>54. values_list(flat=True)</h2>
+
+    <pre><code>
+customers.objects.values_list(
+    'customer_name',
+    flat=True
+)
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+[
+    'Aathi',
+    'Kumar'
+]
+    </code></pre>
+</section>
+
+<section>
+    <h2>55. count()</h2>
+
+    <pre><code>
+customers.objects.count()
+    </code></pre>
+
+    <h3>SQL Equivalent</h3>
+
+    <pre><code>
+SELECT COUNT(*)
+FROM customers
+    </code></pre>
+</section>
+
+<section>
+    <h2>56. exists()</h2>
+
+    <pre><code>
+customers.objects.filter(
+    mobile='9876543210'
+).exists()
+    </code></pre>
+
+    <p>
+        Returns True or False.
+    </p>
+</section>
+
+<section>
+    <h2>57. order_by()</h2>
+
+    <h3>Ascending</h3>
+
+    <pre><code>
+customers.objects.order_by(
+    'customer_name'
+)
+    </code></pre>
+
+    <h3>Descending</h3>
+
+    <pre><code>
+customers.objects.order_by(
+    '-customer_name'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>58. exclude()</h2>
+
+    <pre><code>
+customers.objects.exclude(
+    account_status='Blocked'
+)
+    </code></pre>
+
+    <h3>SQL Equivalent</h3>
+
+    <pre><code>
+WHERE account_status != 'Blocked'
+    </code></pre>
+</section>
+
+<section>
+    <h2>59. __icontains</h2>
+
+    <pre><code>
+customers.objects.filter(
+    customer_name__icontains='aa'
+)
+    </code></pre>
+
+    <h3>Matches</h3>
+
+    <pre><code>
+Aathi
+Rajaa
+    </code></pre>
+</section>
+
+<section>
+    <h2>60. __startswith</h2>
+
+    <pre><code>
+customers.objects.filter(
+    customer_name__startswith='Aa'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>61. __endswith</h2>
+
+    <pre><code>
+customers.objects.filter(
+    customer_name__endswith='thi'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>62. __in</h2>
+
+    <pre><code>
+customers.objects.filter(
+    customer_id__in=[
+        'C000001',
+        'C000002'
+    ]
+)
+    </code></pre>
+
+    <h3>SQL Equivalent</h3>
+
+    <pre><code>
+WHERE customer_id IN
+(
+    'C000001',
+    'C000002'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>63. __gt</h2>
+
+    <pre><code>
+accounts.objects.filter(
+    balance__gt=10000
+)
+    </code></pre>
+
+    <h3>SQL Equivalent</h3>
+
+    <pre><code>
+WHERE balance > 10000
+    </code></pre>
+</section>
+
+<section>
+    <h2>64. __gte</h2>
+
+    <pre><code>
+accounts.objects.filter(
+    balance__gte=10000
+)
+    </code></pre>
+
+    <h3>SQL Equivalent</h3>
+
+    <pre><code>
+WHERE balance >= 10000
+    </code></pre>
+</section>
+
+<section>
+    <h2>65. __lt</h2>
+
+    <pre><code>
+accounts.objects.filter(
+    balance__lt=10000
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>66. __lte</h2>
+
+    <pre><code>
+accounts.objects.filter(
+    balance__lte=10000
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>67. Aggregate Functions</h2>
+
+    <pre><code>
+from django.db.models import (
+    Sum,
+    Avg,
+    Count,
+    Max,
+    Min
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>68. Sum()</h2>
+
+    <pre><code>
+from django.db.models import Sum
+
+accounts.objects.aggregate(
+    Sum('balance')
+)
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+{
+    'balance__sum': 500000
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>69. Avg()</h2>
+
+    <pre><code>
+accounts.objects.aggregate(
+    Avg('balance')
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>70. Max()</h2>
+
+    <pre><code>
+accounts.objects.aggregate(
+    Max('balance')
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>71. Min()</h2>
+
+    <pre><code>
+accounts.objects.aggregate(
+    Min('balance')
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>72. Count()</h2>
+
+    <pre><code>
+customers.objects.aggregate(
+    Count('customer_id')
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>73. Related Objects</h2>
+
+    <pre><code>
+account.customer
+    </code></pre>
+
+    <p>
+        Access parent object.
+    </p>
+
+    <pre><code>
+print(
+    account.customer.customer_name
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>74. Reverse Lookup</h2>
+
+    <pre><code>
+customer.accounts_set.all()
+    </code></pre>
+
+    <p>
+        Access all child records.
+    </p>
+</section>
+
+<section>
+    <h2>75. Raw SQL Query</h2>
+
+    <pre><code>
+from django.db import connection
+    </code></pre>
+</section>
+
+<section>
+    <h2>76. fetchone()</h2>
+
+    <pre><code>
+with connection.cursor() as cursor:
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM customers
+        """
+    )
+
+    row = cursor.fetchone()
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+(
+    1,
+    'C000001',
+    'Aathi'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>77. fetchall()</h2>
+
+    <pre><code>
+with connection.cursor() as cursor:
+
+    cursor.execute(
+        """
+        SELECT *
+        FROM customers
+        """
+    )
+
+    rows = cursor.fetchall()
+    </code></pre>
+</section>
+
+<section>
+    <h2>78. Insert Using SQL</h2>
+
+    <pre><code>
+cursor.execute(
+    """
+    INSERT INTO customers
+    (
+        customer_id,
+        customer_name
+    )
+    VALUES
+    (
+        %s,
+        %s
+    )
+    """,
+    [
+        customer_id,
+        customer_name
+    ]
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>79. Update Using SQL</h2>
+
+    <pre><code>
+cursor.execute(
+    """
+    UPDATE customers
+    SET mobile=%s
+    WHERE customer_id=%s
+    """,
+    [
+        mobile,
+        customer_id
+    ]
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>80. Delete Using SQL</h2>
+
+    <pre><code>
+cursor.execute(
+    """
+    DELETE
+    FROM customers
+    WHERE customer_id=%s
+    """,
+    [
+        customer_id
+    ]
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>81. SQL Injection (Wrong)</h2>
+
+    <pre><code>
+cursor.execute(
+
+    f"""
+
+    SELECT *
+    FROM customers
+    WHERE customer_id =
+    '{customer_id}'
+
+    """
+
+)
+    </code></pre>
+
+    <p>
+        Never use f-strings for SQL.
+    </p>
+</section>
+
+<section>
+    <h2>82. SQL Injection Safe</h2>
+
+    <pre><code>
+cursor.execute(
+    """
+    SELECT *
+    FROM customers
+    WHERE customer_id=%s
+    """,
+    [
+        customer_id
+    ]
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>83. transaction.atomic()</h2>
+
+    <pre><code>
+from django.db import transaction
+    </code></pre>
+
+    <p>
+        Makes multiple operations behave as one transaction.
+    </p>
+</section>
+
+<section>
+    <h2>84. Banking Example Without Transaction</h2>
+
+    <pre><code>
+Create Customer
+
+↓
+
+Create Account
+
+↓
+
+Account Creation Failed
+    </code></pre>
+
+    <h3>Result</h3>
+
+    <pre><code>
+Customer Exists
+
+Account Missing
+    </code></pre>
+</section>
+
+<section>
+    <h2>85. Banking Example With Transaction</h2>
+
+    <pre><code>
+from django.db import transaction
+
+with transaction.atomic():
+
+    Create_Customer()
+
+    Create_Account()
+    </code></pre>
+
+    <h3>Result</h3>
+
+    <pre><code>
+Both Success
+
+OR
+
+Both Rollback
+    </code></pre>
+</section>
+
+<section>
+    <h2>86. Exception Handling</h2>
+
+    <pre><code>
+try:
+
+    Create_Customer()
+
+except Exception as e:
+
+    print(e)
+    </code></pre>
+</section>
+
+<section>
+    <h2>87. Common Exceptions</h2>
+
+    <pre><code>
+DoesNotExist
+
+MultipleObjectsReturned
+
+ValidationError
+
+IntegrityError
+
+ProgrammingError
+
+TypeError
+
+ValueError
+    </code></pre>
+</section>
+
+<section>
+    <h2>88. Logging Errors</h2>
+
+    <pre><code>
+import logging
+
+logger = logging.getLogger(
+    __name__
+)
+
+logger.error(
+    str(error)
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>89. Service Layer Example</h2>
+
+    <pre><code>
+Customer/
+
+├── views.py
+├── services.py
+├── queries.py
+├── models.py
+    </code></pre>
+
+    <p>
+        Keep business logic inside services.py
+    </p>
+</section>
+
+<section>
+    <h2>90. Summary</h2>
+
+    <ul>
+        <li>QuerySet</li>
+        <li>all()</li>
+        <li>first()</li>
+        <li>last()</li>
+        <li>values()</li>
+        <li>values_list()</li>
+        <li>count()</li>
+        <li>exists()</li>
+        <li>order_by()</li>
+        <li>exclude()</li>
+        <li>icontains()</li>
+        <li>startswith()</li>
+        <li>endswith()</li>
+        <li>Aggregate Functions</li>
+        <li>Raw SQL</li>
+        <li>fetchone()</li>
+        <li>fetchall()</li>
+        <li>transaction.atomic()</li>
+        <li>Exception Handling</li>
+        <li>Service Layer</li>
+    </ul>
+</section>
+<section>
+    <h1>Django Learning Notes - Part 4</h1>
+    <h2>Forms, Validation, Sessions, Decorators, Admin Panel & Banking Flow</h2>
+</section>
+
+<section>
+    <h2>91. What is a Form?</h2>
+
+    <p>
+        Forms are used to collect data from users.
+    </p>
+
+    <h3>Example</h3>
+
+    <pre><code>
+Customer Registration
+
+Customer Name
+Mobile
+Email
+Aadhar
+Opening Balance
+    </code></pre>
+</section>
+
+<section>
+    <h2>92. HTML Form</h2>
+
+    <pre><code>
+&lt;form method="POST"&gt;
+
+    {% csrf_token %}
+
+    &lt;input
+        type="text"
+        name="customer_name"
+    &gt;
+
+    &lt;button type="submit"&gt;
+        Save
+    &lt;/button&gt;
+
+&lt;/form&gt;
+    </code></pre>
+</section>
+
+<section>
+    <h2>93. CSRF Token</h2>
+
+    <pre><code>
+{% csrf_token %}
+    </code></pre>
+
+    <p>
+        Protects against Cross Site Request Forgery attacks.
+    </p>
+
+    <p>
+        Every POST form should contain CSRF token.
+    </p>
+</section>
+
+<section>
+    <h2>94. Form Validation Example</h2>
+
+    <pre><code>
+if not mobile:
+
+    messages.error(
+        request,
+        "Mobile Required"
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>95. Regular Expression Validation</h2>
+
+    <pre><code>
+import re
+
+if not re.fullmatch(
+    MOBILE_PATTERN,
+    mobile
+):
+
+    return "INVALID_MOBILE"
+    </code></pre>
+</section>
+
+<section>
+    <h2>96. Common Regex Patterns</h2>
+
+    <h3>Mobile</h3>
+
+    <pre><code>
+^[6-9]\d{9}$
+    </code></pre>
+
+    <h3>Email</h3>
+
+    <pre><code>
+^[a-zA-Z0-9._%+-]+
+@
+[a-zA-Z0-9.-]+
+\.
+[a-zA-Z]{2,}$
+    </code></pre>
+
+    <h3>Aadhar</h3>
+
+    <pre><code>
+^\d{12}$
+    </code></pre>
+</section>
+
+<section>
+    <h2>97. Custom Validation Function</h2>
+
+    <pre><code>
+def Validate(**Details):
+
+    if mobile := Details.get(
+        "mobile"
+    ):
+
+        if not re.fullmatch(
+            MOBILE_PATTERN,
+            mobile
+        ):
+
+            return "INVALID_MOBILE"
+
+    return None
+    </code></pre>
+</section>
+
+<section>
+    <h2>98. Service Layer Validation</h2>
+
+    <pre><code>
+Validation = Validate(
+    **Cust_Details
+)
+
+if Validation:
+
+    messages.error(
+        request,
+        Validation
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>99. Session</h2>
+
+    <p>
+        Session stores user information
+        between requests.
+    </p>
+</section>
+
+<section>
+    <h2>100. Store Session Value</h2>
+
+    <pre><code>
+request.session[
+    'customer_id'
+] = 'C000001'
+    </code></pre>
+</section>
+
+<section>
+    <h2>101. Read Session Value</h2>
+
+    <pre><code>
+customer_id = request.session.get(
+    'customer_id'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>102. Delete Session Value</h2>
+
+    <pre><code>
+del request.session[
+    'customer_id'
+]
+    </code></pre>
+</section>
+
+<section>
+    <h2>103. Check User Login</h2>
+
+    <pre><code>
+if request.user.is_authenticated:
+
+    print(
+        "Logged In"
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>104. Login Required Decorator</h2>
+
+    <pre><code>
+from django.contrib.auth.decorators import login_required
+
+@login_required
+
+def Dashboard(request):
+
+    pass
+    </code></pre>
+
+    <p>
+        User must login before accessing page.
+    </p>
+</section>
+
+<section>
+    <h2>105. Custom Decorator</h2>
+
+    <pre><code>
+def Admin_Only(function):
+
+    def wrapper(
+        request,
+        *args,
+        **kwargs
+    ):
+
+        if request.user.is_staff:
+
+            return function(
+                request,
+                *args,
+                **kwargs
+            )
+
+    return wrapper
+    </code></pre>
+</section>
+
+<section>
+    <h2>106. Using Decorator</h2>
+
+    <pre><code>
+@Admin_Only
+
+def Dashboard(request):
+
+    pass
+    </code></pre>
+</section>
+
+<section>
+    <h2>107. Middleware</h2>
+
+    <p>
+        Middleware runs before and after request.
+    </p>
+
+    <pre><code>
+Request
+
+↓
+
+Middleware
+
+↓
+
+View
+
+↓
+
+Middleware
+
+↓
+
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>108. Admin Panel</h2>
+
+    <pre><code>
+python manage.py createsuperuser
+    </code></pre>
+</section>
+
+<section>
+    <h2>109. Register Model</h2>
+
+    <pre><code>
+from django.contrib import admin
+
+from .models import customers
+
+admin.site.register(
+    customers
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>110. Admin URL</h2>
+
+    <pre><code>
+http://127.0.0.1:8000/admin
+    </code></pre>
+</section>
+
+<section>
+    <h2>111. Custom Admin Display</h2>
+
+    <pre><code>
+class CustomerAdmin(
+    admin.ModelAdmin
+):
+
+    list_display = [
+
+        'customer_id',
+
+        'customer_name',
+
+        'mobile'
+
+    ]
+    </code></pre>
+</section>
+
+<section>
+    <h2>112. Register Custom Admin</h2>
+
+    <pre><code>
+admin.site.register(
+
+    customers,
+
+    CustomerAdmin
+
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>113. Upload File</h2>
+
+    <pre><code>
+&lt;form
+    method="POST"
+    enctype=
+    "multipart/form-data"
+&gt;
+    </code></pre>
+</section>
+
+<section>
+    <h2>114. Access Uploaded File</h2>
+
+    <pre><code>
+file = request.FILES.get(
+    'document'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>115. Banking Flow Overview</h2>
+
+    <pre><code>
+Customer
+
+↓
+
+Account
+
+↓
+
+Card
+
+↓
+
+Transaction
+
+↓
+
+Statement
+    </code></pre>
+</section>
+
+<section>
+    <h2>116. Create Customer Flow</h2>
+
+    <pre><code>
+Validate Data
+
+↓
+
+Create Customer
+
+↓
+
+Create Account
+
+↓
+
+Success Message
+    </code></pre>
+</section>
+
+<section>
+    <h2>117. Deposit Flow</h2>
+
+    <pre><code>
+Account Exists
+
+↓
+
+Account Active
+
+↓
+
+Add Amount
+
+↓
+
+Insert Transaction
+
+↓
+
+Commit
+    </code></pre>
+</section>
+
+<section>
+    <h2>118. Deposit Example</h2>
+
+    <pre><code>
+account.balance += amount
+
+account.save()
+    </code></pre>
+</section>
+
+<section>
+    <h2>119. Withdraw Flow</h2>
+
+    <pre><code>
+Account Exists
+
+↓
+
+Check Balance
+
+↓
+
+Deduct Amount
+
+↓
+
+Insert Transaction
+    </code></pre>
+</section>
+
+<section>
+    <h2>120. Withdrawal Validation</h2>
+
+    <pre><code>
+if account.balance < amount:
+
+    return (
+        "INSUFFICIENT_BALANCE"
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>121. Transfer Flow</h2>
+
+    <pre><code>
+Debit Account
+
+↓
+
+Credit Account
+
+↓
+
+Insert Debit Transaction
+
+↓
+
+Insert Credit Transaction
+
+↓
+
+Commit
+    </code></pre>
+</section>
+
+<section>
+    <h2>122. Transfer Transaction Example</h2>
+
+    <pre><code>
+with transaction.atomic():
+
+    sender.balance -= amount
+
+    receiver.balance += amount
+
+    sender.save()
+
+    receiver.save()
+    </code></pre>
+</section>
+
+<section>
+    <h2>123. Create Transaction Record</h2>
+
+    <pre><code>
+transactions.objects.create(
+
+    account_no=account,
+
+    transaction_amount=amount,
+
+    transaction_type='DEBIT'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>124. Card Issue Flow</h2>
+
+    <pre><code>
+Account Active
+
+↓
+
+Generate Card Number
+
+↓
+
+Create Card
+
+↓
+
+Success
+    </code></pre>
+</section>
+
+<section>
+    <h2>125. Block Card Flow</h2>
+
+    <pre><code>
+Find Card
+
+↓
+
+Update Status
+
+↓
+
+Blocked
+    </code></pre>
+</section>
+
+<section>
+    <h2>126. Close Account Flow</h2>
+
+    <pre><code>
+Balance Must Be Zero
+
+↓
+
+Block Cards
+
+↓
+
+Close Account
+    </code></pre>
+</section>
+
+<section>
+    <h2>127. Dashboard Metrics</h2>
+
+    <pre><code>
+Total Customers
+
+Total Accounts
+
+Total Cards
+
+Total Transactions
+
+Total Balance
+    </code></pre>
+</section>
+
+<section>
+    <h2>128. Dashboard Aggregation Example</h2>
+
+    <pre><code>
+from django.db.models import Sum
+
+accounts.objects.aggregate(
+
+    Sum('balance')
+
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>129. Recommended Folder Structure</h2>
+
+    <pre><code>
+Customer/
+
+├── models.py
+├── views.py
+├── urls.py
+├── services.py
+├── queries.py
+├── admin.py
+├── forms.py
+└── templates/
+    </code></pre>
+</section>
+
+<section>
+    <h2>130. Recommended Banking Architecture</h2>
+
+    <pre><code>
+View
+
+↓
+
+Validation
+
+↓
+
+Service
+
+↓
+
+ORM / SQL
+
+↓
+
+Database
+    </code></pre>
+</section>
+
+<section>
+    <h2>131. What You Have Learned</h2>
+
+    <ul>
+        <li>Django Project Structure</li>
+        <li>Apps</li>
+        <li>Views</li>
+        <li>URLs</li>
+        <li>Templates</li>
+        <li>Models</li>
+        <li>Foreign Keys</li>
+        <li>OneToOneField</li>
+        <li>Authentication</li>
+        <li>Sessions</li>
+        <li>Messages</li>
+        <li>Forms</li>
+        <li>Regex Validation</li>
+        <li>ORM</li>
+        <li>QuerySets</li>
+        <li>Raw SQL</li>
+        <li>Transactions</li>
+        <li>Admin Panel</li>
+        <li>File Upload</li>
+        <li>Banking Application Flow</li>
+    </ul>
+</section>
+
+<section>
+    <h2>132. Next Topics to Learn</h2>
+
+    <ul>
+        <li>Class Based Views (CBV)</li>
+        <li>Django Forms</li>
+        <li>Model Forms</li>
+        <li>Django REST Framework (DRF)</li>
+        <li>AJAX / Fetch API</li>
+        <li>Pagination</li>
+        <li>Caching</li>
+        <li>Signals</li>
+        <li>Celery</li>
+        <li>Docker</li>
+        <li>Deployment using Apache + Gunicorn</li>
+    </ul>
+</section>
+<section>
+    <h1>Django Learning Notes - Part 5</h1>
+    <h2>Django Forms, ModelForms, Advanced ORM, Signals, Deployment</h2>
+</section>
+
+<section>
+    <h2>133. Why Django Forms?</h2>
+
+    <p>
+        We can directly use request.POST,
+        but Django Forms provide:
+    </p>
+
+    <ul>
+        <li>Validation</li>
+        <li>Error Handling</li>
+        <li>Cleaner Code</li>
+        <li>Automatic Form Generation</li>
+    </ul>
+</section>
+
+<section>
+    <h2>134. Basic Form</h2>
+
+    <pre><code>
+from django import forms
+
+class CustomerForm(forms.Form):
+
+    customer_name = forms.CharField(
+        max_length=100
+    )
+
+    mobile = forms.CharField(
+        max_length=10
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>135. Using Form in View</h2>
+
+    <pre><code>
+form = CustomerForm(
+    request.POST
+)
+
+if form.is_valid():
+
+    print(
+        form.cleaned_data
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>136. cleaned_data</h2>
+
+    <pre><code>
+form.cleaned_data
+    </code></pre>
+
+    <h3>Output</h3>
+
+    <pre><code>
+{
+    'customer_name':'Aathi',
+    'mobile':'9876543210'
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>137. Form Errors</h2>
+
+    <pre><code>
+if not form.is_valid():
+
+    print(
+        form.errors
+    )
+    </code></pre>
+</section>
+
+<section>
+    <h2>138. Custom Field Validation</h2>
+
+    <pre><code>
+def clean_mobile(self):
+
+    mobile = self.cleaned_data[
+        'mobile'
+    ]
+
+    if len(mobile) != 10:
+
+        raise forms.ValidationError(
+            "Invalid Mobile"
+        )
+
+    return mobile
+    </code></pre>
+</section>
+
+<section>
+    <h2>139. ModelForm</h2>
+
+    <p>
+        Automatically creates form
+        from model.
+    </p>
+</section>
+
+<section>
+    <h2>140. Example ModelForm</h2>
+
+    <pre><code>
+from django.forms import ModelForm
+
+class CustomerForm(ModelForm):
+
+    class Meta:
+
+        model = customers
+
+        fields = '__all__'
+    </code></pre>
+</section>
+
+<section>
+    <h2>141. Save Form</h2>
+
+    <pre><code>
+if form.is_valid():
+
+    form.save()
+    </code></pre>
+</section>
+
+<section>
+    <h2>142. Exclude Fields</h2>
+
+    <pre><code>
+class Meta:
+
+    model = customers
+
+    exclude = [
+
+        'customer_id'
+
+    ]
+    </code></pre>
+</section>
+
+<section>
+    <h2>143. Django Signals</h2>
+
+    <p>
+        Execute code automatically
+        when events happen.
+    </p>
+</section>
+
+<section>
+    <h2>144. Signal Events</h2>
+
+    <pre><code>
+pre_save
+
+post_save
+
+pre_delete
+
+post_delete
+    </code></pre>
+</section>
+
+<section>
+    <h2>145. post_save Example</h2>
+
+    <pre><code>
+from django.db.models.signals import post_save
+
+from django.dispatch import receiver
+    </code></pre>
+</section>
+
+<section>
+    <h2>146. Auto Create Account</h2>
+
+    <pre><code>
+@receiver(
+    post_save,
+    sender=customers
+)
+
+def Create_Account(
+
+    sender,
+
+    instance,
+
+    created,
+
+    **kwargs
+
+):
+
+    if created:
+
+        print(
+            "Customer Created"
+        )
+    </code></pre>
+</section>
+
+<section>
+    <h2>147. select_related()</h2>
+
+    <p>
+        Used for ForeignKey joins.
+    </p>
+</section>
+
+<section>
+    <h2>148. Without select_related()</h2>
+
+    <pre><code>
+for account in accounts.objects.all():
+
+    print(
+        account.customer.customer_name
+    )
+    </code></pre>
+
+    <p>
+        Executes multiple queries.
+    </p>
+</section>
+
+<section>
+    <h2>149. With select_related()</h2>
+
+    <pre><code>
+accounts.objects.select_related(
+    'customer'
+)
+    </code></pre>
+
+    <p>
+        Executes single JOIN query.
+    </p>
+</section>
+
+<section>
+    <h2>150. SQL Equivalent</h2>
+
+    <pre><code>
+SELECT *
+
+FROM accounts a
+
+JOIN customers c
+
+ON a.customer_id =
+c.customer_id
+    </code></pre>
+</section>
+
+<section>
+    <h2>151. prefetch_related()</h2>
+
+    <p>
+        Used for reverse relations
+        and many-to-many.
+    </p>
+
+    <pre><code>
+customers.objects.prefetch_related(
+    'accounts_set'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>152. F Expression</h2>
+
+    <p>
+        Update values directly in DB.
+    </p>
+</section>
+
+<section>
+    <h2>153. Deposit Example</h2>
+
+    <pre><code>
+from django.db.models import F
+
+accounts.objects.filter(
+
+    account_no=account_no
+
+).update(
+
+    balance=F('balance')
+    + amount
+
+)
+    </code></pre>
+
+    <p>
+        Avoids race conditions.
+    </p>
+</section>
+
+<section>
+    <h2>154. Q Object</h2>
+
+    <p>
+        Complex WHERE conditions.
+    </p>
+</section>
+
+<section>
+    <h2>155. Example</h2>
+
+    <pre><code>
+from django.db.models import Q
+
+customers.objects.filter(
+
+    Q(mobile=mobile)
+
+    |
+
+    Q(email=email)
+
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>156. SQL Equivalent</h2>
+
+    <pre><code>
+WHERE
+
+mobile=''
+
+OR
+
+email=''
+    </code></pre>
+</section>
+
+<section>
+    <h2>157. annotate()</h2>
+
+    <p>
+        Add calculated fields.
+    </p>
+</section>
+
+<section>
+    <h2>158. Example</h2>
+
+    <pre><code>
+customers.objects.annotate(
+
+    total_accounts=
+    Count('accounts')
+
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>159. Database Index</h2>
+
+    <pre><code>
+customer_id = models.CharField(
+
+    max_length=8,
+
+    db_index=True
+
+)
+    </code></pre>
+
+    <p>
+        Improves search speed.
+    </p>
+</section>
+
+<section>
+    <h2>160. Composite Index</h2>
+
+    <pre><code>
+class Meta:
+
+    indexes = [
+
+        models.Index(
+
+            fields=[
+
+                'mobile',
+
+                'email'
+
+            ]
+
+        )
+
+    ]
+    </code></pre>
+</section>
+
+<section>
+    <h2>161. Pagination</h2>
+
+    <p>
+        Split large records into pages.
+    </p>
+</section>
+
+<section>
+    <h2>162. Example</h2>
+
+    <pre><code>
+from django.core.paginator import Paginator
+
+records = customers.objects.all()
+
+paginator = Paginator(
+
+    records,
+
+    10
+
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>163. Current Page</h2>
+
+    <pre><code>
+page_obj = paginator.get_page(
+
+    request.GET.get('page')
+
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>164. Environment Variables</h2>
+
+    <p>
+        Never store passwords
+        directly in settings.py
+    </p>
+</section>
+
+<section>
+    <h2>165. Example</h2>
+
+    <pre><code>
+import os
+
+DATABASE_PASSWORD = os.getenv(
+    'DB_PASSWORD'
+)
+    </code></pre>
+</section>
+
+<section>
+    <h2>166. DEBUG Mode</h2>
+
+    <pre><code>
+DEBUG = False
+    </code></pre>
+
+    <p>
+        Production only.
+    </p>
+</section>
+
+<section>
+    <h2>167. Static Files</h2>
+
+    <pre><code>
+static/
+
+├── css
+├── js
+├── images
+    </code></pre>
+</section>
+
+<section>
+    <h2>168. Static Configuration</h2>
+
+    <pre><code>
+STATIC_URL = '/static/'
+    </code></pre>
+</section>
+
+<section>
+    <h2>169. Media Files</h2>
+
+    <pre><code>
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT =
+BASE_DIR / 'media'
+    </code></pre>
+</section>
+
+<section>
+    <h2>170. Deployment Flow</h2>
+
+    <pre><code>
+Browser
+
+↓
+
+Apache
+
+↓
+
+Gunicorn
+
+↓
+
+Django
+
+↓
+
+PostgreSQL
+    </code></pre>
+</section>
+
+<section>
+    <h2>171. Gunicorn Install</h2>
+
+    <pre><code>
+pip install gunicorn
+    </code></pre>
+</section>
+
+<section>
+    <h2>172. Run Gunicorn</h2>
+
+    <pre><code>
+gunicorn
+
+Bank_Portal.wsgi:application
+    </code></pre>
+</section>
+
+<section>
+    <h2>173. Apache Purpose</h2>
+
+    <pre><code>
+HTTPS
+
+↓
+
+SSL
+
+↓
+
+Load Balancing
+
+↓
+
+Reverse Proxy
+
+↓
+
+Gunicorn
+    </code></pre>
+</section>
+
+<section>
+    <h2>174. Banking Project Final Structure</h2>
+
+    <pre><code>
+Bank_Portal/
+
+├── Authentication/
+├── Customer/
+├── Account/
+├── Card/
+├── Transaction/
+│
+├── Common/
+│   ├── Patterns.py
+│   ├── Constants.py
+│   ├── Validators.py
+│   ├── Functions.py
+│
+├── templates/
+├── static/
+├── media/
+    </code></pre>
+</section>
+
+<section>
+    <h2>175. Industry Architecture</h2>
+
+    <pre><code>
+Request
+
+↓
+
+URL
+
+↓
+
+View
+
+↓
+
+Validation
+
+↓
+
+Service
+
+↓
+
+ORM / SQL
+
+↓
+
+Database
+
+↓
+
+Response
+    </code></pre>
+</section>
+
+<section>
+    <h2>176. Final Recommendation</h2>
+
+    <p>
+        Stop learning theory for now.
+    </p>
+
+    <p>
+        Build the banking project:
+    </p>
+
+    <ul>
+        <li>Create Customer</li>
+        <li>Search Customer</li>
+        <li>Update Customer</li>
+        <li>Create Account</li>
+        <li>Deposit</li>
+        <li>Withdraw</li>
+        <li>Transfer</li>
+        <li>Issue Card</li>
+        <li>Block Card</li>
+        <li>Dashboard</li>
+        <li>Login</li>
+        <li>Logout</li>
+    </ul>
+
+    <p>
+        The bugs and issues you solve while building it will teach you more than reading another hundred pages of notes.
+    </p>
+</section>
+</body>
+</head>
+</html>
