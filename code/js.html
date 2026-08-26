@@ -7407,6 +7407,2050 @@ UI update
   </ul>
 
 </section>
+  <h2>JavaScript Technical Reference Manual</h1>
+  <p>Comprehensive architectural guide and syntax breakdown for core JavaScript runtime behavior, operators, module systems, type coercion, and execution context binding.</p>
+
+  <!-- ========================================================================= -->
+  <!-- 1. DEFAULT PARAMETERS                                                     -->
+  <!-- ========================================================================= -->
+  <section id="default-parameters">
+    <h2>1. Default Parameters</h2>
+    <p>Default function parameters allow named parameters to be initialized with default values if no value or <code>undefined</code> is passed into the invocation.</p>
+    
+    <h3>Key Mechanics & Evaluation Strategy</h3>
+    <ul>
+      <li><strong>Evaluated at Call Time:</strong> Unlike Python (where default arguments are evaluated once at function definition time), JavaScript default parameters are evaluated strictly <em>at run time</em> each time the function is called.</li>
+      <li><strong>Trigger Mechanism:</strong> Default parameters trigger <strong>only</strong> on <code>undefined</code> or when arguments are omitted. Passing <code>null</code>, <code>false</code>, <code>0</code>, or <code>""</code> (empty string) will <strong>not</strong> trigger the default value.</li>
+      <li><strong>Temporal Dead Zone (TDZ):</strong> Parameters are evaluated from left to right in their own parameter scope. A parameter defined later cannot be referenced by a parameter defined earlier.</li>
+    </ul>
+
+    <h3>Code Demonstration</h3>
+    <pre><code>// 1. Dynamic Evaluation & Parameter Reference
+let globalCounter = 0;
+function getUniqueId() {
+  return ++globalCounter;
+}
+
+function createUser(
+  name = "Anonymous",
+  id = getUniqueId(),
+  createdAt = new Date().toISOString()
+) {
+  return { id, name, createdAt };
+}
+
+console.log(createUser()); 
+// Output: { id: 1, name: "Anonymous", createdAt: "2026-08-26T..." }
+
+console.log(createUser("Alice")); 
+// Output: { id: 2, name: "Alice", createdAt: "2026-08-26T..." }
+
+// 2. The undefined vs null Edge Case
+function configureServer(port = 8080, timeout = 3000) {
+  console.log(`Port: ${port}, Timeout: ${timeout}`);
+}
+
+configureServer(undefined, 5000); // Port: 8080, Timeout: 5000 (Triggered default)
+configureServer(null, 5000);      // Port: null, Timeout: 5000 (Did NOT trigger default!)
+configureServer(0, 5000);         // Port: 0, Timeout: 5000 (Falsy, but not undefined)
+
+// 3. Dependent Default Values (Left-to-Right Scope)
+function createBox(width = 10, height = width * 2, area = width * height) {
+  return { width, height, area };
+}
+
+console.log(createBox(5)); // { width: 5, height: 10, area: 50 }
+
+// 4. Temporal Dead Zone (TDZ) in Parameters
+// Invalid: Cannot reference a right-hand parameter from a left-hand default
+function brokenScope(a = b, b = 2) { 
+  return a + b; 
+}
+// brokenScope(); // ReferenceError: Cannot access 'b' before initialization</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 2. OPTIONAL CHAINING (?.)                                                 -->
+  <!-- ========================================================================= -->
+  <section id="optional-chaining">
+    <h2>2. Optional Chaining (<code>?.</code>)</h2>
+    <p>The optional chaining operator (<code>?.</code>) permits reading the value of a property located deep within a chain of connected objects without having to expressly validate that each reference in the chain is non-nullish (<code>null</code> or <code>undefined</code>).</p>
+
+    <h3>Key Mechanics</h3>
+    <ul>
+      <li><strong>Short-Circuit Evaluation:</strong> If the operand prior to <code>?.</code> evaluates to <code>null</code> or <code>undefined</code>, expression evaluation immediately terminates and returns <code>undefined</code>. No error is thrown.</li>
+      <li><strong>Works on 3 Forms:</strong> Properties (<code>obj?.prop</code>), Dynamic bracket access (<code>obj?.[key]</code>), and Function calls (<code>obj.method?.()</code>).</li>
+      <li><strong>Does Not Catch Undeclared Variables:</strong> <code>undeclaredVar?.prop</code> throws a <code>ReferenceError</code>. It only checks references on declared variables whose values evaluate to <code>null</code>/<code>undefined</code>.</li>
+    </ul>
+
+    <h3>Code Demonstration</h3>
+    <pre><code>const apiResponse = {
+  status: 200,
+  data: {
+    user: {
+      profile: {
+        getFullName: function() { return "Jane Doe"; },
+        socials: ["@janedoe", "jane_dev"]
+      },
+      preferences: null
+    }
+  }
+};
+
+// 1. Safe Deep Property Access
+const bio = apiResponse?.data?.user?.profile?.bio;
+console.log(bio); // undefined (No TypeError thrown)
+
+// 2. Safe Dynamic Bracket Notation (Arrays & Keys)
+const firstSocial = apiResponse?.data?.user?.profile?.socials?.[0];
+console.log(firstSocial); // "@janedoe"
+
+const missingArrayItem = apiResponse?.data?.user?.preferences?.[0];
+console.log(missingArrayItem); // undefined
+
+// 3. Safe Function & Method Calls
+const fullName = apiResponse?.data?.user?.profile?.getFullName?.();
+console.log(fullName); // "Jane Doe"
+
+const customMethodResult = apiResponse?.data?.user?.profile?.getAvatarUrl?.();
+console.log(customMethodResult); // undefined (Method doesn't exist, safely skipped)
+
+// 4. Short-Circuiting Proof (Side effects do NOT run if chain breaks)
+let executionTracker = 0;
+const invalidObject = null;
+
+invalidObject?.[++executionTracker];
+console.log(executionTracker); // 0 (Increment was short-circuited and never executed!)</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 3. NULLISH COALESCING (??)                                                -->
+  <!-- ========================================================================= -->
+  <section id="nullish-coalescing">
+    <h2>3. Nullish Coalescing Operator (<code>??</code>)</h2>
+    <p>The nullish coalescing operator (<code>??</code>) is a logical operator that returns its right-hand side operand when its left-hand side operand is <code>null</code> or <code>undefined</code>, and otherwise returns its left-hand side operand.</p>
+
+    <h3>Critical Distinction: <code>??</code> vs <code>||</code> (Logical OR)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Left Operand</th>
+          <th>Logical OR (<code>||</code>) Output</th>
+          <th>Nullish Coalescing (<code>??</code>) Output</th>
+          <th>Technical Reason</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>null</code></td>
+          <td>Right Operand</td>
+          <td>Right Operand</td>
+          <td>Both treat <code>null</code> as fallback trigger.</td>
+        </tr>
+        <tr>
+          <td><code>undefined</code></td>
+          <td>Right Operand</td>
+          <td>Right Operand</td>
+          <td>Both treat <code>undefined</code> as fallback trigger.</td>
+        </tr>
+        <tr>
+          <td><code>0</code> (Zero)</td>
+          <td>Right Operand (<strong>Fails</strong>)</td>
+          <td><code>0</code> (<strong>Preserved</strong>)</td>
+          <td><code>0</code> is falsy, but it is <strong>not nullish</strong>.</td>
+        </tr>
+        <tr>
+          <td><code>""</code> (Empty String)</td>
+          <td>Right Operand (<strong>Fails</strong>)</td>
+          <td><code>""</code> (<strong>Preserved</strong>)</td>
+          <td><code>""</code> is falsy, but it is <strong>not nullish</strong>.</td>
+        </tr>
+        <tr>
+          <td><code>false</code></td>
+          <td>Right Operand (<strong>Fails</strong>)</td>
+          <td><code>false</code> (<strong>Preserved</strong>)</td>
+          <td><code>false</code> is falsy, but it is <strong>not nullish</strong>.</td>
+        </tr>
+        <tr>
+          <td><code>NaN</code></td>
+          <td>Right Operand (<strong>Fails</strong>)</td>
+          <td><code>NaN</code> (<strong>Preserved</strong>)</td>
+          <td><code>NaN</code> is falsy, but it is <strong>not nullish</strong>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Code Demonstration</h3>
+    <pre><code>// 1. UI Configuration Bug with ||
+const userPreferences = {
+  animationSpeed: 0,      // 0 milliseconds (instant animations intentionally chosen)
+  showSidebar: false,     // User explicitly hid sidebar
+  customTitle: ""         // User explicitly set an empty title
+};
+
+// BUGGY APPROACH using Logical OR (||)
+const speedWithOR = userPreferences.animationSpeed || 300;
+const sidebarWithOR = userPreferences.showSidebar || true;
+const titleWithOR = userPreferences.customTitle || "Default Dashboard";
+
+console.log(speedWithOR);   // 300 (BUG: Overwrote user's 0ms choice!)
+console.log(sidebarWithOR); // true (BUG: Overwrote user's false choice!)
+console.log(titleWithOR);   // "Default Dashboard" (BUG: Overwrote empty string)
+
+// CORRECT APPROACH using Nullish Coalescing (??)
+const speedWithNC = userPreferences.animationSpeed ?? 300;
+const sidebarWithNC = userPreferences.showSidebar ?? true;
+const titleWithNC = userPreferences.customTitle ?? "Default Dashboard";
+
+console.log(speedWithNC);   // 0 (CORRECT: Preserved actual value)
+console.log(sidebarWithNC); // false (CORRECT: Preserved actual value)
+console.log(titleWithNC);   // "" (CORRECT: Preserved actual value)
+
+// 2. Logical Assignment Variants
+let defaultPort = null;
+defaultPort ??= 3000;
+console.log(defaultPort); // 3000 (Assigned because it was null)
+
+let existingConnections = 0;
+existingConnections ??= 10;
+console.log(existingConnections); // 0 (Did NOT overwrite 0)</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 4. MODULES (import / export)                                              -->
+  <!-- ========================================================================= -->
+  <section id="modules">
+    <h2>4. JavaScript Modules (ESM: <code>import</code> / <code>export</code>)</h2>
+    <p>ECMAScript Modules (ESM) provide a standardized module format for breaking code into self-contained, maintainable units with explicit dependency relationships. Code inside modules runs in <strong>strict mode automatically</strong> and maintains its own top-level scope.</p>
+
+    <h3>Named Exports vs Default Exports</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Named Exports</th>
+          <th>Default Export</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Declaration</strong></td>
+          <td><code>export const PI = 3.14;</code> or <code>export { a, b };</code></td>
+          <td><code>export default class Engine {}</code></td>
+        </tr>
+        <tr>
+          <td><strong>Count per file</strong></td>
+          <td>Unlimited</td>
+          <td><strong>Strictly 1</strong> per module file</td>
+        </tr>
+        <tr>
+          <td><strong>Import Syntax</strong></td>
+          <td><code>import { PI } from './math.js';</code></td>
+          <td><code>import Engine from './engine.js';</code> (No braces)</td>
+        </tr>
+        <tr>
+          <td><strong>Renaming</strong></td>
+          <td><code>import { PI as CircleConst }</code></td>
+          <td>Any arbitrary identifier name during import</td>
+        </tr>
+        <tr>
+          <td><strong>Tree Shaking</strong></td>
+          <td>Highly optimized by bundlers (Rollup, Webpack, Vite)</td>
+          <td>Harder to tree-shake if export is a large object container</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Code Demonstration</h3>
+    <pre><code>// ==========================================
+// FILE: mathUtils.js
+// ==========================================
+
+// 1. Inline Named Exports
+export const API_VERSION = "v2.1";
+
+export function add(a, b) {
+  return a + b;
+}
+
+export function subtract(a, b) {
+  return a - b;
+}
+
+// 2. Default Export (Single primary unit)
+export default class Calculator {
+  multiply(a, b) {
+    return a * b;
+  }
+}
+
+// ==========================================
+// FILE: main.js
+// ==========================================
+
+// 1. Importing Default and Named Exports Together
+import Calculator, { add, subtract, API_VERSION } from './mathUtils.js';
+
+const calc = new Calculator();
+console.log(add(10, 5));             // 15
+console.log(calc.multiply(10, 5));   // 50
+
+// 2. Namespace Import (Import Everything as Object)
+import * as MathLib from './mathUtils.js';
+console.log(MathLib.subtract(20, 8)); // 12
+console.log(MathLib.API_VERSION);    // "v2.1"
+
+// 3. Renaming with 'as' (Aliasing)
+import { add as sumValues } from './mathUtils.js';
+console.log(sumValues(100, 200));    // 300
+
+// 4. Dynamic Imports (Code Splitting & Lazy Loading)
+// Returns a Promise, ideal for conditionally loading heavy dependencies
+async function loadAnalytics() {
+  const analyticsModule = await import('./analytics.js');
+  analyticsModule.trackEvent("PAGE_VIEW");
+}</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 5. TYPE COERCION, NaN, AND INFINITY                                      -->
+  <!-- ========================================================================= -->
+  <section id="type-coercion">
+    <h2>5. Type Coercion, <code>NaN</code>, and <code>Infinity</code></h2>
+    <p>Type coercion is the automatic or implicit conversion of values from one data type to another (such as converting a string to a number). Understanding coercion rules is critical for avoiding subtle runtime bugs.</p>
+
+    <h3>A. Implicit vs Explicit Coercion Rules</h3>
+    <ul>
+      <li><strong>The Plus Operator (<code>+</code>) Dual Role:</strong> If <em>any</em> operand is a string, <code>+</code> performs string concatenation. For all other arithmetic operators (<code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>), JavaScript forces numeric conversion.</li>
+      <li><strong>Boolean Coercion:</strong> Values that coerce to <code>false</code> (Falsy): <code>false</code>, <code>0</code>, <code>-0</code>, <code>0n</code>, <code>""</code>, <code>null</code>, <code>undefined</code>, and <code>NaN</code>. Everything else (including <code>[]</code>, <code>{}</code>, and <code>"0"</code>) coerces to <code>true</code>.</li>
+      <li><strong>Abstract Equality (<code>==</code>) vs Strict Equality (<code>===</code>):</strong> <code>==</code> attempts implicit conversion between types before comparison; <code>===</code> requires identical types and values.</li>
+    </ul>
+
+    <h3>B. <code>NaN</code> (Not a Number)</h3>
+    <ul>
+      <li>Represents a computational error resulting from an undefined or unrepresentable mathematical operation (e.g., <code>0 / 0</code>, <code>Math.sqrt(-1)</code>, <code>parseInt("abc")</code>).</li>
+      <li><strong>Unique Rule:</strong> <code>NaN</code> is the <strong>only value in JavaScript that is not equal to itself</strong> (<code>NaN === NaN</code> is <code>false</code>).</li>
+      <li><strong>Detection:</strong> Use <code>Number.isNaN(val)</code> (strictly checks for NaN) instead of the global <code>isNaN(val)</code> (which implicitly converts the argument to a number first).</li>
+    </ul>
+
+    <h3>C. <code>Infinity</code> and <code>-Infinity</code></h3>
+    <ul>
+      <li>Produced when a number exceeds the upper limit of floating point representation ($> 1.7976931348623157 \times 10^{308}$) or by division by zero: <code>1 / 0 = Infinity</code> and <code>-1 / 0 = -Infinity</code>.</li>
+      <li><code>typeof Infinity === "number"</code>.</li>
+    </ul>
+
+    <h3>Code Demonstration</h3>
+    <pre><code>// 1. Arithmetic Coercion Quirks
+console.log(5 + "5");       // "55" (Number converted to String)
+console.log("10" - 4);      // 6    (String converted to Number)
+console.log("10" * "2");    // 20   (Both Strings converted to Numbers)
+console.log("10" / "apple");// NaN  (Cannot parse "apple" as a number)
+
+console.log(true + 1);      // 2    (true coerced to 1)
+console.log(false + 1);     // 1    (false coerced to 0)
+console.log(null + 5);      // 5    (null coerced to 0)
+console.log(undefined + 5); // NaN  (undefined coerced to NaN)
+
+// 2. Object & Array Coercion
+console.log([] + []);       // ""   (Arrays converted to empty strings: "" + "")
+console.log([] + {});       // "[object Object]"
+console.log([5] + [10]);    // "510" (Converted to "5" + "10")
+console.log([5] - [2]);     // 3    (Converted to 5 - 2)
+
+// 3. Deep Dive into NaN
+const invalidCalc = 0 / 0;
+console.log(typeof invalidCalc); // "number"
+console.log(invalidCalc === NaN); // false (Self-equality check fails!)
+
+// Detection Comparison:
+console.log(isNaN("Hello"));        // true  (BUG: Global isNaN coerces "Hello" -> NaN)
+console.log(Number.isNaN("Hello")); // false (CORRECT: "Hello" is a string, not NaN)
+console.log(Number.isNaN(NaN));     // true  (CORRECT)
+
+// 4. Infinity Behaviors
+console.log(1 / 0);                  // Infinity
+console.log(-1 / 0);                 // -Infinity
+console.log(Infinity + 1000);        // Infinity
+console.log(Infinity - Infinity);    // NaN (Indeterminate form)
+console.log(1 / Infinity);           // 0
+console.log(Number.isFinite(100));   // true
+console.log(Number.isFinite(Infinity));// false</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 6. EXECUTION CONTEXT: this, call, apply, bind                             -->
+  <!-- ========================================================================= -->
+  <section id="this-and-context">
+    <h2>6. Execution Context: <code>this</code>, <code>call</code>, <code>apply</code>, and <code>bind</code></h2>
+    <p>In JavaScript, the <code>this</code> keyword does not refer to the function itself or its lexical scope; it refers to the <strong>execution context</strong> determined strictly by <strong>how the function is called</strong> at runtime.</p>
+
+    <h3>The 4 Rules of <code>this</code> Binding</h3>
+    <ol>
+      <li><strong>Default Binding:</strong> Standalone function invocation (e.g., <code>fn()</code>). In non-strict mode, <code>this</code> defaults to the global object (<code>window</code>/<code>global</code>). In <code>"use strict"</code>, <code>this</code> is <code>undefined</code>.</li>
+      <li><strong>Implicit Binding:</strong> When a function is called as a method of an object (e.g., <code>obj.method()</code>), <code>this</code> points to <code>obj</code>.</li>
+      <li><strong>Explicit Binding:</strong> Forcing <code>this</code> using <code>call()</code>, <code>apply()</code>, or <code>bind()</code>.</li>
+      <li><strong><code>new</code> Binding:</strong> When a function is invoked with the <code>new</code> constructor keyword, <code>this</code> binds to the newly created instance.</li>
+      <li><strong>Lexical Binding (Arrow Functions):</strong> Arrow functions (<code>() => {}</code>) do <strong>not</strong> have their own <code>this</code>. They lexically inherit <code>this</code> from the enclosing outer execution scope.</li>
+    </ol>
+
+    <h3><code>call</code> vs <code>apply</code> vs <code>bind</code></h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Execution Timing</th>
+          <th>Argument Passing Format</th>
+          <th>Return Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>fn.call(context, arg1, arg2)</code></td>
+          <td>Executes <strong>immediately</strong></td>
+          <td>Comma-separated arguments list</td>
+          <td>Result of the executed function</td>
+        </tr>
+        <tr>
+          <td><code>fn.apply(context, [arg1, arg2])</code></td>
+          <td>Executes <strong>immediately</strong></td>
+          <td><strong>Array</strong> (or array-like) of arguments</td>
+          <td>Result of the executed function</td>
+        </tr>
+        <tr>
+          <td><code>fn.bind(context, arg1, arg2)</code></td>
+          <td><strong>Delayed</strong> (Returns new function)</td>
+          <td>Comma-separated arguments (pre-curried)</td>
+          <td>A <strong>new permanent function</strong> bound to the context</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Code Demonstration</h3>
+    <pre><code>"use strict";
+
+const database = {
+  host: "localhost:5432",
+  driver: "PostgreSQL"
+};
+
+function executeQuery(query, timeout, secure = true) {
+  console.log(`[${this.driver} @ ${this.host}] Running: "${query}" | Timeout: ${timeout}ms | SSL: ${secure}`);
+}
+
+const analyticsDB = {
+  host: "10.0.0.45:9000",
+  driver: "ClickHouse"
+};
+
+// 1. Explicit Binding with .call() (Arguments passed individually)
+executeQuery.call(database, "SELECT * FROM users", 5000);
+// Output: [PostgreSQL @ localhost:5432] Running: "SELECT * FROM users" | Timeout: 5000ms | SSL: true
+
+// 2. Explicit Binding with .apply() (Arguments passed as an Array)
+const queryParams = ["SELECT count(*) FROM page_views", 10000, false];
+executeQuery.apply(analyticsDB, queryParams);
+// Output: [ClickHouse @ 10.0.0.45:9000] Running: "SELECT count(*) FROM page_views" | Timeout: 10000ms | SSL: false
+
+// Practical apply trick: Finding Max in an array (Pre-ES6 spread)
+const numbers = [56, 99, 12, 43, 87];
+const maxVal = Math.max.apply(null, numbers);
+console.log(maxVal); // 99
+
+// 3. Persistent Binding with .bind() (Currying / Pre-configuration)
+// Returns a new function with `this` locked permanently to database
+const runPostgresQuery = executeQuery.bind(database, "SELECT 1");
+
+// Later execution in different context:
+runPostgresQuery(1000);
+// Output: [PostgreSQL @ localhost:5432] Running: "SELECT 1" | Timeout: 1000ms | SSL: true
+
+// 4. The Classic "Losing Context" Bug & Fix
+const userController = {
+  username: "DevMaster",
+  printName: function() {
+    console.log(`Active user: ${this.username}`);
+  }
+};
+
+// Bug: Passing method as callback loses its implicit context
+const callback = userController.printName;
+// callback(); // TypeError: Cannot read properties of undefined (in strict mode)
+
+// Solution A: .bind()
+setTimeout(userController.printName.bind(userController), 100); 
+// Output: Active user: DevMaster
+
+// Solution B: Arrow Function wrapper (Lexical this)
+setTimeout(() => userController.printName(), 100);
+// Output: Active user: DevMaster
+
+// 5. Arrow Function vs Regular Function (Lexical vs Dynamic)
+const timerSystem = {
+  seconds: 0,
+  start() {
+    // Regular function creates its own `this`, causing errors in callbacks
+    // Arrow function captures `this` from outer `start()` method scope
+    setInterval(() => {
+      this.seconds++;
+      // `this` reliably refers to `timerSystem` object
+    }, 1000);
+  }
+};</code></pre>
+  </section>
+
+
+
+<!-- ========================================================================= -->
+  <!-- 7. JAVASCRIPT RUNTIME & MEMORY ARCHITECTURE                              -->
+  <!-- ========================================================================= -->
+  <section id="js-runtime-architecture">
+    <h2>7. JavaScript Runtime Architecture & Memory Model</h2>
+    <p>JavaScript is a single-threaded, non-blocking, asynchronous concurrent language. The JavaScript engine itself (like V8, SpiderMonkey, or JavaScriptCore) does not run in complete isolation—it runs embedded inside a host environment (the <strong>Browser Runtime</strong> or <strong>Node.js</strong>) that provides extra multithreaded APIs, a scheduling system, and background event queues.</p>
+
+    <h3>A. The Anatomy of the JavaScript Runtime</h3>
+    <ul>
+      <li><strong>JS Engine:</strong> Composed of the <strong>Memory Heap</strong> (unstructured memory allocation) and the <strong>Call Stack</strong> (LIFO execution thread tracking).</li>
+      <li><strong>Host Environment (Browser / Node.js):</strong> Provides asynchronous multi-threaded backing threads known as <strong>Web APIs</strong> (DOM, Fetch, Timers, IndexedDB, WebSockets) or Node APIs (fs, crypto, http).</li>
+      <li><strong>The Concurrency Coordinator:</strong> The <strong>Event Loop</strong> continuously checks if the Call Stack is empty to dispatch callbacks queued inside the <strong>Microtask Queue</strong> (Job Queue) or <strong>Macrotask Queue</strong> (Callback / Task Queue).</li>
+    </ul>
+
+    <!-- Text-based Architecture Flow -->
+    <pre><code>+-----------------------------------------------------------------------------------------+
+|                                HOST RUNTIME (BROWSER / NODE.JS)                          |
+|                                                                                         |
+|  +------------------------ JAVASCRIPT ENGINE (V8) --------------------------+           |
+|  |                                                                          |           |
+|  |   +---------------------+               +----------------------------+   |           |
+|  |   |     MEMORY HEAP     |               |         CALL STACK         |   |           |
+|  |   |  (Objects, Closures,|               | (Single-Threaded LIFO)     |   |           |
+|  |   |   Dynamic Data)     |               |                            |   |           |
+|  |   |                     |               | [fnExecutionContext()    ] |   |           |
+|  |   |  [ Object ] [ Array]|               | [GlobalExecutionContext  ] |   |           |
+|  |   +---------------------+               +--------------+-------------+   |           |
+|  +--------------------------------------------------------|-----------------+           |
+|                                                           |                             |
+|                                                           | Dispatches Async            |
+|                                                           v                             |
+|  +--------------------------------------------------------------------------+           |
+|  |                     WEB APIs (C++ / OS Background Threads)               |           |
+|  |              DOM Events  |  fetch()  |  setTimeout()  |  WebSockets      |           |
+|  +------------------------------------+-------------------------------------+           |
+|                                       |                                                 |
+|                                       | Ready callbacks pushed                          |
+|                                       v                                                 |
+|  +--------------------------------------------------------------------------+           |
+|  |                              TASK QUEUES                                 |           |
+|  |                                                                          |           |
+|  |   MICROTASK QUEUE (High Priority):                                       |           |
+|  |   [ Promise.then, queueMicrotask, MutationObserver ]                     |           |
+|  |                                                                          |           |
+|  |   MACROTASK QUEUE (Normal Priority):                                     |           |
+|  |   [ setTimeout, setInterval, setImmediate, I/O, UI Events ]              |           |
+|  +------------------------------------+-------------------------------------+           |
+|                                       |                                                 |
+|                                       | Checks Stack: Is it empty?                      |
+|                                       v                                                 |
+|                             +-------------------+                                       |
+|                             |    EVENT LOOP     | ===> Pumps tasks back to Call Stack   |
+|                             +-------------------+                                       |
++-----------------------------------------------------------------------------------------+</code></pre>
+
+    <h3>B. Memory Heap vs Call Stack</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Call Stack</th>
+          <th>Memory Heap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Data Stored</strong></td>
+          <td>Primitive types (<code>number</code>, <code>boolean</code>, <code>null</code>, <code>undefined</code>, <code>symbol</code>), function frames, execution context pointers, local variable references.</td>
+          <td>Reference types (<code>Objects</code>, <code>Arrays</code>, <code>Functions</code>, <code>Closures</code>, complex dynamic structures).</td>
+        </tr>
+        <tr>
+          <td><strong>Structure & Allocation</strong></td>
+          <td>Static, contiguous memory block allocated by the OS. Operates strictly in <strong>LIFO (Last-In, First-Out)</strong> order.</td>
+          <td>Large, unstructured, fragmented region of system RAM allocated dynamically on demand.</td>
+        </tr>
+        <tr>
+          <td><strong>Access Speed</strong></td>
+          <td>Extremely fast (CPU stack pointer increment/decrement).</td>
+          <td>Slower (requires following memory references/pointers from the stack into the heap).</td>
+        </tr>
+        <tr>
+          <td><strong>Error Conditions</strong></td>
+          <td><code>RangeError: Maximum call stack size exceeded</code> (Infinite recursion / Stack Overflow).</td>
+          <td><code>FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Code Demonstration: Call Stack, Heap & Stack Overflow</h3>
+    <pre><code>// 1. Memory Allocation: Stack vs Heap
+function allocateMemory() {
+  const primitiveAge = 30;                 // Stored directly on Call Stack frame
+  const userObject = { name: "Alex" };    // Pointer on Stack -> Raw Object in Heap
+  const arrayBuffer = new Array(1000000); // Pointer on Stack -> 1M item array in Heap
+  return { primitiveAge, userObject };
+}
+
+// 2. Stack Tracing and LIFO Execution Order
+function first() {
+  console.log("Entering first()");
+  second();
+  console.log("Exiting first()");
+}
+
+function second() {
+  console.log("Entering second()");
+  third();
+  console.log("Exiting second()");
+}
+
+function third() {
+  console.log("Inside third() - Stack is at deepest point!");
+  console.trace(); // Prints full Call Stack snapshot to console
+}
+
+first();
+// Call Stack order:
+// 1. Push global()
+// 2. Push first()
+// 3. Push second()
+// 4. Push third() -> console.trace()
+// 5. Pop third()
+// 6. Pop second()
+// 7. Pop first()
+
+// 3. Provoking a Stack Overflow (Exhausting Call Stack)
+function blowTheStack() {
+  return blowTheStack(); // Recursive call with no base case condition
+}
+// try { blowTheStack(); } catch(e) { console.error(e); } 
+// -> RangeError: Maximum call stack size exceeded</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 8. EXECUTION CONTEXT (GEC vs FEC)                                        -->
+  <!-- ========================================================================= -->
+  <section id="execution-contexts">
+    <h2>8. Execution Context: Global vs Function Execution Contexts</h2>
+    <p>An <strong>Execution Context (EC)</strong> is an abstract environment created by the JavaScript engine to evaluate and execute code. It contains the environment record (variables, functions), the scope chain, and the <code>this</code> reference value for that specific scope.</p>
+
+    <h3>The Two Primary Execution Context Types</h3>
+    <ul>
+      <li><strong>Global Execution Context (GEC):</strong> Created by default when the JS engine starts reading the script. Exactly <strong>one</strong> GEC exists for the lifetime of the application. It creates the global object (<code>window</code> in browsers, <code>global</code> in Node.js) and sets <code>this</code> to that global object.</li>
+      <li><strong>Function Execution Context (FEC):</strong> Created dynamically <strong>every time a function is invoked</strong>. Each function call gets its own brand-new FEC, which is pushed onto the Call Stack and popped off when the function returns.</li>
+    </ul>
+
+    <h3>The Two Phases of Every Execution Context</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Phase</th>
+          <th>What the Engine Does</th>
+          <th>Variable / Function State</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1. Creation Phase (Memory Creation)</strong></td>
+          <td>
+            • Scans code for declarations.<br>
+            • Allocates memory for variables and functions.<br>
+            • Establishes the <strong>Scope Chain</strong> and sets <code>this</code>.
+          </td>
+          <td>
+            • <code>var</code> initialized to <code>undefined</code> (Hoisted).<br>
+            • <code>let</code> / <code>const</code> allocated in uninitialized state (<strong>Temporal Dead Zone</strong>).<br>
+            • Function declarations stored <strong>in their entirety</strong> in heap memory.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>2. Execution Phase (Code Evaluation)</strong></td>
+          <td>
+            • Executes code line-by-line from top to bottom.<br>
+            • Assigns actual values to variables.<br>
+            • Invokes other functions (spawning new FECs).
+          </td>
+          <td>
+            • Variables change from <code>undefined</code> to their evaluated runtime values.<br>
+            • Expressions and logic resolve.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Code Demonstration: Creation vs Execution Phase</h3>
+    <pre><code>// =========================================================================
+// Code written by Developer:
+// =========================================================================
+console.log(hoistedVar);        // Output: undefined (Created & initialized to undefined)
+// console.log(tdzLet);         // Throws ReferenceError: Cannot access 'tdzLet' before initialization
+console.log(declaredFunction); // Output: [Function: declaredFunction] (Entire body hoisted)
+
+var hoistedVar = "I am initialized now";
+let tdzLet = "Out of TDZ now";
+
+function declaredFunction() {
+  return "Full function was hoisted during Creation Phase!";
+}
+
+var expressionFunction = function() {
+  return "Variable is hoisted as undefined; body is assigned in Execution Phase";
+};
+
+// =========================================================================
+// Detailed Trace of Function Execution Context (FEC) Creation:
+// =========================================================================
+function computeTotal(price, taxRate) {
+  // FEC Creation Phase:
+  // 1. Arguments object created: { 0: 100, 1: 0.18, length: 2 }
+  // 2. Parameters initialized: price = 100, taxRate = 0.18
+  // 3. Local variable memory allocated: taxAmount = undefined, total = undefined
+  // 4. Scope Chain linked: [computeTotal Scope -> Global Scope]
+  // 5. 'this' determined based on invocation style
+
+  // FEC Execution Phase:
+  const taxAmount = price * taxRate; // taxAmount = 18
+  const total = price + taxAmount;    // total = 118
+  return total;
+}
+
+const finalInvoice = computeTotal(100, 0.18); // Spawns new FEC, executes, pops off Call Stack</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 9. THE EVENT LOOP, MICROTASK & MACROTASK QUEUES                           -->
+  <!-- ========================================================================= -->
+  <section id="event-loop-queues">
+    <h2>9. The Event Loop, Microtask Queue, and Macrotask Queue</h2>
+    <p>Because JavaScript is single-threaded, it cannot execute two blocks of code at the exact same time. The <strong>Event Loop</strong> is a continuous, infinite background process that coordinates execution by monitoring the Call Stack and the Task Queues.</p>
+
+    <h3>The Exact Priority Rules (Event Loop Algorithm)</h3>
+    <ol>
+      <li>Execute all synchronous code currently residing on the <strong>Call Stack</strong> until the stack is completely empty.</li>
+      <li>Check the <strong>Microtask Queue</strong>. Execute <strong>ALL</strong> microtasks sequentially (FIFO) until the Microtask Queue is completely drained to 0.
+        <ul>
+          <li><em>Crucial rule:</em> If a microtask schedules <em>another</em> microtask, the new microtask is placed at the end of the Microtask Queue and executed <strong>during the same cycle</strong> before moving to macrotasks.</li>
+        </ul>
+      </li>
+      <li>Perform <strong>UI Rendering / Repaint</strong> (if running in a browser and a frame update is due).</li>
+      <li>Check the <strong>Macrotask Queue</strong>. Take <strong>ONLY ONE</strong> macrotask from the front of the queue, push its callback to the Call Stack, and execute it.</li>
+      <li>Go back to Step 1 and repeat the loop forever.</li>
+    </ol>
+
+    <h3>Queue Classification Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Microtask Queue (Job Queue)</th>
+          <th>Macrotask Queue (Task Queue)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Priority</strong></td>
+          <td><strong>Highest</strong> (Runs immediately after stack clears)</td>
+          <td><strong>Standard / Lower</strong></td>
+        </tr>
+        <tr>
+          <td><strong>Queue Drain Strategy</strong></td>
+          <td>Drains <strong>100% of tasks</strong> before yielding to render or macrotasks</td>
+          <td>Processes <strong>exactly 1 task</strong> per event loop iteration</td>
+        </tr>
+        <tr>
+          <td><strong>APIs that queue here</strong></td>
+          <td>
+            • <code>Promise.prototype.then() / .catch() / .finally()</code><br>
+            • <code>queueMicrotask(() => {})</code><br>
+            • <code>MutationObserver</code> (DOM mutation callbacks)<br>
+            • <code>process.nextTick()</code> (Node.js - runs before standard microtasks)
+          </td>
+          <td>
+            • <code>setTimeout()</code> / <code>setInterval()</code><br>
+            • <code>setImmediate()</code> (Node.js)<br>
+            • UI Events (<code>click</code>, <code>scroll</code>, <code>keydown</code>)<br>
+            • Network I/O callbacks (<code>fetch</code> completion callbacks)<br>
+            • MessageChannel, <code>requestAnimationFrame</code> (pre-render phase)
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Master Execution Order Demonstration</h3>
+    <pre><code>console.log("1: Synchronous Script Start");
+
+// Macrotask #1 (0ms delay)
+setTimeout(() => {
+  console.log("2: setTimeout Callback (Macrotask 1)");
+  
+  // Microtask scheduled from inside a Macrotask
+  Promise.resolve().then(() => {
+    console.log("3: Promise inside setTimeout (Nested Microtask)");
+  });
+}, 0);
+
+// Macrotask #2 (0ms delay)
+setTimeout(() => {
+  console.log("4: Second setTimeout Callback (Macrotask 2)");
+}, 0);
+
+// Microtask #1
+Promise.resolve()
+  .then(() => {
+    console.log("5: Promise.then (Microtask 1)");
+    return "chained data";
+  })
+  .then((data) => {
+    // Microtask #2 (chained)
+    console.log("6: Chained Promise.then (Microtask 2)");
+  });
+
+// Microtask #3 (Explicit)
+queueMicrotask(() => {
+  console.log("7: queueMicrotask explicitly queued (Microtask 3)");
+});
+
+console.log("8: Synchronous Script End");
+
+// =========================================================================
+// PRECISE CONSOLE OUTPUT SEQUENCE:
+// =========================================================================
+// 1: Synchronous Script Start
+// 8: Synchronous Script End
+// 5: Promise.then (Microtask 1)
+// 7: queueMicrotask explicitly queued (Microtask 3)
+// 6: Chained Promise.then (Microtask 2)
+// 2: setTimeout Callback (Macrotask 1)
+// 3: Promise inside setTimeout (Nested Microtask - drains before next macrotask!)
+// 4: Second setTimeout Callback (Macrotask 2)</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 10. WEB APIS & BROWSER RUNTIME INTERACTION                                -->
+  <!-- ========================================================================= -->
+  <section id="web-apis-browser-runtime">
+    <h2>10. Web APIs and Browser Runtime Mechanics</h2>
+    <p>JavaScript engines do not possess timers, network hardware controllers, or display renderers. When you call <code>setTimeout</code> or <code>fetch</code>, JavaScript delegates the operation to the host browser's multi-threaded C++ subsystem known as <strong>Web APIs</strong>.</p>
+
+    <h3>Step-by-Step Lifecycle of a Web API Call (e.g., <code>fetch</code> / <code>setTimeout</code>)</h3>
+    <ol>
+      <li><strong>Invocation:</strong> The JavaScript engine encounters <code>fetch('https://api.example.com')</code> on the Call Stack.</li>
+      <li><strong>Hand-off:</strong> The engine passes the URL, headers, and callback to the browser's background networking thread (written in C++ / Rust). The function immediately returns, and the Call Stack frame is popped.</li>
+      <li><strong>Background Execution:</strong> The browser's C++ network thread handles DNS resolution, TLS handshakes, HTTP transfer, and data streaming completely off the JS thread.</li>
+      <li><strong>Queue Placement:</strong> When the network data is fully received, the Web API pushes the resolved Promise callback into the <strong>Microtask Queue</strong> (or a timer callback into the <strong>Macrotask Queue</strong>).</li>
+      <li><strong>Event Loop Transfer:</strong> Once the main Call Stack is empty, the Event Loop pulls the callback from the queue and pushes it onto the Call Stack for JavaScript execution.</li>
+    </ol>
+
+    <h3>Code Demonstration: Non-Blocking Web API Offloading</h3>
+    <pre><code>function nonBlockingDemo() {
+  console.log("A: Requesting heavy network resource...");
+
+  // Handed off to browser's C++ Network Thread
+  fetch("https://jsonplaceholder.typicode.com/todos/1")
+    .then(response => response.json())
+    .then(data => {
+      console.log("D: Network Response arrived:", data.title);
+    });
+
+  // Handed off to browser's C++ Timer Thread
+  setTimeout(() => {
+    console.log("C: Timer elapsed (50ms)");
+  }, 50);
+
+  // Synchronous CPU blocking simulation on Main Thread
+  let sum = 0;
+  for (let i = 0; i < 50000000; i++) {
+    sum += i;
+  }
+  console.log("B: Heavy synchronous math completed on main thread!");
+}
+
+nonBlockingDemo();
+// Output:
+// A: Requesting heavy network resource...
+// B: Heavy synchronous math completed on main thread!
+// C: Timer elapsed (50ms)  (or D, depending on network latency)
+// D: Network Response arrived: delectus aut autem</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 11. GARBAGE COLLECTION & MEMORY MANAGEMENT                                -->
+  <!-- ========================================================================= -->
+  <section id="garbage-collection">
+    <h2>11. Garbage Collection & Memory Management (V8 Engine)</h2>
+    <p>JavaScript manages memory automatically via dynamic allocation and background <strong>Garbage Collection (GC)</strong>. The primary objective of the Garbage Collector is to identify dead memory (objects that can no longer be reached or referenced by the program) and reclaim that space back into the OS memory pool.</p>
+
+    <h3>A. The Mark-and-Sweep Algorithm (Core Algorithm)</h3>
+    <p>Modern engines use <strong>Mark-and-Sweep</strong> (and its generational variants) instead of naive reference counting to eliminate circular reference memory leaks.</p>
+    <ol>
+      <li><strong>Roots Definition:</strong> The GC builds a set of known "Root" references (Global variables, currently executing local stack frames, active DOM tree bindings).</li>
+      <li><strong>Mark Phase:</strong> The GC traverses the graph of references starting from the roots. Every object encountered is tagged as <em>Reachable / Alive</em>.</li>
+      <li><strong>Sweep Phase:</strong> The GC scans through the entire heap memory. Any memory block not marked as reachable is deallocated and added back to the free memory list.</li>
+      <li><strong>Compact Phase:</strong> Remaining alive objects are moved together into contiguous memory blocks to prevent memory fragmentation.</li>
+    </ol>
+
+    <h3>B. V8 Generational Garbage Collection: Young vs Old Generation</h3>
+    <ul>
+      <li><strong>The Generational Hypothesis:</strong> Most allocated objects die very young (e.g., local variables inside short functions).</li>
+      <li><strong>Young Generation (Nursery & Intermediate Spaces):</strong> Small space (1–8 MB). Cleaned frequently and extremely fast using the <strong>Scavenger (Minor GC)</strong> algorithm. Objects that survive two Minor GC cycles get promoted to the Old Generation.</li>
+      <li><strong>Old Generation:</strong> Large space for long-lived objects (surviving closures, global caches, large data models). Cleaned via the <strong>Major GC (Full Mark-Compact / Orinoco)</strong> algorithm using concurrent and incremental background marking threads to minimize main-thread UI stutter.</li>
+    </ul>
+
+    <h3>C. Common Memory Leaks in Real-World JavaScript</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Leak Type</th>
+          <th>How It Happens</th>
+          <th>How to Prevent / Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Forgotten Timers</strong></td>
+          <td><code>setInterval</code> captures references in its closure and runs forever in the background.</td>
+          <td>Always retain interval ID and call <code>clearInterval(id)</code> on component unmount.</td>
+        </tr>
+        <tr>
+          <td><strong>Detached DOM Nodes</strong></td>
+          <td>A DOM element is removed from the HTML page, but a JavaScript variable or array still holds a reference to it.</td>
+          <td>Nullify JavaScript variables referencing deleted DOM nodes (<code>nodeRef = null</code>).</td>
+        </tr>
+        <tr>
+          <td><strong>Uncleared Event Listeners</strong></td>
+          <td>Adding listeners to <code>window</code> or long-lived elements without removal.</td>
+          <td>Use <code>removeEventListener()</code> or bind using <code>AbortController.signal</code>.</td>
+        </tr>
+        <tr>
+          <td><strong>Global Variable Spills</strong></td>
+          <td>Accidental variable declaration without <code>const/let/var</code> attaching to <code>window</code>.</td>
+          <td>Enable <code>"use strict";</code> or TypeScript to enforce scope declarations.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Code Demonstration: Memory Leaks vs Safe Implementations</h3>
+    <pre><code>// =========================================================================
+// 1. FORGOTTEN TIMER LEAK (LEAKY PATTERN)
+// =========================================================================
+function leakySubscription() {
+  const hugeDataPayload = new Array(1000000).fill("LeakData");
+  
+  // This interval holds hugeDataPayload in its closure scope forever!
+  setInterval(() => {
+    console.log("Timer running...", hugeDataPayload.length);
+  }, 1000);
+}
+// leakySubscription(); // Memory will never be reclaimed!
+
+// =========================================================================
+// 2. SAFE TIMER WITH CLEANUP (CLEAN PATTERN)
+// =========================================================================
+function safeSubscription() {
+  const hugeDataPayload = new Array(1000000).fill("SafeData");
+  
+  const timerId = setInterval(() => {
+    console.log("Timer running...", hugeDataPayload.length);
+  }, 1000);
+
+  // Return a cleanup teardown function
+  return function teardown() {
+    clearInterval(timerId);
+    console.log("Interval cleared, memory eligible for GC sweep.");
+  };
+}
+const stopTimer = safeSubscription();
+setTimeout(() => stopTimer(), 5000); // Cleans up after 5 seconds
+
+// =========================================================================
+// 3. MODERN EVENT LISTENER CLEANUP VIA ABORTCONTROLLER
+// =========================================================================
+const abortController = new AbortController();
+
+window.addEventListener(
+  "resize",
+  () => console.log("Window resized!"),
+  { signal: abortController.signal } // Pass signal to listener
+);
+
+// Tear down listener effortlessly with zero manual removeEventListener parameters:
+abortController.abort(); // Listener removed and cleaned from memory instantly!
+
+// =========================================================================
+// 4. WEAKREF AND WEAKMAP (Allowing Automatic Garbage Collection)
+// =========================================================================
+// Regular Map: Prevents GC even if key is deleted elsewhere
+// WeakMap: Keys MUST be objects; does NOT prevent GC of its keys
+let cacheTarget = { userId: 4092 };
+const userMetadata = new WeakMap();
+
+userMetadata.set(cacheTarget, { lastActive: Date.now() });
+console.log(userMetadata.has(cacheTarget)); // true
+
+// When original reference is cleared:
+cacheTarget = null; 
+// In the next GC cycle, the entry inside userMetadata is automatically destroyed!</code></pre>
+  </section>
+
+
+<!-- ========================================================================= -->
+  <!-- 12. SYNCHRONOUS VS ASYNCHRONOUS EXECUTION & CALLBACKS                     -->
+  <!-- ========================================================================= -->
+  <section id="async-foundations">
+    <h2>12. Asynchronous Foundations: Synchronous Blocking, Callbacks & Callback Hell</h2>
+    <p>JavaScript executes synchronously line-by-line on a single main thread. To prevent heavy operations (network I/O, disk access, timers) from blocking UI rendering and user interactions, JavaScript delegates asynchronous operations to the host runtime (Web APIs or Node.js runtime bindings) using non-blocking scheduling primitives.</p>
+
+    <h3>A. The Problem: Synchronous Blocking</h3>
+    <p>When a synchronous operation takes significant CPU time, the Call Stack remains occupied. During this period, the browser cannot process user clicks, render animations, or process network events—resulting in an unresponsive UI thread.</p>
+
+    <h3>B. First-Generation Solution: Callback Functions</h3>
+    <p>A callback is a function passed as an argument to another function, intended to be executed once an asynchronous background operation completes. While functional, chaining multiple dependent asynchronous operations using callbacks creates inverted control flow and severe nesting.</p>
+
+    <h3>C. Callback Hell (The Pyramid of Doom)</h3>
+    <p>Callback Hell occurs when multiple asynchronous calls depend on the output of preceding calls. This creates deeply nested, rightward-drifting code structures with fractured error handling (every single nested level must independently validate and propagate errors).</p>
+
+    <pre><code>// =========================================================================
+// 1. SYNCHRONOUS BLOCKING (Anti-pattern: Locks Main Thread)
+// =========================================================================
+function synchronousSleep(milliseconds) {
+  const start = Date.now();
+  while (Date.now() - start < milliseconds) {
+    // Blocks the Call Stack completely! UI freezes, clicks are dropped.
+  }
+}
+console.log("Starting sync freeze...");
+// synchronousSleep(3000); // Freezes browser for 3 seconds
+console.log("Unfrozen.");
+
+// =========================================================================
+// 2. CALLBACK HELL (Pyramid of Doom with Inverted Error Handling)
+// =========================================================================
+function fetchUser(userId, onSuccess, onError) {
+  setTimeout(() => {
+    if (!userId) onError(new Error("Invalid User ID"));
+    else onSuccess({ id: userId, username: "dev_alex" });
+  }, 300);
+}
+
+function fetchUserPermissions(user, onSuccess, onError) {
+  setTimeout(() => {
+    if (user.username !== "dev_alex") onError(new Error("Forbidden user"));
+    else onSuccess(["READ_REPORTS", "WRITE_DATA"]);
+  }, 300);
+}
+
+function fetchSecureReport(permission, onSuccess, onError) {
+  setTimeout(() => {
+    if (!permission.includes("READ_REPORTS")) onError(new Error("Access Denied"));
+    else onSuccess({ reportId: 101, metrics: [42, 88, 99] });
+  }, 300);
+}
+
+// Deeply nested, error-prone execution pipeline:
+fetchUser(1, function(user) {
+  console.log("1. User loaded:", user.username);
+  
+  fetchUserPermissions(user, function(permissions) {
+    console.log("2. Permissions loaded:", permissions);
+    
+    fetchSecureReport(permissions, function(report) {
+      console.log("3. Report payload:", report);
+      // Nested level 4, 5, 6... (Unmaintainable, difficult debugging)
+    }, function(err) {
+      console.error("Error fetching report:", err.message);
+    });
+    
+  }, function(err) {
+    console.error("Error fetching permissions:", err.message);
+  });
+  
+}, function(err) {
+  console.error("Error fetching user:", err.message);
+});</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 13. PROMISES, STATES & CHAINING                                           -->
+  <!-- ========================================================================= -->
+  <section id="promises-deep-dive">
+    <h2>13. Promises: Internal States, Handlers & Chaining Mechanics</h2>
+    <p>A <code>Promise</code> is an ECMAScript standard object representing the eventual completion (or failure) of an asynchronous operation and its resulting value. It replaces callback nesting with flattened, composable event pipelines.</p>
+
+    <h3>A. The 3 Internal Promise States</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Promise State</th>
+          <th>Description</th>
+          <th>Settled Status</th>
+          <th>Transition Rules</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>&lt;pending&gt;</code></td>
+          <td>Initial state; asynchronous task is still processing.</td>
+          <td>Unsettled</td>
+          <td>Can transition strictly to <code>fulfilled</code> or <code>rejected</code>.</td>
+        </tr>
+        <tr>
+          <td><code>&lt;fulfilled&gt;</code></td>
+          <td>Operation completed successfully with a resolved value.</td>
+          <td><strong>Settled</strong></td>
+          <td>Immutable. Cannot transition to any other state.</td>
+        </tr>
+        <tr>
+          <td><code>&lt;rejected&gt;</code></td>
+          <td>Operation failed with an error reason or exception.</td>
+          <td><strong>Settled</strong></td>
+          <td>Immutable. Cannot transition to any other state.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>Core Invariant:</strong> Once a Promise transitions to a settled state (<code>fulfilled</code> or <code>rejected</code>), it is permanently locked. Subsequent calls to <code>resolve()</code> or <code>reject()</code> within the executor are ignored.
+    </div>
+
+    <h3>B. Pipeline Handlers: <code>.then()</code>, <code>.catch()</code>, and <code>.finally()</code></h3>
+    <ul>
+      <li><strong><code>.then(onFulfilled, onRejected)</code>:</strong> Schedules microtasks to process the resolved value or catch rejection. Always returns a <strong>brand new Promise</strong>, enabling sequential chaining. If a handler returns a value, the new Promise resolves with that value. If it returns another Promise, the chain unwraps it.</li>
+      <li><strong><code>.catch(onRejected)</code>:</strong> Syntactic sugar for <code>.then(null, onRejected)</code>. Catches any rejection or runtime exception thrown upstream in the chain.</li>
+      <li><strong><code>.finally(onFinally)</code>:</strong> Executes cleanup logic regardless of success or failure. Receives no arguments, does not modify the resolved value in the chain, and passes the upstream settled state through to the next handler.</li>
+    </ul>
+
+    <h3>Code Demonstration: Custom Promise Construction & Chaining</h3>
+    <pre><code>// 1. Constructing a Native Promise
+function requestUserData(userId) {
+  return new Promise((resolve, reject) => {
+    // Executor runs synchronously on construction
+    if (!userId || userId <= 0) {
+      reject(new Error("Invalid identifier: ID must be a positive integer"));
+      return;
+    }
+
+    // Async task dispatched to host environment
+    setTimeout(() => {
+      resolve({ id: userId, name: "Maria", accountTier: "ENTERPRISE" });
+    }, 200);
+  });
+}
+
+function requestSubscriptionDetails(tier) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ tier, maxProjects: 50, storageQuotaGB: 500 });
+    }, 200);
+  });
+}
+
+// 2. Flattened Promise Chaining Pipeline
+requestUserData(42)
+  .then((user) => {
+    console.log("Step 1 (Fulfilled):", user.name);
+    // Returning a Promise automatically unwraps it in the next .then()
+    return requestSubscriptionDetails(user.accountTier);
+  })
+  .then((subscription) => {
+    console.log("Step 2 (Fulfilled): Storage quota =", subscription.storageQuotaGB, "GB");
+    return subscription.maxProjects * 2; // Returning primitive scalar value
+  })
+  .then((scaledProjects) => {
+    console.log("Step 3 (Fulfilled): Scaled projects =", scaledProjects);
+    // Throwing an Error inside .then immediately triggers the downstream .catch()
+    if (scaledProjects > 50) {
+      throw new Error("Quota threshold safety breach!");
+    }
+  })
+  .catch((err) => {
+    // Catches errors occurring at ANY stage of the preceding chain
+    console.error("Pipeline Rejection Caught:", err.message);
+  })
+  .finally(() => {
+    // Runs unconditionally after fulfillment or rejection
+    console.log("Cleanup: Database connections and metrics stream flushed.");
+  });</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 14. ASYNC / AWAIT & ERROR PROPAGATION                                     -->
+  <!-- ========================================================================= -->
+  <section id="async-await">
+    <h2>14. <code>async</code> / <code>await</code> Syntax & Error Propagation Mechanics</h2>
+    <p>Introduced in ES2017, <code>async</code> and <code>await</code> provide syntactic abstraction over Promises and Generators. They allow asynchronous code to be written and structured identically to synchronous procedural code without blocking the main execution thread.</p>
+
+    <h3>Under the Hood: How <code>await</code> Operates</h3>
+    <ul>
+      <li>An <code>async</code> function <strong>always returns a Promise</strong>. If a non-Promise value is returned, the engine implicitly wraps it in <code>Promise.resolve(value)</code>.</li>
+      <li>The <code>await</code> expression pauses execution of the <strong>surrounding <code>async</code> function only</strong>, yielding control back to the Event Loop. The remaining body of the function is converted into a microtask scheduled after the awaited Promise settles.</li>
+      <li><strong>Synchronous Call Stack Remains Free:</strong> While an <code>async</code> function is paused at <code>await</code>, other synchronous tasks, UI interactions, and microtasks continue executing without interruption.</li>
+    </ul>
+
+    <h3>Error Propagation: <code>try / catch / finally</code></h3>
+    <p>When an awaited Promise rejects, the rejection reason is transformed directly into a standard JavaScript runtime exception thrown at the exact line of the <code>await</code> statement, allowing standard <code>try / catch</code> blocks to capture asynchronous errors.</p>
+
+    <pre><code>// =========================================================================
+// ASYNC / AWAIT WITH COMPREHENSIVE ERROR PROPAGATION
+// =========================================================================
+
+async function fetchRemoteStock(symbol) {
+  if (!symbol) {
+    throw new Error("Ticker symbol cannot be empty"); // Rejects returned Promise
+  }
+  
+  const response = await fetch(`https://api.example.com/stocks/${symbol}`);
+  
+  if (!response.ok) {
+    throw new Error(`HTTP Error ${response.status}: Failed to load ${symbol}`);
+  }
+  
+  return await response.json();
+}
+
+async function executeTradePipeline(symbol, units) {
+  let sessionActive = true;
+
+  try {
+    console.log(`[TradeEngine] Initiating trade for ${symbol}...`);
+    
+    // Non-blocking wait: Pauses this function, yields thread to event loop
+    const stockData = await fetchRemoteStock(symbol);
+    const totalCost = stockData.price * units;
+    
+    console.log(`[TradeEngine] Order confirmed: ${units} shares of ${symbol} for $${totalCost}`);
+    return { success: true, totalCost };
+
+  } catch (err) {
+    // Catches network errors, HTTP errors, and JSON parsing exceptions
+    console.error(`[TradeEngine ERROR] Transaction aborted: ${err.message}`);
+    // Re-throwing or returning a fallback:
+    return { success: false, reason: err.message };
+
+  } finally {
+    // Guaranteed execution regardless of success or caught exception
+    sessionActive = false;
+    console.log(`[TradeEngine] Session closed. Status: active = ${sessionActive}`);
+  }
+}
+
+// Executing async caller:
+executeTradePipeline("NVDA", 10).then(result => console.log("Final Order Status:", result));</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 15. PROMISE COMBINATORS (all, allSettled, race, any)                      -->
+  <!-- ========================================================================= -->
+  <section id="promise-combinators">
+    <h2>15. Promise Combinators: Concurrent Orchestration Patterns</h2>
+    <p>JavaScript provides four native static combinator methods on the <code>Promise</code> object to manage concurrent asynchronous operations with distinct evaluation strategies.</p>
+
+    <h3>Comparison Matrix of Promise Combinators</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Method</th>
+          <th>Fulfillment Strategy</th>
+          <th>Rejection Strategy</th>
+          <th>Short-Circuits?</th>
+          <th>Primary Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>Promise.all([p1, p2, ...])</code></strong></td>
+          <td>Resolves when <strong>ALL</strong> input promises fulfill. Returns array of values.</td>
+          <td>Rejects immediately if <strong>ANY single</strong> promise rejects.</td>
+          <td><strong>Yes (On Rejection)</strong></td>
+          <td>All-or-nothing dependencies (e.g., loading essential screen data).</td>
+        </tr>
+        <tr>
+          <td><strong><code>Promise.allSettled([p1, p2, ...])</code></strong></td>
+          <td>Resolves when <strong>EVERY</strong> promise has settled (fulfilled OR rejected).</td>
+          <td><strong>Never rejects</strong> directly. Returns array of status descriptor objects.</td>
+          <td><strong>No</strong></td>
+          <td>Independent operations where partial success is acceptable (e.g., bulk analytics).</td>
+        </tr>
+        <tr>
+          <td><strong><code>Promise.race([p1, p2, ...])</code></strong></td>
+          <td>Settles as soon as the <strong>FIRST</strong> promise settles (fulfilled OR rejected).</td>
+          <td>Rejects if the first settling promise rejects.</td>
+          <td><strong>Yes (On First Settlement)</strong></td>
+          <td>Enforcing operational timeouts against remote calls.</td>
+        </tr>
+        <tr>
+          <td><strong><code>Promise.any([p1, p2, ...])</code></strong></td>
+          <td>Resolves as soon as the <strong>FIRST</strong> promise <strong>fulfills</strong>.</td>
+          <td>Rejects only if <strong>ALL</strong> promises reject (returns <code>AggregateError</code>).</td>
+          <td><strong>Yes (On First Fulfillment)</strong></td>
+          <td>Redundant replica queries, primary/fallback CDN asset fetching.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Code Demonstration: All 4 Combinators in Practice</h3>
+    <pre><code>// Utility generator for simulated async endpoints
+const mockTask = (id, delayMs, shouldFail = false) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (shouldFail) reject(new Error(`Task ${id} Failed`));
+      else resolve(`Task ${id} Data`);
+    }, delayMs);
+  });
+};
+
+async function runCombinatorSuite() {
+  // =========================================================================
+  // 1. Promise.all (All-or-Nothing Concurrent Processing)
+  // =========================================================================
+  try {
+    const results = await Promise.all([
+      mockTask("A", 100),
+      mockTask("B", 150),
+      mockTask("C", 80)
+    ]);
+    console.log("Promise.all Success:", results);
+    // Output: ["Task A Data", "Task B Data", "Task C Data"]
+  } catch (err) {
+    console.error("Promise.all short-circuited on failure:", err.message);
+  }
+
+  // =========================================================================
+  // 2. Promise.allSettled (Safe Multi-Task Batch Processing)
+  // =========================================================================
+  const settledResults = await Promise.allSettled([
+    mockTask("Metrics-1", 50),
+    mockTask("Metrics-2", 100, true), // Intentionally failing
+    mockTask("Metrics-3", 75)
+  ]);
+  
+  settledResults.forEach((res, index) => {
+    if (res.status === "fulfilled") {
+      console.log(`Task ${index} Succeeded -> Value:`, res.value);
+    } else {
+      console.warn(`Task ${index} Failed -> Reason:`, res.reason.message);
+    }
+  });
+
+  // =========================================================================
+  // 3. Promise.race (First Settle Wins - Timeout Implementation)
+  // =========================================================================
+  const timeoutPromise = new Promise((_, reject) => 
+    setTimeout(() => reject(new Error("Request Timed Out (Limit: 120ms)")), 120)
+  );
+
+  try {
+    const fastCall = await Promise.race([
+      mockTask("HeavyReport", 200), // Takes 200ms
+      timeoutPromise               // Triggers reject at 120ms
+    ]);
+    console.log("Winner:", fastCall);
+  } catch (err) {
+    console.error("Promise.race Outcome:", err.message);
+    // Output: Promise.race Outcome: Request Timed Out (Limit: 120ms)
+  }
+
+  // =========================================================================
+  // 4. Promise.any (First Successful Fulfillment Wins)
+  // =========================================================================
+  try {
+    const fastestCDN = await Promise.any([
+      mockTask("Mirror-EU", 300, true),  // Fails at 300ms
+      mockTask("Mirror-US", 100),        // Succeeds at 100ms (WINS)
+      mockTask("Mirror-ASIA", 150)       // Succeeds at 150ms
+    ]);
+    console.log("Promise.any Winner:", fastestCDN); // Task Mirror-US Data
+  } catch (err) {
+    // If all fail, err is an instance of AggregateError
+    if (err instanceof AggregateError) {
+      console.error("All mirrors failed. Errors:", err.errors);
+    }
+  }
+}
+
+runCombinatorSuite();</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 16. ABORTCONTROLLER & CANCELLATION PATTERNS                               -->
+  <!-- ========================================================================= -->
+  <section id="cancellation-patterns">
+    <h2>16. <code>AbortController</code> and Asynchronous Cancellation Patterns</h2>
+    <p>JavaScript Promises are non-cancellable by default once instantiated. The <strong><code>AbortController</code></strong> API provides a standardized DOM and Node.js mechanism to safely abort in-flight asynchronous operations (such as <code>fetch</code> requests, background loops, stream reads, and DOM events) without leaking system resources.</p>
+
+    <h3>A. Core Architecture: Controller vs Signal</h3>
+    <ul>
+      <li><strong><code>AbortController</code>:</strong> The control unit containing the <code>.abort(reason)</code> method invoked by the initiator to cancel operations.</li>
+      <li><strong><code>AbortSignal</code>:</strong> The read-only communication channel (<code>controller.signal</code>) passed to the asynchronous worker, which monitors the abort state (<code>signal.aborted</code>) and fires the <code>abort</code> event.</li>
+      <li><strong><code>AbortSignal.timeout(ms)</code>:</strong> Modern static utility that constructs a self-aborting signal after a defined timeout window without requiring manual <code>setTimeout</code> controller tracking.</li>
+    </ul>
+
+    <h3>Code Demonstration: Fetch Cancellation, Custom Cancellable Promises & Automatic Timeouts</h3>
+    <pre><code>// =========================================================================
+// 1. CANCELLING HTTP FETCH REQUESTS VIA ABORTCONTROLLER
+// =========================================================================
+async function fetchWithManualCancellation() {
+  const controller = new AbortController();
+  const { signal } = controller;
+
+  // Trigger abort after 150ms
+  setTimeout(() => {
+    controller.abort("User clicked 'Cancel Download' button");
+  }, 150);
+
+  try {
+    console.log("Starting large file download...");
+    const response = await fetch("https://jsonplaceholder.typicode.com/photos", { signal });
+    const data = await response.json();
+    return data;
+  } catch (err) {
+    if (err.name === "AbortError") {
+      console.warn("Fetch operation successfully aborted:", signal.reason);
+    } else {
+      console.error("Standard network error encountered:", err);
+    }
+  }
+}
+fetchWithManualCancellation();
+
+// =========================================================================
+// 2. CREATING CUSTOM CANCELLABLE ASYNC TASKS
+// =========================================================================
+function cancellableLongTask(durationMs, signal) {
+  return new Promise((resolve, reject) => {
+    // 1. Check if already aborted before work starts
+    if (signal?.aborted) {
+      reject(new DOMException(signal.reason || "Task aborted", "AbortError"));
+      return;
+    }
+
+    const timerId = setTimeout(() => {
+      resolve("Heavy computation finished successfully!");
+    }, durationMs);
+
+    // 2. Listen to the abort signal event
+    signal?.addEventListener("abort", () => {
+      clearTimeout(timerId); // Stop underlying background operation
+      reject(new DOMException(signal.reason || "Aborted by signal", "AbortError"));
+    }, { once: true });
+  });
+}
+
+// Usage with custom task:
+const customController = new AbortController();
+cancellableLongTask(5000, customController.signal)
+  .then(res => console.log(res))
+  .catch(err => {
+    if (err.name === "AbortError") {
+      console.log("Custom task cancelled cleanly:", err.message);
+    }
+  });
+
+// Cancel the custom task after 1000ms:
+setTimeout(() => customController.abort("Operation timed out by supervisor"), 1000);
+
+// =========================================================================
+// 3. MODERN BUILT-IN TIMEOUT SIGNAL (ES2022+)
+// =========================================================================
+async function fetchWithNativeTimeout() {
+  try {
+    // Automatically constructs a signal that aborts after 2000 milliseconds
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts/1", {
+      signal: AbortSignal.timeout(2000)
+    });
+    const post = await response.json();
+    console.log("Fetched post title:", post.title);
+  } catch (err) {
+    if (err.name === "TimeoutError") {
+      console.error("HTTP request cancelled due to timeout limit exceeded.");
+    }
+  }
+}
+fetchWithNativeTimeout();</code></pre>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 17. ADVANCED OBJECTS, PROPERTY DESCRIPTORS & PROTOTYPAL INHERITANCE        -->
+  <!-- ========================================================================= -->
+  <section id="advanced-objects-prototypes">
+    <h2>17. Advanced Objects: Descriptors, Prototypes, Classes & Metaprogramming</h2>
+    <p>JavaScript is a prototype-based object-oriented language. While modern syntax provides the <code>class</code> keyword, classes are syntactic sugar over prototypal inheritance and object property descriptor mechanics.</p>
+
+    <h3>A. Object Creation & Property Descriptors</h3>
+    <p>Every property in a JavaScript object has an internal record called a <strong>Property Descriptor</strong>, controlling how the engine interacts with that property.</p>
+    <ul>
+      <li><strong><code>value</code>:</strong> The data stored inside the property.</li>
+      <li><strong><code>writable</code>:</strong> If <code>false</code>, the property value cannot be modified (reassignment fails silently or throws a <code>TypeError</code> in strict mode).</li>
+      <li><strong><code>enumerable</code>:</strong> If <code>false</code>, the property is hidden from <code>for...in</code> loops, <code>Object.keys()</code>, and <code>JSON.stringify()</code>.</li>
+      <li><strong><code>configurable</code>:</strong> If <code>false</code>, the property cannot be deleted and its descriptor attributes (except <code>writable</code> to <code>false</code>) cannot be modified.</li>
+    </ul>
+
+    <h3>B. The Prototype Chain: <code>prototype</code> vs <code>__proto__</code> vs <code>Object.create()</code></h3>
+    <ul>
+      <li><strong><code>Function.prototype</code>:</strong> An object automatically assigned to functions/constructors used as a shared blueprint for instances created via <code>new</code>.</li>
+      <li><strong><code>[[Prototype]]</code> (exposed as <code>__proto__</code> or via <code>Object.getPrototypeOf</code>):</strong> The internal hidden pointer on an <em>instance</em> linking directly to its parent prototype object.</li>
+      <li><strong><code>Object.create(proto)</code>:</strong> Creates a brand-new object whose internal <code>[[Prototype]]</code> points explicitly to <code>proto</code> without executing constructor functions.</li>
+    </ul>
+
+    <h3>C. Modern Classes, Private Fields (<code>#</code>), and Static Members</h3>
+    <ul>
+      <li><strong>Private Fields (<code>#privateField</code>):</strong> Enforced at the engine/bytecode level. Unlike TypeScript's compile-time <code>private</code>, JS <code>#</code> fields are truly inaccessible outside the class body at runtime.</li>
+      <li><strong>Static Members:</strong> Bound to the constructor function itself, not to instances. Inherited down subclass constructors through the prototype chain.</li>
+    </ul>
+
+    <h3>D. Symbols, Iterators & Generators</h3>
+    <ul>
+      <li><strong><code>Symbol</code>:</strong> Unique, immutable primitive type used as non-colliding object property keys and engine hooks (Well-Known Symbols like <code>Symbol.iterator</code>).</li>
+      <li><strong>Iteration Protocols:</strong> An object is <em>iterable</em> if it implements a <code>[Symbol.iterator]()</code> method that returns an <em>iterator</em> object with a <code>.next() -> { value, done }</code> signature.</li>
+      <li><strong>Generators (<code>function*</code> / <code>yield</code>):</strong> State machines that pause execution and produce values on demand, generating iterators natively.</li>
+    </ul>
+
+    <pre><code>// =========================================================================
+// 1. PROPERTY DESCRIPTORS & GETTERS/SETTERS
+// =========================================================================
+const account = {};
+
+Object.defineProperty(account, "accountNumber", {
+  value: "ACC-99281",
+  writable: false,     // Read-only
+  enumerable: true,    // Visible in loops/keys
+  configurable: false  // Cannot delete or redefine
+});
+
+// Defining dynamic Accessor Descriptors (Getters/Setters)
+let internalBalance = 1000;
+Object.defineProperty(account, "balance", {
+  get() {
+    return `$${internalBalance.toLocaleString()}`;
+  },
+  set(newVal) {
+    if (newVal < 0) throw new Error("Balance cannot be negative");
+    internalBalance = newVal;
+  },
+  enumerable: true,
+  configurable: true
+});
+
+console.log(account.balance); // "$1,000"
+account.balance = 2500;
+console.log(account.balance); // "$2,500"
+
+// =========================================================================
+// 2. CONSTRUCTOR FUNCTIONS & THE PROTOTYPE CHAIN
+// =========================================================================
+function Vehicle(type) {
+  this.type = type;
+}
+// Shared method stored once in memory across all instances
+Vehicle.prototype.describe = function() {
+  return `Vehicle of type: ${this.type}`;
+};
+
+function Car(type, model) {
+  Vehicle.call(this, type); // Inherit instance properties (super)
+  this.model = model;
+}
+// Establish prototype inheritance link
+Car.prototype = Object.create(Vehicle.prototype);
+Car.prototype.constructor = Car;
+
+Car.prototype.drive = function() {
+  return `Driving ${this.model}`;
+};
+
+const myCar = new Car("Electric", "Model S");
+console.log(myCar.describe()); // "Vehicle of type: Electric" (Walked up prototype chain)
+console.log(myCar.__proto__ === Car.prototype); // true
+console.log(Car.prototype.__proto__ === Vehicle.prototype); // true
+
+// =========================================================================
+// 3. ES6+ CLASSES, PRIVATE FIELDS & STATIC PROPERTIES
+// =========================================================================
+class DatabaseConnection {
+  // Hard Private Field (Bytecode-level privacy)
+  #connectionSecret;
+
+  // Public Field
+  host;
+
+  // Static Member (Bound to class constructor, not instance)
+  static activeConnections = 0;
+
+  constructor(host, secret) {
+    this.host = host;
+    this.#connectionSecret = secret;
+    DatabaseConnection.activeConnections++;
+  }
+
+  // Private Method
+  #authenticate() {
+    return this.#connectionSecret === "MASTER_KEY";
+  }
+
+  query(sql) {
+    if (!this.#authenticate()) throw new Error("Authentication failed");
+    return `Executed "${sql}" on ${this.host}`;
+  }
+
+  static getPoolStats() {
+    return `Total active connections: ${DatabaseConnection.activeConnections}`;
+  }
+}
+
+class PostgresConnection extends DatabaseConnection {
+  constructor(host, secret, port = 5432) {
+    super(host, secret);
+    this.port = port;
+  }
+
+  // Method overriding (Polymorphism)
+  query(sql) {
+    return `[Postgres :${this.port}] ${super.query(sql)}`;
+  }
+}
+
+const db = new PostgresConnection("10.0.0.1", "MASTER_KEY");
+console.log(db.query("SELECT * FROM users"));
+console.log(DatabaseConnection.getPoolStats());
+// console.log(db.#connectionSecret); // SyntaxError: Private field must be declared in an enclosing class
+
+// =========================================================================
+// 4. SYMBOLS, CUSTOM ITERATORS & GENERATORS
+// =========================================================================
+// Symbol for hidden metadata keys
+const METADATA_KEY = Symbol("internal_metadata");
+const serviceConfig = {
+  name: "AuthService",
+  [METADATA_KEY]: { version: "1.0.4", cluster: "us-east-1" }
+};
+console.log(Object.keys(serviceConfig)); // ["name"] (Symbol is non-enumerable in standard keys)
+
+// Custom Iterable Object using Symbol.iterator
+const taskQueue = {
+  tasks: ["Compile", "Test", "Deploy"],
+  [Symbol.iterator]() {
+    let index = 0;
+    const tasks = this.tasks;
+    return {
+      next() {
+        if (index < tasks.length) {
+          return { value: tasks[index++], done: false };
+        }
+        return { value: undefined, done: true };
+      }
+    };
+  }
+};
+
+for (const task of taskQueue) {
+  console.log("Processing task:", task); // "Compile", "Test", "Deploy"
+}
+
+// Generators (Pausing execution using yield)
+function* stepByStepIdGenerator(prefix) {
+  let counter = 100;
+  while (true) {
+    yield `${prefix}_${++counter}`; // Execution freezes here until .next() is called
+  }
+}
+
+const gen = stepByStepIdGenerator("USER");
+console.log(gen.next().value); // "USER_101"
+console.log(gen.next().value); // "USER_102"</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 18. CLIENT-SIDE STORAGE: LOCALSTORAGE, SESSIONSTORAGE, COOKIES, INDEXEDDB -->
+  <!-- ========================================================================= -->
+  <section id="browser-storage">
+    <h2>18. Client-Side Storage Mechanisms</h2>
+    <p>Modern browsers offer four primary mechanisms for storing persistent and temporary data on the client device, each engineered with distinct storage capacities, lifetimes, and security profiles.</p>
+
+    <h3>Storage Comparison Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Storage Mechanism</th>
+          <th>Capacity Limit</th>
+          <th>Lifetime</th>
+          <th>Sent with HTTP Requests?</th>
+          <th>Access API Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Cookies</strong></td>
+          <td>~4 KB per cookie</td>
+          <td>Set via <code>Expires</code> / <code>Max-Age</code>; else session-only</td>
+          <td><strong>Yes (Every HTTP request automatically)</strong></td>
+          <td>Synchronous (<code>document.cookie</code>) or <code>CookieStore</code> API</td>
+        </tr>
+        <tr>
+          <td><strong>LocalStorage</strong></td>
+          <td>~5 MB per origin</td>
+          <td>Persistent (until explicitly cleared by script or user)</td>
+          <td>No</td>
+          <td>Synchronous String Key-Value API</td>
+        </tr>
+        <tr>
+          <td><strong>SessionStorage</strong></td>
+          <td>~5 MB per origin</td>
+          <td>Tab/Window lifetime (cleared when browser tab closes)</td>
+          <td>No</td>
+          <td>Synchronous String Key-Value API</td>
+        </tr>
+        <tr>
+          <td><strong>IndexedDB</strong></td>
+          <td>Hundreds of MBs / GBs (Origin storage quota)</td>
+          <td>Persistent (Transactional Object Database)</td>
+          <td>No</td>
+          <td><strong>Asynchronous</strong> (Event/Promise-based Index Engine)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>// =========================================================================
+// 1. LOCALSTORAGE & SESSIONSTORAGE
+// =========================================================================
+const sessionPayload = { token: "eyJhbGciOi...", userId: 488 };
+
+// Serializing to JSON (Storage only holds string primitives)
+localStorage.setItem("user_session", JSON.stringify(sessionPayload));
+sessionStorage.setItem("tab_temp_state", "form_step_2");
+
+// Retrieval and parsing
+const cachedUser = JSON.parse(localStorage.getItem("user_session"));
+console.log("Cached User ID:", cachedUser?.userId);
+
+// Removing keys & clearing
+localStorage.removeItem("user_session");
+// localStorage.clear(); // Clears all origin entries
+
+// =========================================================================
+// 2. DOCUMENT COOKIES WITH SECURITY FLAGS
+// =========================================================================
+// Setting a client-writable cookie with attributes:
+// - Max-Age=3600 (1 hour)
+// - SameSite=Strict (Prevents CSRF)
+// - Secure (Transmitted only over HTTPS)
+document.cookie = "theme=dark; Max-Age=3600; path=/; SameSite=Strict; Secure";
+
+// Note: Critical auth tokens should use server-set HttpOnly cookies,
+// which block JavaScript execution access entirely (preventing XSS theft).
+
+// =========================================================================
+// 3. INDEXEDDB (Asynchronous Transactional Object Database)
+// =========================================================================
+function openAppDatabase() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("AppMetricsDB", 1);
+
+    // Schema initialization/migration hook
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      if (!db.objectStoreNames.contains("logs")) {
+        // Create an Object Store with an auto-incrementing primary key
+        const store = db.createObjectStore("logs", { keyPath: "id", autoIncrement: true });
+        store.createIndex("timestampIndex", "timestamp", { unique: false });
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+}
+
+async function writeAndReadIndexedDB() {
+  const db = await openAppDatabase();
+
+  // 1. Write Data via Transaction
+  const writeTx = db.transaction("logs", "readwrite");
+  const store = writeTx.objectStore("logs");
+  store.add({ message: "Network ping OK", timestamp: Date.now() });
+
+  await new Promise((resolve) => { writeTx.oncomplete = resolve; });
+
+  // 2. Read Data via Read-Only Transaction
+  const readTx = db.transaction("logs", "readonly");
+  const readStore = readTx.objectStore("logs");
+  const getRequest = readStore.getAll();
+
+  getRequest.onsuccess = () => {
+    console.log("IndexedDB Stored Logs:", getRequest.result);
+  };
+}
+writeAndReadIndexedDB();</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 19. ADVANCED FETCH API & WEB/SERVICE WORKERS                              -->
+  <!-- ========================================================================= -->
+  <section id="workers-and-fetch">
+    <h2>19. Fetch API, Web Workers, Service Workers & Notifications</h2>
+    <p>Modern web applications rely on multi-threaded background processing, offline caching proxies, and system-level alert integration to match native performance.</p>
+
+    <h3>A. Web Workers (True Multi-Threading in JavaScript)</h3>
+    <ul>
+      <li><strong>Execution Isolation:</strong> Runs in a completely separate OS thread isolated from the main UI thread. Has no access to the DOM, <code>window</code>, or <code>document</code>.</li>
+      <li><strong>Communication:</strong> Exclusively via message passing (<code>postMessage</code> and <code>onmessage</code> events) with data serialized/cloned across thread boundaries.</li>
+    </ul>
+
+    <h3>B. Service Workers (Programmable Network Proxy & Offline Cache)</h3>
+    <ul>
+      <li><strong>Lifecycle:</strong> Operates independently of web pages. Intercepts all outgoing network requests for an entire origin scope, routing through cache or network.</li>
+      <li><strong>Capabilities:</strong> Offline caching (CacheStorage API), Web Push Notifications, and Background Sync.</li>
+    </ul>
+
+    <pre><code>// =========================================================================
+// 1. ADVANCED FETCH API (Custom Headers, POST Body, Error Validation)
+// =========================================================================
+async function sendTelemetry(payload) {
+  try {
+    const response = await fetch("https://api.example.com/telemetry", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer SECURE_TOKEN_XYZ"
+      },
+      body: JSON.stringify(payload),
+      mode: "cors",
+      cache: "no-store"
+    });
+
+    // Fetch does NOT reject on HTTP 404 or 500! Must manually check response.ok
+    if (!response.ok) {
+      throw new Error(`HTTP Error Status: ${response.status}`);
+    }
+
+    return await response.json();
+  } catch (err) {
+    console.error("Fetch pipeline failed:", err.message);
+  }
+}
+
+// =========================================================================
+// 2. WEB WORKERS (Multi-Threaded CPU Offloading)
+// =========================================================================
+// --- main.js (Main Thread) ---
+const worker = new Worker("worker.js");
+
+// Send heavy computation parameters to background thread
+worker.postMessage({ arraySize: 5000000 });
+
+// Listen for completion without freezing main UI thread
+worker.onmessage = (event) => {
+  console.log("Calculated result from Web Worker thread:", event.data.sum);
+  worker.terminate(); // Kill worker when work finishes
+};
+
+// --- worker.js (Dedicated Background Worker Script) ---
+/*
+self.onmessage = function(e) {
+  const { arraySize } = e.data;
+  let sum = 0;
+  for (let i = 0; i < arraySize; i++) {
+    sum += Math.sqrt(i);
+  }
+  self.postMessage({ sum });
+};
+*/
+
+// =========================================================================
+// 3. SERVICE WORKERS (Offline Interceptor & Cache Proxy)
+// =========================================================================
+// --- Registration inside Main Thread ---
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/sw.js")
+      .then(reg => console.log("Service Worker registered on scope:", reg.scope))
+      .catch(err => console.error("SW Registration failed:", err));
+  });
+}
+
+// --- sw.js (Service Worker Script) ---
+/*
+const CACHE_NAME = "v1-app-cache";
+const ASSETS_TO_CACHE = ["/", "/index.html", "/styles.css", "/app.js"];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS_TO_CACHE))
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  // Cache-First Strategy: Return cached response if available, fallback to network
+  event.respondWith(
+    caches.match(event.request).then(cachedResponse => {
+      return cachedResponse || fetch(event.request);
+    })
+  );
+});
+*/
+
+// =========================================================================
+// 4. NOTIFICATIONS API
+// =========================================================================
+async function triggerDesktopNotification(title, message) {
+  if (!("Notification" in window)) return;
+
+  let permission = Notification.permission;
+  if (permission === "default") {
+    permission = await Notification.requestPermission();
+  }
+
+  if (permission === "granted") {
+    new Notification(title, {
+      body: message,
+      icon: "/assets/bell-icon.png",
+      tag: "order-status-update" // Replaces previous notification with same tag
+    });
+  }
+}</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 20. REAL-TIME PROTOCOLS: WEBSOCKETS VS SERVER-SENT EVENTS (SSE)          -->
+  <!-- ========================================================================= -->
+  <section id="realtime-protocols">
+    <h2>20. Real-Time Communication: WebSockets vs Server-Sent Events (SSE)</h2>
+    <p>Real-time bidirectional interactions require architectures that eliminate HTTP polling overhead. WebSockets and SSE serve as the two primary persistent transport protocols for modern browsers.</p>
+
+    <h3>Architectural Comparison Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Server-Sent Events (SSE)</th>
+          <th>WebSockets</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Directionality</strong></td>
+          <td><strong>Unidirectional</strong> (Server $\rightarrow$ Client only)</td>
+          <td><strong>Bidirectional</strong> (Full Duplex: Client $\leftrightarrow$ Server)</td>
+        </tr>
+        <tr>
+          <td><strong>Protocol</strong></td>
+          <td>Standard HTTP (<code>text/event-stream</code>) over HTTP/1.1 or HTTP/2</td>
+          <td>Independent TCP Protocol (Upgraded via <code>ws://</code> or <code>wss://</code>)</td>
+        </tr>
+        <tr>
+          <td><strong>Data Format</strong></td>
+          <td>UTF-8 Text only (typically JSON payloads)</td>
+          <td>UTF-8 Text and <strong>Raw Binary</strong> (ArrayBuffer, Blob)</td>
+        </tr>
+        <tr>
+          <td><strong>Auto-Reconnection</strong></td>
+          <td><strong>Built-in natively</strong> by the browser runtime</td>
+          <td>Manual implementation required</td>
+        </tr>
+        <tr>
+          <td><strong>Firewall / Proxy Safety</strong></td>
+          <td>Works through standard HTTP infrastructure & proxies natively</td>
+          <td>Can require specialized proxy configuration for connection upgrades</td>
+        </tr>
+        <tr>
+          <td><strong>Ideal Use Cases</strong></td>
+          <td>Live score tickers, stock quotes, notifications, AI token streaming</td>
+          <td>Multiplayer gaming, collaborative canvas editing, real-time chat</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>// =========================================================================
+// 1. WEBSOCKET IMPLEMENTATION (Bidirectional Real-Time Socket)
+// =========================================================================
+class RealTimeSocketManager {
+  #socket;
+  #url;
+
+  constructor(url) {
+    this.#url = url;
+    this.connect();
+  }
+
+  connect() {
+    this.#socket = new WebSocket(this.#url);
+
+    this.#socket.onopen = (event) => {
+      console.log("[WebSocket] Connection open:", event);
+      this.send("HELLO_SERVER", { clientTime: Date.now() });
+    };
+
+    this.#socket.onmessage = (event) => {
+      const parsedData = JSON.parse(event.data);
+      console.log("[WebSocket] Message received from server:", parsedData);
+    };
+
+    this.#socket.onerror = (error) => {
+      console.error("[WebSocket Error]:", error);
+    };
+
+    this.#socket.onclose = (event) => {
+      console.warn(`[WebSocket] Closed: Code ${event.code}, Reason: ${event.reason}`);
+      // Simple reconnect strategy:
+      setTimeout(() => this.connect(), 3000);
+    };
+  }
+
+  send(type, payload) {
+    if (this.#socket.readyState === WebSocket.OPEN) {
+      this.#socket.send(JSON.stringify({ type, payload }));
+    } else {
+      console.warn("Socket not open. Current state:", this.#socket.readyState);
+    }
+  }
+
+  close() {
+    this.#socket.close(1000, "Normal Closure");
+  }
+}
+
+// const chatConnection = new RealTimeSocketManager("wss://echo.websocket.events");
+
+// =========================================================================
+// 2. SERVER-SENT EVENTS (SSE via EventSource API)
+// =========================================================================
+function initializeServerSentEvents(endpointUrl) {
+  const eventSource = new EventSource(endpointUrl);
+
+  // 1. Default Message Handler (Generic un-named events)
+  eventSource.onmessage = (event) => {
+    const rawData = JSON.parse(event.data);
+    console.log("[SSE Generic Event]:", rawData);
+  };
+
+  // 2. Custom Named Event Listeners (Pushed by server with `event: stockTick`)
+  eventSource.addEventListener("stockTick", (event) => {
+    const stockPayload = JSON.parse(event.data);
+    console.log("[SSE Custom Event - stockTick]:", stockPayload.symbol, stockPayload.price);
+  });
+
+  // 3. Connection State Handlers
+  eventSource.onopen = () => {
+    console.log("[SSE] Connected to event stream.");
+  };
+
+  eventSource.onerror = (err) => {
+    console.error("[SSE Error / Disconnect]: Browser will auto-retry reconnecting...", err);
+    // If we wish to stop permanently:
+    // eventSource.close();
+  };
+
+  return eventSource;
+}
+
+// const liveTickerStream = initializeServerSentEvents("https://api.example.com/live-stream");</code></pre>
+  </section>
+
 
 </body>
 </html>
