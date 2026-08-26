@@ -9451,6 +9451,1304 @@ function initializeServerSentEvents(endpointUrl) {
 // const liveTickerStream = initializeServerSentEvents("https://api.example.com/live-stream");</code></pre>
   </section>
 
+<!-- ========================================================================= -->
+  <!-- 21. TYPESCRIPT TYPE SYSTEM: PRIMITIVES, COLLECTIONS & ADVANCED TYPES     -->
+  <!-- ========================================================================= -->
+  <section id="typescript-type-system">
+    <h2>21. TypeScript Type System: Structural Types, Collections, and Core Type Hierarchy</h2>
+    <p>TypeScript adds a static structural type system on top of JavaScript. The compiler evaluates types during build time to ensure type safety, then strips all type signatures via <strong>type erasure</strong> to produce standard JavaScript.</p>
 
+    <h3>A. Arrays, Tuples, Objects, Functions & Optional Properties</h3>
+    <ul>
+      <li><strong>Arrays vs Tuples:</strong> Arrays model variable-length lists of uniform elements (<code>T[]</code> or <code>Array&lt;T&gt;</code>), while Tuples model fixed-length, ordered sequences where each specific index position has a distinct type.</li>
+      <li><strong>Structural Typing (Duck Typing):</strong> Objects are typed by their shape, not by an explicit class name. If an object contains all required properties of an expected type, TypeScript accepts it.</li>
+      <li><strong>Optional Properties (<code>?:</code>):</strong> Appending <code>?</code> allows an object property or function parameter to be omitted (automatically treated as <code>T | undefined</code>).</li>
+    </ul>
+
+    <h3>B. Set Theory Types: Union (<code>|</code>), Intersection (<code>&amp;</code>), and Literal Types</h3>
+    <ul>
+      <li><strong>Union Types (<code>|</code>):</strong> Represents a value that can be <em>any one</em> of several types (Logical OR). Only common properties can be accessed until narrowed via type guards.</li>
+      <li><strong>Intersection Types (<code>&amp;</code>):</strong> Combines multiple types into one comprehensive contract containing <em>all</em> properties from every constituent type (Logical AND).</li>
+      <li><strong>Literal Types:</strong> Locks a type to an exact, specific primitive value (e.g., <code>"admin"</code>, <code>200</code>, <code>true</code>) rather than general types like <code>string</code> or <code>number</code>.</li>
+    </ul>
+
+    <h3>C. Special & Top/Bottom Types Comparison Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Type Classification</th>
+          <th>Can Assign Anything TO It?</th>
+          <th>Can Assign It TO Anything?</th>
+          <th>Type-Safe Operations Allowed?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>any</code></strong></td>
+          <td>Escape Hatch (Disables checking)</td>
+          <td><strong>Yes</strong></td>
+          <td><strong>Yes</strong> (Except <code>never</code>)</td>
+          <td><strong>Unsafe:</strong> Engine allows arbitrary method/property access without checking.</td>
+        </tr>
+        <tr>
+          <td><strong><code>unknown</code></strong></td>
+          <td><strong>Top Type</strong> (Universal Supertype)</td>
+          <td><strong>Yes</strong></td>
+          <td><strong>No</strong> (Only to <code>any</code> or <code>unknown</code>)</td>
+          <td><strong>Safe:</strong> Operations blocked until explicitly narrowed via type checks.</td>
+        </tr>
+        <tr>
+          <td><strong><code>never</code></strong></td>
+          <td><strong>Bottom Type</strong> (Empty Subtype)</td>
+          <td><strong>No</strong> (No value exists)</td>
+          <td><strong>Yes</strong> (Assignable to every type)</td>
+          <td>Used for exhaustiveness checks and functions that never return (e.g., infinite loops/throw).</td>
+        </tr>
+        <tr>
+          <td><strong><code>void</code></strong></td>
+          <td>Absence of return value</td>
+          <td>No</td>
+          <td>Only to <code>any</code> or <code>unknown</code></td>
+          <td>Signals that a function does not return an actionable value (returns <code>undefined</code>).</td>
+        </tr>
+        <tr>
+          <td><strong><code>null</code> / <code>undefined</code></strong></td>
+          <td>Primitive Absences</td>
+          <td>No</td>
+          <td>Only to themselves (with <code>strictNullChecks</code>)</td>
+          <td>Explicit representations of intentional absence (<code>null</code>) or uninitialized state (<code>undefined</code>).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>D. Numeric & String Enums</h3>
+    <p>Unlike interfaces and type aliases which are erased, <strong>Enums</strong> generate actual runtime JavaScript objects. Numeric enums support reverse mapping (value-to-key), whereas String enums and <code>const enum</code> do not.</p>
+
+    <pre><code>// =========================================================================
+// 1. ARRAYS, TUPLES, OBJECTS & FUNCTIONS
+// =========================================================================
+
+// Arrays: Variable length, single type
+const metricScores: number[] = [88, 92, 95];
+const tags: Array&lt;string&gt; = ["production", "v2", "stable"];
+
+// Tuples: Fixed length, specific typed index positions
+// [HTTP_STATUS_CODE, STATUS_MESSAGE, IS_SECURE]
+type ResponseRecord = [number, string, boolean];
+const endpointResponse: ResponseRecord = [200, "OK", true];
+// endpointResponse[0] = "BAD"; // Error: Type 'string' is not assignable to type 'number'
+
+// Optional Tuple elements and rest elements:
+type Coordinate3D = [x: number, y: number, z?: number];
+const point2D: Coordinate3D = [10, 20];
+const point3D: Coordinate3D = [10, 20, 30];
+
+// Objects with Optional & Readonly Properties
+type UserAccount = {
+  readonly id: string; // Cannot be reassigned after creation
+  email: string;
+  displayName?: string; // Optional (string | undefined)
+};
+
+const user1: UserAccount = {
+  id: "usr_9918",
+  email: "developer@example.com"
+};
+// user1.id = "usr_0000"; // Error: Cannot assign to 'id' because it is a read-only property
+
+// Function Signatures with Optional Parameters & Default Values
+type LogHandler = (message: string, level?: "INFO" | "WARN" | "ERROR") =&gt; void;
+
+const writeLog: LogHandler = (message, level = "INFO") =&gt; {
+  console.log(`[${level}] ${message}`);
+};
+
+// =========================================================================
+// 2. UNION, INTERSECTION & LITERAL TYPES
+// =========================================================================
+
+// Literal Types combined with Union (Discriminated Unions pattern)
+type NetworkState =
+  | { status: "loading" }
+  | { status: "success"; responseData: string; statusCode: 200 }
+  | { status: "error"; errorReason: string; statusCode: 400 | 500 };
+
+function renderUI(state: NetworkState): string {
+  switch (state.status) {
+    case "loading":
+      return "Loading spinner...";
+    case "success":
+      // TypeScript automatically narrows `state` to success branch
+      return `Payload: ${state.responseData} (Status: ${state.statusCode})`;
+    case "error":
+      // TypeScript automatically narrows `state` to error branch
+      return `Failed: ${state.errorReason} (Code: ${state.statusCode})`;
+  }
+}
+
+// Intersection Types: Merging contracts (A & B)
+type Identifiable = { id: number };
+type Timestamped = { createdAt: Date; updatedAt: Date };
+type SoftDeletable = { isDeleted: boolean; deletedAt?: Date };
+
+// Entity merges all 3 definitions together
+type DatabaseEntity = Identifiable &amp; Timestamped &amp; SoftDeletable;
+
+const userRecord: DatabaseEntity = {
+  id: 101,
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  isDeleted: false
+};
+
+// =========================================================================
+// 3. ENUMS (NUMERIC, STRING & CONST ENUMS)
+// =========================================================================
+
+// Numeric Enum (Auto-increments from 0: Read = 0, Write = 1, Admin = 2)
+enum PermissionLevel {
+  Read,
+  Write,
+  Admin
+}
+console.log(PermissionLevel.Read);    // Output: 0
+console.log(PermissionLevel[0]);       // Output: "Read" (Reverse lookup)
+
+// String Enum (No reverse mapping; clean values for serialization)
+enum HttpMethod {
+  GET = "GET",
+  POST = "POST",
+  PUT = "PUT",
+  DELETE = "DELETE"
+}
+
+// const enum (Inlined completely during compilation - zero runtime overhead)
+const enum AppEnvironment {
+  Development = "DEV",
+  Staging = "STAGE",
+  Production = "PROD"
+}
+const currentEnv = AppEnvironment.Production; // Inlines as: var currentEnv = "PROD";
+
+// =========================================================================
+// 4. any VS unknown (TYPE SAFETY ESCAPE VS TOP TYPE)
+// =========================================================================
+
+// 'any': Completely disables the type checker (Dangerous)
+let looseData: any = "Hello World";
+looseData = 42;
+looseData.nonExistentMethod(); // Compiles fine, but CRASHES at runtime!
+
+// 'unknown': Safe Top Type (Must narrow before usage)
+let secureInput: unknown = "Raw Payload from Remote API";
+
+// secureInput.toUpperCase(); // Error: Object is of type 'unknown'
+
+// Safe Type Narrowing:
+if (typeof secureInput === "string") {
+  console.log(secureInput.toUpperCase()); // Allowed! TS narrows `secureInput` to string
+}
+
+// =========================================================================
+// 5. never (EXHAUSTIVENESS CHECKING & UNREACHABLE CODE)
+// =========================================================================
+
+type SupportedTheme = "dark" | "light" | "high-contrast";
+
+function applyTheme(theme: SupportedTheme): void {
+  switch (theme) {
+    case "dark":
+      console.log("Applying dark mode");
+      break;
+    case "light":
+      console.log("Applying light mode");
+      break;
+    case "high-contrast":
+      console.log("Applying high-contrast mode");
+      break;
+    default: {
+      // If a developer adds a new theme to `SupportedTheme` (e.g. "sepia")
+      // and forgets to add a case branch, TypeScript will fail compilation here!
+      const exhaustiveCheck: never = theme;
+      throw new Error(`Unhandled theme variant: ${exhaustiveCheck}`);
+    }
+  }
+}
+
+// Functions returning 'never' (Never finish execution or always throw)
+function terminateProcess(errorMessage: string): never {
+  throw new Error(`Fatal execution fault: ${errorMessage}`);
+}
+
+function infiniteBackgroundLoop(): never {
+  while (true) {
+    // Process never yields back or returns
+  }
+}
+
+// =========================================================================
+// 6. void VS null VS undefined
+// =========================================================================
+
+// void: Function returns nothing of consequence
+function emitSystemBeep(): void {
+  console.log("\x07");
+  // return undefined; // Implicitly returns undefined
+}
+
+// null: Explicit variable assignment representing emptiness
+let activeTransaction: string | null = null;
+activeTransaction = "tx_88301";
+activeTransaction = null; // Cleanly reset
+
+// undefined: Variable declared but not assigned
+let uninitializedSessionToken: string | undefined;
+console.log(uninitializedSessionToken); // undefined</code></pre>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 22. INTERFACES VS TYPE ALIASES & DECLARATION MERGING                      -->
+  <!-- ========================================================================= -->
+  <section id="interfaces-and-types">
+    <h2>22. Interfaces and Type Aliases</h2>
+    <p>TypeScript provides two primary mechanisms for defining structural object shapes and type contracts: <strong><code>interface</code></strong> and <strong><code>type</code></strong> aliases. While they overlap significantly, they serve distinct architectural roles.</p>
+
+    <h3>A. Core Differences: Interface vs Type Alias</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Capability / Feature</th>
+          <th><code>interface</code></th>
+          <th><code>type</code> Alias</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Primary Purpose</strong></td>
+          <td>Defines open, extensible object/class contracts.</td>
+          <td>Creates aliases for any type (primitives, unions, tuples, functions, objects).</td>
+        </tr>
+        <tr>
+          <td><strong>Extension Syntax</strong></td>
+          <td><code>interface B extends A {}</code></td>
+          <td><code>type B = A &amp; { ... }</code> (Intersection)</td>
+        </tr>
+        <tr>
+          <td><strong>Declaration Merging</strong></td>
+          <td><strong>Supported natively</strong> (Multiple definitions with the same name merge automatically).</td>
+          <td><strong>Forbidden</strong> (Throws <code>Duplicate identifier</code> error).</td>
+        </tr>
+        <tr>
+          <td><strong>Primitives, Unions & Tuples</strong></td>
+          <td>Cannot define raw primitives or union definitions (e.g. <code>type ID = string | number</code>).</td>
+          <td><strong>Fully Supported</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Mapped / Conditional Types</strong></td>
+          <td>Cannot directly express mapped or conditional computations.</td>
+          <td><strong>Fully Supported</strong>.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>B. Declaration Merging Explained</h3>
+    <p>If you declare an <code>interface</code> with the same identifier multiple times across one or more files, TypeScript automatically merges the property definitions into a single unified interface. This is extensively used in library development to augment global types (such as adding custom properties to <code>window</code> or Express <code>Request</code>).</p>
+
+    <pre><code>// =========================================================================
+// 1. DECLARATION MERGING WITH INTERFACES (AUGMENTING CONTRACTS)
+// =========================================================================
+interface AppConfig {
+  apiUrl: string;
+}
+
+// Re-opening the interface elsewhere in the codebase:
+interface AppConfig {
+  timeoutMs: number;
+  enableLogging: boolean;
+}
+
+// The resulting type requires ALL declared properties:
+const config: AppConfig = {
+  apiUrl: "https://api.example.com",
+  timeoutMs: 5000,
+  enableLogging: true
+};
+
+// =========================================================================
+// 2. EXTENSION (interface extends) VS INTERSECTION (type &)
+// =========================================================================
+interface BaseEntity {
+  id: string;
+  createdAt: Date;
+}
+
+// Interface inheritance
+interface UserEntity extends BaseEntity {
+  name: string;
+  email: string;
+}
+
+// Type alias intersection equivalent
+type Timestamped = { updatedAt: Date };
+type AuditedUserEntity = UserEntity &amp; Timestamped &amp; { modifiedBy: string };
+
+const adminRecord: AuditedUserEntity = {
+  id: "usr_4829",
+  name: "Sarah Connor",
+  email: "s.connor@sky.net",
+  createdAt: new Date(),
+  updatedAt: new Date(),
+  modifiedBy: "System_Init"
+};
+
+// =========================================================================
+// 3. WHEN TO USE INTERFACE VS TYPE (RULE OF THUMB)
+// =========================================================================
+// Use INTERFACE for:
+// - Object shapes for classes (implements UserContract)
+// - Public API / Library interfaces where consumers might need declaration merging
+// - Standard Domain models
+
+// Use TYPE for:
+// - Union types: type Status = "idle" | "loading" | "success" | "error";
+// - Tuples: type LatLng = [number, number];
+// - Utility / Mapped / Conditional type pipelines</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 23. ADVANCED TYPESCRIPT: GENERICS, METATYPING & UTILITIES                -->
+  <!-- ========================================================================= -->
+  <section id="advanced-typescript">
+    <h2>23. Advanced TypeScript: Generics, Metatyping & Type-Level Programming</h2>
+    <p>TypeScript's type system is Turing-complete, allowing complex data transformations, inference, and constraints to be calculated entirely at compile time.</p>
+
+    <h3>A. Generics & Generic Constraints</h3>
+    <p>Generics introduce type variables (e.g. <code>&lt;T&gt;</code>), enabling code reuse across arbitrary data structures while preserving specific return and parameter types. Generic constraints (<code>T extends Constraint</code>) ensure the generic argument satisfies a required interface.</p>
+
+    <h3>B. Type Query & Introspection Operators: <code>typeof</code>, <code>keyof</code>, Indexed Access</h3>
+    <ul>
+      <li><strong><code>typeof</code>:</strong> Captures the TypeScript type of an existing runtime JavaScript variable or object.</li>
+      <li><strong><code>keyof</code>:</strong> Produces a union of all public string/number keys of a given type (<code>keyof User</code> $\rightarrow$ <code>"id" | "name" | "email"</code>).</li>
+      <li><strong>Indexed Access (<code>T[K]</code>):</strong> Looks up the exact type of a specific property within another type.</li>
+    </ul>
+
+    <h3>C. Conditional, Mapped & Template Literal Types</h3>
+    <ul>
+      <li><strong>Conditional Types (<code>T extends U ? X : Y</code>):</strong> Selects one of two types based on a type relationship test.</li>
+      <li><strong>Mapped Types (<code>[K in keyof T]</code>):</strong> Iterates over keys to transform each property's modifier or type.</li>
+      <li><strong>Template Literal Types:</strong> Combines string literal types using string interpolation syntax to create dynamic event/action names.</li>
+    </ul>
+
+    <h3>D. Built-In Utility Types Reference Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Utility Type</th>
+          <th>Transformation Effect</th>
+          <th>Underlying Type Mechanism</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>Partial&lt;T&gt;</code></td>
+          <td>Makes all properties in <code>T</code> optional (<code>?</code>).</td>
+          <td><code>{ [P in keyof T]?: T[P]; }</code></td>
+        </tr>
+        <tr>
+          <td><code>Required&lt;T&gt;</code></td>
+          <td>Makes all properties in <code>T</code> mandatory (removes <code>?</code>).</td>
+          <td><code>{ [P in keyof T]-?: T[P]; }</code></td>
+        </tr>
+        <tr>
+          <td><code>Readonly&lt;T&gt;</code></td>
+          <td>Makes all properties in <code>T</code> immutable (adds <code>readonly</code>).</td>
+          <td><code>{ readonly [P in keyof T]: T[P]; }</code></td>
+        </tr>
+        <tr>
+          <td><code>Pick&lt;T, K&gt;</code></td>
+          <td>Extracts a subset of properties specified by keys <code>K</code> from <code>T</code>.</td>
+          <td><code>{ [P in K]: T[P]; }</code></td>
+        </tr>
+        <tr>
+          <td><code>Omit&lt;T, K&gt;</code></td>
+          <td>Constructs a type containing all properties of <code>T</code> except keys in <code>K</code>.</td>
+          <td><code>Pick&lt;T, Exclude&lt;keyof T, K&gt;&gt;</code></td>
+        </tr>
+        <tr>
+          <td><code>Record&lt;K, T&gt;</code></td>
+          <td>Constructs an object type whose property keys are <code>K</code> and values are <code>T</code>.</td>
+          <td><code>{ [P in K]: T; }</code></td>
+        </tr>
+        <tr>
+          <td><code>Exclude&lt;T, U&gt;</code></td>
+          <td>Excludes from union <code>T</code> all members assignable to <code>U</code>.</td>
+          <td><code>T extends U ? never : T</code></td>
+        </tr>
+        <tr>
+          <td><code>Extract&lt;T, U&gt;</code></td>
+          <td>Extracts from union <code>T</code> all members assignable to <code>U</code>.</td>
+          <td><code>T extends U ? T : never</code></td>
+        </tr>
+        <tr>
+          <td><code>NonNullable&lt;T&gt;</code></td>
+          <td>Strips <code>null</code> and <code>undefined</code> from union <code>T</code>.</td>
+          <td><code>T extends null | undefined ? never : T</code></td>
+        </tr>
+        <tr>
+          <td><code>ReturnType&lt;T&gt;</code></td>
+          <td>Extracts the return type of a function type <code>T</code>.</td>
+          <td><code>T extends (...args: any[]) =&gt; infer R ? R : any</code></td>
+        </tr>
+        <tr>
+          <td><code>Parameters&lt;T&gt;</code></td>
+          <td>Extracts parameter types of function type <code>T</code> as a tuple.</td>
+          <td><code>T extends (...args: infer P) =&gt; any ? P : never</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>// =========================================================================
+// 1. GENERICS & CONSTRAINTS
+// =========================================================================
+interface HasId {
+  id: string | number;
+}
+
+// Generic function constrained to types having an 'id' property
+function findById&lt;T extends HasId&gt;(items: T[], targetId: string | number): T | undefined {
+  return items.find(item =&gt; item.id === targetId);
+}
+
+// Generic Repository Class
+class DataRepository&lt;T extends HasId&gt; {
+  private records: Map&lt;string | number, T&gt; = new Map();
+
+  save(entity: T): void {
+    this.records.set(entity.id, entity);
+  }
+
+  get(id: string | number): T | undefined {
+    return this.records.get(id);
+  }
+}
+
+// =========================================================================
+// 2. typeof, keyof, INDEXED ACCESS & TYPE-SAFE GETTER
+// =========================================================================
+const defaultEndpointConfig = {
+  host: "api.internal.net",
+  port: 8443,
+  protocol: "https" as const
+};
+
+// typeof captures runtime object shape
+type ServerConfig = typeof defaultEndpointConfig;
+
+// keyof produces: "host" | "port" | "protocol"
+type ServerConfigKeys = keyof ServerConfig;
+
+// Indexed Access Type: number
+type PortType = ServerConfig["port"];
+
+// Type-safe property accessor function
+function getProperty&lt;T, K extends keyof T&gt;(obj: T, key: K): T[K] {
+  return obj[key];
+}
+const currentHost = getProperty(defaultEndpointConfig, "host"); // Return type: string
+
+// =========================================================================
+// 3. CONDITIONAL & MAPPED TYPES
+// =========================================================================
+// Flatten array types conditionally:
+type Flatten&lt;T&gt; = T extends Array&lt;infer Item&gt; ? Item : T;
+type StringArray = Flatten&lt;string[]&gt;; // string
+type PureNumber = Flatten&lt;number&gt;;     // number
+
+// Mapped Type: Nullable modifier
+type Nullable&lt;T&gt; = {
+  [K in keyof T]: T[K] | null;
+};
+
+interface AccountProfile {
+  username: string;
+  avatarUrl: string;
+}
+type NullableProfile = Nullable&lt;AccountProfile&gt;;
+// Result: { username: string | null; avatarUrl: string | null; }
+
+// =========================================================================
+// 4. TEMPLATE LITERAL TYPES
+// =========================================================================
+type Domain = "user" | "order" | "inventory";
+type Action = "create" | "update" | "delete";
+
+// Dynamic Event Name Generation: "user:create" | "user:update" | ...
+type DomainEvent = `${Domain}:${Action}`;
+
+function dispatchEvent(event: DomainEvent): void {
+  console.log(`Dispatched: ${event}`);
+}
+dispatchEvent("order:update"); // Valid
+// dispatchEvent("order:publish"); // Compilation Error!
+
+// =========================================================================
+// 5. UTILITY TYPES IN PRACTICE
+// =========================================================================
+interface DatabaseUser {
+  id: number;
+  email: string;
+  passwordHash: string;
+  bio?: string;
+}
+
+// Pick & Omit
+type PublicUserProfile = Omit&lt;DatabaseUser, "passwordHash"&gt;;
+type UserCredentials = Pick&lt;DatabaseUser, "email" | "passwordHash"&gt;;
+
+// Partial & Required
+type UpdateUserDto = Partial&lt;DatabaseUser&gt;; // All fields optional for PATCH
+type CompleteUser = Required&lt;DatabaseUser&gt;; // All fields must exist
+
+// Record
+type RolePermissions = Record&lt;"ADMIN" | "EDITOR" | "VIEWER", string[]&gt;;
+const roles: RolePermissions = {
+  ADMIN: ["read", "write", "delete"],
+  EDITOR: ["read", "write"],
+  VIEWER: ["read"]
+};
+
+// ReturnType & Parameters
+function calculateTax(amount: number, stateCode: string): { tax: number; total: number } {
+  const tax = stateCode === "CA" ? amount * 0.09 : amount * 0.05;
+  return { tax, total: amount + tax };
+}
+
+type TaxOutput = ReturnType&lt;typeof calculateTax&gt;; // { tax: number; total: number }
+type TaxParams = Parameters&lt;typeof calculateTax&gt;; // [amount: number, stateCode: string]</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 24. TYPE NARROWING, GUARDS & DISCRIMINATED UNIONS                         -->
+  <!-- ========================================================================= -->
+  <section id="type-narrowing-guards">
+    <h2>24. Type Narrowing, Custom Type Guards & Discriminated Unions</h2>
+    <p>TypeScript uses control-flow analysis to track variable types across code execution paths. Developers refine broad unions into specific concrete types using narrowing patterns, custom predicates, and tagged structures.</p>
+
+    <h3>A. Built-In Narrowing Mechanisms</h3>
+    <ul>
+      <li><strong><code>typeof</code> checks:</strong> Narrow primitive branches (<code>"string"</code>, <code>"number"</code>, <code>"boolean"</code>, <code>"symbol"</code>, <code>"bigint"</code>, <code>"function"</code>).</li>
+      <li><strong><code>instanceof</code> checks:</strong> Evaluates prototype chains for classes and constructor instances.</li>
+      <li><strong><code>in</code> operator checks:</strong> Verifies if an object possesses a specific property key.</li>
+    </ul>
+
+    <h3>B. Custom Type Guards (User-Defined Type Predicates)</h3>
+    <p>When type evaluation requires custom helper functions, use the <code>parameterName is Type</code> return signature. If the function returns <code>true</code>, TypeScript narrows the variable within the conditional branch.</p>
+
+    <h3>C. Discriminated Unions (Tagged Unions)</h3>
+    <p>A structural pattern where every member of a union shares a common literal property (the <em>discriminant</em> / tag, such as <code>kind</code> or <code>status</code>). The compiler uses this tag to exhaustively differentiate union types inside <code>switch</code> or <code>if</code> blocks.</p>
+
+    <pre><code>// =========================================================================
+// 1. CUSTOM TYPE GUARDS (TYPE PREDICATES)
+// =========================================================================
+interface AdminAccount {
+  id: string;
+  adminRoles: string[];
+}
+
+interface StandardUser {
+  id: string;
+  loyaltyPoints: number;
+}
+
+type AppAccount = AdminAccount | StandardUser;
+
+// Custom Type Predicate: `account is AdminAccount`
+function isAdmin(account: AppAccount): account is AdminAccount {
+  return (account as AdminAccount).adminRoles !== undefined;
+}
+
+function processAccount(account: AppAccount) {
+  if (isAdmin(account)) {
+    // TypeScript knows `account` is AdminAccount here:
+    console.log("Admin Roles:", account.adminRoles.join(", "));
+  } else {
+    // TypeScript knows `account` is StandardUser here:
+    console.log("Loyalty Points:", account.loyaltyPoints);
+  }
+}
+
+// =========================================================================
+// 2. DISCRIMINATED UNIONS & EXHAUSTIVENESS
+// =========================================================================
+interface PaymentPending {
+  status: "PENDING";
+  initiatedAt: Date;
+}
+
+interface PaymentSucceeded {
+  status: "SUCCESS";
+  transactionId: string;
+  amount: number;
+}
+
+interface PaymentFailed {
+  status: "FAILED";
+  errorCode: number;
+  errorMessage: string;
+}
+
+type PaymentResult = PaymentPending | PaymentSucceeded | PaymentFailed;
+
+function handlePaymentResponse(result: PaymentResult): string {
+  switch (result.status) {
+    case "PENDING":
+      return `Transaction initiated at ${result.initiatedAt.toISOString()}`;
+    case "SUCCESS":
+      return `Paid $${result.amount}. Transaction Ref: ${result.transactionId}`;
+    case "FAILED":
+      return `Failed with code ${result.errorCode}: ${result.errorMessage}`;
+    default: {
+      // Exhaustiveness guarantee:
+      const _exhaustiveCheck: never = result;
+      throw new Error(`Unhandled payment variant: ${_exhaustiveCheck}`);
+    }
+  }
+}
+
+// =========================================================================
+// 3. TYPE ASSERTIONS (as / as unknown as)
+// =========================================================================
+// Type assertions bypass the compiler's inference when the developer has superior context.
+// They DO NOT perform runtime casting or data conversions.
+const rawDomElement = document.getElementById("search-input");
+
+// Type assertion: Treats HTMLElement as HTMLInputElement
+const inputField = rawDomElement as HTMLInputElement;
+console.log(inputField.value); // Validated by TS (Assumes DOM element is an <input>)
+
+// Double assertion (Dangerous escape hatch - use with extreme caution):
+const mismatchedData = ("12345" as unknown) as number; // Forces conversion in type system only!
+console.log(typeof mismatchedData); // "string" (Still a string at runtime!)</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 25. TYPESCRIPT RUNTIME REALITY: TYPE ERASURE & API VALIDATION             -->
+  <!-- ========================================================================= -->
+  <section id="typescript-runtime-reality">
+    <h2>25. TypeScript Runtime Reality: Type Erasure & API Boundaries</h2>
+    <p>The single most common source of architectural bugs in TypeScript applications is the misunderstanding of <strong>Compile-Time Types vs. Runtime JavaScript Execution</strong>.</p>
+
+    <h3>A. The Type Erasure Principle</h3>
+    <ul>
+      <li><strong>Types Do Not Exist in JavaScript:</strong> During compilation, the TypeScript compiler (<code>tsc</code>, Babel, or esbuild) strips away <strong>100%</strong> of type annotations, interfaces, type aliases, generic parameters, and access modifiers.</li>
+      <li><strong>Why Interfaces and Generics Disappear:</strong> JavaScript has no native memory structures for interfaces or generic type parameters. An <code>interface User</code> produces exactly <strong>0 lines of JavaScript code</strong> in the output <code>.js</code> bundle.</li>
+      <li><strong>Types Cannot Validate External Data:</strong> Writing <code>const user: User = await response.json();</code> is purely a design-time promise. TypeScript does not inspect the JSON arriving across the network. If the backend returns an empty object or error payload, TypeScript will not warn you at runtime.</li>
+    </ul>
+
+    <!-- Text-based Compilation & Runtime Illusion Pipeline -->
+    <pre><code>+-----------------------------------------------------------------------------------------+
+|                                    BUILD / COMPILE TIME                                 |
+|                                                                                         |
+|   interface User { id: number; name: string; }                                          |
+|   function greet&lt;T&gt;(item: T): void { console.log(item); }                               |
+|   const age: number = 25;                                                               |
+|                                                                                         |
+|   [ TypeScript Type Checker (tsc) ] ===> Validates code, flags syntax/type bugs        |
+|                                                                                         |
+|   [ Type Erasure Pipeline ]         ===> Completely strips all interfaces & types       |
++-----------------------------------------------------------------------------------------+
+                                             │
+                                             ▼
++-----------------------------------------------------------------------------------------+
+|                                      RUNTIME REALITY                                    |
+|                                                                                         |
+|   // COMPILED OUTPUT (.js file):                                                        |
+|   function greet(item) { console.log(item); }                                           |
+|   var age = 25;                                                                         |
+|                                                                                         |
+|   // Interface User is GONE. Generic <T> is GONE.                                       |
+|   // No types are checking the network payload inside the browser!                      |
++-----------------------------------------------------------------------------------------+</code></pre>
+
+    <h3>B. Safe Network Hydration: Runtime Schema Validation</h3>
+    <p>To safely bridge the gap between untrusted runtime JSON data (from APIs, local storage, or user inputs) and compile-time TypeScript types, modern applications employ <strong>Schema Validation Libraries</strong> (like Zod, Valibot, or ArkType). These validate the runtime JavaScript object and infer the TypeScript type from that schema.</p>
+
+    <pre><code>// =========================================================================
+// 1. THE ILLUSION: UNCHECKED TYPE CASTING (DANGEROUS)
+// =========================================================================
+interface RemoteUserProfile {
+  id: number;
+  username: string;
+  roles: string[];
+}
+
+async function unsafeFetchUser(userId: number): Promise&lt;RemoteUserProfile&gt; {
+  const response = await fetch(`https://api.example.com/users/${userId}`);
+  // TYPE CASTING LIE: TypeScript blindly trusts this assertion!
+  // If the backend returned `{ error: "Not Found" }`, this will crash downstream.
+  const data = (await response.json()) as RemoteUserProfile;
+
+  // Runtime TypeError: Cannot read properties of undefined (reading 'join')
+  console.log(data.roles.join(", "));
+  return data;
+}
+
+// =========================================================================
+// 2. THE REALITY: RUNTIME DATA VALIDATION (ZOD SCHEMA PATTERN)
+// =========================================================================
+// Note: Conceptual equivalent of modern runtime parsers (like Zod)
+class SchemaValidator {
+  static validateUserPayload(data: unknown): RemoteUserProfile {
+    if (typeof data !== "object" || data === null) {
+      throw new Error("Invalid payload: Body must be an object");
+    }
+
+    const candidate = data as Record&lt;string, unknown&gt;;
+
+    if (typeof candidate.id !== "number") {
+      throw new Error("Validation Error: Missing or invalid 'id' property (must be number)");
+    }
+    if (typeof candidate.username !== "string") {
+      throw new Error("Validation Error: Missing or invalid 'username' property (must be string)");
+    }
+    if (!Array.isArray(candidate.roles) || !candidate.roles.every(r =&gt; typeof r === "string")) {
+      throw new Error("Validation Error: Missing or invalid 'roles' array (must be string[])");
+    }
+
+    // Return safely confirmed object
+    return {
+      id: candidate.id,
+      username: candidate.username,
+      roles: candidate.roles
+    };
+  }
+}
+
+// Safe hydration at runtime boundary
+async function safeFetchUser(userId: number): Promise&lt;RemoteUserProfile&gt; {
+  const response = await fetch(`https://api.example.com/users/${userId}`);
+  const rawData: unknown = await response.json();
+
+  // Validate at runtime before handing to application logic
+  const verifiedUser = SchemaValidator.validateUserPayload(rawData);
+  console.log("Safely verified user from network:", verifiedUser.username);
+  return verifiedUser;
+}</code></pre>
+  </section>
+
+
+     <!-- ========================================================================= -->
+  <!-- 26. OBSERVABLE FUNDAMENTALS & ARCHITECTURE                                -->
+  <!-- ========================================================================= -->
+  <section id="observable-fundamentals">
+    <h2>26. Observable Fundamentals: Push vs. Pull, Observer Contracts & Lifecycle</h2>
+    <p>An <strong>Observable</strong> represents a lazy, invokable collection of future values or events. It provides a formal architectural foundation for <strong>asynchronous push-based stream processing</strong> in modern JavaScript and TypeScript.</p>
+
+    <h3>A. The Core Entities Breakdown</h3>
+    <ul>
+      <li><strong>Producer:</strong> The underlying data or event source (DOM click events, WebSocket connection, HTTP timer, array, or hardware sensor) generating values over time.</li>
+      <li><strong>Observable:</strong> The lazy blueprint or conduit that defines <em>how</em> to connect an Observer to a Producer. It does not produce values on its own until invoked.</li>
+      <li><strong>Observer:</strong> A consumer interface object declaring up to three notification callbacks: <code>next(value)</code>, <code>error(err)</code>, and <code>complete()</code>.</li>
+      <li><strong>Subscriber:</strong> The internal engine wrapper that implements the Observer interface, enforces completion/error finality, and tracks the cleanup teardown logic.</li>
+      <li><strong>Subscription:</strong> An execution handle returned by <code>.subscribe()</code> representing the running stream. Its primary method is <code>.unsubscribe()</code>, which stops execution and releases memory.</li>
+    </ul>
+
+    <h3>B. Communication Models: Pull vs. Push</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>System Model</th>
+          <th>Producer Role</th>
+          <th>Consumer Role</th>
+          <th>Single Value Primitive</th>
+          <th>Multiple Values Primitive</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PULL</strong></td>
+          <td><strong>Passive:</strong> Produces data strictly when requested by the consumer.</td>
+          <td><strong>Active:</strong> Decides <em>when</em> data is pulled. Synchronously blocks or iterates.</td>
+          <td>Standard Function (<code>return value</code>)</td>
+          <td>Iterators &amp; Generators (<code>iterator.next()</code>)</td>
+        </tr>
+        <tr>
+          <td><strong>PUSH</strong></td>
+          <td><strong>Active:</strong> Determines <em>when</em> data is sent to the consumer at its own pace.</td>
+          <td><strong>Passive:</strong> Registers a reaction callback and waits for data delivery.</td>
+          <td><code>Promise</code> (one-time push)</td>
+          <td><strong><code>Observable</code></strong> (continuous stream push)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>C. Observable Notification Protocol (`next`, `error`, `complete`)</h3>
+    <ul>
+      <li><strong><code>next(value)</code>:</strong> Delivers the next data item in the stream (called 0 to $\infty$ times).</li>
+      <li><strong><code>error(err)</code>:</strong> Notifies an unhandled exception or network fault. Terminates the stream permanently (no subsequent values can be emitted).</li>
+      <li><strong><code>complete()</code>:</strong> Notifies that the producer has finished successfully. Terminates the stream permanently.</li>
+    </ul>
+
+    <div class="note">
+      <strong>Lazy Execution Rule:</strong> Calling <code>new Observable(setupFn)</code> performs zero work and triggers no side effects. The <code>setupFn</code> executes only when a consumer calls <code>.subscribe()</code>. If 5 consumers subscribe to a cold observable independently, <code>setupFn</code> executes 5 distinct times.
+    </div>
+
+    <pre><code>import { Observable, Observer, Subscription } from 'rxjs';
+
+// =========================================================================
+// 1. BUILDING AN OBSERVABLE FROM SCRATCH (THE UNDERLYING MECHANISM)
+// =========================================================================
+const customDataSource$ = new Observable&lt;string&gt;((subscriber) => {
+  console.log("[Observable Execution Started] Producer active.");
+  
+  let count = 0;
+  // Producer: An asynchronous hardware/interval tick
+  const intervalId = setInterval(() => {
+    count++;
+    subscriber.next(`Payload Chunk #${count}`);
+
+    if (count === 3) {
+      subscriber.complete(); // Closes the stream permanently
+      clearInterval(intervalId);
+    }
+  }, 300);
+
+  // Teardown Logic: Executed when unsubscribed or stream completes/errors
+  return () => {
+    console.log("[Teardown] Clearing background interval timer.");
+    clearInterval(intervalId);
+  };
+});
+
+// =========================================================================
+// 2. THE OBSERVER INTERFACE (THE CONSUMER)
+// =========================================================================
+const customObserver: Observer&lt;string&gt; = {
+  next: (data) => console.log("Observer Received:", data),
+  error: (err) => console.error("Observer Error Caught:", err),
+  complete: () => console.log("Observer Received Complete Signal!")
+};
+
+// =========================================================================
+// 3. SUBSCRIBING & MANAGING THE SUBSCRIPTION
+// =========================================================================
+console.log("Before subscription...");
+
+// Subscribing invokes the setup logic inside the Observable constructor
+const activeSubscription: Subscription = customDataSource$.subscribe(customObserver);
+
+// Early teardown test: Unsubscribing manually halts the producer
+setTimeout(() => {
+  console.log("Manual unsubscribe triggered from UI unmount.");
+  activeSubscription.unsubscribe();
+}, 2000);</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 27. CREATING OBSERVABLES: OF, FROM, INTERVAL, TIMER, DEFER                -->
+  <!-- ========================================================================= -->
+  <section id="creating-observables">
+    <h2>27. Observable Creation Factories: Synchronous, Asynchronous & Lazy</h2>
+    <p>RxJS provides specialized static factory methods to instantiate Observables from scalars, iterables, Promises, scheduled timers, or dynamic factory computations without manual observer plumbing.</p>
+
+    <h3>Creation Methods Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Factory</th>
+          <th>Accepted Input</th>
+          <th>Emission Timing</th>
+          <th>Completion Behavior</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>of(...values)</code></strong></td>
+          <td>Individual arguments list (e.g. <code>of(1, 2, 3)</code>)</td>
+          <td>Synchronous</td>
+          <td>Emits all arguments sequentially, then completes immediately.</td>
+        </tr>
+        <tr>
+          <td><strong><code>from(input)</code></strong></td>
+          <td><code>Array</code>, <code>Promise</code>, <code>Iterable</code>, or <code>ObservableInput</code></td>
+          <td>Sync (Arrays/Iterables) or Async (Promises)</td>
+          <td>Unpacks container elements into individual emissions, then completes.</td>
+        </tr>
+        <tr>
+          <td><strong><code>interval(period)</code></strong></td>
+          <td>Period in milliseconds</td>
+          <td>Asynchronous (Macrotask)</td>
+          <td>Emits an incrementing counter (0, 1, 2...) indefinitely (never completes on its own).</td>
+        </tr>
+        <tr>
+          <td><strong><code>timer(dueTime, period?)</code></strong></td>
+          <td>Initial delay + optional recurring interval</td>
+          <td>Asynchronous (Macrotask)</td>
+          <td>Emits <code>0</code> after <code>dueTime</code>; optionally continues emitting if <code>period</code> is passed.</td>
+        </tr>
+        <tr>
+          <td><strong><code>defer(factoryFn)</code></strong></td>
+          <td>Function returning an Observable or Promise</td>
+          <td>Evaluated strictly at subscription time</td>
+          <td>Creates a fresh Observable per subscriber, allowing dynamic context evaluation.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>import { of, from, interval, timer, defer, Observable } from 'rxjs';
+
+// 1. of() -> Emits arguments synchronously as distinct items
+const scalarStream$ = of("Alpha", "Beta", "Gamma");
+scalarStream$.subscribe(val => console.log("of() emission:", val));
+// Output: Alpha, Beta, Gamma
+
+// 2. from() -> Unpacks arrays or resolves Promises into a stream
+const arrayStream$ = from([10, 20, 30]);
+arrayStream$.subscribe(val => console.log("from(Array) emission:", val));
+
+const promiseStream$ = from(fetch("https://jsonplaceholder.typicode.com/todos/1"));
+promiseStream$.subscribe(res => console.log("from(Promise) HTTP Status:", res.status));
+
+// 3. interval() vs timer()
+const ticker$ = interval(1000); // 0, 1, 2, 3... every 1s
+const oneShotTimer$ = timer(2500); // Emits 0 after exactly 2.5s and completes
+const periodicTimer$ = timer(0, 500); // Emits 0 immediately, then 1, 2, 3 every 500ms
+
+// 4. defer() -> Dynamic / Fresh Evaluation per Subscriber
+let requestTimestamp = Date.now();
+
+// Without defer: of() calculates the value once at creation time!
+const staleObservable$ = of(new Date().toISOString());
+
+// With defer: factoryFn runs freshly EVERY time .subscribe() is invoked
+const freshObservable$ = defer(() => of(new Date().toISOString()));
+
+console.log("Immediate subscribe:", freshObservable$.subscribe(console.log));
+setTimeout(() => {
+  // Subscribers get accurate, real-time timestamps evaluated on-demand:
+  freshObservable$.subscribe(val => console.log("Delayed subscribe with defer():", val));
+}, 1500);</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 28. SUBJECTS & HOT VS COLD OBSERVABLES                                    -->
+  <!-- ========================================================================= -->
+  <section id="subjects-hot-cold">
+    <h2>28. Subjects Architecture: Multicasting and Hot vs. Cold Observables</h2>
+    <p>A <strong>Subject</strong> is both an <strong>Observable</strong> and an <strong>Observer</strong> simultaneously. It maintains an internal registry of multiple subscribers and multicasts emissions to all listening observers from a shared producer.</p>
+
+    <h3>A. Cold vs. Hot Observables</h3>
+    <ul>
+      <li><strong>Cold Observables (Unicast):</strong> The producer is created <em>inside</em> the Observable execution scope. Each subscriber receives its own independent execution pipeline and its own dedicated data stream (e.g. <code>of()</code>, HTTP <code>get()</code>, <code>interval()</code>).</li>
+      <li><strong>Hot Observables (Multicast):</strong> The producer exists <em>outside</em> the Observable execution scope (e.g. DOM click events, WebSockets, or Subjects). All subscribers share the same execution thread and receive current emissions simultaneously, regardless of when they subscribed.</li>
+    </ul>
+
+    <h3>B. The 4 Subject Variants Reference Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Subject Variant</th>
+          <th>Initial Value?</th>
+          <th>Replay History on Late Subscription?</th>
+          <th>When Does It Emit?</th>
+          <th>Primary Real-World Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>Subject</code></strong></td>
+          <td>No</td>
+          <td><strong>No.</strong> Late subscribers only receive events emitted <em>after</em> subscription.</td>
+          <td>Immediately when <code>.next()</code> is called.</td>
+          <td>Event buses, UI action triggers, unsubscription signals (<code>takeUntil</code>).</td>
+        </tr>
+        <tr>
+          <td><strong><code>BehaviorSubject</code></strong></td>
+          <td><strong>Yes (Required)</strong></td>
+          <td><strong>Last 1 value</strong> emitted (or initial default) immediately upon subscription.</td>
+          <td>On subscribe + whenever value updates. Provides synchronous <code>.getValue()</code>.</td>
+          <td>Application State Stores (CurrentUser, Theme, ShoppingCart totals).</td>
+        </tr>
+        <tr>
+          <td><strong><code>ReplaySubject</code></strong></td>
+          <td>No (Configurable buffer)</td>
+          <td><strong>Last $N$ values</strong> or values within a specific time window.</td>
+          <td>Replays buffer on subscribe + subsequent live emissions.</td>
+          <td>Caching recent historical event streams, navigation trails, chat logs.</td>
+        </tr>
+        <tr>
+          <td><strong><code>AsyncSubject</code></strong></td>
+          <td>No</td>
+          <td>Emits <strong>only the final value</strong>, and only after <code>.complete()</code> is called.</td>
+          <td><strong>Upon completion only.</strong></td>
+          <td>Long-running calculations or operations mimicking single-result Promises.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>import { Subject, BehaviorSubject, ReplaySubject, AsyncSubject } from 'rxjs';
+
+// =========================================================================
+// 1. STANDARD Subject (No Memory for Late Subscribers)
+// =========================================================================
+const eventBus$ = new Subject&lt;string&gt;();
+
+eventBus$.subscribe(val => console.log("Subscriber 1:", val));
+eventBus$.next("Event Alpha"); // Subscriber 1 receives "Event Alpha"
+
+// Late Subscriber arrives:
+eventBus$.subscribe(val => console.log("Subscriber 2 (Late):", val));
+eventBus$.next("Event Beta");  // Both Subscriber 1 & 2 receive "Event Beta"
+// Note: Subscriber 2 NEVER saw "Event Alpha"!
+
+// =========================================================================
+// 2. BehaviorSubject (State Storage with Current Value Guarantee)
+// =========================================================================
+const authState$ = new BehaviorSubject&lt;{ isAuthenticated: boolean; user: string | null }&gt;({
+  isAuthenticated: false,
+  user: null
+});
+
+// Immediate sync inspection:
+console.log("Current Sync State:", authState$.getValue());
+
+// Subscriber immediately receives the current state:
+authState$.subscribe(state => console.log("Auth Watcher:", state.user ?? "Guest"));
+
+// Push new state:
+authState$.next({ isAuthenticated: true, user: "admin_sarah" });
+
+// =========================================================================
+// 3. ReplaySubject (Buffer History Tracking)
+// =========================================================================
+// Buffer size = 2 (replays last 2 values to new subscribers)
+const telemetryLog$ = new ReplaySubject&lt;number&gt;(2);
+
+telemetryLog$.next(100);
+telemetryLog$.next(200);
+telemetryLog$.next(300);
+
+// Late subscriber connects after 3 emissions:
+telemetryLog$.subscribe(val => console.log("Replay Subscriber:", val));
+// Output: 200, 300 (Last 2 buffered values delivered immediately!)
+
+// =========================================================================
+// 4. AsyncSubject (Final Value Upon Completion Only)
+// =========================================================================
+const heavyComputeResult$ = new AsyncSubject&lt;number&gt;();
+
+heavyComputeResult$.subscribe(val => console.log("AsyncSubject Consumer:", val));
+
+heavyComputeResult$.next(10);
+heavyComputeResult$.next(20);
+heavyComputeResult$.next(30);
+// Nothing logged yet!
+
+heavyComputeResult$.complete(); // Completes execution
+// Output: "AsyncSubject Consumer: 30" (Only the last value before completion is sent)</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 29. RXJS OPERATORS MASTER REFERENCE                                      -->
+  <!-- ========================================================================= -->
+  <section id="rxjs-operators">
+    <h2>29. Operators Architecture: Transformation, Filtering, Combination & Flattening</h2>
+    <p>Operators are pure functions that take an Observable as input and return a new transformed Observable as output. They are composed inside the <code>.pipe()</code> method to build non-blocking data processing pipelines.</p>
+
+    <h3>A. Transformation & Side-Effect Operators</h3>
+    <ul>
+      <li><strong><code>map(projectFn)</code>:</strong> Applies a projection to each value from the source stream.</li>
+      <li><strong><code>scan(accumulator, seed)</code>:</strong> The stream equivalent of <code>Array.reduce</code>. Emits intermediate accumulated states sequentially for every incoming value.</li>
+      <li><strong><code>reduce(accumulator, seed)</code>:</strong> Collects all source emissions and emits <strong>only a single value</strong> when the source stream completes.</li>
+      <li><strong><code>tap(observer)</code>:</strong> Executes isolated side-effects (e.g., logging, metric counters, debugging breakpoints) without mutating the stream values.</li>
+      <li><strong><code>startWith(...values)</code>:</strong> Prepends default or initial values to the start of the output stream before source emissions begin.</li>
+      <li><strong><code>delay(dueTime)</code>:</strong> Shifts every emission forward in time by a specified millisecond duration.</li>
+    </ul>
+
+    <h3>B. Filtering & Rate-Limiting Operators</h3>
+    <ul>
+      <li><strong><code>filter(predicateFn)</code>:</strong> Drops items that evaluate to <code>false</code>.</li>
+      <li><strong><code>take(count)</code>:</strong> Emits the first $N$ values, then automatically completes and tears down the stream.</li>
+      <li><strong><code>takeUntil(notifier$)</code>:</strong> Emits source values until a companion notifier Observable emits a value, triggering instant unsubscription (canonical component unmount pattern).</li>
+      <li><strong><code>first(predicate?)</code> / <code>last(predicate?)</code>:</strong> Emits strictly the first or last value satisfying a condition, then completes.</li>
+      <li><strong><code>skip(count)</code>:</strong> Ignores the first $N$ source emissions before passing subsequent values.</li>
+      <li><strong><code>distinct()</code>:</strong> Suppresses duplicate items across the entire history of the stream using an internal <code>Set</code>.</li>
+      <li><strong><code>distinctUntilChanged()</code>:</strong> Suppresses emissions if they match the <strong>immediately preceding item</strong>.</li>
+      <li><strong><code>debounceTime(dueTime)</code>:</strong> Emits a value only if a specified quiescent duration passes with <strong>no new incoming events</strong> (ideal for search-box inputs).</li>
+      <li><strong><code>throttleTime(duration)</code>:</strong> Emits a value immediately, then ignores subsequent emissions for the specified cooldown window (ideal for button click spamming or scroll events).</li>
+    </ul>
+
+    <h3>C. Combination Operators</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Operator</th>
+          <th>When Does It Emit?</th>
+          <th>What Does It Emit?</th>
+          <th>Completion Condition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>combineLatest([A$, B$])</code></strong></td>
+          <td>Whenever <strong>any</strong> source stream emits (once every source has emitted at least once).</td>
+          <td>Array of the <strong>latest value from each stream</strong>: <code>[latestA, latestB]</code></td>
+          <td>When all constituent input streams complete.</td>
+        </tr>
+        <tr>
+          <td><strong><code>forkJoin([A$, B$])</code></strong></td>
+          <td><strong>Only once</strong>, when <strong>all</strong> input streams have completed (Promise.all equivalent).</td>
+          <td>Array of the <strong>final value from each stream</strong>: <code>[finalA, finalB]</code></td>
+          <td>When all streams complete. (If one stream never completes, <code>forkJoin</code> never emits).</td>
+        </tr>
+        <tr>
+          <td><strong><code>zip([A$, B$])</code></strong></td>
+          <td>When all streams have emitted an item at the <strong>matching index position</strong> ($N$-th item with $N$-th item).</td>
+          <td>Array of values paired by index: <code>[A_n, B_n]</code></td>
+          <td>When any one source stream completes and all paired values are exhausted.</td>
+        </tr>
+        <tr>
+          <td><strong><code>A$.pipe(withLatestFrom(B$))</code></strong></td>
+          <td><strong>Strictly when the primary source <code>A$</code> emits</strong> (provided secondary <code>B$</code> has emitted at least once).</td>
+          <td>Tuple containing current <code>A</code> value and latest <code>B</code> value: <code>[valA, latestB]</code></td>
+          <td>When primary source <code>A$</code> completes.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>D. Higher-Order Flattening Operators (`switchMap`, `mergeMap`, `concatMap`, `exhaustMap`)</h3>
+    <p>A <strong>Higher-Order Observable</strong> is an Observable that emits an inner Observable (an Observable of Observables: <code>Observable&lt;Observable&lt;T&gt;&gt;</code>). Flattening operators unpack these inner streams into a single output stream with distinct concurrency strategies.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Operator</th>
+          <th>Inner Subscription Strategy</th>
+          <th>Concurrency Handling</th>
+          <th>Real-World Application</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>switchMap</code></strong></td>
+          <td><strong>Cancels Previous:</strong> Unsubscribes from the active inner Observable when a new outer value arrives.</td>
+          <td>Concurrency = 1 (Latest only)</td>
+          <td>Search autocompletes, route changes, live cancellation on user interaction.</td>
+        </tr>
+        <tr>
+          <td><strong><code>mergeMap</code></strong></td>
+          <td><strong>Concurrent:</strong> Subscribes to every inner Observable simultaneously without canceling or waiting.</td>
+          <td>Concurrency = $\infty$ (Unbounded parallel)</td>
+          <td>Bulk image uploads, independent background telemetry pings, multi-chat sockets.</td>
+        </tr>
+        <tr>
+          <td><strong><code>concatMap</code></strong></td>
+          <td><strong>Sequential Queue:</strong> Waits for the current inner Observable to <code>complete</code> before starting the next one.</td>
+          <td>Concurrency = 1 (Ordered Queue)</td>
+          <td>Financial transactions, database writes where insertion order must be strictly preserved.</td>
+        </tr>
+        <tr>
+          <td><strong><code>exhaustMap</code></strong></td>
+          <td><strong>Ignore New:</strong> Drops and ignores all incoming outer emissions while an inner Observable is currently active.</td>
+          <td>Concurrency = 1 (First/Current only)</td>
+          <td>Preventing double form submissions, login button spamming, payment checkout clicks.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>import { of, fromEvent, Subject, interval, forkJoin, combineLatest, zip } from 'rxjs';
+import { 
+  map, filter, scan, tap, take, takeUntil, distinctUntilChanged, 
+  debounceTime, throttleTime, delay, startWith, switchMap, 
+  mergeMap, concatMap, exhaustMap, withLatestFrom 
+} from 'rxjs/operators';
+
+// =========================================================================
+// 1. TRANSFORMATION & FILTERING PIPELINE
+// =========================================================================
+const numbers$ = of(1, 2, 2, 3, 4, 4, 5);
+
+numbers$.pipe(
+  distinctUntilChanged(),            // 1, 2, 3, 4, 5 (Removes sequential duplicates)
+  filter(n => n % 2 !== 0),         // 1, 3, 5 (Keep odd numbers)
+  map(n => n * 10),                 // 10, 30, 50
+  scan((acc, val) => acc + val, 0), // 10, 40, 90 (Accumulated running sum)
+  startWith(0)                      // Prepend 0 -> 0, 10, 40, 90
+).subscribe(val => console.log("Pipelined Value:", val));
+
+// =========================================================================
+// 2. RATE LIMITING: debounceTime VS throttleTime
+// =========================================================================
+const simulatedKeypress$ = new Subject&lt;string&gt;();
+
+simulatedKeypress$.pipe(
+  debounceTime(300), // Waits 300ms after last stroke
+  distinctUntilChanged()
+).subscribe(query => console.log("Debounced API Search Query:", query));
+
+// =========================================================================
+// 3. MEMORY SAFETY PATTERN: takeUntil
+// =========================================================================
+const destroyNotifier$ = new Subject&lt;void&gt;();
+
+interval(500).pipe(
+  takeUntil(destroyNotifier$) // Automatically unsubscribes when destroyNotifier$ emits
+).subscribe({
+  next: (tick) => console.log("Stream Tick:", tick),
+  complete: () => console.log("Stream successfully torn down without memory leaks!")
+});
+
+// Simulate component destruction after 1.6 seconds:
+setTimeout(() => {
+  destroyNotifier$.next();
+  destroyNotifier$.complete();
+}, 1600);
+
+// =========================================================================
+// 4. COMBINATION OPERATORS IN ACTION
+// =========================================================================
+const streamA$ = of("A1", "A2");
+const streamB$ = of("B1", "B2", "B3");
+
+// forkJoin (Parallel completion bundle)
+forkJoin({
+  users: of([{ id: 1 }, { id: 2 }]).pipe(delay(100)),
+  settings: of({ theme: "dark" }).pipe(delay(200))
+}).subscribe(bundle => console.log("forkJoin Output:", bundle));
+
+// zip (Pairs by index: [A1, B1], [A2, B2])
+zip(streamA$, streamB$).subscribe(pair => console.log("zip Pair:", pair));
+
+// =========================================================================
+// 5. HIGHER-ORDER FLATTENING OPERATORS COMPARISON
+// =========================================================================
+const fakeHttpCall = (id: string, delayMs: number) => 
+  of(`Response for ${id}`).pipe(delay(delayMs));
+
+const clickStream$ = new Subject&lt;string&gt;();
+
+// A. switchMap: Auto-cancels in-flight requests if a new click arrives
+clickStream$.pipe(
+  switchMap(id => fakeHttpCall(id, 400))
+).subscribe(res => console.log("switchMap Result:", res));
+
+// B. mergeMap: Executes all requests in parallel
+clickStream$.pipe(
+  mergeMap(id => fakeHttpCall(id, 400))
+).subscribe(res => console.log("mergeMap Parallel Result:", res));
+
+// C. concatMap: Runs requests sequentially in order
+clickStream$.pipe(
+  concatMap(id => fakeHttpCall(id, 400))
+).subscribe(res => console.log("concatMap Ordered Result:", res));
+
+// D. exhaustMap: Ignores new clicks while one request is still pending
+clickStream$.pipe(
+  exhaustMap(id => fakeHttpCall(id, 400))
+).subscribe(res => console.log("exhaustMap Ignored-Spam Result:", res));</code></pre>
+  </section>
+     
 </body>
 </html>
