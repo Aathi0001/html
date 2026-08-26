@@ -10613,6 +10613,1748 @@ pprint()
 Readable Output
     </code></pre>
 </section>
+<!-- ========================================================================= -->
+  <!-- 30. PYTHON EXCEPTION ARCHITECTURE, MODULES, PACKAGES & ENVIRONMENTS       -->
+  <!-- ========================================================================= -->
+  <section id="python-foundations-modules-exceptions">
+    <h2>30. Python Architecture: Exception Hierarchy, Modules, Packaging & Environments</h2>
+    <p>Python utilizes a structured runtime environment built on top of modular compilation, exception-driven control flow, and sandboxed package dependency isolation.</p>
 
+    <h3>A. Exception Hierarchy & Error Propagation Flow</h3>
+    <p>All standard exceptions in Python inherit from the root <code>BaseException</code>. Application and framework-level error handlers should intercept subclasses of <code>Exception</code> rather than <code>BaseException</code> directly to avoid unintentionally trapping system signals like <code>KeyboardInterrupt</code> (Ctrl+C) or <code>SystemExit</code>.</p>
+    
+    <!-- Text-based Python Exception Hierarchy Tree -->
+    <pre><code>BaseException
+ ├── BaseExceptionGroup
+ ├── GeneratorExit
+ ├── KeyboardInterrupt
+ ├── SystemExit
+ └── Exception (Root for application code)
+      ├── ArithmeticError (ZeroDivisionError, OverflowError)
+      ├── AssertionError
+      ├── AttributeError
+      ├── BufferError
+      ├── EOFError
+      ├── ImportError (ModuleNotFoundError)
+      ├── LookupError (IndexError, KeyError)
+      ├── MemoryError
+      ├── NameError (UnboundLocalError)
+      ├── OSError (FileNotFoundError, PermissionError, ConnectionError)
+      ├── RuntimeError (RecursionError)
+      ├── SyntaxError (IndentationError)
+      ├── TypeError
+      ├── ValueError (UnicodeError)
+      └── Warning (UserWarning, DeprecationWarning)</code></pre>
+
+    <h3>B. Modules vs. Packages vs. <code>__init__.py</code></h3>
+    <ul>
+      <li><strong>Module:</strong> Any single Python source file (<code>.py</code>) containing executable statements, classes, or functions.</li>
+      <li><strong>Regular Package:</strong> A physical directory containing an explicit <code>__init__.py</code> file. Importing the package initializes this file, which establishes <code>__all__</code> public symbols and initializes namespace variables.</li>
+      <li><strong>Namespace Package (PEP 420):</strong> A directory split across multiple zip files or file paths without an <code>__init__.py</code> file, allowing disparate sub-packages to merge into a single top-level namespace.</li>
+    </ul>
+
+    <h3>C. Virtual Environments & Pip Packaging Mechanism</h3>
+    <ul>
+      <li><strong><code>venv</code>:</strong> Creates a light, isolated directory containing a private Python executable copy, dynamic site-packages folder, and activation scripts.</li>
+      <li><strong>Path Resolution (<code>sys.path</code>):</strong> When an import is evaluated, Python searches: (1) Current directory, (2) <code>PYTHONPATH</code> environment directories, (3) Standard library path, and (4) Site-packages of the active virtual environment.</li>
+      <li><strong><code>pip</code> / <code>wheel</code>:</strong> Downloads pre-compiled binary distributions (<code>.whl</code>) or builds from source distributions (<code>sdist</code>), verifying hashes from <code>requirements.txt</code> or modern lockfiles.</li>
+    </ul>
+
+    <pre><code># =========================================================================
+# 1. PYTHON EXCEPTION HANDLING WITH CUSTOM ERRORS & EXCEPTION GROUPS
+# =========================================================================
+class DatabaseConnectionError(Exception):
+    """Custom domain exception for database communication faults."""
+    def __init__(self, host: str, port: int, reason: str):
+        super().__init__(f"Failed to connect to {host}:{port} -> Reason: {reason}")
+        self.host = host
+        self.port = port
+        self.reason = reason
+
+
+def query_database(host: str, port: int) -> dict:
+    if port < 1024:
+        raise ValueError("Privileged port access rejected")
+    if host == "unreachable.db":
+        raise DatabaseConnectionError(host, port, "Connection Timeout (10000ms)")
+    return {"status": "CONNECTED", "rows": 42}
+
+
+# Advanced try / except / else / finally flow
+try:
+    print("[DB Query] Initiating handshake...")
+    result = query_database("unreachable.db", 5432)
+except ValueError as val_err:
+    print(f"[Handshake Validation Failed]: {val_err}")
+except DatabaseConnectionError as db_err:
+    # Explicit Exception Chaining via 'from' (PEP 3134)
+    print(f"[DB Error Logged]: Host={db_err.host}, Reason={db_err.reason}")
+    # raise RuntimeError("Upstream Service Failure") from db_err
+else:
+    # Executes ONLY if NO exception was raised in the try block
+    print("[Handshake Success]: Data payload:", result)
+finally:
+    # Executes unconditionally (closing network streams / locks)
+    print("[Cleanup]: Connection sockets flushed.")
+
+# =========================================================================
+# 2. STRUCTURING A PYTHON PACKAGE WITH __all__
+# =========================================================================
+# File: my_framework/__init__.py
+"""
+from my_framework.network import HttpClient
+from my_framework.security import encrypt_payload
+
+# __all__ dictates what is exported when a consumer calls:
+# from my_framework import *
+__all__ = ["HttpClient", "encrypt_payload"]
+"""
+
+# =========================================================================
+# 3. SHELL WORKFLOW: VIRTUAL ENVIRONMENT CREATION & DEPENDENCY LOCKING
+# =========================================================================
+"""
+# 1. Create an isolated virtual environment named '.venv'
+python3 -m venv .venv
+
+# 2. Activate the virtual environment
+# On Linux / macOS:
+source .venv/bin/activate
+# On Windows (PowerShell):
+# .venv\\Scripts\\Activate.ps1
+
+# 3. Upgrade pip and install pinned dependencies
+pip install --upgrade pip
+pip install fastapi uvicorn pydantic
+
+# 4. Freeze exact dependency tree to lockfile
+pip freeze > requirements.txt
+"""</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 31. PYTHON INTERNALS: CPYTHON, BYTECODE, OBJECTS & MEMORY ARCHITECTURE    -->
+  <!-- ========================================================================= -->
+  <section id="cpython-internals-memory">
+    <h2>31. CPython Internals: Compilation, Bytecode, Object Memory & Execution Stack</h2>
+    <p>CPython is the reference implementation of Python, written in C. It compiles human-readable Python code into intermediate <strong>Bytecode</strong>, which is then interpreted by the <strong>CPython Virtual Machine</strong>.</p>
+
+    <h3>A. The CPython Compilation Pipeline</h3>
+    <ol>
+      <li><strong>Source Code (<code>.py</code>):</strong> Raw ASCII/UTF-8 character stream.</li>
+      <li><strong>Tokenizer & Parser:</strong> Converts source code into an Abstract Syntax Tree (AST).</li>
+      <li><strong>Bytecode Compiler:</strong> Emits platform-independent instruction sets (<code>.pyc</code> cache files inside <code>__pycache__</code>).</li>
+      <li><strong>CPython Evaluation Loop (<code>_PyEval_EvalFrameDefault</code>):</strong> A massive C <code>switch</code>-statement engine that reads bytecode instructions sequentially and modifies the frame evaluation stack.</li>
+    </ol>
+
+    <!-- Architecture Diagram: Python Bytecode Pipeline -->
+    <pre><code>+--------------------+       +---------------------+       +-----------------------+
+| Python Source Code | ====> |  Tokenizer & Parser  | ====> | Abstract Syntax Tree  |
+|     (script.py)    |       |      (Tokens)       |       |        (AST)          |
++--------------------+       +---------------------+       +-----------+-----------+
+                                                                       |
+                                                                       v
++--------------------+       +---------------------+       +-----------------------+
+| Native CPU Machine | <==== | CPython Evaluation  | <==== | Python Bytecode (.pyc)|
+| Instructions (x86) |       |   Loop (C Engine)   |       | (LOAD_FAST, BINARY_OP)|
++--------------------+       +---------------------+       +-----------------------+</code></pre>
+
+    <h3>B. Everything is a <code>PyObject</code></h3>
+    <p>In CPython, every variable, integer, string, function, and class is a pointer to a C heap structure known as <code>PyObject</code> (or <code>PyVarObject</code> for variable-length items like lists/tuples).</p>
+    
+    <p>A standard <code>PyObject</code> contains two mandatory header fields:</p>
+    <ul>
+      <li><strong><code>ob_refcnt</code> (Reference Count):</strong> 64-bit integer tracking active references pointing to this object.</li>
+      <li><strong><code>ob_type</code> (Type Pointer):</strong> A pointer to a <code>PyTypeObject</code> struct determining the object's methods, memory size, and behavior.</li>
+    </ul>
+
+    <h3>C. Mutability vs. Immutability Memory Mechanics</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Types</th>
+          <th>Memory Behavior on Modification</th>
+          <th>Hashing Capability</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Immutable</strong></td>
+          <td><code>int</code>, <code>float</code>, <code>bool</code>, <code>str</code>, <code>tuple</code>, <code>bytes</code>, <code>frozenset</code></td>
+          <td><strong>Cannot be mutated in-place.</strong> Any modification allocates a <em>new</em> object in heap memory with a new <code>id()</code>.</td>
+          <td>Hashable by default (Can serve as dictionary keys / set members).</td>
+        </tr>
+        <tr>
+          <td><strong>Mutable</strong></td>
+          <td><code>list</code>, <code>dict</code>, <code>set</code>, <code>bytearray</code>, Custom user-defined classes</td>
+          <td><strong>Mutates in-place.</strong> Internal memory buffer expands/shrinks while retaining the exact same memory address (<code>id()</code>).</td>
+          <td>Unhashable (Raises <code>TypeError: unhashable type</code>).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>D. Stack vs. Heap in CPython</h3>
+    <ul>
+      <li><strong>C Call Stack:</strong> Manages C-level stack frames executing the CPython engine.</li>
+      <li><strong>Python Execution Frame (Heap-allocated):</strong> When a Python function is invoked, CPython creates a <code>PyFrameObject</code> on the <strong>heap</strong> (not on the OS machine stack). This frame contains local variable arrays (<code>fastlocals</code>), evaluation stack pointers, and cell/free variable arrays for closures.</li>
+      <li><strong>Python Values:</strong> All Python objects strictly reside inside the <strong>Memory Heap</strong>. Variables inside functions are simply pointer references residing in the frame's local array pointing to heap addresses.</li>
+    </ul>
+
+    <pre><code>import sys
+import dis
+
+# =========================================================================
+# 1. DISASSEMBLING PYTHON BYTECODE (dis module)
+# =========================================================================
+def calculate_tax(base_amount: float) -> float:
+    rate = 0.18
+    return base_amount * rate
+
+print("--- CPython Bytecode Instructions ---")
+dis.dis(calculate_tax)
+# Bytecode output shows the evaluation stack operations:
+# 1. LOAD_CONST (0.18) -> Pushes 0.18 to stack
+# 2. STORE_FAST (rate) -> Pops and stores in local variable slot
+# 3. LOAD_FAST (base_amount) -> Pushes argument to stack
+# 4. LOAD_FAST (rate) -> Pushes rate to stack
+# 5. BINARY_OP (*) -> Multiplies top two values on stack
+# 6. RETURN_VALUE -> Returns product to caller
+
+# =========================================================================
+# 2. INSPECTING PyObject MEMORY & REFERENCE TRACKING
+# =========================================================================
+# Primitive integer allocation in CPython
+number_a = 1000
+number_b = 1000
+
+# id() returns the absolute memory address of the C PyObject
+print(f"Address A: {hex(id(number_a))}")
+print(f"Address B: {hex(id(number_b))}")
+print(f"Identity Check (is): {number_a is number_b}") # False (Distinct heap allocations)
+
+# Small Integer Caching Optimization (Interning pool for -5 to 256):
+cached_1 = 42
+cached_2 = 42
+print(f"Small Int Address Shared: {cached_1 is cached_2}") # True (Pre-allocated singleton)
+
+# =========================================================================
+# 3. MUTABLE VS IMMUTABLE MEMORY MUTATION PROOF
+# =========================================================================
+# Immutable String:
+original_string = "Architecture"
+original_str_id = id(original_string)
+original_string += "_V2"
+print(f"String ID Changed: {id(original_string) != original_str_id}") # True (New PyObject)
+
+# Mutable List (In-Place Buffer Modification):
+original_list = [1, 2, 3]
+original_list_id = id(original_list)
+original_list.append(4)
+print(f"List ID Preserved: {id(original_list) == original_list_id}") # True (Same PyObject)</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 32. GARBAGE COLLECTION & THE GLOBAL INTERPRETER LOCK (GIL)               -->
+  <!-- ========================================================================= -->
+  <section id="python-gc-gil">
+    <h2>32. Python Memory Management: Reference Counting, Cyclic GC & The GIL</h2>
+    <p>CPython manages memory automatically through a two-tiered memory architecture combining deterministic <strong>Reference Counting</strong> with a generational <strong>Cyclic Garbage Collector</strong>, synchronized under the <strong>Global Interpreter Lock (GIL)</strong>.</p>
+
+    <h3>A. Primary Memory Management: Reference Counting</h3>
+    <ul>
+      <li>Every time a name is bound to an object, passed into a function, or appended to a list, its internal <code>ob_refcnt</code> increments by 1.</li>
+      <li>When a variable goes out of scope (e.g. function returns) or is unbound via <code>del</code>, <code>ob_refcnt</code> decrements by 1.</li>
+      <li><strong>Immediate Deallocation:</strong> The exact millisecond <code>ob_refcnt == 0</code>, the memory is instantly released back to Python's memory allocator (<code>PyMalloc</code>) without waiting for a GC sweep.</li>
+    </ul>
+
+    <h3>B. Secondary Memory Management: Generational Cyclic GC (`gc` module)</h3>
+    <p>Reference counting alone cannot free objects trapped in <strong>reference cycles</strong> (e.g., Object A points to Object B, and Object B points back to Object A, but both are unreachable from global/local scope).</p>
+    
+    <ul>
+      <li><strong>Generations (0, 1, 2):</strong> Objects are placed in Generation 0 upon allocation. If they survive a collection sweep, they are promoted to Generation 1, and eventually to Generation 2 (long-lived objects).</li>
+      <li><strong>Tri-Color Marking Algorithm:</strong> Periodically, CPython tracks container objects (lists, dictionaries, custom classes, tuples) and detects isolated subgraphs where references originate exclusively from within the cycle itself.</li>
+    </ul>
+
+    <h3>C. The Global Interpreter Lock (GIL)</h3>
+    <ul>
+      <li><strong>What it is:</strong> A mutual exclusion lock (mutex) used by CPython to prevent multiple native OS threads from executing Python bytecode concurrently.</li>
+      <li><strong>Why it exists:</strong> CPython's memory manager is not thread-safe. Without the GIL, concurrent threads modifying <code>ob_refcnt</code> on shared objects would produce race conditions, memory corruption, and undefined behavior.</li>
+      <li><strong>Impact:</strong> In pure Python code, <strong>multithreading cannot scale across multiple CPU cores</strong> for CPU-bound computation. Multiprocessing or native C-extensions (NumPy, PyTorch) that release the GIL must be used instead.</li>
+    </ul>
+
+    <pre><code>import sys
+import gc
+
+# =========================================================================
+# 1. TRACKING REFERENCE COUNTING LIFECYCLE
+# =========================================================================
+sample_object = ["Data Payload"]
+# sys.getrefcount() temporarily creates 1 additional reference as an argument
+print(f"Base Refcount: {sys.getrefcount(sample_object) - 1}") # Refcount = 1
+
+alias_reference = sample_object
+print(f"Refcount after alias: {sys.getrefcount(sample_object) - 1}") # Refcount = 2
+
+del alias_reference
+print(f"Refcount after deletion: {sys.getrefcount(sample_object) - 1}") # Refcount = 1
+
+# =========================================================================
+# 2. CREATING & RESOLVING CIRCULAR REFERENCES WITH CYCLIC GC
+# =========================================================================
+class Node:
+    def __init__(self, name: str):
+        self.name = name
+        self.neighbor = None
+
+# Instantiate two nodes
+node_a = Node("NodeA")
+node_b = Node("NodeB")
+
+# Create a circular reference cycle
+node_a.neighbor = node_b
+node_b.neighbor = node_a
+
+# Delete primary references from local stack frame
+del node_a
+del node_b
+
+# At this stage, both nodes are unreachable by our program,
+# but their refcounts are still 1 due to the internal cycle!
+# Standard Reference Counting FAILS to free them.
+
+# Manually invoking the Generational Cyclic Collector:
+collected_dead_objects = gc.collect()
+print(f"Cyclic Garbage Collector freed {collected_dead_objects} unreachable cycle objects.")
+
+# =========================================================================
+# 3. GIL THREAD CONTEXT SWITCHING VS CPU BOUND BOTTLENECK
+# =========================================================================
+import threading
+import time
+
+def cpu_heavy_counter(limit: int):
+    count = 0
+    for _ in range(limit):
+        count += 1
+    return count
+
+LIMIT = 20_000_000
+
+# Benchmark Single Thread
+start_time = time.perf_counter()
+cpu_heavy_counter(LIMIT)
+cpu_heavy_counter(LIMIT)
+single_thread_duration = time.perf_counter() - start_time
+print(f"Sequential Execution Time: {single_thread_duration:.3f}s")
+
+# Benchmark Multi-threaded (Blocked by GIL from using multiple CPU cores)
+thread_1 = threading.Thread(target=cpu_heavy_counter, args=(LIMIT,))
+thread_2 = threading.Thread(target=cpu_heavy_counter, args=(LIMIT,))
+
+start_time = time.perf_counter()
+thread_1.start()
+thread_2.start()
+thread_1.join()
+thread_2.join()
+multi_thread_duration = time.perf_counter() - start_time
+print(f"Multithreaded Execution Time (GIL bound): {multi_thread_duration:.3f}s")
+# Multi-threaded execution is NOT 2x faster; it is often slightly SLOWER 
+# due to thread context switching overhead on a single CPU core!</code></pre>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 33. PYTHON OOP: CLASSES, INSTANCES, VARIABLES & METHODS                   -->
+  <!-- ========================================================================= -->
+  <section id="python-oop-foundations">
+    <h2>33. Python OOP: Classes, Execution Scope, Variable Namespaces & Method Types</h2>
+    <p>In Python, classes are first-class objects dynamically instantiated at runtime. When a class definition executes, Python constructs an isolated class namespace mapping attributes, functions, and metadata inside a <code>type</code> instance.</p>
+
+    <h3>A. The Anatomy of Class Construction</h3>
+    <ul>
+      <li><strong><code>self</code>:</strong> The explicit reference to the current instance passed automatically as the first argument to instance methods. Unlike JavaScript/Java where <code>this</code> is implicit, Python requires explicit binding.</li>
+      <li><strong><code>__init__</code> vs <code>__new__</code>:</strong> <code>__new__(cls)</code> is the true static constructor that allocates memory for the <code>PyObject</code> in the heap; <code>__init__(self)</code> is the initializer that configures instance state after creation.</li>
+      <li><strong>Instance Variables vs. Class Variables:</strong> Instance variables live inside the object's local dictionary (<code>self.__dict__</code>). Class variables live in the shared class dictionary (<code>Class.__dict__</code>) and are shared across all instances until overwritten on an instance.</li>
+    </ul>
+
+    <h3>B. Method Binding Types Reference Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Method Type</th>
+          <th>Decorator</th>
+          <th>First Parameter</th>
+          <th>Access Capabilities</th>
+          <th>Primary Real-World Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Instance Method</strong></td>
+          <td><em>None (Default)</em></td>
+          <td><code>self</code> (Instance)</td>
+          <td>Accesses and modifies both instance state (<code>self</code>) and class state (<code>self.__class__</code>).</td>
+          <td>Standard domain behaviors operating on object data.</td>
+        </tr>
+        <tr>
+          <td><strong>Class Method</strong></td>
+          <td><code>@classmethod</code></td>
+          <td><code>cls</code> (Class)</td>
+          <td>Can modify class state; cannot access instance state.</td>
+          <td><strong>Alternative Constructors</strong> (e.g., <code>from_json</code>, <code>from_dict</code>, <code>from_env</code>).</td>
+        </tr>
+        <tr>
+          <td><strong>Static Method</strong></td>
+          <td><code>@staticmethod</code></td>
+          <td><em>None</em></td>
+          <td>Cannot access or modify instance state or class state directly.</td>
+          <td>Isolated utility/helper functions scoped inside the class namespace for clarity.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code># =========================================================================
+# 1. CLASS VS INSTANCE VARIABLES & ALTERNATIVE CONSTRUCTORS
+# =========================================================================
+class DatabaseConnectionPool:
+    # Class Variable (Shared across all instances in memory)
+    default_timeout: int = 5000
+    active_instances_count: int = 0
+
+    def __init__(self, host: str, port: int, timeout: int = None):
+        # Instance Variables (Unique to this specific object instance)
+        self.host: str = host
+        self.port: int = port
+        self.timeout: int = timeout if timeout is not None else self.default_timeout
+
+        # Mutating shared class state via explicit class reference
+        DatabaseConnectionPool.active_instances_count += 1
+
+    # Instance Method
+    def get_connection_uri(self) -> str:
+        return f"postgresql://{self.host}:{self.port}/app_db?timeout={self.timeout}"
+
+    # Class Method: Factory constructor parsing a raw connection string
+    @classmethod
+    def from_uri(cls, uri_string: str) -> "DatabaseConnectionPool":
+        # Example format: "db.internal.net:5432"
+        host, port_str = uri_string.split(":")
+        return cls(host=host, port=int(port_str))
+
+    # Static Method: Pure helper with no access to self or cls
+    @staticmethod
+    def validate_port(port: int) -> bool:
+        return 1 <= port <= 65535
+
+
+# Instantiation via standard initializer
+pool_1 = DatabaseConnectionPool("10.0.0.1", 5432)
+# Instantiation via @classmethod factory
+pool_2 = DatabaseConnectionPool.from_uri("10.0.0.2:5433")
+
+print(pool_1.get_connection_uri()) # postgresql://10.0.0.1:5432/app_db?timeout=5000
+print(f"Total Pools Created: {DatabaseConnectionPool.active_instances_count}") # 2
+print(f"Port 8080 Valid: {DatabaseConnectionPool.validate_port(8080)}")       # True
+
+# Class Variable Shadowing Caveat:
+pool_1.default_timeout = 9000 # Shadows default_timeout on pool_1 instance dict only!
+print(pool_1.default_timeout)                    # 9000 (Read from instance __dict__)
+print(pool_2.default_timeout)                    # 5000 (Read from class __dict__)
+print(DatabaseConnectionPool.default_timeout)    # 5000 (Class variable untouched)</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 34. ENCAPSULATION, ACCESS CONVENTIONS & @property DESCRIPTORS            -->
+  <!-- ========================================================================= -->
+  <section id="python-encapsulation-properties">
+    <h2>34. Encapsulation: Name Mangling, Access Conventions & <code>@property</code></h2>
+    <p>Python does not enforce access control through hardware-level private keywords. Instead, it balances public transparency with naming conventions and compiler-enforced <strong>Name Mangling</strong>, mediated by the <strong>Descriptor Protocol</strong> via <code>@property</code>.</p>
+
+    <h3>A. Access Level Conventions</h3>
+    <ul>
+      <li><strong>Public (<code>identifier</code>):</strong> Fully accessible from any caller inside or outside the module.</li>
+      <li><strong>Protected (<code>_identifier</code>):</strong> An API contract convention signaling internal implementation detail. Tooling and linters flag external access, but the runtime does not block it.</li>
+      <li><strong>Private with Name Mangling (<code>__identifier</code>):</strong> Any attribute prefixed with two leading underscores and at most one trailing underscore is rewritten by the compiler to <code>_ClassName__identifier</code> to prevent accidental namespace collisions in derived subclasses.</li>
+    </ul>
+
+    <h3>B. The <code>@property</code> Decorator (Getters, Setters & Deleters)</h3>
+    <p>Properties allow developers to expose methods with standard attribute access syntax (e.g. <code>account.balance</code> instead of <code>account.get_balance()</code>), while allowing transparent data validation, lazy evaluation, and access logging behind the scenes.</p>
+
+    <pre><code># =========================================================================
+# ENCAPSULATION & THE @property DESCRIPTOR PIPELINE
+# =========================================================================
+class BankAccount:
+    def __init__(self, account_holder: str, initial_deposit: float):
+        self.account_holder: str = account_holder   # Public attribute
+        self._audit_log: list = []                  # Protected convention
+        self.__balance: float = 0.0                 # Private (Name Mangle: _BankAccount__balance)
+
+        self.balance = initial_deposit # Invokes the setter validation immediately
+
+    # Getter: Exposes reading like a normal attribute
+    @property
+    def balance(self) -> float:
+        """Read-only property access to the current account balance."""
+        return self.__balance
+
+    # Setter: Validates mutations
+    @balance.setter
+    def balance(self, amount: float) -> None:
+        if not isinstance(amount, (int, float)):
+            raise TypeError("Balance amount must be numeric.")
+        if amount < 0:
+            raise ValueError("Balance cannot be negative.")
+
+        self._audit_log.append(f"Balance updated from {self.__balance} to {amount}")
+        self.__balance = float(amount)
+
+    # Deleter: Handles attribute deletion cleanup
+    @balance.deleter
+    def balance(self) -> None:
+        raise PermissionError("Account balance cannot be deleted; close the account instead.")
+
+
+account = BankAccount("Elena Rostova", 1500.0)
+print(f"Current Balance: ${account.balance:,.2f}") # Accesses @property getter
+
+account.balance = 2200.0 # Invokes @balance.setter
+# account.balance = -50.0 # Raises ValueError: Balance cannot be negative.
+
+# Proof of Name Mangling:
+# Direct access to private attribute fails:
+# print(account.__balance) # Raises AttributeError: 'BankAccount' object has no attribute '__balance'
+
+# But it exists under the mangled identifier:
+print(f"Direct Mangled Value: ${account._BankAccount__balance:,.2f}") # $2,200.00</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 35. INHERITANCE, MULTIPLE INHERITANCE, MRO & super()                      -->
+  <!-- ========================================================================= -->
+  <section id="python-inheritance-mro">
+    <h2>35. Inheritance, Multiple Inheritance, C3 Linearization (MRO) & <code>super()</code></h2>
+    <p>Python supports single and <strong>multiple inheritance</strong>. When resolving method calls in complex multi-parent hierarchies, Python utilizes the <strong>C3 Linearization Algorithm</strong> to compute an unambiguous <strong>Method Resolution Order (MRO)</strong>.</p>
+
+    <h3>A. The Diamond Problem & Cooperative Multiple Inheritance</h3>
+    <p>The Diamond Problem occurs when a class inherits from two parent classes that both share a common ancestor. Without a deterministic resolution order, calls to ancestor methods risk duplicate execution or ambiguity.</p>
+
+    <!-- Text-based Diagram of the Diamond Problem -->
+    <pre><code>        +-------------------+
+        |      BaseService  |
+        +---------+---------+
+                  ^
+         +--------+--------+
+         |                 |
++--------+--------+  +-----+-----------+
+| LoggingService  |  | SecurityService |
++--------+--------+  +-----+-----------+
+         ^                 ^
+         +--------+--------+
+                  |
+        +---------+---------+
+        |   PaymentGateway  |
+        +-------------------+</code></pre>
+
+    <h3>B. How <code>super()</code> Actually Works</h3>
+    <ul>
+      <li><code>super()</code> does <strong>not</strong> simply call the immediate parent class.</li>
+      <li><code>super()</code> delegates the call to the <strong>next class in the instance's MRO chain</strong> (cooperative multiple inheritance).</li>
+      <li>To inspect the exact execution order computed by C3 Linearization, call <code>ClassName.mro()</code> or <code>ClassName.__mro__</code>.</li>
+    </ul>
+
+    <pre><code># =========================================================================
+# COOPERATIVE MULTIPLE INHERITANCE & MRO DEMONSTRATION
+# =========================================================================
+class BaseService:
+    def __init__(self, service_name: str, **kwargs):
+        print(f"[BaseService] Initialized: {service_name}")
+        self.service_name = service_name
+        super().__init__(**kwargs) # Passes remaining arguments up MRO chain
+
+
+class LoggingMixin(BaseService):
+    def __init__(self, log_level: str = "INFO", **kwargs):
+        print(f"[LoggingMixin] Initialized with log level: {log_level}")
+        self.log_level = log_level
+        super().__init__(**kwargs) # Calls next in MRO (SecurityMixin, NOT BaseService!)
+
+
+class SecurityMixin(BaseService):
+    def __init__(self, enable_encryption: bool = True, **kwargs):
+        print(f"[SecurityMixin] Encryption active: {enable_encryption}")
+        self.enable_encryption = enable_encryption
+        super().__init__(**kwargs) # Calls next in MRO (BaseService)
+
+
+# Child class inheriting from multiple mixins:
+class PaymentGateway(LoggingMixin, SecurityMixin):
+    def __init__(self, gateway_id: str, **kwargs):
+        print(f"[PaymentGateway] Initializing gateway: {gateway_id}")
+        self.gateway_id = gateway_id
+        super().__init__(**kwargs)
+
+
+# Instantiating triggers cooperative initialization along the exact MRO:
+gateway = PaymentGateway(
+    gateway_id="PGW_STRIPE_01",
+    log_level="DEBUG",
+    enable_encryption=True,
+    service_name="StripeIntegrationService"
+)
+
+# =========================================================================
+# INSPECTING THE COMPUTED MRO
+# =========================================================================
+print("\n--- Method Resolution Order (MRO) ---")
+for idx, cls in enumerate(PaymentGateway.mro()):
+    print(f"Step {idx + 1}: {cls.__name__}")
+
+# Execution Order Guarantee:
+# Step 1: PaymentGateway
+# Step 2: LoggingMixin
+# Step 3: SecurityMixin
+# Step 4: BaseService
+# Step 5: object</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 36. ABSTRACT BASE CLASSES (ABCs)                                          -->
+  <!-- ========================================================================= -->
+  <section id="python-abstract-classes">
+    <h2>36. Abstract Base Classes (ABCs) via <code>abc.ABC</code></h2>
+    <p>Abstract Base Classes provide a mechanism to define strict architectural interfaces and contracts in Python. If a subclass inherits from an ABC and fails to implement all methods decorated with <code>@abstractmethod</code>, Python prevents instantiation at runtime, raising a <code>TypeError</code>.</p>
+
+    <pre><code>from abc import ABC, abstractmethod
+
+# Abstract Base Class Interface Definition
+class CloudStorageProvider(ABC):
+
+    @abstractmethod
+    def upload_file(self, file_path: str, destination_key: str) -> bool:
+        """Uploads a local file to remote storage bucket."""
+        pass
+
+    @abstractmethod
+    def download_file(self, destination_key: str) -> bytes:
+        """Downloads raw byte payload from storage bucket."""
+        pass
+
+    # Concrete method (shared implementation across all subclasses)
+    def generate_presigned_url(self, destination_key: str, expiry_seconds: int = 3600) -> str:
+        return f"https://storage.cdn.internal/{destination_key}?expiry={expiry_seconds}"
+
+
+# Concrete Subclass correctly implementing all abstract contracts
+class S3StorageProvider(CloudStorageProvider):
+    def upload_file(self, file_path: str, destination_key: str) -> bool:
+        print(f"[AWS S3] Uploading {file_path} to s3://app-bucket/{destination_key}")
+        return True
+
+    def download_file(self, destination_key: str) -> bytes:
+        print(f"[AWS S3] Streaming bytes for key: {destination_key}")
+        return b"\x89PNG\r\n\x1a\n..."
+
+
+# Incomplete subclass attempting to bypass contracts
+class IncompleteProvider(CloudStorageProvider):
+    def upload_file(self, file_path: str, destination_key: str) -> bool:
+        return True
+    # Forgot to implement download_file!
+
+
+s3 = S3StorageProvider()
+print("S3 Upload Success:", s3.upload_file("avatar.png", "users/1/avatar.png"))
+print("Presigned Link:", s3.generate_presigned_url("users/1/avatar.png"))
+
+# Attempting to instantiate the incomplete class:
+# broken_provider = IncompleteProvider()
+# TypeError: Can't instantiate abstract class IncompleteProvider with abstract method download_file</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 37. MAGIC METHODS (DUNDER) & OPERATOR OVERLOADING                         -->
+  <!-- ========================================================================= -->
+  <section id="python-magic-methods">
+    <h2>37. Magic Methods (Dunder Methods) & Operator Overloading</h2>
+    <p>Magic methods (Double Underscore / Dunder methods) are special hook functions called implicitly by Python when instances interact with built-in operators, string formatting, context managers, and container protocols.</p>
+
+    <h3>Dunder Protocols Reference Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Magic Methods</th>
+          <th>Trigger Syntax / Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Representation</strong></td>
+          <td><code>__repr__(self)</code><br><code>__str__(self)</code></td>
+          <td><code>repr(obj)</code> (Developer/Debug output)<br><code>str(obj)</code> / <code>print(obj)</code> (User-facing output)</td>
+        </tr>
+        <tr>
+          <td><strong>Arithmetic Operators</strong></td>
+          <td><code>__add__</code>, <code>__sub__</code>, <code>__mul__</code>, <code>__truediv__</code></td>
+          <td><code>a + b</code>, <code>a - b</code>, <code>a * b</code>, <code>a / b</code></td>
+        </tr>
+        <tr>
+          <td><strong>Comparison Operators</strong></td>
+          <td><code>__eq__</code>, <code>__lt__</code>, <code>__le__</code>, <code>__gt__</code></td>
+          <td><code>a == b</code>, <code>a &lt; b</code>, <code>a &lt;= b</code>, <code>a &gt; b</code></td>
+        </tr>
+        <tr>
+          <td><strong>Container / Sequence</strong></td>
+          <td><code>__len__</code>, <code>__getitem__</code>, <code>__setitem__</code></td>
+          <td><code>len(obj)</code>, <code>obj[key]</code>, <code>obj[key] = val</code></td>
+        </tr>
+        <tr>
+          <td><strong>Callable Objects</strong></td>
+          <td><code>__call__(self, *args, **kwargs)</code></td>
+          <td><code>obj()</code> (Invokes the instance like a function)</td>
+        </tr>
+        <tr>
+          <td><strong>Context Managers</strong></td>
+          <td><code>__enter__(self)</code>, <code>__exit__(self, *exc)</code></td>
+          <td><code>with obj as x:</code> (Deterministic setup & teardown)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code># =========================================================================
+# OPERATOR OVERLOADING & COMPREHENSIVE DUNDER PROTOCOL IMPLEMENTATION
+# =========================================================================
+class Vector2D:
+    def __init__(self, x: float, y: float):
+        self.x = float(x)
+        self.y = float(y)
+
+    # Formal representation for debugging
+    def __repr__(self) -> str:
+        return f"Vector2D(x={self.x}, y={self.y})"
+
+    # User-friendly string representation
+    def __str__(self) -> str:
+        return f"({self.x}, {self.y})"
+
+    # Overloading Equality: v1 == v2
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, Vector2D):
+            return NotImplemented
+        return self.x == other.x and self.y == other.y
+
+    # Overloading Addition: v1 + v2
+    def __add__(self, other: "Vector2D") -> "Vector2D":
+        if not isinstance(other, Vector2D):
+            raise TypeError(f"Unsupported operand type for +: 'Vector2D' and '{type(other).__name__}'")
+        return Vector2D(self.x + other.x, self.y + other.y)
+
+    # Overloading Multiplication (Scalar scaling): v1 * scalar
+    def __mul__(self, scalar: float) -> "Vector2D":
+        if not isinstance(scalar, (int, float)):
+            raise TypeError("Can only multiply Vector2D by a numeric scalar.")
+        return Vector2D(self.x * scalar, self.y * scalar)
+
+    # Container Protocol: len(vector) -> Integer magnitude approximation
+    def __len__(self) -> int:
+        return int((self.x**2 + self.y**2) ** 0.5)
+
+    # Index Access: vector[0] -> x, vector[1] -> y
+    def __getitem__(self, index: int) -> float:
+        if index == 0: return self.x
+        elif index == 1: return self.y
+        raise IndexError("Vector2D index out of range (use 0 for x, 1 for y).")
+
+    # Callable Instance Protocol: vector(scale_factor)
+    def __call__(self, scale: float) -> "Vector2D":
+        return self * scale
+
+
+# Practical Verification:
+v1 = Vector2D(3, 4)
+v2 = Vector2D(1, 2)
+
+print("v1 repr:", repr(v1))         # Vector2D(x=3.0, y=4.0)
+print("v1 str:", str(v1))           # (3.0, 4.0)
+
+# Operator Overloading in action:
+v3 = v1 + v2
+print("v1 + v2 =", v3)             # (4.0, 6.0)
+
+scaled_v = v1 * 3
+print("v1 * 3 =", scaled_v)        # (9.0, 12.0)
+
+print("Magnitude len(v1):", len(v1)) # 5 (via 3-4-5 triangle)
+print("Index v1[0]:", v1[0])         # 3.0 (via __getitem__)
+
+# Invoking instance as a callable function:
+boosted = v1(10)                    # Invokes __call__
+print("Callable invocation v1(10):", boosted) # (30.0, 40.0)</code></pre>
+  </section>
+
+
+  <!-- ========================================================================= -->
+  <!-- 38. ITERATORS & GENERATORS (yield, state machines & memory efficiency)    -->
+  <!-- ========================================================================= -->
+  <section id="python-iterators-generators">
+    <h2>38. Python Advanced: Iterators, Generators & The <code>yield</code> Mechanism</h2>
+    <p>Python's iteration model relies on two formal structural protocols: the <strong>Iterable Protocol</strong> and the <strong>Iterator Protocol</strong>. Together, they enable lazy, memory-constant processing of infinite or massive data sequences.</p>
+
+    <h3>A. The Protocols Under the Hood</h3>
+    <ul>
+      <li><strong>Iterable Protocol:</strong> An object is <em>iterable</em> if it implements <code>__iter__()</code>, which must return an iterator instance (or implements <code>__getitem__()</code> with consecutive zero-based integer keys).</li>
+      <li><strong>Iterator Protocol:</strong> An object is an <em>iterator</em> if it implements:
+        <ul>
+          <li><code>__iter__()</code>: Returns <code>self</code> (so iterators are themselves iterable).</li>
+          <li><code>__next__()</code>: Returns the next item in sequence. When values are exhausted, it <strong>must</strong> raise <code>StopIteration</code>.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>B. Generators (<code>yield</code>) & Pausable Stack Frames</h3>
+    <p>A generator function is syntactic sugar for creating an iterator without writing boilerplate classes. When a function contains the <code>yield</code> keyword, calling it does not execute the function body; instead, it compiles the code into a <strong>Generator Object</strong> (<code>PyGenObject</code>).</p>
+    <ul>
+      <li>Executing <code>next(gen)</code> resumes execution until the next <code>yield</code> expression is reached, saves the local frame execution state (instruction pointer, local variable values), and yields the value back to the caller.</li>
+      <li><strong>Two-way communication (<code>.send()</code>, <code>.throw()</code>, <code>.close()</code>):</strong> Beyond producing data, generators can receive values dynamically via <code>received = yield value</code>.</li>
+      <li><strong>Sub-generator Delegation (<code>yield from iterable</code>):</strong> Transparently delegates iteration and two-way channel communication to an inner generator or iterable.</li>
+    </ul>
+
+    <pre><code># =========================================================================
+# 1. CUSTOM ITERATOR CLASS IMPLEMENTATION
+# =========================================================================
+class FibonacciSequenceIterator:
+    """Explicit class-based iterator calculating Fibonacci numbers up to a maximum limit."""
+    def __init__(self, limit: int):
+        self.limit = limit
+        self.count = 0
+        self.prev = 0
+        self.curr = 1
+
+    def __iter__(self):
+        return self  # Required: Iterator must return itself on __iter__()
+
+    def __next__(self) -> int:
+        if self.count >= self.limit:
+            raise StopIteration  # Signals exhaustion to for-loops / comprehensions
+
+        if self.count == 0:
+            self.count += 1
+            return 0
+        elif self.count == 1:
+            self.count += 1
+            return 1
+
+        next_val = self.prev + self.curr
+        self.prev = self.curr
+        self.curr = next_val
+        self.count += 1
+        return next_val
+
+
+# Consuming custom iterator
+fib_iter = FibonacciSequenceIterator(5)
+for num in fib_iter:
+    print("Class Iterator Item:", num)  # 0, 1, 1, 2, 3
+
+# =========================================================================
+# 2. GENERATOR FUNCTIONS (yield & yield from)
+# =========================================================================
+def log_reader_generator(file_lines: list[str]):
+    """Generator streaming lines lazily with O(1) memory footprint."""
+    for line in file_lines:
+        cleaned = line.strip()
+        if cleaned.startswith("ERROR"):
+            yield f"[ALERT] {cleaned}"  # Execution pauses here!
+
+
+def combined_pipeline():
+    # yield from delegates iteration cleanly
+    yield from log_reader_generator(["INFO: Ok", "ERROR: DB Crash", "WARN: High CPU"])
+    yield from ["CUSTOM_FOOTER_1", "CUSTOM_FOOTER_2"]
+
+
+for item in combined_pipeline():
+    print("Streamed Entry:", item)
+
+# =========================================================================
+# 3. ADVANCED GENERATOR CONTROL: .send() CO-ROUTINE PATTERN
+# =========================================================================
+def running_average_accumulator():
+    """Generator acting as an in-memory live average accumulator."""
+    total = 0.0
+    count = 0
+    average = 0.0
+    while True:
+        # yield produces 'average', and execution pauses until next .send(val)
+        val = yield average
+        if val is None:
+            break
+        total += val
+        count += 1
+        average = total / count
+
+
+avg_gen = running_average_accumulator()
+next(avg_gen)  # Prime the generator (advances to first yield)
+
+print("Running Avg (10):", avg_gen.send(10))  # 10.0
+print("Running Avg (20):", avg_gen.send(20))  # 15.0
+print("Running Avg (60):", avg_gen.send(60))  # 30.0
+avg_gen.close()  # Closes generator by injecting GeneratorExit</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 39. DECORATORS: FUNCTIONS, WRAPPERS, ARGUMENTS & CLASSES                  -->
+  <!-- ========================================================================= -->
+  <section id="python-decorators">
+    <h2>39. Decorators: Higher-Order Closures, Metadata Preservation & Class Wrappers</h2>
+    <p>A decorator is a <strong>Higher-Order Function</strong> that accepts a function (or class) as an argument, extends or wraps its execution behavior without modifying its source code, and returns the modified callable.</p>
+
+    <h3>A. Syntax Desugaring</h3>
+    <pre><code>@my_decorator
+def target_function():
+    pass
+
+# Desugars exactly to:
+# target_function = my_decorator(target_function)</code></pre>
+
+    <h3>B. <code>functools.wraps</code> Metadata Preservation</h3>
+    <p>When wrapping a function inside an inner closure, the original function's introspection attributes (<code>__name__</code>, <code>__doc__</code>, <code>__module__</code>, <code>__annotations__</code>) are overwritten by the inner wrapper. <code>@functools.wraps(fn)</code> copies these attributes back to maintain debugging fidelity and reflection capabilities.</p>
+
+    <pre><code>import time
+import functools
+from typing import Callable, Any
+
+# =========================================================================
+# 1. FUNCTION DECORATOR WITH METADATA PRESERVATION
+# =========================================================================
+def performance_benchmark(func: Callable) -> Callable:
+    """Measures execution time of the target callable."""
+    @functools.wraps(func)  # Copies __name__, __doc__, and annotations
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
+        start_time = time.perf_counter()
+        result = func(*args, **kwargs)
+        duration = time.perf_counter() - start_time
+        print(f"[Benchmark] Function '{func.__name__}' executed in {duration:.6f}s")
+        return result
+    return wrapper
+
+
+@performance_benchmark
+def compute_factorial(n: int) -> int:
+    """Calculates standard integer factorial."""
+    res = 1
+    for i in range(1, n + 1):
+        res *= i
+    return res
+
+
+print("Result:", compute_factorial(500))
+print("Introspected Name:", compute_factorial.__name__)  # 'compute_factorial' (Preserved!)
+
+# =========================================================================
+# 2. PARAMETERIZED DECORATOR (DECORATOR FACTORY)
+# =========================================================================
+def retry_execution(max_retries: int = 3, delay_seconds: float = 0.1):
+    """Decorator factory creating a retry pipeline with configurable limits."""
+    def decorator(func: Callable) -> Callable:
+        @functools.wraps(func)
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
+            attempts = 0
+            while attempts < max_retries:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as err:
+                    attempts += 1
+                    print(f"[Retry Warning] {func.__name__} failed (Attempt {attempts}/{max_retries}): {err}")
+                    if attempts >= max_retries:
+                        raise
+                    time.sleep(delay_seconds)
+        return wrapper
+    return decorator
+
+
+@retry_execution(max_retries=3, delay_seconds=0.05)
+def unstable_network_call(success_on_attempt: int, state: dict):
+    state["calls"] += 1
+    if state["calls"] < success_on_attempt:
+        raise ConnectionResetError("Remote server rejected socket connection")
+    return "SUCCESS_DATA"
+
+
+call_state = {"calls": 0}
+print(unstable_network_call(2, call_state))  # Retries once and succeeds
+
+# =========================================================================
+# 3. CLASS DECORATOR (METAPROGRAMMING ENHANCEMENT)
+# =========================================================================
+def register_api_endpoint(route: str):
+    """Class decorator attaching routing metadata directly to a view class."""
+    def class_decorator(cls):
+        cls._api_route = route
+        cls._is_registered = True
+        return cls
+    return class_decorator
+
+
+@register_api_endpoint("/api/v1/orders")
+class OrderController:
+    def get(self):
+        return {"orders": []}
+
+
+print("Injected Route Metadata:", OrderController._api_route)  # "/api/v1/orders"</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 40. CONTEXT MANAGERS: with, __enter__, __exit__ & contextlib              -->
+  <!-- ========================================================================= -->
+  <section id="python-context-managers">
+    <h2>40. Context Managers: Resource Management & Exception Boundaries</h2>
+    <p>Context managers establish deterministic setup and teardown lifecycles for resources (files, sockets, database transactions, mutex locks) using the <code>with</code> statement, ensuring teardown logic executes even if unhandled exceptions occur.</p>
+
+    <h3>A. The Context Management Protocol (<code>__enter__</code> & <code>__exit__</code>)</h3>
+    <ul>
+      <li><strong><code>__enter__(self)</code>:</strong> Executes setup logic. The return value is bound to the variable following the <code>as</code> clause (if present).</li>
+      <li><strong><code>__exit__(self, exc_type, exc_val, exc_tb)</code>:</strong> Executes cleanup logic.
+        <ul>
+          <li>If no exception occurred in the <code>with</code> block: all three arguments are <code>None</code>.</li>
+          <li>If an exception occurred: <code>exc_type</code>, <code>exc_val</code>, and <code>exc_tb</code> contain the error metadata.</li>
+          <li><strong>Suppressing Exceptions:</strong> If <code>__exit__()</code> returns a truthy value (<code>True</code>), Python suppresses the exception and execution continues normally after the <code>with</code> block. If it returns <code>False</code> or <code>None</code>, the exception propagates up the stack.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h3>B. Generator Context Managers (<code>@contextlib.contextmanager</code>)</h3>
+    <p>Allows context managers to be written as single generator functions where code before <code>yield</code> handles <code>__enter__</code>, and code inside a <code>finally</code> block handles <code>__exit__</code>.</p>
+
+    <pre><code>import contextlib
+from typing import Optional
+
+# =========================================================================
+# 1. CLASS-BASED CONTEXT MANAGER (DATABASE TRANSACTION SIMULATOR)
+# =========================================================================
+class DatabaseTransaction:
+    def __init__(self, connection_id: str):
+        self.connection_id = connection_id
+        self.is_active = False
+
+    def __enter__(self):
+        self.is_active = True
+        print(f"[TX {self.connection_id}] Transaction BEGIN.")
+        return self  # Bound to the 'as' identifier
+
+    def query(self, sql: str):
+        if not self.is_active:
+            raise RuntimeError("Cannot query on inactive transaction")
+        print(f"[TX {self.connection_id}] Executing: {sql}")
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> Optional[bool]:
+        self.is_active = False
+        if exc_type is not None:
+            # Exception was raised within the 'with' block
+            print(f"[TX {self.connection_id}] Transaction ROLLBACK due to: {exc_val}")
+            return False  # False = Do NOT suppress error; bubble up
+
+        print(f"[TX {self.connection_id}] Transaction COMMIT.")
+        return True
+
+
+# Successful Transaction
+with DatabaseTransaction("CONN_01") as tx:
+    tx.query("INSERT INTO users (name) VALUES ('Sarah')")
+    tx.query("UPDATE accounts SET balance = 500")
+
+# =========================================================================
+# 2. CONTEXT MANAGER VIA @contextlib.contextmanager
+# =========================================================================
+@contextlib.contextmanager
+def temporary_log_level(new_level: str):
+    """Temporarily modifies a setting and guarantees rollback via try...finally."""
+    current_level = "ERROR"  # Simulated global state
+    print(f"[Config] Changed level: {current_level} -> {new_level}")
+    try:
+        yield new_level  # Code inside 'with' runs here
+    finally:
+        print(f"[Config] Restoring level back to: {current_level}")
+
+
+with temporary_log_level("DEBUG") as active_level:
+    print(f"Inside block running with log level: {active_level}")</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 41. TYPE HINTS, DATACLASSES, NAMEDTUPLES & PYDANTIC                      -->
+  <!-- ========================================================================= -->
+  <section id="python-typing-data-containers">
+    <h2>41. Modern Data Modeling: Type Hints, Dataclasses, NamedTuples & Pydantic</h2>
+    <p>Modern Python provides multiple tiers for structuring and validating application state, spanning compile-time type annotations, standard-library immutable records, code-generated dataclasses, and runtime schema parsers.</p>
+
+    <h3>Data Container Comparison Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Container Type</th>
+          <th>Library Source</th>
+          <th>Default Mutability</th>
+          <th>Runtime Validation?</th>
+          <th>Primary Real-World Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>typing.NamedTuple</code></strong></td>
+          <td>Standard Library (<code>typing</code>)</td>
+          <td><strong>Immutable</strong> (Tuple subtype)</td>
+          <td>No (Static types only)</td>
+          <td>Lightweight, memory-efficient structured records with named field indexing.</td>
+        </tr>
+        <tr>
+          <td><strong><code>@dataclass</code></strong></td>
+          <td>Standard Library (<code>dataclasses</code>)</td>
+          <td><strong>Mutable</strong> (or <code>frozen=True</code>)</td>
+          <td>No (Generates boilerplate only)</td>
+          <td>Domain entities, business models, and service data transfer objects without heavy validation overhead.</td>
+        </tr>
+        <tr>
+          <td><strong><code>pydantic.BaseModel</code></strong></td>
+          <td>External / Core FastAPI dependency</td>
+          <td>Mutable (or configurable frozen)</td>
+          <td><strong>Yes (Strict Runtime Parsing & Coercion)</strong></td>
+          <td>API request/response payloads, environmental configuration validation, JSON serialization boundaries.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>from typing import NamedTuple, Optional, Union
+from dataclasses import dataclass, field
+import datetime
+
+# =========================================================================
+# 1. NamedTuple (IMMUTABLE, TUPLE-BASED DATA STRUCTURE)
+# =========================================================================
+class GeoCoordinate(NamedTuple):
+    latitude: float
+    longitude: float
+    label: Optional[str] = "Default Marker"
+
+
+coord = GeoCoordinate(13.0827, 80.2707, "Chennai")
+print(f"NamedTuple: Lat={coord.latitude}, Long={coord.longitude}, Label={coord.label}")
+# Unpacking and index access:
+lat, long, *rest = coord
+print("Index 0 Access:", coord[0])
+# coord.latitude = 15.0 # Raises AttributeError: can't set attribute (Immutable!)
+
+# =========================================================================
+# 2. @dataclass (AUTO-GENERATED DUNDER METHODS & BOILERPLATE)
+# =========================================================================
+@dataclass(frozen=False, order=True)
+class InventoryItem:
+    sku: str
+    price: float = field(compare=True)
+    quantity: int = field(default=0, compare=False)
+    tags: list[str] = field(default_factory=list, compare=False)  # Safe mutable default!
+
+    def calculate_total_value(self) -> float:
+        return self.price * self.quantity
+
+
+item_1 = InventoryItem("SKU-99", price=45.50, quantity=10, tags=["hardware", "retail"])
+item_2 = InventoryItem("SKU-01", price=120.00, quantity=2)
+
+print(item_1)  # InventoryItem(sku='SKU-99', price=45.5, quantity=10, tags=['hardware', 'retail'])
+print("Auto equality comparison:", item_1 == item_2)  # False
+print("Auto sorting (< comparison based on price):", item_1 < item_2)  # True
+
+# =========================================================================
+# 3. PYDANTIC (RUNTIME DATA PARSING, COERCION & SCHEMA VALIDATION)
+# =========================================================================
+# Pydantic v2 implementation architecture
+from pydantic import BaseModel, Field, EmailStr, field_validator
+
+
+class UserRegistrationSchema(BaseModel):
+    # Field validation rules
+    user_id: int = Field(gt=0, description="User ID must be positive integer")
+    email: str
+    signup_timestamp: datetime.datetime = Field(default_factory=datetime.datetime.now)
+    roles: list[str] = Field(default=["USER"])
+    active: bool = True
+
+    # Custom field validator
+    @field_validator("email")
+    @classmethod
+    def validate_corporate_email(cls, value: str) -> str:
+        if not value.endswith("@enterprise.com"):
+            raise ValueError("Email must belong to @enterprise.com domain")
+        return value.lower()
+
+
+# Demonstrating Runtime Parsing & Automatic Coercion:
+raw_incoming_json = {
+    "user_id": "502",  # String automatically coerced to int 502!
+    "email": "DEVOPS@ENTERPRISE.COM",  # Validated and lowercased
+    "roles": ["ADMIN", "AUDITOR"]
+}
+
+# Hydration & Validation Boundary
+try:
+    validated_user = UserRegistrationSchema(**raw_incoming_json)
+    print("\n--- Pydantic Validated Model ---")
+    print("User ID (coerced int):", validated_user.user_id, type(validated_user.user_id))
+    print("Cleaned Email:", validated_user.email)
+    print("Serialized JSON:", validated_user.model_dump_json(indent=2))
+
+    # Triggering validation failure:
+    invalid_data = {"user_id": -5, "email": "hacker@gmail.com"}
+    UserRegistrationSchema(**invalid_data)
+except Exception as validation_error:
+    print("\nPydantic Runtime Validation Successfully Blocked Bad Data:")
+    print(validation_error)
+</code></pre>
+</section>
+
+<!-- ========================================================================= -->
+  <!-- 42. PYTHON CONCURRENCY: PROCESSES, THREADS & SYNCHRONIZATION PRIMITIVES   -->
+  <!-- ========================================================================= -->
+  <section id="python-concurrency-threads-locks">
+    <h2>42. Python Concurrency: Processes vs Threads & Synchronization Primitives</h2>
+    <p>Concurrency in Python is split into two primary OS-level execution paradigms: <strong>Multithreading</strong> (shared address space within a single OS process, bounded by the GIL for CPU tasks) and <strong>Multiprocessing</strong> (isolated OS processes with separate memory heaps and GIL instances).</p>
+
+    <h3>A. Multithreading vs Multiprocessing Structural Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th><code>threading.Thread</code></th>
+          <th><code>multiprocessing.Process</code></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Memory Space</strong></td>
+          <td><strong>Shared memory</strong> across all threads within the parent process.</td>
+          <td><strong>Isolated memory</strong>; each process owns a private virtual address space.</td>
+        </tr>
+        <tr>
+          <td><strong>GIL Impact</strong></td>
+          <td>Only <strong>1 thread executes Python bytecode</strong> at any given instant.</td>
+          <td><strong>Each process runs its own independent GIL</strong> across separate CPU cores.</td>
+        </tr>
+        <tr>
+          <td><strong>Creation Overhead</strong></td>
+          <td>Lightweight (~few KB stack memory, fast OS context switch).</td>
+          <td>Heavier (~10–50 MB initialization, fork/spawn overhead).</td>
+        </tr>
+        <tr>
+          <td><strong>Communication</strong></td>
+          <td>Direct variable sharing (requires locks to prevent race conditions).</td>
+          <td>IPC (Inter-Process Communication): Queues, Pipes, Shared Memory.</td>
+        </tr>
+        <tr>
+          <td><strong>Best Workload</strong></td>
+          <td><strong>I/O-Bound:</strong> Network requests, database queries, file reads.</td>
+          <td><strong>CPU-Bound:</strong> Number crunching, image rendering, data processing.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>B. Thread Synchronization Primitives Reference</h3>
+    <ul>
+      <li><strong><code>Lock</code>:</strong> Mutual exclusion lock (Mutex). Only one thread can acquire it at a time; others block until released. Non-reentrant (a thread deadlocks if it tries to acquire its own lock twice).</li>
+      <li><strong><code>RLock</code> (Reentrant Lock):</strong> Allows the <em>same</em> thread to acquire the lock multiple times recursively without deadlocking. Must be released the exact same number of times it was acquired.</li>
+      <li><strong><code>Semaphore</code>:</strong> Maintains an internal counter of available permits. Allows up to $N$ threads to access a shared resource concurrently (ideal for connection pools or rate limiters).</li>
+      <li><strong><code>Event</code>:</strong> Communication flag between threads. Threads call <code>event.wait()</code> to block until another thread signals <code>event.set()</code>.</li>
+      <li><strong><code>Condition</code>:</strong> Combines a lock with a notification queue. A thread waits (<code>cv.wait()</code>) until another thread notifies (<code>cv.notify()</code> / <code>cv.notify_all()</code>) that a specific state expression evaluates to true.</li>
+      <li><strong><code>queue.Queue</code>:</strong> Thread-safe FIFO/LIFO/Priority queue with built-in locking and condition tracking (<code>task_done()</code>, <code>join()</code>).</li>
+    </ul>
+
+    <pre><code>import threading
+import queue
+import time
+from typing import List
+
+# =========================================================================
+# 1. MUTEX LOCK VS REENTRANT LOCK (RLock)
+# =========================================================================
+# Standard Lock: Cannot be re-acquired by the same thread
+standard_lock = threading.Lock()
+
+# RLock: Reentrant lock allows recursive method acquisition within the same thread
+reentrant_lock = threading.RLock()
+
+class ThreadSafeAccount:
+    def __init__(self, initial_balance: float):
+        self._balance = initial_balance
+        self._lock = threading.RLock()
+
+    def deposit(self, amount: float):
+        with self._lock:  # Acquisition #1
+            self._balance += amount
+
+    def transfer(self, target_account: "ThreadSafeAccount", amount: float):
+        with self._lock:  # Acquisition #1
+            self.withdraw(amount)  # Calls method that attempts Acquisition #2!
+            target_account.deposit(amount)
+
+    def withdraw(self, amount: float):
+        with self._lock:  # Re-acquires safely because it's an RLock
+            if self._balance < amount:
+                raise ValueError("Insufficient balance")
+            self._balance -= amount
+
+# =========================================================================
+# 2. SEMAPHORE: RATE LIMITING CONCURRENT THREADS
+# =========================================================================
+# Allow maximum 2 concurrent worker threads to access the resource
+connection_pool_limiter = threading.Semaphore(2)
+
+def simulate_database_query(worker_id: int):
+    print(f"[Worker {worker_id}] Waiting for connection pool slot...")
+    with connection_pool_limiter:
+        print(f"[Worker {worker_id}] Slot ACQUIRED. Executing query...")
+        time.sleep(0.5)
+        print(f"[Worker {worker_id}] Query done. Releasing slot.")
+
+threads = [threading.Thread(target=simulate_database_query, args=(i,)) for i in range(4)]
+for t in threads: t.start()
+for t in threads: t.join()
+
+# =========================================================================
+# 3. EVENT: INTER-THREAD SIGNALING
+# =========================================================================
+shutdown_signal = threading.Event()
+
+def background_service_worker():
+    print("[Service] Background listener active...")
+    # Blocks until another thread sets the event
+    while not shutdown_signal.is_set():
+        print("[Service] Heartbeat ping OK")
+        time.sleep(0.3)
+    print("[Service] Shutdown signal detected! Cleaning up resources...")
+
+worker_t = threading.Thread(target=background_service_worker)
+worker_t.start()
+
+time.sleep(0.7)
+shutdown_signal.set()  # Signals worker to exit loop
+worker_t.join()
+
+# =========================================================================
+# 4. CONDITION VARIABLE (PRODUCER-CONSUMER BUFFER)
+# =========================================================================
+shared_buffer: List[int] = []
+buffer_condition = threading.Condition()
+BUFFER_CAPACITY = 2
+
+def producer_thread():
+    for item in range(1, 4):
+        with buffer_condition:
+            while len(shared_buffer) >= BUFFER_CAPACITY:
+                print("[Producer] Buffer full. Waiting for consumer...")
+                buffer_condition.wait()  # Releases lock and sleeps
+
+            shared_buffer.append(item)
+            print(f"[Producer] Produced item: {item}. Buffer: {shared_buffer}")
+            buffer_condition.notify_all()  # Wakes waiting consumers
+            time.sleep(0.1)
+
+def consumer_thread():
+    for _ in range(3):
+        with buffer_condition:
+            while len(shared_buffer) == 0:
+                print("[Consumer] Buffer empty. Waiting for producer...")
+                buffer_condition.wait()
+
+            item = shared_buffer.pop(0)
+            print(f"[Consumer] Consumed item: {item}. Buffer: {shared_buffer}")
+            buffer_condition.notify_all()  # Wakes waiting producer
+            time.sleep(0.2)
+
+p = threading.Thread(target=producer_thread)
+c = threading.Thread(target=consumer_thread)
+p.start(); c.start()
+p.join(); c.join()
+
+# =========================================================================
+# 5. THREAD-SAFE QUEUE (queue.Queue)
+# =========================================================================
+task_queue = queue.Queue(maxsize=5)
+
+def worker_consumer(q: queue.Queue):
+    while True:
+        task = q.get()  # Blocks until item is available
+        if task is None:  # Poison pill termination signal
+            q.task_done()
+            break
+        print(f"[Thread Queue Worker] Processing: {task}")
+        time.sleep(0.1)
+        q.task_done()
+
+worker = threading.Thread(target=worker_consumer, args=(task_queue,))
+worker.start()
+
+for job in ["Compile", "Run Tests", "Deploy"]:
+    task_queue.put(job)
+
+task_queue.join()     # Blocks until all items are processed (task_done called)
+task_queue.put(None)  # Send poison pill to stop worker thread
+worker.join()</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 43. MULTIPROCESSING: PIPES, PROCESS POOLS & SHARED MEMORY                -->
+  <!-- ========================================================================= -->
+  <section id="python-multiprocessing-ipc">
+    <h2>43. Multiprocessing: Inter-Process Communication (IPC), Pools & Shared Memory</h2>
+    <p>The <code>multiprocessing</code> module spawns separate operating system processes, each with its own CPython interpreter and memory space, allowing pure Python code to achieve true 100% parallel execution across all CPU cores.</p>
+
+    <h3>A. Inter-Process Communication (IPC) Mechanisms</h3>
+    <ul>
+      <li><strong><code>multiprocessing.Queue</code>:</strong> Process-safe FIFO pipe built on top of OS pipes and synchronization primitives. Automatically handles pickle serialization across process boundaries.</li>
+      <li><strong><code>multiprocessing.Pipe</code>:</strong> A direct, fast bidirectional (duplex) or unidirectional communication link between two specific processes returning two connection objects (<code>conn1</code>, <code>conn2</code>).</li>
+      <li><strong><code>multiprocessing.shared_memory</code> (Python 3.8+):</strong> Allocates direct, raw memory segments mapped into the virtual address space of multiple processes, allowing <strong>zero-copy data sharing</strong> (ideal for NumPy arrays).</li>
+    </ul>
+
+    <h3>B. Process Pools (<code>multiprocessing.Pool</code> vs <code>ProcessPoolExecutor</code>)</h3>
+    <p>Manages a fixed pool of pre-forked worker processes, distributing task queues across cores and aggregating results back to the parent process.</p>
+    <ul>
+      <li><strong><code>pool.map(func, iterable)</code>:</strong> Synchronous blocking map that chunks data and preserves input order.</li>
+      <li><strong><code>pool.imap_unordered(func, iterable)</code>:</strong> Lazy, memory-efficient generator returning results as soon as individual workers complete.</li>
+    </ul>
+
+    <pre><code>import multiprocessing as mp
+from multiprocessing import shared_memory
+from concurrent.futures import ProcessPoolExecutor
+import time
+import os
+
+# =========================================================================
+# 1. INTER-PROCESS COMMUNICATION VIA PIPES
+# =========================================================================
+def worker_pipe_node(pipe_conn):
+    print(f"[Worker PID {os.getpid()}] Child received connection handle.")
+    incoming_data = pipe_conn.recv()  # Blocks until data arrives through OS pipe
+    print(f"[Worker] Processing calculation for: {incoming_data}")
+
+    # Send result back through the pipe
+    pipe_conn.send({"result": incoming_data ** 2, "worker_pid": os.getpid()})
+    pipe_conn.close()
+
+# =========================================================================
+# 2. CPU-BOUND COMPUTATION VIA PROCESS POOL EXECUTOR
+# =========================================================================
+def heavy_cpu_factorizer(number: int) -> int:
+    """Simulates CPU-heavy mathematical prime factor summation."""
+    count = 0
+    for i in range(1, number + 1):
+        if number % i == 0:
+            count += 1
+    return count
+
+# =========================================================================
+# 3. ZERO-COPY SHARED MEMORY (multiprocessing.shared_memory)
+# =========================================================================
+def worker_shared_memory_writer(shm_name: str, size: int):
+    # Attach to existing shared memory block allocated by parent
+    existing_shm = shared_memory.SharedMemory(name=shm_name)
+    buffer = existing_shm.buf
+
+    # Mutate shared memory directly in-place across process boundary:
+    message = b"PROCESSED_DATA_PAYLOAD_OK"
+    buffer[:len(message)] = message
+    existing_shm.close()
+
+# =========================================================================
+# MAIN EXECUTION GUARD (MANDATORY FOR MULTIPROCESSING)
+# =========================================================================
+if __name__ == "__main__":
+    # 1. Pipe Demonstration
+    parent_conn, child_conn = mp.Pipe()
+    proc = mp.Process(target=worker_pipe_node, args=(child_conn,))
+    proc.start()
+
+    parent_conn.send(12)  # Send integer 12 through OS pipe
+    response = parent_conn.recv()
+    print("[Main Process] Pipe Response Received:", response)
+    proc.join()
+
+    # 2. Process Pool Demonstration across all physical CPU cores
+    tasks = [5_000_000, 5_000_001, 5_000_002, 5_000_003]
+    start_time = time.perf_counter()
+
+    with ProcessPoolExecutor(max_workers=os.cpu_count()) as executor:
+        results = list(executor.map(heavy_cpu_factorizer, tasks))
+
+    duration = time.perf_counter() - start_time
+    print(f"[ProcessPool] Processed {len(tasks)} CPU tasks across {os.cpu_count()} cores in {duration:.3f}s")
+    print("[ProcessPool] Results:", results)
+
+    # 3. Shared Memory Allocation & Clean Teardown
+    shm_size = 64  # Bytes
+    shm = shared_memory.SharedMemory(create=True, size=shm_size)
+
+    try:
+        shm_proc = mp.Process(target=worker_shared_memory_writer, args=(shm.name, shm_size))
+        shm_proc.start()
+        shm_proc.join()
+
+        # Read back bytes written directly by the child process without IPC copying
+        raw_bytes = bytes(shm.buf[:26])
+        print("[Shared Memory] Read directly from shared RAM:", raw_bytes.decode("utf-8"))
+    finally:
+        shm.close()
+        shm.unlink()  # Deallocates shared memory segment from the OS</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 44. PYTHON ASYNCIO: EVENT LOOP, COROUTINES, FUTURES & TASKS               -->
+  <!-- ========================================================================= -->
+  <section id="python-asyncio-core">
+    <h2>44. Python AsyncIO: Event Loop Architecture, Coroutines, Futures & Tasks</h2>
+    <p><code>asyncio</code> is Python's standard library framework for writing single-threaded concurrent code using the <strong>async/await</strong> syntax. It operates via cooperative multitasking, utilizing an event loop to schedule and multiplex thousands of non-blocking I/O operations simultaneously.</p>
+
+    <h3>A. The Core AsyncIO Architecture</h3>
+    <ul>
+      <li><strong>Event Loop:</strong> The central scheduler and dispatch engine running on the main thread. It monitors I/O readiness sockets (via OS-level primitives like <code>epoll</code> on Linux, <code>kqueue</code> on macOS, or <code>IOCP</code> on Windows), timers, and scheduled task queues.</li>
+      <li><strong>Coroutine (<code>async def</code>):</strong> A specialized function that returns a Coroutine Object when called (does not run immediately). It yields control explicitly back to the event loop whenever it encounters an <code>await</code> expression.</li>
+      <li><strong><code>asyncio.Future</code>:</strong> A low-level object representing an eventual result of an asynchronous operation (the exact conceptual equivalent of a JavaScript <code>Promise</code>). It starts in a pending state and transitions to finished or failed when <code>set_result()</code> or <code>set_exception()</code> is called.</li>
+      <li><strong><code>asyncio.Task</code>:</strong> A concrete subclass of <code>Future</code> that wraps and drives a Coroutine. Instantiating a task via <code>asyncio.create_task()</code> schedules the coroutine on the event loop immediately for background execution.</li>
+    </ul>
+
+    <h3>B. Concurrent Orchestration: <code>create_task</code> vs <code>asyncio.gather</code></h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Construct</th>
+          <th>Primary Role</th>
+          <th>Scheduling Behavior</th>
+          <th>Error Handling Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><code>asyncio.create_task(coro)</code></strong></td>
+          <td>Fires off a background coroutine without blocking the current flow.</td>
+          <td>Schedules coroutine on the active loop immediately as a background task.</td>
+          <td>Attach callback via <code>.add_done_callback()</code> or capture exception upon <code>await task</code>.</td>
+        </tr>
+        <tr>
+          <td><strong><code>asyncio.gather(*aws)</code></strong></td>
+          <td>Aggregates multiple awaitables and awaits them concurrently to collect all results.</td>
+          <td>Wraps passed coroutines into Tasks and awaits completion of the entire batch.</td>
+          <td><code>return_exceptions=False</code> (Rejects on first error) vs <code>return_exceptions=True</code> (Captures exceptions as items in the returned list).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>import asyncio
+import time
+from typing import Any, List
+
+# =========================================================================
+# 1. COROUTINES, FUTURES & BACKGROUND TASKS
+# =========================================================================
+async def fetch_remote_resource(service_name: str, delay: float) -> dict[str, Any]:
+    print(f"[{service_name}] Request dispatched. Sleeping for {delay}s...")
+    # asyncio.sleep yields execution control back to the event loop
+    await asyncio.sleep(delay)
+    print(f"[{service_name}] Response payload received!")
+    return {"service": service_name, "status": 200, "data": f"{service_name}_PAYLOAD"}
+
+
+async def demonstrate_tasks():
+    print("--- 1. Immediate Background Scheduling via create_task ---")
+    start = time.perf_counter()
+
+    # create_task schedules execution IMMEDIATELY on the loop
+    task_auth = asyncio.create_task(fetch_remote_resource("AuthService", 0.3))
+    task_billing = asyncio.create_task(fetch_remote_resource("BillingService", 0.2))
+
+    print("[Main Coroutine] Tasks scheduled in background. Doing synchronous work...")
+    await asyncio.sleep(0.05) # Yield briefly
+
+    # Await resolution of individual background tasks
+    auth_data = await task_auth
+    billing_data = await task_billing
+
+    elapsed = time.perf_counter() - start
+    print(f"[create_task] Completed concurrently in {elapsed:.3f}s")
+    print(f"Results: {auth_data['service']}, {billing_data['service']}")
+
+
+# =========================================================================
+# 2. CONCURRENT AGGREGATION VIA asyncio.gather()
+# =========================================================================
+async def faulty_worker(task_id: int) -> str:
+    await asyncio.sleep(0.1)
+    if task_id == 2:
+        raise ConnectionResetError(f"Task {task_id} socket dropped!")
+    return f"Task {task_id} Output"
+
+
+async def demonstrate_gather():
+    print("\n--- 2. Concurrent Aggregation with asyncio.gather ---")
+
+    # Mode A: Default (First exception interrupts and raises)
+    try:
+        await asyncio.gather(faulty_worker(1), faulty_worker(2), faulty_worker(3))
+    except ConnectionResetError as err:
+        print(f"[gather Default] Aborted with exception: {err}")
+
+    # Mode B: return_exceptions=True (Captures exceptions as return values, continuing others)
+    results: List[Any] = await asyncio.gather(
+        faulty_worker(1),
+        faulty_worker(2),
+        faulty_worker(3),
+        return_exceptions=True
+    )
+
+    print("[gather Safe] All tasks evaluated:")
+    for idx, item in enumerate(results, 1):
+        if isinstance(item, Exception):
+            print(f" -> Worker {idx} Error Caught: {item}")
+        else:
+            print(f" -> Worker {idx} Result: {item}")
+
+# Run the coroutines
+asyncio.run(demonstrate_tasks())
+asyncio.run(demonstrate_gather())</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 45. ASYNC CANCELLATION, TIMEOUTS & STREAMING GENERATORS                   -->
+  <!-- ========================================================================= -->
+  <section id="python-asyncio-cancellation-streams">
+    <h2>45. AsyncIO Cancellation, Timeouts, Async Iterators & Generators</h2>
+    <p>Managing asynchronous lifecycles requires structured mechanisms for aborting hung operations, enforcing maximum duration limits, and lazily consuming infinite or real-time event streams.</p>
+
+    <h3>A. Task Cancellation Mechanics</h3>
+    <ul>
+      <li>Calling <code>task.cancel()</code> injects an <code>asyncio.CancelledError</code> directly into the coroutine at its currently paused <code>await</code> point.</li>
+      <li>Coroutines can catch <code>asyncio.CancelledError</code> using standard <code>try...finally</code> blocks to flush resources, close sockets, or save state before re-raising or terminating.</li>
+    </ul>
+
+    <h3>B. Enforcing Timeouts: <code>asyncio.wait_for</code> vs <code>asyncio.timeout</code></h3>
+    <ul>
+      <li><strong><code>asyncio.wait_for(coro, timeout=N)</code>:</strong> Standard legacy API that awaits an operation for up to $N$ seconds, automatically cancelling the inner task and raising <code>asyncio.TimeoutError</code> if exceeded.</li>
+      <li><strong><code>async asyncio.timeout(delay)</code> (Python 3.11+):</strong> Modern, clean asynchronous context manager providing structured timeout boundaries around entire blocks of code.</li>
+    </ul>
+
+    <h3>C. Asynchronous Iteration Protocols (<code>__aiter__</code> & <code>__anext__</code>)</h3>
+    <p>Similar to synchronous iterators, asynchronous iterators allow <code>await</code> operations inside sequence stepping. An <strong>Async Generator</strong> (a function using <code>async def</code> and <code>yield</code>) produces values consumed via <code>async for item in stream:</code>.</p>
+
+    <pre><code>import asyncio
+from typing import AsyncIterator
+
+# =========================================================================
+# 1. TASK CANCELLATION LIFECYCLE
+# =========================================================================
+async def persistent_heartbeat_worker():
+    try:
+        iteration = 0
+        while True:
+            iteration += 1
+            print(f"[Heartbeat] Ping #{iteration} emitted.")
+            await asyncio.sleep(0.2)
+    except asyncio.CancelledError:
+        print("[Heartbeat] CancelledError intercepted! Cleaning up sockets and locks...")
+        # Raising is standard so the event loop confirms task cancellation:
+        raise
+    finally:
+        print("[Heartbeat] Teardown complete. Worker fully dead.")
+
+
+async def demonstrate_cancellation():
+    print("--- 1. Task Cancellation Flow ---")
+    hb_task = asyncio.create_task(persistent_heartbeat_worker())
+
+    await asyncio.sleep(0.5) # Allow worker to run for 2-3 iterations
+    print("[Supervisor] Requesting task cancellation...")
+    hb_task.cancel() # Injects CancelledError into persistent_heartbeat_worker
+
+    try:
+        await hb_task
+    except asyncio.CancelledError:
+        print("[Supervisor] Confirmation: Task acknowledged cancellation.")
+
+
+# =========================================================================
+# 2. TIMEOUT ENFORCEMENT (asyncio.wait_for & Python 3.11+ asyncio.timeout)
+# =========================================================================
+async def slow_database_query():
+    print("[Database] Starting heavy analytical calculation (takes 3s)...")
+    await asyncio.sleep(3.0)
+    return "QUERY_RESULT_ROWS"
+
+
+async def demonstrate_timeouts():
+    print("\n--- 2. Enforcing Operational Timeouts ---")
+
+    # Modern context manager (Python 3.11+)
+    try:
+        async with asyncio.timeout(0.5): # Max 500ms limit
+            await slow_database_query()
+    except TimeoutError:
+        print("[Timeout Handler] Operation cancelled: Database exceeded 0.5s limit!")
+
+
+# =========================================================================
+# 3. ASYNC ITERATORS & ASYNC GENERATORS (yield in async def)
+# =========================================================================
+# Custom Class-based Async Iterator
+class RealTimePriceFeed:
+    def __init__(self, symbol: str, total_ticks: int):
+        self.symbol = symbol
+        self.total_ticks = total_ticks
+        self.current_tick = 0
+
+    def __aiter__(self):
+        return self
+
+    async def __anext__(self) -> dict[str, Any]:
+        if self.current_tick >= self.total_ticks:
+            raise StopAsyncIteration # Exhausts the async for loop
+
+        self.current_tick += 1
+        await asyncio.sleep(0.1) # Simulates network stream delay
+        return {
+            "symbol": self.symbol,
+            "tick": self.current_tick,
+            "price": 100.0 + (self.current_tick * 1.5)
+        }
+
+
+# Async Generator Function (Convenience syntax for streaming)
+async def event_log_stream(service_id: str, count: int) -> AsyncIterator[str]:
+    for i in range(1, count + 1):
+        await asyncio.sleep(0.08) # Simulates event wait
+        yield f"[{service_id}] Event log #{i} at {time.time():.2f}"
+
+
+async def demonstrate_streaming():
+    print("\n--- 3. Consuming Async Iterators & Generators via async for ---")
+
+    # Consuming custom class async iterator
+    print("[Feed] Streaming Live Ticks:")
+    async for tick_data in RealTimePriceFeed("BTC/USD", 3):
+        print(" -> Received Price Tick:", tick_data)
+
+    # Consuming async generator function
+    print("[Logs] Streaming Live Logs:")
+    async for log_message in event_log_stream("AUTH_GATEWAY", 3):
+        print(" ->", log_message)
+
+
+# Entry point runner
+async def main():
+    await demonstrate_cancellation()
+    await demonstrate_timeouts()
+    await demonstrate_streaming()
+
+asyncio.run(main())</code></pre>
+  </section>
 </body>
 </html>
