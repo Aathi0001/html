@@ -9317,6 +9317,548 @@ Contains key 3? true
   </tr>
 </table>
 
+<!-- ========================================================================= -->
+  <!-- 46. JAVA GENERICS & TYPE ERASURE                                          -->
+  <!-- ========================================================================= -->
+  <section id="java-generics">
+    <h2>46. Java Generics: Classes, Methods, Wildcards & Type Erasure</h2>
+    <p>Java Generics provide compile-time type safety, eliminating runtime <code>ClassCastException</code> hazards by allowing types (classes and interfaces) to act as parameters when defining classes, interfaces, and methods.</p>
 
+    <h3>A. Invariance, Covariance, and Contravariance (PECS Rule)</h3>
+    <p>In Java, generic types are <strong>invariant</strong> by default (i.e., <code>List&lt;String&gt;</code> is <strong>not</strong> a subtype of <code>List&lt;Object&gt;</code>). Wildcards enable flexible polymorphism following the <strong>PECS Principle: Producer <code>extends</code>, Consumer <code>super</code></strong>.</p>
+    <ul>
+      <li><strong>Upper-Bounded Wildcard (<code>? extends T</code> - Covariance):</strong> Used when you only <em>read/produce</em> data from the structure. You can safely read items as type <code>T</code>, but you <strong>cannot write</strong> anything (except <code>null</code>) because the compiler cannot verify the concrete underlying subtype.</li>
+      <li><strong>Lower-Bounded Wildcard (<code>? super T</code> - Contravariance):</strong> Used when you only <em>write/consume</em> data into the structure. You can safely append instances of <code>T</code> (and its subclasses), but elements read out are typed only as <code>Object</code>.</li>
+      <li><strong>Unbounded Wildcard (<code>?</code>):</strong> Represents an unknown type (<code>? extends Object</code>). Used when operations rely strictly on <code>Object</code> methods or collection metadata (e.g., <code>size()</code>, <code>clear()</code>).</li>
+    </ul>
+
+    <h3>B. Type Erasure Under the Hood</h3>
+    <p>Generics were introduced in Java 5 with strict backward compatibility constraints for existing non-generic bytecode (raw types). The Java compiler enforces type constraints at compile time, then applies <strong>Type Erasure</strong>:</p>
+    <ol>
+      <li>Replaces all type parameters with their upper bound (e.g., <code>&lt;T&gt;</code> becomes <code>Object</code>, while <code>&lt;T extends Number&gt;</code> becomes <code>Number</code>).</li>
+      <li>Inserts explicit byte-level casts where necessary to maintain type safety when reading.</li>
+      <li>Generates synthetic <strong>bridge methods</strong> to preserve polymorphism in extended generic classes.</li>
+      <li><em>Consequence:</em> Type parameters <strong>do not exist at runtime</strong>. You cannot perform <code>new T()</code>, <code>new T[10]</code>, or <code>instanceof List&lt;String&gt;</code>.</li>
+    </ol>
+
+    <pre><code>import java.util.ArrayList;
+import java.util.List;
+
+// =========================================================================
+// 1. GENERIC CLASS & GENERIC METHODS
+// =========================================================================
+public class Repository&lt;T, ID&gt; {
+    private final List&lt;T&gt; database = new ArrayList&lt;&gt;();
+
+    public void persist(T entity) {
+        database.add(entity);
+    }
+
+    public T findByIndex(int index) {
+        return database.get(index);
+    }
+
+    // Generic Method with Type Parameter independent of class types
+    public static &lt;E extends Comparable&lt;E&gt;&gt; E findMax(List&lt;E&gt; list) {
+        if (list == null || list.isEmpty()) return null;
+        E max = list.get(0);
+        for (E item : list) {
+            if (item.compareTo(max) &gt; 0) {
+                max = item;
+            }
+        }
+        return max;
+    }
+}
+
+// =========================================================================
+// 2. PECS IN ACTION (Producer extends, Consumer super)
+// =========================================================================
+class DataPipeline {
+    // Producer Extends: Reads numbers out of 'source' and computes sum
+    public static double sumOfList(List&lt;? extends Number&gt; source) {
+        double sum = 0.0;
+        for (Number num : source) {
+            sum += num.doubleValue(); // Safe read
+        }
+        // source.add(10); // COMPILE ERROR: Cannot insert into <? extends Number>
+        return sum;
+    }
+
+    // Consumer Super: Appends integers into 'destination'
+    public static void appendIntegers(List&lt;? super Integer&gt; destination) {
+        destination.add(100); // Safe write
+        destination.add(200); // Safe write
+        // Integer item = destination.get(0); // COMPILE ERROR: Returns Object, not Integer
+    }
+}</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 47. JAVA MODERN FEATURES (JAVA 8 THROUGH JAVA 21+)                        -->
+  <!-- ========================================================================= -->
+  <section id="java-modern-features">
+    <h2>47. Modern Java: Functional Pipelines, Immutability & Pattern Matching</h2>
+    <p>Modern Java versions (Java 8 through 21 LTS) transformed the language from a verbose, purely imperative OOP model into an expressive hybrid supporting functional paradigms, data-oriented programming, and declarative pattern matching.</p>
+
+    <h3>A. Modern Features Reference Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Introduced</th>
+          <th>Core Purpose</th>
+          <th>Primary Syntax / Usage</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lambdas & Functional Interfaces</strong></td>
+          <td>Java 8</td>
+          <td>Treats behavior as first-class citizens using Single Abstract Method (SAM) types.</td>
+          <td><code>(x, y) -&gt; x + y</code> with <code>@FunctionalInterface</code> (Predicate, Function, Consumer, Supplier).</td>
+        </tr>
+        <tr>
+          <td><strong>Stream API</strong></td>
+          <td>Java 8</td>
+          <td>Declarative, parallelizable data transformations over collections.</td>
+          <td><code>list.stream().filter(...).map(...).collect(toList())</code></td>
+        </tr>
+        <tr>
+          <td><strong>Optional&lt;T&gt;</strong></td>
+          <td>Java 8</td>
+          <td>Type-level container explicitly modeling the absence of a value; avoids <code>NullPointerException</code>.</td>
+          <td><code>Optional.ofNullable(val).map(...).orElseGet(...)</code></td>
+        </tr>
+        <tr>
+          <td><strong>Records</strong></td>
+          <td>Java 16</td>
+          <td>Transparent, immutable data carriers. Automatically generates constructor, getters, <code>equals</code>, <code>hashCode</code>, and <code>toString</code>.</td>
+          <td><code>public record UserDto(String id, String email) {}</code></td>
+        </tr>
+        <tr>
+          <td><strong>Sealed Classes</strong></td>
+          <td>Java 17</td>
+          <td>Restricts class hierarchies by permitting only explicitly listed subclasses.</td>
+          <td><code>public sealed class Shape permits Circle, Square {}</code></td>
+        </tr>
+        <tr>
+          <td><strong>Pattern Matching & Switch</strong></td>
+          <td>Java 17–21</td>
+          <td>Eliminates manual casting with type patterns, guarded <code>when</code> clauses, and exhaustive expressions.</td>
+          <td><code>case Circle c when c.radius() &gt; 5 -&gt; ...</code></td>
+        </tr>
+        <tr>
+          <td><strong>Text Blocks</strong></td>
+          <td>Java 15</td>
+          <td>Multi-line string literals with automatic indentation stripping.</td>
+          <td><code>""" ... """</code></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>import java.util.*;
+import java.util.stream.Collectors;
+
+// =========================================================================
+// 1. RECORDS & SEALED HIERARCHIES (DATA-ORIENTED PROGRAMMING)
+// =========================================================================
+public sealed interface PaymentStatus permits Authorized, Settled, Declined {}
+
+record Authorized(String authCode, double amount) implements PaymentStatus {}
+record Settled(String transactionId, double amount, long timestamp) implements PaymentStatus {}
+record Declined(int errorCode, String reason) implements PaymentStatus {}
+
+// Immutable Data Record with Compact Constructor Validation
+record Order(String orderId, String customerEmail, double totalAmount, PaymentStatus status) {
+    public Order {
+        // Validation inside compact constructor
+        if (totalAmount &lt; 0) {
+            throw new IllegalArgumentException("Total amount cannot be negative");
+        }
+        Objects.requireNonNull(orderId, "orderId must not be null");
+    }
+}
+
+// =========================================================================
+// 2. PATTERN MATCHING SWITCH EXPRESSIONS & STREAM API
+// =========================================================================
+class ModernJavaDemo {
+    // Switch Expression with Pattern Matching & Guard Conditions (when)
+    public static String processPayment(PaymentStatus status) {
+        return switch (status) {
+            case Authorized a when a.amount() &gt; 10000.0 -&gt; 
+                "High-value auth pending audit: " + a.authCode();
+            case Authorized a -&gt; 
+                "Standard auth: " + a.authCode();
+            case Settled s -&gt; 
+                "Settled TX #" + s.transactionId() + " at " + s.timestamp();
+            case Declined d -&gt; 
+                "Declined (" + d.errorCode() + "): " + d.reason();
+            // No default branch required: Compiler proves sealed hierarchy is 100% exhaustive!
+        };
+    }
+
+    public static void runStreamPipeline(List&lt;Order&gt; orders) {
+        // Stream Pipeline: Filter, Map, Group, and Aggregate
+        Map&lt;String, Double&gt; revenueByCustomer = orders.stream()
+            .filter(o -&gt; o.status() instanceof Settled) // Pattern matching in stream
+            .collect(Collectors.groupingBy(
+                Order::customerEmail,
+                Collectors.summingDouble(Order::totalAmount)
+            ));
+
+        // Optional API handling
+        Optional&lt;Order&gt; highestOrder = orders.stream()
+            .max(Comparator.comparingDouble(Order::totalAmount));
+
+        String report = highestOrder
+            .map(o -&gt; "Top Order ID: " + o.orderId())
+            .orElse("No orders found");
+        
+        System.out.println(report);
+    }
+
+    // Text Blocks (Multi-line formatted strings)
+    public static String getJsonSchema() {
+        return """
+            {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "title": "OrderPayload",
+                "type": "object",
+                "required": ["orderId", "totalAmount"]
+            }
+            """;
+    }
+}</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 48. JVM ARCHITECTURE, MEMORY MODEL & EXECUTION ENGINE                     -->
+  <!-- ========================================================================= -->
+  <section id="jvm-architecture-internals">
+    <h2>48. JVM Architecture: ClassLoading, Memory Subsystems, JIT & Memory Model</h2>
+    <p>The Java Virtual Machine (JVM) is an abstract computing machine that provides a platform-independent runtime environment. It compiles Java bytecode into optimized native machine code dynamically during runtime execution.</p>
+
+    <!-- Text-based JVM Internal Architecture Diagram -->
+    <pre><code>+-----------------------------------------------------------------------------------------+
+|                                  CLASS LOADER SUBSYSTEM                                 |
+|      1. Loading (Bootstrap -> Extension/Platform -> Application ClassLoader)           |
+|      2. Linking (Verification -> Preparation [static defaults] -> Resolution)           |
+|      3. Initialization (Executes &lt;clinit&gt; static blocks & variable assignments)           |
++-----------------------------------------------------------------------------------------+
+                                             │
+                                             ▼
++-----------------------------------------------------------------------------------------+
+|                                RUNTIME DATA AREAS (MEMORY)                              |
+|                                                                                         |
+|   +----------------------------------------------------+  +-------------------------+   |
+|   |                    HEAP MEMORY                     |  |       METASPACE         |   |
+|   |  +--------------------+  +-----------------------+ |  | (Native OS Memory)      |   |
+|   |  | Young Generation   |  | Old Generation (Tenured| |  | - Class Metadata        |   |
+|   |  | - Eden             |  | - Long-lived Objects   | |  | - Constant Pool         |   |
+|   |  | - S0 / S1 Survivor |  |                        | |  | - Static Fields         |   |
+|   |  +--------------------+  +-----------------------+ |  +-------------------------+   |
+|   +----------------------------------------------------+                                |
+|                                                                                         |
+|   +-----------------------+  +------------------------+  +--------------------------+   |
+|   |     JVM THREAD STACK  |  |    PROGRAM COUNTER     |  |    NATIVE METHOD STACK   |   |
+|   | (Frames, Primitives,  |  |   (PC Register per     |  |   (C/C++ JNI Invocations)|   |
+|   |  Object References)   |  |        thread)         |  |                          |   |
+|   +-----------------------+  +------------------------+  +--------------------------+   |
++-----------------------------------------------------------------------------------------+
+                                             │
+                                             ▼
++-----------------------------------------------------------------------------------------+
+|                                    EXECUTION ENGINE                                     |
+|                                                                                         |
+|   +---------------------+  +-------------------------------------+  +---------------+   |
+|   |     INTERPRETER     |  |     JIT (JUST-IN-TIME) COMPILER     |  |    GARBAGE    |   |
+|   | (Reads bytecode     |  | - C1 (Client Compiler - Fast tiered)|  |   COLLECTOR   |   |
+|   |  line-by-line)      |  | - C2 (Server Compiler - Deep opts)  |  | (ZGC, G1,     |   |
+|   |                     |  | - Profiler, Inlining, Escape Analysis| |  Parallel, CMS)|  |
+|   +---------------------+  +-------------------------------------+  +---------------+   |
++-----------------------------------------------------------------------------------------+</code></pre>
+
+    <h3>A. Memory Subsystems Breakdown</h3>
+    <ul>
+      <li><strong>Heap Memory:</strong> Shared among all threads. Houses all class instances and arrays. Partitioned into the <strong>Young Generation</strong> (Eden, Survivor 0, Survivor 1) where objects are initially allocated, and the <strong>Old Generation</strong> (Tenured) for objects surviving multiple GC collection cycles.</li>
+      <li><strong>JVM Thread Stack:</strong> Created per thread. Stores LIFO stack frames containing local primitive variables, partial results, and reference pointers to heap objects.</li>
+      <li><strong>Metaspace (Native Memory):</strong> Replaced PermGen in Java 8. Located out-of-heap in raw OS RAM. Houses runtime class definitions, method bytecode structures, and the constant pool. Grows dynamically up to the OS limit unless constrained via <code>-XX:MaxMetaspaceSize</code>.</li>
+    </ul>
+
+    <h3>B. JIT Compilation, Tiered Compilation & Escape Analysis</h3>
+    <ul>
+      <li><strong>Tiered Compilation:</strong> The JVM starts by executing bytecode via the fast <strong>Interpreter</strong>. Frequently invoked loops or methods ("hot code") are compiled to machine code by <strong>C1 (Tier 1-3)</strong> for quick optimization, and finally recompiled by <strong>C2 (Tier 4)</strong> with heavy aggressive optimizations.</li>
+      <li><strong>Escape Analysis:</strong> The JIT compiler determines if an object's reference escapes beyond the current method scope. If an object never escapes, the JVM applies <strong>Scalar Replacement</strong>—breaking the object down and allocating its fields directly on the stack rather than on the heap, completely bypassing Garbage Collection.</li>
+    </ul>
+
+    <h3>C. Modern Garbage Collectors Comparison Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Collector</th>
+          <th>Primary Goal</th>
+          <th>Pause Times (Stop-the-World)</th>
+          <th>Ideal Heap Size / Workload</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>G1 GC (Default)</strong></td>
+          <td>Balanced throughput and predictable pause times. Divides heap into equal regions.</td>
+          <td>Configurable target (e.g., <code>-XX:MaxGCPauseMillis=200</code>, typically 50–200ms).</td>
+          <td>4 GB – 64 GB heaps; standard enterprise microservices and Web backends.</td>
+        </tr>
+        <tr>
+          <td><strong>ZGC (Generational ZGC)</strong></td>
+          <td>Ultra-low latency; performs almost all GC phases concurrently without stopping application threads.</td>
+          <td><strong>Sub-millisecond (&lt; 1ms)</strong>, independent of heap size.</td>
+          <td>Heaps from 16 MB to <strong>16 Terabytes</strong>; financial trading systems, gaming servers.</td>
+        </tr>
+        <tr>
+          <td><strong>Parallel GC</strong></td>
+          <td>Maximum throughput; maximizes CPU utilization by stopping threads and using all cores for GC.</td>
+          <td>Higher pause times (seconds on large heaps).</td>
+          <td>Batch processing, offline crunching, non-interactive big data jobs.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>D. Java Memory Model (JMM) & Hardware Coherency</h3>
+    <ul>
+      <li><strong>Instruction Reordering:</strong> Compilers and CPU hardware out-of-order execution pipelines may reorder bytecode instructions unless constrained by memory barriers.</li>
+      <li><strong><code>volatile</code> Keyword:</strong> Guarantees <strong>visibility</strong> (writes by one thread are immediately flushed to main memory and made visible to all other CPU caches) and prevents compiler reordering via <strong>Happens-Before</strong> memory barriers. (Note: <code>volatile</code> does <em>not</em> guarantee atomicity for compound operations like <code>count++</code>).</li>
+    </ul>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 49. JAVA CONCURRENCY: CLASSIC THREADS, EXECUTORS & LOCKS                  -->
+  <!-- ========================================================================= -->
+  <section id="java-classic-concurrency">
+    <h2>49. Classic Java Concurrency: Thread Pools, Locks, Atomics & CompletableFuture</h2>
+    <p>Java provides a comprehensive suite of concurrency abstractions ranging from bare OS thread bindings to lock-free atomic primitives and composable asynchronous pipelines.</p>
+
+    <h3>A. Concurrency Primitives & Mechanics</h3>
+    <ul>
+      <li><strong><code>Thread</code> vs <code>Runnable</code> vs <code>Callable&lt;V&gt;</code>:</strong> <code>Runnable</code> defines a <code>void run()</code> task that cannot return a value or throw checked exceptions. <code>Callable&lt;V&gt;</code> defines a <code>V call()</code> task that returns a computed result and can propagate checked exceptions.</li>
+      <li><strong><code>ExecutorService</code> & <code>ThreadPoolExecutor</code>:</strong> Manages a pool of reusable worker threads backed by a work blocking queue (<code>LinkedBlockingQueue</code>, <code>ArrayBlockingQueue</code>), avoiding the high OS overhead of constantly destroying and recreating threads.</li>
+      <li><strong><code>ForkJoinPool</code>:</strong> Work-stealing thread pool designed for recursive divide-and-conquer tasks. Idle threads "steal" tasks from the tail of busy threads' local double-ended queues (deques). Backs <code>CompletableFuture</code> and parallel streams.</li>
+      <li><strong>Lock-Free Atomics (<code>AtomicInteger</code>, <code>AtomicReference</code>):</strong> Implemented at the CPU hardware level using <strong>Compare-And-Swap (CAS)</strong> atomic instructions without acquiring OS-level mutex locks.</li>
+      <li><strong><code>ReentrantLock</code> & <code>ReentrantReadWriteLock</code>:</strong> Explicit locking structures providing fair queuing policies, timed lock acquisition (<code>tryLock()</code>), and separate shared read/exclusive write access controls.</li>
+    </ul>
+
+    <pre><code>import java.util.concurrent.*;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class ClassicConcurrencyMastery {
+
+    // 1. Thread-safe Lock-free counter using Hardware CAS (Compare-And-Swap)
+    private static final AtomicLong atomicCounter = new AtomicLong(0);
+
+    // 2. Explicit Reentrant Lock with tryLock capability
+    private static final ReentrantLock explicitLock = new ReentrantLock(true); // Fair lock
+
+    public static void executeThreadPool() throws InterruptedException, ExecutionException {
+        // Custom ThreadPoolExecutor Architecture:
+        // Core pool: 4, Max pool: 8, KeepAlive: 60s, Queue capacity: 100 tasks
+        ExecutorService executor = new ThreadPoolExecutor(
+            4, 8, 60L, TimeUnit.SECONDS,
+            new LinkedBlockingQueue&lt;&gt;(100),
+            Executors.defaultThreadFactory(),
+            new ThreadPoolExecutor.CallerRunsPolicy() // Backpressure handler
+        );
+
+        // Submitting Callable tasks
+        Future&lt;String&gt; futureResult = executor.submit(() -&gt; {
+            Thread.sleep(100);
+            atomicCounter.incrementAndGet();
+            return "Task completed by " + Thread.currentThread().getName();
+        });
+
+        System.out.println("Future blocking get: " + futureResult.get());
+        executor.shutdown();
+        executor.awaitTermination(5, TimeUnit.SECONDS);
+    }
+
+    // =========================================================================
+    // 3. CompletableFuture (ASYNCHRONOUS COMPOSITION & CHAINING)
+    // =========================================================================
+    public static void executeCompletablePipeline() {
+        CompletableFuture.supplyAsync(() -&gt; {
+            // Step 1: Simulate non-blocking async network fetch (ForkJoinPool.commonPool)
+            return "PAYLOAD_ORDER_5541";
+        })
+        .thenApplyAsync(payload -&gt; {
+            // Step 2: Transform / parse data
+            return payload + "_VERIFIED";
+        })
+        .thenAccept(finalResult -&gt; {
+            // Step 3: Consume output
+            System.out.println("[CompletableFuture] Stream finished: " + finalResult);
+        })
+        .exceptionally(throwable -&gt; {
+            // Error handling boundary
+            System.err.println("Pipeline failed: " + throwable.getMessage());
+            return null;
+        });
+    }
+
+    // =========================================================================
+    // 4. EXPLICIT LOCKING WITH TRACEABLE TIMEOUTS
+    // =========================================================================
+    public static void criticalSection() {
+        try {
+            // Non-blocking attempt to acquire lock within 500ms window
+            if (explicitLock.tryLock(500, TimeUnit.MILLISECONDS)) {
+                try {
+                    // Safe mutation of shared critical state
+                    System.out.println("Lock acquired safely by " + Thread.currentThread().getName());
+                } finally {
+                    explicitLock.unlock(); // Always release in finally block
+                }
+            } else {
+                System.out.println("Could not acquire lock; performing fallback logic");
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+}</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 50. JAVA 21 PROJECT LOOM & VIRTUAL THREADS                                -->
+  <!-- ========================================================================= -->
+  <section id="java-virtual-threads-loom">
+    <h2>50. Java 21 Project Loom: Virtual Threads & High-Throughput Concurrency</h2>
+    <p>Java 21 introduces <strong>Virtual Threads</strong> via Project Loom, fundamentally changing JVM scalability by decoupling Java threads from heavy Operating System (1:1 Kernel) threads.</p>
+
+    <h3>A. Platform Threads vs. Virtual Threads</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric / Characteristic</th>
+          <th>Platform (Classic OS) Threads</th>
+          <th>Virtual Threads (Project Loom)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>OS Mapping</strong></td>
+          <td><strong>1 : 1</strong> (1 Java Thread = 1 OS Kernel Thread)</td>
+          <td><strong>$M : N$</strong> (Millions of Virtual Threads multiplexed onto a few Carrier OS Threads)</td>
+        </tr>
+        <tr>
+          <td><strong>Memory Footprint</strong></td>
+          <td><strong>~1 MB</strong> fixed OS stack per thread</td>
+          <td><strong>~few hundred bytes</strong> (Allocated on heap; dynamically grows/shrinks)</td>
+        </tr>
+        <tr>
+          <td><strong>Context Switch Overhead</strong></td>
+          <td>Heavy kernel context switch (CPU ring transition, ~1–10 µs)</td>
+          <td>Lightweight user-space JVM continuation switch (~nanoseconds)</td>
+        </tr>
+        <tr>
+          <td><strong>Scalability Limit</strong></td>
+          <td>Thousands (~2,000 to 5,000 max before OS memory exhaustion)</td>
+          <td><strong>Millions</strong> concurrently within standard heap limits</td>
+        </tr>
+        <tr>
+          <td><strong>Blocking Behavior</strong></td>
+          <td>Blocks the entire underlying OS Kernel thread on I/O</td>
+          <td><strong>Unmounts continuation</strong> from carrier thread on I/O; carrier runs other tasks</td>
+        </tr>
+        <tr>
+          <td><strong>Pooling Recommendation</strong></td>
+          <td><strong>Must pool</strong> (via <code>ExecutorService</code>) to avoid destruction cost</td>
+          <td><strong>Never pool</strong>; create ephemerally per task and discard upon completion</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>B. Continuation Unmounting & Carrier Thread Lifecycle</h3>
+    <p>When code running on a Virtual Thread initiates a blocking I/O operation (e.g., <code>SocketInputStream.read()</code>, <code>Thread.sleep()</code>, JDBC query):</p>
+    <ol>
+      <li>The JVM intercepts the blocking call at the runtime boundary.</li>
+      <li>The Virtual Thread's call stack is <strong>unmounted</strong> from its underlying OS <em>Carrier Thread</em> and preserved in the JVM Heap as a Continuation state.</li>
+      <li>The Carrier Thread is immediately free to execute another Virtual Thread.</li>
+      <li>When the OS signals that the I/O operation has completed (via <code>epoll</code>/<code>kqueue</code>), the JVM re-queues the continuation. Any available Carrier Thread <strong>remounts</strong> the Virtual Thread's stack and resumes execution seamlessly.</li>
+    </ol>
+
+    <div class="warning">
+      <strong>Thread Pinning Warning:</strong> Avoid executing blocking I/O inside a <code>synchronized</code> block or native method (JNI). This "pins" the Virtual Thread to its Carrier Thread, preventing it from unmounting. Use <code>ReentrantLock</code> instead of <code>synchronized</code> in Virtual Thread workloads.
+    </div>
+
+    <pre><code>import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
+
+public class VirtualThreadsMastery {
+
+    // Spawning 100,000 concurrent Virtual Threads without crashing the OS or JVM
+    public static void runMassiveVirtualThreadTasks() {
+        System.out.println("Launching 100,000 concurrent Virtual Threads...");
+        long startTime = System.currentTimeMillis();
+
+        // Native Virtual Thread Per-Task Executor (Java 21+)
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            IntStream.range(0, 100_000).forEach(taskId -&gt; {
+                executor.submit(() -&gt; {
+                    // Simulating blocking I/O: Thread unmounts here; zero OS threads are blocked!
+                    Thread.sleep(Duration.ofMillis(500));
+                    return taskId;
+                });
+            });
+            // try-with-resources automatically invokes executor.close(),
+            // which waits for ALL 100,000 virtual threads to finish!
+        }
+
+        long elapsed = System.currentTimeMillis() - startTime;
+        System.out.println("Finished 100,000 tasks in: " + elapsed + " ms");
+    }
+
+    // Creating a Single Named Virtual Thread directly
+    public static void createExplicitVirtualThread() throws InterruptedException {
+        Thread vThread = Thread.ofVirtual()
+            .name("payment-worker-", 1)
+            .start(() -&gt; {
+                System.out.println("Running on Virtual Thread: " + Thread.currentThread());
+                // Proof that underlying carrier thread is a ForkJoinWorkerThread:
+                // Output: VirtualThread[#32,payment-worker-1]/runnable@ForkJoinPool-1-worker-1
+            });
+
+        vThread.join();
+    }
+
+    // High-Throughput HTTP Client with Virtual Threads
+    public static void fetchMicroserviceData() {
+        try (var executor = Executors.newVirtualThreadPerTaskExecutor()) {
+            var client = HttpClient.newBuilder()
+                .connectTimeout(Duration.ofSeconds(2))
+                .build();
+
+            executor.submit(() -&gt; {
+                var request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://jsonplaceholder.typicode.com/posts/1"))
+                    .GET()
+                    .build();
+
+                // Blocking synchronous HTTP call:
+                // Virtual thread unmounts while waiting on network bytes, allowing huge throughput
+                HttpResponse&lt;String&gt; response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                System.out.println("HTTP Response via Virtual Thread: " + response.statusCode());
+                return response.body();
+            });
+        }
+    }
+}</code></pre>
+  </section>
+     
 </body>
 </html>
