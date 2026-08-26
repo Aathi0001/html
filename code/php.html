@@ -15876,6 +15876,611 @@ Response → output
 </pre>
 
 </section>
+<!-- ========================================================================= -->
+  <!-- 51. PHP OBJECT-ORIENTED PROGRAMMING (OOP) ARCHITECTURE                   -->
+  <!-- ========================================================================= -->
+  <section id="php-oop-architecture">
+    <h2>51. PHP Object-Oriented Programming: Class Model, Namespaces & Engine Hooks</h2>
+    <p>PHP features an explicit, engine-level Object-Oriented Programming model modeled after Java and C++. It strictly enforces access boundaries, interfaces, and single inheritance hierarchies, augmented by horizontal code composition via <strong>Traits</strong> and automated dependency resolution via <strong>PSR-4 Autoloading</strong>.</p>
 
+    <h3>A. Visibility, Inheritance & Extensibility Modifiers</h3>
+    <ul>
+      <li><strong>Visibility:</strong> <code>public</code> (accessible everywhere), <code>protected</code> (accessible within the declaring class and derived subclasses), and <code>private</code> (accessible strictly within the declaring class context).</li>
+      <li><strong><code>final</code> Keyword:</strong> When applied to a class (<code>final class</code>), it prevents other classes from extending it. When applied to a method, it prevents child classes from overriding that specific method signature.</li>
+      <li><strong><code>static</code> Members & Late Static Binding (<code>static::</code> vs <code>self::</code>):</strong> <code>self::</code> resolves lexically to the class where the keyword is written. <code>static::</code> evaluates at runtime using <strong>Late Static Binding</strong> to point to the actual executing subclass.</li>
+      <li><strong>Traits (Horizontal Reuse):</strong> Solves the single-inheritance limitation by allowing methods to be copy-pasted into multiple unrelated classes at compile-time without class inheritance coupling. Conflicting method names are explicitly resolved using the <code>insteadof</code> and <code>as</code> operators.</li>
+    </ul>
+
+    <h3>B. Namespaces, PSR-4 & Composer Autoloading</h3>
+    <p>Namespaces resolve class naming collisions by establishing hierarchical boundaries (e.g., <code>App\Services\Payment\StripeGateway</code>). The <strong>PSR-4 Autoloading Standard</strong> maps namespaces directly to filesystem directory structures. When an un-imported class is instantiated, PHP's engine triggers the <code>spl_autoload_register()</code> queue (managed by Composer) to lazily load the file from disk on-demand.</p>
+
+    <h3>C. PHP Magic Methods Reference Matrix</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Magic Method</th>
+          <th>Engine Trigger Condition</th>
+          <th>Primary Practical Use Case</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>__construct()</code> / <code>__destruct()</code></td>
+          <td>Instance instantiation (<code>new</code>) / Object reference count reaching 0.</td>
+          <td>Resource initialization and deterministic cleanup (e.g. closing socket handles).</td>
+        </tr>
+        <tr>
+          <td><code>__get($name)</code> / <code>__set($name, $val)</code></td>
+          <td>Reading from or writing to inaccessible or non-existent properties.</td>
+          <td>Dynamic ORM active record models (e.g., Laravel Eloquent attribute hydration).</td>
+        </tr>
+        <tr>
+          <td><code>__call($name, $args)</code> / <code>__callStatic()</code></td>
+          <td>Invoking inaccessible or non-existent instance or static methods.</td>
+          <td>Dynamic method proxying, API client method routing, and query builders.</td>
+        </tr>
+        <tr>
+          <td><code>__toString()</code></td>
+          <td>Treating an object as a string (e.g., <code>echo $obj</code>, string concatenation).</td>
+          <td>String representation for logging or rendering HTML identifiers.</td>
+        </tr>
+        <tr>
+          <td><code>__invoke(...$args)</code></td>
+          <td>Calling an object instance directly as a function (e.g., <code>$obj()</code>).</td>
+          <td>Single-action controllers, Command Bus handlers, and middleware invokables.</td>
+        </tr>
+        <tr>
+          <td><code>__clone()</code></td>
+          <td>Executed upon shallow cloning via the <code>clone</code> keyword.</td>
+          <td>Performing deep-copy replication of internal nested object references.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>&lt;?php
+declare(strict_types=1);
+
+namespace App\Core\Security;
+
+// =========================================================================
+// 1. TRAITS FOR HORIZONTAL BEHAVIOR REUSE
+// =========================================================================
+trait LoggableTrait 
+{
+    protected function log(string $message): void 
+    {
+        echo sprintf("[%s] [PID:%d] %s\n", date('Y-m-d H:i:s'), getmypid(), $message);
+    }
+}
+
+// =========================================================================
+// 2. INTERFACES & ABSTRACT CONTRACTS
+// =========================================================================
+interface EncryptorInterface 
+{
+    public function encrypt(string $plainText): string;
+    public function decrypt(string $cipherText): string;
+}
+
+abstract class BaseGateway 
+{
+    use LoggableTrait; // Compose trait horizontally
+
+    protected string $gatewayId;
+
+    public function __construct(string $gatewayId) 
+    {
+        $this->gatewayId = $gatewayId;
+        $this->log("BaseGateway initialized with ID: {$this->gatewayId}");
+    }
+
+    // Abstract method must be implemented by concrete subclasses
+    abstract public function processPayment(float $amount): bool;
+
+    // Final method: Subclasses are strictly forbidden from overriding this
+    final public function getGatewaySignature(): string 
+    {
+        return hash('sha256', $this->gatewayId);
+    }
+}
+
+// =========================================================================
+// 3. CONCRETE INHERITANCE & LATE STATIC BINDING
+// =========================================================================
+final class StripePaymentGateway extends BaseGateway implements EncryptorInterface 
+{
+    protected static string $driverName = "STRIPE_V3";
+
+    public function processPayment(float $amount): bool 
+    {
+        $this->log("Processing \${$amount} via " . static::getDriverName());
+        return true;
+    }
+
+    public function encrypt(string $plainText): string 
+    {
+        return base64_encode($plainText);
+    }
+
+    public function decrypt(string $cipherText): string 
+    {
+        return base64_decode($cipherText);
+    }
+
+    // Late Static Binding demonstration (static:: vs self::)
+    public static function getDriverName(): string 
+    {
+        return static::$driverName; // Resolves dynamically to executing subclass
+    }
+}
+
+// =========================================================================
+// 4. MAGIC METHODS & SINGLE-ACTION INVOKABLE CONTROLLER
+// =========================================================================
+class DynamicEntity 
+{
+    private array $storage = [];
+
+    // Magic getter for dynamic attribute access
+    public function __get(string $name): mixed 
+    {
+        return $this->storage[$name] ?? null;
+    }
+
+    // Magic setter for dynamic attribute assignment
+    public function __set(string $name, mixed $value): void 
+    {
+        $this->storage[$name] = $value;
+    }
+
+    // Magic invokable: Allows instance to be called directly as a closure
+    public function __invoke(string $action): string 
+    {
+        return "Invoked DynamicEntity with action: {$action}";
+    }
+}
+
+$entity = new DynamicEntity();
+$entity->username = "dev_admin"; // Triggers __set
+echo "Hydrated User: " . $entity->username . "\n"; // Triggers __get
+echo $entity("RUN_MIGRATION") . "\n"; // Triggers __invoke</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 52. MODERN PHP: PHP 8.0 THROUGH PHP 8.3+ FEATURES                         -->
+  <!-- ========================================================================= -->
+  <section id="modern-php-features">
+    <h2>52. Modern PHP 8.x: Strict Typing, Readonly Structures & Metaprogramming</h2>
+    <p>PHP 8 introduced major language transformations, moving away from loose dynamic scripting toward a strict, statically analyzable type system with first-class meta-programming constructs and optimized data containers.</p>
+
+    <h3>A. Strict Typing, Union Types & Nullables</h3>
+    <ul>
+      <li><strong><code>declare(strict_types=1);</code>:</strong> Disables PHP's default implicit scalar type coercion (e.g., passing string <code>"10"</code> to <code>int</code> function argument throws a <code>TypeError</code> instead of coercing).</li>
+      <li><strong>Union Types (<code>int|float|string</code>) & Intersection Types (<code>A&amp;B</code>):</strong> Allows formal composite contracts in argument and return signatures.</li>
+      <li><strong>Nullable Types (<code>?string</code>):</strong> Shorthand for <code>string|null</code>.</li>
+    </ul>
+
+    <h3>B. Constructor Property Promotion, Readonly Properties & Readonly Classes</h3>
+    <ul>
+      <li><strong>Constructor Property Promotion:</strong> Combines class property declaration, constructor argument typing, and assignment into a single line within the constructor signature.</li>
+      <li><strong><code>readonly</code> Properties:</strong> Can only be initialized once (inside the constructor) and cannot be modified afterwards.</li>
+      <li><strong><code>readonly class</code> (PHP 8.2+):</strong> Automatically applies the <code>readonly</code> modifier to every property in the class and forbids adding dynamic properties.</li>
+    </ul>
+
+    <h3>C. Modern Syntactic Constructs: Attributes, Match & Backed Enums</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Introduced</th>
+          <th>Core Architectural Improvement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Attributes (<code>#[Attribute]</code>)</strong></td>
+          <td>PHP 8.0</td>
+          <td>Native, structured machine-readable metadata replacing docblock annotations (<code>/** @Route */</code>). Introspected via Reflection API.</td>
+        </tr>
+        <tr>
+          <td><strong><code>match</code> Expression</strong></td>
+          <td>PHP 8.0</td>
+          <td>Strict equality (<code>===</code>) alternative to <code>switch</code>. Returns values directly, does not require <code>break</code>, and throws <code>UnhandledMatchError</code> on missed cases.</td>
+        </tr>
+        <tr>
+          <td><strong>Backed Enums</strong></td>
+          <td>PHP 8.1</td>
+          <td>Type-safe enumerations backed by string or integer scalars, with built-in serialization (<code>from()</code>, <code>tryFrom()</code>).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <pre><code>&lt;?php
+declare(strict_types=1);
+
+namespace App\Domain\Commerce;
+
+use Attribute;
+use ReflectionClass;
+
+// =========================================================================
+// 1. BACKED ENUMS WITH CUSTOM METHODS
+// =========================================================================
+enum OrderStatus: string 
+{
+    case PENDING = 'pending';
+    case PROCESSING = 'processing';
+    case COMPLETED = 'completed';
+    case CANCELLED = 'cancelled';
+
+    public function isTerminal(): bool 
+    {
+        return match($this) {
+            self::COMPLETED, self::CANCELLED => true,
+            self::PENDING, self::PROCESSING => false,
+        };
+    }
+}
+
+// =========================================================================
+// 2. CUSTOM ATTRIBUTE FOR METAPROGRAMMING
+// =========================================================================
+#[Attribute(Attribute::TARGET_CLASS | Attribute::TARGET_PROPERTY)]
+class ValidateEntity 
+{
+    public function __construct(public string $rule) {}
+}
+
+// =========================================================================
+// 3. READONLY CLASS WITH CONSTRUCTOR PROPERTY PROMOTION
+// =========================================================================
+#[ValidateEntity(rule: "strict_immutable_dto")]
+readonly class OrderInvoiceDto 
+{
+    public function __construct(
+        public string $invoiceId,
+        public float|int $amount, // Union type
+        public ?string $vatNumber, // Nullable type
+        public OrderStatus $status,
+        public \DateTimeImmutable $issuedAt = new \DateTimeImmutable()
+    ) {}
+
+    public function calculateTax(): float 
+    {
+        // Modern match expression (strict comparison, returns value directly)
+        $taxRate = match($this->status) {
+            OrderStatus::COMPLETED => 0.20,
+            OrderStatus::PROCESSING => 0.15,
+            OrderStatus::PENDING, OrderStatus::CANCELLED => 0.0,
+        };
+
+        return (float)$this->amount * $taxRate;
+    }
+}
+
+// =========================================================================
+// 4. CLOSURES & FIRST-CLASS CALLABLE SYNTAX
+// =========================================================================
+$invoice = new OrderInvoiceDto(
+    invoiceId: "INV-9902",
+    amount: 1500,
+    vatNumber: null,
+    status: OrderStatus::from('completed') // Parse from string scalar
+);
+
+echo "Calculated Tax: $" . $invoice->calculateTax() . "\n";
+echo "Is Terminal State: " . ($invoice->status->isTerminal() ? 'YES' : 'NO') . "\n";
+
+// First-Class Callable Syntax (PHP 8.1+)
+$stringLengthFn = strlen(...);
+$lengths = array_map($stringLengthFn, ["PHP", "Kotlin", "TypeScript"]);
+// $lengths = [3, 6, 10]
+
+// Introspecting Attribute Metadata via Reflection
+$reflection = new ReflectionClass(OrderInvoiceDto::class);
+$attributes = $reflection->getAttributes(ValidateEntity::class);
+foreach ($attributes as $attribute) {
+    $instance = $attribute->newInstance();
+    echo "Class Attribute Rule: " . $instance->rule . "\n";
+}</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 53. PHP WEB ARCHITECTURE, FPM, NGINX & OPCACHE                            -->
+  <!-- ========================================================================= -->
+  <section id="php-web-architecture">
+    <h2>53. PHP Web Architecture: Request Lifecycle, PHP-FPM, OPcache & Middleware</h2>
+    <p>Unlike persistent application servers (e.g. Node.js, Spring Boot) that keep code in RAM between requests, traditional PHP operates on a <strong>Shared-Nothing Architecture</strong>. State is completely destroyed and recreated on every HTTP request.</p>
+
+    <!-- Text-based PHP-FPM / Nginx Request Lifecycle Pipeline -->
+    <pre><code>+-----------------------------------------------------------------------------------------+
+|                                  HTTP REQUEST LIFECYCLE                                 |
+|                                                                                         |
+|   1. CLIENT (Browser) ===[ HTTP Request (Port 80/443) ]===> 2. WEB SERVER (Nginx/Apache)|
+|                                                                    │                    |
+|                                                               FastCGI UNIX Socket       |
+|                                                               (/run/php/php-fpm.sock)   |
+|                                                                    │                    |
+|                                                                    v                    |
+|   +-------------------------- 3. PHP-FPM MASTER PROCESS ----------------------------+  |
+|   |  - Manages worker pool (pm = dynamic / ondemand / static)                       |  |
+|   |  - Dispatches request to an idle worker child process                           |  |
+|   +---------------------------------------+-----------------------------------------+  |
+|                                           │                                             |
+|                                           v                                             |
+|   +--------------------------- 4. PHP-FPM WORKER PROCESS ---------------------------+  |
+|   |                                                                                 |  |
+|   |   +------------------ 5. OPCACHE (SHARED MEMORY RAM) -----------------------+   |  |
+|   |   | Precompiled Opcodes cached?                                             |   |  |
+|   |   |   -> YES: Skip compilation, execute opcodes instantly                   |   |  |
+|   |   |   -> NO:  Lex/Parse script -> Compile to Opcodes -> Store in OPcache    |   |  |
+|   |   +-----------------------------------+-------------------------------------+   |  |
+|   |                                       │                                         |  |
+|   |                                       v                                         |  |
+|   |   +---------------------- 6. ZEND EXECUTION ENGINE -------------------------+   |  |
+|   |   |  - Superglobals hydrated ($_GET, $_POST, $_SERVER, $_COOKIE, $_SESSION) |   |  |
+|   |   |  - Executes application middleware pipeline & controller logic          |   |  |
+|   |   |  - Emits HTTP response headers & body buffer (FastCGI Stream)           |   |  |
+|   |   +-----------------------------------+-------------------------------------+   |  |
+|   |                                       │                                         |  |
+|   |   +--------------------- 7. WORKER CLEANUP & RESET -------------------------+   |  |
+|   |   |  - Destroys 100% of memory heap allocations, variables, static state    |   |  |
+|   |   |  - Worker resets memory arena and returns to idle pool                  |   |  |
+|   |   +-------------------------------------------------------------------------+   |  |
+|   +---------------------------------------------------------------------------------+  |
+|                                           │                                             |
+|                                           v                                             |
+|   8. WEB SERVER (Nginx) <===[ FastCGI Response ]=== Flushes output to Client            |
++-----------------------------------------------------------------------------------------+</code></pre>
+
+    <h3>A. Key Infrastructure Components</h3>
+    <ul>
+      <li><strong>Nginx:</strong> Acts as the edge Reverse Proxy and static file server. It cannot execute PHP directly; it forwards <code>.php</code> requests over a UNIX socket or TCP port using the <strong>FastCGI Protocol</strong>.</li>
+      <li><strong>PHP-FPM (FastCGI Process Manager):</strong> A process manager controlling a pool of persistent PHP worker processes. Pools can scale dynamically (<code>pm = dynamic</code>) based on traffic spikes.</li>
+      <li><strong>OPcache:</strong> Eliminates the overhead of reading, tokenizing, and parsing PHP scripts on every request by compiling PHP source code into CPU-executable <strong>Opcodes</strong> stored permanently in shared RAM.</li>
+      <li><strong>Shared-Nothing Memory Safety:</strong> Because memory is completely wiped after every request, PHP applications are immune to cross-request memory leaks and thread-safety concurrency race conditions that plague persistent servers.</li>
+    </ul>
+
+    <h3>B. Sessions, Cookies & PSR-15 Middleware Pipelines</h3>
+    <pre><code>&lt;?php
+declare(strict_types=1);
+
+namespace App\Http\Middleware;
+
+// =========================================================================
+// 1. PSR-7 / PSR-15 COMPLIANT HTTP MIDDLEWARE PATTERN
+// =========================================================================
+interface RequestInterface {
+    public function getHeader(string $name): ?string;
+    public function getCookieParams(): array;
+}
+
+interface ResponseInterface {
+    public function getStatusCode(): int;
+    public function withHeader(string $name, string $value): self;
+    public function send(): void;
+}
+
+interface MiddlewareInterface {
+    public function process(RequestInterface $request, callable $next): ResponseInterface;
+}
+
+// Authentication Middleware
+class TokenAuthenticationMiddleware implements MiddlewareInterface 
+{
+    public function process(RequestInterface $request, callable $next): ResponseInterface 
+    {
+        $authHeader = $request->getHeader('Authorization');
+
+        if ($authHeader === null || !str_starts_with($authHeader, 'Bearer ')) {
+            // Short-circuit request execution pipeline
+            http_response_code(401);
+            echo json_encode(["error" => "Unauthorized access: Token missing or invalid"]);
+            exit;
+        }
+
+        $token = substr($authHeader, 7);
+        // Validate token signature...
+        
+        // Pass request down to next middleware / controller
+        return $next($request);
+    }
+}
+
+// =========================================================================
+// 2. SECURE SESSION MANAGEMENT CONFIGURATION
+// =========================================================================
+function initializeSecureSession(): void 
+{
+    // Configure session cookie parameters BEFORE starting session
+    session_set_cookie_params([
+        'lifetime' => 3600,
+        'path' => '/',
+        'domain' => 'api.enterprise.com',
+        'secure' => true,      // HTTPS only
+        'httponly' => true,    // Prevent JavaScript XSS access
+        'samesite' => 'Strict' // Mitigate CSRF attacks
+    ]);
+
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+        
+        // Prevent Session Fixation attacks: regenerate session ID on auth change
+        if (!isset($_SESSION['initiated'])) {
+            session_regenerate_id(true);
+            $_SESSION['initiated'] = true;
+        }
+    }
+}</code></pre>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 54. ASYNC PHP, BACKGROUND WORKERS, REDIS QUEUES & FIBERS                  -->
+  <!-- ========================================================================= -->
+  <section id="php-async-queues-fibers">
+    <h2>54. Asynchronous PHP, Queues, Redis Workers, Fibers & Persistent Runtimes</h2>
+    <p>While standard PHP runs under synchronous request-response lifecycles, enterprise architectures offload heavy work to <strong>Background Queues</strong> managed by worker daemons (like Supervisor), or run entire applications inside high-throughput <strong>Persistent Event-Loop Runtimes</strong> (like Swoole or RoadRunner).</p>
+
+    <h3>A. Background Queues Architecture (Laravel Queues / Redis)</h3>
+    <ul>
+      <li><strong>Producer (Web Request):</strong> Serializes a Job payload (JSON) and pushes it to a Redis list / stream in milliseconds, immediately returning a <code>202 Accepted</code> response to the user.</li>
+      <li><strong>Consumer (CLI Worker):</strong> A long-running PHP CLI process (<code>php artisan queue:work</code>) running in a continuous loop, pulling jobs off Redis and processing them asynchronously.</li>
+      <li><strong>Supervisor:</strong> A Linux process monitor daemon that manages queue workers in the background, automatically restarting worker processes if they crash or exhaust memory limits.</li>
+    </ul>
+
+    <h3>B. Modern Persistent Application Runtimes vs PHP-FPM</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Execution Model</th>
+          <th>Engine State Between Requests</th>
+          <th>I/O Architecture</th>
+          <th>Throughput Benchmark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Standard PHP-FPM</strong></td>
+          <td><strong>Destroyed:</strong> Wiped clean after each HTTP request.</td>
+          <td>Synchronous blocking I/O (One thread per connection).</td>
+          <td>~500 – 2,000 req/sec</td>
+        </tr>
+        <tr>
+          <td><strong>RoadRunner (Go-based)</strong></td>
+          <td><strong>Persistent:</strong> Keeps workers alive in RAM via Goroutines, recycling workers after $N$ requests.</td>
+          <td>Asynchronous Go HTTP server forwarding FastCGI/gRPC payloads to PHP workers.</td>
+          <td>~15,000 – 40,000 req/sec</td>
+        </tr>
+        <tr>
+          <td><strong>Swoole / OpenSwoole</strong></td>
+          <td><strong>Persistent:</strong> C/C++ engine extension replacing FPM; keeps entire framework resident in memory.</td>
+          <td>Event-loop coroutines with non-blocking async socket multiplexing (epoll/kqueue).</td>
+          <td>~50,000 – 100,000+ req/sec</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>C. PHP 8.1+ Fibers (Low-Level Coroutines)</h3>
+    <p>A <strong>Fiber</strong> is an interruptible, stackful coroutine managed in user-space. Fibers allow asynchronous non-blocking frameworks (like RevoltPHP / Amp) to pause (<code>Fiber::suspend()</code>) and resume (<code>$fiber->resume()</code>) function execution stacks without callback nesting.</p>
+
+    <pre><code>&lt;?php
+declare(strict_types=1);
+
+namespace App\Async;
+
+use Fiber;
+use Throwable;
+
+// =========================================================================
+// 1. PHP 8.1 FIBER (STACKFUL COROUTINE PRIMITIVE)
+// =========================================================================
+class AsyncHttpClient 
+{
+    private static ?Fiber $activeLoopFiber = null;
+
+    public static function fetchAsync(string $url): string 
+    {
+        echo "[Fiber] Initiating non-blocking request to {$url}...\n";
+
+        // Suspend the active Fiber execution frame, yielding control to scheduler
+        $response = Fiber::suspend("WAITING_FOR_SOCKET_{$url}");
+
+        echo "[Fiber] Resumed! Data arrived for {$url}.\n";
+        return (string)$response;
+    }
+}
+
+// Coroutine Task Orchestrator
+$fiber = new Fiber(function(): void {
+    $data1 = AsyncHttpClient::fetchAsync("https://api.internal/service-1");
+    $data2 = AsyncHttpClient::fetchAsync("https://api.internal/service-2");
+    echo "[Fiber Done] Aggregated Output: {$data1} | {$data2}\n";
+});
+
+// Start Fiber execution (runs until first suspend)
+$state = $fiber->start();
+echo "[Main Thread] Fiber yielded with state: {$state}\n";
+
+// Simulate Event Loop waiting for I/O and resuming Fiber with resolved data
+$fiber->resume("SERVICE_1_PAYLOAD");
+$fiber->resume("SERVICE_2_PAYLOAD");
+
+// =========================================================================
+// 2. REDIS BACKGROUND QUEUE JOB PROCESSOR (CLI WORKER LOOP)
+// =========================================================================
+class RedisQueueWorker 
+{
+    private \Redis $redis;
+    private bool $shouldKeepRunning = true;
+
+    public function __construct(string $host = '127.0.0.1', int $port = 6379) 
+    {
+        $this->redis = new \Redis();
+        $this->redis->connect($host, $port);
+        
+        // Listen to POSIX signals for graceful SIGTERM shutdown
+        if (function_exists('pcntl_async_signals')) {
+            pcntl_async_signals(true);
+            pcntl_signal(SIGTERM, function() { $this->shouldKeepRunning = false; });
+            pcntl_signal(SIGINT, function() { $this->shouldKeepRunning = false; });
+        }
+    }
+
+    public function dispatchJob(string $queue, array $payload): void 
+    {
+        $this->redis->rPush($queue, json_encode($payload));
+        echo "[Producer] Job dispatched to queue: {$queue}\n";
+    }
+
+    public function startWorkerLoop(string $queue): void 
+    {
+        echo "[Worker PID:" . getmypid() . "] Listening for jobs on queue: {$queue}...\n";
+
+        while ($this->shouldKeepRunning) {
+            // Blocking Pop (BLPOP) waits up to 2 seconds for a job without CPU spinning
+            $jobData = $this->redis->blPop([$queue], 2);
+
+            if ($jobData) {
+                [$queueName, $rawPayload] = $jobData;
+                $payload = json_decode($rawPayload, true);
+
+                try {
+                    $this->processJob($payload);
+                } catch (Throwable $e) {
+                    echo "[Job Error]: " . $e->getMessage() . "\n";
+                    // Push to failed_jobs dead letter queue
+                    $this->redis->rPush("failed_jobs", $rawPayload);
+                }
+            }
+        }
+
+        echo "[Worker] Graceful shutdown completed.\n";
+    }
+
+    private function processJob(array $payload): void 
+    {
+        echo "[Processing] Job ID: {$payload['job_id']} -> Type: {$payload['type']}\n";
+        // Execute email sending, report generation, webhook delivery...
+        usleep(100000); // 100ms work simulation
+    }
+}
+
+// =========================================================================
+// 3. PRODUCTION SUPERVISOR CONFIGURATION (supervisord.conf)
+// =========================================================================
+/*
+[program:php-queue-worker]
+process_name=%(program_name)s_%(process_num)02d
+command=php /var/www/app/artisan queue:work redis --sleep=3 --tries=3 --max-time=3600
+autostart=true
+autorestart=true
+user=www-data
+numprocs=8
+redirect_stderr=true
+stdout_logfile=/var/log/supervisor/worker.log
+stopwaitsecs=3600
+*/</code></pre>
+  </section>
+      
 </body>
 </html>
