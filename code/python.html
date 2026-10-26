@@ -12356,5 +12356,75 @@ async def main():
 
 asyncio.run(main())</code></pre>
   </section>
+     <section id="closure-guide">
+  <h2>Understanding Closures: Private State vs. Global Variables</h2>
+
+  <!-- 1. Definition -->
+  <article>
+    <h3>1. What is a Closure?</h3>
+    <p>
+      A closure occurs when an outer function creates a variable and returns an inner function. 
+      The outer function runs <strong>only once</strong> during setup. The inner function remembers 
+      and uses that variable every time it is called later.
+    </p>
+  </article>
+
+  <!-- 2. Where It Is Stored in Memory -->
+z <article>
+    <h3>2. Where Does It Store?</h3>
+    <ul>
+      <li><strong>RAM (Heap Memory):</strong> Stored inside a special internal Python object called a <code>cell</code>. It stays alive in RAM because the inner function holds a reference to it via <code>__closure__</code>.</li>
+      <li><strong>CPU Cache:</strong> Only loaded into L1/L2/L3 cache for a few nanoseconds while the processor performs the calculation, then evicted.</li>
+      <li><strong>Visibility:</strong> It does not live in the global scope table, so outside functions cannot see, access, or reassign it.</li>
+    </ul>
+  </article>
+
+  <!-- 3. Global Variable Problem vs Closure (Tax Example) -->
+  <article>
+    <h3>3. Code Example: Tax Calculator</h3>
+
+    <h4>The Bad Way: Using Global Variables</h4>
+    <pre><code># Lives in Global RAM — visible to every piece of code
+tax_rate = 0.18
+
+def calculate_tax(price):
+    return price + (price * tax_rate)
+
+print(calculate_tax(100))  # 118.0
+
+# 50 lines later, another file or function does this:
+tax_rate = 0.05  # Or accidentally: tax_rate = "error"
+
+print(calculate_tax(100))  # 105.0 -> Silent bug! Rate was overwritten globally.</code></pre>
+
+    <h4>The Right Way: Using a Closure</h4>
+    <pre><code>def make_tax_calculator(tax_rate):
+    # Runs ONCE. 'tax_rate' is locked in a private RAM cell.
+    def calculate_tax(price):
+        # Runs EVERY call. The outer function does NOT run again.
+        return price + (price * tax_rate)
+    return calculate_tax
+
+# Lock the rates into independent closures in RAM:
+gst_18 = make_tax_calculator(0.18)  # Cell 1 in RAM holds 0.18
+gst_5  = make_tax_calculator(0.05)  # Cell 2 in RAM holds 0.05
+
+print(gst_18(100))  # 118.0
+print(gst_5(100))   # 105.0
+
+# Outside code cannot modify Cell 1 or Cell 2:
+# There is no global variable to overwrite!</code></pre>
+  </article>
+
+  <!-- 4. Quick Rule -->
+  <article>
+    <h3>4. Why Not Global?</h3>
+    <ul>
+      <li><strong>No Clashes:</strong> With closures, you can have <code>gst_18</code> and <code>gst_5</code> without creating separate global variables like <code>tax1</code>, <code>tax2</code>.</li>
+      <li><strong>Protection:</strong> Nothing from outside can overwrite the enclosed value.</li>
+      <li><strong>Rule:</strong> Use <strong>global</strong> only for app-wide fixed constants. Use <strong>closure</strong> to lock in a setting once so you don't repeat it on every call.</li>
+    </ul>
+  </article>
+</section>
 </body>
 </html>
