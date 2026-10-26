@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Huffman Coding — Interactive Algorithm Lab</title>
+<style>
+:root{
+ --bg:#09111f;--panel:#121e31;--panel2:#1b2b44;--text:#edf3ff;
+ --muted:#aab9d0;--border:#30435f;--accent:#5de0c4;
+ --blue:#91b4ff;--gold:#ffd477;--purple:#c6a2ff;--danger:#ff9a9a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 system-ui,sans-serif}
+main{max-width:1150px;margin:auto;padding:22px}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.15}
+h2{margin-top:0;font-size:1.25rem}
+h3{margin-top:22px}
+p,li{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:20px;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:13px}
+.metric{background:var(--panel2);padding:14px;border-radius:10px}
+.metric strong{display:block;color:var(--accent);font-size:1.4rem;overflow-wrap:anywhere}
+.tag{color:var(--blue);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+table{width:100%;border-collapse:collapse;margin:12px 0}
+th,td{border:1px solid var(--border);padding:9px;text-align:center}
+th{background:var(--panel2)}
+input{width:100%;min-width:0;background:#080e19;color:var(--text);border:1px solid var(--border);padding:9px;border-radius:7px;font:inherit}
+input:focus{outline:2px solid var(--accent);outline-offset:1px}
+button{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:10px 15px;border-radius:9px;cursor:pointer;font-size:1rem}
+button.primary{background:#155448;border-color:var(--accent)}
+button.danger{border-color:#8b4545;color:#ffc0c0}
+button:disabled{opacity:.35;cursor:not-allowed}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.track{height:8px;background:#28384f;border-radius:8px;overflow:hidden}
+#progress{height:100%;width:0;background:var(--accent);transition:width .2s}
+#explanation{color:var(--text);font-size:1.05rem}
+#state{white-space:pre-wrap;overflow-wrap:anywhere;background:#080e19;border:1px solid var(--border);padding:14px;border-radius:10px;font-family:monospace}
+.tree-scroll{overflow:auto;background:#080e19;border:1px solid var(--border);border-radius:12px;padding:10px}
+#tree{display:block;min-width:650px;width:100%;height:auto}
+.node circle{fill:#1b2b44;stroke:#6f8db5;stroke-width:2}
+.node.leaf circle{fill:#17453e;stroke:var(--accent)}
+.node text{fill:var(--text);font-size:14px;text-anchor:middle}
+.edge{stroke:#7186a7;stroke-width:2;fill:none}
+.bit{fill:var(--gold);font-size:13px;font-weight:bold}
+pre{white-space:pre-wrap;overflow-x:auto;overflow-wrap:anywhere;background:#080e19;padding:15px;border-radius:10px;color:#d8e7ff}
+code{overflow-wrap:anywhere}
+.note{border-left:3px solid var(--accent);background:#142a3b;padding:10px 14px}
+.pill{display:inline-block;padding:3px 9px;border-radius:7px;background:var(--panel2);margin:3px}
+.muted{color:var(--muted)}
+.error{color:var(--danger);min-height:1.5em}
+.good{color:var(--accent)}
+@media(max-width:600px){main{padding:12px}.panel{padding:13px}th,td{padding:7px 3px;font-size:.82rem}}
+</style>
+</head>
+<body>
+<main>
+ <p class="tag">Greedy Algorithms · Lesson 02</p>
+ <h1>Huffman Coding</h1>
+ <p>Build a binary tree by repeatedly combining the two least-frequent nodes. The resulting tree gives frequent characters shorter binary codes.</p>
+
+ <section class="panel">
+  <h2>1. The main idea</h2>
+  <div class="grid">
+   <div class="metric"><span class="tag">Input</span><strong>Characters</strong>Each character has a frequency.</div>
+   <div class="metric"><span class="tag">Greedy choice</span><strong>Two smallest</strong>Combine the two lowest frequencies.</div>
+   <div class="metric"><span class="tag">Output</span><strong>Binary codes</strong>Follow left/right edges from root to leaf.</div>
+  </div>
+  <p>Convention used here: left edge = <strong>0</strong>, right edge = <strong>1</strong>. When frequencies tie, more than one valid Huffman tree may exist.</p>
+ </section>
+
+ <section class="panel">
+  <h2>2. Input frequency table — edit it yourself</h2>
+  <p>Change any character or frequency, add or remove rows, then select <strong>Build / Update</strong>. The queue, dry run, tree, codes, and compression calculations all update from your input.</p>
+  <table>
+   <thead><tr><th>Character</th><th>Frequency</th><th>Action</th></tr></thead>
+   <tbody id="inputRows"></tbody>
+  </table>
+  <div class="controls">
+   <button id="addRow">＋ Add character</button>
+   <button id="build" class="primary">Build / Update</button>
+   <button id="restore">Restore example</button>
+  </div>
+  <p id="inputError" class="error" role="status"></p>
+  <div class="note">Frequencies must be positive whole numbers and character labels must be unique. Use a single character or a short label. The example has 100 total characters, but your input can have any valid total.</div>
+  <div class="grid" style="margin-top:14px">
+   <div class="metric"><span class="tag">Symbols</span><strong id="symbolCount">6</strong></div>
+   <div class="metric"><span class="tag">Total frequency</span><strong id="totalFrequency">100</strong></div>
+   <div class="metric"><span class="tag">Merges required</span><strong id="mergeCount">5</strong></div>
+  </div>
+ </section>
+
+ <section class="panel">
+  <h2>3. Interactive tree construction</h2>
+  <p>Press Next to combine the two smallest frequencies. Use Previous to revisit each decision. The diagram shows the current forest until the final tree is formed.</p>
+  <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+   <strong id="stepCount">Step 1 of 6</strong><span id="stepPercent">17%</span>
+  </div>
+  <div class="track" style="margin-top:8px"><div id="progress"></div></div>
+  <h3 id="stepTitle"></h3>
+  <p id="explanation"></p>
+  <div class="grid">
+   <div class="metric"><span class="tag">Smallest node 1</span><strong id="small1">—</strong></div>
+   <div class="metric"><span class="tag">Smallest node 2</span><strong id="small2">—</strong></div>
+   <div class="metric"><span class="tag">New merged node</span><strong id="merged">—</strong></div>
+  </div>
+  <h3>Current priority queue (lowest frequency first)</h3>
+  <div id="queue"></div>
+  <h3>Current Huffman forest / tree</h3>
+  <div class="tree-scroll"><svg id="tree" viewBox="0 0 900 300" role="img" aria-label="Huffman tree diagram"></svg></div>
+  <div class="controls">
+   <button id="prev">← Previous</button><button id="next" class="primary">Next →</button><button id="restart">↻ Restart dry run</button>
+  </div>
+  <p id="dryRunHint" class="muted"></p>
+ </section>
+
+ <section class="panel">
+  <h2>4. Final Huffman codes and compression</h2>
+  <p>The code is formed by reading the edge labels from the root to each character. Finish the dry run to reveal the final code table.</p>
+  <table>
+   <thead><tr><th>Character</th><th>Frequency</th><th>Huffman code</th><th>Bits used</th></tr></thead>
+   <tbody id="codesTable"></tbody>
+  </table>
+  <div class="grid">
+   <div class="metric"><span class="tag">Huffman encoding</span><strong id="encodedBits">—</strong><span>bits in total</span></div>
+   <div class="metric"><span class="tag">Fixed-length encoding</span><strong id="fixedBits">—</strong><span id="fixedDescription">—</span></div>
+   <div class="metric"><span class="tag">Space saved</span><strong id="saved">—</strong><span>compared with fixed-length codes</span></div>
+  </div>
+  <p id="codeExplanation"></p>
+  <h3>Encode your own message</h3>
+  <p>Enter a message using only characters in the current frequency table. The output is built using the generated codes.</p>
+  <input id="messageInput" value="FACE" aria-label="Message to encode">
+  <div class="controls"><button id="encode" class="primary">Encode message</button></div>
+  <p id="encodeError" class="error" role="status"></p>
+  <div class="metric"><span class="tag">Encoded bit stream</span><strong id="encodedMessage" style="font-family:monospace;word-break:break-all">Finish the tree first</strong><p id="encodedMessageInfo"></p></div>
+ </section>
+
+ <section class="panel">
+  <h2>5. Python implementation</h2>
+  <p>This version uses a min-heap. A counter is included to break ties deterministically without trying to compare dictionary nodes.</p>
+  <pre><code>import heapq
+from itertools import count
+
+def huffman_codes(frequencies):
+    serial = count()
+    heap = []
+
+    for character, frequency in frequencies.items():
+        node = {"char": character, "left": None, "right": None}
+        heapq.heappush(heap, (frequency, next(serial), node))
+
+    while len(heap) > 1:
+        f1, _, left = heapq.heappop(heap)
+        f2, _, right = heapq.heappop(heap)
+
+        parent = {
+            "char": None,
+            "left": left,
+            "right": right
+        }
+        heapq.heappush(heap, (f1 + f2, next(serial), parent))
+
+    root = heap[0][2]
+    codes = {}
+
+    def walk(node, code):
+        if node["left"] is None and node["right"] is None:
+            codes[node["char"]] = code or "0"
+            return
+        walk(node["left"], code + "0")
+        walk(node["right"], code + "1")
+
+    walk(root, "")
+    return codes
+
+frequencies = {"A": 5, "B": 9, "C": 12,
+               "D": 13, "E": 16, "F": 45}
+print(huffman_codes(frequencies))</code></pre>
+  <button class="primary" id="showOutput">Show output for current inputs</button>
+  <pre id="output" hidden></pre>
+  <p class="muted">Exact code assignments can differ when equal frequencies are resolved differently. The encoded length remains optimal for the given frequencies.</p>
+ </section>
+
+ <section class="panel">
+  <h2>6. Step-by-step dry run example</h2>
+  <p>For the default values, the greedy decisions are:</p>
+  <ol>
+   <li>A(5) + B(9) = 14</li>
+   <li>C(12) + D(13) = 25</li>
+   <li>14 + E(16) = 30</li>
+   <li>25 + 30 = 55</li>
+   <li>F(45) + 55 = 100</li>
+  </ol>
+  <p>This list describes the default example. For your custom values, follow the interactive dry run above; its steps are generated from the current inputs.</p>
+  <div class="note"><strong>How to decode:</strong> Huffman codes are prefix-free, meaning no character's code is the beginning of another character's code. Read bits from the root until reaching a leaf, output that character, then return to the root.</div>
+ </section>
+
+ <section class="panel">
+  <h2>7. Complexity and when to use it</h2>
+  <ul>
+   <li><strong>Tree construction:</strong> O(n log n) using a min-heap, where n is the number of distinct characters.</li>
+   <li><strong>Generating all codes:</strong> O(n) for a tree with n leaves.</li>
+   <li><strong>Space:</strong> O(n) for the tree and heap.</li>
+   <li><strong>Use it for:</strong> lossless compression when symbol frequencies are known or can be estimated.</li>
+   <li><strong>Remember:</strong> Huffman coding compresses data; it is not encryption.</li>
+  </ul>
+ </section>
+</main>
+<script>
+"use strict";
+const defaults = [
+ {name:"A",freq:5},{name:"B",freq:9},{name:"C",freq:12},
+ {name:"D",freq:13},{name:"E",freq:16},{name:"F",freq:45}
+];
+let items = defaults.map(x=>({...x}));
+let steps = [];
+let index = 0;
+let finalRoot = null;
+let finalCodes = {};
+
+function makeLeaf(name,freq){return {name,freq,char:name,left:null,right:null,id:cryptoRandomId()};}
+function cryptoRandomId(){return Math.random().toString(36).slice(2,10);}
+function merge(left,right){
+ return {name:`(${left.name}+${right.name})`,freq:left.freq+right.freq,char:null,left,right,id:cryptoRandomId()};
+}
+function compare(a,b){return a.freq-b.freq || a.name.localeCompare(b.name);}
+function buildSteps(source){
+ let queue=source.map(x=>makeLeaf(x.name,x.freq)).sort(compare);
+ const snapshots=[{
+  title:"Step 1 — Put all symbols into the min-heap",
+  explanation:`Start with ${queue.length} leaf nodes. The queue is ordered by frequency, so the two smallest nodes can be selected efficiently.`,
+  queue:queue.slice(),forest:queue.slice(),small1:null,small2:null,merged:null
+ }];
+ while(queue.length>1){
+  queue.sort(compare);
+  const first=queue.shift(),second=queue.shift();
+  const parent=merge(first,second);
+  queue.push(parent);queue.sort(compare);
+  snapshots.push({
+   title:`Merge ${first.name} (${first.freq}) + ${second.name} (${second.freq})`,
+   explanation:`Greedy choice: select ${first.name} with frequency ${first.freq} and ${second.name} with frequency ${second.freq}. Combine them into a parent with frequency ${parent.freq}. The left edge to ${first.name} is 0; the right edge to ${second.name} is 1.`,
+   queue:queue.slice(),forest:queue.slice(),small1:first,small2:second,merged:parent
+  });
+ }
+ return {steps:snapshots,root:queue[0]||null};
+}
+function getCodes(root){
+ const result={};
+ if(!root)return result;
+ function walk(node,code){
+  if(!node.left&&!node.right){result[node.name]=code||"0";return;}
+  walk(node.left,code+"0");walk(node.right,code+"1");
+ }
+ walk(root,"");return result;
+}
+function escapeHTML(value){
+ return String(value).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function renderInputRows(){
+ const tbody=document.getElementById("inputRows");
+ tbody.innerHTML=items.map((item,i)=>`<tr>
+ <td><input data-index="${i}" data-field="name" value="${escapeHTML(item.name)}" maxlength="8" aria-label="Character or label ${i+1}"></td>
+ <td><input data-index="${i}" data-field="freq" type="number" min="1" step="1" value="${item.freq}" aria-label="Frequency for ${escapeHTML(item.name)}"></td>
+ <td><button type="button" class="danger" data-remove="${i}" ${items.length<=2?"disabled":""}>Remove</button></td>
+ </tr>`).join("");
+ tbody.querySelectorAll("input").forEach(input=>input.addEventListener("change",()=>{
+  const i=Number(input.dataset.index),field=input.dataset.field;
+  const raw=input.value.trim();
+  if(field==="name")items[i].name=raw;
+  else items[i].freq=Number(raw);
+  setError("");
+ }));
+ tbody.querySelectorAll("[data-remove]").forEach(button=>button.addEventListener("click",()=>{
+  const i=Number(button.dataset.remove);
+  if(items.length<=2)return;
+  items.splice(i,1);renderInputRows();setError("");rebuild();
+ }));
+}
+function setError(message){document.getElementById("inputError").textContent=message;}
+function validateItems(){
+ if(items.length<2)return "Add at least two characters.";
+ if(items.length>80)return "Use 80 or fewer symbols so the tree stays readable.";
+ const names=items.map(x=>x.name.trim());
+ if(names.some(n=>!n))return "Every character/label must have a value.";
+ if(new Set(names).size!==names.length)return "Character/labels must be unique.";
+ if(items.some(x=>!Number.isSafeInteger(Number(x.freq))||Number(x.freq)<=0))return "Every frequency must be a positive whole number.";
+ if(items.reduce((sum,x)=>sum+Number(x.freq),0)>Number.MAX_SAFE_INTEGER)return "The total frequency is too large.";
+ return "";
+}
+function rebuild(){
+ const error=validateItems();
+ if(error){setError(error);return false;}
+ items=items.map(x=>({name:x.name.trim(),freq:Number(x.freq)}));
+ const built=buildSteps(items);
+ steps=built.steps;finalRoot=built.root;finalCodes=getCodes(finalRoot);index=0;
+ document.getElementById("symbolCount").textContent=items.length;
+ document.getElementById("totalFrequency").textContent=items.reduce((s,x)=>s+x.freq,0).toLocaleString();
+ document.getElementById("mergeCount").textContent=items.length-1;
+ document.getElementById("messageInput").value=items.map(x=>x.name).join("").slice(0,100);
+ renderInputRows();setError("");document.getElementById("encodeError").textContent="";
+ document.getElementById("output").hidden=true;
+ render();return true;
+}
+function svgEl(tag,attrs={},text=""){
+ const ns="http://www.w3.org/2000/svg",el=document.createElementNS(ns,tag);
+ Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));
+ if(text!=="")el.textContent=text;
+ return el;
+}
+function drawForest(roots){
+ const svg=document.getElementById("tree");svg.innerHTML="";
+ if(!roots||!roots.length){svg.setAttribute("viewBox","0 0 900 150");svg.appendChild(svgEl("text",{x:450,y:75,fill:"#aab9d0","text-anchor":"middle"},"No tree data"));return;}
+ const all=[];let leafIndex=0;
+ function measure(node,depth){
+  const item={node,depth,children:[],x:0,y:0};all.push(item);
+  if(node.left){item.children=[measure(node.left,depth+1),measure(node.right,depth+1)];}
+  else item.leafIndex=leafIndex++;
+  return item;
+ }
+ const rootItems=roots.map(root=>measure(root,0));
+ function place(item){
+  if(item.children.length){item.children.forEach(place);item.x=(item.children[0].x+item.children[1].x)/2;}
+  else item.x=75+item.leafIndex*105;
+  item.y=42+item.depth*78;
+ }
+ rootItems.forEach(place);
+ const width=Math.max(650,leafIndex*105+100);
+ const maxDepth=Math.max(...all.map(x=>x.depth));
+ const height=Math.max(140,(maxDepth+1)*78+45);
+ svg.setAttribute("viewBox",`0 0 ${width} ${height}`);
+ function edge(parent,child,label){
+  svg.appendChild(svgEl("line",{x1:parent.x,y1:parent.y+18,x2:child.x,y2:child.y-18,class:"edge"}));
+  svg.appendChild(svgEl("text",{x:(parent.x+child.x)/2,y:(parent.y+child.y)/2,class:"bit","text-anchor":"middle"},label));
+ }
+ function draw(item){
+  item.children.forEach((child,i)=>{edge(item,child,i===0?"0":"1");draw(child);});
+  const g=svgEl("g",{class:"node"+(!item.node.left?" leaf":"")});
+  g.appendChild(svgEl("circle",{cx:item.x,cy:item.y,r:25}));
+  const label=item.node.left?String(item.node.freq):`${item.node.name}:${item.node.freq}`;
+  g.appendChild(svgEl("text",{x:item.x,y:item.y+5},label.length>10?label.slice(0,9)+"…":label));
+  svg.appendChild(g);
+ }
+ rootItems.forEach(draw);
+}
+function renderCodes(){
+ const body=document.getElementById("codesTable");
+ const complete=index===steps.length-1;
+ if(!complete){
+  body.innerHTML=`<tr><td colspan="4">Finish building the tree (${index} of ${steps.length-1} merges complete).</td></tr>`;
+  ["encodedBits","fixedBits","saved"].forEach(id=>document.getElementById(id).textContent="—");
+  document.getElementById("fixedDescription").textContent="—";
+  document.getElementById("codeExplanation").textContent="";
+  document.getElementById("encodedMessage").textContent="Finish the tree first";
+  document.getElementById("encodedMessageInfo").textContent="";
+  return;
+ }
+ body.innerHTML=items.map(item=>{
+  const code=finalCodes[item.name];
+  return `<tr><td>${escapeHTML(item.name)}</td><td>${item.freq}</td><td><span class="pill">${code}</span></td><td>${code.length*item.freq}</td></tr>`;
+ }).join("");
+ const bits=items.reduce((sum,item)=>sum+item.freq*finalCodes[item.name].length,0);
+ const fixedLength=Math.max(1,Math.ceil(Math.log2(items.length)));
+ const fixed=items.reduce((sum,item)=>sum+item.freq*fixedLength,0);
+ const delta=fixed-bits;
+ document.getElementById("encodedBits").textContent=bits.toLocaleString();
+ document.getElementById("fixedBits").textContent=fixed.toLocaleString()+" bits";
+ document.getElementById("fixedDescription").textContent=`${fixedLength} bit(s) × ${items.reduce((s,x)=>s+x.freq,0).toLocaleString()} symbols`;
+ document.getElementById("saved").textContent=delta>=0?`${delta.toLocaleString()} bits (${fixed?((delta/fixed)*100).toFixed(1):"0.0"}%)`:`${Math.abs(delta).toLocaleString()} bits more`;
+ document.getElementById("codeExplanation").textContent=delta>=0
+  ?`Huffman uses ${bits.toLocaleString()} bits versus ${fixed.toLocaleString()} bits for fixed-length encoding, saving ${delta.toLocaleString()} bits before storing tree/codebook overhead.`
+  :`For this frequency distribution, this Huffman tree uses ${Math.abs(delta).toLocaleString()} more bits than the simple fixed-length baseline. The comparison excludes tree/codebook overhead.`;
+ encodeMessage();
+}
+function render(){
+ if(!steps.length)return;
+ const s=steps[index],pct=Math.round((index+1)/steps.length*100);
+ document.getElementById("stepCount").textContent=`Step ${index+1} of ${steps.length}`;
+ document.getElementById("stepPercent").textContent=pct+"%";
+ document.getElementById("progress").style.width=pct+"%";
+ document.getElementById("stepTitle").textContent=s.title;
+ document.getElementById("explanation").textContent=s.explanation;
+ document.getElementById("small1").textContent=s.small1?`${s.small1.name} (${s.small1.freq})`:"Not merged yet";
+ document.getElementById("small2").textContent=s.small2?`${s.small2.name} (${s.small2.freq})`:"Not merged yet";
+ document.getElementById("merged").textContent=s.merged?`${s.merged.freq} (${s.merged.name})`:"—";
+ document.getElementById("queue").innerHTML=s.queue.map(n=>`<span class="pill">${escapeHTML(n.name)}: ${n.freq}</span>`).join("");
+ drawForest(s.forest);
+ document.getElementById("prev").disabled=index===0;
+ document.getElementById("next").disabled=index===steps.length-1;
+ document.getElementById("dryRunHint").textContent=index===steps.length-1
+  ?"Complete: the final tree and codes are ready."
+  :`Next will perform merge ${index+1} of ${steps.length-1}.`;
+ renderCodes();
+}
+function encodeMessage(){
+ const output=document.getElementById("encodedMessage"),info=document.getElementById("encodedMessageInfo");
+ if(index!==steps.length-1){output.textContent="Finish the tree first";info.textContent="";return;}
+ const message=document.getElementById("messageInput").value;
+ const chars=Array.from(message);
+ const missing=[...new Set(chars.filter(ch=>!Object.prototype.hasOwnProperty.call(finalCodes,ch)))];
+ if(missing.length){output.textContent="—";info.textContent="";document.getElementById("encodeError").textContent=`No code found for: ${missing.join(", ")}. Use only labels present in the table.`;return;}
+ const encoded=chars.map(ch=>finalCodes[ch]).join("");
+ document.getElementById("encodeError").textContent="";
+ output.textContent=encoded||"(empty message)";
+ info.textContent=`${chars.length} input symbol(s) → ${encoded.length} bit(s).`;
+}
+document.getElementById("addRow").addEventListener("click",()=>{
+ if(items.length>=80){setError("Use 80 or fewer symbols.");return;}
+ let name="";let n=1;while(!name||items.some(x=>x.name===name)){name=`X${n++}`;}
+ items.push({name,freq:1});renderInputRows();setError("");
+});
+document.getElementById("build").addEventListener("click",rebuild);
+document.getElementById("restore").addEventListener("click",()=>{items=defaults.map(x=>({...x}));renderInputRows();rebuild();});
+document.getElementById("prev").addEventListener("click",()=>{if(index>0){index--;render();}});
+document.getElementById("next").addEventListener("click",()=>{if(index<steps.length-1){index++;render();}});
+document.getElementById("restart").addEventListener("click",()=>{index=0;render();});
+document.getElementById("encode").addEventListener("click",encodeMessage);
+document.getElementById("messageInput").addEventListener("input",()=>{if(index===steps.length-1)encodeMessage();});
+document.getElementById("showOutput").addEventListener("click",()=>{
+ const out=document.getElementById("output");
+ if(index!==steps.length-1){out.hidden=false;out.textContent="Finish the dry run to generate codes for the current input.";return;}
+ out.hidden=false;
+ out.textContent=items.map(item=>`${item.name}: ${finalCodes[item.name]}`).join("\n")+
+  `\n\nEncoded length: ${items.reduce((s,item)=>s+item.freq*finalCodes[item.name].length,0)} bits`;
+});
+renderInputRows();
+rebuild();
+</script>
+</body>
+</html>

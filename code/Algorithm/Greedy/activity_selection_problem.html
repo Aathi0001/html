@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Activity Selection — Interactive Algorithm Lab</title>
+<style>
+:root{--bg:#09111f;--panel:#121e31;--panel2:#1b2b44;--text:#edf3ff;--muted:#aab9d0;--border:#30435f;--accent:#5de0c4;--blue:#91b4ff;--gold:#ffd477;--red:#ff9a9a;--purple:#c6a2ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 system-ui,sans-serif}
+main{max-width:1150px;margin:auto;padding:22px}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.15}h2{font-size:1.25rem;margin-top:0}h3{margin-top:22px}p,li{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:20px;margin:18px 0}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px}.metric{background:var(--panel2);padding:14px;border-radius:10px;min-width:0}.metric strong{display:block;color:var(--accent);font-size:1.4rem;overflow-wrap:anywhere}
+.tag{color:var(--blue);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+table{width:100%;border-collapse:collapse;margin:12px 0}th,td{border:1px solid var(--border);padding:9px;text-align:center}th{background:var(--panel2)}
+input{width:100%;min-width:0;background:#080e19;color:var(--text);border:1px solid var(--border);padding:9px;border-radius:7px;font:inherit}input:focus{outline:2px solid var(--accent);outline-offset:1px}
+button{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:10px 15px;border-radius:9px;cursor:pointer;font-size:1rem}button.primary{background:#155448;border-color:var(--accent)}button.danger{border-color:#8b4545;color:#ffc0c0}button:disabled{opacity:.35;cursor:not-allowed}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}.track{height:9px;background:#28384f;border-radius:8px;overflow:hidden}.progress{height:100%;width:0;background:var(--accent);transition:width .2s}
+.pill{display:inline-block;padding:3px 9px;border-radius:7px;background:var(--panel2);margin:3px}.note{border-left:3px solid var(--accent);background:#142a3b;padding:10px 14px}.error{color:var(--red);min-height:1.5em}.good{color:var(--accent)}
+.chart{background:#080e19;border:1px solid var(--border);border-radius:12px;padding:12px;overflow-x:auto}svg{display:block;width:100%;min-width:650px;height:auto}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#080e19;padding:15px;border-radius:10px;color:#d8e7ff;overflow-x:auto}code{overflow-wrap:anywhere}
+.status-selected{color:var(--accent);font-weight:700}.status-rejected{color:var(--red);font-weight:700}.muted{color:var(--muted)}
+@media(max-width:600px){main{padding:12px}.panel{padding:13px}th,td{padding:7px 3px;font-size:.82rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="tag">Greedy Algorithms · Lesson 03</p>
+<h1>Activity Selection Problem</h1>
+<p>Given activities with start and finish times, choose the largest possible set of activities that do not overlap. The classic greedy strategy is to always select the compatible activity that finishes earliest.</p>
+
+<section class="panel">
+<h2>1. The main idea</h2>
+<div class="grid">
+<div class="metric"><span class="tag">Input</span><strong>Start + finish</strong><span>Each activity occupies a time interval.</span></div>
+<div class="metric"><span class="tag">Greedy choice</span><strong>Finish earliest</strong><span>Sort by finish time, smallest first.</span></div>
+<div class="metric"><span class="tag">Goal</span><strong>More activities</strong><span>Choose the maximum compatible set.</span></div>
+</div>
+<p class="note">In this lesson, an activity starting exactly when the previous one finishes is allowed. The compatibility rule is <strong>start time ≥ last selected finish time</strong>.</p>
+</section>
+
+<section class="panel">
+<h2>2. Edit your activities</h2>
+<p>Change activity names and times, add or remove rows, and press <strong>Build / Update</strong>. All sorted rows, dry-run decisions, and timeline graphics are recalculated from your input.</p>
+<table>
+<thead><tr><th>Activity</th><th>Start time</th><th>Finish time</th><th>Action</th></tr></thead>
+<tbody id="inputRows"></tbody>
+</table>
+<div class="controls"><button id="addActivity">＋ Add activity</button><button id="build" class="primary">Build / Update</button><button id="restore">Restore example</button></div>
+<p id="inputError" class="error" role="status"></p>
+<div class="grid">
+<div class="metric"><span class="tag">Activity count</span><strong id="activityCount">11</strong></div>
+<div class="metric"><span class="tag">Earliest start</span><strong id="earliestStart">1</strong></div>
+<div class="metric"><span class="tag">Latest finish</span><strong id="latestFinish">11</strong></div>
+</div>
+</section>
+
+<section class="panel">
+<h2>3. Sort by finish time</h2>
+<p>Greedy selection requires activities to be considered in ascending order of finish time. Equal finish times are ordered by start time, then by their original input order.</p>
+<table><thead><tr><th>Sorted order</th><th>Activity</th><th>Start</th><th>Finish</th><th>Duration</th></tr></thead><tbody id="sortedRows"></tbody></table>
+</section>
+
+<section class="panel">
+<h2>4. Interactive step-by-step dry run</h2>
+<p>Use Next and Previous to inspect each decision. The timeline marks selected activities in green, rejected activities in red, and the activity currently being checked in gold.</p>
+<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><strong id="stepCount">Step 1</strong><span id="stepPercent">0%</span></div>
+<div class="track" style="margin-top:8px"><div class="progress" id="progress"></div></div>
+<h3 id="stepTitle"></h3><p id="explanation"></p>
+<div class="grid">
+<div class="metric"><span class="tag">Activity checked</span><strong id="currentActivity">—</strong></div>
+<div class="metric"><span class="tag">Decision</span><strong id="decision">—</strong></div>
+<div class="metric"><span class="tag">Last selected finish</span><strong id="lastFinish">—</strong></div>
+<div class="metric"><span class="tag">Activities selected</span><strong id="selectedCount">0</strong></div>
+</div>
+<h3>Current selection</h3><div id="selectionTable"></div>
+<h3>Activity timeline</h3>
+<div class="chart"><svg id="timeline" viewBox="0 0 1000 420" role="img" aria-label="Activity selection timeline"></svg></div>
+<div class="controls"><button id="prev">← Previous</button><button id="next" class="primary">Next →</button><button id="restart">↻ Restart dry run</button></div>
+<p id="dryRunHint" class="muted"></p>
+</section>
+
+<section class="panel">
+<h2>5. Final result</h2>
+<div class="grid">
+<div class="metric"><span class="tag">Maximum compatible activities</span><strong id="finalCount">—</strong></div>
+<div class="metric"><span class="tag">Selected activity names</span><strong id="finalNames">—</strong></div>
+<div class="metric"><span class="tag">Total occupied duration</span><strong id="totalDuration">—</strong></div>
+</div>
+<p id="resultExplanation"></p>
+<table><thead><tr><th>Activity</th><th>Start</th><th>Finish</th><th>Duration</th><th>Result</th></tr></thead><tbody id="finalRows"></tbody></table>
+</section>
+
+<section class="panel">
+<h2>6. Python implementation</h2>
+<p>This implementation sorts activities by finish time and selects an activity only when it starts at or after the finish time of the last selected activity.</p>
+<pre><code>def activity_selection(activities):
+    # Each activity is: (name, start, finish)
+    activities = sorted(activities, key=lambda a: (a[2], a[1]))
+    selected = []
+    last_finish = float("-inf")
+
+    for name, start, finish in activities:
+        if start >= last_finish:
+            selected.append((name, start, finish))
+            last_finish = finish
+
+    return selected
+
+
+activities = [
+    ("A1", 1, 4),
+    ("A2", 3, 5),
+    ("A3", 0, 6),
+    ("A4", 5, 7),
+    ("A5", 3, 9),
+    ("A6", 5, 9),
+    ("A7", 6, 10),
+    ("A8", 8, 11),
+    ("A9", 8, 12),
+    ("A10", 2, 14),
+    ("A11", 12, 16)
+]
+
+chosen = activity_selection(activities)
+print("Selected activities:")
+for activity in chosen:
+    print(activity)</code></pre>
+<button id="showOutput" class="primary">Show Python-style output for current inputs</button>
+<pre id="output" hidden></pre>
+</section>
+
+<section class="panel">
+<h2>7. Default example dry run</h2>
+<p>The default example illustrates the greedy process:</p>
+<ol>
+<li>Sort all activities by their finish time.</li>
+<li>Select A1 (1–4), because no activity has been selected yet.</li>
+<li>Reject A2 (3–5), because it starts before time 4.</li>
+<li>Reject A3 (0–6), because it starts before time 4.</li>
+<li>Select A4 (5–7), because 5 ≥ 4.</li>
+<li>Continue the same test for each remaining activity in sorted order.</li>
+</ol>
+<p>The interactive simulator is the source of truth for all steps and adapts this process to any valid activities you enter.</p>
+</section>
+
+<section class="panel">
+<h2>8. Complexity and when to use it</h2>
+<ul>
+<li><strong>Sorting:</strong> O(n log n).</li>
+<li><strong>Selection pass:</strong> O(n).</li>
+<li><strong>Overall time:</strong> O(n log n), dominated by sorting.</li>
+<li><strong>Space:</strong> O(n) for the sorted list and selected result in this implementation.</li>
+<li><strong>Use it for:</strong> scheduling the maximum number of non-overlapping meetings, jobs, or events when each has a start and finish time.</li>
+</ul>
+<p class="note"><strong>Remember:</strong> sort by finish time—not start time or duration. Pick the earliest-finishing compatible activity, then repeat.</p>
+</section>
+</main>
+<script>
+"use strict";
+const defaults=[
+{name:"A1",start:1,finish:4},{name:"A2",start:3,finish:5},{name:"A3",start:0,finish:6},
+{name:"A4",start:5,finish:7},{name:"A5",start:3,finish:9},{name:"A6",start:5,finish:9},
+{name:"A7",start:6,finish:10},{name:"A8",start:8,finish:11},{name:"A9",start:8,finish:12},
+{name:"A10",start:2,finish:14},{name:"A11",start:12,finish:16}
+];
+let activities=defaults.map(x=>({...x})),sorted=[],steps=[],index=0;
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function fmt(n){return Number(n.toFixed(3)).toString();}
+function setError(s){document.getElementById("inputError").textContent=s;}
+function validate(){
+ if(activities.length<1)return "Add at least one activity.";
+ if(activities.length>80)return "Use 80 or fewer activities so the timeline stays readable.";
+ if(activities.some(a=>!a.name.trim()))return "Every activity needs a name.";
+ if(new Set(activities.map(a=>a.name.trim())).size!==activities.length)return "Activity names must be unique.";
+ if(activities.some(a=>!Number.isFinite(Number(a.start))||!Number.isFinite(Number(a.finish))))return "Start and finish times must be valid numbers.";
+ if(activities.some(a=>Number(a.finish)<=Number(a.start)))return "Every finish time must be greater than its start time.";
+ return "";
+}
+function renderInputs(){
+ const tbody=document.getElementById("inputRows");
+ tbody.innerHTML=activities.map((a,i)=>`<tr>
+ <td><input data-i="${i}" data-f="name" maxlength="20" value="${esc(a.name)}" aria-label="Activity ${i+1} name"></td>
+ <td><input data-i="${i}" data-f="start" type="number" step="any" value="${a.start}" aria-label="Activity ${i+1} start time"></td>
+ <td><input data-i="${i}" data-f="finish" type="number" step="any" value="${a.finish}" aria-label="Activity ${i+1} finish time"></td>
+ <td><button type="button" class="danger" data-remove="${i}" ${activities.length===1?"disabled":""}>Remove</button></td></tr>`).join("");
+ tbody.querySelectorAll("input").forEach(input=>input.addEventListener("change",()=>{
+  const i=Number(input.dataset.i),f=input.dataset.f;
+  activities[i][f]=f==="name"?input.value.trim():Number(input.value);setError("");
+ }));
+ tbody.querySelectorAll("[data-remove]").forEach(btn=>btn.addEventListener("click",()=>{
+  activities.splice(Number(btn.dataset.remove),1);renderInputs();rebuild();
+ }));
+}
+function buildSteps(){
+ sorted=activities.map((a,i)=>({...a,start:Number(a.start),finish:Number(a.finish),originalIndex:i}))
+  .sort((a,b)=>a.finish-b.finish||a.start-b.start||a.originalIndex-b.originalIndex);
+ let selected=[],lastFinish=-Infinity;
+ steps=[{type:"intro",title:"Step 1 — Begin with no selected activities",explanation:`There are ${sorted.length} activities. Sort by finish time and start checking from the earliest finish. Initially, no activity has been selected, so the first compatible activity can be accepted.`,activity:null,selected:[],lastFinish:null,decision:"Ready"}];
+ for(const a of sorted){
+  const accepted=a.start>=lastFinish;
+  if(accepted){selected.push(a);lastFinish=a.finish;}
+  steps.push({type:"decision",title:`${accepted?"Select":"Reject"} ${a.name} (${fmt(a.start)}–${fmt(a.finish)})`,
+   explanation:accepted
+    ?`Accept ${a.name}: it starts at ${fmt(a.start)}, which is ${lastFinish===a.finish&&selected.length===1?"valid because no earlier activity was selected":`at or after the previous selected finish time ${fmt(selected.length>1?selected[selected.length-2].finish:-Infinity)}`}. Its finish time becomes ${fmt(a.finish)}.`
+    :`Reject ${a.name}: it starts at ${fmt(a.start)}, before the last selected activity finishes at ${fmt(lastFinish)}. Selecting it would overlap the current schedule.`,
+   activity:a,accepted,selected:selected.slice(),lastFinish,decision:accepted?"Selected":"Rejected"});
+ }
+ return selected;
+}
+let finalSelected=[];
+function rebuild(){
+ const err=validate();if(err){setError(err);return false;}
+ activities=activities.map(a=>({name:a.name.trim(),start:Number(a.start),finish:Number(a.finish)}));
+ finalSelected=buildSteps();index=0;setError("");renderInputs();render();return true;
+}
+function renderSorted(){
+ document.getElementById("sortedRows").innerHTML=sorted.map((a,i)=>`<tr><td>${i+1}</td><td>${esc(a.name)}</td><td>${fmt(a.start)}</td><td>${fmt(a.finish)}</td><td>${fmt(a.finish-a.start)}</td></tr>`).join("");
+ document.getElementById("activityCount").textContent=activities.length;
+ document.getElementById("earliestStart").textContent=fmt(Math.min(...activities.map(a=>a.start)));
+ document.getElementById("latestFinish").textContent=fmt(Math.max(...activities.map(a=>a.finish)));
+}
+function renderSelection(selected){
+ const el=document.getElementById("selectionTable");
+ if(!selected.length){el.innerHTML="<p class='muted'>No activities selected yet.</p>";return;}
+ el.innerHTML=`<table><thead><tr><th>Activity</th><th>Start</th><th>Finish</th><th>Duration</th></tr></thead><tbody>${selected.map(a=>`<tr><td>${esc(a.name)}</td><td>${fmt(a.start)}</td><td>${fmt(a.finish)}</td><td>${fmt(a.finish-a.start)}</td></tr>`).join("")}</tbody></table>`;
+}
+function drawTimeline(step){
+ const svg=document.getElementById("timeline");svg.innerHTML="";
+ const ns="http://www.w3.org/2000/svg";
+ const add=(tag,attrs,text="")=>{const el=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));if(text!=="")el.textContent=text;svg.appendChild(el);return el;};
+ const min=Math.min(...activities.map(a=>a.start)),max=Math.max(...activities.map(a=>a.finish));
+ const span=max-min||1,left=105,right=25,top=35,rowH=31,plotW=870;
+ const x=t=>left+(t-min)/span*plotW;
+ const selectedNames=new Set(step.selected.map(a=>a.name));
+ const processed=new Set(steps.slice(1,index+1).map(s=>s.activity?.name).filter(Boolean));
+ const current=step.activity?.name;
+ const height=top+sorted.length*rowH+45;svg.setAttribute("viewBox",`0 0 1000 ${height}`);
+ for(let t=Math.ceil(min);t<=max;t++){
+  const xx=x(t);add("line",{x1:xx,y1:top-8,x2:xx,y2:height-28,stroke:"#26384f","stroke-width":1});
+  add("text",{x:xx,y:height-8,fill:"#aab9d0","font-size":12,"text-anchor":"middle"},fmt(t));
+ }
+ sorted.forEach((a,i)=>{
+  const y=top+i*rowH;
+  add("text",{x:8,y:y+15,fill:"#edf3ff","font-size":12},a.name);
+  add("rect",{x:left,y,width:plotW,height:21,rx:4,fill:"#101a2a"});
+  let cls="#31516f",stroke="#91b4ff";
+  if(selectedNames.has(a.name)){cls="#155448";stroke="#5de0c4";}
+  else if(processed.has(a.name)){cls="#542d35";stroke="#ff9a9a";}
+  if(current===a.name){cls="#70551c";stroke="#ffd477";}
+  add("rect",{x:x(a.start),y:y+2,width:Math.max(3,x(a.finish)-x(a.start)),height:17,rx:4,fill:cls,stroke,"stroke-width":2});
+  add("text",{x:(x(a.start)+x(a.finish))/2,y:y+14,fill:"#ffffff","font-size":11,"text-anchor":"middle"},`${fmt(a.start)}–${fmt(a.finish)}`);
+ });
+}
+function renderFinal(){
+ document.getElementById("finalCount").textContent=finalSelected.length;
+ document.getElementById("finalNames").textContent=finalSelected.map(a=>a.name).join(", ")||"None";
+ document.getElementById("totalDuration").textContent=fmt(finalSelected.reduce((s,a)=>s+a.finish-a.start,0));
+ document.getElementById("resultExplanation").textContent=`The greedy algorithm selects ${finalSelected.length} compatible activities. Each selected activity starts at or after the finish time of the previous selected activity.`;
+ const chosen=new Set(finalSelected.map(a=>a.name));
+ document.getElementById("finalRows").innerHTML=sorted.map(a=>`<tr><td>${esc(a.name)}</td><td>${fmt(a.start)}</td><td>${fmt(a.finish)}</td><td>${fmt(a.finish-a.start)}</td><td class="${chosen.has(a.name)?"status-selected":"status-rejected"}">${chosen.has(a.name)?"Selected":"Not selected"}</td></tr>`).join("");
+}
+function render(){
+ const s=steps[index],pct=Math.round(index/(steps.length-1)*100);
+ document.getElementById("stepCount").textContent=`Step ${index+1} of ${steps.length}`;
+ document.getElementById("stepPercent").textContent=pct+"%";
+ document.getElementById("progress").style.width=pct+"%";
+ document.getElementById("stepTitle").textContent=s.title;
+ document.getElementById("explanation").textContent=s.explanation;
+ document.getElementById("currentActivity").textContent=s.activity?`${s.activity.name} (${fmt(s.activity.start)}–${fmt(s.activity.finish)})`:"—";
+ document.getElementById("decision").textContent=s.decision;
+ document.getElementById("decision").style.color=s.accepted===true?"var(--accent)":s.accepted===false?"var(--red)":"var(--text)";
+ document.getElementById("lastFinish").textContent=s.lastFinish===null?"None yet":fmt(s.lastFinish);
+ document.getElementById("selectedCount").textContent=s.selected.length;
+ renderSelection(s.selected);drawTimeline(s);
+ document.getElementById("prev").disabled=index===0;document.getElementById("next").disabled=index===steps.length-1;
+ document.getElementById("dryRunHint").textContent=index===steps.length-1?"Dry run complete. The final compatible set is shown below.":`Next examines ${index===0?"the first activity in finish-time order":`the next activity in finish-time order`}.`;
+ renderSorted();renderFinal();
+}
+document.getElementById("addActivity").addEventListener("click",()=>{
+ if(activities.length>=80){setError("Use 80 or fewer activities.");return;}
+ let n=activities.length+1,name=`A${n}`;while(activities.some(a=>a.name===name))name=`A${++n}`;
+ activities.push({name,start:0,finish:1});renderInputs();setError("");
+});
+document.getElementById("build").addEventListener("click",rebuild);
+document.getElementById("restore").addEventListener("click",()=>{activities=defaults.map(a=>({...a}));renderInputs();rebuild();});
+document.getElementById("prev").addEventListener("click",()=>{if(index>0){index--;render();}});
+document.getElementById("next").addEventListener("click",()=>{if(index<steps.length-1){index++;render();}});
+document.getElementById("restart").addEventListener("click",()=>{index=0;render();});
+document.getElementById("showOutput").addEventListener("click",()=>{
+ const out=document.getElementById("output");out.hidden=false;
+ out.textContent="Selected activities:\n"+finalSelected.map(a=>`(${a.name}, ${fmt(a.start)}, ${fmt(a.finish)})`).join("\n");
+});
+renderInputs();rebuild();
+</script>
+</body>
+</html>

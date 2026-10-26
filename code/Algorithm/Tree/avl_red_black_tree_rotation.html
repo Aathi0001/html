@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AVL & Red-Black Trees — Interactive Simulators</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1020;--panel:#121c30;--panel2:#182640;--line:#2c3e5d;--text:#edf4ff;--muted:#aab8d0;--blue:#7dd3fc;--green:#86efac;--gold:#fcd34d;--red:#fca5a5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2b49 0%,var(--bg) 60%);color:var(--text);font:16px/1.6 system-ui,Segoe UI,Roboto,sans-serif}main{max-width:1150px;margin:auto;padding:24px 16px 60px}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.15;margin:.25em 0}h2{margin:0 0 12px;line-height:1.2}h3{margin:.3em 0}.hero,section{border:1px solid var(--line);border-radius:20px;background:#111a2bee}.hero{padding:26px;background:linear-gradient(135deg,#1a2c49,#11182a)}section{padding:22px;margin-top:20px}.eyebrow{color:var(--blue);font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.muted{color:var(--muted)}.small{font-size:.88rem}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{border:1px solid #3a4c6c;border-radius:99px;padding:4px 10px;font-size:.85rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px}.card p{margin-bottom:0;color:#d1dced}.callout{background:#13243a;border-left:4px solid var(--blue);padding:12px 15px;border-radius:0 10px 10px 0}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{background:#1c2b43;color:#bae6fd;padding:2px 5px;border-radius:5px}pre{white-space:pre;overflow:auto;background:#080d18;border:1px solid var(--line);border-radius:12px;padding:16px;color:#dce8fb}label{display:block;font-weight:700;margin-bottom:5px}input,select,button{font:inherit}input,select{width:100%;padding:10px 12px;background:#0b1323;color:var(--text);border:1px solid #405171;border-radius:9px}button{background:#213552;color:var(--text);border:1px solid #476080;border-radius:9px;padding:8px 13px;font-weight:700;cursor:pointer}button:hover{filter:brightness(1.15)}button.primary{background:#075985;border-color:#0e7490}button:disabled{opacity:.4;cursor:not-allowed}.setup{display:grid;grid-template-columns:minmax(220px,1fr) minmax(190px,.65fr);gap:12px;align-items:end}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.simgrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(260px,.8fr);gap:14px;margin-top:16px}.visual{background:#09111f;border:1px solid var(--line);border-radius:13px;padding:10px;min-width:0}.visual svg{width:100%;height:auto;display:block;min-height:200px}.edge{stroke:#526784;stroke-width:2}.node circle{fill:#182b46;stroke:#5a7195;stroke-width:2}.node text{fill:#edf5ff;font-size:13px;font-weight:800;text-anchor:middle;dominant-baseline:central}.node.red circle{fill:#991b1b;stroke:#fca5a5;stroke-width:2.5}.node.black circle{fill:#030712;stroke:#aab8d0;stroke-width:2.5}.node.current circle{stroke:var(--gold);stroke-width:4}.node text.sub{font-size:9px;fill:#cbd5e1}.stepbox{background:#0b1424;border:1px solid var(--line);border-radius:13px;padding:15px}.stepcount{color:var(--blue);font-size:.83rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.steptext{min-height:94px}.sequence{font-family:ui-monospace,monospace;overflow-wrap:anywhere;min-height:28px}.tablewrap{overflow:auto;margin-top:14px}table{width:100%;border-collapse:collapse}th,td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{background:#172238;color:#a9dfff}td{min-width:80px}.warn{color:var(--gold)}.good{color:var(--green)}.foot{text-align:center;color:var(--muted);padding-top:26px}details{margin-top:10px}summary{cursor:pointer;color:var(--blue)}@media(max-width:760px){.simgrid,.setup{grid-template-columns:1fr}main{padding:12px}.hero,section{padding:16px}}
+</style>
+</head>
+<body><main>
+<header class="hero"><div class="eyebrow">Data structures • Interactive lesson</div><h1>AVL & Red-Black Tree Rotations</h1><p>Correct, step-by-step simulators for both self-balancing binary search trees. Insert keys one at a time, inspect every resulting tree, and see exactly which rotation or recoloring operation fixes an imbalance.</p><div class="chips"><span class="chip">AVL balance factors</span><span class="chip">LL / RR / LR / RL</span><span class="chip">Red-Black insertion</span><span class="chip">Back / Next / Restart</span></div></header>
+
+<section><h2>1. The idea behind rotations</h2><div class="grid"><article class="card"><h3>Why balance?</h3><p>An ordinary BST can become a chain, making operations <code>O(n)</code>. Balanced trees keep height logarithmic, so search and updates are <code>O(log n)</code>.</p></article><article class="card"><h3>Rotation preserves order</h3><p>A rotation rearranges parent/child links but keeps the binary-search-tree ordering intact.</p></article><article class="card"><h3>AVL vs Red-Black</h3><p>AVL uses subtree heights and balance factors. Red-Black uses node colors, recoloring, and rotations to maintain its properties.</p></article></div><p class="callout"><strong>AVL balance factor:</strong> <code>height(left) − height(right)</code>. A valid AVL node has balance factor −1, 0, or +1.</p></section>
+
+<section><h2>2. AVL insertion simulator</h2><p class="muted">Enter unique integer keys in insertion order. The tree changes one insertion per step. The history is snapshotted, so Previous shows the exact earlier tree, not a mutated later tree.</p><div class="setup"><div><label for="avlKeys">Keys to insert (comma-separated)</label><input id="avlKeys" value="30,20,10"></div><div><label for="avlPreset">Choose a case</label><select id="avlPreset"><option value="30,20,10">LL — 30, 20, 10</option><option value="10,20,30">RR — 10, 20, 30</option><option value="30,10,20">LR — 30, 10, 20</option><option value="10,30,20">RL — 10, 30, 20</option><option value="50,30,70,20,40,60,80,10">Larger example</option></select></div></div><div class="controls"><button class="primary" id="avlBuild">Build steps</button><button id="avlReset">Restore LL example</button></div><div id="avlError" class="small warn" role="status"></div><div class="simgrid"><div class="visual"><svg id="avlSvg" viewBox="0 0 600 250" role="img" aria-label="AVL tree visualization"></svg><p class="muted small">Node labels show <strong>key</strong> and <strong>BF</strong>. Gold border marks the key inserted at this step.</p></div><div class="stepbox"><div class="stepcount" id="avlCount">Step 0</div><h3 id="avlTitle">Ready</h3><p class="steptext" id="avlText">Build the steps, then press Next to insert keys in sequence.</p><div class="muted small">In-order traversal</div><div id="avlOrder" class="sequence">—</div><div class="controls"><button id="avlPrev" disabled>← Previous</button><button class="primary" id="avlNext" disabled>Next →</button><button id="avlRestart" disabled>Restart</button></div></div></div><div class="tablewrap"><table><thead><tr><th>Step</th><th>Inserted</th><th>Decision / rotation</th><th>Root</th></tr></thead><tbody id="avlTable"></tbody></table></div></section>
+
+<section><h2>3. The four AVL imbalance cases</h2><div class="grid"><article class="card"><h3>LL — Left Left</h3><p>The inserted key is in the left subtree of the left child. Fix with one <strong>right rotation</strong>.</p><p>Example: <code>30,20,10</code>.</p></article><article class="card"><h3>RR — Right Right</h3><p>The inserted key is in the right subtree of the right child. Fix with one <strong>left rotation</strong>.</p><p>Example: <code>10,20,30</code>.</p></article><article class="card"><h3>LR — Left Right</h3><p>The inserted key is in the right subtree of the left child. Left-rotate the left child, then right-rotate the unbalanced node.</p><p>Example: <code>30,10,20</code>.</p></article><article class="card"><h3>RL — Right Left</h3><p>The inserted key is in the left subtree of the right child. Right-rotate the right child, then left-rotate the unbalanced node.</p><p>Example: <code>10,30,20</code>.</p></article></div><p class="callout">AVL insertion performs ordinary BST insertion, updates heights while returning up the recursion, then applies the appropriate rotation at the first unbalanced node.</p></section>
+
+<section><h2>4. Red-Black insertion simulator</h2><p class="muted">New nodes are inserted red. Each step includes the standard Red-Black insertion fix-up: recoloring when parent and uncle are red; rotations and recoloring when the uncle is black. Root is black after every insertion.</p><div class="setup"><div><label for="rbKeys">Keys to insert (comma-separated)</label><input id="rbKeys" value="10,20,30,15,25,5,1"></div><div><label for="rbPreset">Choose a case</label><select id="rbPreset"><option value="10,20,30">Left rotation — 10, 20, 30</option><option value="10,5,1">Right rotation — 10, 5, 1</option><option value="10,5,15,1">Recoloring — 10, 5, 15, 1</option><option value="10,20,30,15,25,5,1">Mixed cases</option></select></div></div><div class="controls"><button class="primary" id="rbBuild">Build steps</button><button id="rbReset">Restore mixed example</button></div><div id="rbError" class="small warn" role="status"></div><div class="simgrid"><div class="visual"><svg id="rbSvg" viewBox="0 0 600 250" role="img" aria-label="Red-Black tree visualization"></svg><p class="muted small">Red nodes have red fill; black nodes have near-black fill. Gold border marks the inserted key.</p></div><div class="stepbox"><div class="stepcount" id="rbCount">Step 0</div><h3 id="rbTitle">Ready</h3><p class="steptext" id="rbText">Build the steps, then use Next to inspect each insertion and fix-up.</p><div class="muted small">In-order traversal</div><div id="rbOrder" class="sequence">—</div><div class="controls"><button id="rbPrev" disabled>← Previous</button><button class="primary" id="rbNext" disabled>Next →</button><button id="rbRestart" disabled>Restart</button></div></div></div><div class="tablewrap"><table><thead><tr><th>Step</th><th>Inserted</th><th>Fix-up</th><th>Rotations</th><th>Root</th></tr></thead><tbody id="rbTable"></tbody></table></div></section>
+
+<section><h2>5. Red-Black tree rules</h2><ol><li>Every node is red or black.</li><li>The root is black.</li><li>Every NIL/empty leaf is treated as black.</li><li>A red node cannot have a red child.</li><li>Every path from a node to descendant NIL leaves has the same number of black nodes.</li></ol><div class="grid"><article class="card"><h3>Parent is black</h3><p>No red-red violation; the inserted node needs no further fix.</p></article><article class="card"><h3>Parent and uncle are red</h3><p>Recolor parent and uncle black, grandparent red, then continue upward.</p></article><article class="card"><h3>Parent red, uncle black</h3><p>Align a triangle with a rotation if needed, then rotate at the grandparent and recolor.</p></article></div></section>
+
+<section><h2>6. Python: AVL rotation helpers</h2><pre><code>def right_rotate(y):
+    x = y.left
+    middle = x.right
+    x.right = y
+    y.left = middle
+    # Update the lower node first
+    y.height = 1 + max(height(y.left), height(y.right))
+    x.height = 1 + max(height(x.left), height(x.right))
+    return x  # New subtree root
+
+def left_rotate(x):
+    y = x.right
+    middle = y.left
+    y.left = x
+    x.right = middle
+    x.height = 1 + max(height(x.left), height(x.right))
+    y.height = 1 + max(height(y.left), height(y.right))
+    return y  # New subtree root</code></pre><p class="muted small">Time complexity for search, insert, and delete is <code>O(log n)</code> in AVL and Red-Black trees. AVL is more strictly balanced; Red-Black often needs fewer rotations during updates. This lesson simulates insertion; Red-Black deletion fix-up has additional cases.</p></section>
+<div class="foot">AVL & Red-Black Tree Rotations • Interactive DSA notes</div>
+</main>
+<script>
+(() => {
+const $ = id => document.getElementById(id);
+function parseKeys(text) {
+  const parts = text.split(',').map(s => s.trim()).filter(Boolean);
+  if (!parts.length) throw new Error('Enter at least one integer key.');
+  const keys = parts.map(s => {
+    if (!/^-?\d+$/.test(s)) throw new Error('Invalid integer key: ' + s);
+    const n = Number(s);
+    if (!Number.isSafeInteger(n)) throw new Error('Key is outside JavaScript safe-integer range: ' + s);
+    return n;
+  });
+  if (new Set(keys).size !== keys.length) throw new Error('Keys must be unique; duplicate keys are not supported.');
+  return keys;
+}
+const height = n => n ? n.height : 0;
+const balance = n => n ? height(n.left) - height(n.right) : 0;
+function avlClone(n) { return n ? {key:n.key,left:avlClone(n.left),right:avlClone(n.right),height:n.height} : null; }
+function avlRotateRight(y) {
+  const x=y.left, middle=x.right;
+  x.right=y; y.left=middle;
+  y.height=1+Math.max(height(y.left),height(y.right));
+  x.height=1+Math.max(height(x.left),height(x.right));
+  return x;
+}
+function avlRotateLeft(x) {
+  const y=x.right, middle=y.left;
+  y.left=x; x.right=middle;
+  x.height=1+Math.max(height(x.left),height(x.right));
+  y.height=1+Math.max(height(y.left),height(y.right));
+  return y;
+}
+function avlInsert(node,key,notes) {
+  if (!node) { notes.push(`Create ${key} as a leaf (height 1).`); return {key,left:null,right:null,height:1}; }
+  if (key < node.key) node.left=avlInsert(node.left,key,notes);
+  else node.right=avlInsert(node.right,key,notes);
+  node.height=1+Math.max(height(node.left),height(node.right));
+  const bf=balance(node);
+  if (bf>1 && key<node.left.key) {
+    notes.push(`LL imbalance at ${node.key} (BF ${bf}). Right-rotate ${node.key}.`);
+    return avlRotateRight(node);
+  }
+  if (bf < -1 && key>node.right.key) {
+    notes.push(`RR imbalance at ${node.key} (BF ${bf}). Left-rotate ${node.key}.`);
+    return avlRotateLeft(node);
+  }
+  if (bf>1 && key>node.left.key) {
+    notes.push(`LR imbalance at ${node.key}. Left-rotate child ${node.left.key}, then right-rotate ${node.key}.`);
+    node.left=avlRotateLeft(node.left);
+    return avlRotateRight(node);
+  }
+  if (bf < -1 && key<node.right.key) {
+    notes.push(`RL imbalance at ${node.key}. Right-rotate child ${node.right.key}, then left-rotate ${node.key}.`);
+    node.right=avlRotateRight(node.right);
+    return avlRotateLeft(node);
+  }
+  return node;
+}
+function inorder(n,out=[]) { if(n){inorder(n.left,out);out.push(n.key);inorder(n.right,out)}return out; }
+function size(n){return n?1+size(n.left)+size(n.right):0}
+function setLayout(root) {
+  const total=size(root);let index=0,maxDepth=0;
+  function depth(n,d){if(!n)return;maxDepth=Math.max(maxDepth,d);depth(n.left,d+1);depth(n.right,d+1)} depth(root,0);
+  function walk(n,d){if(!n)return;walk(n.left,d+1);n.x=(++index)*600/(total+1);n.y=35+d*(290/(maxDepth+1));walk(n.right,d+1)}walk(root,0);
+}
+function draw(svgId,root,mode,highlight) {
+  const svg=$(svgId);svg.innerHTML='';
+  if(!root){svg.setAttribute('viewBox','0 0 600 180');return;}
+  setLayout(root);
+  const all=[];function gather(n){if(!n)return;all.push(n);gather(n.left);gather(n.right)}gather(root);
+  const maxY=Math.max(...all.map(n=>n.y));svg.setAttribute('viewBox',`0 0 600 ${Math.max(180,maxY+52)}`);
+  function edges(n){if(!n)return;[n.left,n.right].forEach(c=>{if(c){const e=document.createElementNS('http://www.w3.org/2000/svg','line');e.setAttribute('x1',n.x);e.setAttribute('y1',n.y);e.setAttribute('x2',c.x);e.setAttribute('y2',c.y);e.setAttribute('class','edge');svg.appendChild(e);edges(c)}})}edges(root);
+  all.forEach(n=>{
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+    g.setAttribute('class','node '+(mode==='rb'?n.color:'')+(n.key===highlight?' current':''));
+    g.setAttribute('transform',`translate(${n.x},${n.y})`);
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r','20');g.appendChild(c);
+    const t=document.createElementNS('http://www.w3.org/2000/svg','text');t.setAttribute('y',mode==='avl'?-4:0);t.textContent=n.key;g.appendChild(t);
+    if(mode==='avl'){const sub=document.createElementNS('http://www.w3.org/2000/svg','text');sub.setAttribute('class','sub');sub.setAttribute('y','10');sub.textContent='BF '+balance(n);g.appendChild(sub);}
+    svg.appendChild(g);
+  });
+}
+let avlSteps=[],avlPos=0;
+function buildAVL() {
+  try {
+    const keys=parseKeys($('avlKeys').value);
+    let root=null;
+    avlSteps=[{root:null,key:null,description:'The tree is empty. Press Next to insert the first key.',rotations:'—'}];
+    keys.forEach(key=>{
+      const notes=[];root=avlInsert(root,key,notes);
+      avlSteps.push({root:avlClone(root),key,description:notes.join(' ')||`Insert ${key}. No imbalance requires a rotation.`,rotations:notes.filter(x=>x.toLowerCase().includes('rotate')).join(' ')||'None',rootKey:root.key});
+    });
+    avlPos=0;$('avlError').textContent='';
+    ['avlPrev','avlNext','avlRestart'].forEach(id=>$(id).disabled=false);
+    renderAVL();
+  } catch(e) { $('avlError').textContent=e.message; }
+}
+function renderAVL() {
+  const s=avlSteps[avlPos];
+  $('avlCount').textContent=`Step ${avlPos} of ${avlSteps.length-1}`;
+  $('avlTitle').textContent=avlPos===0?'Ready':`Inserted ${s.key}`;
+  $('avlText').textContent=s.description;
+  $('avlOrder').textContent=s.root?inorder(s.root).join(' → '):'—';
+  $('avlPrev').disabled=avlPos===0;$('avlNext').disabled=avlPos===avlSteps.length-1;
+  $('avlNext').textContent=avlPos===avlSteps.length-1?'Complete ✓':'Next →';
+  draw('avlSvg',s.root,'avl',s.key);
+  $('avlTable').innerHTML='';
+  avlSteps.slice(1).forEach((r,i)=>{
+    const tr=document.createElement('tr');if(i+1===avlPos)tr.style.background='#493717';
+    [i+1,r.key,r.description,r.rootKey].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
+    $('avlTable').appendChild(tr);
+  });
+}
+$('avlBuild').addEventListener('click',buildAVL);
+$('avlPreset').addEventListener('change',()=>{$('avlKeys').value=$('avlPreset').value;buildAVL()});
+$('avlReset').addEventListener('click',()=>{$('avlKeys').value='30,20,10';$('avlPreset').value='30,20,10';buildAVL()});
+$('avlNext').addEventListener('click',()=>{if(avlPos<avlSteps.length-1){avlPos++;renderAVL()}});
+$('avlPrev').addEventListener('click',()=>{if(avlPos>0){avlPos--;renderAVL()}});
+$('avlRestart').addEventListener('click',()=>{avlPos=0;renderAVL()});
+
+function rbNode(key,color='red'){return {key,color,left:null,right:null,parent:null};}
+function rbClone(n,parent=null){if(!n)return null;const c=rbNode(n.key,n.color);c.parent=parent;c.left=rbClone(n.left,c);c.right=rbClone(n.right,c);return c;}
+function rbLeft(root,x){const y=x.right;x.right=y.left;if(y.left)y.left.parent=x;y.parent=x.parent;if(!x.parent)root=y;else if(x===x.parent.left)x.parent.left=y;else x.parent.right=y;y.left=x;x.parent=y;return root;}
+function rbRight(root,y){const x=y.left;y.left=x.right;if(x.right)x.right.parent=y;x.parent=y.parent;if(!y.parent)root=x;else if(y===y.parent.right)y.parent.right=x;else y.parent.left=x;x.right=y;y.parent=x;return root;}
+function rbBSTInsert(root,z){let parent=null,node=root;while(node){parent=node;node=z.key<node.key?node.left:node.right;}z.parent=parent;if(!parent)root=z;else if(z.key<parent.key)parent.left=z;else parent.right=z;return root;}
+function rbFix(root,z,notes,rotations){
+  while(z.parent && z.parent.color==='red'){
+    const parent=z.parent,grand=parent.parent;
+    if(parent===grand.left){
+      let uncle=grand.right;
+      if(uncle && uncle.color==='red'){
+        notes.push(`Parent ${parent.key} and uncle ${uncle.key} are red: recolor both black and grandparent ${grand.key} red; continue upward.`);
+        parent.color='black';uncle.color='black';grand.color='red';z=grand;
+      } else {
+        if(z===parent.right){
+          notes.push(`Triangle case: left-rotate parent ${parent.key} to make a straight line.`);
+          z=parent;root=rbLeft(root,z);rotations.push('Left at '+z.key);
+        }
+        const p=z.parent,g=p.parent;
+        notes.push(`Line case: color parent ${p.key} black, grandparent ${g.key} red, then right-rotate grandparent ${g.key}.`);
+        p.color='black';g.color='red';rotations.push('Right at '+g.key);root=rbRight(root,g);
+      }
+    } else {
+      let uncle=grand.left;
+      if(uncle && uncle.color==='red'){
+        notes.push(`Parent ${parent.key} and uncle ${uncle.key} are red: recolor both black and grandparent ${grand.key} red; continue upward.`);
+        parent.color='black';uncle.color='black';grand.color='red';z=grand;
+      } else {
+        if(z===parent.left){
+          notes.push(`Triangle case: right-rotate parent ${parent.key} to make a straight line.`);
+          z=parent;root=rbRight(root,z);rotations.push('Right at '+z.key);
+        }
+        const p=z.parent,g=p.parent;
+        notes.push(`Line case: color parent ${p.key} black, grandparent ${g.key} red, then left-rotate grandparent ${g.key}.`);
+        p.color='black';g.color='red';rotations.push('Left at '+g.key);root=rbLeft(root,g);
+      }
+    }
+  }
+  if(root.color!=='black')notes.push('Color the root black.');
+  root.color='black';
+  return root;
+}
+let rbSteps=[],rbPos=0;
+function buildRB(){
+  try{
+    const keys=parseKeys($('rbKeys').value);let root=null;
+    rbSteps=[{root:null,key:null,description:'The tree is empty. The first inserted node becomes the root and must be black.',rotations:'—',rootKey:'—'}];
+    keys.forEach(key=>{
+      const z=rbNode(key,'red'),notes=[`Insert ${key} as a red node using normal BST insertion.`],rotations=[];
+      root=rbBSTInsert(root,z);
+      if(!z.parent){root.color='black';notes.push('The new node is the root; color it black.');}
+      else root=rbFix(root,z,notes,rotations);
+      rbSteps.push({root:rbClone(root),key,description:notes.join(' '),rotations:rotations.join('; ')||'None',rootKey:`${root.key} (${root.color})`});
+    });
+    rbPos=0;$('rbError').textContent='';
+    ['rbPrev','rbNext','rbRestart'].forEach(id=>$(id).disabled=false);
+    renderRB();
+  }catch(e){$('rbError').textContent=e.message;}
+}
+function renderRB(){
+  const s=rbSteps[rbPos];
+  $('rbCount').textContent=`Step ${rbPos} of ${rbSteps.length-1}`;
+  $('rbTitle').textContent=rbPos===0?'Ready':`Inserted ${s.key}`;
+  $('rbText').textContent=s.description;
+  $('rbOrder').textContent=s.root?inorder(s.root).join(' → '):'—';
+  $('rbPrev').disabled=rbPos===0;$('rbNext').disabled=rbPos===rbSteps.length-1;
+  $('rbNext').textContent=rbPos===rbSteps.length-1?'Complete ✓':'Next →';
+  draw('rbSvg',s.root,'rb',s.key);
+  $('rbTable').innerHTML='';
+  rbSteps.slice(1).forEach((r,i)=>{
+    const tr=document.createElement('tr');if(i+1===rbPos)tr.style.background='#493717';
+    [i+1,r.key,r.description,r.rotations,r.rootKey].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
+    $('rbTable').appendChild(tr);
+  });
+}
+$('rbBuild').addEventListener('click',buildRB);
+$('rbPreset').addEventListener('change',()=>{$('rbKeys').value=$('rbPreset').value;buildRB()});
+$('rbReset').addEventListener('click',()=>{$('rbKeys').value='10,20,30,15,25,5,1';$('rbPreset').value='10,20,30,15,25,5,1';buildRB()});
+$('rbNext').addEventListener('click',()=>{if(rbPos<rbSteps.length-1){rbPos++;renderRB()}});
+$('rbPrev').addEventListener('click',()=>{if(rbPos>0){rbPos--;renderRB()}});
+$('rbRestart').addEventListener('click',()=>{rbPos=0;renderRB()});
+buildAVL();buildRB();
+})();
+</script>
+</body></html>

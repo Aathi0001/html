@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tree Traversals — Interactive DSA Lesson</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2d;--panel2:#172238;--line:#2b3a56;--text:#edf3ff;--muted:#a7b5ce;--blue:#7dd3fc;--green:#86efac;--gold:#fcd34d;--red:#fca5a5;--purple:#c4b5fd}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#182844 0%,var(--bg) 58%);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1150px;margin:auto;padding:28px 18px 60px}h1,h2,h3{line-height:1.2}h1{font-size:clamp(2rem,5vw,3.2rem);margin:.2em 0}h2{font-size:1.65rem;margin-top:0}h3{font-size:1.12rem}p{color:#d2dced}.eyebrow{color:var(--blue);font-weight:800;letter-spacing:.13em;text-transform:uppercase;font-size:.78rem}
+.hero{padding:30px;border:1px solid var(--line);border-radius:24px;background:linear-gradient(135deg,#182944dd,#11182add);box-shadow:0 18px 60px #0003}.hero p{max-width:800px}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.chip{padding:5px 10px;border:1px solid #3a4c6c;border-radius:99px;color:#c9d8ee;font-size:.84rem}
+section{margin-top:24px;padding:24px;border:1px solid var(--line);border-radius:20px;background:#111a2beF}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}.card{padding:16px;border:1px solid #2d3d59;border-radius:15px;background:var(--panel2)}.card p{margin-bottom:0}.callout{border-left:4px solid var(--blue);padding:12px 16px;background:#13243a;border-radius:0 12px 12px 0;color:#dbeafe}.muted{color:var(--muted)}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{color:#bae6fd;background:#1c2b43;padding:2px 5px;border-radius:5px}pre{white-space:pre;overflow:auto;background:#080d18;border:1px solid var(--line);padding:18px;border-radius:12px;color:#dce8fb;font-size:.9rem}
+label{display:block;font-weight:700;margin-bottom:6px}.field{display:flex;flex-direction:column;gap:5px}input,select,button{font:inherit}input,select{width:100%;padding:10px 12px;border:1px solid #405171;border-radius:10px;background:#0b1323;color:var(--text)}button{border:1px solid #476080;border-radius:10px;padding:9px 14px;background:#213552;color:var(--text);font-weight:700;cursor:pointer}button:hover{filter:brightness(1.15)}button.primary{background:#075985;border-color:#0e7490}button:disabled{opacity:.4;cursor:not-allowed}.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.setup{display:grid;grid-template-columns:minmax(220px,1fr) minmax(190px,.5fr);gap:14px;align-items:end}.simgrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(260px,.8fr);gap:18px;margin-top:18px}.visual{border:1px solid var(--line);border-radius:14px;background:#09111f;padding:12px;min-width:0}.visual svg{width:100%;height:auto;display:block;min-height:220px}.node circle{fill:#182b46;stroke:#5a7195;stroke-width:2}.node text{fill:#edf5ff;font-size:14px;font-weight:800;text-anchor:middle;dominant-baseline:central}.node.visited circle{fill:#14532d;stroke:#86efac;stroke-width:3}.node.current circle{fill:#854d0e;stroke:#fcd34d;stroke-width:4}.node text.order{font-size:10px;fill:#bbf7d0}.edge{stroke:#526784;stroke-width:2}.stepbox{padding:17px;background:#0b1424;border:1px solid var(--line);border-radius:14px}.stepcount{color:var(--blue);font-size:.84rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.steptext{font-size:1.05rem;min-height:80px}.pillrow{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.pill{padding:5px 9px;border-radius:8px;background:#20314c;border:1px solid #3c5273;font-family:monospace}.pill.active{background:#713f12;border-color:var(--gold);color:#ffefb0}.pill.done{background:#14532d;border-color:#4ade80;color:#dcfce7}.sequence{font-family:ui-monospace,monospace;font-size:1rem;overflow-wrap:anywhere;min-height:38px}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;margin-top:12px}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line)}th{color:#a9dfff;background:#172238}.good{color:var(--green)}.warn{color:var(--gold)}.small{font-size:.88rem}.foot{color:var(--muted);text-align:center;padding:28px 0 0}
+@media(max-width:760px){main{padding:14px}.hero,section{padding:18px}.setup,.simgrid{grid-template-columns:1fr}.visual svg{min-height:170px}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+  <div class="eyebrow">DSA • Trees • Interactive lesson</div>
+  <h1>Tree Traversals</h1>
+  <p>A tree can store data hierarchically. <strong>Traversal</strong> means visiting its nodes in a defined order. Here you can edit a tree, choose a traversal, and move through every visit one step at a time.</p>
+  <div class="chips"><span class="chip">Preorder</span><span class="chip">Inorder</span><span class="chip">Postorder</span><span class="chip">Level order</span><span class="chip">Interactive dry run</span></div>
+</header>
+
+<section>
+<h2>1. Understand the tree</h2>
+<div class="grid">
+  <article class="card"><h3>Root</h3><p>The top node. In this example, <code>A</code> is the root.</p></article>
+  <article class="card"><h3>Child and parent</h3><p><code>B</code> is a child of <code>A</code>; <code>A</code> is its parent.</p></article>
+  <article class="card"><h3>Leaf</h3><p>A node with no children, such as <code>D</code>, <code>E</code>, <code>F</code>, or <code>G</code>.</p></article>
+  <article class="card"><h3>Binary tree</h3><p>Each node can have up to two children: a left child and a right child.</p></article>
+</div>
+<p class="callout"><strong>Input format:</strong> Enter nodes in level-order (top to bottom, left to right), separated by commas. Use <code>null</code> for a missing child. Example: <code>A,B,C,D,E,F,G</code>. For a missing left child under B: <code>A,B,C,null,E,F,G</code>.</p>
+</section>
+
+<section id="simulator">
+<h2>2. Interactive traversal simulator</h2>
+<p class="muted">Change the tree or traversal, then press <strong>Build / Update</strong>. Use Next and Previous to inspect each visit. Nodes are highlighted as the traversal proceeds.</p>
+<div class="setup">
+  <div class="field"><label for="treeInput">Level-order tree values</label><input id="treeInput" value="A,B,C,D,E,F,G" spellcheck="false" aria-describedby="inputHelp"><span id="inputHelp" class="muted small">Example: A,B,C,D,E,null,G</span></div>
+  <div class="field"><label for="method">Traversal method</label><select id="method"><option value="pre">Preorder — Root, Left, Right</option><option value="in" selected>Inorder — Left, Root, Right</option><option value="post">Postorder — Left, Right, Root</option><option value="level">Level order — breadth-first</option></select></div>
+</div>
+<div class="controls"><button class="primary" id="build">Build / Update</button><button id="example">Restore example</button></div>
+<div id="error" role="status" class="small warn" style="margin-top:8px"></div>
+<div class="simgrid">
+  <div class="visual"><svg id="treeSvg" viewBox="0 0 600 360" role="img" aria-label="Binary tree visualization"></svg><p class="muted small">Legend: <span class="good">green = already visited</span>, <span class="warn">gold = current visit</span>.</p></div>
+  <div class="stepbox">
+    <div class="stepcount" id="stepCount">Step 0 of 7</div>
+    <h3 id="stepTitle">Ready to begin</h3>
+    <p class="steptext" id="stepText">Press Next to begin the dry run.</p>
+    <div class="muted small">Visited sequence</div><div id="sequence" class="sequence">—</div>
+    <div class="muted small" style="margin-top:12px">Traversal order (all nodes)</div><div id="fullOrder" class="sequence">A, B, D, E, C, F, G</div>
+    <div class="controls"><button id="prev" disabled>← Previous</button><button id="next" class="primary">Next →</button><button id="restart">Restart</button></div>
+  </div>
+</div>
+<div class="tablewrap">
+<table><thead><tr><th>#</th><th>Node</th><th>Action</th><th>Reason</th></tr></thead><tbody id="traceRows"></tbody></table>
+</div>
+</section>
+
+<section>
+<h2>3. The four main traversals</h2>
+<div class="grid">
+  <article class="card"><h3>Preorder: Root → Left → Right</h3><p>Visit a node before traversing its children. Useful for copying/serializing a tree and prefix expressions.</p><p><code>A, B, D, E, C, F, G</code></p></article>
+  <article class="card"><h3>Inorder: Left → Root → Right</h3><p>Visit left subtree, then node, then right subtree. In a binary search tree, this gives values in sorted order.</p><p><code>D, B, E, A, F, C, G</code></p></article>
+  <article class="card"><h3>Postorder: Left → Right → Root</h3><p>Visit children before their parent. Useful when deleting a tree or evaluating expression trees bottom-up.</p><p><code>D, E, B, F, G, C, A</code></p></article>
+  <article class="card"><h3>Level order</h3><p>Visit one level at a time, from left to right. It uses a queue and is also called breadth-first traversal.</p><p><code>A, B, C, D, E, F, G</code></p></article>
+</div>
+</section>
+
+<section>
+<h2>4. Python implementations</h2>
+<p>Each recursive traversal takes <code>O(n)</code> time because every node is visited once. The recursive methods use call-stack space proportional to tree height, <code>O(h)</code>; in the worst case, <code>h = n</code>. Level order uses a queue that can hold up to <code>O(n)</code> nodes.</p>
+<pre><code>from collections import deque
+
+class Node:
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+def preorder(root):
+    if root is None:
+        return
+    print(root.value)       # Root
+    preorder(root.left)     # Left
+    preorder(root.right)    # Right
+
+def inorder(root):
+    if root is None:
+        return
+    inorder(root.left)      # Left
+    print(root.value)       # Root
+    inorder(root.right)     # Right
+
+def postorder(root):
+    if root is None:
+        return
+    postorder(root.left)   # Left
+    postorder(root.right)  # Right
+    print(root.value)      # Root
+
+def level_order(root):
+    if root is None:
+        return
+    queue = deque([root])
+    while queue:
+        node = queue.popleft()
+        print(node.value)
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)</code></pre>
+</section>
+
+<section>
+<h2>5. Dry-run checklist</h2>
+<ul>
+<li>Identify the root and each node's left/right children.</li>
+<li>For preorder, record the root immediately before going left.</li>
+<li>For inorder, finish the left subtree before recording the root.</li>
+<li>For postorder, record the root only after both subtrees are complete.</li>
+<li>For level order, use a queue: remove the front node, visit it, then add its children left-to-right.</li>
+</ul>
+<div class="callout"><strong>Remember:</strong> the tree structure stays the same. Only the order in which nodes are visited changes.</div>
+</section>
+<div class="foot">Tree Traversals • Interactive DSA notes</div>
+</main>
+<script>
+(() => {
+ const $ = id => document.getElementById(id);
+ let nodes = [], root = null, trace = [], cursor = 0, order = [];
+ const methods = {
+  pre:{name:'Preorder',rule:'Root → Left → Right'},
+  in:{name:'Inorder',rule:'Left → Root → Right'},
+  post:{name:'Postorder',rule:'Left → Right → Root'},
+  level:{name:'Level order',rule:'Breadth-first, left to right'}
+ };
+ function parseTree(raw){
+   const vals = raw.split(',').map(s=>s.trim());
+   while(vals.length && vals[vals.length-1]==='') vals.pop();
+   if(!vals.length || vals[0]==='' || vals[0].toLowerCase()==='null') {
+     if(vals.length && vals[0].toLowerCase()==='null' && vals.slice(1).some(v=>v!=='' && v.toLowerCase()!=='null')) throw Error('A tree cannot have child nodes when the root is null.');
+     return [];
+   }
+   const built = vals.map((v,i)=>({id:i,value:v,left:null,right:null,x:0,y:0}));
+   for(let i=0;i<built.length;i++){
+     if(built[i].value==='' || built[i].value.toLowerCase()==='null') continue;
+     const li=2*i+1, ri=2*i+2;
+     if(li<built.length && built[li].value!=='' && built[li].value.toLowerCase()!=='null') built[i].left=built[li];
+     if(ri<built.length && built[ri].value!=='' && built[ri].value.toLowerCase()!=='null') built[i].right=built[ri];
+   }
+   // Reject orphan values that cannot be reached from the root.
+   const reachable = new Set();
+   function mark(n){if(!n)return;reachable.add(n.id);mark(n.left);mark(n.right)}
+   mark(built[0]);
+   const orphan=built.find(n=>n.value!==''&&n.value.toLowerCase()!=='null'&&!reachable.has(n.id));
+   if(orphan) throw Error('Node "'+orphan.value+'" is unreachable. Fill missing parent positions or remove that value.');
+   const seen = new Set();
+   for(const n of built){if(n.value!==''&&n.value.toLowerCase()!=='null'){if(seen.has(n.value))throw Error('Node labels must be unique so each visit can be tracked. Duplicate: '+n.value);seen.add(n.value)}}
+   return built.filter(n=>n.value!==''&&n.value.toLowerCase()!=='null');
+ }
+ function makeTrace(root,method){
+   const out=[];
+   function visit(n){
+     if(!n)return;
+     if(method==='pre'){out.push({node:n,reason:'Visit the root of this subtree first.'});visit(n.left);visit(n.right)}
+     else if(method==='in'){visit(n.left);out.push({node:n,reason:'The left subtree is complete; visit this node before its right subtree.'});visit(n.right)}
+     else {visit(n.left);visit(n.right);out.push({node:n,reason:'Both child subtrees are complete; visit this node last.'})}
+   }
+   if(method==='level'){
+     const q=[root];
+     while(q.length){const n=q.shift();out.push({node:n,reason:'Take the front node from the queue; add its left child, then right child.'});if(n.left)q.push(n.left);if(n.right)q.push(n.right)}
+   }else visit(root);
+   return out;
+ }
+ function assignPositions(){
+   if(!root)return;
+   let maxDepth=0;
+   function depth(n,d){if(!n)return;maxDepth=Math.max(maxDepth,d);depth(n.left,d+1);depth(n.right,d+1)}
+   depth(root,0);
+   let index=0;
+   function place(n,d){if(!n)return;place(n.left,d+1);n.x=(index++ + .5)*600/countLeaves(root);n.y=42+d*(Math.min(82,270/Math.max(1,maxDepth)));place(n.right,d+1)}
+   function countLeaves(n){if(!n)return 0;if(!n.left&&!n.right)return 1;return countLeaves(n.left)+countLeaves(n.right)}
+   // Inorder positions make left/right relationships easy to read.
+   const total=countNodes(root);let k=0;
+   function layout(n,d){if(!n)return;layout(n.left,d+1);n.x=(++k)*600/(total+1);n.y=35+d*(300/(maxDepth+1));layout(n.right,d+1)}
+   layout(root,0);
+ }
+ function countNodes(n){return n?1+countNodes(n.left)+countNodes(n.right):0}
+ function draw(){
+   const svg=$('treeSvg'); svg.innerHTML='';
+   if(!root){svg.setAttribute('viewBox','0 0 600 180');return}
+   assignPositions();
+   const ns=[];function collect(n){if(!n)return;ns.push(n);collect(n.left);collect(n.right)}collect(root);
+   const maxY=Math.max(...ns.map(n=>n.y));svg.setAttribute('viewBox',`0 0 600 ${Math.max(180,maxY+52)}`);
+   const edge=(a,b)=>{if(!b)return;const line=document.createElementNS('http://www.w3.org/2000/svg','line');line.setAttribute('x1',a.x);line.setAttribute('y1',a.y);line.setAttribute('x2',b.x);line.setAttribute('y2',b.y);line.setAttribute('class','edge');svg.appendChild(line);edge(b,b.left);edge(b,b.right)};
+   edge(root,root.left);edge(root,root.right);
+   // Draw all edges in a separate recursive pass.
+   svg.querySelectorAll('line').forEach(el=>el.remove());
+   function edges(n){if(!n)return;for(const c of [n.left,n.right])if(c){const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',n.x);l.setAttribute('y1',n.y);l.setAttribute('x2',c.x);l.setAttribute('y2',c.y);l.setAttribute('class','edge');svg.appendChild(l);edges(c)}}edges(root);
+   const visited=trace.slice(0,cursor).map(t=>t.node.id), current=cursor>0?trace[cursor-1].node.id:null;
+   for(const n of ns){
+     const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('class','node'+(visited.includes(n.id)?' visited':'')+(current===n.id?' current':''));g.setAttribute('transform',`translate(${n.x},${n.y})`);
+     const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r','19');g.appendChild(c);
+     const t=document.createElementNS('http://www.w3.org/2000/svg','text');t.textContent=n.value;g.appendChild(t);
+     if(visited.includes(n.id)){const o=document.createElementNS('http://www.w3.org/2000/svg','text');o.setAttribute('class','order');o.setAttribute('y','31');o.textContent=visited.indexOf(n.id)+1;g.appendChild(o)}
+     svg.appendChild(g);
+   }
+ }
+ function render(){
+   const total=trace.length; $('stepCount').textContent=`Step ${cursor} of ${total}`;
+   const current=cursor?trace[cursor-1]:null;
+   $('stepTitle').textContent=current?`Visit ${current.node.value}`:'Ready to begin';
+   $('stepText').textContent=current?`${current.reason} ${methods[$('method').value].name} order: node ${cursor} of ${total}.`:'Press Next to begin. The chosen rule is '+methods[$('method').value].rule+'.';
+   const seq=trace.slice(0,cursor).map(t=>t.node.value);
+   $('sequence').textContent=seq.length?seq.join(' → '):'—';
+   $('fullOrder').textContent=trace.map(t=>t.node.value).join(', ')||'—';
+   $('prev').disabled=cursor===0;$('next').disabled=cursor>=total;
+   $('next').textContent=cursor>=total?'Complete ✓':'Next →';
+   $('traceRows').innerHTML='';
+   trace.forEach((t,i)=>{
+     const tr=document.createElement('tr');
+     if(i===cursor-1)tr.style.background='#4a3416';
+     const vals=[String(i+1),t.node.value,i<cursor?'Visited':i===cursor?'Next':'Waiting',t.reason];
+     vals.forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
+     $('traceRows').appendChild(tr);
+   });
+   draw();
+ }
+ function build(){
+   try{
+     const built=parseTree($('treeInput').value);
+     nodes=built;root=built.length?built.find(n=>n.id===0)||null:null;
+     if(!root)throw Error('Enter at least one root node.');
+     trace=makeTrace(root,$('method').value);order=trace.map(t=>t.node.value);cursor=0;$('error').textContent='';render();
+   }catch(e){$('error').textContent=e.message}
+ }
+ $('build').addEventListener('click',build);
+ $('example').addEventListener('click',()=>{$('treeInput').value='A,B,C,D,E,F,G';$('method').value='in';build()});
+ $('method').addEventListener('change',build);
+ $('next').addEventListener('click',()=>{if(cursor<trace.length){cursor++;render()}});
+ $('prev').addEventListener('click',()=>{if(cursor>0){cursor--;render()}});
+ $('restart').addEventListener('click',()=>{cursor=0;render()});
+ build();
+})();
+</script>
+</body>
+</html>

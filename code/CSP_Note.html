@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Practical Content Security Policy guide for Angular, Apache, PHP and Razorpay troubleshooting.">
+<title>Content Security Policy (CSP) — Implementation & Troubleshooting</title>
+<style>
+:root{color-scheme:dark;--bg:#090d16;--surface:#0f172a;--card:#151f38;--code:#080f1d;--text:#f1f5f9;--muted:#a8b6ca;--sub:#8292aa;--border:#26344b;--blue:#38bdf8;--purple:#a5b4fc;--red:#fb7185;--yellow:#fbbf24;--green:#34d399}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:5rem}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.75 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:2.8rem max(1rem,calc((100% - 1200px)/2));background:linear-gradient(135deg,#14213b,#0b1220);border-bottom:1px solid var(--border)}
+h1{font-size:clamp(2rem,5vw,3.4rem);line-height:1.15;margin:.5rem 0 1rem}h2{font-size:1.8rem;margin:3.5rem 0 1rem;border-bottom:1px solid var(--border);padding-bottom:.5rem}h3{font-size:1.25rem;margin:2rem 0 .7rem}p,li{color:var(--muted)}strong{color:var(--text)}a{color:var(--blue)}code{font: .9em ui-monospace,SFMono-Regular,Consolas,monospace;background:#1b2b43;color:#b9e8ff;padding:.12rem .35rem;border-radius:4px;overflow-wrap:anywhere}pre{overflow:auto;background:var(--code);border:1px solid var(--border);padding:1rem;border-radius:9px;color:#d8e4f4;line-height:1.6;font-size:.88rem}pre code{background:none;padding:0;color:inherit}.layout{max-width:1200px;margin:auto;padding:1.5rem;display:grid;grid-template-columns:270px minmax(0,1fr);gap:2rem}nav{position:sticky;top:1rem;align-self:start;max-height:calc(100vh - 2rem);overflow:auto;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1rem}nav b{display:block;margin-bottom:.6rem}nav a{display:block;text-decoration:none;padding:.25rem .45rem;color:var(--muted);font-size:.9rem}nav a:hover{background:var(--card);color:var(--blue)}main{min-width:0}.hero,.callout,.panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin:1.2rem 0}.hero{border-color:#28506b}.callout.warn{border-left:4px solid var(--yellow)}.callout.danger{border-left:4px solid var(--red)}.callout.good{border-left:4px solid var(--green)}.callout.info{border-left:4px solid var(--blue)}.tag{display:inline-block;border:1px solid var(--border);border-radius:99px;padding:.15rem .65rem;color:var(--blue);font-size:.8rem;margin:.2rem .25rem .2rem 0}.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:10px;margin:1rem 0}table{border-collapse:collapse;width:100%;min-width:560px;background:var(--surface)}th,td{text-align:left;padding:.8rem;border-bottom:1px solid var(--border);vertical-align:top}th{background:var(--card);color:var(--text)}td{color:var(--muted)}.flow{display:grid;grid-template-columns:1fr auto 1fr;gap:.8rem;align-items:center;text-align:center}.flow div{background:var(--card);padding:1rem;border-radius:8px}.small{font-size:.9rem;color:var(--sub)}.check li{margin:.45rem 0}footer{border-top:1px solid var(--border);padding:2rem;text-align:center;color:var(--sub)}@media(max-width:850px){.layout{grid-template-columns:1fr}nav{position:relative;top:auto;max-height:none}.flow{grid-template-columns:1fr}.flow span{transform:rotate(90deg)}}@media print{body{background:white;color:#111}nav{display:none}.layout{display:block;max-width:none}p,li,td{color:#333}pre{white-space:pre-wrap;background:#f4f4f4;color:#111}header{background:white;color:#111}a{color:#0645ad}}
+</style>
+</head>
+<body>
+<header>
+  <span class="tag">Developer notes · Angular + Apache + PHP</span>
+  <h1>Content Security Policy (CSP)</h1>
+  <p style="max-width:850px;color:#c1d0e4">A practical guide to browser enforcement, directives, nonces and hashes, Angular styles, Apache response handling, and Razorpay checkout troubleshooting.</p>
+  <p class="small">Use this as a learning and implementation reference. Confirm every production change against your deployed Apache build and your organization’s security requirements.</p>
+</header>
+<div class="layout">
+<nav aria-label="Table of contents">
+<b>Contents</b>
+<a href="#overview">1. CSP fundamentals</a><a href="#threat">2. Threat model and limits</a><a href="#delivery">3. Delivery methods</a><a href="#directives">4. Directives and fallback</a><a href="#styles">5. Style elements vs attributes</a><a href="#nonce">6. Nonces</a><a href="#hash">7. Hashes</a><a href="#unsafe">8. unsafe-inline</a><a href="#angular">9. Angular and CSP</a><a href="#ngstyle">10. ngStyle and ngClass</a><a href="#apache">11. Apache headers</a><a href="#uid">12. UNIQUE_ID and @</a><a href="#ssi">13. SSI and substitute</a><a href="#lua">14. Apache Lua option</a><a href="#razorpay">15. Razorpay integration</a><a href="#errors">16. Errors encountered</a><a href="#debug">17. Debugging workflow</a><a href="#deployment">18. UAT/production</a><a href="#policy">19. Policy design example</a><a href="#checklist">20. Final checklist</a><a href="#glossary">21. Glossary</a><a href="#refs">22. References</a>
+</nav>
+<main>
+<section id="overview">
+<h2>1. CSP fundamentals</h2>
+<p>Content Security Policy is a browser-enforced security mechanism. A server sends a policy that tells the browser which sources and execution patterns are allowed for resources such as scripts, styles, images, frames, and network connections.</p>
+<div class="hero"><strong>Core idea:</strong> CSP is an additional layer of defense—especially against some cross-site scripting (XSS) attacks. It does not replace output encoding, safe DOM APIs, input validation, authentication, or secure application design.</div>
+<h3>How it works</h3><div class="flow"><div>Server returns HTML + CSP response header</div><span>→</span><div>Browser parses policy and enforces it while loading/executing resources</div></div>
+<p>When a resource or operation violates the policy, the browser blocks it (when enforcing) and reports a violation in DevTools. A policy can also be delivered in report-only mode to observe violations without blocking them.</p>
+</section>
+<section id="threat"><h2>2. Threat model and limits</h2>
+<ul><li>CSP can reduce the impact of injected scripts by restricting script sources and inline execution.</li><li>A weak policy, overly broad host allowlist, or permissive inline execution can reduce its protection.</li><li>CSP does not make trusted scripts safe if those scripts contain an injection flaw.</li><li>Third-party integrations expand the policy surface and should be limited to verified requirements.</li></ul>
+<div class="callout warn"><strong>Remember:</strong> “The page works” is not proof that the policy is strong, and “the console is quiet” is not proof that every intended security control is active.</div>
+</section>
+<section id="delivery"><h2>3. Delivery methods: HTTP header vs meta</h2>
+<h3>HTTP response header (preferred)</h3><p>Send <code>Content-Security-Policy</code> as an HTTP response header. It can apply to the document before its HTML is parsed and supports the full policy feature set.</p>
+<pre><code>Content-Security-Policy: default-src 'self'; object-src 'none'; base-uri 'self';</code></pre>
+<h3>HTML meta element</h3><pre><code>&lt;meta http-equiv="Content-Security-Policy"
+      content="default-src 'self';"&gt;</code></pre>
+<p>A meta policy is parsed from the document and has limitations; it cannot provide all header capabilities (for example, reporting directives and some document-level controls). A meta policy also cannot retroactively protect content parsed before it. Avoid treating it as a replacement for a server-managed policy when headers are available.</p>
+</section>
+<section id="directives"><h2>4. Directives and fallback behavior</h2>
+<div class="tablewrap"><table><thead><tr><th>Directive</th><th>Controls</th><th>Typical purpose</th></tr></thead><tbody>
+<tr><td><code>default-src</code></td><td>Fallback for several fetch directives</td><td>Baseline source restriction</td></tr>
+<tr><td><code>script-src</code></td><td>Script sources and inline/eval-related execution</td><td>Control JavaScript loading/execution</td></tr>
+<tr><td><code>style-src</code></td><td>Styles, when more-specific style directives are absent</td><td>Fallback for style elements and attributes</td></tr>
+<tr><td><code>style-src-elem</code></td><td>Style elements and linked stylesheets</td><td>Fine-grained stylesheet policy</td></tr>
+<tr><td><code>style-src-attr</code></td><td>Inline style attributes and style-attribute operations</td><td>Control style attributes separately</td></tr>
+<tr><td><code>img-src</code></td><td>Images</td><td>Restrict image origins and data URLs</td></tr>
+<tr><td><code>connect-src</code></td><td>Fetch, XHR, WebSocket, EventSource and related connections</td><td>Permit API endpoints</td></tr>
+<tr><td><code>frame-src</code></td><td>Nested browsing contexts loaded by the page</td><td>Allow required checkout frames</td></tr>
+<tr><td><code>font-src</code></td><td>Fonts</td><td>Restrict font sources</td></tr>
+<tr><td><code>form-action</code></td><td>Form submission destinations</td><td>Limit where forms can submit</td></tr>
+<tr><td><code>base-uri</code></td><td>Document base URL</td><td>Reduce base-tag injection risk</td></tr>
+<tr><td><code>object-src</code></td><td>Plugin/object resources</td><td>Often set to <code>'none'</code></td></tr>
+<tr><td><code>frame-ancestors</code></td><td>Who may embed this page</td><td>Clickjacking defense; header-only</td></tr>
+<tr><td><code>upgrade-insecure-requests</code></td><td>Upgrades eligible HTTP requests</td><td>HTTPS migration support</td></tr>
+</tbody></table></div>
+<p>More-specific directives override their fallback for the resource type they govern. For example, when <code>style-src-elem</code> is present, it governs style elements rather than inheriting the style source list from <code>style-src</code>. A missing directive may fall back to its parent directive, where defined.</p>
+<div class="callout info"><strong>Multiple policies:</strong> Multiple enforcing CSP headers are not merged as a permissive union. Each policy is enforced, so the combined effect is generally more restrictive. Check for duplicate headers from Apache, a proxy, or application middleware.</div>
+</section>
+<section id="styles"><h2>5. Style elements vs style attributes</h2>
+<p>CSP distinguishes stylesheet elements from inline style attributes when the split directives are supported and configured.</p>
+<pre><code>&lt;style&gt;
+  .notice { color: teal; }
+&lt;/style&gt;
+
+&lt;div style="color: teal"&gt;Hello&lt;/div&gt;</code></pre>
+<ul><li><code>style-src-elem</code> governs <code>&lt;style&gt;</code> elements and stylesheet links.</li><li><code>style-src-attr</code> governs inline style attributes and related style-attribute operations.</li><li>A nonce on a <code>&lt;style&gt;</code> element does not authorize a separate <code>style="..."</code> attribute.</li></ul>
+</section>
+<section id="nonce"><h2>6. CSP nonces</h2>
+<p>A nonce is a per-response unpredictable value. The server includes it in the CSP source list and on the specific inline script/style element it intends to authorize.</p>
+<pre><code>Content-Security-Policy: style-src-elem 'self' 'nonce-RESPONSE_NONCE';
+
+&lt;style nonce="RESPONSE_NONCE"&gt;
+  .example { color: teal; }
+&lt;/style&gt;</code></pre>
+<div class="callout danger"><strong>Security requirements</strong><ul><li>Generate from a cryptographically secure random source.</li><li>Use a fresh nonce for each HTML response.</li><li>Use the exact same value in the header and authorized markup.</li><li>Do not expose or reuse a fixed nonce across responses.</li><li>Ensure caching does not pair one response’s HTML with another response’s CSP header.</li></ul></div>
+<p>A nonce is not a general authorization token for all CSS on the page. It applies to supported nonce-bearing elements, not arbitrary attributes or third-party DOM mutations.</p>
+</section>
+<section id="hash"><h2>7. CSP hashes (SHA-256)</h2>
+<p>A hash source authorizes inline content only when the browser-calculated digest matches the exact content covered by the relevant CSP rules. Whitespace and content changes can change the digest.</p>
+<pre><code>style-src-elem 'sha256-BASE64_DIGEST';</code></pre>
+<p>For inline style attributes, CSP requires special handling: in CSP Level 3, a matching hash for an attribute needs <code>'unsafe-hashes'</code> in the applicable style directive. A hash copied from an error must be applied to the right kind of blocked content and directive.</p>
+<div class="callout warn"><strong>Why a copied hash may not fix the error:</strong> It may describe a different inline block, an attribute rather than a style element, a changed string, or be placed in a directive that does not govern the violation. Do not blindly accumulate hashes from console messages.</div>
+<p>Hashes are useful for stable, known inline content. They are usually awkward for dynamic framework-generated or third-party CSS that changes across versions or runtime states.</p>
+</section>
+<section id="unsafe"><h2>8. What <code>'unsafe-inline'</code> means</h2>
+<p><code>'unsafe-inline'</code> relaxes CSP’s restrictions on inline code for the directive where it is used. In a style directive, it permits inline styling more broadly; it is not the same as allowing a single nonce-authorized style block.</p>
+<div class="tablewrap"><table><thead><tr><th>Policy choice</th><th>Effect</th><th>Trade-off</th></tr></thead><tbody>
+<tr><td>Nonce on style elements</td><td>Allows only matching nonce-bearing style elements</td><td>Requires correct server-side nonce plumbing</td></tr>
+<tr><td>Hashes for stable blocks</td><td>Allows exact matching inline content</td><td>Fragile if content changes; attributes need special handling</td></tr>
+<tr><td><code>style-src-attr 'unsafe-inline'</code></td><td>Allows inline style attributes</td><td>Broadly relaxes attribute-style restrictions</td></tr>
+<tr><td><code>style-src 'unsafe-inline'</code></td><td>Broad inline-style allowance in the style policy</td><td>Less granular; review carefully</td></tr>
+</tbody></table></div>
+<p>Using <code>style-src-attr 'unsafe-inline'</code> can be a compatibility decision, but it should be explicit, tested, documented, and approved. It is not automatically “safe” just because it is narrower than putting <code>'unsafe-inline'</code> in <code>style-src</code>.</p>
+</section>
+<section id="angular"><h2>9. Angular and CSP</h2>
+<p>Angular may create style elements for component styles at runtime. Angular’s <code>ngCspNonce</code> attribute supplies a nonce to Angular’s style creation mechanism in supported versions/configurations.</p>
+<pre><code>&lt;app-root ngCspNonce="SERVER_GENERATED_NONCE"&gt;&lt;/app-root&gt;</code></pre>
+<p>The value must be present in the delivered HTML and match the nonce in the CSP header. A static placeholder does nothing unless a server-side mechanism replaces it correctly.</p>
+<div class="callout info"><strong>Important distinction:</strong> Angular’s nonce helps authorize Angular-created style elements. It does not automatically add a nonce to styles inserted by every third-party script, nor does it authorize ordinary <code>style</code> attributes.</div>
+</section>
+<section id="ngstyle"><h2>10. Angular <code>ngStyle</code> and <code>ngClass</code></h2>
+<h3><code>[ngStyle]</code></h3><p><code>ngStyle</code> applies style properties to an element at runtime. It can appear to work even while CSP blocks or restricts some style operations, depending on the browser, exact operation, policy, and whether a violation occurs. Working visually does not prove that CSP authorizes it under every supported browser or policy.</p>
+<pre><code>&lt;p [ngStyle]="{'margin-top.px': 10}"&gt;Consent text&lt;/p&gt;</code></pre>
+<p>For fixed presentation, prefer a CSS class where practical:</p>
+<pre><code>&lt;p class="consent-text"&gt;Consent text&lt;/p&gt;
+
+/* component stylesheet */
+.consent-text { margin-top: 10px; }</code></pre>
+<h3><code>[ngClass]</code></h3><p><code>ngClass</code> toggles class names; the corresponding CSS rules live in stylesheets. It is generally a good way to express state-based presentation without setting a style attribute directly.</p>
+<pre><code>&lt;button [ngClass]="{'is-disabled': isDisabled}"&gt;Continue&lt;/button&gt;
+
+/* CSS */
+.is-disabled { opacity: .55; }</code></pre>
+<p>However, <code>ngClass</code> is not a CSP bypass: the stylesheet containing the class must still be allowed, and the class name must not be used to inject untrusted CSS or HTML.</p>
+</section>
+<section id="apache"><h2>11. Apache response headers</h2>
+<p>Apache’s <code>mod_headers</code> can set response headers. Keep the policy in one authoritative place where possible, and confirm whether a reverse proxy or application layer also emits CSP.</p>
+<pre><code>Header always set Content-Security-Policy "default-src 'self'; object-src 'none'; base-uri 'self';"</code></pre>
+<p>In Apache configuration, quoting and expression syntax depend on the directive and Apache version. Do not assume a string such as <code>%{SOME_VAR}e</code> is automatically evaluated in every context; header interpolation has specific syntax and environment-variable requirements.</p>
+<div class="callout warn"><strong>Do not paste illustrative snippets directly into production.</strong> Preserve existing required directives, validate Apache syntax with its configuration test command, and test in a non-production environment first.</div>
+</section>
+<section id="uid"><h2>12. Apache <code>UNIQUE_ID</code> and the <code>@</code> issue</h2>
+<p><code>mod_unique_id</code> supplies a request identifier. It is useful for correlation and logging, but it is not intended to be a cryptographically secure CSP nonce generator.</p>
+<p>Your earlier implementation used <code>%{UNIQUE_ID}e</code> and encountered an <code>@</code> character in the generated value. Replacing characters can make a string syntactically convenient, but it does not upgrade the source into a secure nonce generator.</p>
+<div class="callout danger"><strong>Key takeaway:</strong> Do not rely on <code>UNIQUE_ID</code> plus character substitution as the final secure nonce design. Prefer a cryptographically secure random generator and coordinate the header and HTML values.</div>
+</section>
+<section id="ssi"><h2>13. SSI and <code>mod_substitute</code></h2>
+<h3>SSI</h3><p>Server Side Includes can insert server-side values into HTML when the response is configured for SSI processing. SSI does not itself generate secure randomness, and it does not automatically share arbitrary variables with a Lua handler.</p>
+<h3><code>mod_substitute</code></h3><p><code>mod_substitute</code> performs response-body substitutions. It is not a secure nonce generator, and broad regular-expression rewriting of large HTML responses can add processing cost or interact unexpectedly with other output filters.</p>
+<p>Your investigation also encountered literal/unexpanded environment placeholders and concerns about combining substitution with SSI. Treat output-filter ordering and variable expansion as implementation-specific; verify the actual response bytes and headers rather than assuming a directive expands as intended.</p>
+</section>
+<section id="lua"><h2>14. Apache Lua: what it can and cannot solve by itself</h2>
+<p><code>mod_lua</code> allows Apache to run Lua handlers and filters when the module is built and configured compatibly. Installing the Lua interpreter alone does not install or enable Apache’s <code>mod_lua</code>.</p>
+<ul><li>Lua 5.1.4 being available on the server does not prove that Apache has a compatible Lua module.</li><li>A Lua script file sitting on disk is not invoked unless Apache configuration connects it to an appropriate hook or handler.</li><li><code>math.random()</code> is not suitable for generating CSP nonces.</li><li>The chosen implementation must securely generate a nonce and make the same request-scoped value available to both header and HTML.</li></ul>
+<div class="callout warn"><strong>Architecture caution:</strong> A Lua fixup hook that sets an environment variable is not, by itself, a complete HTML-rewriting solution. Apache’s header processing and response-body processing are separate concerns. A working design needs a verified supported mechanism for both, and must account for caching, compression, and filter order.</div>
+<p>Before implementing: verify Apache version/build, whether dynamic modules are supported, whether a compatible <code>mod_lua</code> exists, and the documented APIs available in that exact build. Test only in development/staging first.</p>
+</section>
+<section id="razorpay"><h2>15. Razorpay checkout and inline styling</h2>
+<p>Your observed checkout behavior included a dynamically inserted style block (for example, a spinner animation) and elements carrying inline style attributes. These are different CSP cases.</p>
+<ul><li>A stylesheet host source such as <code>https://*.razorpay.com</code> permits eligible external resources from that origin pattern; it does not authorize arbitrary inline style attributes.</li><li>A nonce on Angular’s root element does not automatically nonce Razorpay-created style elements.</li><li>A nonce on a style element does not authorize Razorpay’s separate <code>style</code> attributes.</li><li>A SHA-256 hash only addresses exact matching content in the applicable context; one hash should not be assumed to authorize unrelated styles.</li></ul>
+<p>Use Razorpay’s current official integration and security documentation to verify required script, frame, connection, image, and form destinations for the exact checkout integration you use. Avoid inventing or broadly allowing domains. Do not edit vendor <code>checkout.js</code> as a workaround.</p>
+<div class="callout info"><strong>Practical decision:</strong> If the checkout requires inline style attributes and there is no supported way to avoid them, a narrowly scoped <code>style-src-attr 'unsafe-inline'</code> may be a compatibility option after security review. It is not proof that no other integration option exists.</div>
+</section>
+<section id="errors"><h2>16. Errors and issues encountered — case notes</h2>
+<div class="panel"><h3>Case 1 — Inline style blocked</h3><p><strong>Symptom:</strong> Browser reports that inline styling violates <code>style-src</code>.</p><p><strong>Diagnosis:</strong> Identify whether the violation is a style element, a style attribute, or a dynamic CSS operation. Read the exact directive named in the error.</p><p><strong>Resolution path:</strong> Apply a nonce/hash only when it matches the relevant content and directive; otherwise refactor to classes or adjust policy deliberately.</p></div>
+<div class="panel"><h3>Case 2 — Angular style elements lacked a nonce</h3><p><strong>Symptom:</strong> Angular-generated styles are rejected under a nonce policy.</p><p><strong>Diagnosis:</strong> Check the delivered root element’s <code>ngCspNonce</code> and inspect generated style elements’ nonce properties.</p><p><strong>Resolution path:</strong> Ensure the server injects a per-response nonce and the CSP header carries the identical value.</p></div>
+<div class="panel"><h3>Case 3 — Apache <code>UNIQUE_ID</code> contained <code>@</code></h3><p><strong>Symptom:</strong> Nonce string caused formatting/validation issues.</p><p><strong>Diagnosis:</strong> Request IDs are not designed as secure CSP nonce values.</p><p><strong>Resolution path:</strong> Replace the design with cryptographically secure randomness rather than depending on character substitution.</p></div>
+<div class="panel"><h3>Case 4 — Placeholder was not expanded as expected</h3><p><strong>Symptom:</strong> HTML/header contained a literal variable placeholder.</p><p><strong>Diagnosis:</strong> Apache directives do not all expand environment variables the same way; substitution replacement syntax and filter timing matter.</p><p><strong>Resolution path:</strong> Verify actual HTTP response headers and body; use a supported request-scoped mechanism.</p></div>
+<div class="panel"><h3>Case 5 — SSI and substitution complexity</h3><p><strong>Symptom:</strong> Multiple output filters and regex replacement made behavior harder to reason about and raised performance concerns.</p><p><strong>Diagnosis:</strong> Body filters can interact; repeated rewriting of HTML is not a nonce-generation strategy.</p><p><strong>Resolution path:</strong> Minimize transformations and test exact output, response time, compression, and caching.</p></div>
+<div class="panel"><h3>Case 6 — PHP entry-point returned “File not found”</h3><p><strong>Symptom:</strong> Testing an <code>index.php</code> wrapper produced a 404-style response although a file appeared to exist.</p><p><strong>Diagnosis:</strong> Potential causes include PHP-FPM path/chroot configuration, incorrect <code>SCRIPT_FILENAME</code>, permissions, or Angular rewrite rules intercepting the request. The precise cause must be confirmed from logs/config.</p><p><strong>Resolution path:</strong> Check Apache error logs, FastCGI parameters, filesystem mapping, and rewrite order. Do not assume one cause without evidence.</p></div>
+<div class="panel"><h3>Case 7 — SHA-256 hash added but violation continued</h3><p><strong>Symptom:</strong> Adding a hash did not clear the CSP error.</p><p><strong>Diagnosis:</strong> Confirm the exact blocked content, directive, digest, and whether the violation concerns an attribute. Hashes are content-specific.</p><p><strong>Resolution path:</strong> Use the exact browser error, inspect the affected element, and avoid copying a hash from one violation to another.</p></div>
+<div class="panel"><h3>Case 8 — One hash appeared to clear multiple errors</h3><p><strong>Symptom:</strong> A single hash seemed to remove several visible style errors.</p><p><strong>Diagnosis:</strong> This observation alone does not prove the hash authorized all style blocks. Browser logging, stylesheet reuse, and changed execution paths can affect what appears in the console.</p><p><strong>Resolution path:</strong> Verify each relevant element and behavior independently. Do not infer a general CSP rule from a quiet console.</p></div>
+<div class="panel"><h3>Case 9 — Razorpay injected CSS</h3><p><strong>Symptom:</strong> Checkout added a style block and inline style attributes.</p><p><strong>Diagnosis:</strong> Separate style-element violations from style-attribute violations. Angular’s nonce does not automatically cover Razorpay’s DOM changes.</p><p><strong>Resolution path:</strong> Check current provider requirements, use exact applicable hashes/nonces where feasible, or document and approve a narrowly scoped compatibility exception.</p></div>
+<div class="panel"><h3>Case 10 — <code>ngStyle</code> vs CSP</h3><p><strong>Symptom:</strong> Angular <code>ngStyle</code> appeared to work despite concerns.</p><p><strong>Diagnosis:</strong> Runtime appearance is not a complete CSP compliance test; behavior depends on the precise style operation and browser.</p><p><strong>Resolution path:</strong> Prefer CSS classes for static styling and test dynamic styling under the actual enforced policy.</p></div>
+</section>
+<section id="debug"><h2>17. Browser debugging workflow</h2>
+<ol><li>Open DevTools → Network → select the document request → inspect all response headers.</li><li>Find every <code>Content-Security-Policy</code> header and any CSP meta element.</li><li>In Console, copy the complete violation, especially the directive name and suggested hash/nonce text.</li><li>Inspect the affected element and determine whether it is a <code>&lt;style&gt;</code>, linked stylesheet, <code>style</code> attribute, or script-driven style operation.</li><li>Check Angular’s root <code>ngCspNonce</code> and compare it to the CSP nonce exactly.</li><li>Test the same interaction in a clean session and after a hard reload; account for cache and service-worker behavior.</li><li>Use report-only mode in a controlled test when evaluating a proposed policy, then test enforcement.</li></ol>
+<pre><code>// Inspect inline style-bearing elements around Razorpay checkout:
+[...document.querySelectorAll(
+  '.razorpay-container [style], .razorpay-container style'
+)].map(el => ({
+  tag: el.tagName,
+  style: el.getAttribute('style'),
+  text: el.tagName === 'STYLE' ? el.textContent : null,
+  nonce: el.nonce || ''
+}));</code></pre>
+<p>This is a diagnostic snippet; run it in DevTools after the checkout DOM exists. It does not modify the page.</p>
+</section>
+<section id="deployment"><h2>18. Why development may differ from UAT/production</h2>
+<ul><li>Development servers may use different headers, proxies, build modes, or relaxed policies.</li><li>UAT/production may serve static files directly, use PHP-FPM, add proxy headers, or apply different rewrite rules.</li><li>Cached HTML can mismatch a newly generated CSP nonce if caching is not designed for nonce-bearing documents.</li><li>Build optimization, lazy-loaded modules, third-party scripts, and different checkout paths may reveal additional violations.</li><li>Permissions, filesystem paths, and custom Apache builds can differ across environments.</li></ul>
+<p>Compare the actual response—not only the configuration file—between environments.</p>
+</section>
+<section id="policy"><h2>19. Policy design example (illustrative only)</h2>
+<p>The following demonstrates directive structure, not a ready-to-deploy policy. Replace sources with verified requirements, insert a real server-generated nonce, and retain any necessary application directives.</p>
+<pre><code>Content-Security-Policy:
+  default-src 'self';
+  base-uri 'self';
+  object-src 'none';
+  frame-ancestors 'self';
+  script-src 'self' https://checkout.razorpay.com;
+  style-src-elem 'self' 'nonce-RESPONSE_NONCE' https://*.razorpay.com;
+  style-src-attr 'unsafe-inline';
+  img-src 'self' data: https://*.razorpay.com;
+  connect-src 'self' https://api.razorpay.com;
+  frame-src 'self' https://api.razorpay.com https://checkout.razorpay.com;
+  form-action 'self';</code></pre>
+<div class="callout danger"><strong>Do not copy this blindly:</strong> The Razorpay origins shown are examples based on the troubleshooting context, not a complete verified provider allowlist. Confirm current official requirements. Also review whether script nonces, strict-dynamic, report-uri/report-to, worker-src, font-src, media-src, and other directives are needed for your application.</div>
+</section>
+<section id="checklist"><h2>20. Final implementation checklist</h2>
+<ul class="check">
+<li>□ Inventory all CSP headers and meta policies across app, proxy, and Apache.</li>
+<li>□ Start with report-only testing where feasible; review violations.</li>
+<li>□ Generate nonce with a cryptographically secure source, once per HTML response.</li>
+<li>□ Confirm identical nonce in CSP header and Angular’s delivered <code>ngCspNonce</code>.</li>
+<li>□ Ensure HTML caching cannot mismatch the nonce/header pair.</li>
+<li>□ Distinguish <code>style-src-elem</code> from <code>style-src-attr</code>.</li>
+<li>□ Prefer CSS classes for static styling; review dynamic <code>ngStyle</code> uses individually.</li>
+<li>□ Treat Razorpay’s injected styles separately from Angular’s generated styles.</li>
+<li>□ Verify hashes against exact content and the correct directive.</li>
+<li>□ Avoid using <code>UNIQUE_ID</code> or <code>math.random()</code> as CSP nonce sources.</li>
+<li>□ Avoid broad response-body regex rewriting unless thoroughly justified and tested.</li>
+<li>□ Verify Apache module/build compatibility before enabling Lua.</li>
+<li>□ Test login, logout, modals, checkout open/close, success/failure flows, lazy routes, and refresh.</li>
+<li>□ Validate Apache configuration before reload; follow change approval and rollback procedures.</li>
+<li>□ Document any <code>'unsafe-inline'</code> exception, its scope, rationale, and approval.</li>
+</ul>
+</section>
+<section id="glossary"><h2>21. Glossary</h2>
+<div class="tablewrap"><table><thead><tr><th>Term</th><th>Meaning</th></tr></thead><tbody>
+<tr><td>CSP</td><td>Browser-enforced resource and execution policy.</td></tr><tr><td>Nonce</td><td>Unpredictable, per-response value authorizing matching nonce-bearing elements.</td></tr><tr><td>Hash source</td><td>Digest that authorizes exact inline content under applicable CSP rules.</td></tr><tr><td>Inline style</td><td>CSS in a style element or style attribute; CSP treats these contexts differently.</td></tr><tr><td>SSI</td><td>Server Side Includes; server-side HTML processing.</td></tr><tr><td>mod_substitute</td><td>Apache output filter for response-body substitutions.</td></tr><tr><td>mod_lua</td><td>Apache module enabling Lua handlers/filters when built and configured.</td></tr><tr><td>Report-Only</td><td>Policy mode that reports violations without enforcing the policy.</td></tr><tr><td>XSS</td><td>Cross-site scripting: injection of attacker-controlled script/content into a trusted page.</td></tr>
+</tbody></table></div>
+</section>
+<section id="refs"><h2>22. References</h2>
+<p>Use primary documentation to confirm exact behavior and version-specific support:</p>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP" target="_blank" rel="noopener noreferrer">MDN: Content Security Policy</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy" target="_blank" rel="noopener noreferrer">MDN: Content-Security-Policy header</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src-elem" target="_blank" rel="noopener noreferrer">MDN: style-src-elem</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src-attr" target="_blank" rel="noopener noreferrer">MDN: style-src-attr</a></li>
+<li><a href="https://httpd.apache.org/docs/2.4/mod/mod_lua.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server: mod_lua</a></li>
+<li><a href="https://httpd.apache.org/docs/2.4/mod/mod_headers.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server: mod_headers</a></li>
+<li><a href="https://httpd.apache.org/docs/2.4/mod/mod_substitute.html" target="_blank" rel="noopener noreferrer">Apache HTTP Server: mod_substitute</a></li>
+<li><a href="https://angular.dev/best-practices/security" target="_blank" rel="noopener noreferrer">Angular: Security best practices</a></li>
+<li><a href="https://razorpay.com/docs/" target="_blank" rel="noopener noreferrer">Razorpay documentation — verify requirements for your checkout integration</a></li>
+</ul>
+<p class="small">Documentation URLs and implementation details can change. Check the versions actually deployed in your environments.</p>
+</section>
+</main>
+</div>
+<footer>Content Security Policy — Angular, Apache, PHP &amp; Razorpay troubleshooting notes</footer>
+</body>
+</html>

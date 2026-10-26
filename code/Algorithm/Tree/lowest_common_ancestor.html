@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lowest Common Ancestor — Interactive DSA Lesson</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1020;--panel:#121c30;--panel2:#182640;--line:#2c3e5d;--text:#edf4ff;--muted:#aab8d0;--blue:#7dd3fc;--green:#86efac;--gold:#fcd34d;--red:#fca5a5;--purple:#c4b5fd}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2b49 0%,var(--bg) 58%);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+main{max-width:1150px;margin:auto;padding:28px 18px 60px}h1,h2,h3{line-height:1.2}h1{font-size:clamp(2rem,5vw,3.2rem);margin:.2em 0}h2{font-size:1.65rem;margin-top:0}h3{font-size:1.12rem}.eyebrow{color:var(--blue);font-size:.78rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}
+.hero,section{border:1px solid var(--line);border-radius:22px;background:#111a2beF}.hero{padding:30px;background:linear-gradient(135deg,#1a2c49eF,#11182aeF);box-shadow:0 18px 60px #0003}.hero p{max-width:850px;color:#d3dfef}.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}.chip{padding:5px 10px;border:1px solid #3a4c6c;border-radius:99px;color:#c9d8ee;font-size:.84rem}
+section{margin-top:24px;padding:24px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.card{padding:16px;border:1px solid #2d3d59;border-radius:15px;background:var(--panel2)}.card p{color:#d1dced;margin-bottom:0}.callout{border-left:4px solid var(--blue);padding:12px 16px;background:#13243a;border-radius:0 12px 12px 0;color:#dbeafe}.muted{color:var(--muted)}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{color:#bae6fd;background:#1c2b43;padding:2px 5px;border-radius:5px}pre{white-space:pre;overflow:auto;background:#080d18;border:1px solid var(--line);padding:18px;border-radius:12px;color:#dce8fb;font-size:.9rem}
+label{display:block;font-weight:700;margin-bottom:6px}input,button{font:inherit}input{width:100%;padding:10px 12px;border:1px solid #405171;border-radius:10px;background:#0b1323;color:var(--text)}button{border:1px solid #476080;border-radius:10px;padding:9px 14px;background:#213552;color:var(--text);font-weight:700;cursor:pointer}button:hover{filter:brightness(1.15)}button.primary{background:#075985;border-color:#0e7490}button:disabled{opacity:.4;cursor:not-allowed}.setup{display:grid;grid-template-columns:minmax(220px,1fr) repeat(2,minmax(120px,.4fr));gap:14px;align-items:end}.field{display:flex;flex-direction:column;gap:5px}.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.simgrid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(270px,.8fr);gap:18px;margin-top:18px}.visual{border:1px solid var(--line);border-radius:14px;background:#09111f;padding:12px;min-width:0}.visual svg{width:100%;height:auto;display:block;min-height:220px}.edge{stroke:#526784;stroke-width:2}.node circle{fill:#182b46;stroke:#5a7195;stroke-width:2}.node text{fill:#edf5ff;font-size:14px;font-weight:800;text-anchor:middle;dominant-baseline:central}.node.target circle{fill:#164e63;stroke:#67e8f9;stroke-width:3}.node.active circle{fill:#854d0e;stroke:#fcd34d;stroke-width:4}.node.lca circle{fill:#14532d;stroke:#86efac;stroke-width:4}.stepbox{padding:17px;background:#0b1424;border:1px solid var(--line);border-radius:14px}.stepcount{color:var(--blue);font-size:.84rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}.steptext{font-size:1.02rem;min-height:104px}.sequence{font-family:ui-monospace,monospace;font-size:1rem;overflow-wrap:anywhere;min-height:35px}.metricrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}.metric{background:#172238;border:1px solid var(--line);border-radius:12px;padding:12px}.metric .value{font-size:1.2rem;font-weight:800;overflow-wrap:anywhere}.good{color:var(--green)}.warn{color:var(--gold)}.small{font-size:.88rem}.tablewrap{overflow:auto}table{border-collapse:collapse;width:100%;margin-top:12px}th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}th{color:#a9dfff;background:#172238}.pill{display:inline-block;padding:4px 8px;border-radius:8px;background:#20314c;border:1px solid #3c5273;font-family:monospace}.foot{color:var(--muted);text-align:center;padding:28px 0 0}
+@media(max-width:760px){main{padding:14px}.hero,section{padding:18px}.setup,.simgrid{grid-template-columns:1fr}.visual svg{min-height:170px}}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<div class="eyebrow">DSA • Binary Trees • Interactive lesson</div>
+<h1>Lowest Common Ancestor (LCA)</h1>
+<p>The <strong>Lowest Common Ancestor</strong> of two nodes is the deepest node in a tree that is an ancestor of both. A node can count as its own ancestor. Learn the recursive idea, edit the tree and targets, then step through the algorithm.</p>
+<div class="chips"><span class="chip">Binary tree</span><span class="chip">Recursion</span><span class="chip">Step-by-step dry run</span><span class="chip">Python</span></div>
+</header>
+
+<section>
+<h2>1. What does “lowest common ancestor” mean?</h2>
+<div class="grid">
+<article class="card"><h3>Ancestor</h3><p>A node above another node on the path toward the root. A node is also considered an ancestor of itself.</p></article>
+<article class="card"><h3>Common ancestor</h3><p>A node that is an ancestor of both target nodes.</p></article>
+<article class="card"><h3>Lowest / deepest</h3><p>Of the common ancestors, choose the one farthest from the root—the one closest to both targets.</p></article>
+</div>
+<p class="callout">In the example tree, the LCA of <code>D</code> and <code>E</code> is <code>B</code>. The LCA of <code>D</code> and <code>G</code> is <code>A</code>. A is a common ancestor of D and E too, but B is lower (deeper), so B is the answer.</p>
+</section>
+
+<section id="simulator">
+<h2>2. Interactive LCA simulator</h2>
+<p class="muted">Enter a binary tree in level-order, then select two existing node labels. Values must be unique. Use <code>null</code> to leave a child position empty.</p>
+<div class="setup">
+<div class="field"><label for="treeInput">Level-order tree values</label><input id="treeInput" value="A,B,C,D,E,F,G" spellcheck="false"></div>
+<div class="field"><label for="targetP">First target (p)</label><input id="targetP" value="D"></div>
+<div class="field"><label for="targetQ">Second target (q)</label><input id="targetQ" value="E"></div>
+</div>
+<div class="controls"><button class="primary" id="build">Build / Update</button><button id="example">Restore example (D, E)</button><button id="crossExample">Try cross-subtree (D, G)</button></div>
+<div id="error" role="status" class="small warn" style="margin-top:8px"></div>
+<div class="simgrid">
+<div class="visual"><svg id="treeSvg" viewBox="0 0 600 360" role="img" aria-label="Binary tree with targets and current recursive node"></svg><p class="muted small"><span class="good">Green = confirmed LCA</span> · <span style="color:#67e8f9">Cyan = target</span> · <span class="warn">Gold = current recursive node</span></p></div>
+<div class="stepbox">
+<div class="stepcount" id="stepCount">Step 0 of 0</div>
+<h3 id="stepTitle">Ready to begin</h3>
+<p class="steptext" id="stepText">Press Next to inspect the recursive calls.</p>
+<div class="muted small">Latest result</div><div id="currentResult" class="sequence">Not calculated yet</div>
+<div class="metricrow"><div class="metric"><div class="muted small">Target p</div><div id="pMetric" class="value">D</div></div><div class="metric"><div class="muted small">Target q</div><div id="qMetric" class="value">E</div></div></div>
+<div class="controls"><button id="prev" disabled>← Previous</button><button id="next" class="primary">Next →</button><button id="restart">Restart</button></div>
+</div>
+</div>
+<div class="tablewrap"><table><thead><tr><th>#</th><th>Current node</th><th>What the recursive call does</th><th>Returned value</th></tr></thead><tbody id="traceRows"></tbody></table></div>
+</section>
+
+<section>
+<h2>3. The recursive idea, in plain English</h2>
+<ol>
+<li>If the current node is empty, return <code>null</code>.</li>
+<li>If the current node is either target <code>p</code> or <code>q</code>, return that node.</li>
+<li>Search the left subtree and save its result as <code>left</code>.</li>
+<li>Search the right subtree and save its result as <code>right</code>.</li>
+<li>If both results are non-null, one target was found on each side. The current node is the LCA.</li>
+<li>Otherwise return whichever side is non-null. If both are null, return null.</li>
+</ol>
+<div class="callout"><strong>Key insight:</strong> the first node where the left recursion finds one target and the right recursion finds the other is the lowest common ancestor. This standard version assumes both target nodes exist in the tree.</div>
+</section>
+
+<section>
+<h2>4. Python solution</h2>
+<pre><code>def lowest_common_ancestor(root, p, q):
+    # Empty subtree: neither target found here
+    if root is None:
+        return None
+
+    # Current node is one of the targets
+    if root == p or root == q:
+        return root
+
+    # Ask both subtrees to search for the targets
+    left = lowest_common_ancestor(root.left, p, q)
+    right = lowest_common_ancestor(root.right, p, q)
+
+    # Targets are found on opposite sides
+    if left is not None and right is not None:
+        return root
+
+    # Otherwise pass the result found by either side upward
+    return left if left is not None else right</code></pre>
+<div class="grid">
+<article class="card"><h3>Time complexity</h3><p><code>O(n)</code> in the worst case. The algorithm may inspect every node once.</p></article>
+<article class="card"><h3>Space complexity</h3><p><code>O(h)</code> recursive call stack, where h is tree height. Worst case: <code>O(n)</code>; balanced tree: <code>O(log n)</code>.</p></article>
+</div>
+<p class="muted small">This code uses node identity / references for p and q, as is common in coding-interview problems. The simulator uses unique text labels to represent node identity.</p>
+</section>
+
+<section>
+<h2>5. Follow one dry run</h2>
+<p>For targets <code>D</code> and <code>E</code>, recursion explores the left subtree of A. D returns itself, E returns itself, and B receives non-null results from both sides. So B returns as the LCA. A then passes B upward.</p>
+<div class="grid">
+<article class="card"><h3>Targets in same subtree</h3><p>Example D and E: their LCA is B, not A, because B is the deepest shared ancestor.</p></article>
+<article class="card"><h3>Targets across subtrees</h3><p>Example D and G: one target is in A's left subtree and the other is in its right subtree, so A is the LCA.</p></article>
+<article class="card"><h3>One target is the ancestor</h3><p>If p is B and q is D, the answer is B. The algorithm returns immediately when it reaches B.</p></article>
+</div>
+</section>
+<div class="foot">Lowest Common Ancestor • Interactive DSA notes</div>
+</main>
+<script>
+(() => {
+const $=id=>document.getElementById(id);
+let root=null, allNodes=[], trace=[], cursor=0, lcaId=null, pValue='', qValue='';
+function parseTree(raw){
+ const vals=raw.split(',').map(s=>s.trim());
+ while(vals.length && vals[vals.length-1]==='') vals.pop();
+ if(!vals.length || vals[0]==='' || vals[0].toLowerCase()==='null') throw Error('Please provide a root node as the first value.');
+ const built=vals.map((v,i)=>({id:i,value:v,left:null,right:null,x:0,y:0}));
+ for(let i=0;i<built.length;i++){
+   if(!built[i].value || built[i].value.toLowerCase()==='null') continue;
+   const li=2*i+1,ri=2*i+2;
+   if(li<built.length && built[li].value && built[li].value.toLowerCase()!=='null') built[i].left=built[li];
+   if(ri<built.length && built[ri].value && built[ri].value.toLowerCase()!=='null') built[i].right=built[ri];
+ }
+ const reachable=new Set();function mark(n){if(!n)return;reachable.add(n.id);mark(n.left);mark(n.right)}mark(built[0]);
+ const orphan=built.find(n=>n.value && n.value.toLowerCase()!=='null'&&!reachable.has(n.id));
+ if(orphan)throw Error('Node "'+orphan.value+'" has no reachable parent. Fill missing parent positions or remove it.');
+ const seen=new Set();
+ for(const n of built){if(!n.value||n.value.toLowerCase()==='null')continue;if(seen.has(n.value))throw Error('Node labels must be unique. Duplicate: '+n.value);seen.add(n.value)}
+ return built.filter(n=>n.value&&n.value.toLowerCase()!=='null');
+}
+function findByValue(n,v){if(!n)return null;if(n.value===v)return n;return findByValue(n.left,v)||findByValue(n.right,v)}
+function buildTrace(){
+ const out=[];
+ function solve(n){
+   if(!n){out.push({node:null,action:'Reached an empty child pointer.',ret:null,reason:'Base case: an empty subtree returns null.'});return null}
+   out.push({node:n,action:'Check the current node against p and q.',ret:'PENDING',reason:`Inspect node ${n.value}.`});
+   if(n.value===pValue||n.value===qValue){
+     const ret=n.value;
+     out[out.length-1]={node:n,action:`Node ${n.value} matches target ${ret===pValue?'p':'q'}.`,ret,reason:'Return this target node immediately; ancestors can use it.'};
+     return n;
+   }
+   const left=solve(n.left),right=solve(n.right);
+   let ret,reason,action;
+   if(left&&right){ret=n;reason=`Left returned ${left.value} and right returned ${right.value}; both targets are found in different branches.`;action=`Both sides returned a target/result, so ${n.value} is the LCA.`}
+   else if(left||right){ret=left||right;reason=`Only ${left?'left':'right'} side returned a node (${ret.value}); pass it upward.`;action=`Pass ${ret.value} upward from ${n.value}.`}
+   else{ret=null;reason='Neither subtree found a target, so return null.';action=`No target found under ${n.value}; return null.`}
+   out.push({node:n,action,ret:ret?ret.value:null,reason});
+   return ret;
+ }
+ const result=solve(root);
+ return {out,result};
+}
+function count(n){return n?1+count(n.left)+count(n.right):0}
+function layout(){
+ const total=count(root);let idx=0,maxDepth=0;
+ function depth(n,d){if(!n)return;maxDepth=Math.max(maxDepth,d);depth(n.left,d+1);depth(n.right,d+1)}depth(root,0);
+ function walk(n,d){if(!n)return;walk(n.left,d+1);n.x=(++idx)*600/(total+1);n.y=35+d*(300/(maxDepth+1));walk(n.right,d+1)}walk(root,0);
+}
+function draw(){
+ const svg=$('treeSvg');svg.innerHTML='';if(!root)return;layout();
+ const ns=[];function collect(n){if(!n)return;ns.push(n);collect(n.left);collect(n.right)}collect(root);
+ const maxY=Math.max(...ns.map(n=>n.y));svg.setAttribute('viewBox',`0 0 600 ${Math.max(180,maxY+50)}`);
+ function edges(n){if(!n)return;for(const c of [n.left,n.right])if(c){const line=document.createElementNS('http://www.w3.org/2000/svg','line');line.setAttribute('x1',n.x);line.setAttribute('y1',n.y);line.setAttribute('x2',c.x);line.setAttribute('y2',c.y);line.setAttribute('class','edge');svg.appendChild(line);edges(c)}}edges(root);
+ const current=cursor?trace[cursor-1].node:null;
+ for(const n of ns){
+   const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+   let cls='node';if(n.value===pValue||n.value===qValue)cls+=' target';if(current&&current.id===n.id)cls+=' active';if(lcaId!==null&&n.id===lcaId&&cursor===trace.length)cls+=' lca';
+   g.setAttribute('class',cls);g.setAttribute('transform',`translate(${n.x},${n.y})`);
+   const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r','19');g.appendChild(c);
+   const t=document.createElementNS('http://www.w3.org/2000/svg','text');t.textContent=n.value;g.appendChild(t);svg.appendChild(g);
+ }
+}
+function render(){
+ const total=trace.length,step=cursor?trace[cursor-1]:null;
+ $('stepCount').textContent=`Step ${cursor} of ${total}`;
+ $('stepTitle').textContent=step?(step.node?step.action:'Empty subtree'): 'Ready to begin';
+ $('stepText').textContent=step?step.reason:'Press Next to follow the recursive calls from the root. Calls are shown in the order the algorithm executes them.';
+ $('currentResult').textContent=step?(step.ret==='PENDING'?'Waiting for recursive result…':step.ret===null?'null':step.ret):'Not calculated yet';
+ $('pMetric').textContent=pValue;$('qMetric').textContent=qValue;
+ $('prev').disabled=cursor===0;$('next').disabled=cursor>=total;$('next').textContent=cursor>=total?'Complete ✓':'Next →';
+ $('traceRows').innerHTML='';
+ trace.forEach((t,i)=>{
+   const tr=document.createElement('tr');if(i===cursor-1)tr.style.background='#4a3416';
+   [String(i+1),t.node?t.node.value:'null / empty child',t.action,t.ret==='PENDING'?'Pending':(t.ret===null?'null':t.ret)].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});
+   $('traceRows').appendChild(tr);
+ });
+ draw();
+ if(cursor===total && lcaId!==null){$('stepTitle').textContent='LCA found: '+allNodes.find(n=>n.id===lcaId).value;$('stepText').textContent='The recursive calls have completed. The highlighted green node is the lowest common ancestor.';$('currentResult').textContent=allNodes.find(n=>n.id===lcaId).value}
+}
+function build(){
+ try{
+   const built=parseTree($('treeInput').value);
+   root=built.find(n=>n.id===0)||null;allNodes=built;
+   pValue=$('targetP').value.trim();qValue=$('targetQ').value.trim();
+   if(!pValue||!qValue)throw Error('Enter both target labels.');
+   if(pValue===qValue)throw Error('Choose two different target labels for this lesson.');
+   if(!findByValue(root,pValue))throw Error('Target p "'+pValue+'" does not exist in this tree.');
+   if(!findByValue(root,qValue))throw Error('Target q "'+qValue+'" does not exist in this tree.');
+   const result=buildTrace();trace=result.out;lcaId=result.result?result.result.id:null;cursor=0;
+   $('error').textContent='';render();
+ }catch(e){$('error').textContent=e.message}
+}
+$('build').addEventListener('click',build);
+$('example').addEventListener('click',()=>{$('treeInput').value='A,B,C,D,E,F,G';$('targetP').value='D';$('targetQ').value='E';build()});
+$('crossExample').addEventListener('click',()=>{$('treeInput').value='A,B,C,D,E,F,G';$('targetP').value='D';$('targetQ').value='G';build()});
+$('next').addEventListener('click',()=>{if(cursor<trace.length){cursor++;render()}});
+$('prev').addEventListener('click',()=>{if(cursor>0){cursor--;render()}});
+$('restart').addEventListener('click',()=>{cursor=0;render()});
+build();
+})();
+</script>
+</body>
+</html>

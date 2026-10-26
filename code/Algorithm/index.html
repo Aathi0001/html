@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DSA Algorithm Library — Index</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2e;--panel2:#17223b;--line:#263451;--text:#edf2ff;--muted:#9aa9c7;--accent:#8b9cff;--accent2:#62e6c5;--shadow:0 12px 32px #0003}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#18264a 0%,var(--bg) 55%);color:var(--text);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:inherit;text-decoration:none}.wrap{width:min(1200px,calc(100% - 32px));margin:auto}
+header{padding:42px 0 24px}.eyebrow{color:var(--accent2);text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:800}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;margin:10px 0 12px;letter-spacing:-.04em}
+header p{max-width:720px;color:var(--muted);margin:0;font-size:1.02rem}
+.toolbar{position:sticky;top:0;z-index:5;padding:14px 0;background:#0b1020eF;backdrop-filter:blur(14px);border-block:1px solid #263451}
+.searchrow{display:flex;gap:10px;flex-wrap:wrap}.searchbox{flex:1;min-width:220px;position:relative}.searchbox span{position:absolute;left:14px;top:10px;color:var(--muted);font-size:1.1rem}
+input{width:100%;background:var(--panel);color:var(--text);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 42px;font:inherit;outline:none}
+input:focus{border-color:var(--accent);box-shadow:0 0 0 3px #8b9cff22}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.filter{border:1px solid var(--line);background:var(--panel);color:var(--muted);padding:7px 12px;border-radius:999px;cursor:pointer;font:inherit;font-size:.85rem}.filter.active,.filter:hover{background:#29365b;color:var(--text);border-color:var(--accent)}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0 26px}.stat{padding:12px 16px;background:#121a2eaa;border:1px solid var(--line);border-radius:12px;min-width:120px}.stat strong{display:block;font-size:1.35rem}.stat span{color:var(--muted);font-size:.82rem}
+main{padding:8px 0 60px}.section{margin:28px 0}.section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:13px}.section h2{margin:0;font-size:1.35rem;letter-spacing:-.02em}.section-head p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:13px}
+.card{display:block;padding:17px 18px;background:linear-gradient(145deg,var(--panel),#10172a);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);transition:transform .16s,border-color .16s}
+.card:hover{transform:translateY(-2px);border-color:#7184d9}.card-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.card h3{font-size:1.02rem;margin:0}.tag{font-size:.7rem;font-weight:750;letter-spacing:.04em;padding:4px 8px;border-radius:999px;background:#26365b;color:#cdd6ff;white-space:nowrap}.card p{color:var(--muted);font-size:.88rem;margin:9px 0 0}.open{color:var(--accent2);font-size:.8rem;font-weight:750;margin-top:12px;display:inline-block}
+.empty{display:none;border:1px dashed var(--line);border-radius:14px;padding:28px;text-align:center;color:var(--muted)}footer{border-top:1px solid var(--line);padding:20px 0 35px;color:var(--muted);font-size:.85rem}
+.note{border:1px solid #3b4b78;background:#131f3a;border-radius:14px;padding:14px 16px;color:#cbd6f5;margin-top:14px}.note strong{color:var(--text)}
+@media(max-width:600px){header{padding-top:30px}.section-head{display:block}.stat{flex:1}}
+</style>
+</head>
+<body>
+<header class="wrap">
+  <div class="eyebrow">Personal DSA handbook</div>
+  <h1>Algorithm Library</h1>
+  <p>A single home page for your algorithm notes. Search by algorithm name or topic, filter by category, and open the relevant HTML study guide.</p>
+  <div class="note"><strong>Search algorithms:</strong> all six searching techniques are grouped in your existing <code>Search/searching_algorithm.html</code> file, so this index links to that one file rather than expecting six separate pages.</div>
+</header>
+<div class="toolbar">
+  <div class="wrap">
+    <div class="searchrow">
+      <div class="searchbox"><span>⌕</span><input id="search" type="search" placeholder="Search algorithms, topics, or filenames…" aria-label="Search algorithm library"></div>
+    </div>
+    <div class="filters" id="filters">
+      <button class="filter active" data-filter="all">All topics</button>
+      <button class="filter" data-filter="Search">Search</button>
+      <button class="filter" data-filter="Sort">Sorting</button>
+      <button class="filter" data-filter="Pattern">Pattern matching</button>
+      <button class="filter" data-filter="Tree">Trees</button>
+      <button class="filter" data-filter="Graph">Graphs</button>
+      <button class="filter" data-filter="Greedy">Greedy</button>
+      <button class="filter" data-filter="DP">Dynamic programming</button>
+    </div>
+  </div>
+</div>
+<main class="wrap">
+  <div class="stats">
+    <div class="stat"><strong id="totalCount">0</strong><span>Study pages</span></div>
+    <div class="stat"><strong>7</strong><span>Topic groups</span></div>
+    <div class="stat"><strong>6</strong><span>Search algorithms in one page</span></div>
+  </div>
+  <div id="sections">
+    <section class="section" data-category="Search">
+      <div class="section-head"><div><h2>🔎 Searching</h2><p>Six searching algorithms in one interactive study file.</p></div></div>
+      <div class="cards">
+        <a class="card" href="Search/searching_algorithm.html" data-search="search searching linear search binary search jump search interpolation search exponential search fibonacci search searching_algorithm.html">
+          <div class="card-top"><h3>Searching Algorithms</h3><span class="tag">6 algorithms</span></div>
+          <p>Linear Search · Binary Search · Jump Search · Interpolation Search · Exponential Search · Fibonacci Search</p>
+          <span class="open">Open searching notes →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" data-category="Sort">
+      <div class="section-head"><div><h2>↕️ Sorting</h2><p>Comparison, non-comparison, and tree-based sorting.</p></div></div>
+      <div class="cards">
+        <a class="card" href="Sort/bubble_sort_notes.html" data-search="bubble sort adjacent swaps simple stable">
+          <div class="card-top"><h3>Bubble Sort</h3><span class="tag">Sort</span></div><p>Repeatedly swaps adjacent elements that are out of order.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/selection_sort_notes.html" data-search="selection sort minimum select">
+          <div class="card-top"><h3>Selection Sort</h3><span class="tag">Sort</span></div><p>Selects the next minimum element for each position.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/insertion_sort_notes.html" data-search="insertion sort sorted portion insert">
+          <div class="card-top"><h3>Insertion Sort</h3><span class="tag">Sort</span></div><p>Builds a sorted portion by inserting each item into place.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/merge_sort_notes.html" data-search="merge sort divide conquer">
+          <div class="card-top"><h3>Merge Sort</h3><span class="tag">Sort</span></div><p>Divide-and-conquer sorting with merging.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/quick_sort_notes.html" data-search="quick sort pivot partition">
+          <div class="card-top"><h3>Quick Sort</h3><span class="tag">Sort</span></div><p>Partitions values around a pivot.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/heap_sort_notes.html" data-search="heap sort binary heap">
+          <div class="card-top"><h3>Heap Sort</h3><span class="tag">Sort</span></div><p>Uses a heap to repeatedly extract the next element.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/shell_sort_notes.html" data-search="shell sort gap insertion">
+          <div class="card-top"><h3>Shell Sort</h3><span class="tag">Sort</span></div><p>Improves insertion sort with gap-based comparisons.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/counting_sort_notes.html" data-search="counting sort frequencies integer range">
+          <div class="card-top"><h3>Counting Sort</h3><span class="tag">Sort</span></div><p>Counts occurrences instead of directly comparing items.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/radix_sort_notes.html" data-search="radix sort digits">
+          <div class="card-top"><h3>Radix Sort</h3><span class="tag">Sort</span></div><p>Sorts by digit or character position.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/bucket_sort_notes.html" data-search="bucket sort distribute buckets">
+          <div class="card-top"><h3>Bucket Sort</h3><span class="tag">Sort</span></div><p>Distributes values into buckets, then sorts each bucket.</p><span class="open">Open notes →</span>
+        </a>
+        <a class="card" href="Sort/tree_sort_notes.html" data-search="tree sort binary search tree">
+          <div class="card-top"><h3>Tree Sort</h3><span class="tag">Sort</span></div><p>Inserts values into a search tree and reads them in order.</p><span class="open">Open notes →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="section" data-category="Pattern">
+      <div class="section-head"><div><h2>🔤 Pattern Matching</h2><p>Find a pattern inside a larger text.</p></div></div>
+      <div class="cards">
+        <a class="card" href="Pattern/naive_pattern.html" data-search="naive pattern matching brute force">
+          <div class="card-top"><h3>Naive Pattern Matching</h3><span class="tag">Pattern</span></div><p>Checks the pattern at each possible text position.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Pattern/kmp.html" data-search="kmp knuth morris pratt lps prefix">
+          <div class="card-top"><h3>KMP</h3><span class="tag">Pattern</span></div><p>Uses the LPS array to avoid repeating comparisons.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Pattern/rabin_karp.html" data-search="rabin karp rolling hash">
+          <div class="card-top"><h3>Rabin–Karp</h3><span class="tag">Pattern</span></div><p>Uses rolling hashes to find candidate matches.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Pattern/boyer_moore.html" data-search="boyer moore bad character good suffix">
+          <div class="card-top"><h3>Boyer–Moore</h3><span class="tag">Pattern</span></div><p>Compares from right to left and can skip sections of text.</p><span class="open">Open notes →</span></a>
+      </div>
+    </section>
+
+    <section class="section" data-category="Tree">
+      <div class="section-head"><div><h2>🌳 Trees</h2><p>Traversal, ancestry, and balancing concepts.</p></div></div>
+      <div class="cards">
+        <a class="card" href="Tree/tree_traversals.html" data-search="tree traversals inorder preorder postorder level order">
+          <div class="card-top"><h3>Tree Traversals</h3><span class="tag">Tree</span></div><p>Visit tree nodes in different orders.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Tree/lowest_common_ancestor.html" data-search="lowest common ancestor lca">
+          <div class="card-top"><h3>Lowest Common Ancestor</h3><span class="tag">Tree</span></div><p>Finds the lowest node that is an ancestor of two nodes.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Tree/avl_red_black_tree_rotation.html" data-search="avl red black tree rotation balancing">
+          <div class="card-top"><h3>AVL / Red-Black Tree Rotations</h3><span class="tag">Tree</span></div><p>Balancing ideas and rotations for search trees.</p><span class="open">Open notes →</span></a>
+      </div>
+    </section>
+
+    <section class="section" data-category="Graph">
+      <div class="section-head"><div><h2>🕸️ Graphs</h2><p>Traversal, shortest paths, spanning trees, and ordering.</p></div></div>
+      <div class="cards">
+        <a class="card" href="Graph/fundamentals.html" data-search="graph fundamentals vertices edges directed undirected">
+          <div class="card-top"><h3>Graph Fundamentals</h3><span class="tag">Graph</span></div><p>Core graph terminology and representations.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Graph/bfs.html" data-search="bfs breadth first search queue">
+          <div class="card-top"><h3>Breadth-First Search (BFS)</h3><span class="tag">Graph</span></div><p>Explores level by level using a queue.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Graph/dfs.html" data-search="dfs depth first search stack recursion">
+          <div class="card-top"><h3>Depth-First Search (DFS)</h3><span class="tag">Graph</span></div><p>Explores a path deeply before backtracking.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Graph/dijkstra.html" data-search="dijkstra shortest path nonnegative">
+          <div class="card-top"><h3>Dijkstra’s Algorithm</h3><span class="tag">Graph</span></div><p>Shortest paths for non-negative edge weights.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Graph/bellman-ford.html" data-search="bellman ford negative weights cycle shortest path">
+          <div class="card-top"><h3>Bellman–Ford</h3><span class="tag">Graph</span></div><p>Shortest paths with support for negative edge weights.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Graph/floyd-warshall.html" data-search="floyd warshall all pairs shortest path">
+          <div class="card-top"><h3>Floyd–Warshall</h3><span class="tag">Graph</span></div><p>Computes shortest paths between all vertex pairs.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Graph/kruskal.html" data-search="kruskal minimum spanning tree union find">
+          <div class="card-top"><h3>Kruskal’s Algorithm</h3><span class="tag">Graph</span></div><p>Builds a minimum spanning tree by selecting edges.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Graph/prim.html" data-search="prim minimum spanning tree">
+          <div class="card-top"><h3>Prim’s Algorithm</h3><span class="tag">Graph</span></div><p>Grows a minimum spanning tree from a starting vertex.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Graph/topological-sort.html" data-search="topological sort dag directed acyclic graph">
+          <div class="card-top"><h3>Topological Sort</h3><span class="tag">Graph</span></div><p>Orders vertices in a directed acyclic graph.</p><span class="open">Open notes →</span></a>
+      </div>
+    </section>
+
+    <section class="section" data-category="Greedy">
+      <div class="section-head"><div><h2>⚡ Greedy Algorithms</h2><p>Make locally optimal choices toward a solution.</p></div></div>
+      <div class="cards">
+        <a class="card" href="Greedy/activity_selection_problem.html" data-search="activity selection interval scheduling greedy">
+          <div class="card-top"><h3>Activity Selection</h3><span class="tag">Greedy</span></div><p>Selects the maximum compatible activities by finish time.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Greedy/fractional_knapsack.html" data-search="fractional knapsack value weight ratio">
+          <div class="card-top"><h3>Fractional Knapsack</h3><span class="tag">Greedy</span></div><p>Chooses items by value-to-weight ratio, allowing fractions.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="Greedy/huffman_coding.html" data-search="huffman coding compression prefix code">
+          <div class="card-top"><h3>Huffman Coding</h3><span class="tag">Greedy</span></div><p>Builds a frequency-based prefix code.</p><span class="open">Open notes →</span></a>
+      </div>
+    </section>
+
+    <section class="section" data-category="DP">
+      <div class="section-head"><div><h2>🧩 Dynamic Programming</h2><p>Reuse subproblem results to avoid repeated work.</p></div></div>
+      <div class="cards">
+        <a class="card" href="DP/fundamentals.html" data-search="dynamic programming fundamentals memoization tabulation">
+          <div class="card-top"><h3>DP Fundamentals</h3><span class="tag">DP</span></div><p>Overlapping subproblems, optimal substructure, and core methods.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="DP/knapsack.html" data-search="0 1 knapsack dynamic programming">
+          <div class="card-top"><h3>0/1 Knapsack</h3><span class="tag">DP</span></div><p>Choose items under a capacity constraint.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="DP/lcs.html" data-search="longest common subsequence lcs">
+          <div class="card-top"><h3>Longest Common Subsequence</h3><span class="tag">DP</span></div><p>Finds the longest sequence shared by two sequences.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="DP/lis.html" data-search="longest increasing subsequence lis">
+          <div class="card-top"><h3>Longest Increasing Subsequence</h3><span class="tag">DP</span></div><p>Finds the longest strictly increasing subsequence.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="DP/matrix-chain.html" data-search="matrix chain multiplication order">
+          <div class="card-top"><h3>Matrix Chain Multiplication</h3><span class="tag">DP</span></div><p>Finds a low-cost multiplication order for matrices.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="DP/floyd-warshall.html" data-search="floyd warshall dynamic programming all pairs shortest path">
+          <div class="card-top"><h3>Floyd–Warshall</h3><span class="tag">DP</span></div><p>Dynamic-programming approach to all-pairs shortest paths.</p><span class="open">Open notes →</span></a>
+        <a class="card" href="DP/comparison.html" data-search="dynamic programming comparison">
+          <div class="card-top"><h3>DP Comparison</h3><span class="tag">DP</span></div><p>Compare dynamic-programming techniques and examples.</p><span class="open">Open notes →</span></a>
+      </div>
+    </section>
+  </div>
+  <div class="empty" id="empty">No matching notes. Try a different search term or topic.</div>
+</main>
+<footer><div class="wrap">DSA Algorithm Library · Relative links are based on your current folder structure. Keep this file as <code>index.html</code> in the <code>Algorithm</code> root folder.</div></footer>
+<script>
+const searchInput=document.getElementById('search');
+const filterButtons=[...document.querySelectorAll('.filter')];
+const sections=[...document.querySelectorAll('.section')];
+const cards=[...document.querySelectorAll('.card')];
+let activeFilter='all';
+document.getElementById('totalCount').textContent=cards.length;
+function update(){
+  const q=searchInput.value.trim().toLowerCase();
+  let visibleCards=0;
+  sections.forEach(section=>{
+    const category=section.dataset.category;
+    let sectionVisible=0;
+    section.querySelectorAll('.card').forEach(card=>{
+      const haystack=(card.innerText+' '+(card.dataset.search||'')+' '+card.getAttribute('href')).toLowerCase();
+      const matchesText=!q||haystack.includes(q);
+      const matchesCategory=activeFilter==='all'||activeFilter===category;
+      const show=matchesText&&matchesCategory;
+      card.style.display=show?'':'none';
+      if(show){sectionVisible++;visibleCards++;}
+    });
+    section.style.display=sectionVisible?'':'none';
+  });
+  document.getElementById('empty').style.display=visibleCards?'none':'block';
+}
+searchInput.addEventListener('input',update);
+filterButtons.forEach(btn=>btn.addEventListener('click',()=>{
+  activeFilter=btn.dataset.filter;
+  filterButtons.forEach(b=>b.classList.toggle('active',b===btn));
+  update();
+}));
+update();
+</script>
+</body>
+</html>

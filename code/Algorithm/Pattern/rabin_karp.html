@@ -1,0 +1,743 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rabin-Karp | Interactive DSA Notes</title>
+
+<style>
+:root {
+  --bg: #0b1020;
+  --panel: #141d32;
+  --panel2: #1c2943;
+  --text: #e8eefc;
+  --muted: #a5b4d1;
+  --accent: #8bafff;
+  --green: #70e1b0;
+  --yellow: #ffd479;
+  --red: #ff8d9b;
+  --border: #30415f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.7 system-ui, sans-serif;
+}
+
+header, main, footer {
+  width: min(1100px, 94%);
+  margin: auto;
+}
+
+header { padding: 38px 0 20px; }
+
+.eyebrow {
+  color: var(--green);
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.15; }
+h2 { color: var(--accent); margin-top: 0; }
+h3 { color: var(--green); }
+
+.lead, .muted { color: var(--muted); }
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 18px 0;
+  overflow-wrap: anywhere;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.mini {
+  background: var(--panel2);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+code, pre, .mono {
+  font-family: Consolas, monospace;
+}
+
+code {
+  color: #c6d6ff;
+  background: #202c46;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+pre {
+  white-space: pre-wrap;
+  overflow-x: auto;
+  background: #080d18;
+  border: 1px solid var(--border);
+  padding: 18px;
+  border-radius: 12px;
+  color: #dce7ff;
+}
+
+button, input {
+  font: inherit;
+  border-radius: 9px;
+  padding: 10px 13px;
+}
+
+button {
+  background: #263958;
+  color: var(--text);
+  border: 1px solid #526a91;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover { filter: brightness(1.2); }
+button:disabled { opacity: .4; cursor: not-allowed; }
+
+.primary {
+  background: #3157a0;
+}
+
+input {
+  width: 100%;
+  min-width: 0;
+  background: #080f1d;
+  color: var(--text);
+  border: 1px solid #526a91;
+}
+
+label {
+  display: block;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.status {
+  padding: 14px;
+  border: 1px solid var(--border);
+  background: #091222;
+  border-radius: 10px;
+  margin: 12px 0;
+}
+
+.strip {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin: 28px 0 12px;
+}
+
+.cell {
+  width: 42px;
+  height: 46px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #405174;
+  border-radius: 7px;
+  background: #101a2d;
+  font-family: Consolas, monospace;
+  font-weight: bold;
+}
+
+.cell small {
+  position: absolute;
+  top: -24px;
+  font-size: 11px;
+  color: var(--muted);
+  font-weight: normal;
+}
+
+.cell.active {
+  background: #624d20;
+  border-color: var(--yellow);
+}
+
+.cell.match {
+  background: #164c3b;
+  border-color: var(--green);
+}
+
+.cell.mismatch {
+  background: #632b3a;
+  border-color: var(--red);
+}
+
+.cell.done {
+  background: #203d6e;
+  border-color: var(--accent);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 14px 0;
+}
+
+th, td {
+  border-bottom: 1px solid var(--border);
+  padding: 10px;
+  text-align: left;
+}
+
+th { color: var(--accent); }
+
+.callout {
+  background: #192640;
+  border-left: 4px solid var(--accent);
+  padding: 12px 16px;
+  border-radius: 0 9px 9px 0;
+}
+
+.good { color: var(--green); }
+.warn { color: var(--yellow); }
+
+details {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  margin: 10px 0;
+}
+
+summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: bold;
+}
+
+footer {
+  padding: 25px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+@media(max-width: 600px) {
+  .fields { grid-template-columns: 1fr; }
+  .card { padding: 17px; }
+  .cell { width: 32px; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="eyebrow">DSA Learning Lab · String Algorithms</div>
+  <h1>Rabin–Karp Algorithm</h1>
+  <p class="lead">
+    Learn how hashing and rolling hash help find a pattern inside a text,
+    with a step-by-step interactive dry run.
+  </p>
+</header>
+
+<main>
+
+<section class="card">
+<h2>1. What is Rabin–Karp?</h2>
+
+<p>
+Rabin–Karp is a string pattern-matching algorithm that uses
+<strong>hash values</strong> to find a pattern in a larger text.
+</p>
+
+<p>
+Instead of comparing every character at every possible position
+immediately, it first compares the hash of the pattern with the hash
+of each text window of the same length.
+</p>
+
+<div class="grid">
+  <div class="mini">
+    <h3>Text</h3>
+    <code>ABCCDABC</code>
+  </div>
+  <div class="mini">
+    <h3>Pattern</h3>
+    <code>ABC</code>
+  </div>
+  <div class="mini">
+    <h3>Result</h3>
+    <p>Match at index <code>5</code></p>
+  </div>
+</div>
+
+<div class="callout">
+<strong>Main idea:</strong> compare hash values first. When hashes match,
+compare the actual characters to confirm the match.
+</div>
+</section>
+
+<section class="card">
+<h2>2. What is hashing?</h2>
+
+<p>
+A hash function converts a string into a number. That number is called
+the string's <strong>hash value</strong>.
+</p>
+
+<p>For this learning example, imagine each character has a number:</p>
+
+<table>
+<tr><th>Character</th><th>Example value</th></tr>
+<tr><td>A</td><td>1</td></tr>
+<tr><td>B</td><td>2</td></tr>
+<tr><td>C</td><td>3</td></tr>
+</table>
+
+<p>For a simple illustrative hash, add the character values.</p>
+
+<pre>
+ABC = 1 + 2 + 3 = 6
+CAB = 3 + 1 + 2 = 6
+</pre>
+
+<p>
+Notice that <code>ABC</code> and <code>CAB</code> have the same hash,
+even though the strings are different. This is called a
+<strong>hash collision</strong>.
+</p>
+
+<p>
+Therefore, a matching hash does not guarantee a matching string.
+Rabin–Karp verifies the actual characters when the hashes match.
+Real implementations generally use a polynomial rolling hash with
+modular arithmetic rather than this simple sum.
+</p>
+</section>
+
+<section class="card">
+<h2>3. What is a rolling hash?</h2>
+
+<p>
+Suppose the text is <code>ABCCDABC</code> and the pattern is
+<code>ABC</code>. The pattern length is 3, so we inspect text windows
+of length 3.
+</p>
+
+<table>
+<tr><th>Window</th><th>Window hash (simple example)</th></tr>
+<tr><td><code>ABC</code></td><td>1 + 2 + 3 = 6</td></tr>
+<tr><td><code>BCC</code></td><td>2 + 3 + 3 = 8</td></tr>
+<tr><td><code>CCD</code></td><td>3 + 3 + 4 = 10</td></tr>
+</table>
+
+<p>
+A rolling hash calculates the next window's hash by reusing the
+previous window's information. It removes the outgoing character and
+adds the incoming character, with position weighting handled by the
+rolling-hash formula.
+</p>
+
+<div class="callout">
+For a proper polynomial rolling hash, moving from one window to the
+next can be done in constant time. That is what makes the algorithm
+efficient.
+</div>
+</section>
+
+<section class="card">
+<h2>4. Interactive dry run</h2>
+
+<p>
+Edit the text and pattern, then use Next to inspect each window.
+This simulator uses a simple character-sum hash so the arithmetic
+is easy to follow. It demonstrates the window and collision logic;
+the Python implementation below uses a polynomial rolling hash.
+</p>
+
+<div class="fields">
+  <div>
+    <label for="textInput">Text</label>
+    <input id="textInput" value="ABCCDABC" maxlength="40">
+  </div>
+  <div>
+    <label for="patternInput">Pattern</label>
+    <input id="patternInput" value="ABC" maxlength="12">
+  </div>
+</div>
+
+<div class="controls">
+  <button class="primary" id="resetBtn">Start / Restart</button>
+  <button id="prevBtn">← Previous</button>
+  <button id="nextBtn">Next step →</button>
+</div>
+
+<p class="muted" id="stepCount"></p>
+
+<h3>Text and current window</h3>
+<div class="strip" id="textStrip"></div>
+
+<h3>Pattern</h3>
+<div class="strip" id="patternStrip"></div>
+
+<div class="status" id="explanation" aria-live="polite"></div>
+<div class="callout" id="result">Start the dry run.</div>
+</section>
+
+<section class="card">
+<h2>5. Python implementation</h2>
+
+<p>
+This version uses a polynomial rolling hash with base 256 and prime
+modulus 1,000,000,007. It returns the index of the first match or
+<code>-1</code> if no match is found.
+</p>
+
+<pre><code>def rabin_karp(text, pattern):
+    n = len(text)
+    m = len(pattern)
+
+    if m == 0:
+        return 0
+
+    if m > n:
+        return -1
+
+    base = 256
+    mod = 1_000_000_007
+
+    highest = pow(base, m - 1, mod)
+
+    pattern_hash = 0
+    window_hash = 0
+
+    # Calculate the first window and pattern hashes.
+    for i in range(m):
+        pattern_hash = (
+            pattern_hash * base + ord(pattern[i])
+        ) % mod
+
+        window_hash = (
+            window_hash * base + ord(text[i])
+        ) % mod
+
+    # Slide the window across the text.
+    for start in range(n - m + 1):
+
+        # Hashes match: verify actual characters.
+        if pattern_hash == window_hash:
+            if text[start:start + m] == pattern:
+                return start
+
+        # Calculate the next window's rolling hash.
+        if start < n - m:
+            outgoing = ord(text[start])
+            incoming = ord(text[start + m])
+
+            window_hash = (
+                (window_hash - outgoing * highest) * base
+                + incoming
+            ) % mod
+
+            # Python's modulo operation keeps it non-negative.
+            window_hash %= mod
+
+    return -1
+
+
+text = "ABCCDABC"
+pattern = "ABC"
+
+print(rabin_karp(text, pattern))
+# Output: 5</code></pre>
+
+<div class="callout">
+<strong>Why verify characters?</strong> Two different strings can
+produce the same hash. Checking the substring prevents a collision
+from being incorrectly reported as a real match.
+</div>
+</section>
+
+<section class="card">
+<h2>6. Complexity analysis</h2>
+
+<p>Let <code>n</code> be the text length and <code>m</code> the pattern length.</p>
+
+<table>
+<tr><th>Case</th><th>Time complexity</th><th>Reason</th></tr>
+<tr><td>Expected / average</td><td><code>O(n + m)</code></td><td>Rolling hashes are updated in constant time, and few windows require full verification.</td></tr>
+<tr><td>Worst case</td><td><code>O(n × m)</code></td><td>Many hash matches may require character-by-character verification.</td></tr>
+<tr><td>Extra space</td><td><code>O(1)</code></td><td>The implementation uses a fixed number of hash variables.</td></tr>
+</table>
+
+<p class="muted">
+The expected running time depends on hash behavior and the frequency
+of collisions. The worst-case bound matters when many windows collide
+or repeatedly match long prefixes.
+</p>
+</section>
+
+<section class="card">
+<h2>7. When should you use Rabin–Karp?</h2>
+
+<div class="grid">
+  <div class="mini">
+    <h3>Useful for</h3>
+    <ul>
+      <li>Searching for a substring</li>
+      <li>Searching for multiple patterns with related lengths</li>
+      <li>Plagiarism and duplicate-text detection techniques</li>
+      <li>Finding repeated sequences in text</li>
+    </ul>
+  </div>
+  <div class="mini">
+    <h3>Be careful about</h3>
+    <ul>
+      <li>Hash collisions</li>
+      <li>Choosing a suitable hash base and modulus</li>
+      <li>Verifying characters when hashes match</li>
+      <li>Worst-case performance</li>
+    </ul>
+  </div>
+</div>
+</section>
+
+<section class="card">
+<h2>8. Rabin–Karp vs KMP vs Naive</h2>
+
+<table>
+<tr><th>Algorithm</th><th>Main technique</th><th>Typical / guaranteed time</th></tr>
+<tr><td>Naive</td><td>Compare each possible window</td><td>Worst case <code>O(nm)</code></td></tr>
+<tr><td>KMP</td><td>LPS prefix/suffix table</td><td><code>O(n + m)</code></td></tr>
+<tr><td>Rabin–Karp</td><td>Rolling hash</td><td>Expected <code>O(n + m)</code>; worst <code>O(nm)</code></td></tr>
+</table>
+</section>
+
+<section class="card">
+<h2>9. Quick self-test</h2>
+
+<details>
+<summary>1. What does Rabin–Karp compare first?</summary>
+<p>It compares the hash of the pattern with the hash of the current text window.</p>
+</details>
+
+<details>
+<summary>2. What is a hash collision?</summary>
+<p>Different strings producing the same hash value.</p>
+</details>
+
+<details>
+<summary>3. Why verify characters when hashes match?</summary>
+<p>Because equal hashes do not prove that the strings are equal.</p>
+</details>
+
+<details>
+<summary>4. What is the rolling hash benefit?</summary>
+<p>It lets the next window's hash be calculated from the previous one without hashing every character again.</p>
+</details>
+
+<details>
+<summary>5. What is the worst-case time complexity?</summary>
+<p><code>O(n × m)</code>, when many windows need full character verification.</p>
+</details>
+</section>
+
+</main>
+
+<footer>Rabin–Karp · Interactive DSA Study Notes</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+let steps = [];
+let step = 0;
+let text = "";
+let pattern = "";
+
+function hashSum(str) {
+  let total = 0;
+  for (const ch of str) total += ch.charCodeAt(0) - 64;
+  return total;
+}
+
+function buildSteps(t, p) {
+  const result = [];
+  const m = p.length;
+
+  if (!m) {
+    return [{
+      start: 0,
+      window: "",
+      hash: 0,
+      kind: "found",
+      message: "The pattern is empty. This example returns index 0."
+    }];
+  }
+
+  if (m > t.length) {
+    return [{
+      start: 0,
+      window: "",
+      hash: null,
+      kind: "notfound",
+      message: "The pattern is longer than the text. No match is possible."
+    }];
+  }
+
+  const targetHash = hashSum(p);
+
+  for (let start = 0; start <= t.length - m; start++) {
+    const window = t.slice(start, start + m);
+    const currentHash = hashSum(window);
+
+    if (currentHash !== targetHash) {
+      result.push({
+        start, window, hash: currentHash,
+        kind: "different",
+        message: `Window "${window}" at index ${start}: hash ${currentHash}, pattern hash ${targetHash}. Hashes differ, so the characters do not need to be checked.`
+      });
+    } else if (window === p) {
+      result.push({
+        start, window, hash: currentHash,
+        kind: "found",
+        message: `Window "${window}" at index ${start}: both hashes are ${currentHash}, and the actual characters match. Pattern found at index ${start}.`
+      });
+      return result;
+    } else {
+      result.push({
+        start, window, hash: currentHash,
+        kind: "collision",
+        message: `Window "${window}" at index ${start}: both hashes are ${currentHash}, but the characters differ. This is a hash collision; continue searching.`
+      });
+    }
+  }
+
+  result.push({
+    start: t.length - m + 1,
+    window: "",
+    hash: null,
+    kind: "notfound",
+    message: "All windows were checked, but no exact match was found. Return -1."
+  });
+
+  return result;
+}
+
+function drawStrip(element, str, activeStart = -1, activeLength = 0, state = {}) {
+  element.innerHTML = "";
+
+  [...str].forEach((ch, i) => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+
+    if (i >= activeStart && i < activeStart + activeLength) {
+      cell.classList.add("active");
+    }
+
+    if (state[i]) cell.classList.add(state[i]);
+
+    const index = document.createElement("small");
+    index.textContent = i;
+    cell.append(index, document.createTextNode(ch));
+    element.appendChild(cell);
+  });
+}
+
+function render() {
+  const s = steps[step];
+
+  $("stepCount").textContent =
+    `Step ${step + 1} of ${steps.length}`;
+
+  const textStates = {};
+
+  if (s.kind === "found") {
+    for (let i = s.start; i < s.start + pattern.length; i++) {
+      textStates[i] = "match";
+    }
+  } else if (s.kind === "collision") {
+    for (let i = s.start; i < s.start + pattern.length; i++) {
+      textStates[i] = "mismatch";
+    }
+  }
+
+  drawStrip(
+    $("textStrip"),
+    text,
+    s.start,
+    s.window.length,
+    textStates
+  );
+
+  drawStrip($("patternStrip"), pattern);
+
+  $("explanation").textContent = s.message;
+
+  $("result").textContent =
+    s.kind === "found"
+      ? `Match found at index ${s.start}.`
+      : s.kind === "notfound"
+      ? "Pattern not found. Return -1."
+      : "Inspect this window, then press Next step.";
+
+  $("prevBtn").disabled = step === 0;
+  $("nextBtn").disabled = step === steps.length - 1;
+}
+
+function restart() {
+  text = $("textInput").value;
+  pattern = $("patternInput").value;
+  steps = buildSteps(text, pattern);
+  step = 0;
+  render();
+}
+
+$("resetBtn").addEventListener("click", restart);
+
+$("prevBtn").addEventListener("click", () => {
+  if (step > 0) {
+    step--;
+    render();
+  }
+});
+
+$("nextBtn").addEventListener("click", () => {
+  if (step < steps.length - 1) {
+    step++;
+    render();
+  }
+});
+
+$("textInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") restart();
+});
+
+$("patternInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") restart();
+});
+
+restart();
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boyer-Moore | Interactive DSA Notes</title>
+<style>
+:root{
+  --bg:#0b1020;--panel:#141d32;--panel2:#1c2943;
+  --text:#e8eefc;--muted:#a5b4d1;--accent:#8bafff;
+  --green:#70e1b0;--yellow:#ffd479;--red:#ff8d9b;
+  --border:#30415f
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);
+font:16px/1.7 system-ui,sans-serif}
+header,main,footer{width:min(1100px,94%);margin:auto}
+header{padding:38px 0 20px}
+.eyebrow{color:var(--green);font-weight:bold;letter-spacing:2px;
+text-transform:uppercase;font-size:13px}
+h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.15}
+h2{color:var(--accent);margin-top:0}
+h3{color:var(--green)}
+.lead,.muted{color:var(--muted)}
+.card{background:var(--panel);border:1px solid var(--border);
+border-radius:16px;padding:24px;margin:18px 0;overflow-wrap:anywhere}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.mini{background:var(--panel2);padding:16px;border:1px solid var(--border);border-radius:12px}
+code,pre,.mono{font-family:Consolas,monospace}
+code{color:#c6d6ff;background:#202c46;padding:2px 5px;border-radius:4px}
+pre{white-space:pre-wrap;overflow-x:auto;background:#080d18;
+border:1px solid var(--border);padding:18px;border-radius:12px;color:#dce7ff}
+button,input{font:inherit;border-radius:9px;padding:10px 13px}
+button{background:#263958;color:var(--text);border:1px solid #526a91;cursor:pointer;font-weight:bold}
+button:hover{filter:brightness(1.2)}
+button:disabled{opacity:.4;cursor:not-allowed}
+.primary{background:#3157a0}
+input{width:100%;min-width:0;background:#080f1d;color:var(--text);border:1px solid #526a91}
+label{display:block;color:var(--muted);margin-bottom:5px}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.controls{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.status{padding:14px;border:1px solid var(--border);background:#091222;border-radius:10px;margin:12px 0}
+.strip{display:flex;gap:6px;flex-wrap:wrap;margin:30px 0 12px}
+.cell{width:42px;height:46px;position:relative;display:flex;justify-content:center;
+align-items:center;border:1px solid #405174;border-radius:7px;
+background:#101a2d;font-family:Consolas,monospace;font-weight:bold}
+.cell small{position:absolute;top:-24px;font-size:11px;color:var(--muted);font-weight:normal}
+.cell.active{background:#624d20;border-color:var(--yellow)}
+.cell.match{background:#164c3b;border-color:var(--green)}
+.cell.mismatch{background:#632b3a;border-color:var(--red)}
+.cell.done{background:#203d6e;border-color:var(--accent)}
+table{width:100%;border-collapse:collapse;margin:14px 0}
+th,td{border-bottom:1px solid var(--border);padding:10px;text-align:left;vertical-align:top}
+th{color:var(--accent)}
+.callout{background:#192640;border-left:4px solid var(--accent);padding:12px 16px;border-radius:0 9px 9px 0}
+.warn{color:var(--yellow)}
+details{border:1px solid var(--border);border-radius:10px;padding:12px;margin:10px 0}
+summary{cursor:pointer;color:var(--accent);font-weight:bold}
+footer{padding:25px 0;color:var(--muted);text-align:center}
+@media(max-width:600px){.fields{grid-template-columns:1fr}.card{padding:17px}.cell{width:32px}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">DSA Learning Lab · String Algorithms</div>
+<h1>Boyer–Moore Algorithm</h1>
+<p class="lead">Learn how Boyer–Moore skips sections of text by comparing the pattern from right to left.</p>
+</header>
+
+<main>
+<section class="card">
+<h2>1. What is Boyer–Moore?</h2>
+<p>Boyer–Moore is a string pattern-matching algorithm that searches for a pattern inside a larger text. Its key idea is to compare characters <strong>from right to left</strong> and use mismatches to shift the pattern forward intelligently.</p>
+<div class="grid">
+<div class="mini"><h3>Text</h3><code>HERE IS A SIMPLE EXAMPLE</code></div>
+<div class="mini"><h3>Pattern</h3><code>EXAMPLE</code></div>
+<div class="mini"><h3>Key idea</h3><p>Use mismatches to skip unnecessary comparisons.</p></div>
+</div>
+<div class="callout"><strong>Remember:</strong> Naive search moves the pattern one position at a time. Boyer–Moore can often move it several positions.</div>
+</section>
+
+<section class="card">
+<h2>2. The two main rules</h2>
+<div class="grid">
+<div class="mini">
+<h3>Bad-character rule</h3>
+<p>When a mismatch occurs, inspect the mismatching text character. Shift the pattern so that the character's rightmost occurrence in the pattern lines up with it. If it does not occur in the pattern, shift past that character.</p>
+</div>
+<div class="mini">
+<h3>Good-suffix rule</h3>
+<p>If a suffix at the right end of the pattern has already matched before a mismatch, shift the pattern to align another occurrence of that suffix, or a suitable matching prefix.</p>
+</div>
+</div>
+<p>This study guide implements the <strong>bad-character rule</strong>, which is a useful way to learn the core algorithm. The full Boyer–Moore algorithm combines bad-character and good-suffix shifts.</p>
+</section>
+
+<section class="card">
+<h2>3. Bad-character example</h2>
+<p>Text: <code>ABAAABCD</code></p>
+<p>Pattern: <code>ABC</code></p>
+<p>Compare the pattern from its rightmost character.</p>
+<table>
+<tr><th>Comparison</th><th>What happens?</th></tr>
+<tr><td><code>C</code> vs <code>A</code></td><td>Mismatch at the pattern's last position.</td></tr>
+<tr><td>Bad character = <code>A</code></td><td>The rightmost <code>A</code> in <code>ABC</code> is at index 0.</td></tr>
+<tr><td>Shift</td><td>Shift by <code>2 - 0 = 2</code> positions.</td></tr>
+</table>
+<p>The pattern moves forward without checking every possible alignment.</p>
+</section>
+
+<section class="card" id="simulator">
+<h2>4. Interactive dry run</h2>
+<p>Edit the text and pattern. This visualizer uses the bad-character rule and compares from right to left. Spaces are allowed.</p>
+<div class="fields">
+<div><label for="textInput">Text</label><input id="textInput" value="ABAAABCD" maxlength="60"></div>
+<div><label for="patternInput">Pattern</label><input id="patternInput" value="ABC" maxlength="20"></div>
+</div>
+<div class="controls">
+<button class="primary" id="resetBtn">Start / Restart</button>
+<button id="prevBtn">← Previous</button>
+<button id="nextBtn">Next step →</button>
+</div>
+<p class="muted" id="stepCount"></p>
+<h3>Text</h3><div class="strip" id="textStrip"></div>
+<h3>Pattern</h3><div class="strip" id="patternStrip"></div>
+<div class="status" id="explanation" aria-live="polite"></div>
+<div class="callout" id="result">Start the dry run.</div>
+</section>
+
+<section class="card">
+<h2>5. Python implementation — bad-character version</h2>
+<pre><code>def boyer_moore_bad_character(text, pattern):
+    n = len(text)
+    m = len(pattern)
+
+    if m == 0:
+        return 0
+
+    if m > n:
+        return -1
+
+    # Store the rightmost index of each pattern character.
+    last = {}
+    for i, char in enumerate(pattern):
+        last[char] = i
+
+    shift = 0
+
+    while shift <= n - m:
+        j = m - 1
+
+        # Compare from right to left.
+        while j >= 0 and pattern[j] == text[shift + j]:
+            j -= 1
+
+        # All pattern characters matched.
+        if j < 0:
+            return shift
+
+        # The mismatching character in the text.
+        bad_char = text[shift + j]
+
+        # Shift enough to align its rightmost occurrence.
+        # If absent, last.get returns -1.
+        shift_amount = max(1, j - last.get(bad_char, -1))
+        shift += shift_amount
+
+    return -1
+
+
+text = "ABAAABCD"
+pattern = "ABC"
+
+print(boyer_moore_bad_character(text, pattern))
+# Output: 4</code></pre>
+<div class="callout">This is the Boyer–Moore bad-character variant, not the full algorithm with the good-suffix rule.</div>
+</section>
+
+<section class="card">
+<h2>6. Complexity</h2>
+<table>
+<tr><th>Situation</th><th>Complexity</th></tr>
+<tr><td>Preprocessing the last-occurrence table</td><td><code>O(m)</code></td></tr>
+<tr><td>Typical practical search</td><td>Often sublinear in the text length, because shifts skip characters.</td></tr>
+<tr><td>Worst case for this simple bad-character implementation</td><td><code>O(n × m)</code></td></tr>
+<tr><td>Extra space</td><td><code>O(k)</code>, where k is the number of distinct pattern characters stored.</td></tr>
+</table>
+<p class="muted">The full Boyer–Moore algorithm uses both bad-character and good-suffix preprocessing and has stronger performance guarantees under the standard algorithmic formulation.</p>
+</section>
+
+<section class="card">
+<h2>7. When should you use Boyer–Moore?</h2>
+<div class="grid">
+<div class="mini"><h3>Useful when</h3><ul><li>The text is long.</li><li>The pattern is reasonably long.</li><li>Many mismatches can cause large shifts.</li><li>You need efficient practical string search.</li></ul></div>
+<div class="mini"><h3>Remember</h3><ul><li>Compare right to left.</li><li>Precompute character positions.</li><li>Use mismatches to skip alignments.</li><li>The full version also uses good-suffix shifts.</li></ul></div>
+</div>
+</section>
+
+<section class="card">
+<h2>8. Compare the algorithms</h2>
+<table>
+<tr><th>Algorithm</th><th>Main technique</th><th>Worst-case time</th></tr>
+<tr><td>Naive</td><td>Compare every alignment</td><td><code>O(nm)</code></td></tr>
+<tr><td>KMP</td><td>LPS prefix/suffix table</td><td><code>O(n + m)</code></td></tr>
+<tr><td>Rabin–Karp</td><td>Rolling hash</td><td><code>O(nm)</code></td></tr>
+<tr><td>Boyer–Moore</td><td>Right-to-left comparison and shifts</td><td>Depends on variant; this simple bad-character implementation can be <code>O(nm)</code>.</td></tr>
+</table>
+</section>
+
+<section class="card">
+<h2>9. Quick self-test</h2>
+<details><summary>1. Which direction does Boyer–Moore compare?</summary><p>From right to left within the pattern.</p></details>
+<details><summary>2. What is the bad-character rule?</summary><p>Shift the pattern to align the mismatching text character with its rightmost occurrence in the pattern, or shift past it if absent.</p></details>
+<details><summary>3. What is the good-suffix rule?</summary><p>Use a suffix that already matched to determine a safe shift.</p></details>
+<details><summary>4. Does the code above implement both rules?</summary><p>No. It implements only the bad-character rule.</p></details>
+</section>
+</main>
+
+<footer>Boyer–Moore · Interactive DSA Study Notes</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+let text = "", pattern = "", steps = [], current = 0;
+
+function makeStrip(container, str, start = -1, length = 0, states = {}) {
+  container.innerHTML = "";
+  [...str].forEach((ch, i) => {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    if (i >= start && i < start + length) cell.classList.add("active");
+    if (states[i]) cell.classList.add(states[i]);
+    const label = document.createElement("small");
+    label.textContent = i;
+    cell.append(label, document.createTextNode(ch));
+    container.appendChild(cell);
+  });
+}
+
+function buildSteps(t, p) {
+  const out = [];
+  const n = t.length, m = p.length;
+
+  if (m === 0) {
+    return [{shift:0, j:-1, kind:"found",
+      msg:"The pattern is empty. This implementation returns index 0."}];
+  }
+
+  if (m > n) {
+    return [{shift:0, j:-1, kind:"notfound",
+      msg:"The pattern is longer than the text, so no match is possible."}];
+  }
+
+  const last = {};
+  for (let i = 0; i < m; i++) last[p[i]] = i;
+
+  let shift = 0;
+
+  while (shift <= n - m) {
+    let j = m - 1;
+
+    out.push({
+      shift, j, kind:"align",
+      msg:`Align the pattern at text index ${shift}. Begin comparison at the pattern's rightmost index ${j}.`
+    });
+
+    while (j >= 0 && p[j] === t[shift + j]) {
+      out.push({
+        shift, j, kind:"match",
+        msg:`Match: pattern[${j}] = "${p[j]}" equals text[${shift+j}] = "${t[shift+j]}". Move left to the next pattern character.`
+      });
+      j--;
+    }
+
+    if (j < 0) {
+      out.push({
+        shift, j:-1, kind:"found",
+        msg:`Every character matched. The pattern starts at text index ${shift}.`
+      });
+      return out;
+    }
+
+    const bad = t[shift + j];
+    const lastIndex = Object.prototype.hasOwnProperty.call(last, bad)
+      ? last[bad] : -1;
+    const amount = Math.max(1, j - lastIndex);
+
+    out.push({
+      shift, j, badIndex:shift+j, kind:"mismatch",
+      msg:`Mismatch: pattern[${j}] = "${p[j]}" but text[${shift+j}] = "${bad}". The last occurrence of "${bad}" in the pattern is ${lastIndex}. Shift by max(1, ${j} − (${lastIndex})) = ${amount}.`
+    });
+
+    shift += amount;
+  }
+
+  out.push({
+    shift: Math.max(0, n-m+1), j:-1, kind:"notfound",
+    msg:"All valid alignments have been checked. The pattern was not found; return -1."
+  });
+
+  return out;
+}
+
+function render() {
+  const s = steps[current];
+  const states = {};
+
+  if (s.kind === "match" && s.shift+s.j < text.length) {
+    states[s.shift+s.j] = "match";
+  }
+  if (s.kind === "mismatch" && s.badIndex < text.length) {
+    states[s.badIndex] = "mismatch";
+  }
+  if (s.kind === "found") {
+    for (let i=s.shift; i<s.shift+pattern.length; i++) {
+      if (i < text.length) states[i] = "done";
+    }
+  }
+
+  makeStrip($("textStrip"), text, s.shift, pattern.length, states);
+  makeStrip($("patternStrip"), pattern, 0, pattern.length);
+
+  $("stepCount").textContent = `Step ${current+1} of ${steps.length}`;
+  $("explanation").textContent = s.msg;
+  $("result").textContent = s.kind === "found"
+    ? `Pattern found at index ${s.shift}.`
+    : s.kind === "notfound"
+      ? "Pattern not found. Return -1."
+      : "Follow the highlighted alignment and press Next step.";
+
+  $("prevBtn").disabled = current === 0;
+  $("nextBtn").disabled = current === steps.length-1;
+}
+
+function restart() {
+  text = $("textInput").value;
+  pattern = $("patternInput").value;
+  steps = buildSteps(text, pattern);
+  current = 0;
+  render();
+}
+
+$("resetBtn").addEventListener("click", restart);
+$("prevBtn").addEventListener("click", () => {
+  if (current > 0) { current--; render(); }
+});
+$("nextBtn").addEventListener("click", () => {
+  if (current < steps.length-1) { current++; render(); }
+});
+$("textInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") restart();
+});
+$("patternInput").addEventListener("keydown", e => {
+  if (e.key === "Enter") restart();
+});
+restart();
+</script>
+</body>
+</html>
+

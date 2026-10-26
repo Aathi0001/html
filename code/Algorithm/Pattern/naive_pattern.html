@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Naive Pattern Matching Algorithms — Interactive DSA Notes</title>
+<style>
+:root{color-scheme:dark;--bg:#0a1020;--panel:#121c30;--panel2:#182640;--line:#2c3e5d;--text:#edf4ff;--muted:#aab8d0;--blue:#7dd3fc;--green:#86efac;--gold:#fcd34d;--red:#fca5a5}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#1a2b49 0%,var(--bg) 60%);color:var(--text);font:16px/1.65 system-ui,Segoe UI,Roboto,sans-serif}main{max-width:1150px;margin:auto;padding:24px 16px 60px}h1{font-size:clamp(2rem,5vw,3rem);line-height:1.15;margin:.25em 0}h2{margin:0 0 12px;line-height:1.25}h3{margin:.25em 0}.hero,section{border:1px solid var(--line);border-radius:20px;background:#111a2bee}.hero{padding:26px;background:linear-gradient(135deg,#1a2c49,#11182a)}section{padding:22px;margin-top:20px}.eyebrow{color:var(--blue);font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.muted{color:var(--muted)}.small{font-size:.88rem}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{border:1px solid #3a4c6c;border-radius:99px;padding:4px 10px;font-size:.85rem}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}.card{background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:14px}.card p{margin-bottom:0;color:#d1dced}.callout{background:#13243a;border-left:4px solid var(--blue);padding:12px 15px;border-radius:0 10px 10px 0}code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{background:#1c2b43;color:#bae6fd;padding:2px 5px;border-radius:5px}pre{white-space:pre;overflow:auto;background:#080d18;border:1px solid var(--line);border-radius:12px;padding:16px;color:#dce8fb}label{display:block;font-weight:700;margin-bottom:5px}input,select,button{font:inherit}input,select{width:100%;padding:10px 12px;background:#0b1323;color:var(--text);border:1px solid #405171;border-radius:9px}button{background:#213552;color:var(--text);border:1px solid #476080;border-radius:9px;padding:8px 13px;font-weight:700;cursor:pointer}button:hover{filter:brightness(1.15)}button.primary{background:#075985;border-color:#0e7490}button:disabled{opacity:.4;cursor:not-allowed}.setup{display:grid;grid-template-columns:1fr 1fr;gap:12px}.controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.simgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:14px;margin-top:16px}.visual,.stepbox{background:#09111f;border:1px solid var(--line);border-radius:13px;padding:15px;min-width:0}.stepcount{color:var(--blue);font-size:.83rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.steptext{min-height:90px}.sequence{font-family:ui-monospace,monospace;overflow-wrap:anywhere}.charrow{display:flex;gap:4px;flex-wrap:wrap;margin:10px 0}.cell{width:38px;height:42px;display:grid;place-items:center;border:1px solid #405171;border-radius:7px;background:#142239;font-family:ui-monospace,monospace;font-weight:800;position:relative}.cell.index{font-size:.67rem;color:var(--muted);font-weight:500}.cell.match{background:#14532d;border-color:#4ade80}.cell.compare{background:#713f12;border-color:#fbbf24}.cell.mismatch{background:#7f1d1d;border-color:#f87171}.cell.found{background:#064e3b;border-color:#34d399}.tag{display:inline-block;border:1px solid var(--line);padding:3px 8px;border-radius:7px;margin:3px;font-family:ui-monospace,monospace}.tablewrap{overflow:auto;margin-top:14px}table{width:100%;border-collapse:collapse}th,td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}th{background:#172238;color:#a9dfff}.foot{text-align:center;color:var(--muted);padding-top:26px}details{margin-top:10px}summary{cursor:pointer;color:var(--blue)}@media(max-width:760px){.simgrid,.setup{grid-template-columns:1fr}main{padding:12px}.hero,section{padding:16px}.cell{width:31px;height:36px}}
+</style>
+</head>
+<body><main>
+<header class="hero"><div class="eyebrow">Data structures & algorithms • Interactive notes</div><h1>String / Pattern Matching Algorithms</h1><p>Learn how to find a smaller pattern inside a larger text. Start with the naive method, then compare it with KMP and Rabin–Karp using an interactive character-by-character dry run.</p><div class="chips"><span class="chip">Naive pattern searching</span><span class="chip">KMP</span><span class="chip">Rabin–Karp</span><span class="chip">Interactive dry run</span></div></header>
+
+<section><h2>1. What is pattern matching?</h2><p>Given a text <code>T</code> and a pattern <code>P</code>, find every starting index where <code>P</code> occurs inside <code>T</code>. In this document, indices are <strong>zero-based</strong>.</p><div class="grid"><article class="card"><h3>Text</h3><p>The larger string you search inside, for example <code>ABABABC</code>.</p></article><article class="card"><h3>Pattern</h3><p>The smaller string to find, for example <code>ABABC</code>.</p></article><article class="card"><h3>Result</h3><p>Return the start index or all matching indices. Example: <code>ABABC</code> starts at index <code>2</code>.</p></article></div><p class="callout"><strong>Important:</strong> searching for a pattern means checking character sequences, not just whether the individual characters appear somewhere in the text.</p></section>
+
+<section><h2>2. Interactive simulator</h2><p class="muted">Edit the text and pattern, choose an algorithm, then press Next to inspect each comparison or shift. Previous returns to the exact previous state.</p><div class="setup"><div><label for="textInput">Text (T)</label><input id="textInput" value="ABABABC"></div><div><label for="patternInput">Pattern (P)</label><input id="patternInput" value="ABABC"></div><div><label for="algorithm">Algorithm</label><select id="algorithm"><option value="naive">Naive pattern searching</option><option value="kmp">Knuth–Morris–Pratt (KMP)</option><option value="rk">Rabin–Karp (rolling hash)</option></select></div><div><label for="casePreset">Example</label><select id="casePreset"><option value="ABABABC|ABABC">Pattern found after overlap</option><option value="AAAAABAAABA|AAAA">Repeated characters</option><option value="THE QUICK BROWN FOX|FOX">Simple match</option><option value="ABCDE|XYZ">No match</option><option value="BANANA|ANA">Two matches</option></select></div></div><div class="controls"><button class="primary" id="build">Build dry run</button><button id="reset">Reset example</button></div><p id="error" class="small" role="status" style="color:#fca5a5"></p><div class="simgrid"><div class="visual"><div><strong>Text characters</strong><div id="textCells" class="charrow"></div></div><div><strong>Pattern characters</strong><div id="patternCells" class="charrow"></div></div><p class="muted small">Gold = current comparison; green = matching characters / found range; red = mismatch. The index is printed inside each character cell.</p></div><div class="stepbox"><div id="stepCount" class="stepcount">Step 0</div><h3 id="stepTitle">Ready</h3><p id="stepText" class="steptext">Build the dry run to begin.</p><div class="muted small">Current alignment / window</div><div id="windowInfo" class="sequence">—</div><div class="muted small" style="margin-top:8px">Matches found so far</div><div id="matches" class="sequence">—</div><div class="controls"><button id="prev" disabled>← Previous</button><button class="primary" id="next" disabled>Next →</button><button id="restart" disabled>Restart</button></div></div></div><div class="tablewrap"><table><thead><tr><th>Step</th><th>Action</th><th>Position / detail</th><th>Outcome</th></tr></thead><tbody id="traceTable"></tbody></table></div></section>
+
+<section><h2>3. Naive pattern searching</h2><p>Naive searching tries every possible starting position in the text. At each position, it compares the pattern characters from left to right. If a character differs, it shifts the pattern by one position and starts again.</p><div class="grid"><article class="card"><h3>How it works</h3><ol><li>Align pattern at index <code>i = 0</code>.</li><li>Compare <code>T[i+j]</code> with <code>P[j]</code>.</li><li>If all pattern characters match, record <code>i</code>.</li><li>Move to the next alignment, <code>i + 1</code>.</li></ol></article><article class="card"><h3>Complexity</h3><p>Let text length be <code>n</code> and pattern length be <code>m</code>.</p><p>Worst-case time: <code>O((n−m+1)m)</code>, commonly written <code>O(nm)</code>. Extra space: <code>O(1)</code>.</p></article><article class="card"><h3>When to use</h3><p>Good for short strings, small inputs, quick implementations, or when simplicity matters more than worst-case speed.</p></article></div><h3>Python implementation</h3><pre><code>def naive_search(text, pattern):
+    n, m = len(text), len(pattern)
+    if m == 0:
+        return list(range(n + 1))
+
+    matches = []
+    for i in range(n - m + 1):
+        j = 0
+        while j < m and text[i + j] == pattern[j]:
+            j += 1
+        if j == m:
+            matches.append(i)
+    return matches
+
+print(naive_search("ABABABC", "ABABC"))  # [2]</code></pre><p class="muted small">This implementation defines an empty pattern as matching at every boundary from index 0 through n. Some libraries use different empty-pattern conventions.</p></section>
+
+<section><h2>4. KMP — Knuth–Morris–Pratt</h2><p>KMP avoids rechecking text characters that are already known to match. It preprocesses the pattern into an <strong>LPS array</strong>: Longest Proper Prefix which is also a Suffix.</p><div class="grid"><article class="card"><h3>What LPS means</h3><p>For each pattern position, LPS stores the length of the longest proper prefix of the pattern prefix that is also its suffix. “Proper” means it is shorter than the whole substring.</p></article><article class="card"><h3>Why it helps</h3><p>After a mismatch, KMP uses the LPS value to shift the pattern intelligently instead of moving all the way back to its first character.</p></article><article class="card"><h3>Complexity</h3><p>Preprocessing: <code>O(m)</code>. Search: <code>O(n)</code>. Total time: <code>O(n + m)</code>; extra space: <code>O(m)</code>.</p></article></div><h3>KMP Python implementation</h3><pre><code>def build_lps(pattern):
+    lps = [0] * len(pattern)
+    length = 0
+    i = 1
+
+    while i < len(pattern):
+        if pattern[i] == pattern[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        elif length:
+            length = lps[length - 1]
+        else:
+            lps[i] = 0
+            i += 1
+    return lps
+
+def kmp_search(text, pattern):
+    if not pattern:
+        return list(range(len(text) + 1))
+    lps = build_lps(pattern)
+    matches = []
+    i = j = 0
+
+    while i < len(text):
+        if text[i] == pattern[j]:
+            i += 1
+            j += 1
+            if j == len(pattern):
+                matches.append(i - j)
+                j = lps[j - 1]
+        elif j:
+            j = lps[j - 1]
+        else:
+            i += 1
+    return matches</code></pre></section>
+
+<section><h2>5. Rabin–Karp (rolling hash)</h2><p>Rabin–Karp compares hash values for the pattern and each text window. If the hashes differ, the strings cannot match. If hashes match, it checks the actual characters because two different strings can have the same hash (a collision).</p><div class="grid"><article class="card"><h3>Basic steps</h3><ol><li>Calculate the pattern hash.</li><li>Calculate the hash of the first text window.</li><li>Slide the window and update its hash efficiently.</li><li>When hashes match, verify the characters.</li></ol></article><article class="card"><h3>Complexity</h3><p>Expected/average behavior is often <code>O(n + m)</code> with a suitable hash and limited collisions. Worst case can be <code>O(nm)</code> due to collisions and verification.</p></article><article class="card"><h3>When to use</h3><p>Useful for searching many patterns, plagiarism-style matching, and comparing multiple windows. Hash design and collision checks matter.</p></article></div><h3>Educational Python implementation</h3><pre><code>def rabin_karp(text, pattern):
+    n, m = len(text), len(pattern)
+    if m == 0:
+        return list(range(n + 1))
+    if m > n:
+        return []
+
+    base, mod = 256, 1_000_000_007
+    high = pow(base, m - 1, mod)
+    p_hash = t_hash = 0
+
+    for j in range(m):
+        p_hash = (p_hash * base + ord(pattern[j])) % mod
+        t_hash = (t_hash * base + ord(text[j])) % mod
+
+    matches = []
+    for start in range(n - m + 1):
+        if p_hash == t_hash and text[start:start + m] == pattern:
+            matches.append(start)
+        if start < n - m:
+            t_hash = (t_hash - ord(text[start]) * high) % mod
+            t_hash = (t_hash * base + ord(text[start + m])) % mod
+    return matches</code></pre><p class="muted small">This is an educational rolling-hash example, not a cryptographic hash. The final substring comparison prevents false-positive matches from hash collisions.</p></section>
+
+<section><h2>6. Compare the algorithms</h2><div class="tablewrap"><table><thead><tr><th>Algorithm</th><th>Main idea</th><th>Time</th><th>Extra space</th><th>Best fit</th></tr></thead><tbody><tr><td>Naive</td><td>Try each alignment</td><td>Worst <code>O(nm)</code></td><td><code>O(1)</code> excluding output</td><td>Small inputs, simplicity</td></tr><tr><td>KMP</td><td>Use pattern LPS to avoid repeat comparisons</td><td><code>O(n + m)</code></td><td><code>O(m)</code></td><td>Guaranteed linear-time single-pattern search</td></tr><tr><td>Rabin–Karp</td><td>Rolling hashes, verify equal hashes</td><td>Average often <code>O(n + m)</code>; worst <code>O(nm)</code></td><td><code>O(1)</code> auxiliary in this version</td><td>Multiple patterns / window matching ideas</td></tr></tbody></table></div><p class="callout"><strong>Learning order:</strong> understand Naive first, then learn why KMP uses LPS, then learn how Rabin–Karp uses rolling hashes.</p></section>
+<div class="foot">String / Pattern Matching • Interactive DSA study notes</div>
+</main>
+<script>
+(() => {
+const $=id=>document.getElementById(id);
+let steps=[],pos=0,text='',pattern='',algorithm='naive';
+function makeStep(title,description,start,compareIndex,kind,found,detail){
+  steps.push({title,description,start,compareIndex,kind,found:[...found],detail});
+}
+function buildNaive(){
+ const found=[],n=text.length,m=pattern.length;
+ if(m===0){for(let i=0;i<=n;i++)found.push(i);makeStep('Empty pattern',`Empty pattern convention: every boundary is a match (0 through ${n}).`,0,-1,'done',found,'Empty pattern');return;}
+ if(m>n){makeStep('Pattern is longer than text',`Pattern length (${m}) exceeds text length (${n}); no match is possible.`,0,-1,'done',found,'No possible alignment');return;}
+ for(let s=0;s<=n-m;s++){
+   let j=0;
+   while(j<m){
+    const equal=text[s+j]===pattern[j];
+    makeStep(equal?'Characters match':'Mismatch',`Compare T[${s+j}] = "${text[s+j]}" with P[${j}] = "${pattern[j]}". ${equal?'They match, so continue to the next pattern character.':'They differ, so abandon this alignment and shift the pattern by one.'}`,s,j,equal?'match':'mismatch',found,`T[${s+j}] ${equal?'=':'≠'} P[${j}]`);
+    if(!equal)break;
+    j++;
+   }
+   if(j===m){found.push(s);makeStep('Pattern found',`Every character matched at start index ${s}. Record ${s}, then continue searching for overlapping matches.`,s,m-1,'found',found,`Match at ${s}`);}
+ }
+ makeStep('Search complete',found.length?`All matches found at indices: ${found.join(', ')}.`:'No match was found.',n-m,-1,'done',found,'Complete');
+}
+function makeLPS(p){
+ const lps=Array(p.length).fill(0);let len=0,i=1;
+ while(i<p.length){
+  if(p[i]===p[len]){len++;lps[i]=len;i++;}
+  else if(len!==0)len=lps[len-1];
+  else{lps[i]=0;i++;}
+ }
+ return lps;
+}
+function buildKMP(){
+ const found=[],n=text.length,m=pattern.length;
+ if(m===0){for(let i=0;i<=n;i++)found.push(i);makeStep('Empty pattern',`Empty pattern convention: boundaries 0 through ${n} match.`,0,-1,'done',found,'Empty pattern');return;}
+ if(m>n){makeStep('Pattern is longer than text',`Pattern length (${m}) exceeds text length (${n}); no match is possible.`,0,-1,'done',found,'No possible alignment');return;}
+ const lps=makeLPS(pattern);
+ makeStep('Build LPS array',`LPS for pattern "${pattern}" is [${lps.join(', ')}]. Each value tells KMP how much of the matched prefix can be retained after a mismatch.`,0,-1,'lps',found,`LPS = [${lps.join(', ')}]`);
+ let i=0,j=0;
+ while(i<n){
+  if(text[i]===pattern[j]){
+   makeStep('Characters match',`T[${i}] = "${text[i]}" matches P[${j}] = "${pattern[j]}". Advance both pointers.`,i-j,j,'match',found,`i=${i}, j=${j}`);
+   i++;j++;
+   if(j===m){found.push(i-j);makeStep('Pattern found',`Pattern found at index ${i-j}. Use LPS[${j-1}] = ${lps[j-1]} to continue without rechecking known prefix characters.`,i-j,j-1,'found',found,`Match at ${i-j}`);j=lps[j-1];}
+  }else if(j!==0){
+   const old=j;j=lps[j-1];
+   makeStep('Use LPS after mismatch',`T[${i}] = "${text[i]}" differs from P[${old}] = "${pattern[old]}". Keep text index i=${i}; move pattern index j from ${old} to LPS[${old-1}] = ${j}.`,i-j,j,'mismatch',found,`j: ${old} → ${j}`);
+  }else{
+   makeStep('Mismatch at pattern start',`T[${i}] = "${text[i]}" differs from P[0] = "${pattern[0]}". No prefix can be reused; advance text index.`,i,0,'mismatch',found,`i: ${i} → ${i+1}`);i++;
+  }
+ }
+ makeStep('Search complete',found.length?`All matches found at indices: ${found.join(', ')}.`:'No match was found.',Math.max(0,n-m),-1,'done',found,'Complete');
+}
+function buildRK(){
+ const found=[],n=text.length,m=pattern.length;
+ if(m===0){for(let i=0;i<=n;i++)found.push(i);makeStep('Empty pattern',`Empty pattern convention: boundaries 0 through ${n} match.`,0,-1,'done',found,'Empty pattern');return;}
+ if(m>n){makeStep('Pattern is longer than text',`Pattern length (${m}) exceeds text length (${n}); no match is possible.`,0,-1,'done',found,'No possible alignment');return;}
+ const base=256,mod=1000000007,high=powmod(base,m-1,mod);
+ const hash=s=>{let h=0;for(let k=0;k<s.length;k++)h=(h*base+s.charCodeAt(k))%mod;return h;};
+ const ph=hash(pattern);let th=hash(text.slice(0,m));
+ makeStep('Calculate initial hashes',`Pattern hash = ${ph}; first text-window hash = ${th}. A hash match is only a candidate: verify the characters to guard against collisions.`,0,-1,ph===th?'match':'hash',found,`pattern=${ph}; window=${th}`);
+ for(let s=0;s<=n-m;s++){
+  if(s>0){
+   const old=th;
+   th=(th-text.charCodeAt(s-1)*high%mod+mod)%mod;
+   th=(th*base+text.charCodeAt(s+m-1))%mod;
+   makeStep('Slide rolling hash',`Remove "${text[s-1]}" from the left and add "${text[s+m-1]}" on the right. Window ${s} hash changes from ${old} to ${th}.`,s,-1,'hash',found,`window hash=${th}`);
+  }
+  if(th===ph){
+   const equal=text.slice(s,s+m)===pattern;
+   makeStep(equal?'Hash and characters match':'Hash collision',`Window hash equals pattern hash (${ph}). ${equal?'The actual substring is also equal, so record this match.':'The actual substring differs, so this is a hash collision and must not be reported as a match.'}`,s,-1,equal?'found':'mismatch',equal?[...found,s]:found,`hash equal; verified=${equal}`);
+   if(equal)found.push(s);
+  }else{
+   makeStep('Hashes differ',`Window at index ${s} has hash ${th}; pattern hash is ${ph}. Hashes differ, so this window cannot match.`,s,-1,'hash',found,`${th} ≠ ${ph}`);
+  }
+ }
+ makeStep('Search complete',found.length?`All matches found at indices: ${found.join(', ')}.`:'No match was found.',n-m,-1,'done',found,'Complete');
+}
+function powmod(a,b,m){let r=1;while(b>0){if(b%2)r=r*a%m;a=a*a%m;b=Math.floor(b/2)}return r;}
+function build(){
+ try{
+  text=$('textInput').value;pattern=$('patternInput').value;algorithm=$('algorithm').value;
+  if(text.length>120||pattern.length>40)throw new Error('For a readable dry run, keep text to 120 characters and pattern to 40 characters.');
+  steps=[];pos=0;
+  if(algorithm==='naive')buildNaive();else if(algorithm==='kmp')buildKMP();else buildRK();
+  $('error').textContent='';['prev','next','restart'].forEach(id=>$(id).disabled=false);render();
+ }catch(e){$('error').textContent=e.message;}
+}
+function renderCells(){
+ const s=steps[pos],textEl=$('textCells'),patEl=$('patternCells');
+ textEl.innerHTML='';patEl.innerHTML='';
+ const activeStart=s.start,ci=s.compareIndex;
+ for(let i=0;i<text.length;i++){
+  const d=document.createElement('div');d.className='cell';
+  if(s.found.some(start=>i>=start&&i<start+pattern.length))d.classList.add('found');
+  else if(s.start>=0&&i>=s.start&&i<s.start+pattern.length)d.classList.add('compare');
+  if(ci>=0&&i===s.start+ci)d.className='cell '+(s.kind==='mismatch'?'mismatch':'compare');
+  d.textContent=text[i]||' ';const ix=document.createElement('span');ix.className='index';ix.textContent=i;d.appendChild(ix);textEl.appendChild(d);
+ }
+ for(let j=0;j<pattern.length;j++){
+  const d=document.createElement('div');d.className='cell';
+  if(s.start>=0&&j<s.compareIndex)d.classList.add('match');
+  if(j===ci)d.classList.add(s.kind==='mismatch'?'mismatch':'compare');
+  if(s.kind==='found'&&s.start>=0)d.classList.add('found');
+  d.textContent=pattern[j]||' ';const ix=document.createElement('span');ix.className='index';ix.textContent=j;d.appendChild(ix);patEl.appendChild(d);
+ }
+}
+function render(){
+ const s=steps[pos];
+ $('stepCount').textContent=`Step ${pos+1} of ${steps.length}`;
+ $('stepTitle').textContent=s.title;$('stepText').textContent=s.description;
+ $('windowInfo').textContent=s.start>=0?`Start index ${s.start}: "${text.slice(s.start,s.start+pattern.length)}"`:s.detail;
+ $('matches').textContent=s.found.length?s.found.join(', '):'None yet';
+ $('prev').disabled=pos===0;$('next').disabled=pos===steps.length-1;$('next').textContent=pos===steps.length-1?'Complete ✓':'Next →';
+ renderCells();
+ $('traceTable').innerHTML='';
+ steps.forEach((r,i)=>{const tr=document.createElement('tr');if(i===pos)tr.style.background='#493717';
+ [i+1,r.title,r.detail,r.found.length?r.found.join(', '):'—'].forEach(v=>{const td=document.createElement('td');td.textContent=v;tr.appendChild(td)});$('traceTable').appendChild(tr);});
+}
+$('build').addEventListener('click',build);
+$('casePreset').addEventListener('change',()=>{const [t,p]=$('casePreset').value.split('|');$('textInput').value=t;$('patternInput').value=p;build();});
+$('reset').addEventListener('click',()=>{$('textInput').value='ABABABC';$('patternInput').value='ABABC';$('algorithm').value='naive';$('casePreset').value='ABABABC|ABABC';build();});
+$('algorithm').addEventListener('change',build);
+$('next').addEventListener('click',()=>{if(pos<steps.length-1){pos++;render();}});
+$('prev').addEventListener('click',()=>{if(pos>0){pos--;render();}});
+$('restart').addEventListener('click',()=>{pos=0;render();});
+build();
+})();
+</script>
+</body></html>

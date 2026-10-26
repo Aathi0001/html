@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DSA Notes — Bubble Sort</title>
+<style>
+:root{
+  color-scheme:dark; --bg:#07111f; --panel:#0d1b2e; --panel2:#10233a;
+  --line:#203b5d; --text:#e7efff; --muted:#9eb2d0; --blue:#70a7ff;
+  --cyan:#48e0e2; --green:#48e0a4; --orange:#ffbf69; --pink:#f29bff;
+  --red:#ff778d; --shadow:0 12px 30px #0003;
+}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top left,#102847 0,transparent 40%),var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
+main{width:min(1120px,94%);margin:32px auto 60px}
+header{padding:28px 30px;border:1px solid var(--line);border-radius:22px;background:linear-gradient(125deg,#102541,#0a1728);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem}
+h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.08;margin:8px 0 12px;letter-spacing:-.04em}
+h2{font-size:1.35rem;line-height:1.25;margin:0 0 16px}
+h3{font-size:1.05rem;margin:0 0 8px;color:var(--blue)}
+p{margin:8px 0 12px}
+.sub{max-width:740px;color:var(--muted);font-size:1.06rem}
+.header-row{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #176e63;color:var(--green);border-radius:999px;font-size:.85rem;font-weight:700;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px;margin-top:16px}
+.card{grid-column:span 6;background:linear-gradient(160deg,#0d1c30,#0a1727);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);min-width:0}
+.card.third{grid-column:span 4}.card.full{grid-column:1/-1}
+.section-no{display:inline-grid;place-items:center;width:32px;height:32px;margin-right:8px;border-radius:10px;background:#183c68;color:#b9d5ff;font-weight:850}
+.muted{color:var(--muted)}.good{color:var(--green)}.warn{color:var(--orange)}.bad{color:var(--red)}
+code,pre,.code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+code{color:#a9e5ff;background:#132740;padding:.1em .35em;border-radius:5px}
+pre{margin:0;white-space:pre;overflow:auto;color:#dbeaff;font-size:.92rem;line-height:1.65}
+.codebox{position:relative;background:#06101e;border:1px solid #244465;border-radius:12px;padding:18px;margin:12px 0}
+.copy{position:absolute;right:10px;top:10px;border:1px solid #385878;background:#142b43;color:var(--text);border-radius:8px;padding:5px 9px;cursor:pointer}
+button,select,input{font:inherit}
+button{border:1px solid #315579;background:#132b45;color:var(--text);border-radius:10px;padding:9px 13px;cursor:pointer}
+button:hover{border-color:var(--cyan);transform:translateY(-1px)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+.callout{border-left:4px solid var(--cyan);padding:12px 15px;background:#0b2633;border-radius:0 10px 10px 0;margin:14px 0}
+.callout.warning{border-color:var(--orange);background:#2a2115}
+.list{padding-left:1.25rem}.list li{margin:7px 0}
+table{width:100%;border-collapse:collapse;margin-top:10px}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:#b9d5ff;background:#10243b}
+tr:last-child td{border-bottom:0}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.controls{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0}
+.bars{display:flex;align-items:flex-end;gap:8px;min-height:200px;padding:18px 10px 8px;border:1px solid var(--line);border-radius:12px;background:#071322;overflow-x:auto}
+.bar{min-width:44px;flex:1;max-width:78px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:165px}
+.bar .value{font-weight:800;font-variant-numeric:tabular-nums}
+.bar .stick{width:100%;max-width:54px;min-height:10px;border-radius:8px 8px 3px 3px;background:linear-gradient(180deg,#70a7ff,#3964bc);transition:height .25s ease,background .25s ease}
+.bar.active .stick{background:linear-gradient(180deg,#ffca78,#e47d49)}
+.bar.sorted .stick{background:linear-gradient(180deg,#55efb0,#178a72)}
+.bar small{color:var(--muted)}
+.status{padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:#0a192a;margin:10px 0;color:#c9dcf8;min-height:48px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.stat{padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:12px}
+.stat strong{display:block;font-size:1.4rem;color:var(--cyan)}
+.stat span{font-size:.85rem;color:var(--muted)}
+.tag{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:3px 8px;margin:3px;font-size:.82rem;color:#c9dcf8}
+
+.trace-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:14px}
+.trace-pass{border:1px solid var(--line);border-radius:14px;background:#081525;overflow:hidden}
+.trace-head{padding:12px 14px;background:#122944;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}
+.trace-head strong{color:var(--cyan)}
+.trace-head small{color:var(--muted)}
+.trace-body{padding:13px 14px}
+.trace-step{padding:10px 0;border-bottom:1px solid #1a3049}
+.trace-step:last-child{border-bottom:0}
+.trace-step b{display:block;margin-bottom:6px}
+.trace-array{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.trace-cell{min-width:32px;text-align:center;padding:5px 8px;border:1px solid #2a4665;background:#132740;border-radius:7px;font-weight:800}
+.trace-cell.swap{border-color:#b97738;background:#382719;color:var(--orange)}
+.trace-cell.fixed{border-color:#218266;background:#10372d;color:var(--green)}
+.trace-note{margin-top:10px;border:1px solid #1c715b;background:#0b2a25;color:#baf7dc;border-radius:9px;padding:10px 12px}
+
+footer{text-align:center;color:var(--muted);padding:25px 0 0}
+@media(max-width:780px){.card,.card.third{grid-column:1/-1}.header-row{display:block}.pill{margin-top:15px}.stats{grid-template-columns:1fr}.card{padding:17px}main{width:min(100% - 24px,1120px);margin-top:12px}}
+@media print{body{background:#fff;color:#111}.card,header{background:#fff;color:#111;box-shadow:none;border-color:#aaa}.muted,footer{color:#444}.codebox{background:#f5f5f5;color:#111}pre{color:#111}button,.controls{display:none}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div class="eyebrow">DSA Field Notes · 01 / 11</div>
+  <div class="header-row">
+    <div>
+      <h1>Bubble Sort</h1>
+      <p class="sub">A beginner-friendly sorting algorithm that repeatedly compares neighboring values and swaps them when they are in the wrong order.</p>
+    </div>
+    <span class="pill">● Beginner friendly</span>
+  </div>
+  <div><span class="tag">In-place</span><span class="tag">Stable</span><span class="tag">Ascending order</span><span class="tag">O(n²) basic version</span></div>
+</header>
+
+<div class="grid">
+<section class="card">
+  <h2><span class="section-no">1</span> The idea</h2>
+  <ol class="list">
+    <li>Start at the left side of the list.</li>
+    <li>Compare two <strong>adjacent</strong> values: the current value and the one immediately to its right.</li>
+    <li>If the left value is bigger, swap them. Otherwise, leave them alone.</li>
+    <li>Move one position right and repeat.</li>
+    <li>After a full pass, the largest value in the unsorted section has reached the end. Repeat for the remaining section.</li>
+  </ol>
+  <div class="callout"><strong>Memory hook:</strong> Bubble Sort moves a large value rightward, one neighboring swap at a time.</div>
+</section>
+
+<section class="card">
+  <h2><span class="section-no">2</span> Your Python implementation</h2>
+  <div class="codebox">
+    <button class="copy" onclick="copyCode()">Copy code</button>
+<pre id="pythonCode">def bubble_sort(num):
+    n = len(num)
+
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if num[j] > num[j + 1]:
+                num[j], num[j + 1] = num[j + 1], num[j]
+
+    return num
+
+
+numbers = [5, 2, 3, 12, 3, 65, 34, 100, 1, 0]
+print(bubble_sort(numbers))</pre>
+  </div>
+  <p class="good"><strong>Yes — your code is correct.</strong> It sorts the input list in ascending order.</p>
+  <p class="muted">Small improvement: return the sorted list instead of printing inside the function. That lets other code reuse the result. Your original <code>print(list(num))</code> is valid, but <code>list(num)</code> is unnecessary because <code>num</code> is already a list.</p>
+</section>
+
+<section class="card full">
+  <h2><span class="section-no">3</span> Interactive dry run</h2>
+  <p class="muted">Use the controls to step through the actual neighboring comparisons for your input list. Orange means the current pair; green means a value has reached the sorted suffix.</p>
+  <div class="controls">
+    <button onclick="stepBack()">← Previous</button>
+    <button onclick="stepForward()">Next comparison →</button>
+    <button onclick="nextPass()">Finish this pass</button>
+    <button onclick="resetRun()">Reset</button>
+    <label for="inputNumbers" class="muted">Input:</label>
+    <input id="inputNumbers" value="5,2,3,12,3,65,34,100,1,0" aria-label="Comma-separated numbers" style="width:min(340px,100%);background:#071322;border:1px solid #315579;color:var(--text);border-radius:8px;padding:9px">
+    <button onclick="loadInput()">Load list</button>
+  </div>
+  <div id="bars" class="bars" aria-label="Visual representation of list values"></div>
+  <div id="status" class="status" aria-live="polite">Ready. Press “Next comparison” to begin.</div>
+  <div class="stats">
+    <div class="stat"><strong id="comparisons">0</strong><span>Comparisons made</span></div>
+    <div class="stat"><strong id="swaps">0</strong><span>Swaps made</span></div>
+    <div class="stat"><strong id="pass">1</strong><span>Current pass</span></div>
+  </div>
+</section>
+
+<section class="card full">
+  <h2><span class="section-no">4</span> Step-by-step dry run (quick revision)</h2>
+  <p class="muted">Follow every comparison in order. Orange cells show the pair being swapped; green cells show values that are already fixed at the right-hand end.</p>
+  <div class="callout"><strong>Starting list:</strong> <code>[5, 3, 8, 1, 2]</code><br>Rule: compare neighbors <code>num[j]</code> and <code>num[j + 1]</code>. Swap only when the left value is bigger.</div>
+  <div class="trace-grid">
+    <article class="trace-pass">
+      <div class="trace-head"><strong>Pass 1</strong><small>4 comparisons</small></div>
+      <div class="trace-body">
+        <div class="trace-step"><b>1. Compare 5 and 3 → swap</b><div class="trace-array"><span class="trace-cell swap">3</span><span class="trace-cell swap">5</span><span class="trace-cell">8</span><span class="trace-cell">1</span><span class="trace-cell">2</span></div></div>
+        <div class="trace-step"><b>2. Compare 5 and 8 → no swap</b><div class="trace-array"><span class="trace-cell">3</span><span class="trace-cell">5</span><span class="trace-cell">8</span><span class="trace-cell">1</span><span class="trace-cell">2</span></div></div>
+        <div class="trace-step"><b>3. Compare 8 and 1 → swap</b><div class="trace-array"><span class="trace-cell">3</span><span class="trace-cell">5</span><span class="trace-cell swap">1</span><span class="trace-cell swap">8</span><span class="trace-cell">2</span></div></div>
+        <div class="trace-step"><b>4. Compare 8 and 2 → swap</b><div class="trace-array"><span class="trace-cell">3</span><span class="trace-cell">5</span><span class="trace-cell">1</span><span class="trace-cell swap">2</span><span class="trace-cell fixed">8</span></div></div>
+        <div class="trace-note">End of pass: <b>[3, 5, 1, 2, 8]</b><br>Largest value 8 is now in its final position.</div>
+      </div>
+    </article>
+    <article class="trace-pass">
+      <div class="trace-head"><strong>Pass 2</strong><small>3 comparisons</small></div>
+      <div class="trace-body">
+        <div class="trace-step"><b>1. Compare 3 and 5 → no swap</b><div class="trace-array"><span class="trace-cell">3</span><span class="trace-cell">5</span><span class="trace-cell">1</span><span class="trace-cell">2</span><span class="trace-cell fixed">8</span></div></div>
+        <div class="trace-step"><b>2. Compare 5 and 1 → swap</b><div class="trace-array"><span class="trace-cell">3</span><span class="trace-cell swap">1</span><span class="trace-cell swap">5</span><span class="trace-cell">2</span><span class="trace-cell fixed">8</span></div></div>
+        <div class="trace-step"><b>3. Compare 5 and 2 → swap</b><div class="trace-array"><span class="trace-cell">3</span><span class="trace-cell">1</span><span class="trace-cell swap">2</span><span class="trace-cell fixed">5</span><span class="trace-cell fixed">8</span></div></div>
+        <div class="trace-note">End of pass: <b>[3, 1, 2, 5, 8]</b><br>5 has reached its final position too.</div>
+      </div>
+    </article>
+    <article class="trace-pass">
+      <div class="trace-head"><strong>Pass 3</strong><small>2 comparisons</small></div>
+      <div class="trace-body">
+        <div class="trace-step"><b>1. Compare 3 and 1 → swap</b><div class="trace-array"><span class="trace-cell swap">1</span><span class="trace-cell swap">3</span><span class="trace-cell">2</span><span class="trace-cell fixed">5</span><span class="trace-cell fixed">8</span></div></div>
+        <div class="trace-step"><b>2. Compare 3 and 2 → swap</b><div class="trace-array"><span class="trace-cell">1</span><span class="trace-cell swap">2</span><span class="trace-cell fixed">3</span><span class="trace-cell fixed">5</span><span class="trace-cell fixed">8</span></div></div>
+        <div class="trace-note">End of pass: <b>[1, 2, 3, 5, 8]</b><br>The list is sorted.</div>
+      </div>
+    </article>
+    <article class="trace-pass">
+      <div class="trace-head"><strong>Pass 4</strong><small>1 comparison</small></div>
+      <div class="trace-body">
+        <div class="trace-step"><b>1. Compare 1 and 2 → no swap</b><div class="trace-array"><span class="trace-cell fixed">1</span><span class="trace-cell fixed">2</span><span class="trace-cell fixed">3</span><span class="trace-cell fixed">5</span><span class="trace-cell fixed">8</span></div></div>
+        <div class="trace-note">List stays <b>[1, 2, 3, 5, 8]</b>. The basic code still performs this final comparison; an optimized version can stop early if no swaps occur.</div>
+      </div>
+    </article>
+  </div>
+  <p class="muted">Fast memory tip: after Pass 1, the last 1 value is fixed; after Pass 2, the last 2 values are fixed. Each pass shortens the unsorted section by one.</p>
+</section>
+
+<section class="card">
+  <h2><span class="section-no">5</span> Read the important lines</h2>
+  <h3><code>n = len(num)</code></h3><p>Count the list elements once. For 10 values, <code>n = 10</code>.</p>
+  <h3><code>for i in range(n)</code></h3><p>The outer loop controls passes through the list.</p>
+  <h3><code>range(0, n - i - 1)</code></h3><p>The inner loop compares adjacent pairs. After each pass, one more largest value is already sorted at the end, so we skip it. The <code>-1</code> keeps <code>j + 1</code> within the list.</p>
+  <h3><code>num[j] &gt; num[j + 1]</code></h3><p>Swap only if the left value is greater than its right neighbor. This produces ascending order.</p>
+</section>
+
+<section class="card">
+  <h2><span class="section-no">6</span> Output for your input</h2>
+  <p>Input:</p>
+  <div class="codebox"><pre>[5, 2, 3, 12, 3, 65, 34, 100, 1, 0]</pre></div>
+  <p>Sorted output:</p>
+  <div class="codebox"><pre>[0, 1, 2, 3, 3, 5, 12, 34, 65, 100]</pre></div>
+  <p class="muted">Equal values such as the two <code>3</code>s remain in their original relative order. That property is called stability.</p>
+</section>
+
+<section class="card full">
+  <h2><span class="section-no">7</span> Time complexity — how much work grows?</h2>
+  <p><strong>n</strong> means the number of elements. Big O describes how the amount of work grows as n grows; it is not a direct measurement in seconds.</p>
+  <div class="tablewrap">
+  <table>
+    <thead><tr><th>Case</th><th>Complexity for your code</th><th>Why?</th></tr></thead>
+    <tbody>
+      <tr><td>Best</td><td><strong>O(n²)</strong></td><td>This version still makes all passes even if the list is already sorted.</td></tr>
+      <tr><td>Average</td><td><strong>O(n²)</strong></td><td>Repeated passes compare many neighboring pairs.</td></tr>
+      <tr><td>Worst</td><td><strong>O(n²)</strong></td><td>A reverse-sorted list requires many comparisons and swaps.</td></tr>
+      <tr><td>Extra space</td><td><strong>O(1)</strong></td><td>It sorts the existing list and uses only a few extra variables.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout warning"><strong>Why O(n²)?</strong> For n = 5, the basic version makes 4 + 3 + 2 + 1 = 10 comparisons. For n = 10, it makes 45. The comparison count grows roughly like n × n, so we call it quadratic.</div>
+  <p><strong>Optimized best case:</strong> if you add a <code>swapped</code> flag and stop when a pass makes no swaps, an already-sorted list can finish in <code>O(n)</code> time. That optimization is not in your current code.</p>
+</section>
+
+<section class="card third">
+  <h2><span class="section-no">8</span> When to use it</h2>
+  <ul class="list">
+    <li>Learning sorting, loops, comparisons and swapping.</li>
+    <li>Demonstrating how a simple algorithm works on a tiny list.</li>
+    <li>Situations where simplicity matters more than speed and the input is very small.</li>
+  </ul>
+</section>
+<section class="card third">
+  <h2><span class="section-no">9</span> When not to use it</h2>
+  <ul class="list">
+    <li>Large lists: quadratic work grows quickly.</li>
+    <li>Performance-sensitive production code.</li>
+    <li>Normal Python tasks where <code>sorted()</code> or <code>.sort()</code> is available.</li>
+  </ul>
+</section>
+<section class="card third">
+  <h2><span class="section-no">10</span> Quick summary</h2>
+  <p><strong>Strategy:</strong> compare adjacent pairs.</p>
+  <p><strong>Swap rule:</strong> left &gt; right.</p>
+  <p><strong>Time:</strong> O(n²) for this implementation.</p>
+  <p><strong>Extra space:</strong> O(1).</p>
+  <p><strong>In-place:</strong> yes.</p>
+  <p><strong>Stable:</strong> yes.</p>
+</section>
+
+<section class="card full">
+  <h2><span class="section-no">11</span> Practice before moving on</h2>
+  <ol class="list">
+    <li>Change the input to <code>[4, 1, 3, 2]</code> and trace the first pass.</li>
+    <li>Change the comparison to <code>&lt;</code>. What order do you get?</li>
+    <li>Print the list after each pass, not after each comparison.</li>
+    <li>Try adding the <code>swapped</code> flag to stop early when no swap occurs.</li>
+  </ol>
+  <details>
+    <summary style="cursor:pointer;color:var(--cyan);font-weight:700">Show descending-order hint</summary>
+    <p>For descending order, swap when the left value is smaller than the right value: <code>if num[j] &lt; num[j + 1]:</code></p>
+  </details>
+</section>
+</div>
+<footer>DSA Notes · Bubble Sort · Learn the idea, trace the code, then practise it.</footer>
+</main>
+<script>
+let original=[5,2,3,12,3,65,34,100,1,0], arr=[], events=[], cursor=0, comparisons=0, swaps=0;
+function buildEvents(){
+  events=[]; let a=original.slice(), n=a.length;
+  for(let i=0;i<n;i++){
+    for(let j=0;j<n-i-1;j++){
+      const left=a[j], right=a[j+1], doSwap=left>right;
+      if(doSwap){a[j]=right;a[j+1]=left;}
+      events.push({a:a.slice(),i,j,left,right,doSwap,pass:i+1,sortedFrom:n-i});
+    }
+  }
+  events.push({a:a.slice(),i:-1,j:-1,done:true,pass:Math.max(1,n-1)});
+}
+function render(){
+  let state;
+  if(cursor===0) state={a:original.slice(),i:-1,j:-1,pass:1};
+  else state=events[cursor-1];
+  arr=state.a.slice();
+  const root=document.getElementById('bars'); root.innerHTML='';
+  const max=Math.max(1,...arr.map(x=>Math.abs(x)));
+  arr.forEach((v,index)=>{
+    const b=document.createElement('div'); b.className='bar';
+    if(state.done || (state.sortedFrom!==undefined && index>=state.sortedFrom)) b.classList.add('sorted');
+    if(!state.done && index===state.j) b.classList.add('active');
+    if(!state.done && index===state.j+1) b.classList.add('active');
+    const value=document.createElement('div'); value.className='value'; value.textContent=v;
+    const stick=document.createElement('div'); stick.className='stick'; stick.style.height=(14+Math.abs(v)/max*110)+'px';
+    const idx=document.createElement('small'); idx.textContent='idx '+index;
+    b.append(value,stick,idx); root.appendChild(b);
+  });
+  comparisons=cursor; swaps=events.slice(0,cursor).filter(e=>e.doSwap).length;
+  document.getElementById('comparisons').textContent=comparisons;
+  document.getElementById('swaps').textContent=swaps;
+  document.getElementById('pass').textContent=state.done?'Done':state.pass||1;
+  const s=document.getElementById('status');
+  if(cursor===0)s.textContent='Ready. Press “Next comparison” to begin.';
+  else if(state.done)s.textContent='Finished! The list is sorted: '+arr.join(', ')+'.';
+  else s.textContent='Pass '+state.pass+': compare '+state.left+' and '+state.right+'. '+(state.doSwap?'Swap them.':'No swap needed.')+' Current list: ['+arr.join(', ')+'].';
+}
+function stepForward(){if(cursor<events.length){cursor++;render();}}
+function stepBack(){if(cursor>0){cursor--;render();}}
+function nextPass(){if(cursor>=events.length)return;let p=events[cursor]?.pass;while(cursor<events.length && events[cursor].pass===p)cursor++;render();}
+function resetRun(){cursor=0;render();}
+function loadInput(){
+ const raw=document.getElementById('inputNumbers').value.trim();
+ const vals=raw.split(',').map(x=>x.trim()).filter(Boolean).map(Number);
+ if(!vals.length||vals.some(x=>!Number.isFinite(x))){document.getElementById('status').textContent='Enter a comma-separated list of valid numbers.';return;}
+ original=vals;buildEvents();cursor=0;render();
+}
+function copyCode(){
+ const text=document.getElementById('pythonCode').textContent;
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(()=>{document.querySelector('.copy').textContent='Copied!';setTimeout(()=>document.querySelector('.copy').textContent='Copy code',1200);});}
+ else {const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();document.querySelector('.copy').textContent='Copied!';setTimeout(()=>document.querySelector('.copy').textContent='Copy code',1200);}
+}
+buildEvents();render();
+</script>
+</body>
+</html>

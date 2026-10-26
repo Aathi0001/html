@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fractional Knapsack — Interactive Algorithm Lab</title>
+<style>
+:root{--bg:#09111f;--panel:#121e31;--panel2:#1b2b44;--text:#edf3ff;--muted:#aab9d0;--border:#30435f;--accent:#5de0c4;--blue:#91b4ff;--gold:#ffd477;--red:#ff9a9a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 system-ui,sans-serif}
+main{max-width:1150px;margin:auto;padding:22px}
+h1{font-size:clamp(2rem,5vw,3rem);line-height:1.15}
+h2{font-size:1.25rem;margin-top:0}h3{margin-top:22px}
+p,li{color:var(--muted)}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:15px;padding:20px;margin:18px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:13px}
+.metric{background:var(--panel2);padding:14px;border-radius:10px;min-width:0}
+.metric strong{display:block;color:var(--accent);font-size:1.4rem;overflow-wrap:anywhere}
+.tag{color:var(--blue);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+table{width:100%;border-collapse:collapse;margin:12px 0}
+th,td{border:1px solid var(--border);padding:9px;text-align:center}
+th{background:var(--panel2)}
+input{width:100%;min-width:0;background:#080e19;color:var(--text);border:1px solid var(--border);padding:9px;border-radius:7px;font:inherit}
+input:focus{outline:2px solid var(--accent);outline-offset:1px}
+button{background:var(--panel2);border:1px solid var(--border);color:var(--text);padding:10px 15px;border-radius:9px;cursor:pointer;font-size:1rem}
+button.primary{background:#155448;border-color:var(--accent)}button.danger{border-color:#8b4545;color:#ffc0c0}
+button:disabled{opacity:.35;cursor:not-allowed}
+.controls{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.track{height:9px;background:#28384f;border-radius:8px;overflow:hidden}.progress{height:100%;width:0;background:var(--accent);transition:width .2s}
+.pill{display:inline-block;padding:3px 9px;border-radius:7px;background:var(--panel2);margin:3px}
+.note{border-left:3px solid var(--accent);background:#142a3b;padding:10px 14px}
+.error{color:var(--red);min-height:1.5em}.good{color:var(--accent)}
+.chart{background:#080e19;border:1px solid var(--border);border-radius:12px;padding:12px;overflow-x:auto}
+svg{display:block;width:100%;min-width:600px;height:auto}
+.bar-item{fill:#31516f;stroke:#91b4ff;stroke-width:1}.bar-selected{fill:#155448;stroke:#5de0c4;stroke-width:2}.bar-partial{fill:#70551c;stroke:#ffd477;stroke-width:2}
+pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#080e19;padding:15px;border-radius:10px;color:#d8e7ff;overflow-x:auto}
+code{overflow-wrap:anywhere}
+@media(max-width:600px){main{padding:12px}.panel{padding:13px}th,td{padding:7px 3px;font-size:.82rem}}
+</style>
+</head>
+<body>
+<main>
+<p class="tag">Greedy Algorithms · Lesson 01</p>
+<h1>Fractional Knapsack</h1>
+<p>Choose items to maximize total value without exceeding a bag's capacity. In the fractional version, you may take a fraction of an item. The greedy strategy is to take items in descending order of <strong>value ÷ weight</strong>.</p>
+
+<section class="panel">
+<h2>1. Understand the greedy idea</h2>
+<div class="grid">
+ <div class="metric"><span class="tag">Input</span><strong>Weight + value</strong><span>Each item has a weight and a value.</span></div>
+ <div class="metric"><span class="tag">Greedy rule</span><strong>Highest ratio first</strong><span>Ratio = value / weight.</span></div>
+ <div class="metric"><span class="tag">Goal</span><strong>Maximum value</strong><span>Stay within the capacity limit.</span></div>
+</div>
+<p class="note">Important: this greedy strategy is optimal for <strong>Fractional Knapsack</strong>. It is not generally optimal for <strong>0/1 Knapsack</strong>, where each item must be taken whole or not at all.</p>
+</section>
+
+<section class="panel">
+<h2>2. Customize the items and capacity</h2>
+<p>Edit the weights, values, and capacity. Add or remove items, then press <strong>Build / Update</strong>. The ratio ranking, dry run, chart, and totals will be recalculated from your values.</p>
+<label for="capacity"><strong>Knapsack capacity</strong></label>
+<input id="capacity" type="number" min="0.000001" step="any" value="50" style="max-width:240px;margin-top:6px">
+<table>
+<thead><tr><th>Item</th><th>Weight</th><th>Value</th><th>Value ÷ Weight</th><th>Action</th></tr></thead>
+<tbody id="itemRows"></tbody>
+</table>
+<div class="controls">
+<button id="addItem">＋ Add item</button><button id="build" class="primary">Build / Update</button><button id="restore">Restore example</button>
+</div>
+<p id="inputError" class="error" role="status"></p>
+<div class="grid">
+<div class="metric"><span class="tag">Number of items</span><strong id="itemCount">3</strong></div>
+<div class="metric"><span class="tag">Capacity</span><strong id="capacityMetric">50</strong></div>
+<div class="metric"><span class="tag">Total weight available</span><strong id="availableWeight">60</strong></div>
+</div>
+</section>
+
+<section class="panel">
+<h2>3. Sort items by value-to-weight ratio</h2>
+<p>Before filling the bag, calculate each ratio. The largest ratio is considered first. When ratios tie, this simulator uses the original item order as a consistent tie-breaker.</p>
+<table>
+<thead><tr><th>Greedy rank</th><th>Item</th><th>Weight</th><th>Value</th><th>Ratio</th></tr></thead>
+<tbody id="sortedRows"></tbody>
+</table>
+<div class="note">Example: if an item is worth 60 and weighs 10, its ratio is 60 ÷ 10 = 6 value units per weight unit. A higher ratio gives more value for each unit of capacity.</div>
+</section>
+
+<section class="panel">
+<h2>4. Interactive step-by-step dry run</h2>
+<p>Move through the decisions one at a time. Each step shows the next item considered, how much of it fits, the value gained, and the remaining capacity.</p>
+<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><strong id="stepCount">Step 1 of 4</strong><span id="stepPercent">25%</span></div>
+<div class="track" style="margin-top:8px"><div class="progress" id="progress"></div></div>
+<h3 id="stepTitle"></h3>
+<p id="explanation"></p>
+<div class="grid">
+<div class="metric"><span class="tag">Item considered</span><strong id="currentItem">—</strong></div>
+<div class="metric"><span class="tag">Fraction taken</span><strong id="fractionTaken">—</strong></div>
+<div class="metric"><span class="tag">Value gained this step</span><strong id="stepValue">—</strong></div>
+<div class="metric"><span class="tag">Capacity remaining</span><strong id="remainingCapacity">—</strong></div>
+</div>
+<h3>Current selection</h3>
+<div id="selectionTable"></div>
+<h3>Capacity usage</h3>
+<div class="chart"><svg id="capacityChart" viewBox="0 0 900 150" role="img" aria-label="Knapsack capacity usage chart"></svg></div>
+<div class="controls"><button id="prev">← Previous</button><button id="next" class="primary">Next →</button><button id="restart">↻ Restart dry run</button></div>
+<p id="dryRunHint" class="muted"></p>
+</section>
+
+<section class="panel">
+<h2>5. Final result</h2>
+<div class="grid">
+<div class="metric"><span class="tag">Maximum value found</span><strong id="totalValue">—</strong></div>
+<div class="metric"><span class="tag">Weight used</span><strong id="weightUsed">—</strong></div>
+<div class="metric"><span class="tag">Capacity unused</span><strong id="unusedCapacity">—</strong></div>
+<div class="metric"><span class="tag">Capacity filled</span><strong id="filledPercent">—</strong></div>
+</div>
+<p id="resultExplanation"></p>
+<table>
+<thead><tr><th>Item</th><th>Ratio</th><th>Fraction taken</th><th>Weight taken</th><th>Value gained</th></tr></thead>
+<tbody id="finalRows"></tbody>
+</table>
+</section>
+
+<section class="panel">
+<h2>6. Python implementation</h2>
+<p>This implementation uses the same greedy rule as the simulator. It returns the selected fraction of each item, total weight used, and total value.</p>
+<pre><code>def fractional_knapsack(items, capacity):
+    # Each item: {"name": "A", "weight": 10, "value": 60}
+    # Sort by value per unit of weight, highest first.
+    items = sorted(
+        items,
+        key=lambda item: item["value"] / item["weight"],
+        reverse=True
+    )
+
+    total_value = 0
+    weight_used = 0
+    selections = []
+
+    for item in items:
+        if capacity <= 0:
+            break
+
+        weight = item["weight"]
+        value = item["value"]
+
+        # Take the whole item if it fits; otherwise take a fraction.
+        fraction = min(1, capacity / weight)
+        taken_weight = fraction * weight
+        gained_value = fraction * value
+
+        selections.append({
+            "name": item["name"],
+            "fraction": fraction,
+            "weight_taken": taken_weight,
+            "value_gained": gained_value
+        })
+
+        capacity -= taken_weight
+        weight_used += taken_weight
+        total_value += gained_value
+
+    return selections, weight_used, total_value
+
+
+items = [
+    {"name": "A", "weight": 10, "value": 60},
+    {"name": "B", "weight": 20, "value": 100},
+    {"name": "C", "weight": 30, "value": 120}
+]
+
+selected, used, value = fractional_knapsack(items, capacity=50)
+print("Weight used:", used)
+print("Maximum value:", value)
+for item in selected:
+    print(item)</code></pre>
+<button id="showOutput" class="primary">Show Python-style output for current inputs</button>
+<pre id="output" hidden></pre>
+</section>
+
+<section class="panel">
+<h2>7. Complexity and when to use it</h2>
+<ul>
+<li><strong>Sorting:</strong> O(n log n), where n is the number of items.</li>
+<li><strong>Selection after sorting:</strong> O(n).</li>
+<li><strong>Overall time:</strong> O(n log n), dominated by sorting.</li>
+<li><strong>Extra space:</strong> O(n) in this implementation because a sorted copy and selection results are stored.</li>
+<li><strong>Use it when:</strong> items can be divided, such as allocating divisible resources to maximize value.</li>
+</ul>
+<p class="note"><strong>Remember the steps:</strong> calculate each ratio → sort high to low → take whole items while possible → take the needed fraction of the next item → stop when capacity is full or items run out.</p>
+</section>
+</main>
+<script>
+"use strict";
+const defaults=[
+ {name:"A",weight:10,value:60},
+ {name:"B",weight:20,value:100},
+ {name:"C",weight:30,value:120}
+];
+let items=defaults.map(x=>({...x}));
+let capacity=50, sorted=[], steps=[], index=0;
+const EPS=1e-9;
+function fmt(n){if(Math.abs(n)<EPS)return "0";return Number(n.toFixed(4)).toString();}
+function money(n){return Number(n.toFixed(2)).toLocaleString(undefined,{maximumFractionDigits:2});}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function setError(s){document.getElementById("inputError").textContent=s;}
+function validate(){
+ if(!items.length)return "Add at least one item.";
+ if(items.length>100)return "Use 100 or fewer items for a readable chart.";
+ if(!Number.isFinite(Number(capacity))||Number(capacity)<=0)return "Capacity must be greater than zero.";
+ if(items.some(x=>!x.name.trim()))return "Every item needs a name.";
+ if(new Set(items.map(x=>x.name.trim())).size!==items.length)return "Item names must be unique.";
+ if(items.some(x=>!Number.isFinite(Number(x.weight))||Number(x.weight)<=0))return "Every weight must be a number greater than zero.";
+ if(items.some(x=>!Number.isFinite(Number(x.value))||Number(x.value)<0))return "Every value must be zero or greater.";
+ return "";
+}
+function renderInputs(){
+ const tbody=document.getElementById("itemRows");
+ tbody.innerHTML=items.map((x,i)=>`<tr>
+ <td><input data-i="${i}" data-f="name" maxlength="24" value="${esc(x.name)}" aria-label="Item ${i+1} name"></td>
+ <td><input data-i="${i}" data-f="weight" type="number" min="0.000001" step="any" value="${x.weight}" aria-label="Item ${i+1} weight"></td>
+ <td><input data-i="${i}" data-f="value" type="number" min="0" step="any" value="${x.value}" aria-label="Item ${i+1} value"></td>
+ <td>${Number(x.weight)>0&&Number.isFinite(Number(x.value))?fmt(Number(x.value)/Number(x.weight)):"—"}</td>
+ <td><button type="button" class="danger" data-remove="${i}" ${items.length===1?"disabled":""}>Remove</button></td>
+ </tr>`).join("");
+ tbody.querySelectorAll("input").forEach(input=>input.addEventListener("change",()=>{
+  const i=Number(input.dataset.i),f=input.dataset.f;
+  items[i][f]=f==="name"?input.value.trim():Number(input.value);
+  setError("");
+ }));
+ tbody.querySelectorAll("[data-remove]").forEach(btn=>btn.addEventListener("click",()=>{
+  items.splice(Number(btn.dataset.remove),1);renderInputs();rebuild();
+ }));
+}
+function makeSteps(){
+ sorted=items.map((item,originalIndex)=>({...item,originalIndex,ratio:item.value/item.weight}))
+  .sort((a,b)=>b.ratio-a.ratio||a.originalIndex-b.originalIndex);
+ let remaining=capacity,weightUsed=0,totalValue=0;
+ const chosen=[];
+ steps=[{
+  title:"Step 1 — Start with an empty knapsack",
+  explanation:`The bag has capacity ${fmt(capacity)}. Items are sorted by value-to-weight ratio; begin with the highest ratio.`,
+  item:null,fraction:0,takenWeight:0,gainedValue:0,remaining,weightUsed,totalValue,chosen:[],considered:0
+ }];
+ for(const item of sorted){
+  if(remaining<=EPS)break;
+  const fraction=Math.min(1,remaining/item.weight);
+  const takenWeight=item.weight*fraction;
+  const gainedValue=item.value*fraction;
+  remaining=Math.max(0,remaining-takenWeight);
+  weightUsed+=takenWeight;totalValue+=gainedValue;
+  chosen.push({name:item.name,weight:item.weight,value:item.value,ratio:item.ratio,fraction,takenWeight,gainedValue,originalIndex:item.originalIndex});
+  const full=fraction>=1-EPS;
+  steps.push({
+   title:full?`Take all of item ${item.name}`:`Take a fraction of item ${item.name}`,
+   explanation:full
+    ?`Item ${item.name} has ratio ${fmt(item.ratio)}. Its full weight (${fmt(item.weight)}) fits in the remaining capacity, so take the whole item and gain value ${money(gainedValue)}.`
+    :`Item ${item.name} has weight ${fmt(item.weight)} but only ${fmt(remaining+ takenWeight)} capacity was available. Take ${(fraction*100).toFixed(2)}% of it: weight ${fmt(takenWeight)} and value ${money(gainedValue)}.`,
+   item,fraction,takenWeight,gainedValue,remaining,weightUsed,totalValue,chosen:chosen.map(x=>({...x})),considered:item.originalIndex
+  });
+ }
+ if(steps.length===1){
+  steps.push({title:"No item can be selected",explanation:"No items were available to add to the knapsack.",item:null,fraction:0,takenWeight:0,gainedValue:0,remaining,weightUsed,totalValue,chosen:[],considered:0});
+ }
+}
+function rebuild(){
+ capacity=Number(document.getElementById("capacity").value);
+ const error=validate();if(error){setError(error);return false;}
+ items=items.map(x=>({name:x.name.trim(),weight:Number(x.weight),value:Number(x.value)}));
+ capacity=Number(capacity);makeSteps();index=0;setError("");renderInputs();render();return true;
+}
+function renderSorted(){
+ document.getElementById("sortedRows").innerHTML=sorted.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(x.name)}</td><td>${fmt(x.weight)}</td><td>${money(x.value)}</td><td><strong>${fmt(x.ratio)}</strong></td></tr>`).join("");
+ document.getElementById("itemCount").textContent=items.length;
+ document.getElementById("capacityMetric").textContent=fmt(capacity);
+ document.getElementById("availableWeight").textContent=fmt(items.reduce((s,x)=>s+x.weight,0));
+}
+function drawCapacity(used,remaining,chosen){
+ const svg=document.getElementById("capacityChart");svg.innerHTML="";
+ const ns="http://www.w3.org/2000/svg";
+ const add=(tag,attrs,text="")=>{const el=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,v));if(text)el.textContent=text;svg.appendChild(el);return el;};
+ const x=40,y=40,w=820,h=42,usedW=Math.max(0,Math.min(w,used/capacity*w));
+ add("rect",{x,y,width:w,height:h,rx:8,fill:"#1b2b44",stroke:"#30435f"});
+ if(usedW>0)add("rect",{x,y,width:usedW,height:h,rx:8,fill:"#155448",stroke:"#5de0c4"});
+ add("text",{x:40,y:25,fill:"#aab9d0","font-size":14},`Used ${fmt(used)} / ${fmt(capacity)} capacity`);
+ add("text",{x:40,y:108,fill:"#edf3ff","font-size":15},`${(used/capacity*100).toFixed(1)}% filled`);
+ add("text",{x:860,y:108,fill:"#aab9d0","font-size":15,"text-anchor":"end"},`${fmt(remaining)} left`);
+ const legendY=135;
+ add("rect",{x:40,y:legendY,width:12,height:12,fill:"#155448",stroke:"#5de0c4"});
+ add("text",{x:59,y:legendY+11,fill:"#aab9d0","font-size":12},"Capacity used");
+ add("rect",{x:180,y:legendY,width:12,height:12,fill:"#1b2b44",stroke:"#30435f"});
+ add("text",{x:199,y:legendY+11,fill:"#aab9d0","font-size":12},"Capacity remaining");
+}
+function renderSelection(chosen){
+ const body=document.getElementById("selectionTable");
+ if(!chosen.length){body.innerHTML="<p class='muted'>No items selected yet.</p>";return;}
+ body.innerHTML=`<table><thead><tr><th>Item</th><th>Fraction</th><th>Weight taken</th><th>Value gained</th><th>Status</th></tr></thead><tbody>${
+ chosen.map(x=>`<tr><td>${esc(x.name)}</td><td>${(x.fraction*100).toFixed(2)}%</td><td>${fmt(x.takenWeight)}</td><td>${money(x.gainedValue)}</td><td>${x.fraction>=1-EPS?"Whole item":"Fractional"}</td></tr>`).join("")
+ }</tbody></table>`;
+}
+function renderFinal(){
+ const final=steps[steps.length-1];
+ document.getElementById("totalValue").textContent=money(final.totalValue);
+ document.getElementById("weightUsed").textContent=fmt(final.weightUsed);
+ document.getElementById("unusedCapacity").textContent=fmt(Math.max(0,capacity-final.weightUsed));
+ document.getElementById("filledPercent").textContent=(final.weightUsed/capacity*100).toFixed(1)+"%";
+ document.getElementById("resultExplanation").textContent=`The greedy algorithm selected items in descending ratio order. Total value is ${money(final.totalValue)} with ${fmt(final.weightUsed)} weight used out of ${fmt(capacity)} capacity.`;
+ const byOriginal=[...final.chosen].sort((a,b)=>a.originalIndex-b.originalIndex);
+ document.getElementById("finalRows").innerHTML=items.map((item,i)=>{
+  const found=byOriginal.find(x=>x.originalIndex===i);
+  return `<tr><td>${esc(item.name)}</td><td>${fmt(item.value/item.weight)}</td><td>${found?(found.fraction*100).toFixed(2)+"%":"0%"}</td><td>${found?fmt(found.takenWeight):"0"}</td><td>${found?money(found.gainedValue):"0"}</td></tr>`;
+ }).join("");
+}
+function render(){
+ const s=steps[index],pct=Math.round((index+1)/steps.length*100);
+ document.getElementById("stepCount").textContent=`Step ${index+1} of ${steps.length}`;
+ document.getElementById("stepPercent").textContent=pct+"%";
+ document.getElementById("progress").style.width=pct+"%";
+ document.getElementById("stepTitle").textContent=s.title;
+ document.getElementById("explanation").textContent=s.explanation;
+ document.getElementById("currentItem").textContent=s.item?`${s.item.name} (weight ${fmt(s.item.weight)}, value ${money(s.item.value)}, ratio ${fmt(s.item.value/s.item.weight)})`:"—";
+ document.getElementById("fractionTaken").textContent=s.item?(s.fraction*100).toFixed(2)+"%":"—";
+ document.getElementById("stepValue").textContent=money(s.gainedValue);
+ document.getElementById("remainingCapacity").textContent=fmt(s.remaining);
+ renderSelection(s.chosen);drawCapacity(s.weightUsed,s.remaining,s.chosen);
+ document.getElementById("prev").disabled=index===0;
+ document.getElementById("next").disabled=index===steps.length-1;
+ document.getElementById("dryRunHint").textContent=index===steps.length-1?"Dry run complete. Final totals are shown below.":`Next advances to the next greedy selection (${index+1} of ${steps.length-1} item-selection step(s)).`;
+ renderSorted();renderFinal();
+}
+document.getElementById("addItem").addEventListener("click",()=>{
+ if(items.length>=100){setError("Use 100 or fewer items.");return;}
+ let n=items.length+1,name=`Item ${n}`;while(items.some(x=>x.name===name))name=`Item ${++n}`;
+ items.push({name,weight:1,value:1});renderInputs();setError("");
+});
+document.getElementById("build").addEventListener("click",rebuild);
+document.getElementById("restore").addEventListener("click",()=>{
+ items=defaults.map(x=>({...x}));document.getElementById("capacity").value=50;renderInputs();rebuild();
+});
+document.getElementById("prev").addEventListener("click",()=>{if(index>0){index--;render();}});
+document.getElementById("next").addEventListener("click",()=>{if(index<steps.length-1){index++;render();}});
+document.getElementById("restart").addEventListener("click",()=>{index=0;render();});
+document.getElementById("showOutput").addEventListener("click",()=>{
+ const out=document.getElementById("output"),final=steps[steps.length-1];out.hidden=false;
+ out.textContent=`Weight used: ${fmt(final.weightUsed)}\nMaximum value: ${money(final.totalValue)}\nSelections:\n`+
+ final.chosen.map(x=>`  ${x.name}: fraction=${fmt(x.fraction)}, weight_taken=${fmt(x.takenWeight)}, value_gained=${money(x.gainedValue)}`).join("\n");
+});
+renderInputs();rebuild();
+</script>
+</body>
+</html>
+

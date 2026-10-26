@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KMP Pattern Matching — Interactive DSA Notes</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#121a2d;--panel2:#18233b;--text:#e8eefc;--muted:#a5b4d1;--line:#2b3958;--accent:#8bafff;--green:#70e1b0;--yellow:#ffd479;--red:#ff8d9b}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#162344 0,#0b1020 48%);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{padding:42px 20px 28px;max-width:1100px;margin:auto}header .eyebrow{color:var(--green);font-weight:750;letter-spacing:.12em;text-transform:uppercase;font-size:.78rem}h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;margin:.5rem 0 1rem}h2{font-size:1.55rem;margin-top:0}h3{font-size:1.08rem;color:var(--accent)}p{margin:.5rem 0 1rem}.lead{font-size:1.12rem;color:var(--muted);max-width:850px}
+main{max-width:1100px;margin:auto;padding:0 20px 60px;display:grid;gap:18px}.card{background:linear-gradient(145deg,rgba(20,29,50,.98),rgba(15,23,41,.98));border:1px solid var(--line);border-radius:18px;padding:24px;box-shadow:0 12px 35px #0002}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}.mini{background:var(--panel2);border:1px solid var(--line);border-radius:13px;padding:16px}.tag{display:inline-block;padding:3px 9px;border:1px solid #405780;border-radius:999px;color:var(--accent);font-size:.8rem;font-weight:700}code,pre,.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}code{color:#c6d6ff;background:#202c46;border-radius:5px;padding:2px 5px}pre{white-space:pre-wrap;overflow:auto;background:#080d18;border:1px solid var(--line);border-radius:12px;padding:18px;color:#dce7ff;line-height:1.55}table{width:100%;border-collapse:collapse;margin:12px 0}th,td{text-align:left;border-bottom:1px solid var(--line);padding:10px 9px;vertical-align:top}th{color:var(--accent);font-size:.9rem} .muted{color:var(--muted)}.good{color:var(--green)}.warn{color:var(--yellow)}
+button{background:#253758;border:1px solid #49618c;color:var(--text);padding:10px 15px;border-radius:10px;cursor:pointer;font:inherit;font-weight:650}button:hover{filter:brightness(1.2)}button.primary{background:#3157a0;border-color:#628de8}button:disabled{opacity:.4;cursor:not-allowed}input{background:#080f1d;border:1px solid #405174;color:var(--text);border-radius:9px;padding:10px;font:inherit;min-width:0;width:100%}.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{display:block;color:var(--muted);font-size:.88rem;margin-bottom:5px}.controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.status{border-radius:10px;background:#0a1222;border:1px solid var(--line);padding:12px 14px;margin:12px 0}.pointers{display:flex;gap:10px;flex-wrap:wrap;font-family:ui-monospace,monospace;font-size:.9rem}.pill{border-radius:8px;padding:4px 8px;background:#243552}.strip{display:flex;gap:5px;flex-wrap:wrap;margin:12px 0}.cell{width:38px;min-height:44px;display:flex;align-items:center;justify-content:center;border:1px solid #354667;border-radius:7px;background:#101a2d;position:relative;font-family:ui-monospace,monospace;font-weight:700}.cell small{position:absolute;top:-21px;font-size:10px;color:var(--muted);font-weight:400}.cell.active{background:#634d20;border-color:var(--yellow);color:#fff1c8}.cell.match{background:#164c3b;border-color:var(--green)}.cell.mismatch{background:#632b3a;border-color:var(--red)}.cell.done{background:#203d6e;border-color:var(--accent)}.indexrow{display:flex;gap:5px;flex-wrap:wrap}.index{width:38px;text-align:center;font:12px ui-monospace,monospace;color:var(--muted)}.stepcount{color:var(--muted);font-size:.9rem}.callout{border-left:3px solid var(--accent);padding:8px 14px;background:#17233a;border-radius:0 8px 8px 0}.quiz details{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:9px 0}.quiz summary{cursor:pointer;color:var(--accent);font-weight:700}footer{text-align:center;color:var(--muted);padding:20px}
+@media(max-width:600px){.card{padding:17px}.fields{grid-template-columns:1fr}.cell,.index{width:30px}.lead{font-size:1rem}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">DSA Learning Lab · String Algorithms</div>
+<h1>KMP Pattern Matching</h1>
+<p class="lead">A beginner-friendly study guide with a live LPS builder, a step-by-step search dry run, Python implementation, complexity analysis, and practice questions.</p>
+<span class="tag">Knuth–Morris–Pratt</span> <span class="tag">Linear-time search</span> <span class="tag">Interactive dry run</span>
+</header>
+<main>
+<section class="card">
+<h2>1. The idea in one minute</h2>
+<p>Suppose you are searching for a <strong>pattern</strong> inside a larger <strong>text</strong>. When several characters match and then a mismatch happens, a naive algorithm may start over and compare characters it already learned about.</p>
+<p><strong>KMP avoids those unnecessary comparisons.</strong> It builds an array called <code>LPS</code> and uses it to decide where to continue in the pattern after a mismatch. The text pointer never moves backward.</p>
+<div class="grid">
+<div class="mini"><h3>Text</h3><p>The full string being searched.</p><code>ABABABC</code></div>
+<div class="mini"><h3>Pattern</h3><p>The smaller string to find.</p><code>ABABC</code></div>
+<div class="mini"><h3>Result</h3><p>First matching start index.</p><code>2</code> <span class="muted">(zero-based)</span></div>
+</div>
+<div class="callout"><strong>Core takeaway:</strong> on a mismatch, KMP uses previous matches in the pattern instead of moving the text pointer backward or restarting from scratch.</div>
+</section>
+
+<section class="card">
+<h2>2. Prefix, suffix, and LPS</h2>
+<p>A <strong>prefix</strong> starts at the beginning of a string. A <strong>suffix</strong> ends at the end. A <strong>proper prefix</strong> is any prefix except the whole string.</p>
+<p><strong>LPS</strong> means <em>Longest Proper Prefix which is also a Suffix</em>. Each LPS entry answers: “For the pattern substring ending at this position, what is the length of its longest matching proper prefix and suffix?”</p>
+<table><thead><tr><th>Substring</th><th>Matching proper prefix / suffix</th><th>LPS</th></tr></thead><tbody>
+<tr><td><code>A</code></td><td>None</td><td>0</td></tr><tr><td><code>AB</code></td><td>None</td><td>0</td></tr><tr><td><code>ABA</code></td><td><code>A</code></td><td>1</td></tr><tr><td><code>ABAB</code></td><td><code>AB</code></td><td>2</td></tr><tr><td><code>ABABC</code></td><td>None</td><td>0</td></tr>
+</tbody></table>
+<p>So <code>ABABC</code> has LPS array <code>[0, 0, 1, 2, 0]</code>.</p>
+<div class="callout">LPS values are lengths, not character indexes. If <code>lps[j - 1] = 2</code>, KMP can continue with two pattern characters already accounted for.</div>
+</section>
+
+<section class="card" id="lps-lab">
+<h2>3. Interactive dry run A — build the LPS array</h2>
+<p>Change the pattern, then step through the LPS construction one operation at a time.</p>
+<div class="fields"><div class="field"><label for="lpsPattern">Pattern (no spaces for this visualizer)</label><input id="lpsPattern" value="ABABC" maxlength="24" autocomplete="off"></div><div class="field"><label>Algorithm pointers</label><div class="status mono" id="lpsPointers">i = 1 · length = 0</div></div></div>
+<div class="controls"><button class="primary" id="lpsReset">Build / Restart</button><button id="lpsPrev">← Previous</button><button id="lpsNext">Next step →</button></div>
+<div class="stepcount" id="lpsCount"></div>
+<h3>Pattern characters</h3><div class="strip" id="lpsChars"></div>
+<h3>LPS values</h3><div class="strip" id="lpsVals"></div>
+<div class="status" id="lpsExplain" aria-live="polite">Press Next step to begin.</div>
+<p class="muted">How to read it: <code>i</code> is the position currently being calculated; <code>length</code> is the length of the best prefix/suffix match found so far.</p>
+</section>
+
+<section class="card" id="search-lab">
+<h2>4. Interactive dry run B — search the text</h2>
+<p>This visualizer builds LPS automatically, then shows each comparison and pointer movement. Use a pattern that appears in the text, or try one that does not.</p>
+<div class="fields"><div class="field"><label for="textInput">Text</label><input id="textInput" value="ABABABC" maxlength="40" autocomplete="off"></div><div class="field"><label for="patternInput">Pattern</label><input id="patternInput" value="ABABC" maxlength="20" autocomplete="off"></div></div>
+<div class="controls"><button class="primary" id="searchReset">Start / Restart</button><button id="searchPrev">← Previous</button><button id="searchNext">Next step →</button></div>
+<div class="stepcount" id="searchCount"></div>
+<div class="pointers"><span class="pill" id="pointerI">i (text) = 0</span><span class="pill" id="pointerJ">j (pattern) = 0</span><span class="pill" id="pointerLps">LPS = —</span></div>
+<h3>Text</h3><div class="strip" id="textChars"></div>
+<h3>Pattern</h3><div class="strip" id="patternChars"></div>
+<div class="status" id="searchExplain" aria-live="polite">Press Next step to begin.</div>
+<div class="callout" id="searchResult">The result will appear when the dry run finishes.</div>
+</section>
+
+<section class="card">
+<h2>5. Python code</h2>
+<p>There are two functions: one builds the LPS array, and the other uses it to search for the first occurrence.</p>
+<pre><code>def build_lps(pattern):
+    lps = [0] * len(pattern)
+    length = 0
+    i = 1
+
+    while i &lt; len(pattern):
+        if pattern[i] == pattern[length]:
+            length += 1
+            lps[i] = length
+            i += 1
+        elif length != 0:
+            # Try a shorter known prefix/suffix.
+            length = lps[length - 1]
+        else:
+            lps[i] = 0
+            i += 1
+
+    return lps
+
+
+def kmp_search(text, pattern):
+    if pattern == "":
+        return 0
+
+    lps = build_lps(pattern)
+    i = 0  # pointer in text
+    j = 0  # pointer in pattern
+
+    while i &lt; len(text):
+        if text[i] == pattern[j]:
+            i += 1
+            j += 1
+
+            if j == len(pattern):
+                return i - j
+        elif j != 0:
+            j = lps[j - 1]
+        else:
+            i += 1
+
+    return -1
+
+
+text = "ABABABC"
+pattern = "ABABC"
+print(kmp_search(text, pattern))  # 2</code></pre>
+<div class="callout"><strong>Important:</strong> this version returns the first match only. It returns <code>-1</code> if the pattern is not found, and <code>0</code> for an empty pattern.</div>
+</section>
+
+<section class="card">
+<h2>6. Understand the two mismatch cases</h2>
+<div class="grid">
+<div class="mini"><h3>Case A — j is not zero</h3><p>Some pattern characters already matched. Set <code>j = lps[j - 1]</code>. Keep <code>i</code> unchanged so the current text character is compared again with the new pattern position.</p></div>
+<div class="mini"><h3>Case B — j is zero</h3><p>No pattern prefix matched. There is nothing to reuse, so advance <code>i</code> to the next text character.</p></div>
+<div class="mini"><h3>Full match</h3><p>When <code>j == len(pattern)</code>, the start index is <code>i - j</code>.</p></div>
+</div>
+<p class="warn">Common bug: after a mismatch with <code>j != 0</code>, do not increment <code>i</code>. KMP needs to compare the same text character against the fallback pattern position.</p>
+</section>
+
+<section class="card">
+<h2>7. Complexity and when to use it</h2>
+<table><thead><tr><th>Work</th><th>Time</th><th>Extra space</th></tr></thead><tbody>
+<tr><td>Build LPS</td><td><code>O(m)</code></td><td><code>O(m)</code></td></tr><tr><td>Search text</td><td><code>O(n)</code></td><td><code>O(1)</code> beyond the LPS array</td></tr><tr><td>Total</td><td><code>O(n + m)</code></td><td><code>O(m)</code></td></tr>
+</tbody></table>
+<p><code>n</code> = text length, <code>m</code> = pattern length.</p>
+<div class="grid"><div class="mini"><h3>Use KMP when…</h3><p>You want predictable linear-time searching, especially when patterns contain repeated prefix/suffix structures.</p></div><div class="mini"><h3>Compare with Naive</h3><p>Naive searching can take <code>O(n × m)</code> in the worst case. KMP preprocesses the pattern to avoid redundant comparisons.</p></div><div class="mini"><h3>Remember</h3><p>The text pointer never moves backward; the LPS array tells the pattern pointer how to fall back.</p></div></div>
+</section>
+
+<section class="card quiz">
+<h2>8. Quick self-test</h2>
+<details><summary>1. What does LPS stand for?</summary><p>Longest Proper Prefix which is also a Suffix.</p></details>
+<details><summary>2. What is the LPS array for ABABC?</summary><p><code>[0, 0, 1, 2, 0]</code>.</p></details>
+<details><summary>3. On mismatch, when j is greater than zero, what changes?</summary><p>Set <code>j = lps[j - 1]</code>. Keep the text pointer <code>i</code> in place for that comparison.</p></details>
+<details><summary>4. What is KMP's total time complexity?</summary><p><code>O(n + m)</code>, where n is the text length and m is the pattern length.</p></details>
+<details><summary>5. What does the search function return if no match exists?</summary><p><code>-1</code>.</p></details>
+</section>
+</main>
+<footer>KMP Pattern Matching · Interactive DSA Notes</footer>
+<script>
+const $ = id => document.getElementById(id);
+function makeStrip(container, chars, active=-1, state={}, labels=true){
+  container.innerHTML='';
+  [...chars].forEach((ch,idx)=>{
+    const cell=document.createElement('div'); cell.className='cell';
+    if(idx===active) cell.classList.add('active');
+    if(state[idx]) cell.classList.add(state[idx]);
+    if(labels){const sm=document.createElement('small');sm.textContent=idx;cell.appendChild(sm)}
+    cell.append(document.createTextNode(ch));container.appendChild(cell);
+  });
+}
+function makeValueStrip(container, vals, active=-1){
+ container.innerHTML='';
+ vals.forEach((v,idx)=>{const cell=document.createElement('div');cell.className='cell'+(idx===active?' active':'');const sm=document.createElement('small');sm.textContent=idx;cell.append(sm,document.createTextNode(String(v)));container.appendChild(cell)});
+}
+let lpsSteps=[], lpsAt=0, currentPattern='ABABC';
+function generateLpsSteps(p){
+ const steps=[], arr=Array(p.length).fill(0);let length=0,i=1;
+ steps.push({arr:[...arr],i,length,msg:`Initialize LPS with zeros. The first character always has LPS 0. Start at i = 1.`});
+ while(i<p.length){
+  if(p[i]===p[length]){
+   length++;arr[i]=length;
+   steps.push({arr:[...arr],i,length,msg:`Match: pattern[${i}] = "${p[i]}" equals pattern[${length-1}] = "${p[length-1]}". Increase length to ${length}, set LPS[${i}] = ${length}, then advance i.`});
+   i++;
+  }else if(length!==0){
+   const old=length;length=arr[length-1];
+   steps.push({arr:[...arr],i,length,msg:`Mismatch at i = ${i}. There was a previous partial match of length ${old}. Fall back to length = LPS[${old-1}] = ${length}; keep i at ${i} and try again.`});
+  }else{
+   arr[i]=0;
+   steps.push({arr:[...arr],i,length,msg:`Mismatch at i = ${i}, and length is already 0. Set LPS[${i}] = 0 and advance i.`});
+   i++;
+  }
+ }
+ steps.push({arr:[...arr],i,length,final:true,msg:`LPS construction complete: [${arr.join(', ')}].`});
+ return steps;
+}
+function resetLps(){currentPattern=$('lpsPattern').value||'A';lpsSteps=generateLpsSteps(currentPattern);lpsAt=0;renderLps()}
+function renderLps(){
+ const s=lpsSteps[lpsAt];makeStrip($('lpsChars'),currentPattern,s.i<currentPattern.length?s.i:-1);
+ makeValueStrip($('lpsVals'),s.arr,s.i<currentPattern.length?s.i:-1);
+ $('lpsPointers').textContent=`i = ${s.i} · length = ${s.length}`;
+ $('lpsCount').textContent=`Step ${lpsAt+1} of ${lpsSteps.length}`;
+ $('lpsExplain').textContent=s.msg;
+ $('lpsPrev').disabled=lpsAt===0;$('lpsNext').disabled=lpsAt===lpsSteps.length-1;
+}
+$('lpsReset').addEventListener('click',resetLps);
+$('lpsPrev').addEventListener('click',()=>{if(lpsAt>0){lpsAt--;renderLps()}});
+$('lpsNext').addEventListener('click',()=>{if(lpsAt<lpsSteps.length-1){lpsAt++;renderLps()}});
+$('lpsPattern').addEventListener('keydown',e=>{if(e.key==='Enter')resetLps()});
+resetLps();
+
+let searchSteps=[], searchAt=0, searchText='', searchPattern='', searchLps=[];
+function buildLps(p){const a=Array(p.length).fill(0);let len=0,i=1;while(i<p.length){if(p[i]===p[len]){len++;a[i]=len;i++}else if(len!==0){len=a[len-1]}else{a[i]=0;i++}}return a}
+function generateSearchSteps(t,p){
+ const steps=[], lps=buildLps(p);let i=0,j=0;
+ steps.push({i,j,cmp:null,kind:'start',msg:`Start searching. Text pointer i = 0 and pattern pointer j = 0. LPS = [${lps.join(', ')}].`});
+ if(p.length===0){steps.push({i:0,j:0,cmp:null,kind:'found',result:0,msg:'The pattern is empty; by this implementation, its match index is 0.'});return {steps,lps}}
+ while(i<t.length){
+  if(t[i]===p[j]){
+   const ci=i,cj=j;i++;j++;
+   if(j===p.length){steps.push({i,j,cmp:[ci,cj],kind:'found',result:i-j,msg:`Match at text[${ci}] = pattern[${cj}] ("${t[ci]}"). All ${p.length} pattern characters matched. Start index = ${i} − ${j} = ${i-j}.`});return {steps,lps}}
+   steps.push({i,j,cmp:[ci,cj],kind:'match',msg:`Match: text[${ci}] = pattern[${cj}] = "${t[ci]}". Advance both pointers to i = ${i}, j = ${j}.`});
+  }else if(j!==0){
+   const old=j;j=lps[j-1];
+   steps.push({i,j,cmp:[i,j],kind:'fallback',msg:`Mismatch: text[${i}] = "${t[i]}" but pattern[${old}] = "${p[old]}". Keep i = ${i}; fall back j = LPS[${old-1}] = ${j}.`});
+  }else{
+   steps.push({i,j,cmp:[i,j],kind:'skip',msg:`Mismatch at text[${i}] = "${t[i]}" and pattern[0] = "${p[0]}". No prefix matched, so advance i to ${i+1}.`});
+   i++;
+  }
+ }
+ steps.push({i,j,cmp:null,kind:'notfound',result:-1,msg:'Reached the end of the text without matching the full pattern. Return -1.'});
+ return {steps,lps};
+}
+function renderSearch(){
+ const s=searchSteps[searchAt], ts={}, ps={};
+ if(s.cmp){const [ci,cj]=s.cmp;if(ci<searchText.length)ts[ci]=s.kind==='match'||s.kind==='found'?'match':s.kind==='skip'?'mismatch':'active';if(cj<searchPattern.length)ps[cj]=s.kind==='match'||s.kind==='found'?'match':s.kind==='skip'?'mismatch':'active'}
+ if(s.kind==='found'&&s.result>=0){for(let k=s.result;k<s.result+searchPattern.length;k++)ts[k]='done'}
+ makeStrip($('textChars'),searchText,s.i<searchText.length?s.i:-1,ts);
+ makeStrip($('patternChars'),searchPattern,s.j<searchPattern.length?s.j:-1,ps);
+ $('pointerI').textContent=`i (text) = ${s.i}`;$('pointerJ').textContent=`j (pattern) = ${s.j}`;$('pointerLps').textContent=`LPS = [${searchLps.join(', ')}]`;
+ $('searchCount').textContent=`Step ${searchAt+1} of ${searchSteps.length}`;
+ $('searchExplain').textContent=s.msg;
+ $('searchPrev').disabled=searchAt===0;$('searchNext').disabled=searchAt===searchSteps.length-1;
+ $('searchResult').textContent=s.kind==='found'?`Finished: first match starts at index ${s.result}.`:s.kind==='notfound'?`Finished: pattern not found (return -1).`:'Follow the highlighted comparison, then press Next step.';
+}
+function resetSearch(){
+ searchText=$('textInput').value;searchPattern=$('patternInput').value;
+ if(!searchPattern){searchPattern='';}
+ const out=generateSearchSteps(searchText,searchPattern);searchSteps=out.steps;searchLps=out.lps;searchAt=0;renderSearch();
+}
+$('searchReset').addEventListener('click',resetSearch);
+$('searchPrev').addEventListener('click',()=>{if(searchAt>0){searchAt--;renderSearch()}});
+$('searchNext').addEventListener('click',()=>{if(searchAt<searchSteps.length-1){searchAt++;renderSearch()}});
+$('textInput').addEventListener('keydown',e=>{if(e.key==='Enter')resetSearch()});
+$('patternInput').addEventListener('keydown',e=>{if(e.key==='Enter')resetSearch()});
+resetSearch();
+</script>
+</body>
+</html>
